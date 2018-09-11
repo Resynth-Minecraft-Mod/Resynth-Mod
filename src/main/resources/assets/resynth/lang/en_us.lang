@@ -1,0 +1,8 @@
+item.noname.noitem.name=Example Item
+tile.noname.noblock.name=Example Block
+
+itemGroup.resynth.tabResynth=Resynth
+
+item.resynth.itemTest.name=Test Item
+
+tile.resynth.blockTest.name=Test Block

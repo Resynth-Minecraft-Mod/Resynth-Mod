@@ -1,0 +1,16 @@
+[
+{
+  "modid": "resynth",
+  "name": "Resynth",
+  "description": "Adds growable resources to Minecraft.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Ki11er_wolf"],
+  "credits": "\n   FML and Forge\n   Me, Myself and I\n   Casper",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
