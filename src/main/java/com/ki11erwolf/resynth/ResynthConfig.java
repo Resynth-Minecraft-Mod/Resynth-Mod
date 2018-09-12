@@ -35,32 +35,57 @@ public class ResynthConfig {
     private ResynthConfig(){}
 
     /**
-     * A boolean config value for testing.
+     * Configuration settings for the ore the mod uses.
      */
-    @Config.Comment("A test boolean")
-    public static boolean testBoolean = false;
+    public static final Ore ORE = new Ore();
 
     /**
-     * A test config category.
+     * Configuration settings for the ore the mod uses.
      */
-    public static final Test TEST = new Test();
-
-    /**
-     * A test class that represents a config category.
-     */
-    public static class Test{
+    public static class Ore{
 
         /**
-         * Test integer config property.
+         * The block hardness of mods ore block.
          */
-        @Config.Comment("Test Integer A")
-        public int TestIntegerA = 20;
+        @Config.Comment("Mineral Rich Stone hardness")
+        public float oreHardness = 3.0F;
 
         /**
-         * Test integer config property.
+         * The minimum number of items the ore block will drop.
          */
-        @Config.Comment("Test Integer B")
-        public int TestIntegerB = 30;
+        @Config.Comment("Minimum base number of items dropped by Mineral Rich Stone")
+        public int oreBaseDrops = 1;
+
+        /**
+         * The chance of the ore blocking dropping extra items.
+         * Where {@code n} is {@code oreChanceOfExtraDropIn}
+         * and {@code c} is {@code chance}.
+         * <p>
+         * {@code c = 1/n}
+         */
+        @Config.Comment("Chance of dropping an extra item. 1 in n")
+        public int oreChanceOfExtraDropIn = 6;
+
+        /**
+         * The number of extra items to drop.
+         */
+        @Config.Comment("Number of extra drops.")
+        public int oreExtraDrops = 1;
+
+        /**
+         * The maximum amount of experience orbs to drop.
+         */
+        @Config.Comment("Maximum amount of XP dropped")
+        public int maxXP = 6;
+
+        /**
+         * The multiplier used when calculating fortune
+         * influenced drops. fortune(I) = 1 and fortune(III) = 3.
+         * <p>
+         * Actual value used is {@code fortune*multiplier}.
+         */
+        @Config.Comment("Fortune drop multiplier.")
+        public int multiplier = 1;
     }
 
     /**

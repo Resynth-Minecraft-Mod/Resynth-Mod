@@ -31,10 +31,16 @@ public class ResynthItems {
     public static final Item ITEM_TEST = null;
 
     /**
+     * Mineral Rock. The item dropped from Mineral Rich Rock.
+     */
+    public static final Item ITEM_MINERAL_ROCK = null;
+
+    /**
      * Array of all the constructed mod items.
      */
     private static final Item[] ITEMS = {
-            new ItemTest()
+            new ItemTest(),
+            new ItemMineralRock()
     };
 
     /**

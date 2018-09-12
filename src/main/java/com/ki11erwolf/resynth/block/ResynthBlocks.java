@@ -31,10 +31,16 @@ public class ResynthBlocks {
     public static final Block BLOCK_TEST = null;
 
     /**
+     * Mineral Rich Stone. The mods ore.
+     */
+    public static final Block BLOCK_MINERAL_ORE = null;
+
+    /**
      * Array of all the constructed mod blocks.
      */
     private static final Block[] BLOCKS = {
-            new BlockTest()
+            new BlockTest(),
+            new BlockMineralOre()
     };
 
     /**
