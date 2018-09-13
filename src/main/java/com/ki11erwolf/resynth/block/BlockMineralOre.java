@@ -46,7 +46,7 @@ public class BlockMineralOre extends ResynthBlock{
     public BlockMineralOre() {
         super(Material.ROCK, "blockMineralOre", "block_mineral_ore");
         oreCfg = ResynthConfig.ORE;
-        this.setHardness(oreCfg.oreHardness);
+        this.setHardness(oreCfg.hardness);
         BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.PICKAXE, 2);
     }
 
@@ -92,9 +92,9 @@ public class BlockMineralOre extends ResynthBlock{
      */
     @Override
     public int quantityDropped(Random random) {
-        return oreCfg.oreBaseDrops
-                + (MathUtil.getRandomIntegerInRange(1, oreCfg.oreChanceOfExtraDropIn) == oreCfg.oreChanceOfExtraDropIn
-                ? oreCfg.oreExtraDrops : 0);
+        return oreCfg.baseDrops
+                + (MathUtil.getRandomIntegerInRange(1, oreCfg.extraChance) == oreCfg.extraChance
+                ? oreCfg.extraDrops : 0);
     }
 
     /**

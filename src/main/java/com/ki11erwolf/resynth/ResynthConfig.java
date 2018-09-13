@@ -22,11 +22,13 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import static net.minecraftforge.common.config.Config.*;
+
 /**
  * Holds all the config values for the mod.
  */
 @Config(modid = ResynthMod.MOD_ID)
-@Config.LangKey(ResynthMod.MOD_ID + ".config.title")
+@LangKey(ResynthMod.MOD_ID + ".config.title")
 public class ResynthConfig {
 
     /**
@@ -37,6 +39,8 @@ public class ResynthConfig {
     /**
      * Configuration settings for the ore the mod uses.
      */
+    @Name("Mineral Stone and Mineral Rock")
+    @Comment("Configuration settings for the mods ore blocks and items.")
     public static final Ore ORE = new Ore();
 
     /**
@@ -47,35 +51,41 @@ public class ResynthConfig {
         /**
          * The block hardness of mods ore block.
          */
-        @Config.Comment("Mineral Rich Stone hardness")
-        public float oreHardness = 3.0F;
+        @Name("Mineral Stone Hardness")
+        @Comment("The amount of time it takes to break the Mineral Rich Stone block.")
+        @RequiresMcRestart
+        public float hardness = 10.0F;
 
         /**
          * The minimum number of items the ore block will drop.
          */
-        @Config.Comment("Minimum base number of items dropped by Mineral Rich Stone")
-        public int oreBaseDrops = 1;
+        @Name("Mineral Rock Drop Count")
+        @Comment("The amount of Mineral Rocks Mineral Stone drops as a minimum.")
+        public int baseDrops = 1;
 
         /**
          * The chance of the ore blocking dropping extra items.
-         * Where {@code n} is {@code oreChanceOfExtraDropIn}
+         * Where {@code n} is {@code extraChance}
          * and {@code c} is {@code chance}.
          * <p>
          * {@code c = 1/n}
          */
-        @Config.Comment("Chance of dropping an extra item. 1 in n")
-        public int oreChanceOfExtraDropIn = 6;
+        @Name("Mineral Rock Drop Chance")
+        @Comment("The chance of extra Mineral Rocks dropping. Chance is 1 in n.")
+        public int extraChance = 6;
 
         /**
          * The number of extra items to drop.
          */
-        @Config.Comment("Number of extra drops.")
-        public int oreExtraDrops = 1;
+        @Name("Mineral Rock Extra Drop Count")
+        @Comment("The number of extra Mineral Rocks will drop.")
+        public int extraDrops = 1;
 
         /**
          * The maximum amount of experience orbs to drop.
          */
-        @Config.Comment("Maximum amount of XP dropped")
+        @Name("Mineral Stone XP Count")
+        @Comment("Maximum amount of XP orbs dropped by Mineral Rock.")
         public int maxXP = 6;
 
         /**
@@ -84,7 +94,8 @@ public class ResynthConfig {
          * <p>
          * Actual value used is {@code fortune*multiplier}.
          */
-        @Config.Comment("Fortune drop multiplier.")
+        @Name("Fortune Multiplier")
+        @Comment("The number of extra Mineral Rocks to drop based on fortune. 1 is 1 extra at fortune 1.")
         public int multiplier = 1;
     }
 
