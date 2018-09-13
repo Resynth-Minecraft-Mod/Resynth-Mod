@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -103,6 +104,8 @@ public class ResynthMod {
     public void init(FMLInitializationEvent event){
         logger.info("Entering init phase...");
         proxy.init(event);
+        GameRegistry.registerWorldGenerator(ResynthWorldGen.INSTANCE, 0);
+
     }
 
     /**

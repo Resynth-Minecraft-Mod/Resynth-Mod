@@ -53,6 +53,7 @@ public class ResynthConfig {
          */
         @Name("Mineral Stone Hardness")
         @Comment("The amount of time it takes to break the Mineral Rich Stone block.")
+        @RangeDouble(min = 1.0, max = 100.0)
         @RequiresMcRestart
         public float hardness = 10.0F;
 
@@ -61,6 +62,7 @@ public class ResynthConfig {
          */
         @Name("Mineral Rock Drop Count")
         @Comment("The amount of Mineral Rocks Mineral Stone drops as a minimum.")
+        @RangeInt(min = 0, max = 256)
         public int baseDrops = 1;
 
         /**
@@ -72,6 +74,7 @@ public class ResynthConfig {
          */
         @Name("Mineral Rock Drop Chance")
         @Comment("The chance of extra Mineral Rocks dropping. Chance is 1 in n.")
+        @RangeInt(min = 2, max = 100)
         public int extraChance = 6;
 
         /**
@@ -79,6 +82,7 @@ public class ResynthConfig {
          */
         @Name("Mineral Rock Extra Drop Count")
         @Comment("The number of extra Mineral Rocks will drop.")
+        @RangeInt(min = 0, max = 256)
         public int extraDrops = 1;
 
         /**
@@ -86,6 +90,7 @@ public class ResynthConfig {
          */
         @Name("Mineral Stone XP Count")
         @Comment("Maximum amount of XP orbs dropped by Mineral Rock.")
+        @RangeInt(min = 3, max = 150)
         public int maxXP = 6;
 
         /**
@@ -96,7 +101,57 @@ public class ResynthConfig {
          */
         @Name("Fortune Multiplier")
         @Comment("The number of extra Mineral Rocks to drop based on fortune. 1 is 1 extra at fortune 1.")
+        @RangeInt(min = 1, max = 20)
         public int multiplier = 1;
+    }
+
+    /**
+     * Ore generation settings.
+     */
+    @Name("Mineral Stone World Generation")
+    @Comment("Configuration settings for the mods ore world generation.")
+    @RequiresMcRestart
+    public static final OreGen oreGen = new OreGen();
+
+    /**
+     * Ore generation settings.
+     */
+    public static class OreGen{
+
+        /**
+         * True if Mineral Stone should be generated in the overworld.
+         */
+        @Name("Generate Mineral Stone")
+        @Comment("Determines if Mineral Stone is generated in the world or not. True to generate.")
+        @RequiresMcRestart
+        public boolean generate = true;
+
+        /**
+         * Number of ore veins (clusters) to generate in a given chunk.
+         */
+        @Name("Veins Per Chunk")
+        @Comment("The number of ore veins (clusters) in a chunk. ")
+        @RangeInt(min = 1, max = 32)
+        @RequiresMcRestart
+        public int perChunk = 2;
+
+        /**
+         * Minimum height to generate the ore veins.
+         */
+        @Name("Minimum Height")
+        @Comment("The minimum block height the ore veins will spawn at.")
+        @RangeInt(min = 2, max = 252)
+        @RequiresMcRestart
+        public int minHeight = 3;
+
+        /**
+         * Maximum height to generate the ore veins.
+         */
+        @Name("Maximum Height")
+        @Comment("The maximum block height the ore veins will spawn at.")
+        @RangeInt(min = 3, max = 254)
+        @RequiresMcRestart
+        public int maxHeight = 4;
     }
 
     /**
