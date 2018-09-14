@@ -26,6 +26,6 @@ public class BlockTest extends ResynthBlock {
      * Sets the unlocalized and registry name of the block.
      */
     public BlockTest() {
-        super(Material.ROCK, "blockTest", "block_test");
+        super(Material.ROCK, "test");
     }
 }

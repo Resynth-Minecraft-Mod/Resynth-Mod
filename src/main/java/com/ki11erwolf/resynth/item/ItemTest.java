@@ -24,6 +24,6 @@ public class ItemTest extends ResynthItem {
      * Generic Constructor.
      */
     public ItemTest() {
-        super("itemTest", "item_test");
+        super("test");
     }
 }

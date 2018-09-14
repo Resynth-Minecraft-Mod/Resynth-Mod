@@ -27,6 +27,6 @@ public class ItemMineralRock extends ResynthItem {
      * and registry name.
      */
     public ItemMineralRock() {
-        super("itemMineralRock", "item_mineral_rock");
+        super("mineralRock");
     }
 }

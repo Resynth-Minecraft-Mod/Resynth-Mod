@@ -17,6 +17,7 @@ package com.ki11erwolf.resynth.item;
 
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthTab;
+import com.ki11erwolf.resynth.util.StringUtil;
 import net.minecraft.item.Item;
 
 /**
@@ -24,16 +25,17 @@ import net.minecraft.item.Item;
  */
 public class ResynthItem extends Item {
 
+    private static final String ITEM_PREFIX = "item";
+
     /**
      * Sets the creative tab, unlocalized name prefix
      * and registry name.
      *
-     * @param unlocalizedName unlocalized name without the prefix.
-     * @param registryName item registry name.
+     * @param name the general name of the item (e.g. redstoneDust)
      */
-    public ResynthItem(String unlocalizedName, String registryName) {
-        this.setUnlocalizedName(ResynthMod.MOD_ID + "." + unlocalizedName);
-        this.setRegistryName(registryName);
+    public ResynthItem(String name) {
+        this.setUnlocalizedName(ResynthMod.MOD_ID + "." + ITEM_PREFIX + StringUtil.capitalize(name));
+        this.setRegistryName(ITEM_PREFIX + "_" + StringUtil.toUnderscoreLowercase(name));
         this.setCreativeTab(ResynthTab.RESYNTH_TAB);
     }
 

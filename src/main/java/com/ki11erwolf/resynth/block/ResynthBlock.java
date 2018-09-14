@@ -17,6 +17,7 @@ package com.ki11erwolf.resynth.block;
 
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthTab;
+import com.ki11erwolf.resynth.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -26,27 +27,28 @@ import net.minecraft.block.material.Material;
  */
 public class ResynthBlock extends Block {
 
+    private static final String BLOCK_PREFIX = "block";
+
     /**
      * @param material the blocks material.
-     * @param unlocalizedName the unlocalized name of the block.
-     * @param registryName the registry name of the block.
+     * @param name the general name of the block (e.g. stone).
      */
-    public ResynthBlock(Material material, String unlocalizedName, String registryName) {
-        this(material, SoundType.STONE, unlocalizedName, registryName);
+    public ResynthBlock(Material material, String name) {
+        this(material, SoundType.STONE, name);
     }
 
     /**
      * @param material the blocks material.
-     * @param unlocalizedName the unlocalized name of the block.
-     * @param registryName the registry name of the block.
+     * @param name the general name of the block (e.g. redstoneOre).
      * @param sound the sound the block makes when interacted with.
      */
-    public ResynthBlock(Material material, SoundType sound, String unlocalizedName, String registryName) {
+    public ResynthBlock(Material material, SoundType sound, String name) {
         super(material);
-        setUnlocalizedName(ResynthMod.MOD_ID + "." + unlocalizedName);
-        setRegistryName(registryName);
+        setUnlocalizedName(ResynthMod.MOD_ID + "." + BLOCK_PREFIX + StringUtil.capitalize(name));
+        setRegistryName(BLOCK_PREFIX + "_" + StringUtil.toUnderscoreLowercase(name));
         setCreativeTab(ResynthTab.RESYNTH_TAB);
         setSoundType(sound);
     }
+
 
 }
