@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.block;
 
+import net.minecraft.block.BlockCrops;
 import net.minecraft.block.material.Material;
 
 /**
@@ -25,7 +26,7 @@ public class BlockTest extends ResynthBlock {
     /**
      * Sets the unlocalized and registry name of the block.
      */
-    public BlockTest() {
+    protected BlockTest() {
         super(Material.ROCK, "test");
     }
 }

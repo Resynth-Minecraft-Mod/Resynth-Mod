@@ -43,7 +43,7 @@ public class BlockMineralOre extends ResynthBlock{
     /**
      * Sets the basic properties of the block.
      */
-    public BlockMineralOre() {
+    protected BlockMineralOre() {
         super(Material.ROCK, "mineralOre");
         oreCfg = ResynthConfig.ORE;
         this.setHardness(oreCfg.hardness);

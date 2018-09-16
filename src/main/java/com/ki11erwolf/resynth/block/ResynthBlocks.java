@@ -36,11 +36,17 @@ public class ResynthBlocks {
     public static final Block BLOCK_MINERAL_ORE = null;
 
     /**
+     * Mineral Enriched Soil. The farmland block for the mod.
+     */
+    public static final Block BLOCK_MINERAL_SOIL = null;
+
+    /**
      * Array of all the constructed mod blocks.
      */
     private static final Block[] BLOCKS = {
-            new BlockTest(),
-            new BlockMineralOre()
+            //new BlockTest(),
+            new BlockMineralOre(),
+            new BlockMineralSoil()
     };
 
     /**

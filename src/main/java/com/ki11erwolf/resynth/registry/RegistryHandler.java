@@ -16,13 +16,16 @@
 package com.ki11erwolf.resynth.registry;
 
 import com.ki11erwolf.resynth.block.ResynthBlocks;
+import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * Handles the registering of all mod items.
@@ -35,13 +38,17 @@ public class RegistryHandler {
      *
      * @param event item register event.
      */
-    @SuppressWarnings("ConstantConditions")
     @SubscribeEvent
+    @SuppressWarnings({"ConstantConditions", "SingleStatementInBlock", "unchecked", "deprecation"})
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(ResynthItems.getItems());
 
         for(Block b : ResynthBlocks.getBlocks()){
             event.getRegistry().register(new ItemBlock(b).setRegistryName(b.getRegistryName()));
+
+            if(b instanceof ResynthTileEntity){
+                GameRegistry.registerTileEntity(((ResynthTileEntity)b).getTileEntityClass(), b.getRegistryName().toString());
+            }
         }
     }
 

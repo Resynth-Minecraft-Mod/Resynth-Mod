@@ -27,6 +27,9 @@ import net.minecraft.block.material.Material;
  */
 public class ResynthBlock extends Block {
 
+    /**
+     * The prefix for all block names.
+     */
     private static final String BLOCK_PREFIX = "block";
 
     /**
@@ -49,6 +52,4 @@ public class ResynthBlock extends Block {
         setCreativeTab(ResynthTab.RESYNTH_TAB);
         setSoundType(sound);
     }
-
-
 }

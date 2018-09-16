@@ -39,7 +39,7 @@ public class ResynthItems {
      * Array of all the constructed mod items.
      */
     private static final Item[] ITEMS = {
-            new ItemTest(),
+            //new ItemTest(),
             new ItemMineralRock()
     };
 

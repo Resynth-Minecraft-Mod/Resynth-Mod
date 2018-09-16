@@ -25,6 +25,9 @@ import net.minecraft.item.Item;
  */
 public class ResynthItem extends Item {
 
+    /**
+     * The prefix for all item names.
+     */
     private static final String ITEM_PREFIX = "item";
 
     /**
@@ -38,5 +41,4 @@ public class ResynthItem extends Item {
         this.setRegistryName(ITEM_PREFIX + "_" + StringUtil.toUnderscoreLowercase(name));
         this.setCreativeTab(ResynthTab.RESYNTH_TAB);
     }
-
 }

@@ -111,7 +111,7 @@ public class ResynthConfig {
     @Name("Mineral Stone World Generation")
     @Comment("Configuration settings for the mods ore world generation.")
     @RequiresMcRestart
-    public static final OreGen oreGen = new OreGen();
+    public static final OreGen ORE_GENERATION = new OreGen();
 
     /**
      * Ore generation settings.
@@ -152,6 +152,28 @@ public class ResynthConfig {
         @RangeInt(min = 3, max = 254)
         @RequiresMcRestart
         public int maxHeight = 4;
+    }
+
+    /**
+     * Mineral Enriched Soil Settings.
+     */
+    @Name("Mineral Enriched Soil")
+    @Comment("Configuration settings for Mineral Enriched Soil and other related features.")
+    public static final MineralSoil MINERAL_SOIL = new MineralSoil();
+
+    /**
+     * Mineral Enriched Soil Settings.
+     */
+    public static class MineralSoil{
+
+        /**
+         * The percentage one Mineral Rock item
+         * will increase the soils mineral content.
+         */
+        @Name("Mineral Rock Value")
+        @Comment("The value of one Mineral Rock. One Mineral Rock item will increase the mineral content percentage value of Mineral Enriched Soil by this amount.")
+        @RangeDouble(min = 0.1, max = 49.0)
+        public float mineralValue = 1.0F;
     }
 
     /**

@@ -56,7 +56,7 @@ public class ResynthWorldGen implements IWorldGenerator {
      * Initializes everything.
      */
     private ResynthWorldGen(){
-        this.oreGenConfig = ResynthConfig.oreGen;
+        this.oreGenConfig = ResynthConfig.ORE_GENERATION;
         oreMineralStone = new WorldGenMinable(
                 Objects.requireNonNull(ResynthBlocks.BLOCK_MINERAL_ORE).getDefaultState(),
                 15,

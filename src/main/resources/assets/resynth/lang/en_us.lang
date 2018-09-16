@@ -4,7 +4,8 @@ tile.noname.noblock.name=Example Block
 itemGroup.resynth.tabResynth=Resynth
 
 item.resynth.itemTest.name=Test Item
-item.resynth.itemMineralRock.name=Mineral Rock Pile
+item.resynth.itemMineralRock.name=Mineral Rocks
 
 tile.resynth.blockTest.name=Test Block
-tile.resynth.blockMineralOre.name=Mineral Rich Stone
+tile.resynth.blockMineralOre.name=Mineral Infused Stone
+tile.resynth.blockMineralSoil.name=Mineral Enriched Soil
