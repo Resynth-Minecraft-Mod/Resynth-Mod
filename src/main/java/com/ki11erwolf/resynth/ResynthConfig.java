@@ -171,7 +171,8 @@ public class ResynthConfig {
          * will increase the soils mineral content.
          */
         @Name("Mineral Rock Value")
-        @Comment("The value of one Mineral Rock. One Mineral Rock item will increase the mineral content percentage value of Mineral Enriched Soil by this amount.")
+        @Comment("The value of one Mineral Rock. One Mineral Rock item will increase the mineral " +
+                "content percentage value of Mineral Enriched Soil by this amount.")
         @RangeDouble(min = 0.1, max = 49.0)
         public float mineralValue = 1.0F;
     }

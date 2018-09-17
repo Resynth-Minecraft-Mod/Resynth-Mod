@@ -1,10 +1,10 @@
 {
   "variants": {
-    "inventory": [{"model": "resynth:block_mineral_soil_30"}],
-    "percent=0": { "model": "resynth:block_mineral_soil_10" },
-    "percent=1": { "model": "resynth:block_mineral_soil_20" },
-    "percent=2": { "model": "resynth:block_mineral_soil_30" },
-    "percent=3": { "model": "resynth:block_mineral_soil_40" },
-    "percent=4": { "model": "resynth:block_mineral_soil_50" }
+    "inventory": [{"model": "resynth:block_mineral_soil/block_mineral_soil_30"}],
+    "percent=0": { "model": "resynth:block_mineral_soil/block_mineral_soil_10" },
+    "percent=1": { "model": "resynth:block_mineral_soil/block_mineral_soil_20" },
+    "percent=2": { "model": "resynth:block_mineral_soil/block_mineral_soil_30" },
+    "percent=3": { "model": "resynth:block_mineral_soil/block_mineral_soil_40" },
+    "percent=4": { "model": "resynth:block_mineral_soil/block_mineral_soil_50" }
   }
 }

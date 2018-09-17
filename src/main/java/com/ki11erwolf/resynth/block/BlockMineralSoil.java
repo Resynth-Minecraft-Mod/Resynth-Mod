@@ -20,6 +20,7 @@ import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.BlockUtil;
+import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -120,52 +121,58 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
             return false;
 
         if(playerIn.getHeldItemMainhand().getItem().getClass().equals(ResynthItems.ITEM_MINERAL_ROCK.getClass())){
-            if(!worldIn.isRemote){
-                ItemStack offer = playerIn.getHeldItemMainhand();
-                TileEntityMineralSoil entity = getTileEntity(worldIn, pos);
+            new MinecraftUtil.SideSensitiveCode(worldIn){
+                @Override
+                public void onServer(){
+                    ItemStack offer = playerIn.getHeldItemMainhand();
+                    TileEntityMineralSoil entity = getTileEntity(worldIn, pos);
 
-                if(hand.equals(EnumHand.MAIN_HAND)){
-                    if(!playerIn.isCreative())
-                        offer.shrink(1);
-                    entity.incrementPercentage(MINERAL_SOIL_CONFIG.mineralValue);
+                    if(hand.equals(EnumHand.MAIN_HAND)){
+                        if(!playerIn.isCreative())
+                            offer.shrink(1);
+                        entity.incrementPercentage(MINERAL_SOIL_CONFIG.mineralValue);
+                    }
+
+                    float percentage = entity.getPercentage();
+                    updateState(worldIn, pos, state);
+                    ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setPercentage(percentage);
+                    String perc = String.valueOf(entity.getPercentage());
+
+
+                    playerIn.sendMessage(new TextComponentString("Soil mineral content: "
+                            + perc
+                            .substring(0, perc.length() > 4 ? 4 : perc.length())
+                            + "%"));
                 }
-
-                float percentage = entity.getPercentage();
-                updateState(worldIn, pos, state);
-                ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setPercentage(percentage);
-                String perc = String.valueOf(entity.getPercentage());
-
-
-                playerIn.sendMessage(new TextComponentString("Soil mineral content: "
-                        + perc
-                        .substring(0, perc.length() > 4 ? 4 : perc.length())
-                        + "%"));
-            }
+            }.execute();
             return true;
         }
 
         if(playerIn.getHeldItemMainhand().getItem().getClass().equals(ResynthItems.ITEM_DENSE_MINERAL_ROCK.getClass())){
-            if(!worldIn.isRemote){
-                ItemStack offer = playerIn.getHeldItemMainhand();
-                TileEntityMineralSoil entity = getTileEntity(worldIn, pos);
+            new MinecraftUtil.SideSensitiveCode(worldIn) {
+                @Override
+                public void onServer() {
+                    ItemStack offer = playerIn.getHeldItemMainhand();
+                    TileEntityMineralSoil entity = getTileEntity(worldIn, pos);
 
-                if(hand.equals(EnumHand.MAIN_HAND)){
-                    if(!playerIn.isCreative())
-                        offer.shrink(1);
-                    entity.incrementPercentage(MINERAL_SOIL_CONFIG.mineralValue * 9);
+                    if(hand.equals(EnumHand.MAIN_HAND)){
+                        if(!playerIn.isCreative())
+                            offer.shrink(1);
+                        entity.incrementPercentage(MINERAL_SOIL_CONFIG.mineralValue * 9);
+                    }
+
+                    float percentage = entity.getPercentage();
+                    updateState(worldIn, pos, state);
+                    ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setPercentage(percentage);
+                    String perc = String.valueOf(entity.getPercentage());
+
+
+                    playerIn.sendMessage(new TextComponentString("Soil mineral content: "
+                            + perc
+                            .substring(0, perc.length() > 4 ? 4 : perc.length())
+                            + "%"));
                 }
-
-                float percentage = entity.getPercentage();
-                updateState(worldIn, pos, state);
-                ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setPercentage(percentage);
-                String perc = String.valueOf(entity.getPercentage());
-
-
-                playerIn.sendMessage(new TextComponentString("Soil mineral content: "
-                        + perc
-                        .substring(0, perc.length() > 4 ? 4 : perc.length())
-                        + "%"));
-            }
+            }.execute();
             return true;
         }
 

@@ -15,7 +15,6 @@
  */
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
