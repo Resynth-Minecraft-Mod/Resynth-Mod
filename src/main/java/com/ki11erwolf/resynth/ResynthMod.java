@@ -105,7 +105,7 @@ public class ResynthMod {
         logger.info("Entering init phase...");
         proxy.init(event);
         GameRegistry.registerWorldGenerator(ResynthWorldGen.INSTANCE, 0);
-
+        ResynthFurnaceRecipes.registerFurnaceRecipes();
     }
 
     /**

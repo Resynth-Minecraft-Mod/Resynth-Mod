@@ -21,7 +21,6 @@ import com.ki11erwolf.resynth.item.ResynthItems;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -47,7 +46,8 @@ public class RegistryHandler {
             event.getRegistry().register(new ItemBlock(b).setRegistryName(b.getRegistryName()));
 
             if(b instanceof ResynthTileEntity){
-                GameRegistry.registerTileEntity(((ResynthTileEntity)b).getTileEntityClass(), b.getRegistryName().toString());
+                GameRegistry.registerTileEntity(
+                        ((ResynthTileEntity)b).getTileEntityClass(), b.getRegistryName().toString());
             }
         }
     }

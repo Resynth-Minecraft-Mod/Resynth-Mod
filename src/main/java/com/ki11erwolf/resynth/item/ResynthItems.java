@@ -36,11 +36,23 @@ public class ResynthItems {
     public static final Item ITEM_MINERAL_ROCK = null;
 
     /**
+     * Dense Mineral Rock. x9 MineralRocks.
+     */
+    public static final Item ITEM_DENSE_MINERAL_ROCK = null;
+
+    /**
+     * Mineral Crystal. Recipe component for Mineral Soil.
+     */
+    public static final Item ITEM_MINERAL_CRYSTAL = null;
+
+    /**
      * Array of all the constructed mod items.
      */
     private static final Item[] ITEMS = {
             //new ItemTest(),
-            new ItemMineralRock()
+            new ItemMineralRock(),
+            new ItemDenseMineralRock(),
+            new ItemMineralCrystal()
     };
 
     /**

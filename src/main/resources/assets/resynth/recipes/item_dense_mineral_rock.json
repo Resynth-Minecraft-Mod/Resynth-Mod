@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "resynth:item_mineral_rock"
+    }
+  },
+  "result": {
+    "item": "resynth:item_dense_mineral_rock"
+  }
+}

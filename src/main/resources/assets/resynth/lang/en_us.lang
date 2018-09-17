@@ -5,6 +5,8 @@ itemGroup.resynth.tabResynth=Resynth
 
 item.resynth.itemTest.name=Test Item
 item.resynth.itemMineralRock.name=Mineral Rocks
+item.resynth.itemDenseMineralRock.name=Dense Mineral Rock
+item.resynth.itemMineralCrystal.name=Mineral Crystal
 
 tile.resynth.blockTest.name=Test Block
 tile.resynth.blockMineralOre.name=Mineral Infused Stone

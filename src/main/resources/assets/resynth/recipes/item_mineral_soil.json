@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "resynth:item_mineral_crystal"
+    },
+    {
+      "item": "minecraft:dirt",
+      "data": 0
+    },
+    {
+      "item": "minecraft:wooden_hoe"
+    }
+  ],
+  "result": {
+    "item": "resynth:block_mineral_soil"
+  }
+}
