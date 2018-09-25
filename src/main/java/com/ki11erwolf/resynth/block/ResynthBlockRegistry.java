@@ -15,30 +15,31 @@
  */
 package com.ki11erwolf.resynth.block;
 
+import java.util.ArrayList;
+
 /**
- * List of block references and objects.
+ * Stores all registered resynth blocks.
  */
-public class ResynthBlocks {
+public class ResynthBlockRegistry {
 
     /**
-     * Mods test block.
+     * Array list containing all blocks.
      */
-    public static final ResynthBlock BLOCK_TEST = new BlockTest();
+    private static final ArrayList<ResynthBlock> BLOCKS = new ArrayList<>();
 
     /**
-     * Mineral Rich Stone. The mods ore.
+     * Adds a block to the registry.
+     *
+     * @param block the block to add.
      */
-    public static final ResynthBlock BLOCK_MINERAL_ORE = new BlockMineralOre().register();
+    protected static void addBlock(ResynthBlock block){
+        BLOCKS.add(block);
+    }
 
     /**
-     * Mineral Enriched Soil. The farmland block for the mod.
+     * @return an array of all registered resynth blocks.
      */
-    public static final ResynthBlock BLOCK_MINERAL_SOIL = new BlockMineralSoil().register();
-
-    /**
-     * @return an array of all the registered resynth blocks.
-     */
-    public static ResynthBlock[] getBlocks(){
-        return ResynthBlockRegistry.getBlocks();
+    protected static ResynthBlock[] getBlocks(){
+        return BLOCKS.toArray(new ResynthBlock[0]);
     }
 }

@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "resynth:plant/iron/ore_iron"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

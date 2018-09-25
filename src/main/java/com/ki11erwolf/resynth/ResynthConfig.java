@@ -177,6 +177,122 @@ public class ResynthConfig {
         public float mineralValue = 1.0F;
     }
 
+    //*********************************
+    //              PLANTS
+    //*********************************
+
+    /**
+     * Settings for all plants and plant types.
+     */
+    @Name("General Plant Settings")
+    @Comment("Settings for plants as a whole.")
+    public static final PlantGeneral PLANTS_GENERAL = new PlantGeneral();
+
+    /**
+     * Settings for all plants and plant types.
+     */
+    public static class PlantGeneral{
+
+        /**
+         * Can bonemeal be used on plants.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to false to disable bonemeal on all plants.")
+        public boolean canBonemeal = false;
+
+        /**
+         * Do minecraft ore blocks drop seeds.
+         */
+        @Name("Enable Seed Drops From Ore")
+        @Comment("Set to false to disable ores dropping seeds when blown up.")
+        public boolean oreDropSeeds = true;
+
+        /**
+         * Do plant ore blocks drop seeds.
+         */
+        @Name("Enable Seed Drops From Organic Ore")
+        @Comment("Set to false to disable organic ores dropping seeds when blown up.")
+        public boolean organicOreDropSeeds = true;
+    }
+
+    /**
+     * Settings for the iron plant.
+     */
+    @Name("Plant: Iron")
+    @Comment("Settings for the Iron Plant.")
+    public static final PlantIron PLANT_IRON = new PlantIron();
+
+    /**
+     * Settings for the iron plant.
+     */
+    public static class PlantIron{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Flowering Period")
+        @Comment("How long it takes this species of plant to grow. " +
+                "The higher the number, the longer the plant takes to grow. " +
+                "Each increment doubles the time the plant takes to grow. " +
+                "E.g. two is twice as long as one.")
+        @RangeInt(min = 1, max = 100_000)
+        public int floweringPeriod = 15;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant.")
+        public boolean canBonemeal = true;
+
+        /**
+         * Does the minecraft ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, iron ore will occasionally drop iron seeds when blown up.")
+        public boolean oreDropSeeds = true;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Organic Ore Drop Seeds")
+        @Comment("If set to true, organic iron ore will occasionally drop iron seeds when blown up.")
+        public boolean organicOreDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from iron ore.
+         */
+        @Name("Ore Seed Drop Chance")
+        @Comment("The chance iron ore will drop iron seeds. The chance of dropping a seed " +
+                "is one in Ore Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int oreSeedDropChance = 13;
+
+        /**
+         * The chance of seeds dropping from
+         * organic iron ore.
+         */
+        @Name("Organic Ore Seed Drop Chance")
+        @Comment("The chance organic iron ore will drop iron seeds. The chance of dropping a seed " +
+                "is one in Organic Ore Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int organicOreSeedDropChance = 26;
+
+        /**
+         * The number of ingots the plants ore
+         * block gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of iron ingots an Organic Iron Ore block will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
     /**
      * Handles the syncing of config values
      * when they change.

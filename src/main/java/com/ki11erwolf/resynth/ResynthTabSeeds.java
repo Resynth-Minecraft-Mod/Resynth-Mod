@@ -15,32 +15,35 @@
  */
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.item.ResynthItems;
-import com.ki11erwolf.resynth.plant.PlantMetallic;
+import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.plant.ResynthPlants;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
- * Provides a method to register all furnace recipes.
+ * The mods creative tab for seeds. Singleton instance.
  */
-final class ResynthFurnaceRecipes {
+public final class ResynthTabSeeds extends CreativeTabs {
 
     /**
-     * Static util class.
+     * Creative tab instance.
      */
-    private ResynthFurnaceRecipes(){}
+    public static final CreativeTabs RESYNTH_TAB_SEEDS = new ResynthTabSeeds("tabResynthSeeds");
 
     /**
-     * Adds all furnace recipes to the game.
+     * Private constructor.
+     *
+     * @param label tab name.
      */
-    static void registerFurnaceRecipes(){
-        GameRegistry.addSmelting(
-                ResynthItems.ITEM_DENSE_MINERAL_ROCK,
-                new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1), 0F
-        );
+    private ResynthTabSeeds(String label) {
+        super(ResynthMod.MOD_ID + "." + label);
+    }
 
-        for(PlantMetallic plant : ResynthPlants.getMetallicPlants())
-            GameRegistry.addSmelting(plant.getOre(), plant.getResult(), 1.0F);
+    /**
+     * @return the item/block to use as tabs icon.
+     */
+    @Override
+    public ItemStack getTabIconItem() {
+        return new ItemStack(ResynthPlants.PLANT_IRON.getSeeds());
     }
 }

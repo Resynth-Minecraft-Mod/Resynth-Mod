@@ -28,37 +28,27 @@ public class ResynthItems {
     /**
      * Mods test item.
      */
-    public static final Item ITEM_TEST = null;
+    public static final ResynthItem ITEM_TEST = new ItemTest();
 
     /**
      * Mineral Rock. The item dropped from Mineral Rich Rock.
      */
-    public static final Item ITEM_MINERAL_ROCK = null;
+    public static final ResynthItem ITEM_MINERAL_ROCK = new ItemMineralRock().register();
 
     /**
      * Dense Mineral Rock. x9 MineralRocks.
      */
-    public static final Item ITEM_DENSE_MINERAL_ROCK = null;
+    public static final ResynthItem ITEM_DENSE_MINERAL_ROCK = new ItemDenseMineralRock().register();
 
     /**
      * Mineral Crystal. Recipe component for Mineral Soil.
      */
-    public static final Item ITEM_MINERAL_CRYSTAL = null;
+    public static final ResynthItem ITEM_MINERAL_CRYSTAL = new ItemMineralCrystal().register();
 
     /**
-     * Array of all the constructed mod items.
-     */
-    private static final Item[] ITEMS = {
-            //new ItemTest(),
-            new ItemMineralRock(),
-            new ItemDenseMineralRock(),
-            new ItemMineralCrystal()
-    };
-
-    /**
-     * @return an array of all the constructed mod items
+     * @return an array of all the registered resynth items.
      */
     public static Item[] getItems(){
-        return ITEMS;
+        return ResynthItemRegistry.getItems();
     }
 }

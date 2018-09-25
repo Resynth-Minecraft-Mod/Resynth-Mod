@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "resynth:blocks/plants/iron/ore_iron"
+  }
+}

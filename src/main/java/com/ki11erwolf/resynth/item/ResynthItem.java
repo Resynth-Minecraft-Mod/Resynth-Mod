@@ -37,8 +37,27 @@ public class ResynthItem extends Item {
      * @param name the general name of the item (e.g. redstoneDust)
      */
     public ResynthItem(String name) {
-        this.setUnlocalizedName(ResynthMod.MOD_ID + "." + ITEM_PREFIX + StringUtil.capitalize(name));
-        this.setRegistryName(ITEM_PREFIX + "_" + StringUtil.toUnderscoreLowercase(name));
+        this(name, ITEM_PREFIX);
+    }
+
+    /**
+     * @param name the general name of the item (e.g. redstoneDust)
+     * @param prefix the prefix to add before all names of the item.
+     */
+    public ResynthItem(String name, String prefix){
+        this.setUnlocalizedName(ResynthMod.MOD_ID + "." + prefix + StringUtil.capitalize(name));
+        this.setRegistryName(prefix + "_" + StringUtil.toUnderscoreLowercase(name));
         this.setCreativeTab(ResynthTab.RESYNTH_TAB);
+    }
+
+    /**
+     * Adds this item to the list of items to be
+     * registered to the game though forge.
+     *
+     * @return {@code this} item.
+     */
+    protected ResynthItem register(){
+        ResynthItemRegistry.addItem(this);
+        return this;
     }
 }

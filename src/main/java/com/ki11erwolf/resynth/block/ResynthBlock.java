@@ -37,19 +37,40 @@ public class ResynthBlock extends Block {
      * @param name the general name of the block (e.g. stone).
      */
     public ResynthBlock(Material material, String name) {
-        this(material, SoundType.STONE, name);
+        this(material, SoundType.STONE, name, BLOCK_PREFIX);
+    }
+
+    /**
+     * @param material the blocks material.
+     * @param sound the sound the block makes when interacted with.
+     * @param name the general name of the block (e.g. stone).
+     */
+    public ResynthBlock(Material material, SoundType sound, String name){
+        this(material, sound, name, BLOCK_PREFIX);
     }
 
     /**
      * @param material the blocks material.
      * @param name the general name of the block (e.g. redstoneOre).
      * @param sound the sound the block makes when interacted with.
+     * @param prefix the prefix to add before all names of the block.
      */
-    public ResynthBlock(Material material, SoundType sound, String name) {
+    public ResynthBlock(Material material, SoundType sound, String name, String prefix) {
         super(material);
-        setUnlocalizedName(ResynthMod.MOD_ID + "." + BLOCK_PREFIX + StringUtil.capitalize(name));
-        setRegistryName(BLOCK_PREFIX + "_" + StringUtil.toUnderscoreLowercase(name));
+        setUnlocalizedName(ResynthMod.MOD_ID + "." + prefix + StringUtil.capitalize(name));
+        setRegistryName(prefix + "_" + StringUtil.toUnderscoreLowercase(name));
         setCreativeTab(ResynthTab.RESYNTH_TAB);
         setSoundType(sound);
+    }
+
+    /**
+     * Adds this block to the list of blocks to be
+     * registered to the game though forge.
+     *
+     * @return {@code this} block.
+     */
+    protected ResynthBlock register(){
+        ResynthBlockRegistry.addBlock(this);
+        return this;
     }
 }

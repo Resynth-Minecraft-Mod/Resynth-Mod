@@ -2,6 +2,7 @@ item.noname.noitem.name=Example Item
 tile.noname.noblock.name=Example Block
 
 itemGroup.resynth.tabResynth=Resynth
+itemGroup.resynth.tabResynthSeeds=Resynth Seeds
 
 item.resynth.itemTest.name=Test Item
 item.resynth.itemMineralRock.name=Mineral Rocks
@@ -11,3 +12,7 @@ item.resynth.itemMineralCrystal.name=Mineral Crystal
 tile.resynth.blockTest.name=Test Block
 tile.resynth.blockMineralOre.name=Mineral Infused Stone
 tile.resynth.blockMineralSoil.name=Mineral Enriched Soil
+
+item.resynth.seedIron.name=Iron Seeds
+
+tile.resynth.oreIron.name=Organic Iron Ore
