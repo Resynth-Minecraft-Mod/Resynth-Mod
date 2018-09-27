@@ -54,6 +54,29 @@ public final class ResynthPlants {
         public ItemStack getResult() {return new ItemStack(Items.IRON_INGOT, ResynthConfig.PLANT_IRON.yield);}
     };
 
+    public static final PlantMetallic PLANT_GOLD = new PlantMetallic("gold", Blocks.GOLD_ORE) {
+        @Override
+        protected int getFloweringPeriod() {return ResynthConfig.PLANT_GOLD.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return ResynthConfig.PLANT_GOLD.canBonemeal;}
+
+        @Override
+        protected int getOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.oreSeedDropChance;}
+
+        @Override
+        protected int getOrganicOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.organicOreSeedDropChance;}
+
+        @Override
+        protected boolean doesOreDropSeeds() {return ResynthConfig.PLANT_GOLD.oreDropSeeds;}
+
+        @Override
+        protected boolean doesOrganicOreDropSeeds() {return ResynthConfig.PLANT_GOLD.organicOreDropSeeds;}
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.GOLD_INGOT, ResynthConfig.PLANT_GOLD.yield);}
+    };
+
     //Static class.
     private ResynthPlants(){}
 

@@ -237,7 +237,7 @@ public class ResynthConfig {
                 "Each increment doubles the time the plant takes to grow. " +
                 "E.g. two is twice as long as one.")
         @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 15;
+        public int floweringPeriod = 25;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -270,7 +270,7 @@ public class ResynthConfig {
         @Comment("The chance iron ore will drop iron seeds. The chance of dropping a seed " +
                 "is one in Ore Seed Drop Chance + 1.")
         @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 13;
+        public int oreSeedDropChance = 26;
 
         /**
          * The chance of seeds dropping from
@@ -280,7 +280,7 @@ public class ResynthConfig {
         @Comment("The chance organic iron ore will drop iron seeds. The chance of dropping a seed " +
                 "is one in Organic Ore Seed Drop Chance + 1.")
         @RangeInt(min = 1, max = 100_000)
-        public int organicOreSeedDropChance = 26;
+        public int organicOreSeedDropChance = 48;
 
         /**
          * The number of ingots the plants ore
@@ -293,6 +293,83 @@ public class ResynthConfig {
         public int yield = 1;
     }
 
+    /**
+     * Settings for the iron plant.
+     */
+    @Name("Plant: Gold")
+    @Comment("Settings for the Gold Plant.")
+    public static final PlantIron PLANT_GOLD = new PlantIron();
+
+    /**
+     * Settings for the iron plant.
+     */
+    public static class PlantGold{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Flowering Period")
+        @Comment("How long it takes this species of plant to grow. " +
+                "The higher the number, the longer the plant takes to grow. " +
+                "Each increment doubles the time the plant takes to grow. " +
+                "E.g. two is twice as long as one.")
+        @RangeInt(min = 1, max = 100_000)
+        public int floweringPeriod = 15;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant.")
+        public boolean canBonemeal = true;
+
+        /**
+         * Does the minecraft ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, gold ore will occasionally drop gold seeds when blown up.")
+        public boolean oreDropSeeds = true;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Organic Ore Drop Seeds")
+        @Comment("If set to true, organic gold ore will occasionally drop gold seeds when blown up.")
+        public boolean organicOreDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from gold ore.
+         */
+        @Name("Ore Seed Drop Chance")
+        @Comment("The chance gold ore will drop gold seeds. The chance of dropping a seed " +
+                "is one in Ore Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int oreSeedDropChance = 13;
+
+        /**
+         * The chance of seeds dropping from
+         * organic gold ore.
+         */
+        @Name("Organic Ore Seed Drop Chance")
+        @Comment("The chance organic gold ore will drop gold seeds. The chance of dropping a seed " +
+                "is one in Organic Ore Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int organicOreSeedDropChance = 26;
+
+        /**
+         * The number of ingots the plants ore
+         * block gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of gold ingots an Organic Gold Ore block will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
     /**
      * Handles the syncing of config values
      * when they change.

@@ -14,5 +14,10 @@ tile.resynth.blockMineralOre.name=Mineral Infused Stone
 tile.resynth.blockMineralSoil.name=Mineral Enriched Soil
 
 item.resynth.seedIron.name=Iron Seeds
+item.resynth.seedGold.name=Gold Seeds
 
 tile.resynth.oreIron.name=Organic Iron Ore
+tile.resynth.oreGold.name=Organic Gold Ore
+
+tile.resynth.plantIron.name=Iron Plant
+tile.resynth.plantGold.name=Gold Plant
