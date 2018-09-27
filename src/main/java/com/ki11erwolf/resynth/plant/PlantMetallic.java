@@ -122,53 +122,6 @@ public abstract class PlantMetallic {
         return this.plant;
     }
 
-    //Old idea for dropping seeds.
-    //Abandoned because it's easy
-    //to abuse.
-
-    //Kept for use in other plant types
-    //with different ore.
-
-//    @SubscribeEvent
-//    public static void onBlockBroken(BlockEvent.BreakEvent event){
-//        if(!ResynthConfig.PLANTS_GENERAL.oreDropSeeds)
-//            return;
-//
-//        if(event.getPlayer() == null)
-//            return;
-//
-//        if(! (event.getPlayer().getHeldItemMainhand().getItem() instanceof ItemPickaxe))
-//            return;
-//
-//        if(event.getPlayer().isCreative())
-//            return;
-//
-//        //If has fortune enchantment.
-//        for(NBTBase tag : event.getPlayer().getHeldItemMainhand().getEnchantmentTagList()){
-//            if(((NBTTagCompound)tag).getShort("id") == 33)
-//                return;
-//        }
-//
-//        Block block = event.getWorld().getBlockState(event.getPos()).getBlock();
-//        World world = event.getWorld();
-//        double x = event.getPos().getX(), y = event.getPos().getY(), z = event.getPos().getZ();
-//
-//        for(PlantMetallic plant : ResynthPlantRegistry.getMetallicPlants()){
-//            if(!plant.doesOreDropSeeds())
-//                return;
-//
-//            if(block == plant.seedOre){
-//                int random = MathUtil.getRandomIntegerInRange(0, plant.getOreSeedDropChance());
-//
-//                if(random == 1){
-//                    world.spawnEntity(new EntityItem(world, x, y, z, new ItemStack(plant.seeds, 1)));
-//                    event.setCanceled(true);
-//                    world.setBlockToAir(event.getPos());
-//                }
-//            }
-//        }
-//    }
-
     /**
      * Called when an explosion occurs in the world.
      * <p>

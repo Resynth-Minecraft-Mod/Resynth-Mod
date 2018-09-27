@@ -44,6 +44,6 @@ public final class ResynthTabSeeds extends CreativeTabs {
      */
     @Override
     public ItemStack getTabIconItem() {
-        return new ItemStack(ResynthPlants.PLANT_IRON.getSeeds());
+        return new ItemStack(ResynthPlants.PLANT_DIAMOND.getSeeds());
     }
 }

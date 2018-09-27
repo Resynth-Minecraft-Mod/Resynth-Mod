@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth.plant;
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
 import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
+import com.ki11erwolf.resynth.plant.item.ItemPlantOreProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -29,7 +30,7 @@ import net.minecraft.item.ItemStack;
 public final class ResynthPlants {
 
     /**
-     * The iron plant type.
+     * The iron plant instance.
      */
     public static final PlantMetallic PLANT_IRON = new PlantMetallic("iron", Blocks.IRON_ORE){
         @Override
@@ -54,6 +55,9 @@ public final class ResynthPlants {
         public ItemStack getResult() {return new ItemStack(Items.IRON_INGOT, ResynthConfig.PLANT_IRON.yield);}
     };
 
+    /**
+     * The gold plant instance.
+     */
     public static final PlantMetallic PLANT_GOLD = new PlantMetallic("gold", Blocks.GOLD_ORE) {
         @Override
         protected int getFloweringPeriod() {return ResynthConfig.PLANT_GOLD.floweringPeriod;}
@@ -75,6 +79,34 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() {return new ItemStack(Items.GOLD_INGOT, ResynthConfig.PLANT_GOLD.yield);}
+    };
+
+    /**
+     * The diamond plant instance.
+     */
+    public static final PlantCrystalline PLANT_DIAMOND = new PlantCrystalline("diamond", Blocks.DIAMOND_ORE) {
+        private final ResynthConfig.PlantDiamond cfg = ResynthConfig.PLANT_DIAMOND;
+
+        @Override
+        protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
+
+        @Override
+        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+
+        @Override
+        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+
+        @Override
+        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+
+        @Override
+        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+
+        @Override
+        protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
+
+        @Override
+        public ItemStack getResult() { return new ItemStack(Items.DIAMOND, cfg.yield); }
     };
 
     //Static class.
@@ -108,4 +140,17 @@ public final class ResynthPlants {
         return ResynthPlantRegistry.getOreBlocks();
     }
 
+    /**
+     * @return an array of the plant produce items to register.
+     */
+    public static ItemPlantOreProduce[] getProduceItems(){
+        return ResynthPlantRegistry.getProduce();
+    }
+
+    /**
+     * @return an array of the crystalline plants to register.
+     */
+    public static PlantCrystalline[] getCrystallinePlants(){
+        return ResynthPlantRegistry.getCrystallinePlants();
+    }
 }

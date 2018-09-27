@@ -1,23 +1,39 @@
+#Examples
 item.noname.noitem.name=Example Item
 tile.noname.noblock.name=Example Block
 
+#Tabs
 itemGroup.resynth.tabResynth=Resynth
 itemGroup.resynth.tabResynthSeeds=Resynth Seeds
 
+#Blocks
+tile.resynth.blockTest.name=Test Block
+tile.resynth.blockMineralOre.name=Mineral Infused Stone
+tile.resynth.blockMineralSoil.name=Mineral Enriched Soil
+
+#Items
 item.resynth.itemTest.name=Test Item
 item.resynth.itemMineralRock.name=Mineral Rocks
 item.resynth.itemDenseMineralRock.name=Dense Mineral Rock
 item.resynth.itemMineralCrystal.name=Mineral Crystal
 
-tile.resynth.blockTest.name=Test Block
-tile.resynth.blockMineralOre.name=Mineral Infused Stone
-tile.resynth.blockMineralSoil.name=Mineral Enriched Soil
+############
+#  PLANTS  #
+############
 
+#Seeds
 item.resynth.seedIron.name=Iron Seeds
 item.resynth.seedGold.name=Gold Seeds
+item.resynth.seedDiamond.name=Diamond Seeds
 
+#Plants
+tile.resynth.plantIron.name=Iron Plant
+tile.resynth.plantGold.name=Gold Plant
+tile.resynth.plantDiamond.name=Diamond Straw Patch
+
+#Plant Ores
 tile.resynth.oreIron.name=Organic Iron Ore
 tile.resynth.oreGold.name=Organic Gold Ore
 
-tile.resynth.plantIron.name=Iron Plant
-tile.resynth.plantGold.name=Gold Plant
+#Produce
+item.resynth.produceDiamond.name=Diamond Straw

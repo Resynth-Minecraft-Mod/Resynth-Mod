@@ -270,7 +270,7 @@ public class ResynthConfig {
         @Comment("The chance iron ore will drop iron seeds. The chance of dropping a seed " +
                 "is one in Ore Seed Drop Chance + 1.")
         @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 26;
+        public int oreSeedDropChance = 32;
 
         /**
          * The chance of seeds dropping from
@@ -280,7 +280,7 @@ public class ResynthConfig {
         @Comment("The chance organic iron ore will drop iron seeds. The chance of dropping a seed " +
                 "is one in Organic Ore Seed Drop Chance + 1.")
         @RangeInt(min = 1, max = 100_000)
-        public int organicOreSeedDropChance = 48;
+        public int organicOreSeedDropChance = 64;
 
         /**
          * The number of ingots the plants ore
@@ -294,14 +294,14 @@ public class ResynthConfig {
     }
 
     /**
-     * Settings for the iron plant.
+     * Settings for the gold plant.
      */
     @Name("Plant: Gold")
     @Comment("Settings for the Gold Plant.")
-    public static final PlantIron PLANT_GOLD = new PlantIron();
+    public static final PlantGold PLANT_GOLD = new PlantGold();
 
     /**
-     * Settings for the iron plant.
+     * Settings for the gold plant.
      */
     public static class PlantGold{
 
@@ -315,7 +315,7 @@ public class ResynthConfig {
                 "Each increment doubles the time the plant takes to grow. " +
                 "E.g. two is twice as long as one.")
         @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 15;
+        public int floweringPeriod = 45;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -348,7 +348,7 @@ public class ResynthConfig {
         @Comment("The chance gold ore will drop gold seeds. The chance of dropping a seed " +
                 "is one in Ore Seed Drop Chance + 1.")
         @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 13;
+        public int oreSeedDropChance = 64;
 
         /**
          * The chance of seeds dropping from
@@ -358,7 +358,7 @@ public class ResynthConfig {
         @Comment("The chance organic gold ore will drop gold seeds. The chance of dropping a seed " +
                 "is one in Organic Ore Seed Drop Chance + 1.")
         @RangeInt(min = 1, max = 100_000)
-        public int organicOreSeedDropChance = 26;
+        public int organicOreSeedDropChance = 96;
 
         /**
          * The number of ingots the plants ore
@@ -370,6 +370,87 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
     }
+
+    /**
+     * Settings for the diamond plant.
+     */
+    @Name("Plant: Diamond")
+    @Comment("Settings for the Diamond Plant.")
+    public static final PlantDiamond PLANT_DIAMOND = new PlantDiamond();
+
+    /**
+     * Settings for the diamond plant.
+     */
+    public static class PlantDiamond{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Flowering Period")
+        @Comment("How long it takes this species of plant to grow. " +
+                "The higher the number, the longer the plant takes to grow. " +
+                "Each increment doubles the time the plant takes to grow. " +
+                "E.g. two is twice as long as one.")
+        @RangeInt(min = 1, max = 100_000)
+        public int floweringPeriod = 45;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, diamond ore will occasionally drop diamond seeds when mined.")
+        public boolean oreDropSeeds = true;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, diamond straw will occasionally turn into diamond seeds when left in water.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from diamond ore.
+         */
+        @Name("Ore Seed Drop Chance")
+        @Comment("The chance diamond ore will drop diamond seeds. The chance of dropping a seed " +
+                "is one in Ore Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int oreSeedDropChance = 64;
+
+        /**
+         * The chance of seeds dropping from
+         * diamond straw.
+         */
+        @Name("Produce Seed Drop Chance")
+        @Comment("The chance diamond straw will turn into diamond seeds when left in water. " +
+                "The chance of dropping a seed " +
+                "is one in Produce Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int produceSeedDropChance = 96;
+
+        /**
+         * The number of diamonds the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of diamonds diamond straw will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
     /**
      * Handles the syncing of config values
      * when they change.

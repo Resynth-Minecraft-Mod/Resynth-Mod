@@ -17,6 +17,7 @@ package com.ki11erwolf.resynth.plant;
 
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
 import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
+import com.ki11erwolf.resynth.plant.item.ItemPlantOreProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
 
 import java.util.ArrayList;
@@ -36,6 +37,11 @@ final class ResynthPlantRegistry {
     private static final ArrayList<PlantMetallic> PLANTS_METALLIC = new ArrayList<>();
 
     /**
+     * List of all crystalline plants to register to the game.
+     */
+    private static final ArrayList<PlantCrystalline> PLANTS_CRYSTALLINE = new ArrayList<>();
+
+    /**
      * List of plant blocks to register to the game.
      */
     private static final ArrayList<BlockPlantBase> PLANT_BLOCKS = new ArrayList<>();
@@ -51,12 +57,26 @@ final class ResynthPlantRegistry {
     private static final ArrayList<BlockPlantOre> PLANT_ORE_BLOCKS = new ArrayList<>();
 
     /**
+     * List of all plant produce items to register to the game.
+     */
+    private static final ArrayList<ItemPlantOreProduce> PLANT_PRODUCE_ITEMS = new ArrayList<>();
+
+    /**
      * Adds a metallic plant instance to the list.
      *
      * @param plantMetallic the metallic plant instance.
      */
     protected static void addPlant(PlantMetallic plantMetallic){
         PLANTS_METALLIC.add(plantMetallic);
+    }
+
+    /**
+     * Adds a crystalline plant instance to the list.
+     *
+     * @param plantCrystalline the crystalline plant instance.
+     */
+    protected static void addPlant(PlantCrystalline plantCrystalline){
+        PLANTS_CRYSTALLINE.add(plantCrystalline);
     }
 
     /**
@@ -87,6 +107,15 @@ final class ResynthPlantRegistry {
     }
 
     /**
+     * Adds a plants produce item to the list.
+     *
+     * @param produce the produce item.
+     */
+    protected static void addProduce(ItemPlantOreProduce produce){
+        PLANT_PRODUCE_ITEMS.add(produce);
+    }
+
+    /**
      * @return an array of the plant blocks to register.
      */
     protected static BlockPlantBase[] getPlantBlocks(){
@@ -112,5 +141,19 @@ final class ResynthPlantRegistry {
      */
     protected static PlantMetallic[] getMetallicPlants(){
         return PLANTS_METALLIC.toArray(new PlantMetallic[0]);
+    }
+
+    /**
+     * @return an array of all crystalline plants to register.
+     */
+    protected static PlantCrystalline[] getCrystallinePlants(){
+        return PLANTS_CRYSTALLINE.toArray(new PlantCrystalline[0]);
+    }
+
+    /**
+     * @return an array of all plant produce items to register.
+     */
+    protected static ItemPlantOreProduce[] getProduce(){
+        return PLANT_PRODUCE_ITEMS.toArray(new ItemPlantOreProduce[0]);
     }
 }
