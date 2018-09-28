@@ -29,6 +29,7 @@ item.resynth.seedRedstone.name=Redstone Seeds
 item.resynth.seedLapis.name=Lapis Lazuli Seeds
 item.resynth.seedCoal.name=Coal Seeds
 item.resynth.seedEmerald.name=Emerald Seeds
+item.resynth.seedQuartz.name=Quartz Seeds
 
 #Plants
 tile.resynth.plantIron.name=Iron Plant
@@ -38,6 +39,7 @@ tile.resynth.plantRedstone.name=Redstone Straw Patch
 tile.resynth.plantLapis.name=Lapis Lazuli Straw Patch
 tile.resynth.plantCoal.name=Coal Straw Patch
 tile.resynth.plantEmerald.name=Emerald Straw Patch
+tile.resynth.plantQuartz.name=Quartz Straw Patch
 
 #Plant Ores
 tile.resynth.oreIron.name=Organic Iron Ore
@@ -49,3 +51,4 @@ item.resynth.produceRedstone.name=Redstone Straw
 item.resynth.produceLapis.name=Lapis Lazuli Straw
 item.resynth.produceCoal.name=Coal Straw
 item.resynth.produceEmerald.name=Emerald Straw
+item.resynth.produceQuartz.name=Quartz Straw

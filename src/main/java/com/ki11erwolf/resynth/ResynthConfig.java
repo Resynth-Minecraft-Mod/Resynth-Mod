@@ -786,6 +786,86 @@ public class ResynthConfig {
     }
 
     /**
+     * Settings for the quartz plant.
+     */
+    @Name("Plant: Quartz")
+    @Comment("Settings for the quartz plant.")
+    public static final PlantQuartz PLANT_QUARTZ = new PlantQuartz();
+
+    /**
+     * Settings for the quartz plant.
+     */
+    public static class PlantQuartz{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Flowering Period")
+        @Comment("How long it takes this species of plant to grow. " +
+                "The higher the number, the longer the plant takes to grow. " +
+                "Each increment doubles the time the plant takes to grow. " +
+                "E.g. two is twice as long as one.")
+        @RangeInt(min = 1, max = 100_000)
+        public int floweringPeriod = 35;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, quartz ore will occasionally drop quartz seeds when mined.")
+        public boolean oreDropSeeds = true;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, quartz straw will occasionally turn into quartz seeds when left in water.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from quartz ore.
+         */
+        @Name("Ore Seed Drop Chance")
+        @Comment("The chance quartz ore will drop quartz seeds. The chance of dropping a seed " +
+                "is one in Ore Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int oreSeedDropChance = 64+32;
+
+        /**
+         * The chance of seeds dropping from
+         * quartz straw.
+         */
+        @Name("Produce Seed Drop Chance")
+        @Comment("The chance quartz straw will turn into quartz seeds when left in water. " +
+                "The chance of dropping a seed " +
+                "is one in Produce Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int produceSeedDropChance = 64;
+
+        /**
+         * The number of quartz items the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of quartz quartz straw will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
+    /**
      * Handles the syncing of config values
      * when they change.
      */

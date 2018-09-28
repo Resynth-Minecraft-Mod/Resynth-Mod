@@ -225,6 +225,35 @@ public final class ResynthPlants {
         public ItemStack getResult() { return new ItemStack(Items.EMERALD, cfg.yield); }
     };
 
+    /**
+     * The quartz plant instance.
+     */
+    public static final PlantCrystalline PLANT_QUARTZ
+            = new PlantCrystalline("quartz", Blocks.QUARTZ_ORE) {
+        private final ResynthConfig.PlantQuartz cfg = ResynthConfig.PLANT_QUARTZ;
+
+        @Override
+        protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
+
+        @Override
+        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+
+        @Override
+        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+
+        @Override
+        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+
+        @Override
+        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+
+        @Override
+        protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
+
+        @Override
+        public ItemStack getResult() { return new ItemStack(Items.QUARTZ, cfg.yield); }
+    };
+
     //Static class.
     private ResynthPlants(){}
 
