@@ -15,7 +15,6 @@
  */
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.plant.ResynthPlants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;

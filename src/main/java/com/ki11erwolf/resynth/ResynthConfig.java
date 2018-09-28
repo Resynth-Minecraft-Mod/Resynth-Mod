@@ -233,7 +233,7 @@ public class ResynthConfig {
      * Settings for the iron plant.
      */
     @Name("Plant: Iron")
-    @Comment("Settings for the Iron Plant.")
+    @Comment("Settings for the iron plant.")
     public static final PlantIron PLANT_IRON = new PlantIron();
 
     /**
@@ -311,7 +311,7 @@ public class ResynthConfig {
      * Settings for the gold plant.
      */
     @Name("Plant: Gold")
-    @Comment("Settings for the Gold Plant.")
+    @Comment("Settings for the gold plant.")
     public static final PlantGold PLANT_GOLD = new PlantGold();
 
     /**
@@ -389,7 +389,7 @@ public class ResynthConfig {
      * Settings for the diamond plant.
      */
     @Name("Plant: Diamond")
-    @Comment("Settings for the Diamond Plant.")
+    @Comment("Settings for the diamond plant.")
     public static final PlantDiamond PLANT_DIAMOND = new PlantDiamond();
 
     /**
@@ -469,7 +469,7 @@ public class ResynthConfig {
      * Settings for the diamond plant.
      */
     @Name("Plant: Redstone")
-    @Comment("Settings for the Redstone Plant.")
+    @Comment("Settings for the redstone plant.")
     public static final PlantRedstone PLANT_REDSTONE = new PlantRedstone();
 
     /**

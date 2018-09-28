@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth.plant.item;
 import com.ki11erwolf.resynth.ResynthTabSeeds;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItem;
-import com.ki11erwolf.resynth.plant.PlantCrystalline;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
 import com.ki11erwolf.resynth.plant.block.BlockPlantCrystalline;
 import com.ki11erwolf.resynth.plant.block.BlockPlantMetallic;
