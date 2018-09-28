@@ -327,7 +327,8 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
 
         boolean grow = this.shouldGrow(worldIn, pos);
         if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, grow)) {
-            onGrowApproved(worldIn, pos, state, rand);
+            if(ResynthConfig.PLANTS_GENERAL.enableGrowth)
+                onGrowApproved(worldIn, pos, state, rand);
         }
     }
 

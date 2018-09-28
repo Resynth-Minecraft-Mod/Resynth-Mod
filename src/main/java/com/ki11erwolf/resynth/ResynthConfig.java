@@ -213,6 +213,20 @@ public class ResynthConfig {
         @Name("Enable Seed Drops From Organic Ore")
         @Comment("Set to false to disable organic ores dropping seeds when blown up.")
         public boolean organicOreDropSeeds = true;
+
+        /**
+         * Can plant produce turn into seeds.
+         */
+        @Name("Enable Seed Drops From Produce (straw)")
+        @Comment("Set to false to disable plant produce (straw) turning into seeds when left in water")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * Should plants grow.
+         */
+        @Name("Enable Growth")
+        @Comment("Set to false to disable growth of all plants. This effectively disables the mod")
+        public boolean enableGrowth = true;
     }
 
     /**

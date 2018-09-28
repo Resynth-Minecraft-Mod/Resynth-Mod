@@ -222,7 +222,7 @@ public abstract class PlantCrystalline {
                 return;
             }
 
-            if(!p.doesProduceDropSeeds())
+            if(!p.doesProduceDropSeeds() || !ResynthConfig.PLANTS_GENERAL.produceDropSeeds)
                 continue;
 
             if(i == p.getProduce() && b == Blocks.WATER){
