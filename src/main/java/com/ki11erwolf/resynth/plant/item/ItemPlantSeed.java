@@ -18,10 +18,14 @@ package com.ki11erwolf.resynth.plant.item;
 import com.ki11erwolf.resynth.ResynthTabSeeds;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItem;
+import com.ki11erwolf.resynth.plant.PlantCrystalline;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
+import com.ki11erwolf.resynth.plant.block.BlockPlantCrystalline;
+import com.ki11erwolf.resynth.plant.block.BlockPlantMetallic;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -33,6 +37,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * The base class for all items used to place
@@ -50,6 +57,8 @@ public class ItemPlantSeed extends ResynthItem implements IPlantable {
      */
     private final Block plant;
 
+    private final String obtain;
+
     /**
      * Sets the creative tab, unlocalized name prefix
      * and registry name.
@@ -57,8 +66,9 @@ public class ItemPlantSeed extends ResynthItem implements IPlantable {
      * @param plant the plant block to place.
      * @param name the general name of the item (e.g. redstoneDust)
      */
-    public ItemPlantSeed(BlockPlantBase plant, String name) {
+    public ItemPlantSeed(BlockPlantBase plant, String name, String obtain) {
         super(name, SEED_PREFIX);
+        this.obtain = obtain;
         this.plant = plant;
         this.setCreativeTab(ResynthTabSeeds.RESYNTH_TAB_SEEDS);
     }
@@ -124,5 +134,27 @@ public class ItemPlantSeed extends ResynthItem implements IPlantable {
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
         return this.plant.getDefaultState();
+    }
+
+    /**
+     * {@inheritDoc}
+     * Adds a tooltip on how to obtain the item.
+     *
+     * @param stack
+     * @param worldIn
+     * @param tooltip
+     * @param flagIn
+     */
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+                               ITooltipFlag flagIn){
+        tooltip.add("Place on Mineral Soil.");
+        BlockPlantBase base = (BlockPlantBase) plant;
+
+        if(base instanceof BlockPlantCrystalline)
+            tooltip.add("Obtained by mining " + obtain + " ore");
+        else if (base instanceof BlockPlantMetallic)
+            tooltip.add("Obtained by blowing up " + obtain + " ore");
+
     }
 }

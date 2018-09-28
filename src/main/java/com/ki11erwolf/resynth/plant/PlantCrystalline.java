@@ -86,7 +86,7 @@ public abstract class PlantCrystalline {
         };
 
         this.produce = new ItemPlantOreProduce(name);
-        this.seeds = new ItemPlantSeed(plant, name);
+        this.seeds = new ItemPlantSeed(plant, name, name);
 
         this.register();
     }

@@ -28,6 +28,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -43,6 +44,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -317,6 +320,22 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
     @Override
     public TileEntityMineralSoil createTileEntity(World world, IBlockState state) {
         return new TileEntityMineralSoil();
+    }
+
+    /**
+     * {@inheritDoc}
+     * Adds a tooltip on how to use the block.
+     *
+     * @param stack
+     * @param worldIn
+     * @param tooltip
+     * @param flagIn
+     */
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+                               ITooltipFlag flagIn){
+        tooltip.add("Right click with mineral rocks or dense mineral rock to" +
+                " increase plant growth.");
     }
 
     /**

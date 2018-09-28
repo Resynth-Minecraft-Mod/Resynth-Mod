@@ -19,6 +19,12 @@ import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.util.BlockUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * The base class for all blocks produced
@@ -40,5 +46,21 @@ public class BlockPlantOre extends ResynthBlock {
         super(Material.ROCK, SoundType.PLANT, name, ORE_PREFIX);
         this.setHardness(2.0F);
         BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.AXE, 2);
+    }
+
+    /**
+     * {@inheritDoc}
+     * Adds a tooltip on how to use the block.
+     *
+     * @param stack
+     * @param worldIn
+     * @param tooltip
+     * @param flagIn
+     */
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+                               ITooltipFlag flagIn){
+        tooltip.add("Can be blown up to obtain more seeds.");
+        tooltip.add("Can be smelted to obtain the resource.");
     }
 }

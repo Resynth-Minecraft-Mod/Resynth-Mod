@@ -15,6 +15,13 @@
  */
 package com.ki11erwolf.resynth.item;
 
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
+
 /**
  * Mineral Rock.
  *
@@ -28,5 +35,21 @@ public class ItemMineralRock extends ResynthItem {
      */
     public ItemMineralRock() {
         super("mineralRock");
+    }
+
+    /**
+     * {@inheritDoc}
+     * Adds a tooltip on how to use the item.
+     *
+     * @param stack
+     * @param worldIn
+     * @param tooltip
+     * @param flagIn
+     */
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+                               ITooltipFlag flagIn){
+        tooltip.add("Right click on Mineral Soil");
+        tooltip.add("or turn into Mineral Soil blocks.");
     }
 }

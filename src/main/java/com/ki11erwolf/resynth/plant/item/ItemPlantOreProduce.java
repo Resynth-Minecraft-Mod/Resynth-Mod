@@ -16,6 +16,12 @@
 package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.item.ResynthItem;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * The item crystalline plants grow.
@@ -34,5 +40,21 @@ public class ItemPlantOreProduce extends ResynthItem {
      */
     public ItemPlantOreProduce(String name) {
         super(name, PREFIX);
+    }
+
+    /**
+     * {@inheritDoc}
+     * Adds a tooltip on how to use the item.
+     *
+     * @param stack
+     * @param worldIn
+     * @param tooltip
+     * @param flagIn
+     */
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+                               ITooltipFlag flagIn){
+        tooltip.add("Can be left in water to obtain more seeds.");
+        tooltip.add("Can be smelted to obtain the resource.");
     }
 }

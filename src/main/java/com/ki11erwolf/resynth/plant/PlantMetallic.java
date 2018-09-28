@@ -84,7 +84,7 @@ public abstract class PlantMetallic {
                 return canBoneMeal();
             }
         };
-        this.seeds = new ItemPlantSeed(plant, name);
+        this.seeds = new ItemPlantSeed(plant, name, name);
         register();
     }
 
