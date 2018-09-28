@@ -17,7 +17,6 @@ package com.ki11erwolf.resynth.item;
 
 import com.ki11erwolf.resynth.ResynthMod;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemSword;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**

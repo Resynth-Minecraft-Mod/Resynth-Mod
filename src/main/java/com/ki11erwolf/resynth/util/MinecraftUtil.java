@@ -15,7 +15,6 @@
  */
 package com.ki11erwolf.resynth.util;
 
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /**

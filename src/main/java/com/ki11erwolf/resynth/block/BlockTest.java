@@ -15,7 +15,6 @@
  */
 package com.ki11erwolf.resynth.block;
 
-import net.minecraft.block.BlockCrops;
 import net.minecraft.block.material.Material;
 
 /**
