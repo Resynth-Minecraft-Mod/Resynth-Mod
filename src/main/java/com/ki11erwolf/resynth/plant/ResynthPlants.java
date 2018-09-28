@@ -114,7 +114,7 @@ public final class ResynthPlants {
      */
     public static final PlantCrystalline PLANT_REDSTONE
             = new PlantCrystalline("redstone", Blocks.REDSTONE_ORE) {
-        private final ResynthConfig.PlantDiamond cfg = ResynthConfig.PLANT_DIAMOND;
+        private final ResynthConfig.PlantRedstone cfg = ResynthConfig.PLANT_REDSTONE;
 
         @Override
         protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
@@ -165,6 +165,35 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() { return new ItemStack(Items.DYE, cfg.yield, 4); }
+    };
+
+    /**
+     * The lapis plant instance.
+     */
+    public static final PlantCrystalline PLANT_COAL
+            = new PlantCrystalline("coal", Blocks.COAL_ORE) {
+        private final ResynthConfig.PlantCoal cfg = ResynthConfig.PLANT_COAL;
+
+        @Override
+        protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
+
+        @Override
+        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+
+        @Override
+        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+
+        @Override
+        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+
+        @Override
+        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+
+        @Override
+        protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
+
+        @Override
+        public ItemStack getResult() { return new ItemStack(Items.COAL, cfg.yield); }
     };
 
     //Static class.

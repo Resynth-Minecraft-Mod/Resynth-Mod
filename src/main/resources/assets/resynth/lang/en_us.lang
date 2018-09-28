@@ -27,6 +27,7 @@ item.resynth.seedGold.name=Gold Seeds
 item.resynth.seedDiamond.name=Diamond Seeds
 item.resynth.seedRedstone.name=Redstone Seeds
 item.resynth.seedLapis.name=Lapis Lazuli Seeds
+item.resynth.seedCoal.name=Coal Seeds
 
 #Plants
 tile.resynth.plantIron.name=Iron Plant
@@ -34,6 +35,7 @@ tile.resynth.plantGold.name=Gold Plant
 tile.resynth.plantDiamond.name=Diamond Straw Patch
 tile.resynth.plantRedstone.name=Redstone Straw Patch
 tile.resynth.plantLapis.name=Lapis Lazuli Straw Patch
+tile.resynth.plantCoal.name=Coal Straw Patch
 
 #Plant Ores
 tile.resynth.oreIron.name=Organic Iron Ore
@@ -43,3 +45,4 @@ tile.resynth.oreGold.name=Organic Gold Ore
 item.resynth.produceDiamond.name=Diamond Straw
 item.resynth.produceRedstone.name=Redstone Straw
 item.resynth.produceLapis.name=Lapis Lazuli Straw
+item.resynth.produceCoal.name=Coal Straw
