@@ -109,6 +109,35 @@ public final class ResynthPlants {
         public ItemStack getResult() { return new ItemStack(Items.DIAMOND, cfg.yield); }
     };
 
+    /**
+     * The redstone plant instance.
+     */
+    public static final PlantCrystalline PLANT_REDSTONE
+            = new PlantCrystalline("redstone", Blocks.REDSTONE_ORE) {
+        private final ResynthConfig.PlantDiamond cfg = ResynthConfig.PLANT_DIAMOND;
+
+        @Override
+        protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
+
+        @Override
+        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+
+        @Override
+        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+
+        @Override
+        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+
+        @Override
+        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+
+        @Override
+        protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
+
+        @Override
+        public ItemStack getResult() { return new ItemStack(Items.REDSTONE, cfg.yield); }
+    };
+
     //Static class.
     private ResynthPlants(){}
 
