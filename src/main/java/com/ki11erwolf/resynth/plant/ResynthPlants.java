@@ -168,11 +168,40 @@ public final class ResynthPlants {
     };
 
     /**
-     * The lapis plant instance.
+     * The coal plant instance.
      */
     public static final PlantCrystalline PLANT_COAL
             = new PlantCrystalline("coal", Blocks.COAL_ORE) {
-        private final ResynthConfig.PlantCoal cfg = ResynthConfig.PLANT_COAL;
+                private final ResynthConfig.PlantCoal cfg = ResynthConfig.PLANT_COAL;
+
+                @Override
+                protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
+
+                @Override
+                protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+
+                @Override
+                protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+
+                @Override
+                protected boolean canBoneMeal() { return cfg.canBonemeal; }
+
+                @Override
+                protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+
+                @Override
+                protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
+
+                @Override
+                public ItemStack getResult() { return new ItemStack(Items.COAL, cfg.yield); }
+    };
+
+    /**
+     * The emerald plant instance.
+     */
+    public static final PlantCrystalline PLANT_EMERALD
+            = new PlantCrystalline("emerald", Blocks.EMERALD_ORE) {
+        private final ResynthConfig.PlantEmerald cfg = ResynthConfig.PLANT_EMERALD;
 
         @Override
         protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
@@ -193,7 +222,7 @@ public final class ResynthPlants {
         protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
 
         @Override
-        public ItemStack getResult() { return new ItemStack(Items.COAL, cfg.yield); }
+        public ItemStack getResult() { return new ItemStack(Items.EMERALD, cfg.yield); }
     };
 
     //Static class.

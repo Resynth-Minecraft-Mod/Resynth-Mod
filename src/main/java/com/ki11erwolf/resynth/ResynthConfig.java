@@ -549,7 +549,7 @@ public class ResynthConfig {
      * Settings for the lapis plant.
      */
     @Name("Plant: Lapis")
-    @Comment("Settings for the Lapis Plant.")
+    @Comment("Settings for the lapis plant.")
     public static final PlantLapis PLANT_LAPIS = new PlantLapis();
 
     /**
@@ -628,8 +628,8 @@ public class ResynthConfig {
     /**
      * Settings for the coal plant.
      */
-    @Name("Plant: coal")
-    @Comment("Settings for the coal Plant.")
+    @Name("Plant: Coal")
+    @Comment("Settings for the coal plant.")
     public static final PlantCoal PLANT_COAL = new PlantCoal();
 
     /**
@@ -699,7 +699,87 @@ public class ResynthConfig {
          * item gives.
          */
         @Name("Yield")
-        @Comment("The amount of coal lazuli coal straw will give when smelted.")
+        @Comment("The amount of coal coal straw will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
+    /**
+     * Settings for the emerald plant.
+     */
+    @Name("Plant: Emerald")
+    @Comment("Settings for the emerald plant.")
+    public static final PlantEmerald PLANT_EMERALD = new PlantEmerald();
+
+    /**
+     * Settings for the emerald plant.
+     */
+    public static class PlantEmerald{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Flowering Period")
+        @Comment("How long it takes this species of plant to grow. " +
+                "The higher the number, the longer the plant takes to grow. " +
+                "Each increment doubles the time the plant takes to grow. " +
+                "E.g. two is twice as long as one.")
+        @RangeInt(min = 1, max = 100_000)
+        public int floweringPeriod = 55;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, emerald ore will occasionally drop emerald seeds when mined.")
+        public boolean oreDropSeeds = true;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, emerald straw will occasionally turn into emerald seeds when left in water.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from emerald ore.
+         */
+        @Name("Ore Seed Drop Chance")
+        @Comment("The chance emerald ore will drop emerald seeds. The chance of dropping a seed " +
+                "is one in Ore Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int oreSeedDropChance = 32;
+
+        /**
+         * The chance of seeds dropping from
+         * emerald straw.
+         */
+        @Name("Produce Seed Drop Chance")
+        @Comment("The chance emerald straw will turn into emerald seeds when left in water. " +
+                "The chance of dropping a seed " +
+                "is one in Produce Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int produceSeedDropChance = 64;
+
+        /**
+         * The number of emerald items the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of emeralds emerald straw will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
