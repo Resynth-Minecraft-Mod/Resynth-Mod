@@ -254,6 +254,35 @@ public final class ResynthPlants {
         public ItemStack getResult() { return new ItemStack(Items.QUARTZ, cfg.yield); }
     };
 
+    /**
+     * The glowstone plant instance.
+     */
+    public static final PlantCrystalline PLANT_GLOWSTONE
+            = new PlantCrystalline("glowstone", Blocks.GLOWSTONE) {
+        private final ResynthConfig.PlantGlowstone cfg = ResynthConfig.PLANT_GLOWSTONE;
+
+        @Override
+        protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
+
+        @Override
+        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+
+        @Override
+        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+
+        @Override
+        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+
+        @Override
+        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+
+        @Override
+        protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
+
+        @Override
+        public ItemStack getResult() { return new ItemStack(Items.GLOWSTONE_DUST, cfg.yield); }
+    };
+
     //Static class.
     private ResynthPlants(){}
 

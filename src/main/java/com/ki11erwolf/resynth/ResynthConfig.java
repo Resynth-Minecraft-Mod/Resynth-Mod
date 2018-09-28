@@ -786,6 +786,86 @@ public class ResynthConfig {
     }
 
     /**
+     * Settings for the glowstone plant.
+     */
+    @Name("Plant: Glowstone")
+    @Comment("Settings for the glowstone plant.")
+    public static final PlantGlowstone PLANT_GLOWSTONE = new PlantGlowstone();
+
+    /**
+     * Settings for the glowstone plant.
+     */
+    public static class PlantGlowstone{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Flowering Period")
+        @Comment("How long it takes this species of plant to grow. " +
+                "The higher the number, the longer the plant takes to grow. " +
+                "Each increment doubles the time the plant takes to grow. " +
+                "E.g. two is twice as long as one.")
+        @RangeInt(min = 1, max = 100_000)
+        public int floweringPeriod = 25;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, glowstone will occasionally drop glowstone seeds when mined.")
+        public boolean oreDropSeeds = true;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, glowstone straw will occasionally turn into glowstone seeds when left in water.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from glowstone ore.
+         */
+        @Name("Ore Seed Drop Chance")
+        @Comment("The chance glowstone will drop glowstone seeds. The chance of dropping a seed " +
+                "is one in Ore Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int oreSeedDropChance = 64;
+
+        /**
+         * The chance of seeds dropping from
+         * glowstone straw.
+         */
+        @Name("Produce Seed Drop Chance")
+        @Comment("The chance glowstone straw will turn into glowstone seeds when left in water. " +
+                "The chance of dropping a seed " +
+                "is one in Produce Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int produceSeedDropChance = 64+32;
+
+        /**
+         * The number of glowstone items the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of glowstone glowstone straw will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
+    /**
      * Settings for the quartz plant.
      */
     @Name("Plant: Quartz")
