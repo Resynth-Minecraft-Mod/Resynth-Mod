@@ -138,6 +138,35 @@ public final class ResynthPlants {
         public ItemStack getResult() { return new ItemStack(Items.REDSTONE, cfg.yield); }
     };
 
+    /**
+     * The lapis plant instance.
+     */
+    public static final PlantCrystalline PLANT_LAPIS
+            = new PlantCrystalline("lapis", Blocks.LAPIS_ORE) {
+        private final ResynthConfig.PlantLapis cfg = ResynthConfig.PLANT_LAPIS;
+
+        @Override
+        protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
+
+        @Override
+        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+
+        @Override
+        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+
+        @Override
+        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+
+        @Override
+        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+
+        @Override
+        protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
+
+        @Override
+        public ItemStack getResult() { return new ItemStack(Items.DYE, cfg.yield, 4); }
+    };
+
     //Static class.
     private ResynthPlants(){}
 

@@ -468,8 +468,8 @@ public class ResynthConfig {
     /**
      * Settings for the diamond plant.
      */
-    @Name("Plant: Diamond")
-    @Comment("Settings for the Diamond Plant.")
+    @Name("Plant: Redstone")
+    @Comment("Settings for the Redstone Plant.")
     public static final PlantRedstone PLANT_REDSTONE = new PlantRedstone();
 
     /**
@@ -540,6 +540,86 @@ public class ResynthConfig {
          */
         @Name("Yield")
         @Comment("The amount of redstone dust redstone straw will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
+    /**
+     * Settings for the lapis plant.
+     */
+    @Name("Plant: Lapis")
+    @Comment("Settings for the Lapis Plant.")
+    public static final PlantLapis PLANT_LAPIS = new PlantLapis();
+
+    /**
+     * Settings for the lapis plant.
+     */
+    public static class PlantLapis{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Flowering Period")
+        @Comment("How long it takes this species of plant to grow. " +
+                "The higher the number, the longer the plant takes to grow. " +
+                "Each increment doubles the time the plant takes to grow. " +
+                "E.g. two is twice as long as one.")
+        @RangeInt(min = 1, max = 100_000)
+        public int floweringPeriod = 40;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, lapis ore will occasionally drop lapis seeds when mined.")
+        public boolean oreDropSeeds = true;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, lapis straw will occasionally turn into lapis seeds when left in water.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from lapis ore.
+         */
+        @Name("Ore Seed Drop Chance")
+        @Comment("The chance lapis ore will drop lapis seeds. The chance of dropping a seed " +
+                "is one in Ore Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int oreSeedDropChance = 48;
+
+        /**
+         * The chance of seeds dropping from
+         * lapis straw.
+         */
+        @Name("Produce Seed Drop Chance")
+        @Comment("The chance lapis straw will turn into lapis seeds when left in water. " +
+                "The chance of dropping a seed " +
+                "is one in Produce Seed Drop Chance + 1.")
+        @RangeInt(min = 1, max = 100_000)
+        public int produceSeedDropChance = 48*2;
+
+        /**
+         * The number of lapis items the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of lapis lazuli lapis straw will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
