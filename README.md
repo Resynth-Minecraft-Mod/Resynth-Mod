@@ -3,4 +3,7 @@ A mod for Minecraft that adds growable ores, mob drops (yet to be implemented) a
 
 ## Work In Progress
 This mod is still in its first stages of development, so some features are missing and
-most numbers still need to be balanced.
+most numbers still need to be balanced. A website is also in the works.
+
+## Curse Forge
+This mod has a page over [here] at Curse Forge(https://www.curseforge.com/minecraft/mc-mods/resynth).
