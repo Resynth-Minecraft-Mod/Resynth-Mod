@@ -9,3 +9,5 @@ most numbers still need to be balanced. A website is also in the works.
 This mod has a page over [here](https://www.curseforge.com/minecraft/mc-mods/resynth) at Curse Forge
 as well as over [here](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/2927861-resynth-growable-ores-mob-drops-and-resouces-fully) at the Minecraft Forums.
 
+## License
+Resynth and the Resynth website (https://resynth-minecraft-mod.github.io) are licensed the Apache License V2
