@@ -6,4 +6,4 @@ This mod is still in its first stages of development, so some features are missi
 most numbers still need to be balanced. A website is also in the works.
 
 ## Curse Forge
-This mod has a page over [here] at Curse Forge(https://www.curseforge.com/minecraft/mc-mods/resynth).
+This mod has a page over [here](https://www.curseforge.com/minecraft/mc-mods/resynth) at Curse Forge.
