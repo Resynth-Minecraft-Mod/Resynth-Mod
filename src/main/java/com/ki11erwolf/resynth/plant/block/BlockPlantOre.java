@@ -43,7 +43,7 @@ public class BlockPlantOre extends ResynthBlock {
      * @param name the name of the block.
      */
     public BlockPlantOre(String name) {
-        super(Material.ROCK, SoundType.PLANT, name, ORE_PREFIX);
+        super(Material.GOURD, SoundType.PLANT, name, ORE_PREFIX);
         this.setHardness(2.0F);
         BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.AXE, 2);
     }
