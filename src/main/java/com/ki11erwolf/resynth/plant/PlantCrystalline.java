@@ -16,6 +16,7 @@
 package com.ki11erwolf.resynth.plant;
 
 import com.ki11erwolf.resynth.ResynthConfig;
+import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.plant.block.BlockPlantCrystalline;
 import com.ki11erwolf.resynth.plant.item.ItemPlantOreProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
@@ -24,7 +25,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -171,13 +171,15 @@ public abstract class PlantCrystalline {
         if(event.getPlayer() == null)
             return;
 
-        if(! (event.getPlayer().getHeldItemMainhand().getItem() instanceof ItemPickaxe))
-            return;
+        //Added log for future testing purposes.
+        if(!(event.getPlayer().getHeldItemMainhand().getItem().canHarvestBlock(event.getState())))
+            ResynthMod.getLogger().warn("Ore broken with item that cannot harvest: "
+                    + event.getPlayer().getHeldItemMainhand().getItem().getClass().getCanonicalName());
 
         if(event.getPlayer().isCreative())
             return;
 
-        //If has fortune enchantment.
+        //If has silk touch enchantment.
         for(NBTBase tag : event.getPlayer().getHeldItemMainhand().getEnchantmentTagList()){
             if(((NBTTagCompound)tag).getShort("id") == 33)
                 return;
