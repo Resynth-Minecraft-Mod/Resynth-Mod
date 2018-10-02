@@ -287,10 +287,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         if(!(chance > randomChance))
             return false;
 
-        int period = getGrowthPeriod();
-        int random = MathUtil.getRandomIntegerInRange(0, period);
-
-        return random == 1;
+        return MathUtil.chance(getGrowthPeriod());
     }
 
     /**
@@ -347,7 +344,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * @return how long the plant takes to grow
      * in general.
      */
-    protected abstract int getGrowthPeriod();
+    protected abstract float getGrowthPeriod();
 
     /**
      * @return true if bonemeal can be used

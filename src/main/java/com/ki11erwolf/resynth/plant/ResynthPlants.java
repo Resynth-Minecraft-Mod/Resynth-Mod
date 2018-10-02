@@ -34,16 +34,16 @@ public final class ResynthPlants {
      */
     public static final PlantMetallic PLANT_IRON = new PlantMetallic("iron", Blocks.IRON_ORE){
         @Override
-        protected int getFloweringPeriod() {return ResynthConfig.PLANT_IRON.floweringPeriod;}
+        protected float getFloweringPeriod() {return ResynthConfig.PLANT_IRON.floweringPeriod;}
 
         @Override
         protected boolean canBoneMeal() {return ResynthConfig.PLANT_IRON.canBonemeal;}
 
         @Override
-        protected int getOreSeedDropChance() {return ResynthConfig.PLANT_IRON.oreSeedDropChance;}
+        protected float getOreSeedDropChance() {return ResynthConfig.PLANT_IRON.oreSeedDropChance;}
 
         @Override
-        protected int getOrganicOreSeedDropChance() {return ResynthConfig.PLANT_IRON.organicOreSeedDropChance;}
+        protected float getOrganicOreSeedDropChance() {return ResynthConfig.PLANT_IRON.organicOreSeedDropChance;}
 
         @Override
         protected boolean doesOreDropSeeds() {return ResynthConfig.PLANT_IRON.oreDropSeeds;}
@@ -60,16 +60,16 @@ public final class ResynthPlants {
      */
     public static final PlantMetallic PLANT_GOLD = new PlantMetallic("gold", Blocks.GOLD_ORE) {
         @Override
-        protected int getFloweringPeriod() {return ResynthConfig.PLANT_GOLD.floweringPeriod;}
+        protected float getFloweringPeriod() {return ResynthConfig.PLANT_GOLD.floweringPeriod;}
 
         @Override
         protected boolean canBoneMeal() {return ResynthConfig.PLANT_GOLD.canBonemeal;}
 
         @Override
-        protected int getOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.oreSeedDropChance;}
+        protected float getOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.oreSeedDropChance;}
 
         @Override
-        protected int getOrganicOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.organicOreSeedDropChance;}
+        protected float getOrganicOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.organicOreSeedDropChance;}
 
         @Override
         protected boolean doesOreDropSeeds() {return ResynthConfig.PLANT_GOLD.oreDropSeeds;}
@@ -91,16 +91,16 @@ public final class ResynthPlants {
         protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
 
         @Override
-        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+        protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
 
         @Override
         protected boolean canBoneMeal() { return cfg.canBonemeal; }
 
         @Override
-        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+        protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
 
         @Override
         protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
@@ -120,16 +120,16 @@ public final class ResynthPlants {
         protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
 
         @Override
-        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+        protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
 
         @Override
         protected boolean canBoneMeal() { return cfg.canBonemeal; }
 
         @Override
-        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+        protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
 
         @Override
         protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
@@ -149,16 +149,16 @@ public final class ResynthPlants {
         protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
 
         @Override
-        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+        protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
 
         @Override
         protected boolean canBoneMeal() { return cfg.canBonemeal; }
 
         @Override
-        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+        protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
 
         @Override
         protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
@@ -174,26 +174,26 @@ public final class ResynthPlants {
             = new PlantCrystalline("coal", Blocks.COAL_ORE) {
                 private final ResynthConfig.PlantCoal cfg = ResynthConfig.PLANT_COAL;
 
-                @Override
-                protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
+        @Override
+        protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
 
-                @Override
-                protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+        @Override
+        protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
-                @Override
-                protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+        @Override
+        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
 
-                @Override
-                protected boolean canBoneMeal() { return cfg.canBonemeal; }
+        @Override
+        protected boolean canBoneMeal() { return cfg.canBonemeal; }
 
-                @Override
-                protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+        @Override
+        protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
 
-                @Override
-                protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
+        @Override
+        protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
 
-                @Override
-                public ItemStack getResult() { return new ItemStack(Items.COAL, cfg.yield); }
+        @Override
+        public ItemStack getResult() { return new ItemStack(Items.COAL, cfg.yield); }
     };
 
     /**
@@ -207,16 +207,16 @@ public final class ResynthPlants {
         protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
 
         @Override
-        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+        protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
 
         @Override
         protected boolean canBoneMeal() { return cfg.canBonemeal; }
 
         @Override
-        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+        protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
 
         @Override
         protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
@@ -236,16 +236,16 @@ public final class ResynthPlants {
         protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
 
         @Override
-        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+        protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
 
         @Override
         protected boolean canBoneMeal() { return cfg.canBonemeal; }
 
         @Override
-        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+        protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
 
         @Override
         protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
@@ -265,16 +265,16 @@ public final class ResynthPlants {
         protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
 
         @Override
-        protected int getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+        protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected int getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
 
         @Override
         protected boolean canBoneMeal() { return cfg.canBonemeal; }
 
         @Override
-        protected int getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+        protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
 
         @Override
         protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }

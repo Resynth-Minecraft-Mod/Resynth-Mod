@@ -92,9 +92,7 @@ public class BlockMineralOre extends ResynthBlock{
      */
     @Override
     public int quantityDropped(Random random) {
-        return oreCfg.baseDrops
-                + (MathUtil.getRandomIntegerInRange(1, oreCfg.extraChance) == oreCfg.extraChance
-                ? oreCfg.extraDrops : 0);
+        return oreCfg.baseDrops + (MathUtil.chance(oreCfg.extraChance) ? oreCfg.extraDrops : 0);
     }
 
     /**

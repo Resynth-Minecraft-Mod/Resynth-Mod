@@ -67,15 +67,12 @@ public class ResynthConfig {
 
         /**
          * The chance of the ore blocking dropping extra items.
-         * Where {@code n} is {@code extraChance}
-         * and {@code c} is {@code chance}.
-         * <p>
-         * {@code c = 1/n}
+         * Chance is percentage based.
          */
-        @Name("Mineral Rock Drop Chance")
-        @Comment("The chance of extra Mineral Rocks dropping. Chance is 1 in n.")
-        @RangeInt(min = 2, max = 100)
-        public int extraChance = 6;
+        @Name("Extra Mineral Rock Drop Chance")
+        @Comment("The chance of extra Mineral Rocks dropping. Chance is percentage based")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float extraChance = 50.0F;
 
         /**
          * The number of extra items to drop.
@@ -245,13 +242,11 @@ public class ResynthConfig {
          * How long it takes this plant type
          * to grow.
          */
-        @Name("Flowering Period")
-        @Comment("How long it takes this species of plant to grow. " +
-                "The higher the number, the longer the plant takes to grow. " +
-                "Each increment doubles the time the plant takes to grow. " +
-                "E.g. two is twice as long as one.")
-        @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 25;
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 6.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -278,23 +273,23 @@ public class ResynthConfig {
 
         /**
          * The chance of seeds dropping
-         * from iron ore.
+         * from this species of plants ore block.
          */
-        @Name("Ore Seed Drop Chance")
-        @Comment("The chance iron ore will drop iron seeds. The chance of dropping a seed " +
-                "is one in Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 32;
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance of the ore block dropping seeds for this species of plant." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 3.0F;
 
         /**
          * The chance of seeds dropping from
-         * organic iron ore.
+         * this plant species' produce.
          */
-        @Name("Organic Ore Seed Drop Chance")
-        @Comment("The chance organic iron ore will drop iron seeds. The chance of dropping a seed " +
-                "is one in Organic Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int organicOreSeedDropChance = 64;
+        @Name("Seed Drop Chance From Organic Ore")
+        @Comment("The chance of this plants produce (organic ore) dropping seeds " +
+                "when blown up by TNT.  This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float organicOreSeedDropChance = 1.5F;
 
         /**
          * The number of ingots the plants ore
@@ -323,13 +318,11 @@ public class ResynthConfig {
          * How long it takes this plant type
          * to grow.
          */
-        @Name("Flowering Period")
-        @Comment("How long it takes this species of plant to grow. " +
-                "The higher the number, the longer the plant takes to grow. " +
-                "Each increment doubles the time the plant takes to grow. " +
-                "E.g. two is twice as long as one.")
-        @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 45;
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance.  This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 4.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -356,23 +349,23 @@ public class ResynthConfig {
 
         /**
          * The chance of seeds dropping
-         * from gold ore.
+         * from this species of plants ore block.
          */
-        @Name("Ore Seed Drop Chance")
-        @Comment("The chance gold ore will drop gold seeds. The chance of dropping a seed " +
-                "is one in Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 64;
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance of the ore block dropping seeds for this species of plant." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 6.0F;
 
         /**
          * The chance of seeds dropping from
-         * organic gold ore.
+         * this plant species' produce.
          */
-        @Name("Organic Ore Seed Drop Chance")
-        @Comment("The chance organic gold ore will drop gold seeds. The chance of dropping a seed " +
-                "is one in Organic Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int organicOreSeedDropChance = 96;
+        @Name("Seed Drop Chance From Organic Ore")
+        @Comment("The chance of this plants produce (organic ore) dropping seeds " +
+                "when blown up by TNT.  This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float organicOreSeedDropChance = 3.0F;
 
         /**
          * The number of ingots the plants ore
@@ -401,13 +394,11 @@ public class ResynthConfig {
          * How long it takes this plant type
          * to grow.
          */
-        @Name("Flowering Period")
-        @Comment("How long it takes this species of plant to grow. " +
-                "The higher the number, the longer the plant takes to grow. " +
-                "Each increment doubles the time the plant takes to grow. " +
-                "E.g. two is twice as long as one.")
-        @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 45;
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 6.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -435,24 +426,23 @@ public class ResynthConfig {
 
         /**
          * The chance of seeds dropping
-         * from diamond ore.
+         * from this plants minecraft ore block.
          */
-        @Name("Ore Seed Drop Chance")
-        @Comment("The chance diamond ore will drop diamond seeds. The chance of dropping a seed " +
-                "is one in Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 64;
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 5.0F;
 
         /**
          * The chance of seeds dropping from
-         * diamond straw.
+         * this plant types produce.
          */
-        @Name("Produce Seed Drop Chance")
-        @Comment("The chance diamond straw will turn into diamond seeds when left in water. " +
-                "The chance of dropping a seed " +
-                "is one in Produce Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int produceSeedDropChance = 96;
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (straw) from this plant type will drop seeds." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 2.5F;
 
         /**
          * The number of diamonds the plants produce
@@ -481,13 +471,11 @@ public class ResynthConfig {
          * How long it takes this plant type
          * to grow.
          */
-        @Name("Flowering Period")
-        @Comment("How long it takes this species of plant to grow. " +
-                "The higher the number, the longer the plant takes to grow. " +
-                "Each increment doubles the time the plant takes to grow. " +
-                "E.g. two is twice as long as one.")
-        @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 35;
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 10.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -515,24 +503,23 @@ public class ResynthConfig {
 
         /**
          * The chance of seeds dropping
-         * from redstone ore.
+         * from this plants minecraft ore block.
          */
-        @Name("Ore Seed Drop Chance")
-        @Comment("The chance redstone ore will drop redstone seeds. The chance of dropping a seed " +
-                "is one in Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 48;
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 1.0F;
 
         /**
          * The chance of seeds dropping from
-         * redstone straw.
+         * this plant types produce.
          */
-        @Name("Produce Seed Drop Chance")
-        @Comment("The chance redstone straw will turn into redstone seeds when left in water. " +
-                "The chance of dropping a seed " +
-                "is one in Produce Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int produceSeedDropChance = 64;
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (straw) from this plant type will drop seeds." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 0.5F;
 
         /**
          * The number of redstone the plants produce
@@ -561,13 +548,11 @@ public class ResynthConfig {
          * How long it takes this plant type
          * to grow.
          */
-        @Name("Flowering Period")
-        @Comment("How long it takes this species of plant to grow. " +
-                "The higher the number, the longer the plant takes to grow. " +
-                "Each increment doubles the time the plant takes to grow. " +
-                "E.g. two is twice as long as one.")
-        @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 40;
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 4.5F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -595,24 +580,23 @@ public class ResynthConfig {
 
         /**
          * The chance of seeds dropping
-         * from lapis ore.
+         * from this plants minecraft ore block.
          */
-        @Name("Ore Seed Drop Chance")
-        @Comment("The chance lapis ore will drop lapis seeds. The chance of dropping a seed " +
-                "is one in Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 48;
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 4.0F;
 
         /**
          * The chance of seeds dropping from
-         * lapis straw.
+         * this plant types produce.
          */
-        @Name("Produce Seed Drop Chance")
-        @Comment("The chance lapis straw will turn into lapis seeds when left in water. " +
-                "The chance of dropping a seed " +
-                "is one in Produce Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int produceSeedDropChance = 48*2;
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (straw) from this plant type will drop seeds." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 2.0F;
 
         /**
          * The number of lapis items the plants produce
@@ -641,13 +625,11 @@ public class ResynthConfig {
          * How long it takes this plant type
          * to grow.
          */
-        @Name("Flowering Period")
-        @Comment("How long it takes this species of plant to grow. " +
-                "The higher the number, the longer the plant takes to grow. " +
-                "Each increment doubles the time the plant takes to grow. " +
-                "E.g. two is twice as long as one.")
-        @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 15;
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 30.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -675,24 +657,23 @@ public class ResynthConfig {
 
         /**
          * The chance of seeds dropping
-         * from coal ore.
+         * from this plants minecraft ore block.
          */
-        @Name("Ore Seed Drop Chance")
-        @Comment("The chance coal ore will drop coal seeds. The chance of dropping a seed " +
-                "is one in Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 32;
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 1.0F;
 
         /**
          * The chance of seeds dropping from
-         * coal straw.
+         * this plant types produce.
          */
-        @Name("Produce Seed Drop Chance")
-        @Comment("The chance coal straw will turn into coal seeds when left in water. " +
-                "The chance of dropping a seed " +
-                "is one in Produce Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int produceSeedDropChance = 64;
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (straw) from this plant type will drop seeds." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 0.5F;
 
         /**
          * The number of coal items the plants produce
@@ -721,13 +702,11 @@ public class ResynthConfig {
          * How long it takes this plant type
          * to grow.
          */
-        @Name("Flowering Period")
-        @Comment("How long it takes this species of plant to grow. " +
-                "The higher the number, the longer the plant takes to grow. " +
-                "Each increment doubles the time the plant takes to grow. " +
-                "E.g. two is twice as long as one.")
-        @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 55;
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 2.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -755,24 +734,23 @@ public class ResynthConfig {
 
         /**
          * The chance of seeds dropping
-         * from emerald ore.
+         * from this plants minecraft ore block.
          */
-        @Name("Ore Seed Drop Chance")
-        @Comment("The chance emerald ore will drop emerald seeds. The chance of dropping a seed " +
-                "is one in Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 32;
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 10.0F;
 
         /**
          * The chance of seeds dropping from
-         * emerald straw.
+         * this plant types produce.
          */
-        @Name("Produce Seed Drop Chance")
-        @Comment("The chance emerald straw will turn into emerald seeds when left in water. " +
-                "The chance of dropping a seed " +
-                "is one in Produce Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int produceSeedDropChance = 64;
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (straw) from this plant type will drop seeds." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 5.0F;
 
         /**
          * The number of emerald items the plants produce
@@ -801,13 +779,11 @@ public class ResynthConfig {
          * How long it takes this plant type
          * to grow.
          */
-        @Name("Flowering Period")
-        @Comment("How long it takes this species of plant to grow. " +
-                "The higher the number, the longer the plant takes to grow. " +
-                "Each increment doubles the time the plant takes to grow. " +
-                "E.g. two is twice as long as one.")
-        @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 25;
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 25.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -835,24 +811,23 @@ public class ResynthConfig {
 
         /**
          * The chance of seeds dropping
-         * from glowstone ore.
+         * from this plants minecraft ore block.
          */
-        @Name("Ore Seed Drop Chance")
-        @Comment("The chance glowstone will drop glowstone seeds. The chance of dropping a seed " +
-                "is one in Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 64;
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 2.0F;
 
         /**
          * The chance of seeds dropping from
-         * glowstone straw.
+         * this plant types produce.
          */
-        @Name("Produce Seed Drop Chance")
-        @Comment("The chance glowstone straw will turn into glowstone seeds when left in water. " +
-                "The chance of dropping a seed " +
-                "is one in Produce Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int produceSeedDropChance = 64+32;
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (straw) from this plant type will drop seeds." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 1.0F;
 
         /**
          * The number of glowstone items the plants produce
@@ -881,13 +856,11 @@ public class ResynthConfig {
          * How long it takes this plant type
          * to grow.
          */
-        @Name("Flowering Period")
-        @Comment("How long it takes this species of plant to grow. " +
-                "The higher the number, the longer the plant takes to grow. " +
-                "Each increment doubles the time the plant takes to grow. " +
-                "E.g. two is twice as long as one.")
-        @RangeInt(min = 1, max = 100_000)
-        public int floweringPeriod = 35;
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 25.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -915,24 +888,23 @@ public class ResynthConfig {
 
         /**
          * The chance of seeds dropping
-         * from quartz ore.
+         * from this plants minecraft ore block.
          */
-        @Name("Ore Seed Drop Chance")
-        @Comment("The chance quartz ore will drop quartz seeds. The chance of dropping a seed " +
-                "is one in Ore Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int oreSeedDropChance = 64+32;
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 2.0F;
 
         /**
          * The chance of seeds dropping from
-         * quartz straw.
+         * this plant types produce.
          */
-        @Name("Produce Seed Drop Chance")
-        @Comment("The chance quartz straw will turn into quartz seeds when left in water. " +
-                "The chance of dropping a seed " +
-                "is one in Produce Seed Drop Chance + 1.")
-        @RangeInt(min = 1, max = 100_000)
-        public int produceSeedDropChance = 64;
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (straw) from this plant type will drop seeds." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 1.0F;
 
         /**
          * The number of quartz items the plants produce

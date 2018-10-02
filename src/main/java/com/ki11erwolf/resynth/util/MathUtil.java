@@ -49,4 +49,24 @@ public final class MathUtil {
 
         return RANDOM_INSTANCE.nextInt((max - min) + 1) + min;
     }
+
+    /**
+     * Returns {@code true} randomly with the
+     * given chance (0.0F - 100.0F).
+     *
+     * @param percentage the percentage chance
+     *                   of the method returning
+     *                   true (0.0F - 100.0F)
+     * @return {@code true} or {@code false} randomly
+     * with the given percentage chance.
+     */
+    public static boolean chance(float percentage){
+        if(percentage > 100.0)
+            percentage = 100.0F;
+        if(percentage < 0.0F)
+            percentage = 0.0F;
+
+        float random = RANDOM_INSTANCE.nextFloat();
+        return (percentage / 100) > random;
+    }
 }

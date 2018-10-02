@@ -75,7 +75,7 @@ public abstract class PlantMetallic {
             }
 
             @Override
-            protected int getGrowthPeriod(){
+            protected float getGrowthPeriod(){
                 return getFloweringPeriod();
             }
 
@@ -143,10 +143,8 @@ public abstract class PlantMetallic {
                 if(plant.doesOreDropSeeds() && block == plant.seedOre && ResynthConfig.PLANTS_GENERAL.oreDropSeeds){
                     //A Seed ore block has been blown up.
 
-                    int random = MathUtil.getRandomIntegerInRange(0, plant.getOreSeedDropChance());
-
                     //Random chance.
-                    if(random == 1){
+                    if(MathUtil.chance(plant.getOreSeedDropChance())){
                         detonateEvent.getWorld().setBlockToAir(blockPos);
                         detonateEvent.getWorld().spawnEntity(
                                 new EntityItem(detonateEvent.getWorld(),
@@ -160,10 +158,8 @@ public abstract class PlantMetallic {
                         && ResynthConfig.PLANTS_GENERAL.organicOreDropSeeds){
                     //An organic ore block has been blown up.
 
-                    int random = MathUtil.getRandomIntegerInRange(0, plant.getOrganicOreSeedDropChance());
-
                     //Random chance.
-                    if(random == 1){
+                    if(MathUtil.chance(plant.getOrganicOreSeedDropChance())){
                         detonateEvent.getWorld().setBlockToAir(blockPos);
                         detonateEvent.getWorld().spawnEntity(
                                 new EntityItem(detonateEvent.getWorld(),
@@ -187,7 +183,7 @@ public abstract class PlantMetallic {
      * to grow in general. This chance of
      * growing is 1 in the number provided + 1.
      */
-    protected abstract int getFloweringPeriod();
+    protected abstract float getFloweringPeriod();
 
     /**
      * @return true if bonemeal can be used
@@ -199,13 +195,13 @@ public abstract class PlantMetallic {
      * @return the integer chance of seeds
      * dropping from the minecraft ore block.
      */
-    protected abstract int getOreSeedDropChance();
+    protected abstract float getOreSeedDropChance();
 
     /**
      * @return the integer chance of seeds
      * dropping from the plants ore block (produce).
      */
-    protected abstract int getOrganicOreSeedDropChance();
+    protected abstract float getOrganicOreSeedDropChance();
 
     /**
      * @return true if seeds should drop from the

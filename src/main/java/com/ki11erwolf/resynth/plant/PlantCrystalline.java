@@ -79,7 +79,7 @@ public abstract class PlantCrystalline {
             protected Item getProduce() {return produce;}
 
             @Override
-            protected int getGrowthPeriod() {return getFloweringPeriod();}
+            protected float getGrowthPeriod() {return getFloweringPeriod();}
 
             @Override
             protected boolean canBonemeal() {return canBoneMeal();}
@@ -136,12 +136,12 @@ public abstract class PlantCrystalline {
     /**
      * @return the chance the minecraft ore block will drop this plants seeds.
      */
-    protected abstract int getOreSeedDropChance();
+    protected abstract float getOreSeedDropChance();
 
     /**
      * @return how long this plant takes to grow.
      */
-    protected abstract int getFloweringPeriod();
+    protected abstract float getFloweringPeriod();
 
     /**
      * @return true if bonemeal can be used on this plant.
@@ -151,7 +151,7 @@ public abstract class PlantCrystalline {
     /**
      * @return the chance this plants produce will turn into seeds in water.
      */
-    protected abstract int getProduceSeedDropChance();
+    protected abstract float getProduceSeedDropChance();
 
     /**
      * @return true if this plants produce turns into seeds in water.
@@ -194,9 +194,7 @@ public abstract class PlantCrystalline {
                 return;
 
             if(block == plant.seedOre){
-                int random = MathUtil.getRandomIntegerInRange(0, plant.getOreSeedDropChance());
-
-                if(random == 1){
+                if(MathUtil.chance(plant.getOreSeedDropChance())){
                     world.spawnEntity(new EntityItem(world, x, y, z, new ItemStack(plant.seeds, 1)));
                     event.setCanceled(true);
                     world.setBlockToAir(event.getPos());
@@ -229,9 +227,7 @@ public abstract class PlantCrystalline {
 
             if(i == p.getProduce() && b == Blocks.WATER){
                 for(int j = 0; j < count; j++){
-                    int random = MathUtil.getRandomIntegerInRange(0, p.getProduceSeedDropChance());
-
-                    if(random == 1){
+                    if(MathUtil.chance(p.getProduceSeedDropChance())){
                         event.getEntityItem().world.spawnEntity(
                                 new EntityItem(
                                         event.getEntityItem().world,
