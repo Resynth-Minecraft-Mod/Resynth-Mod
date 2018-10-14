@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "inventory": [{"model": "resynth:plant/gunpowder/plant_gunpowder_7"}],
+    "age=0": { "model": "resynth:plant/gunpowder/plant_gunpowder_0" },
+    "age=1": { "model": "resynth:plant/gunpowder/plant_gunpowder_1" },
+    "age=2": { "model": "resynth:plant/gunpowder/plant_gunpowder_2" },
+    "age=3": { "model": "resynth:plant/gunpowder/plant_gunpowder_3" },
+    "age=4": { "model": "resynth:plant/gunpowder/plant_gunpowder_4" },
+    "age=5": { "model": "resynth:plant/gunpowder/plant_gunpowder_5" },
+    "age=6": { "model": "resynth:plant/gunpowder/plant_gunpowder_6" },
+    "age=7": { "model": "resynth:plant/gunpowder/plant_gunpowder_7" }
+  }
+}

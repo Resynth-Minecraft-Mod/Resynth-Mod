@@ -34,6 +34,7 @@ item.resynth.seedQuartz.name=Quartz Seeds
 item.resynth.seedGlowstone.name=Glowstone Seeds
 #biochemical
 item.resynth.seedEnderpearl.name=Ender Pearl Seeds
+item.resynth.seedGunpowder.name=Gunpowder Seeds
 
 #Plants
 tile.resynth.plantIron.name=Iron Plant
@@ -48,6 +49,7 @@ tile.resynth.plantQuartz.name=Quartz Straw Patch
 tile.resynth.plantGlowstone.name=Glowstone Straw Patch
 #biochemical
 tile.resynth.plantEnderpearl.name=Ender Pearl Flower
+tile.resynth.plantGunpowder.name=Gunpowder Flower
 
 #Plant Ores
 tile.resynth.oreIron.name=Organic Iron Ore
@@ -64,3 +66,4 @@ item.resynth.produceGlowstone.name=Glowstone Straw
 
 #Mob Produce
 item.resynth.mobproduceEnderpearl.name=Ender Pearl Bulb
+item.resynth.mobproduceGunpowder.name=Gunpowder Bulb

@@ -21,6 +21,7 @@ import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
 import com.ki11erwolf.resynth.plant.item.ItemPlantMobProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantOreProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -302,6 +303,35 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() {return new ItemStack(Items.ENDER_PEARL, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+    };
+
+    /**
+     * The gunpowder plant instance.
+     */
+    public static final PlantBiochemical PLANT_GUNPOWDER
+            = new PlantBiochemical("gunpowder", EntityCreeper.class){
+        ResynthConfig.PlantGunpowder cfg = ResynthConfig.PLANT_GUNPOWDER;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.GUNPOWDER, cfg.yield);}
 
         @Override
         protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
