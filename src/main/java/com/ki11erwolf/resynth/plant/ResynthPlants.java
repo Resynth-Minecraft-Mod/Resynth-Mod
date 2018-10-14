@@ -18,8 +18,10 @@ package com.ki11erwolf.resynth.plant;
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
 import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
+import com.ki11erwolf.resynth.plant.item.ItemPlantMobProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantOreProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -80,6 +82,10 @@ public final class ResynthPlants {
         @Override
         public ItemStack getResult() {return new ItemStack(Items.GOLD_INGOT, ResynthConfig.PLANT_GOLD.yield);}
     };
+
+    /*
+        CRYSTALLINE
+     */
 
     /**
      * The diamond plant instance.
@@ -283,6 +289,39 @@ public final class ResynthPlants {
         public ItemStack getResult() { return new ItemStack(Items.GLOWSTONE_DUST, cfg.yield); }
     };
 
+    /*
+        BIOCHEMICAL
+     */
+
+    /**
+     * The ender pearl plant instance.
+     */
+    public static final PlantBiochemical PLANT_ENDER_PEARL
+            = new PlantBiochemical("enderpearl", EntityEnderman.class){
+        ResynthConfig.PlantEnderpearl cfg = ResynthConfig.PLANT_ENDERPEARL;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.ENDER_PEARL, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+    };
+
     //Static class.
     private ResynthPlants(){}
 
@@ -322,9 +361,23 @@ public final class ResynthPlants {
     }
 
     /**
+     * @return an array of the mob produce items to register.
+     */
+    public static ItemPlantMobProduce[] getMobProduceItems(){
+        return ResynthPlantRegistry.getMobProduce();
+    }
+
+    /**
      * @return an array of the crystalline plants to register.
      */
     public static PlantCrystalline[] getCrystallinePlants(){
         return ResynthPlantRegistry.getCrystallinePlants();
+    }
+
+    /**
+     * @return an array of the biochemical plants to register.
+     */
+    public static PlantBiochemical[] getBiochemicalPlants(){
+        return ResynthPlantRegistry.getBiochemicalPlants();
     }
 }

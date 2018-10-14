@@ -24,6 +24,7 @@ item.resynth.itemMineralCrystal.name=Mineral Crystal
 #Seeds
 item.resynth.seedIron.name=Iron Seeds
 item.resynth.seedGold.name=Gold Seeds
+#crystalline
 item.resynth.seedDiamond.name=Diamond Seeds
 item.resynth.seedRedstone.name=Redstone Seeds
 item.resynth.seedLapis.name=Lapis Lazuli Seeds
@@ -31,10 +32,13 @@ item.resynth.seedCoal.name=Coal Seeds
 item.resynth.seedEmerald.name=Emerald Seeds
 item.resynth.seedQuartz.name=Quartz Seeds
 item.resynth.seedGlowstone.name=Glowstone Seeds
+#biochemical
+item.resynth.seedEnderpearl.name=Ender Pearl Seeds
 
 #Plants
 tile.resynth.plantIron.name=Iron Plant
 tile.resynth.plantGold.name=Gold Plant
+#crystalline
 tile.resynth.plantDiamond.name=Diamond Straw Patch
 tile.resynth.plantRedstone.name=Redstone Straw Patch
 tile.resynth.plantLapis.name=Lapis Lazuli Straw Patch
@@ -42,6 +46,8 @@ tile.resynth.plantCoal.name=Coal Straw Patch
 tile.resynth.plantEmerald.name=Emerald Straw Patch
 tile.resynth.plantQuartz.name=Quartz Straw Patch
 tile.resynth.plantGlowstone.name=Glowstone Straw Patch
+#biochemical
+tile.resynth.plantEnderpearl.name=Ender Pearl Flower
 
 #Plant Ores
 tile.resynth.oreIron.name=Organic Iron Ore
@@ -55,3 +61,6 @@ item.resynth.produceCoal.name=Coal Straw
 item.resynth.produceEmerald.name=Emerald Straw
 item.resynth.produceQuartz.name=Quartz Straw
 item.resynth.produceGlowstone.name=Glowstone Straw
+
+#Mob Produce
+item.resynth.mobproduceEnderpearl.name=Ender Pearl Bulb

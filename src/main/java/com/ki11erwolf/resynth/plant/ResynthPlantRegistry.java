@@ -17,6 +17,7 @@ package com.ki11erwolf.resynth.plant;
 
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
 import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
+import com.ki11erwolf.resynth.plant.item.ItemPlantMobProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantOreProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
 
@@ -35,6 +36,11 @@ final class ResynthPlantRegistry {
      * List of all metallic plants to register to the game.
      */
     private static final ArrayList<PlantMetallic> PLANTS_METALLIC = new ArrayList<>();
+
+    /**
+     * List of all biochemical plants.
+     */
+    private static final ArrayList<PlantBiochemical> PLANTS_BIOCHEMICAL = new ArrayList<>();
 
     /**
      * List of all crystalline plants to register to the game.
@@ -62,6 +68,11 @@ final class ResynthPlantRegistry {
     private static final ArrayList<ItemPlantOreProduce> PLANT_PRODUCE_ITEMS = new ArrayList<>();
 
     /**
+     * The list of all plant mob produce items to register to the game.
+     */
+    private static final ArrayList<ItemPlantMobProduce> PLANT_MOB_PRODUCES_ITEMS = new ArrayList<>();
+
+    /**
      * Adds a metallic plant instance to the list.
      *
      * @param plantMetallic the metallic plant instance.
@@ -77,6 +88,15 @@ final class ResynthPlantRegistry {
      */
     protected static void addPlant(PlantCrystalline plantCrystalline){
         PLANTS_CRYSTALLINE.add(plantCrystalline);
+    }
+
+    /**
+     * Adds a biochemical plant instance to the list.
+     *
+     * @param plantBiochemical the biochemical plant instance.
+     */
+    protected static void addPlant(PlantBiochemical plantBiochemical){
+        PLANTS_BIOCHEMICAL.add(plantBiochemical);
     }
 
     /**
@@ -116,6 +136,15 @@ final class ResynthPlantRegistry {
     }
 
     /**
+     * Adds a mob produce item to the list.
+     *
+     * @param produce the mob produce item.
+     */
+    protected static void addMobProduce(ItemPlantMobProduce produce){
+        PLANT_MOB_PRODUCES_ITEMS.add(produce);
+    }
+
+    /**
      * @return an array of the plant blocks to register.
      */
     protected static BlockPlantBase[] getPlantBlocks(){
@@ -139,8 +168,15 @@ final class ResynthPlantRegistry {
     /**
      * @return an array of the metallic plants to register.
      */
-    protected static PlantMetallic[] getMetallicPlants(){
+    protected static PlantMetallic[] getMetallicPlants() {
         return PLANTS_METALLIC.toArray(new PlantMetallic[0]);
+    }
+
+    /**
+     * @return an array of all the biochemical plants to register.
+     */
+    protected static PlantBiochemical[] getBiochemicalPlants(){
+        return PLANTS_BIOCHEMICAL.toArray(new PlantBiochemical[0]);
     }
 
     /**
@@ -155,5 +191,12 @@ final class ResynthPlantRegistry {
      */
     protected static ItemPlantOreProduce[] getProduce(){
         return PLANT_PRODUCE_ITEMS.toArray(new ItemPlantOreProduce[0]);
+    }
+
+    /**
+     * @return an array of the plant mob produce items to register.
+     */
+    protected static ItemPlantMobProduce[] getMobProduce(){
+        return PLANT_MOB_PRODUCES_ITEMS.toArray(new ItemPlantMobProduce[0]);
     }
 }

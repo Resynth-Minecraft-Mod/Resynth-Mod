@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "inventory": [{"model": "resynth:plant/ender/plant_ender_7"}],
+    "age=0": { "model": "resynth:plant/ender/plant_ender_0" },
+    "age=1": { "model": "resynth:plant/ender/plant_ender_1" },
+    "age=2": { "model": "resynth:plant/ender/plant_ender_2" },
+    "age=3": { "model": "resynth:plant/ender/plant_ender_3" },
+    "age=4": { "model": "resynth:plant/ender/plant_ender_4" },
+    "age=5": { "model": "resynth:plant/ender/plant_ender_5" },
+    "age=6": { "model": "resynth:plant/ender/plant_ender_6" },
+    "age=7": { "model": "resynth:plant/ender/plant_ender_7" }
+  }
+}

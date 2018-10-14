@@ -16,6 +16,7 @@
 package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.item.ResynthItems;
+import com.ki11erwolf.resynth.plant.PlantBiochemical;
 import com.ki11erwolf.resynth.plant.PlantCrystalline;
 import com.ki11erwolf.resynth.plant.PlantMetallic;
 import com.ki11erwolf.resynth.plant.ResynthPlants;
@@ -45,5 +46,7 @@ final class ResynthFurnaceRecipes {
             GameRegistry.addSmelting(plant.getOre(), plant.getResult(), 1.0F);
         for(PlantCrystalline plant : ResynthPlants.getCrystallinePlants())
             GameRegistry.addSmelting(plant.getProduce(), plant.getResult(), 2.0F);
+        for(PlantBiochemical plant : ResynthPlants.getBiochemicalPlants())
+            GameRegistry.addSmelting(plant.getProduce(), plant.getResult(), 1.5F);
     }
 }

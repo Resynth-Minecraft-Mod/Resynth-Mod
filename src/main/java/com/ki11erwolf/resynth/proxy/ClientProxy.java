@@ -50,5 +50,4 @@ public class ClientProxy implements IProxy {
     public void postInit(FMLPostInitializationEvent event) {
 
     }
-
 }

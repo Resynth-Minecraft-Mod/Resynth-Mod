@@ -61,6 +61,7 @@ public class ResynthObjectRegisterer {
         //Plants
         event.getRegistry().registerAll(ResynthPlants.getSeedItems());
         event.getRegistry().registerAll(ResynthPlants.getProduceItems());
+        event.getRegistry().registerAll(ResynthPlants.getMobProduceItems());
 
         for(Block b : ResynthPlants.getPlantBlocks()) {
             event.getRegistry().register(new ItemBlock(b).setRegistryName(b.getRegistryName()));
@@ -106,6 +107,8 @@ public class ResynthObjectRegisterer {
             for(Item i : ResynthPlants.getSeedItems())
                 registerModel(i);
             for(Item i : ResynthPlants.getProduceItems())
+                registerModel(i);
+            for(Item i : ResynthPlants.getMobProduceItems())
                 registerModel(i);
             for(Block b : ResynthPlants.getPlantBlocks())
                 registerModel(Item.getItemFromBlock(b));

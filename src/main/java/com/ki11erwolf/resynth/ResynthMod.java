@@ -90,6 +90,7 @@ public class ResynthMod {
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
+
         logger = event.getModLog();
         logger.info("Entering pre-init phase...");
         proxy.preInit(event);

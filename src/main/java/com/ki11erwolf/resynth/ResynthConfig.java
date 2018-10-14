@@ -918,6 +918,81 @@ public class ResynthConfig {
     }
 
     /**
+     * Settings for the ender pearl plant.
+     */
+    @Name("Plant: Ender Pearl")
+    @Comment("Settings for the Ender Pearl plant.")
+    public static final PlantEnderpearl PLANT_ENDERPEARL = new PlantEnderpearl();
+
+    /**
+     * Settings for the ender pearl plant.
+     */
+    public static class PlantEnderpearl{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 20.0F;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft mob that represents
+         * this plant drop seeds?
+         */
+        @Name("Do Mobs Drop Seeds")
+        @Comment("If set to true, endermen will sometimes drop seeds when killed.")
+        public boolean mobDropSeeds = true;
+
+        /**
+         * Does the plants produce drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, enderpearl bulbs will occasionally turn into seeds when thrown.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from this plants minecraft mob.
+         */
+        @Name("Seed Drop Chance From Mob")
+        @Comment("The chance an enderman will drop seeds when killed. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float mobSeedDropChance = 10.0F;
+
+        /**
+         * The chance of seeds dropping from
+         * this plant types produce.
+         */
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 10.0F;
+
+        /**
+         * The number of ender pearls the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of quartz quartz straw will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
+    /**
      * Handles the syncing of config values
      * when they change.
      */
