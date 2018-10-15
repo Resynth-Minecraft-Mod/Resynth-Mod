@@ -44,6 +44,7 @@ item.resynth.seedFeather.name=Feather Seeds
 item.resynth.seedGhast.name=Ghast Seeds
 item.resynth.seedNetherstar.name=Nether Star Seeds
 item.resynth.seedSpidereye.name=Spider Eye Seeds
+item.resynth.seedSlime.name=Slime Seeds
 
 #Plants
 
@@ -67,6 +68,7 @@ tile.resynth.plantFeather.name=Feather Flower
 tile.resynth.plantGhast.name=Ghast Flower
 tile.resynth.plantNetherstar.name=Nether Star Flower
 tile.resynth.plantSpidereye.name=Spider Eye Flower
+tile.resynth.plantSlime.name=Slime Flower
 
 #Plant Ores
 
@@ -93,3 +95,4 @@ item.resynth.mobproduceFeather.name=Feather Bulb
 item.resynth.mobproduceGhast.name=Ghast Bulb
 item.resynth.mobproduceNetherstar.name=Nether Star Bulb
 item.resynth.mobproduceSpidereye.name=Spider Eye Bulb
+item.resynth.mobproduceSlime.name=Slime Bulb

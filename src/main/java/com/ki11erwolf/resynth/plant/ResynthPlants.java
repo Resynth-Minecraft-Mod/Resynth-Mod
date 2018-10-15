@@ -556,6 +556,35 @@ public final class ResynthPlants {
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
     };
 
+    /**
+     * The spider eye plant instance.
+     */
+    public static final PlantBiochemical PLANT_SLIME
+            = new PlantBiochemical("slime", EntitySlime.class){
+        ResynthConfig.PlantSlime cfg = ResynthConfig.PLANT_SLIME;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.SLIME_BALL, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+    };
+
     //Static class.
     private ResynthPlants(){}
 
