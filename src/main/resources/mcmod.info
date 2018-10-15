@@ -5,12 +5,14 @@
   "description": "Adds growable resources to Minecraft.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://resynth-minecraft-mod.github.io",
   "updateUrl": "",
   "authorList": ["Ki11er_wolf"],
   "credits": "\n   FML and Forge\n   Me, Myself and I\n   Casper\n\n   Though seriously, a huge thanks goes\n   out to the creators of Minecraft Forge\n   (LexManos, cpw, Player and fry)\n   as well as the various resources\n   (tutorials, open source mods and forums)\n   on the internet that made this possible.",
-  "logoFile": "",
+  "logoFile": "assets/resynth/textures/logo.png",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": [
+    "mod_MinecraftForge"
+  ]
 }
 ]
