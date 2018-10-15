@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant;
 
+import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBiochemical;
 import com.ki11erwolf.resynth.plant.item.ItemPlantMobProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
@@ -167,7 +168,7 @@ public abstract class PlantBiochemical {
         Entity causer = deathEvent.getSource().getTrueSource();
         Entity victim = deathEvent.getEntity();
 
-        if(causer == null || causer.getClass() != EntityPlayerMP.class)
+        if(causer == null || causer.getClass() != EntityPlayerMP.class || !ResynthConfig.PLANTS_GENERAL.mobDropSeeds)
             return;
 
         for(PlantBiochemical plant : ResynthPlantRegistry.getBiochemicalPlants()){

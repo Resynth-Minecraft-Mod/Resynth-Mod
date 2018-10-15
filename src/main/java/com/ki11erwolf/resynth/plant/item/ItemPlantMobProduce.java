@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.item;
 
+import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthTabProduce;
 import com.ki11erwolf.resynth.item.ResynthItem;
@@ -89,7 +90,8 @@ public abstract class ItemPlantMobProduce extends ResynthItem {
             itemstack.shrink(1);
         }
 
-        throwItem(worldIn, playerIn);
+        if(ResynthConfig.PLANTS_GENERAL.produceDropSeeds)
+            throwItem(worldIn, playerIn);
 
         return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
     }

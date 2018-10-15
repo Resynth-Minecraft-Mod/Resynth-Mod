@@ -212,6 +212,13 @@ public class ResynthConfig {
         public boolean organicOreDropSeeds = true;
 
         /**
+         * Do mobs drop seeds.
+         */
+        @Name("Enable Seed Drops From Mobs")
+        @Comment("Set to false to disable mobs dropping seeds when killed.")
+        public boolean mobDropSeeds = true;
+
+        /**
          * Can plant produce turn into seeds.
          */
         @Name("Enable Seed Drops From Produce (straw)")
@@ -276,7 +283,7 @@ public class ResynthConfig {
          * from this species of plants ore block.
          */
         @Name("Seed Drop Chance From Ore")
-        @Comment("The chance of the ore block dropping seeds for this species of plant." +
+        @Comment("The chance of the ore block dropping seeds for this species of plant when blown up." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
         public float oreSeedDropChance = 3.0F;
@@ -352,7 +359,7 @@ public class ResynthConfig {
          * from this species of plants ore block.
          */
         @Name("Seed Drop Chance From Ore")
-        @Comment("The chance of the ore block dropping seeds for this species of plant." +
+        @Comment("The chance of the ore block dropping seeds for this species of plant when blown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
         public float oreSeedDropChance = 6.0F;
@@ -398,7 +405,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 6.0F;
+        public float floweringPeriod = 12.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -432,7 +439,7 @@ public class ResynthConfig {
         @Comment("The chance this plants ore will drop seeds when mined." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float oreSeedDropChance = 5.0F;
+        public float oreSeedDropChance = 25.0F;
 
         /**
          * The chance of seeds dropping from
@@ -442,7 +449,7 @@ public class ResynthConfig {
         @Comment("The chance the produce (straw) from this plant type will drop seeds." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 2.5F;
+        public float produceSeedDropChance = 15.0F;
 
         /**
          * The number of diamonds the plants produce
@@ -452,7 +459,7 @@ public class ResynthConfig {
         @Comment("The amount of diamonds diamond straw will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
-        public int yield = 1;
+        public int yield = 2;
     }
 
     /**
@@ -506,7 +513,7 @@ public class ResynthConfig {
          * from this plants minecraft ore block.
          */
         @Name("Seed Drop Chance From Ore")
-        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+        @Comment("The chance this plants ore block will drop seeds when mined." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
         public float oreSeedDropChance = 5.0F;
@@ -533,14 +540,14 @@ public class ResynthConfig {
     }
 
     /**
-     * Settings for the diamond plant.
+     * Settings for the redstone plant.
      */
     @Name("Plant: Redstone")
     @Comment("Settings for the redstone plant.")
     public static final PlantRedstone PLANT_REDSTONE = new PlantRedstone();
 
     /**
-     * Settings for the diamond plant.
+     * Settings for the redstone plant.
      */
     public static class PlantRedstone{
 
@@ -567,7 +574,7 @@ public class ResynthConfig {
          * represents drop seeds.
          */
         @Name("Does Ore Drop Seeds")
-        @Comment("If set to true, diamond ore will occasionally drop diamond seeds when mined.")
+        @Comment("If set to true, redstone ore will occasionally drop redstibe seeds when mined.")
         public boolean oreDropSeeds = true;
 
         /**
@@ -583,7 +590,7 @@ public class ResynthConfig {
          * from this plants minecraft ore block.
          */
         @Name("Seed Drop Chance From Ore")
-        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+        @Comment("The chance this plants ore will drop seeds when mined." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
         public float oreSeedDropChance = 1.0F;
@@ -613,7 +620,7 @@ public class ResynthConfig {
      * Settings for the lapis plant.
      */
     @Name("Plant: Lapis")
-    @Comment("Settings for the lapis plant.")
+    @Comment("Settings for the lapis lazuli plant.")
     public static final PlantLapis PLANT_LAPIS = new PlantLapis();
 
     /**
@@ -660,7 +667,7 @@ public class ResynthConfig {
          * from this plants minecraft ore block.
          */
         @Name("Seed Drop Chance From Ore")
-        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+        @Comment("The chance this plants ore block will drop seeds when mined." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
         public float oreSeedDropChance = 4.0F;
@@ -737,7 +744,7 @@ public class ResynthConfig {
          * from this plants minecraft ore block.
          */
         @Name("Seed Drop Chance From Ore")
-        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+        @Comment("The chance this plants ore block will drop seeds when mined." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
         public float oreSeedDropChance = 1.0F;
@@ -757,7 +764,7 @@ public class ResynthConfig {
          * item gives.
          */
         @Name("Yield")
-        @Comment("The amount of coal coal straw will give when smelted.")
+        @Comment("The amount of coal items coal straw will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
@@ -814,7 +821,7 @@ public class ResynthConfig {
          * from this plants minecraft ore block.
          */
         @Name("Seed Drop Chance From Ore")
-        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+        @Comment("The chance this plants ore block will drop seeds when mined." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
         public float oreSeedDropChance = 10.0F;
@@ -891,7 +898,7 @@ public class ResynthConfig {
          * from this plants minecraft ore block.
          */
         @Name("Seed Drop Chance From Ore")
-        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+        @Comment("The chance this plants ore block will drop seeds when mined." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
         public float oreSeedDropChance = 2.0F;
@@ -968,7 +975,7 @@ public class ResynthConfig {
          * from this plants minecraft ore block.
          */
         @Name("Seed Drop Chance From Ore")
-        @Comment("The chance this plants produce (straw) will drop seeds when left in water." +
+        @Comment("The chance this plants ore block will drop seeds when mined." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
         public float oreSeedDropChance = 2.0F;
@@ -1014,7 +1021,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 20.0F;
+        public float floweringPeriod = 9.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1046,7 +1053,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance an enderman will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 10.0F;
+        public float mobSeedDropChance = 8.5F;
 
         /**
          * The chance of seeds dropping from
@@ -1056,14 +1063,14 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 10.0F;
+        public float produceSeedDropChance = 5.0F;
 
         /**
          * The number of ender pearls the plants produce
          * item gives.
          */
         @Name("Yield")
-        @Comment("The amount of quartz quartz straw will give when smelted.")
+        @Comment("The amount of ender pearls enderpearl straw will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
@@ -1121,7 +1128,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a creeper will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 10.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1152,7 +1159,7 @@ public class ResynthConfig {
     public static final PlantBlaze PLANT_BLAZE = new PlantBlaze();
 
     /**
-     * Settings for the gunpowder plant.
+     * Settings for the blaze plant.
      */
     public static class PlantBlaze{
 
@@ -1164,7 +1171,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 20.0F;
+        public float floweringPeriod = 10.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1196,7 +1203,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a blaze will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 10.0F;
+        public float mobSeedDropChance = 8.5F;
 
         /**
          * The chance of seeds dropping from
@@ -1206,7 +1213,7 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 10.0F;
+        public float produceSeedDropChance = 5.0F;
 
         /**
          * The number of blaze rod items the plants produce
@@ -1239,7 +1246,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 35.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1271,7 +1278,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a skeleton will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 10.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1291,7 +1298,7 @@ public class ResynthConfig {
         @Comment("The amount of bones bone bulbs will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
-        public int yield = 1;
+        public int yield = 2;
     }
 
     /**
@@ -1314,7 +1321,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 35.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1346,7 +1353,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a spider will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 10.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1389,7 +1396,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 35.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1421,7 +1428,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a chicken will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 10.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1431,17 +1438,17 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 20.0F;
 
         /**
-         * The number of bone items the plants produce
+         * The number of feather items the plants produce
          * item gives.
          */
         @Name("Yield")
         @Comment("The amount of feather items feather bulbs will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
-        public int yield = 1;
+        public int yield = 2;
     }
 
     /**
@@ -1464,7 +1471,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 20.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1496,7 +1503,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a ghast will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 10.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1506,10 +1513,10 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 10.0F;
 
         /**
-         * The number of bone items the plants produce
+         * The number of ghast tear items the plants produce
          * item gives.
          */
         @Name("Yield")
@@ -1539,7 +1546,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 5.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1571,7 +1578,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a wither will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 10.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1581,7 +1588,7 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 2.0F;
 
         /**
          * The number of nether star items the plants produce
@@ -1614,7 +1621,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 20.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1646,7 +1653,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a spider will drop spider eye seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 6.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1689,7 +1696,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 35.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1721,7 +1728,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a slime will drop slime seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 3.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1731,7 +1738,7 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 9.0F;
 
         /**
          * The number of slime ball items the plants produce
@@ -1741,7 +1748,7 @@ public class ResynthConfig {
         @Comment("The amount of slime ball items slime bulbs will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
-        public int yield = 1;
+        public int yield = 3;
     }
 
     /**
@@ -1764,7 +1771,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 15.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1796,7 +1803,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a shulker will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 5.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1806,7 +1813,7 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 5.0F;
 
         /**
          * The number of shulker shell items the plants produce
@@ -1839,7 +1846,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 25.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1871,7 +1878,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a squid will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 10.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1881,7 +1888,7 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 20.0F;
 
         /**
          * The number of ink sac items the plants produce
@@ -1914,7 +1921,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 35.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -1946,7 +1953,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a cow will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 5.0F;
 
         /**
          * The chance of seeds dropping from
@@ -1956,7 +1963,7 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 8.0F;
 
         /**
          * The number of leather items the plants produce
@@ -1989,7 +1996,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 35.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -2021,7 +2028,7 @@ public class ResynthConfig {
         @Name("Seed Drop Chance From Mob")
         @Comment("The chance a zombie will drop seeds when killed. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 25.0F;
 
         /**
          * The chance of seeds dropping from
@@ -2031,7 +2038,7 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 30.0F;
 
         /**
          * The number of rotten flesh items the plants produce
@@ -2064,7 +2071,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 10.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -2107,7 +2114,7 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 14.0F;
 
         /**
          * The number of prismarine crystal items the plants produce
@@ -2117,7 +2124,7 @@ public class ResynthConfig {
         @Comment("The amount of prismarine crystal items prismarine crystal bulbs will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
-        public int yield = 1;
+        public int yield = 2;
     }
 
     /**
@@ -2140,7 +2147,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 10.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -2183,17 +2190,17 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 14.0F;
 
         /**
-         * The number of prismarine crystal items the plants produce
+         * The number of prismarine shard items the plants produce
          * item gives.
          */
         @Name("Yield")
         @Comment("The amount of prismarine shard items prismarine shard bulbs will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
-        public int yield = 1;
+        public int yield = 2;
     }
 
     /**
@@ -2216,7 +2223,7 @@ public class ResynthConfig {
         @Comment("The chance the plant species will grow when a random tick occurs. This" +
                 " is calculated after the mineral soil growth chance. This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float floweringPeriod = 30.0F;
+        public float floweringPeriod = 25.0F;
 
         /**
          * Can bonemeal be used on this plant type.
@@ -2249,7 +2256,7 @@ public class ResynthConfig {
         @Comment("The chance a rabbit will drop seeds when killed." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float mobSeedDropChance = 7.0F;
+        public float mobSeedDropChance = 10.0F;
 
         /**
          * The chance of seeds dropping from
@@ -2259,7 +2266,7 @@ public class ResynthConfig {
         @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
                 " This chance is percentage based.")
         @RangeDouble(min = 0.0F, max = 100.0F)
-        public float produceSeedDropChance = 15.0F;
+        public float produceSeedDropChance = 5.0F;
 
         /**
          * The number of rabbit foot items the plants produce
