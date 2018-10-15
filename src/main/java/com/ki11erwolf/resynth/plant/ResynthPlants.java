@@ -21,6 +21,7 @@ import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
 import com.ki11erwolf.resynth.plant.item.ItemPlantMobProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantOreProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
+import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.init.Blocks;
@@ -477,6 +478,35 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() {return new ItemStack(Items.GHAST_TEAR, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+    };
+
+    /**
+     * The nether star plant instance.
+     */
+    public static final PlantBiochemical PLANT_NETHERSTAR
+            = new PlantBiochemical("netherstar", EntityWither.class){
+        ResynthConfig.PlantNetherstar cfg = ResynthConfig.PLANT_NETHERSTAR;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.NETHER_STAR, cfg.yield);}
 
         @Override
         protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}

@@ -41,6 +41,7 @@ item.resynth.seedBone.name=Bone Seeds
 item.resynth.seedString.name=String Seeds
 item.resynth.seedFeather.name=Feather Seeds
 item.resynth.seedGhast.name=Ghast Seeds
+item.resynth.seedNetherstar.name=Nether Star Seeds
 
 #Plants
 
@@ -62,6 +63,7 @@ tile.resynth.plantBone.name=Bone Flower
 tile.resynth.plantString.name=String Flower
 tile.resynth.plantFeather.name=Feather Flower
 tile.resynth.plantGhast.name=Ghast Flower
+tile.resynth.plantNetherstar.name=Nether Star Flower
 
 #Plant Ores
 
@@ -86,3 +88,4 @@ item.resynth.mobproduceBone.name=Bone Bulb
 item.resynth.mobproduceString.name=String Bulb
 item.resynth.mobproduceFeather.name=Feather Bulb
 item.resynth.mobproduceGhast.name=Ghast Bulb
+item.resynth.mobproduceNetherstar.name=Nether Star Bulb
