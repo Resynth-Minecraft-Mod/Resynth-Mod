@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.block;
 
+import com.ki11erwolf.resynth.ResynthTabProduce;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.util.BlockUtil;
 import net.minecraft.block.SoundType;
@@ -45,6 +46,7 @@ public class BlockPlantOre extends ResynthBlock {
     public BlockPlantOre(String name) {
         super(Material.GOURD, SoundType.PLANT, name, ORE_PREFIX);
         this.setHardness(2.0F);
+        this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
         BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.AXE, 2);
     }
 

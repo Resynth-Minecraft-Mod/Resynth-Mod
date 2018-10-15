@@ -16,6 +16,7 @@
 package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.ResynthTabProduce;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -53,6 +54,7 @@ public abstract class ItemPlantMobProduce extends ResynthItem {
      */
     public ItemPlantMobProduce(String name, ItemPlantSeed seeds) {
         super(name, PREFIX);
+        this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
         this.plantSeeds = seeds;
     }
 

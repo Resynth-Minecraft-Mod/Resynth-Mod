@@ -5,6 +5,7 @@ tile.noname.noblock.name=Example Block
 #Tabs
 itemGroup.resynth.tabResynth=Resynth
 itemGroup.resynth.tabResynthSeeds=Resynth Seeds
+itemGroup.resynth.rabResynthProduce=Resynth Produce
 
 #Blocks
 tile.resynth.blockTest.name=Test Block

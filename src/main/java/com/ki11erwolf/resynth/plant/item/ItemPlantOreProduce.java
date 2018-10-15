@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.item;
 
+import com.ki11erwolf.resynth.ResynthTabProduce;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -40,6 +41,7 @@ public class ItemPlantOreProduce extends ResynthItem {
      */
     public ItemPlantOreProduce(String name) {
         super(name, PREFIX);
+        this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
     }
 
     /**
