@@ -47,6 +47,7 @@ item.resynth.seedSpidereye.name=Spider Eye Seeds
 item.resynth.seedSlime.name=Slime Seeds
 item.resynth.seedShulker.name=Shulker Seeds
 item.resynth.seedInk.name=Ink Seeds
+item.resynth.seedLeather.name=Leather Seeds
 
 #Plants
 
@@ -73,6 +74,7 @@ tile.resynth.plantSpidereye.name=Spider Eye Flower
 tile.resynth.plantSlime.name=Slime Flower
 tile.resynth.plantShulker.name=Shulker Flower
 tile.resynth.plantInk.name=Ink Flower
+tile.resynth.plantLeather.name=Leather Flower
 
 #Plant Ores
 
@@ -103,3 +105,4 @@ item.resynth.mobproduceSpidereye.name=Spider Eye Bulb
 item.resynth.mobproduceSlime.name=Slime Bulb
 item.resynth.mobproduceShulker.name=Shulker Bulb
 item.resynth.mobproduceInk.name=Ink Bulb
+item.resynth.mobproduceLeather.name=Leather Bulb
