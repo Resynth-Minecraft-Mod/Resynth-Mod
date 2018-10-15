@@ -16,6 +16,8 @@
 package com.ki11erwolf.resynth.plant;
 
 import com.ki11erwolf.resynth.ResynthConfig;
+import com.ki11erwolf.resynth.block.ResynthBlocks;
+import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
 import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
 import com.ki11erwolf.resynth.plant.item.ItemPlantMobProduce;
@@ -91,6 +93,35 @@ public final class ResynthPlants {
     /*
         CRYSTALLINE
      */
+
+    /**
+     * The mineral plant instance.
+     */
+    public static final PlantCrystalline PLANT_MINERAL = new PlantCrystalline("mineral",
+            ResynthBlocks.BLOCK_MINERAL_ORE) {
+        private final ResynthConfig.PlantMineral cfg = ResynthConfig.PLANT_MINERAL;
+
+        @Override
+        protected boolean doesOreDropSeeds() { return cfg.oreDropSeeds; }
+
+        @Override
+        protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
+
+        @Override
+        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
+
+        @Override
+        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+
+        @Override
+        protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
+
+        @Override
+        protected boolean doesProduceDropSeeds() { return cfg.produceDropSeeds; }
+
+        @Override
+        public ItemStack getResult() { return new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, cfg.yield); }
+    };
 
     /**
      * The diamond plant instance.

@@ -379,6 +379,83 @@ public class ResynthConfig {
     }
 
     /**
+     * Settings for the mineral plant.
+     */
+    @Name("Plant: Mineral")
+    @Comment("Settings for the mineral plant.")
+    public static final PlantMineral PLANT_MINERAL = new PlantMineral();
+
+    /**
+     * Settings for the mineral plant.
+     */
+    public static class PlantMineral{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 6.0F;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, mineral rock ore will occasionally drop mineral seeds when mined.")
+        public boolean oreDropSeeds = true;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, mineral straw will occasionally turn into mineral seeds when left in water.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from this plants ore block.
+         */
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance this plants ore will drop seeds when mined." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 5.0F;
+
+        /**
+         * The chance of seeds dropping from
+         * this plant types produce.
+         */
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (straw) from this plant type will drop seeds." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 2.5F;
+
+        /**
+         * The number of diamonds the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of diamonds diamond straw will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
+    /**
      * Settings for the diamond plant.
      */
     @Name("Plant: Diamond")
