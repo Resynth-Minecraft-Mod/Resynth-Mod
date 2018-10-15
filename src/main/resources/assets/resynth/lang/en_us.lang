@@ -22,6 +22,7 @@ item.resynth.itemMineralCrystal.name=Mineral Crystal
 ############
 
 #Seeds
+
 item.resynth.seedIron.name=Iron Seeds
 item.resynth.seedGold.name=Gold Seeds
 #crystalline
@@ -35,8 +36,11 @@ item.resynth.seedGlowstone.name=Glowstone Seeds
 #biochemical
 item.resynth.seedEnderpearl.name=Ender Pearl Seeds
 item.resynth.seedGunpowder.name=Gunpowder Seeds
+item.resynth.seedBlaze.name=Blaze Seeds
+item.resynth.seedBone.name=Bone Seeds
 
 #Plants
+
 tile.resynth.plantIron.name=Iron Plant
 tile.resynth.plantGold.name=Gold Plant
 #crystalline
@@ -50,12 +54,16 @@ tile.resynth.plantGlowstone.name=Glowstone Straw Patch
 #biochemical
 tile.resynth.plantEnderpearl.name=Ender Pearl Flower
 tile.resynth.plantGunpowder.name=Gunpowder Flower
+tile.resynth.plantBlaze.name=Blaze Flower
+tile.resynth.plantBone.name=Bone Flower
 
 #Plant Ores
+
 tile.resynth.oreIron.name=Organic Iron Ore
 tile.resynth.oreGold.name=Organic Gold Ore
 
 #Produce
+
 item.resynth.produceDiamond.name=Diamond Straw
 item.resynth.produceRedstone.name=Redstone Straw
 item.resynth.produceLapis.name=Lapis Lazuli Straw
@@ -67,3 +75,5 @@ item.resynth.produceGlowstone.name=Glowstone Straw
 #Mob Produce
 item.resynth.mobproduceEnderpearl.name=Ender Pearl Bulb
 item.resynth.mobproduceGunpowder.name=Gunpowder Bulb
+item.resynth.mobproduceBlaze.name=Blaze Bulb
+item.resynth.mobproduceBone.name=Bone Bulb

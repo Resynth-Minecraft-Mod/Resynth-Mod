@@ -22,6 +22,7 @@ import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.BlockUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
@@ -75,7 +76,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
      * Constructor.
      */
     protected BlockMineralSoil(){
-        super(Material.GROUND, "mineralSoil");
+        super(Material.GRASS, SoundType.GROUND, "mineralSoil");
         this.setHardness(2.0F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(PERCENTAGE, 0));
         this.setLightOpacity(255);

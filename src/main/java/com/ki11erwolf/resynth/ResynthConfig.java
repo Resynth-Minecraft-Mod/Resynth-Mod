@@ -1061,7 +1061,157 @@ public class ResynthConfig {
          * item gives.
          */
         @Name("Yield")
-        @Comment("The amount of quartz quartz straw will give when smelted.")
+        @Comment("The amount of gunpowder gunpowder bulbs will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
+    /**
+     * Settings for the blaze plant.
+     */
+    @Name("Plant: Blaze")
+    @Comment("Settings for the Blaze plant.")
+    public static final PlantBlaze PLANT_BLAZE = new PlantBlaze();
+
+    /**
+     * Settings for the gunpowder plant.
+     */
+    public static class PlantBlaze{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 20.0F;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft mob that represents
+         * this plant drop seeds?
+         */
+        @Name("Do Mobs Drop Seeds")
+        @Comment("If set to true, blaze will sometimes drop seeds when killed.")
+        public boolean mobDropSeeds = true;
+
+        /**
+         * Does the plants produce drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, blaze bulbs will occasionally turn into seeds when thrown.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from this plants minecraft mob.
+         */
+        @Name("Seed Drop Chance From Mob")
+        @Comment("The chance a blaze will drop seeds when killed. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float mobSeedDropChance = 10.0F;
+
+        /**
+         * The chance of seeds dropping from
+         * this plant types produce.
+         */
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 10.0F;
+
+        /**
+         * The number of blaze rod items the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of blaze rods blaze bulbs will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
+    /**
+     * Settings for the bone plant.
+     */
+    @Name("Plant: Bone")
+    @Comment("Settings for the bone plant.")
+    public static final PlantBone PLANT_BONE = new PlantBone();
+
+    /**
+     * Settings for the gunpowder plant.
+     */
+    public static class PlantBone{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 30.0F;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft mob that represents
+         * this plant drop seeds?
+         */
+        @Name("Do Mobs Drop Seeds")
+        @Comment("If set to true, skeletons will sometimes drop seeds when killed.")
+        public boolean mobDropSeeds = true;
+
+        /**
+         * Does the plants produce drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, bone bulbs will occasionally turn into seeds when thrown.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from this plants minecraft mob.
+         */
+        @Name("Seed Drop Chance From Mob")
+        @Comment("The chance a skeleton will drop seeds when killed. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float mobSeedDropChance = 7.0F;
+
+        /**
+         * The chance of seeds dropping from
+         * this plant types produce.
+         */
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 15.0F;
+
+        /**
+         * The number of bone items the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of bones bone bulbs will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;

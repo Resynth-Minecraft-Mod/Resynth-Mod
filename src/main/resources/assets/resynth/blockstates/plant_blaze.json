@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "inventory": [{"model": "resynth:plant/blaze/plant_blaze_7"}],
+    "age=0": { "model": "resynth:plant/blaze/plant_blaze_0" },
+    "age=1": { "model": "resynth:plant/blaze/plant_blaze_1" },
+    "age=2": { "model": "resynth:plant/blaze/plant_blaze_2" },
+    "age=3": { "model": "resynth:plant/blaze/plant_blaze_3" },
+    "age=4": { "model": "resynth:plant/blaze/plant_blaze_4" },
+    "age=5": { "model": "resynth:plant/blaze/plant_blaze_5" },
+    "age=6": { "model": "resynth:plant/blaze/plant_blaze_6" },
+    "age=7": { "model": "resynth:plant/blaze/plant_blaze_7" }
+  }
+}
