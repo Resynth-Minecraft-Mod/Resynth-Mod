@@ -527,6 +527,35 @@ public final class ResynthPlants {
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
     };
 
+    /**
+     * The spider eye plant instance.
+     */
+    public static final PlantBiochemical PLANT_SPIDEREYE
+            = new PlantBiochemical("spidereye", EntitySpider.class){
+        ResynthConfig.PlantSpidereye cfg = ResynthConfig.PLANT_SPIDEREYE;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.SPIDER_EYE, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+    };
+
     //Static class.
     private ResynthPlants(){}
 
