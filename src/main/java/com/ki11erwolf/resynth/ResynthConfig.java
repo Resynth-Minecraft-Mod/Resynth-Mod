@@ -2051,7 +2051,7 @@ public class ResynthConfig {
     public static final PlantPrismarineShard PLANT_PRISMARINE_SHARD = new PlantPrismarineShard();
 
     /**
-     * Settings for the prismarine  plant.
+     * Settings for the prismarine shard plant.
      */
     public static class PlantPrismarineShard{
 
@@ -2114,6 +2114,82 @@ public class ResynthConfig {
          */
         @Name("Yield")
         @Comment("The amount of prismarine shard items prismarine shard bulbs will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
+    /**
+     * Settings for the rabbit foot plant.
+     */
+    @Name("Plant: Rabbit Foot")
+    @Comment("Settings for the Rabbit Foot plant.")
+    public static final PlantRabbitFoot PLANT_RABBIT_FOOT = new PlantRabbitFoot();
+
+    /**
+     * Settings for the rabbit foot plant.
+     */
+    public static class PlantRabbitFoot{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 30.0F;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft mob that represents
+         * this plant drop seeds?
+         */
+        @Name("Do Mobs Drop Seeds")
+        @Comment("If set to true, rabbits will sometimes drop seeds when killed.")
+        public boolean mobDropSeeds = true;
+
+        /**
+         * Does the plants produce drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, rabbit foot bulbs will occasionally turn into seeds when thrown.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from this plants minecraft mob.
+         */
+        @Name("Seed Drop Chance From Mob")
+        @Comment("The chance a rabbit will drop seeds when killed." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float mobSeedDropChance = 7.0F;
+
+        /**
+         * The chance of seeds dropping from
+         * this plant types produce.
+         */
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 15.0F;
+
+        /**
+         * The number of rabbit foot items the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of rabbit foot items rabbit foot bulbs will give when smelted.")
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;

@@ -25,6 +25,7 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -741,6 +742,35 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() {return new ItemStack(Items.PRISMARINE_SHARD, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+    };
+
+    /**
+     * The rabbit foot plant instance.
+     */
+    public static final PlantBiochemical PLANT_RABBIT_FOOT
+            = new PlantBiochemical("rabbitFoot", EntityRabbit.class){
+        ResynthConfig.PlantRabbitFoot cfg = ResynthConfig.PLANT_RABBIT_FOOT;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.RABBIT_FOOT, cfg.yield);}
 
         @Override
         protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
