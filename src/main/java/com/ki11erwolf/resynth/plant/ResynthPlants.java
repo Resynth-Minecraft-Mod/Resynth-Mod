@@ -468,6 +468,35 @@ public final class ResynthPlants {
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
     };
 
+    /**
+     * The ghast plant instance.
+     */
+    public static final PlantBiochemical PLANT_GHAST
+            = new PlantBiochemical("ghast", EntityGhast.class){
+        ResynthConfig.PlantGhast cfg = ResynthConfig.PLANT_GHAST;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.GHAST_TEAR, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+    };
+
     //Static class.
     private ResynthPlants(){}
 

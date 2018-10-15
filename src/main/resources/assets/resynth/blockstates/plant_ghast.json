@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "inventory": [{"model": "resynth:plant/ghast/plant_ghast_7"}],
+    "age=0": { "model": "resynth:plant/ghast/plant_ghast_0" },
+    "age=1": { "model": "resynth:plant/ghast/plant_ghast_1" },
+    "age=2": { "model": "resynth:plant/ghast/plant_ghast_2" },
+    "age=3": { "model": "resynth:plant/ghast/plant_ghast_3" },
+    "age=4": { "model": "resynth:plant/ghast/plant_ghast_4" },
+    "age=5": { "model": "resynth:plant/ghast/plant_ghast_5" },
+    "age=6": { "model": "resynth:plant/ghast/plant_ghast_6" },
+    "age=7": { "model": "resynth:plant/ghast/plant_ghast_7" }
+  }
+}
