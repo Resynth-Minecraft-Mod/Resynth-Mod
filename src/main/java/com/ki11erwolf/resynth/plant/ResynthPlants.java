@@ -21,10 +21,7 @@ import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
 import com.ki11erwolf.resynth.plant.item.ItemPlantMobProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantOreProduce;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -384,7 +381,7 @@ public final class ResynthPlants {
     };
 
     /**
-     * The gunpowder plant instance.
+     * The bone plant instance.
      */
     public static final PlantBiochemical PLANT_BONE
             = new PlantBiochemical("bone", EntitySkeleton.class){
@@ -392,6 +389,35 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() {return new ItemStack(Items.BONE, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+    };
+
+    /**
+     * The string plant instance.
+     */
+    public static final PlantBiochemical PLANT_STRING
+            = new PlantBiochemical("string", EntitySpider.class){
+        ResynthConfig.PlantString cfg = ResynthConfig.PLANT_STRING;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.STRING, cfg.yield);}
 
         @Override
         protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}

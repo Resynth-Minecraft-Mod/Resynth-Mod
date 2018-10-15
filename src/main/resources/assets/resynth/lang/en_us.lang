@@ -38,6 +38,7 @@ item.resynth.seedEnderpearl.name=Ender Pearl Seeds
 item.resynth.seedGunpowder.name=Gunpowder Seeds
 item.resynth.seedBlaze.name=Blaze Seeds
 item.resynth.seedBone.name=Bone Seeds
+item.resynth.seedString.name=String Seeds
 
 #Plants
 
@@ -56,6 +57,7 @@ tile.resynth.plantEnderpearl.name=Ender Pearl Flower
 tile.resynth.plantGunpowder.name=Gunpowder Flower
 tile.resynth.plantBlaze.name=Blaze Flower
 tile.resynth.plantBone.name=Bone Flower
+tile.resynth.plantString.name=String Flower
 
 #Plant Ores
 
@@ -77,3 +79,4 @@ item.resynth.mobproduceEnderpearl.name=Ender Pearl Bulb
 item.resynth.mobproduceGunpowder.name=Gunpowder Bulb
 item.resynth.mobproduceBlaze.name=Blaze Bulb
 item.resynth.mobproduceBone.name=Bone Bulb
+item.resynth.mobproduceString.name=String Bulb
