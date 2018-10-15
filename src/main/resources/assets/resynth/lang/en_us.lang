@@ -39,6 +39,7 @@ item.resynth.seedGunpowder.name=Gunpowder Seeds
 item.resynth.seedBlaze.name=Blaze Seeds
 item.resynth.seedBone.name=Bone Seeds
 item.resynth.seedString.name=String Seeds
+item.resynth.seedFeather.name=Feather Seeds
 
 #Plants
 
@@ -58,6 +59,7 @@ tile.resynth.plantGunpowder.name=Gunpowder Flower
 tile.resynth.plantBlaze.name=Blaze Flower
 tile.resynth.plantBone.name=Bone Flower
 tile.resynth.plantString.name=String Flower
+tile.resynth.plantFeather.name=Feather Flower
 
 #Plant Ores
 
@@ -80,3 +82,4 @@ item.resynth.mobproduceGunpowder.name=Gunpowder Bulb
 item.resynth.mobproduceBlaze.name=Blaze Bulb
 item.resynth.mobproduceBone.name=Bone Bulb
 item.resynth.mobproduceString.name=String Bulb
+item.resynth.mobproduceFeather.name=Feather Bulb

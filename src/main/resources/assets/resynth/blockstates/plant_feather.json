@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "inventory": [{"model": "resynth:plant/feather/plant_feather_7"}],
+    "age=0": { "model": "resynth:plant/feather/plant_feather_0" },
+    "age=1": { "model": "resynth:plant/feather/plant_feather_1" },
+    "age=2": { "model": "resynth:plant/feather/plant_feather_2" },
+    "age=3": { "model": "resynth:plant/feather/plant_feather_3" },
+    "age=4": { "model": "resynth:plant/feather/plant_feather_4" },
+    "age=5": { "model": "resynth:plant/feather/plant_feather_5" },
+    "age=6": { "model": "resynth:plant/feather/plant_feather_6" },
+    "age=7": { "model": "resynth:plant/feather/plant_feather_7" }
+  }
+}
