@@ -50,6 +50,7 @@ item.resynth.seedInk.name=Ink Seeds
 item.resynth.seedLeather.name=Leather Seeds
 item.resynth.seedFlesh.name=Rotten Flesh Seeds
 item.resynth.seedPrismarineCrystal.name=Prismarine Crystal Seeds
+item.resynth.seedPrismarineShard.name=Prismarine Shard Seeds
 
 #Plants
 
@@ -79,6 +80,7 @@ tile.resynth.plantInk.name=Ink Flower
 tile.resynth.plantLeather.name=Leather Flower
 tile.resynth.plantFlesh.name=Rotten Flesh Flower
 tile.resynth.plantPrismarineCrystall.name=Prismarine Crystal Flower
+tile.resynth.plantPrismarineShard.name=Prismarine Shard Flower
 
 #Plant Ores
 
@@ -112,3 +114,4 @@ item.resynth.mobproduceInk.name=Ink Bulb
 item.resynth.mobproduceLeather.name=Leather Bulb
 item.resynth.mobproduceFlesh.name=Rotten Flesh Bulb
 item.resynth.mobproducePrismarineCrystal.name=Prismarine Crystall Bulb
+item.resynth.mobproducePrismarineShard.name=Prismarine Shard Bulb

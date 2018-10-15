@@ -732,6 +732,35 @@ public final class ResynthPlants {
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
     };
 
+    /**
+     * The prismarine shard plant instance.
+     */
+    public static final PlantBiochemical PLANT_PRISMARINE_SHARD
+            = new PlantBiochemical("prismarineShard", EntityGuardian.class){
+        ResynthConfig.PlantPrismarineShard cfg = ResynthConfig.PLANT_PRISMARINE_SHARD;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.PRISMARINE_SHARD, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+    };
+
     //Static class.
     private ResynthPlants(){}
 
