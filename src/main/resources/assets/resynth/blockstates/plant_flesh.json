@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "inventory": [{"model": "resynth:plant/flesh/plant_flesh_7"}],
+    "age=0": { "model": "resynth:plant/flesh/plant_flesh_0" },
+    "age=1": { "model": "resynth:plant/flesh/plant_flesh_1" },
+    "age=2": { "model": "resynth:plant/flesh/plant_flesh_2" },
+    "age=3": { "model": "resynth:plant/flesh/plant_flesh_3" },
+    "age=4": { "model": "resynth:plant/flesh/plant_flesh_4" },
+    "age=5": { "model": "resynth:plant/flesh/plant_flesh_5" },
+    "age=6": { "model": "resynth:plant/flesh/plant_flesh_6" },
+    "age=7": { "model": "resynth:plant/flesh/plant_flesh_7" }
+  }
+}

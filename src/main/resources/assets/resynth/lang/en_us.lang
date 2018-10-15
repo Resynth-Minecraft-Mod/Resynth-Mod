@@ -48,6 +48,7 @@ item.resynth.seedSlime.name=Slime Seeds
 item.resynth.seedShulker.name=Shulker Seeds
 item.resynth.seedInk.name=Ink Seeds
 item.resynth.seedLeather.name=Leather Seeds
+item.resynth.seedFlesh.name=Rotten Flesh Seeds
 
 #Plants
 
@@ -75,6 +76,7 @@ tile.resynth.plantSlime.name=Slime Flower
 tile.resynth.plantShulker.name=Shulker Flower
 tile.resynth.plantInk.name=Ink Flower
 tile.resynth.plantLeather.name=Leather Flower
+tile.resynth.plantFlesh.name=Rotten Flesh Flower
 
 #Plant Ores
 
@@ -106,3 +108,4 @@ item.resynth.mobproduceSlime.name=Slime Bulb
 item.resynth.mobproduceShulker.name=Shulker Bulb
 item.resynth.mobproduceInk.name=Ink Bulb
 item.resynth.mobproduceLeather.name=Leather Bulb
+item.resynth.mobproduceLeather.name=Rotten Flesh Bulb

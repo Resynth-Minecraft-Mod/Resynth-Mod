@@ -674,6 +674,35 @@ public final class ResynthPlants {
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
     };
 
+    /**
+     * The flesh plant instance.
+     */
+    public static final PlantBiochemical PLANT_FLESH
+            = new PlantBiochemical("flesh", EntityZombie.class){
+        ResynthConfig.PlantFlesh cfg = ResynthConfig.PLANT_FLESH;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.ROTTEN_FLESH, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+    };
+
     //Static class.
     private ResynthPlants(){}
 
