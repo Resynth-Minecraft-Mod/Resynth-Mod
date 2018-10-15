@@ -5,7 +5,7 @@ tile.noname.noblock.name=Example Block
 #Tabs
 itemGroup.resynth.tabResynth=Resynth
 itemGroup.resynth.tabResynthSeeds=Resynth Seeds
-itemGroup.resynth.rabResynthProduce=Resynth Produce
+itemGroup.resynth.tabResynthProduce=Resynth Produce
 
 #Blocks
 tile.resynth.blockTest.name=Test Block
@@ -45,6 +45,7 @@ item.resynth.seedGhast.name=Ghast Seeds
 item.resynth.seedNetherstar.name=Nether Star Seeds
 item.resynth.seedSpidereye.name=Spider Eye Seeds
 item.resynth.seedSlime.name=Slime Seeds
+item.resynth.seedShulker.name=Shulker Seeds
 
 #Plants
 
@@ -69,6 +70,7 @@ tile.resynth.plantGhast.name=Ghast Flower
 tile.resynth.plantNetherstar.name=Nether Star Flower
 tile.resynth.plantSpidereye.name=Spider Eye Flower
 tile.resynth.plantSlime.name=Slime Flower
+tile.resynth.plantShulker.name=Shulker Flower
 
 #Plant Ores
 
@@ -86,6 +88,7 @@ item.resynth.produceQuartz.name=Quartz Straw
 item.resynth.produceGlowstone.name=Glowstone Straw
 
 #Mob Produce
+
 item.resynth.mobproduceEnderpearl.name=Ender Pearl Bulb
 item.resynth.mobproduceGunpowder.name=Gunpowder Bulb
 item.resynth.mobproduceBlaze.name=Blaze Bulb
@@ -96,3 +99,4 @@ item.resynth.mobproduceGhast.name=Ghast Bulb
 item.resynth.mobproduceNetherstar.name=Nether Star Bulb
 item.resynth.mobproduceSpidereye.name=Spider Eye Bulb
 item.resynth.mobproduceSlime.name=Slime Bulb
+item.resynth.mobproduceShulker.name=Shulker Bulb
