@@ -84,13 +84,17 @@ public class ResynthMod {
     private static Logger logger;
 
     /**
+     * The resynth world generator instance.
+     */
+    private static ResynthWorldGen worldGen;
+
+    /**
      * Stage 1 of 3 in the initialization event.
      *
      * @param event pre init event.
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
-
         logger = event.getModLog();
         logger.info("Entering pre-init phase...");
         proxy.preInit(event);
@@ -105,7 +109,8 @@ public class ResynthMod {
     public void init(FMLInitializationEvent event){
         logger.info("Entering init phase...");
         proxy.init(event);
-        GameRegistry.registerWorldGenerator(ResynthWorldGen.INSTANCE, 0);
+        worldGen = new ResynthWorldGen();
+        worldGen.init();
         ResynthFurnaceRecipes.registerFurnaceRecipes();
     }
 

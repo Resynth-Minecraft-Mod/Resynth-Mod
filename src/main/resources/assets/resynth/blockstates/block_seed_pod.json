@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "resynth:block_seed_pod"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

@@ -356,6 +356,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -385,6 +388,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -414,6 +420,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -443,6 +452,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -472,6 +484,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -501,6 +516,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -530,6 +548,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -559,6 +580,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -588,6 +612,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -617,6 +644,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -646,6 +676,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -675,6 +708,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -704,6 +740,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -733,6 +772,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -762,6 +804,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -791,6 +836,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     /**
@@ -820,6 +868,9 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
 
     //Static class.

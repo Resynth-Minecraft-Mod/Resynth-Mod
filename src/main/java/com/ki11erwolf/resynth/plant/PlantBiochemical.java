@@ -159,6 +159,12 @@ public abstract class PlantBiochemical {
     protected abstract boolean doesProduceDropSeeds();
 
     /**
+     * @return the chance a mystical seed pod will drop this plant
+     * types seeds.
+     */
+    public abstract float getSeedPodDropPercentage();
+
+    /**
      * Handles distributing seeds when a mob is killed by a player.
      *
      * @param deathEvent {@link net.minecraftforge.event.entity.living.LivingDeathEvent}

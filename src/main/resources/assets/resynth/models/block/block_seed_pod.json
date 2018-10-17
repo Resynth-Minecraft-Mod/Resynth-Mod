@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "resynth:blocks/mystical_seed_pod"
+  }
+}

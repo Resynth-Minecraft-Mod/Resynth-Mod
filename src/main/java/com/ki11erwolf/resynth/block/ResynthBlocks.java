@@ -36,6 +36,11 @@ public class ResynthBlocks {
     public static final ResynthBlock BLOCK_MINERAL_SOIL = new BlockMineralSoil().register();
 
     /**
+     * Mystical Seed Pos. The random seed dropper.
+     */
+    public static final ResynthBlock BLOCK_SEED_POD = new BlockSeedPod().register();
+
+    /**
      * @return an array of all the registered resynth blocks.
      */
     public static ResynthBlock[] getBlocks(){

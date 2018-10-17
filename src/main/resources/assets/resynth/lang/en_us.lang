@@ -11,6 +11,7 @@ itemGroup.resynth.tabResynthProduce=Resynth Produce
 tile.resynth.blockTest.name=Test Block
 tile.resynth.blockMineralOre.name=Mineral Infused Stone
 tile.resynth.blockMineralSoil.name=Mineral Enriched Soil
+tile.resynth.blockSeedPod.name=Mystical Seed Pod
 
 #Items
 item.resynth.itemTest.name=Test Item

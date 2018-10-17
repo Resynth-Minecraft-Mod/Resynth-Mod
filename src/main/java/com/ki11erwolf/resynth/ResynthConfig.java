@@ -130,7 +130,7 @@ public class ResynthConfig {
         @Comment("The number of ore veins (clusters) in a chunk. ")
         @RangeInt(min = 1, max = 32)
         @RequiresMcRestart
-        public int perChunk = 2;
+        public int perChunk = 5;
 
         /**
          * Minimum height to generate the ore veins.
@@ -149,6 +149,100 @@ public class ResynthConfig {
         @RangeInt(min = 3, max = 254)
         @RequiresMcRestart
         public int maxHeight = 4;
+
+        /**
+         * The average number of blocks per vein.
+         */
+        @Name("Block Count")
+        @Comment("The average number of blocks per ore vein")
+        @RangeInt(min = 1, max = 10_000)
+        @RequiresMcRestart
+        public int blockCount = 10;
+    }
+
+    /**
+     * All settings relating to the mystical seed pod.
+     */
+    @Name("Mystical Seed Pod")
+    @Comment("Settings for the Mystical Seed Pod and its world generation")
+    @RequiresMcRestart
+    public static final MysticalSeedPod MYSTICAL_SEED_POD = new MysticalSeedPod();
+
+    /**
+     * All settings relating to the mystical seed pod.
+     */
+    public static class MysticalSeedPod {
+        /**
+         * Mystical seed pod world gen toggle.
+         */
+        @Name("Generate Mystical Seed Pods")
+        @Comment("If true, Mystical Seed Pods will generate in the world.")
+        @RequiresMcRestart
+        public boolean generate = true;
+
+        /**
+         * Seed pod drop seeds toggle.
+         */
+        @Name("Should Drop Seeds")
+        @Comment("If true, Mystical Seed Pods will drop a random Biochemical seed." +
+                "If false, the plant block will be dropped instead. This offers a way to obtain" +
+                " biochemical seeds in peaceful mode.")
+        public boolean dropSeeds = false;
+
+        /**
+         * If false, has the chance to drop no item.
+         */
+        @Name("Should Always Drop Seeds")
+        @Comment("If false, Mystical Seed Pods have a chance to drop no seeds.")
+        public boolean alwaysDropSeeds = false;
+
+        /**
+         * Number of attempts at finding a suitable seed type to
+         * drop before giving up.
+         */
+        @Name("Seed Attempts Per Break")
+        @Comment("The number of times a Mystical Seed Pod will calculate the chance of the randomly" +
+                " selected seeds" +
+                " dropping before giving up. Making this number too high may affect performance. " +
+                " Making this number too low will affect seed drop chance calculations")
+        @RangeInt(min = 10, max = 1_000)
+        public int triesPerBreak = 30;
+
+        /**
+         * Number of flower fields (clusters) to generate in a given chunk.
+         */
+        @Name("Fields Per Chunk")
+        @Comment("The average number of flower fields (clusters) in a chunk. ")
+        @RangeInt(min = 1, max = 32)
+        @RequiresMcRestart
+        public int perChunk = 25;
+
+        /**
+         * Minimum height to generate the fields.
+         */
+        @Name("Minimum Height")
+        @Comment("The minimum block height the flower fields will spawn at.")
+        @RangeInt(min = 2, max = 252)
+        @RequiresMcRestart
+        public int minHeight = 35;
+
+        /**
+         * Maximum height to generate the fields.
+         */
+        @Name("Maximum Height")
+        @Comment("The maximum block height the flower fields will spawn at.")
+        @RangeInt(min = 3, max = 254)
+        @RequiresMcRestart
+        public int maxHeight = 110;
+
+        /**
+         * The average number of blocks per field.
+         */
+        @Name("Block Count")
+        @Comment("The average number of plants per field")
+        @RangeInt(min = 1, max = 10_000)
+        @RequiresMcRestart
+        public int blockCount = 6;
     }
 
     /**
@@ -1074,13 +1168,19 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 20F;
     }
 
     /**
-     * Settings for the gunpowder plant.
+     * Settings for the ender pearl plant.
      */
     @Name("Plant: Gunpowder")
-    @Comment("Settings for the Gunpowder plant.")
+    @Comment("Settings for the Ender Pearl plant.")
     public static final PlantGunpowder PLANT_GUNPOWDER = new PlantGunpowder();
 
     /**
@@ -1149,6 +1249,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 30F;
     }
 
     /**
@@ -1224,6 +1330,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 15F;
     }
 
     /**
@@ -1299,6 +1411,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 2;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 30F;
     }
 
     /**
@@ -1374,6 +1492,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 30F;
     }
 
     /**
@@ -1449,6 +1573,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 2;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 35F;
     }
 
     /**
@@ -1524,6 +1654,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 10F;
     }
 
     /**
@@ -1599,6 +1735,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 5F;
     }
 
     /**
@@ -1674,6 +1816,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 25F;
     }
 
     /**
@@ -1749,6 +1897,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 3;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 20F;
     }
 
     /**
@@ -1824,6 +1978,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 10F;
     }
 
     /**
@@ -1899,6 +2059,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 30F;
     }
 
     /**
@@ -1974,6 +2140,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 25F;
     }
 
     /**
@@ -2049,6 +2221,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 40F;
     }
 
     /**
@@ -2125,6 +2303,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 2;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 20F;
     }
 
     /**
@@ -2201,6 +2385,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 2;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 20F;
     }
 
     /**
@@ -2277,6 +2467,12 @@ public class ResynthConfig {
         @RangeInt(min = 1, max = 64)
         @RequiresMcRestart
         public int yield = 1;
+
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 15F;
     }
 
     /**

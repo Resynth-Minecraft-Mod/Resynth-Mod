@@ -171,11 +171,6 @@ public abstract class PlantCrystalline {
         if(event.getPlayer() == null)
             return;
 
-        //Added log for future testing purposes.
-        if(!(event.getPlayer().getHeldItemMainhand().getItem().canHarvestBlock(event.getState())))
-            ResynthMod.getLogger().warn("Ore broken with item that cannot harvest: "
-                    + event.getPlayer().getHeldItemMainhand().getItem().getClass().getCanonicalName());
-
         if(event.getPlayer().isCreative())
             return;
 
@@ -194,6 +189,11 @@ public abstract class PlantCrystalline {
                 return;
 
             if(block == plant.seedOre){
+                //Added log for future testing purposes.
+                if(!(event.getPlayer().getHeldItemMainhand().getItem().canHarvestBlock(event.getState())))
+                    ResynthMod.getLogger().warn("Ore broken with item that cannot harvest: "
+                            + event.getPlayer().getHeldItemMainhand().getItem().getClass().getCanonicalName());
+
                 if(MathUtil.chance(plant.getOreSeedDropChance())){
                     world.spawnEntity(new EntityItem(world, x, y, z, new ItemStack(plant.seeds, 1)));
                     event.setCanceled(true);
