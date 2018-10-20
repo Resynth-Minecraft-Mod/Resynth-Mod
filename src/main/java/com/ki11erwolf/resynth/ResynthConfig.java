@@ -37,6 +37,41 @@ public class ResynthConfig {
     private ResynthConfig(){}
 
     /**
+     * Settings related to core of resynth.
+     */
+    @Name("Resynth")
+    @Comment("Settings for the Resynth mod itself.")
+    public static final Resynth RESYNTH = new Resynth();
+
+    /**
+     * Settings related to the core of resynth.
+     */
+    public static class Resynth {
+
+        /**
+         * Disables the google analytics event from firing when true.
+         */
+        @Name("Disable Analytics")
+        @Comment("Set to true to disable the mods analytics functionality.")
+        public boolean disableAnalytics = false;
+
+        /**
+         * Disables all version checks when true.
+         */
+        @Name("Disable Version Checks")
+        @Comment("Set to true to disable everything related to version checking")
+        public boolean disableVersionChecks = false;
+
+        /**
+         * Disables out of date messages from appearing in chat.
+         */
+        @Name("Disable Version Chat Message")
+        @Comment("Set to true to disable the chat message that" +
+                " notifies you when your version of resynth is out of date")
+        public boolean disableVersionMessage = false;
+    }
+
+    /**
      * Configuration settings for the ore the mod uses.
      */
     @Name("Mineral Stone and Mineral Rock")

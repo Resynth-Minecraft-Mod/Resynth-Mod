@@ -17,13 +17,18 @@
 package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.proxy.IProxy;
+import com.ki11erwolf.resynth.versioning.ModVersionManager;
+import com.ki11erwolf.resynth.versioning.ModVersionObject;
+import com.ki11erwolf.resynth.versioning.VersionManagerBuilder;
+import dmurph.tracking.AnalyticsConfigData;
+import dmurph.tracking.AnalyticsRequestData;
+import dmurph.tracking.JGoogleAnalyticsTracker;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -63,6 +68,11 @@ public class ResynthMod {
     public static final String MOD_PACKAGE = "com.ki11erwolf.resynth";
 
     /**
+     * The URL to versions.json file.
+     */
+    public static final String UPDATE_URL = "https://resynth-minecraft-mod.github.io/mod/versions.json";
+
+    /**
      * FML initialized proxy. Can be server side proxy, client side proxy or both.
      */
     @SidedProxy(clientSide = ResynthMod.CLIENT_PROXY, serverSide = ResynthMod.SERVER_PROXY)
@@ -98,6 +108,17 @@ public class ResynthMod {
         logger = event.getModLog();
         logger.info("Entering pre-init phase...");
         proxy.preInit(event);
+
+        VersionManagerBuilder resynthVMBuilder
+                = new VersionManagerBuilder(MOD_ID)
+                .setEnabled(!ResynthConfig.RESYNTH.disableVersionChecks)
+                .setOutOfDateConsoleWarningEnabled(!ResynthConfig.RESYNTH.disableVersionMessage)
+                .addVersionJsonFileURL(UPDATE_URL);
+        ModVersionManager resynthVersionManager = new ModVersionManager(resynthVMBuilder);
+        resynthVersionManager.preInit();
+
+        if(!ResynthConfig.RESYNTH.disableAnalytics)
+            sendAnalyticsEvent();
     }
 
     /**
@@ -130,5 +151,57 @@ public class ResynthMod {
      */
     public static Logger getLogger(){
         return logger;
+    }
+
+    //***************************
+    //     Google Analytics
+    //***************************
+
+    /**
+     * The Google Analytics tracking code for resynth.
+     */
+    private static final String TRACKING_CODE = "UA-127648959-1";
+
+    /**
+     * The mods beacon page - used as an identifier.
+     */
+    private static final String BEACON_PAGE = "/mod/call-home.html";
+
+    /**
+     * The pages title.
+     */
+    private static final String TITLE = "Resynth - Call Home";
+
+    /**
+     * The resynth host name.
+     */
+    private static final String HOST_NAME = "Https://resynth-minecraft-mod.github.io";
+
+    /**
+     * The events category and action identifiers.
+     */
+    private static final String
+            EVENT_CATEGORY = "Resynth-Mod-Jar",
+            EVENT_ACTION = "Connect";
+
+    /**
+     * Sends the connected event to google analytics.
+     */
+    private static void sendAnalyticsEvent(){
+        ModVersionManager.disableSSLVerification();
+        AnalyticsConfigData data = new AnalyticsConfigData(TRACKING_CODE);
+        JGoogleAnalyticsTracker tracker = new JGoogleAnalyticsTracker(data,
+                JGoogleAnalyticsTracker.GoogleAnalyticsVersion.V_4_7_2);
+
+        AnalyticsRequestData resynthModEvent = new AnalyticsRequestData();
+        resynthModEvent.setPageURL(BEACON_PAGE);
+        resynthModEvent.setPageTitle(TITLE);
+        resynthModEvent.setHostName(HOST_NAME);
+
+        resynthModEvent.setEventCategory(EVENT_CATEGORY);
+        resynthModEvent.setEventAction(EVENT_ACTION);
+
+        tracker.makeCustomRequest(resynthModEvent);
+        ModVersionManager.enableSSLVerification();
     }
 }

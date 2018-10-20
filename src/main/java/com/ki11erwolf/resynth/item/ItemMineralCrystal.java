@@ -108,7 +108,7 @@ public class ItemMineralCrystal extends ResynthItem {
                 double d0 = itemRand.nextGaussian() * 0.02D;
                 double d1 = itemRand.nextGaussian() * 0.02D;
                 double d2 = itemRand.nextGaussian() * 0.02D;
-                worldIn.spawnParticle(EnumParticleTypes.SPELL,
+                worldIn.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK,
                         (double)((float)pos.getX() + itemRand.nextFloat()),
                         (double)pos.getY() + (double)itemRand.nextFloat()
                                 * iblockstate.getBoundingBox(worldIn, pos).maxY,
@@ -120,7 +120,7 @@ public class ItemMineralCrystal extends ResynthItem {
                 double d0 = itemRand.nextGaussian() * 0.02D;
                 double d1 = itemRand.nextGaussian() * 0.02D;
                 double d2 = itemRand.nextGaussian() * 0.02D;
-                worldIn.spawnParticle(EnumParticleTypes.SPELL,
+                worldIn.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK,
                         (double)((float)pos.getX() + itemRand.nextFloat()),
                         (double)pos.getY() + (double)itemRand.nextFloat() * 1.0f,
                         (double)((float)pos.getZ() + itemRand.nextFloat()), d0, d1, d2);
