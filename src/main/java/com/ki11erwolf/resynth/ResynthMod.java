@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.proxy.IProxy;
 import com.ki11erwolf.resynth.versioning.ModVersionManager;
-import com.ki11erwolf.resynth.versioning.ModVersionObject;
 import com.ki11erwolf.resynth.versioning.VersionManagerBuilder;
 import dmurph.tracking.AnalyticsConfigData;
 import dmurph.tracking.AnalyticsRequestData;
@@ -55,7 +54,7 @@ public class ResynthMod {
     /**
      * Resynth version.
      */
-    public static final String MOD_VERSION = "1.1.0";
+    public static final String MOD_VERSION = "1.1.1";
 
     /**
      * Minecraft version.
@@ -96,6 +95,7 @@ public class ResynthMod {
     /**
      * The resynth world generator instance.
      */
+    @SuppressWarnings("FieldCanBeLocal")
     private static ResynthWorldGen worldGen;
 
     /**
