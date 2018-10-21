@@ -30,6 +30,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
+import java.net.InetAddress;
+
 /**
  * Resynth mod class.
  */
@@ -118,7 +120,8 @@ public class ResynthMod {
         resynthVersionManager.preInit();
 
         if(!ResynthConfig.RESYNTH.disableAnalytics)
-            sendAnalyticsEvent();
+            try{sendAnalyticsEvent();}
+            catch (Exception e){getLogger().error("Failed to send analytics event", e);}
     }
 
     /**
@@ -163,26 +166,28 @@ public class ResynthMod {
     private static final String TRACKING_CODE = "UA-127648959-1";
 
     /**
-     * The mods beacon page - used as an identifier.
+     * The mods beacon page - used as an identifier (page does not exist).
      */
-    private static final String BEACON_PAGE = "/mod/call-home.html";
+    private static final String BEACON_PAGE = "/mod/mod-client-connect";
 
     /**
      * The pages title.
      */
-    private static final String TITLE = "Resynth - Call Home";
+    private static final String TITLE = "Resynth - Mod Client Connect";
 
     /**
      * The resynth host name.
      */
-    private static final String HOST_NAME = "Https://resynth-minecraft-mod.github.io";
+    private static final String HOST_NAME = "https://resynth-minecraft-mod.github.io";
 
     /**
-     * The events category and action identifiers.
+     * The events category, action and label identifiers.
      */
     private static final String
             EVENT_CATEGORY = "Resynth-Mod-Jar",
-            EVENT_ACTION = "Connect";
+            EVENT_ACTION = "Mod-Client-Connect-"
+                    + MOD_VERSION + MC_VERSION,
+            EVENT_LABEL = "IDENTIFIER-" + getID();
 
     /**
      * Sends the connected event to google analytics.
@@ -200,8 +205,47 @@ public class ResynthMod {
 
         resynthModEvent.setEventCategory(EVENT_CATEGORY);
         resynthModEvent.setEventAction(EVENT_ACTION);
+        resynthModEvent.setEventLabel(EVENT_LABEL);
 
         tracker.makeCustomRequest(resynthModEvent);
         ModVersionManager.enableSSLVerification();
+    }
+
+    /**
+     * Attempts to get the first host address of the running
+     * machine.
+     *
+     * This servers to identify returning users
+     * from new users. This will fail at times
+     * and isn't reliable but does server its
+     * purpose of successfully identifying a
+     * returning user at least one or twice.
+     *
+     * This only gets the host address - no personal
+     * information such as user names. The host address
+     * can chance quite easily and doesn't tie the user
+     * down to the value.
+     *
+     * @return the first found host address found or
+     * {@code "Unknown"}.
+     */
+    private static String getID() {
+        String hostAddress = "Unknown";
+
+        try {
+            //Use first identifier found.
+            //This isn't perfect and will fail to points but
+            //will serve its purpose of identifying returning users.
+            for (InetAddress aMac : InetAddress.getAllByName(InetAddress.getLocalHost().getHostName())) {
+                if(aMac.getHostAddress() != null){
+                    hostAddress = aMac.getHostAddress();
+                    return  hostAddress;
+                }
+            }
+        } catch (Exception e) {
+            getLogger().error("Failed to get identifier.", e);
+        }
+
+        return hostAddress;
     }
 }
