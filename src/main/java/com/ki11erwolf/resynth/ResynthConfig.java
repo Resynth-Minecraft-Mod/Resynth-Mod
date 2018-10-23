@@ -16,9 +16,11 @@
 
 package com.ki11erwolf.resynth;
 
+import com.ki11erwolf.resynth.plant.ModPlantCrystalline;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -53,6 +55,7 @@ public class ResynthConfig {
          */
         @Name("Disable Analytics")
         @Comment("Set to true to disable the mods analytics functionality.")
+        @RequiresMcRestart
         public boolean disableAnalytics = false;
 
         /**
@@ -60,6 +63,7 @@ public class ResynthConfig {
          */
         @Name("Disable Version Checks")
         @Comment("Set to true to disable everything related to version checking")
+        @RequiresMcRestart
         public boolean disableVersionChecks = false;
 
         /**
@@ -68,6 +72,7 @@ public class ResynthConfig {
         @Name("Disable Version Chat Message")
         @Comment("Set to true to disable the chat message that" +
                 " notifies you when your version of resynth is out of date")
+        @RequiresMcRestart
         public boolean disableVersionMessage = false;
     }
 
@@ -1204,6 +1209,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -1285,6 +1293,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -1366,6 +1377,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -1447,6 +1461,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 2;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -1528,6 +1545,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -1609,6 +1629,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 2;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -1690,6 +1713,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -1771,6 +1797,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -1852,6 +1881,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -1933,6 +1965,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 3;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -2014,6 +2049,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -2095,6 +2133,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -2176,6 +2217,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -2257,6 +2301,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -2339,6 +2386,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 2;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -2421,6 +2471,9 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 2;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
@@ -2503,11 +2556,124 @@ public class ResynthConfig {
         @RequiresMcRestart
         public int yield = 1;
 
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
         @Name("Mystical Seed Pod Drop Chance")
         @Comment("The chance this plant types seeds will be chosen to drop when a" +
                 " mystical seed pod is broken.")
         @RangeDouble(min = 0.0F, max = 100.0F)
         public float seedPodDropChance = 15F;
+    }
+
+    /*
+        OTHER MOD PLANTS CONFIG.
+     */
+
+    /*
+     * Handles loading config classes for modded plants.
+     */
+    static {
+        if(Loader.isModLoaded(ResynthMod.MODID_AE2))
+            PLANT_CERTUS_QUARTZ = new ModPlantCrystallineCfg(
+                    15.0F,
+                    false,
+                    true,
+                    true,
+                    05.0F,
+                    02.5F,
+                    1
+            );
+        else
+            PLANT_CERTUS_QUARTZ = null;
+    }
+
+    /**
+     * Settings for the certus quartz crystal plant.
+     */
+    @Name("Plant: Certus Quartz Crystal (AE2)")
+    @Comment("Settings for the certus quartz crystal plant.")
+    public static final ModPlantCrystallineCfg PLANT_CERTUS_QUARTZ;
+
+    /**
+     * Configuration class for all mod crystalline plants.
+     */
+    public static class ModPlantCrystallineCfg {
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal;
+
+        /**
+         * Does the modded ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, the ore block for this plant will occasionally drop seeds when mined.")
+        public boolean oreDropSeeds;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, this plants produce will occasionally turn into seeds when left in water.")
+        public boolean produceDropSeeds;
+
+        /**
+         * The chance of seeds dropping
+         * from this plants modded ore block.
+         */
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance this plants ore block will drop seeds when mined." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance;
+
+        /**
+         * The chance of seeds dropping from
+         * this plant types produce.
+         */
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (straw) from this plant type will drop seeds." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance;
+
+        /**
+         * The number of resource items the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of resources the plants produce (straw) will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield;
+
+        private ModPlantCrystallineCfg (
+                float floweringPeriod, boolean canBonemeal,
+                boolean doesOreDropSeeds, boolean doesProduceDropSeeds,
+                float oreSeedDropChance, float produceSeedDropChance, int yield
+        ){
+            this.floweringPeriod = floweringPeriod; this.canBonemeal = canBonemeal;
+            this.oreDropSeeds = doesOreDropSeeds; this.produceDropSeeds = doesProduceDropSeeds;
+            this.oreSeedDropChance = oreSeedDropChance; this.produceSeedDropChance = produceSeedDropChance;
+            this.yield = yield;
+        }
     }
 
     /**

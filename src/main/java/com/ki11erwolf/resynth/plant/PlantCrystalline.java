@@ -87,8 +87,6 @@ public abstract class PlantCrystalline {
 
         this.produce = new ItemPlantOreProduce(name);
         this.seeds = new ItemPlantSeed(plant, name, name);
-
-        this.register();
     }
 
     /**
@@ -115,11 +113,12 @@ public abstract class PlantCrystalline {
     /**
      * Adds this plant to the game.
      */
-    private void register(){
+    protected PlantCrystalline register(){
         ResynthPlantRegistry.addPlant(plant);
         ResynthPlantRegistry.addProduce(produce);
         ResynthPlantRegistry.addSeeds(seeds);
         ResynthPlantRegistry.addPlant(this);
+        return this;
     }
 
     /**

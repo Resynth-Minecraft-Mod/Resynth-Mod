@@ -122,3 +122,12 @@ item.resynth.mobproduceFlesh.name=Rotten Flesh Bulb
 item.resynth.mobproducePrismarineCrystal.name=Prismarine Crystall Bulb
 item.resynth.mobproducePrismarineShard.name=Prismarine Shard Bulb
 item.resynth.mobproduceRabbitFoot.name=Rabbit Foot Bulb
+
+###################
+#    MOD PLANTS   #
+###################
+
+#Applied Energistics 2
+item.resynth.seedAe2Quartz.name=Certus Quartz Crystal Seeds
+tile.resynth.plantAe2Quartz.name=Certus Quartz Crystal Patch
+item.resynth.produceAe2Quartz.name=Cerus Quartz Crystal Straw

@@ -16,6 +16,7 @@
 package com.ki11erwolf.resynth.plant;
 
 import com.ki11erwolf.resynth.ResynthConfig;
+import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
@@ -121,7 +122,7 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() { return new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, cfg.yield); }
-    };
+    }.register();
 
     /**
      * The diamond plant instance.
@@ -149,7 +150,7 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() { return new ItemStack(Items.DIAMOND, cfg.yield); }
-    };
+    }.register();
 
     /**
      * The redstone plant instance.
@@ -178,7 +179,7 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() { return new ItemStack(Items.REDSTONE, cfg.yield); }
-    };
+    }.register();
 
     /**
      * The lapis plant instance.
@@ -207,7 +208,7 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() { return new ItemStack(Items.DYE, cfg.yield, 4); }
-    };
+    }.register();
 
     /**
      * The coal plant instance.
@@ -236,7 +237,7 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() { return new ItemStack(Items.COAL, cfg.yield); }
-    };
+    }.register();
 
     /**
      * The emerald plant instance.
@@ -265,7 +266,7 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() { return new ItemStack(Items.EMERALD, cfg.yield); }
-    };
+    }.register();
 
     /**
      * The quartz plant instance.
@@ -294,7 +295,7 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() { return new ItemStack(Items.QUARTZ, cfg.yield); }
-    };
+    }.register();
 
     /**
      * The glowstone plant instance.
@@ -323,7 +324,7 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() { return new ItemStack(Items.GLOWSTONE_DUST, cfg.yield); }
-    };
+    }.register();
 
     /*
         BIOCHEMICAL
@@ -872,6 +873,42 @@ public final class ResynthPlants {
         @Override
         public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
     };
+
+    /*
+        External Mod Plants
+
+        Plants for other supported mods.
+     */
+
+    /**
+     * The certus quartz crystalline plant for Applied Energistics 2.
+     */
+    public static final ModPlantCrystalline MOD_PLANT_AE2_QUARTZ
+            = new ModPlantCrystalline("ae2Quartz", ResynthMod.MODID_AE2,
+            "quartz_ore", "material", 0) {
+        private final ResynthConfig.ModPlantCrystallineCfg cfg = ResynthConfig.PLANT_CERTUS_QUARTZ;
+
+        @Override
+        protected int getResultCount() {return cfg.yield;}
+
+        @Override
+        protected boolean doesModOreDropSeeds() {return cfg.oreDropSeeds;}
+
+        @Override
+        protected float getModOreSeedDropChance() {return cfg.oreSeedDropChance;}
+
+        @Override
+        protected float getModPlantGrowthChance() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBonemeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getModProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {return cfg.produceDropSeeds;}
+    }.register();
 
     //Static class.
     private ResynthPlants(){}

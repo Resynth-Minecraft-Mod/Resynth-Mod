@@ -39,7 +39,8 @@ import java.net.InetAddress;
         modid = ResynthMod.MOD_ID,
         name = ResynthMod.MOD_NAME,
         version = ResynthMod.MOD_VERSION,
-        acceptedMinecraftVersions = ResynthMod.MC_VERSION
+        acceptedMinecraftVersions = ResynthMod.MC_VERSION,
+        dependencies = "after:appliedenergistics2"
 )
 public class ResynthMod {
 
@@ -78,6 +79,8 @@ public class ResynthMod {
      */
     @SidedProxy(clientSide = ResynthMod.CLIENT_PROXY, serverSide = ResynthMod.SERVER_PROXY)
     public static IProxy proxy;
+
+    public static final String MODID_AE2 = "appliedenergistics2";
 
     /**
      * Path (including pack) to the server proxy class.
@@ -136,6 +139,12 @@ public class ResynthMod {
         worldGen = new ResynthWorldGen();
         worldGen.init();
         ResynthFurnaceRecipes.registerFurnaceRecipes();
+
+        //Prints all registered items to console.
+//        for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
+//            ResynthMod.getLogger().info("R LOC: " + entry.getKey().getResourceDomain() + ":"
+//            + entry.getKey().getResourcePath());
+//        }
     }
 
     /**
