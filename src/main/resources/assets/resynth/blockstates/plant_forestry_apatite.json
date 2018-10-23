@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "inventory": [{"model": "resynth:plant/forestry_apatite/plant_forestry_apatite_7"}],
+    "age=0": { "model": "resynth:plant/forestry_apatite/plant_forestry_apatite_0" },
+    "age=1": { "model": "resynth:plant/forestry_apatite/plant_forestry_apatite_1" },
+    "age=2": { "model": "resynth:plant/forestry_apatite/plant_forestry_apatite_2" },
+    "age=3": { "model": "resynth:plant/forestry_apatite/plant_forestry_apatite_3" },
+    "age=4": { "model": "resynth:plant/forestry_apatite/plant_forestry_apatite_4" },
+    "age=5": { "model": "resynth:plant/forestry_apatite/plant_forestry_apatite_5" },
+    "age=6": { "model": "resynth:plant/forestry_apatite/plant_forestry_apatite_6" },
+    "age=7": { "model": "resynth:plant/forestry_apatite/plant_forestry_apatite_7" }
+  }
+}

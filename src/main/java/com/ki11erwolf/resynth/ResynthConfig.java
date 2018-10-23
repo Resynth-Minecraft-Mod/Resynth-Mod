@@ -16,7 +16,6 @@
 
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.plant.ModPlantCrystalline;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -2586,14 +2585,34 @@ public class ResynthConfig {
             );
         else
             PLANT_CERTUS_QUARTZ = null;
+
+        if(Loader.isModLoaded(ResynthMod.MODID_FORESTRY))
+            PLANT_APATITE = new ModPlantCrystallineCfg(
+                    30.0F,
+                    false,
+                    true,
+                    true,
+                    10.0F,
+                    06.0F,
+                    2
+            );
+        else
+            PLANT_APATITE = null;
     }
 
     /**
      * Settings for the certus quartz crystal plant.
      */
     @Name("Plant: Certus Quartz Crystal (AE2)")
-    @Comment("Settings for the certus quartz crystal plant.")
+    @Comment("Settings for the certus quartz crystal plant from Applied Energistics 2.")
     public static final ModPlantCrystallineCfg PLANT_CERTUS_QUARTZ;
+
+    /**
+     * Settings for the apatite plant.
+     */
+    @Name("Plant: Apatite (Forestry)")
+    @Comment("Settings for the apatite plant from Forestry.")
+    public static final ModPlantCrystallineCfg PLANT_APATITE;
 
     /**
      * Configuration class for all mod crystalline plants.

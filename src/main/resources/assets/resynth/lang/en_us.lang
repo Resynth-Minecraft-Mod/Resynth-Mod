@@ -131,3 +131,8 @@ item.resynth.mobproduceRabbitFoot.name=Rabbit Foot Bulb
 item.resynth.seedAe2Quartz.name=Certus Quartz Crystal Seeds
 tile.resynth.plantAe2Quartz.name=Certus Quartz Crystal Patch
 item.resynth.produceAe2Quartz.name=Cerus Quartz Crystal Straw
+
+#Forestry
+item.resynth.seedForestryApatite.name=Apatite Seeds
+tile.resynth.plantForestryApatite.name=Apatite Patch
+item.resynth.produceForestryApatite.name=Apatite Straw

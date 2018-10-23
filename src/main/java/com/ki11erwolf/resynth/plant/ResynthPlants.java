@@ -881,12 +881,42 @@ public final class ResynthPlants {
      */
 
     /**
-     * The certus quartz crystalline plant for Applied Energistics 2.
+     * The certus quartz crystal plant for Applied Energistics 2.
      */
     public static final ModPlantCrystalline MOD_PLANT_AE2_QUARTZ
             = new ModPlantCrystalline("ae2Quartz", ResynthMod.MODID_AE2,
             "quartz_ore", "material", 0) {
         private final ResynthConfig.ModPlantCrystallineCfg cfg = ResynthConfig.PLANT_CERTUS_QUARTZ;
+
+        @Override
+        protected int getResultCount() {return cfg.yield;}
+
+        @Override
+        protected boolean doesModOreDropSeeds() {return cfg.oreDropSeeds;}
+
+        @Override
+        protected float getModOreSeedDropChance() {return cfg.oreSeedDropChance;}
+
+        @Override
+        protected float getModPlantGrowthChance() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBonemeal() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getModProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {return cfg.produceDropSeeds;}
+    }.register();
+
+    /**
+     * The apatite plant for Forestry.
+     */
+    public static final ModPlantCrystalline MOD_PLANT_FORESTRY_APATITE
+            = new ModPlantCrystalline("forestryApatite", ResynthMod.MODID_FORESTRY,
+            "resources", "apatite", 0) {
+        private final ResynthConfig.ModPlantCrystallineCfg cfg = ResynthConfig.PLANT_APATITE;
 
         @Override
         protected int getResultCount() {return cfg.yield;}

@@ -22,15 +22,20 @@ import com.ki11erwolf.resynth.versioning.VersionManagerBuilder;
 import dmurph.tracking.AnalyticsConfigData;
 import dmurph.tracking.AnalyticsRequestData;
 import dmurph.tracking.JGoogleAnalyticsTracker;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.logging.log4j.Logger;
 
 import java.net.InetAddress;
+import java.util.Map;
 
 /**
  * Resynth mod class.
@@ -81,6 +86,8 @@ public class ResynthMod {
     public static IProxy proxy;
 
     public static final String MODID_AE2 = "appliedenergistics2";
+
+    public static final String MODID_FORESTRY = "forestry";
 
     /**
      * Path (including pack) to the server proxy class.
@@ -141,10 +148,15 @@ public class ResynthMod {
         ResynthFurnaceRecipes.registerFurnaceRecipes();
 
         //Prints all registered items to console.
-//        for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
-//            ResynthMod.getLogger().info("R LOC: " + entry.getKey().getResourceDomain() + ":"
-//            + entry.getKey().getResourcePath());
-//        }
+        for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
+            ResynthMod.getLogger().info("R LOC: " + entry.getKey().getResourceDomain() + ":"
+            + entry.getKey().getResourcePath());
+        }
+
+        for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
+            ResynthMod.getLogger().info("R LOC: " + entry.getKey().getResourceDomain() + ":"
+                    + entry.getKey().getResourcePath());
+        }
     }
 
     /**
