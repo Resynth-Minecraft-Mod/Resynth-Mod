@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "resynth:plant/cobalt/ore_cobalt"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

@@ -52,10 +52,10 @@ public class ResynthConfig {
         /**
          * Disables the google analytics event from firing when true.
          */
-        @Name("Disable Analytics")
-        @Comment("Set to true to disable the mods analytics functionality.")
+        @Name("Disable Analytics (Not in use)")
+        @Comment("Set to true to disable the mods analytics functionality (not in use).")
         @RequiresMcRestart
-        public boolean disableAnalytics = false;
+        public boolean disableAnalytics = true;
 
         /**
          * Disables all version checks when true.
@@ -2570,7 +2570,7 @@ public class ResynthConfig {
      */
 
     /*
-     * Handles loading config classes for modded plants.
+     * Handles loading config classes for modded crystalline plants.
      */
     static {
         if(Loader.isModLoaded(ResynthMod.MODID_AE2))
@@ -2583,8 +2583,7 @@ public class ResynthConfig {
                     02.5F,
                     1
             );
-        else
-            PLANT_CERTUS_QUARTZ = null;
+        else PLANT_CERTUS_QUARTZ = null;
 
         if(Loader.isModLoaded(ResynthMod.MODID_FORESTRY))
             PLANT_APATITE = new ModPlantCrystallineCfg(
@@ -2596,14 +2595,13 @@ public class ResynthConfig {
                     06.0F,
                     2
             );
-        else
-            PLANT_APATITE = null;
+        else PLANT_APATITE = null;
     }
 
     /**
      * Settings for the certus quartz crystal plant.
      */
-    @Name("Plant: Certus Quartz Crystal (AE2)")
+    @Name("Plant: Certus Quartz Crystal (Applied Energistics 2)")
     @Comment("Settings for the certus quartz crystal plant from Applied Energistics 2.")
     public static final ModPlantCrystallineCfg PLANT_CERTUS_QUARTZ;
 
@@ -2684,6 +2682,131 @@ public class ResynthConfig {
         public int yield;
 
         private ModPlantCrystallineCfg (
+                float floweringPeriod, boolean canBonemeal,
+                boolean doesOreDropSeeds, boolean doesProduceDropSeeds,
+                float oreSeedDropChance, float produceSeedDropChance, int yield
+        ){
+            this.floweringPeriod = floweringPeriod; this.canBonemeal = canBonemeal;
+            this.oreDropSeeds = doesOreDropSeeds; this.produceDropSeeds = doesProduceDropSeeds;
+            this.oreSeedDropChance = oreSeedDropChance; this.produceSeedDropChance = produceSeedDropChance;
+            this.yield = yield;
+        }
+    }
+
+    /*
+     * Handles loading config classes for modded metallic plants.
+     */
+    static{
+        if(Loader.isModLoaded(ResynthMod.MODID_TINKERS_CONSTRUCT))
+            PLANT_COBALT = new ModPlantMetallicCfg(
+                    10.0F,
+                    false,
+                    true,
+                    true,
+                    5.0F,
+                    9.0F,
+                    1
+            );
+        else PLANT_COBALT = null;
+
+        if(Loader.isModLoaded(ResynthMod.MODID_TINKERS_CONSTRUCT))
+            PLANT_ARDITE = new ModPlantMetallicCfg(
+                    10.0F,
+                    false,
+                    true,
+                    true,
+                    5.0F,
+                    9.0F,
+                    1
+            );
+        else PLANT_ARDITE = null;
+    }
+
+    /**
+     * Settings for the cobalt plant.
+     */
+    @Name("Plant: Cobalt (Tinkers' Construct)")
+    @Comment("Settings for the Cobalt plant from Tinkers' Construct.")
+    public static final ModPlantMetallicCfg PLANT_COBALT;
+
+    /**
+     * Settings for the cobalt plant.
+     */
+    @Name("Plant: Ardite (Tinkers' Construct)")
+    @Comment("Settings for the Ardite plant from Tinkers' Construct.")
+    public static final ModPlantMetallicCfg PLANT_ARDITE;
+
+    /**
+     * Configuration class for all mod metallic plants.
+     */
+    public static class ModPlantMetallicCfg {
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal;
+
+        /**
+         * Does the modded ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, the ore block for this plant will occasionally drop seeds when mined.")
+        public boolean oreDropSeeds;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Organic Ore Drop Seeds")
+        @Comment("If set to true, this plants produce (organic ore) will occasionally" +
+                "turn into seeds when blown up by TNT")
+        public boolean produceDropSeeds;
+
+        /**
+         * The chance of seeds dropping
+         * from this plants modded ore block.
+         */
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance this plants ore block will drop seeds when mined." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance;
+
+        /**
+         * The chance of seeds dropping from
+         * this plant types produce.
+         */
+        @Name("Seed Drop Chance From Organic Ore")
+        @Comment("The chance the produce (organic ore) from this plant type will drop seeds." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance;
+
+        /**
+         * The number of resource items the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of resources the plants produce (organic ore) will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield;
+
+        private ModPlantMetallicCfg (
                 float floweringPeriod, boolean canBonemeal,
                 boolean doesOreDropSeeds, boolean doesProduceDropSeeds,
                 float oreSeedDropChance, float produceSeedDropChance, int yield

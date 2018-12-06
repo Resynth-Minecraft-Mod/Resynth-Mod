@@ -1,0 +1,7 @@
+{
+  "parent": "resynth:block/plant/plant_metallic_blooming",
+  "textures": {
+    "stem": "resynth:blocks/plants/ardite/ardite_stem_disconnected",
+    "upperstem": "resynth:blocks/plants/ardite/ardite_stem_connected"
+  }
+}

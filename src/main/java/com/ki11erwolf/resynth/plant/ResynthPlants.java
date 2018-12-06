@@ -42,7 +42,7 @@ public final class ResynthPlants {
     /**
      * The iron plant instance.
      */
-    public static final PlantMetallic PLANT_IRON = new PlantMetallic("iron", Blocks.IRON_ORE){
+    public static final PlantMetallic PLANT_IRON = new PlantMetallic("iron", new ItemStack(Blocks.IRON_ORE)){
         @Override
         protected float getFloweringPeriod() {return ResynthConfig.PLANT_IRON.floweringPeriod;}
 
@@ -63,12 +63,12 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() {return new ItemStack(Items.IRON_INGOT, ResynthConfig.PLANT_IRON.yield);}
-    };
+    }.register();
 
     /**
      * The gold plant instance.
      */
-    public static final PlantMetallic PLANT_GOLD = new PlantMetallic("gold", Blocks.GOLD_ORE) {
+    public static final PlantMetallic PLANT_GOLD = new PlantMetallic("gold", new ItemStack(Blocks.GOLD_ORE)) {
         @Override
         protected float getFloweringPeriod() {return ResynthConfig.PLANT_GOLD.floweringPeriod;}
 
@@ -89,7 +89,7 @@ public final class ResynthPlants {
 
         @Override
         public ItemStack getResult() {return new ItemStack(Items.GOLD_INGOT, ResynthConfig.PLANT_GOLD.yield);}
-    };
+    }.register();
 
     /*
         CRYSTALLINE
@@ -938,6 +938,94 @@ public final class ResynthPlants {
 
         @Override
         protected boolean doesModProduceDropSeeds() {return cfg.produceDropSeeds;}
+    }.register();
+
+    /**
+     * Cobalt plant for tinkers' construct.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TC_ORE_COBALT
+            = new ModPlantMetallic("cobalt", "tconstruct", "ore", 0,
+            "ingots", 0) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_COBALT;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
+    /**
+     * Ardite plant for tinkers' construct.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TC_ORE_ARDITE
+            = new ModPlantMetallic("ardite", "tconstruct", "ore", 1,
+            "ingots", 1) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_ARDITE;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
     }.register();
 
     //Static class.

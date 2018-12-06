@@ -92,9 +92,11 @@ public class ModPlant<T> {
             return null;
         }
 
-        if(backingPlant instanceof PlantCrystalline){
+        if(backingPlant instanceof PlantCrystalline)
             ((PlantCrystalline) backingPlant).register();
-        }
+
+        if(backingPlant instanceof PlantMetallic)
+            ((PlantMetallic) backingPlant).register();
 
         return this;
     }

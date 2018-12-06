@@ -45,7 +45,7 @@ import java.util.Map;
         name = ResynthMod.MOD_NAME,
         version = ResynthMod.MOD_VERSION,
         acceptedMinecraftVersions = ResynthMod.MC_VERSION,
-        dependencies = "after:appliedenergistics2"
+        dependencies = "after:appliedenergistics2; after:tconstruct; after:forestry"
 )
 public class ResynthMod {
 
@@ -85,9 +85,20 @@ public class ResynthMod {
     @SidedProxy(clientSide = ResynthMod.CLIENT_PROXY, serverSide = ResynthMod.SERVER_PROXY)
     public static IProxy proxy;
 
+    /**
+     * Modid for Applied energistics.
+     */
     public static final String MODID_AE2 = "appliedenergistics2";
 
+    /**
+     * Modid for Forestry.
+     */
     public static final String MODID_FORESTRY = "forestry";
+
+    /**
+     * Modid for Tinkers' Construct.
+     */
+    public static final String MODID_TINKERS_CONSTRUCT = "tconstruct";
 
     /**
      * Path (including pack) to the server proxy class.
@@ -129,9 +140,11 @@ public class ResynthMod {
         ModVersionManager resynthVersionManager = new ModVersionManager(resynthVMBuilder);
         resynthVersionManager.preInit();
 
-        if(!ResynthConfig.RESYNTH.disableAnalytics)
-            try{sendAnalyticsEvent();}
-            catch (Exception e){getLogger().error("Failed to send analytics event", e);}
+
+        //Disabled until it proves to be more useful.
+//        if(!ResynthConfig.RESYNTH.disableAnalytics)
+//            try{sendAnalyticsEvent();}
+//            catch (Exception e){getLogger().error("Failed to send analytics event", e);}
     }
 
     /**
@@ -179,6 +192,7 @@ public class ResynthMod {
 
     //***************************
     //     Google Analytics
+    //         Disabled
     //***************************
 
     /**

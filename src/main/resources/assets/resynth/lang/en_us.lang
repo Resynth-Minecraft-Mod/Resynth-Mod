@@ -136,3 +136,12 @@ item.resynth.produceAe2Quartz.name=Cerus Quartz Crystal Straw
 item.resynth.seedForestryApatite.name=Apatite Seeds
 tile.resynth.plantForestryApatite.name=Apatite Patch
 item.resynth.produceForestryApatite.name=Apatite Straw
+
+#Tinkers' Construct
+item.resynth.seedCobalt.name=Cobalt Seeds
+tile.resynth.plantCobalt.name=Cobalt Plant
+tile.resynth.oreCobalt.name=Organic Cobalt Ore
+
+item.resynth.seedArdite.name=Ardite Seeds
+tile.resynth.plantArdite.name=Ardite Plant
+tile.resynth.oreArdite.name=Organic Ardite Ore

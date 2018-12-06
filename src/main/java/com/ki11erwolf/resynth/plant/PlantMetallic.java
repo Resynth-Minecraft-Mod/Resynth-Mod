@@ -21,7 +21,9 @@ import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -41,7 +43,7 @@ public abstract class PlantMetallic {
     /**
      * The minecraft ore block used to obtain seeds.
      */
-    private final Block seedOre;
+    private final ItemStack seedOre;
 
     /**
      * The block the plant should place..
@@ -59,14 +61,29 @@ public abstract class PlantMetallic {
     private final ItemPlantSeed seeds;
 
     /**
+     * modid if this instance represents a mod plant (e.g. tinkers)
+     */
+    protected String modid;
+
+    /**
+     * name of the mod ore block if this instance represents a mod plant (e.g. tinkers)
+     */
+    protected String oreBlockName;
+
+    /**
+     * mod block metadata if this instance represents a mod plant (e.g. tinkers).
+     */
+    protected int oreMetaData;
+
+    /**
      * Constructs a new metallic plant
      * instance.
      *
      * @param name the name of the plant block.
-     * @param produce the block the plant should place.
+     * @param seedOre the ore block seeds are obtained from.
      */
-    public PlantMetallic(String name, Block produce){
-        this.seedOre = produce;
+    public PlantMetallic(String name, ItemStack seedOre){
+        this.seedOre = seedOre;
         this.ore = new BlockPlantOre(name);
         this.plant = new BlockPlantMetallic(ore, name){
             @Override
@@ -85,18 +102,20 @@ public abstract class PlantMetallic {
             }
         };
         this.seeds = new ItemPlantSeed(plant, name, name);
-        register();
     }
 
     /**
      * Registers this plant (plant block, seeds and produce)
      * to the game.
+     *
+     * @return this
      */
-    private void register(){
+    protected PlantMetallic register(){
         ResynthPlantRegistry.addOre(ore);
         ResynthPlantRegistry.addPlant(plant);
         ResynthPlantRegistry.addSeeds(seeds);
         ResynthPlantRegistry.addPlant(this);
+        return this;
     }
 
     /**
@@ -137,11 +156,34 @@ public abstract class PlantMetallic {
 
         for(BlockPos blockPos : affectedBlocks){
             Block block = detonateEvent.getWorld().getBlockState(blockPos).getBlock();
-
-
+            IBlockState state = detonateEvent.getWorld().getBlockState(blockPos);
             for(PlantMetallic plant : ResynthPlantRegistry.getMetallicPlants()){
-                if(plant.doesOreDropSeeds() && block == plant.seedOre && ResynthConfig.PLANTS_GENERAL.oreDropSeeds){
-                    //A Seed ore block has been blown up.
+                //Separate logic for non-vanilla plants.
+                if(plant.modid != null && plant.doesOreDropSeeds() && ResynthConfig.PLANTS_GENERAL.oreDropSeeds){
+                    //Same Block class
+                    if(block == ModPlant.getModBlock(plant.modid, plant.oreBlockName)){
+                        //Same block exactly
+                        if(block.getMetaFromState(state) == plant.oreMetaData){
+                            //Random chance.
+                            if(MathUtil.chance(plant.getOreSeedDropChance())){
+                                detonateEvent.getWorld().setBlockToAir(blockPos);
+                                detonateEvent.getWorld().spawnEntity(
+                                        new EntityItem(detonateEvent.getWorld(),
+                                                blockPos.getX(), blockPos.getY(), blockPos.getZ(),
+                                                new ItemStack(plant.seeds, 1))
+                                );
+                            }
+                        }
+                    }
+                }
+
+                //A Seed ore block has been blown up.
+                if(plant.doesOreDropSeeds() && block == Block.getBlockFromItem(plant.seedOre.getItem())
+                        && ResynthConfig.PLANTS_GENERAL.oreDropSeeds){
+
+                    //Don't spawn seeds from thin air...
+                    if(plant.seedOre.getItem() == Items.AIR)
+                        continue;
 
                     //Random chance.
                     if(MathUtil.chance(plant.getOreSeedDropChance())){

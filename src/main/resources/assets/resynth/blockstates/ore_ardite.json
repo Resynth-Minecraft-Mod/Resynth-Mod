@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "resynth:plant/ardite/ore_ardite"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}
