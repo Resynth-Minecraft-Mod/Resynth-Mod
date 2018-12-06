@@ -1,5 +1,5 @@
 # Resynth-Mod
-A mod for Minecraft that adds growable ores, mob drops (yet to be implemented) and other ore drops, such as diamond and coal.
+A mod for Minecraft that adds growable ores/resources, mob drops and modded resources.
 
 ## Curse Forge & Minecraft Forums
 This mod has a page over [here](https://www.curseforge.com/minecraft/mc-mods/resynth) at Curse Forge
