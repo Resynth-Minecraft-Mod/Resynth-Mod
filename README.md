@@ -1,13 +1,15 @@
-# Resynth-Mod
-A mod for Minecraft that adds growable ores/resources, mob drops and modded resources.
+# Resynth Mod
+![](https://resynth-minecraft-mod.github.io/images/title.png)
 
-## Curse Forge & Minecraft Forums
-This mod has a page over [here](https://www.curseforge.com/minecraft/mc-mods/resynth) at Curse Forge
-as well as over [here](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/2927861-resynth-growable-ores-mob-drops-and-resouces-fully) at the Minecraft Forums.
+Resynth is a mod(modification) to [Minecraft](https://minecraft.net/) that
+focuses on adding growable ores, mob drops and resources. It can be found
+here on the Official [Resynth Website](https://resynth-minecraft-mod.github.io/)
+or over at the [CurseForge Project Page](https://minecraft.curseforge.com/projects/resynth).
 
-## Files
-All compiled binaries (.jar) for the mod will be distributed on curse forge (https://www.curseforge.com)
-at https://minecraft.curseforge.com/projects/resynth/files from version 1.0.2 onwards.
+This is the **SOURCE CODE** project page for Resynth and hosts **NO DOWNLOADS**.
+
+## Forge
+Resynth is a [forge](http://files.minecraftforge.net/) mod and depends on it to run
 
 ## License
-Resynth and the Resynth website (https://resynth-minecraft-mod.github.io) are licensed the Apache License V2
+Resynth and the [Resynth Website](https://resynth-minecraft-mod.github.io/) (https://resynth-minecraft-mod.github.io/) are licensed the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
