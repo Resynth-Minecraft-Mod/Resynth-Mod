@@ -16,12 +16,13 @@
 
 package com.ki11erwolf.resynth;
 
+import com.ki11erwolf.resynth.analytics.ConnectEvent;
+import com.ki11erwolf.resynth.analytics.ErrorEvent;
+import com.ki11erwolf.resynth.analytics.NewUserEvent;
+import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
 import com.ki11erwolf.resynth.proxy.IProxy;
 import com.ki11erwolf.resynth.versioning.ModVersionManager;
 import com.ki11erwolf.resynth.versioning.VersionManagerBuilder;
-import dmurph.tracking.AnalyticsConfigData;
-import dmurph.tracking.AnalyticsRequestData;
-import dmurph.tracking.JGoogleAnalyticsTracker;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -34,8 +35,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.logging.log4j.Logger;
 
-import java.net.InetAddress;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Resynth mod class.
@@ -45,7 +48,11 @@ import java.util.Map;
         name = ResynthMod.MOD_NAME,
         version = ResynthMod.MOD_VERSION,
         acceptedMinecraftVersions = ResynthMod.MC_VERSION,
-        dependencies = "after:appliedenergistics2; after:tconstruct; after:forestry"
+        dependencies =
+                        "after:appliedenergistics2; " +
+                        "after:tconstruct; " +
+                        "after:forestry; " +
+                        "after:thermalfoundation"
 )
 public class ResynthMod {
 
@@ -101,6 +108,11 @@ public class ResynthMod {
     public static final String MODID_TINKERS_CONSTRUCT = "tconstruct";
 
     /**
+     * Thermal Foundation/Thermal Expansion modid.
+     */
+    public static final String MODID_THERMAL_FOUNDATION = "thermalfoundation";
+
+    /**
      * Path (including pack) to the server proxy class.
      */
     static final String SERVER_PROXY = MOD_PACKAGE + ".proxy.ServerProxy";
@@ -109,6 +121,13 @@ public class ResynthMod {
      * Path (including package) to the client proxy class.
      */
     static final String CLIENT_PROXY = MOD_PACKAGE + ".proxy.ClientProxy";
+
+    /**
+     * Resynth's new/returning user identification file.
+     * This servers to separate new Resynth users
+     * from existing ones.
+     */
+    private static final String RESYNTH_NU_FILE = "/resynth.id";
 
     /**
      * Logger for the mod.
@@ -128,23 +147,38 @@ public class ResynthMod {
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
-        logger = event.getModLog();
-        logger.info("Entering pre-init phase...");
-        proxy.preInit(event);
+        wrapError((object) -> {
+            logger = event.getModLog();
+            logger.info("Entering pre-init phase...");
+            proxy.preInit(event);
 
-        VersionManagerBuilder resynthVMBuilder
-                = new VersionManagerBuilder(MOD_ID)
-                .setEnabled(!ResynthConfig.RESYNTH.disableVersionChecks)
-                .setOutOfDateConsoleWarningEnabled(!ResynthConfig.RESYNTH.disableVersionMessage)
-                .addVersionJsonFileURL(UPDATE_URL);
-        ModVersionManager resynthVersionManager = new ModVersionManager(resynthVMBuilder);
-        resynthVersionManager.preInit();
+            VersionManagerBuilder resynthVMBuilder
+                    = new VersionManagerBuilder(MOD_ID)
+                    .setEnabled(!ResynthConfig.RESYNTH.disableVersionChecks)
+                    .setOutOfDateConsoleWarningEnabled(!ResynthConfig.RESYNTH.disableVersionMessage)
+                    .addVersionJsonFileURL(UPDATE_URL);
+            ModVersionManager resynthVersionManager = new ModVersionManager(resynthVMBuilder);
+            resynthVersionManager.preInit();
 
+            ResynthAnalytics.send(new ConnectEvent());
 
-        //Disabled until it proves to be more useful.
-//        if(!ResynthConfig.RESYNTH.disableAnalytics)
-//            try{sendAnalyticsEvent();}
-//            catch (Exception e){getLogger().error("Failed to send analytics event", e);}
+            File resynthFile
+                    = new File( event.getModConfigurationDirectory().getAbsolutePath()
+                            + RESYNTH_NU_FILE);
+
+            if(!resynthFile.exists()){
+                ResynthAnalytics.send(new NewUserEvent());
+                try {
+                    boolean create = resynthFile.createNewFile();
+                    if(!create)
+                        getLogger().error("Failed to create Resynth NU file");
+                } catch (IOException e) {
+                    getLogger().error("Failed to create Resynth NU file", e);
+                }
+            }
+
+            return null;
+        });
     }
 
     /**
@@ -154,22 +188,25 @@ public class ResynthMod {
      */
     @EventHandler
     public void init(FMLInitializationEvent event){
-        logger.info("Entering init phase...");
-        proxy.init(event);
-        worldGen = new ResynthWorldGen();
-        worldGen.init();
-        ResynthFurnaceRecipes.registerFurnaceRecipes();
+        wrapError((object -> {
+            logger.info("Entering init phase...");
+            proxy.init(event);
+            worldGen = new ResynthWorldGen();
+            worldGen.init();
+            ResynthFurnaceRecipes.registerFurnaceRecipes();
 
-        //Prints all registered items to console.
-        for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
-            ResynthMod.getLogger().info("R LOC: " + entry.getKey().getResourceDomain() + ":"
-            + entry.getKey().getResourcePath());
-        }
+            //Prints all registered items to console.
+            for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
+                ResynthMod.getLogger().info("R LOC: " + entry.getKey().getResourceDomain() + ":"
+                        + entry.getKey().getResourcePath());
+            }
 
-        for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
-            ResynthMod.getLogger().info("R LOC: " + entry.getKey().getResourceDomain() + ":"
-                    + entry.getKey().getResourcePath());
-        }
+            for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
+                ResynthMod.getLogger().info("R LOC: " + entry.getKey().getResourceDomain() + ":"
+                        + entry.getKey().getResourcePath());
+            }
+            return null;
+        }));
     }
 
     /**
@@ -179,8 +216,11 @@ public class ResynthMod {
      */
     @EventHandler
     public void postInit(FMLPostInitializationEvent event){
-        logger.info("Entering post-init phase...");
-        proxy.postInit(event);
+        wrapError(object -> {
+            logger.info("Entering post-init phase...");
+            proxy.postInit(event);
+            return null;
+        });
     }
 
     /**
@@ -190,97 +230,20 @@ public class ResynthMod {
         return logger;
     }
 
-    //***************************
-    //     Google Analytics
-    //         Disabled
-    //***************************
-
     /**
-     * The Google Analytics tracking code for resynth.
-     */
-    private static final String TRACKING_CODE = "UA-127648959-1";
-
-    /**
-     * The mods beacon page - used as an identifier (page does not exist).
-     */
-    private static final String BEACON_PAGE = "/mod/mod-client-connect";
-
-    /**
-     * The pages title.
-     */
-    private static final String TITLE = "Resynth - Mod Client Connect";
-
-    /**
-     * The resynth host name.
-     */
-    private static final String HOST_NAME = "https://resynth-minecraft-mod.github.io";
-
-    /**
-     * The events category, action and label identifiers.
-     */
-    private static final String
-            EVENT_CATEGORY = "Resynth-Mod-Jar",
-            EVENT_ACTION = "Mod-Client-Connect-"
-                    + MOD_VERSION + MC_VERSION,
-            EVENT_LABEL = "IDENTIFIER-" + getID();
-
-    /**
-     * Sends the connected event to google analytics.
-     */
-    private static void sendAnalyticsEvent(){
-        ModVersionManager.disableSSLVerification();
-        AnalyticsConfigData data = new AnalyticsConfigData(TRACKING_CODE);
-        JGoogleAnalyticsTracker tracker = new JGoogleAnalyticsTracker(data,
-                JGoogleAnalyticsTracker.GoogleAnalyticsVersion.V_4_7_2);
-
-        AnalyticsRequestData resynthModEvent = new AnalyticsRequestData();
-        resynthModEvent.setPageURL(BEACON_PAGE);
-        resynthModEvent.setPageTitle(TITLE);
-        resynthModEvent.setHostName(HOST_NAME);
-
-        resynthModEvent.setEventCategory(EVENT_CATEGORY);
-        resynthModEvent.setEventAction(EVENT_ACTION);
-        resynthModEvent.setEventLabel(EVENT_LABEL);
-
-        tracker.makeCustomRequest(resynthModEvent);
-        ModVersionManager.enableSSLVerification();
-    }
-
-    /**
-     * Attempts to get the first host address of the running
-     * machine.
+     * Wraps a block of code in a try/catch
+     * that reports and logs any exceptions.
      *
-     * This servers to identify returning users
-     * from new users. This will fail at times
-     * and isn't reliable but does server its
-     * purpose of successfully identifying a
-     * returning user at least one or twice.
-     *
-     * This only gets the host address - no personal
-     * information such as user names. The host address
-     * can chance quite easily and doesn't tie the user
-     * down to the value.
-     *
-     * @return the first found host address found or
-     * {@code "Unknown"}.
+     * @param t lambda block of code.
      */
-    private static String getID() {
-        String hostAddress = "Unknown";
-
-        try {
-            //Use first identifier found.
-            //This isn't perfect and will fail to points but
-            //will serve its purpose of identifying returning users.
-            for (InetAddress aMac : InetAddress.getAllByName(InetAddress.getLocalHost().getHostName())) {
-                if(aMac.getHostAddress() != null){
-                    hostAddress = aMac.getHostAddress();
-                    return  hostAddress;
-                }
-            }
-        } catch (Exception e) {
-            getLogger().error("Failed to get identifier.", e);
+    public static void wrapError(Function<Void, Void> t){
+        try{
+            t.apply(null);
+        } catch (Exception e){
+            getLogger().fatal("Error in Resynth init()", e);
+            ResynthAnalytics.send(new ErrorEvent());
+            throw e;
         }
-
-        return hostAddress;
     }
+
 }

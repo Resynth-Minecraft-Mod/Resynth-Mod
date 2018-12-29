@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "resynth:plant/aluminum/ore_aluminum"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

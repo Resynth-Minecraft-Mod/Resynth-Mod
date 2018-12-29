@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "resynth:plant/silver/ore_silver"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "resynth:plant/iridium/ore_iridium"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

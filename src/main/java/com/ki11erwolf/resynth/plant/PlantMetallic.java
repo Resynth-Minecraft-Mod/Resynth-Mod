@@ -31,6 +31,7 @@ import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -151,6 +152,8 @@ public abstract class PlantMetallic {
      * @param detonateEvent the event created by the explosion.
      */
     @SubscribeEvent
+    //1 square kilometer of tnt blasts later
+    //It works (i think)... until the next plant breaks it.
     public static void onExplosion(ExplosionEvent.Detonate detonateEvent){
         List<BlockPos> affectedBlocks = detonateEvent.getAffectedBlocks();
 
@@ -175,11 +178,9 @@ public abstract class PlantMetallic {
                             }
                         }
                     }
-                }
-
-                //A Seed ore block has been blown up.
-                if(plant.doesOreDropSeeds() && block == Block.getBlockFromItem(plant.seedOre.getItem())
+                } else if(plant.doesOreDropSeeds() && block == Block.getBlockFromItem(plant.seedOre.getItem())
                         && ResynthConfig.PLANTS_GENERAL.oreDropSeeds){
+                    //A Seed ore block has been blown up.
 
                     //Don't spawn seeds from thin air...
                     if(plant.seedOre.getItem() == Items.AIR)
@@ -202,6 +203,9 @@ public abstract class PlantMetallic {
 
                     //Random chance.
                     if(MathUtil.chance(plant.getOrganicOreSeedDropChance())){
+                        JOptionPane.showMessageDialog(null,
+                                "Spawning seeds 3"
+                        );
                         detonateEvent.getWorld().setBlockToAir(blockPos);
                         detonateEvent.getWorld().spawnEntity(
                                 new EntityItem(detonateEvent.getWorld(),

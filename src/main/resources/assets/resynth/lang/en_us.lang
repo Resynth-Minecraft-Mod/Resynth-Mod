@@ -53,7 +53,7 @@ item.resynth.seedLeather.name=Leather Seeds
 item.resynth.seedFlesh.name=Rotten Flesh Seeds
 item.resynth.seedPrismarineCrystal.name=Prismarine Crystal Seeds
 item.resynth.seedPrismarineShard.name=Prismarine Shard Seeds
-item.resynth.seedRabbitFoot.name=Rabbit Foot Seeds
+item.resynth.seedRabbioot.name=Rabbit Foot Seeds
 
 #Plants
 
@@ -74,7 +74,7 @@ tile.resynth.plantGunpowder.name=Gunpowder Flower
 tile.resynth.plantBlaze.name=Blaze Flower
 tile.resynth.plantBone.name=Bone Flower
 tile.resynth.plantString.name=String Flower
-tile.resynth.plantFeather.name=Feather Flower
+tile.resynth.planeather.name=Feather Flower
 tile.resynth.plantGhast.name=Ghast Flower
 tile.resynth.plantNetherstar.name=Nether Star Flower
 tile.resynth.plantSpidereye.name=Spider Eye Flower
@@ -82,10 +82,10 @@ tile.resynth.plantSlime.name=Slime Flower
 tile.resynth.plantShulker.name=Shulker Flower
 tile.resynth.plantInk.name=Ink Flower
 tile.resynth.plantLeather.name=Leather Flower
-tile.resynth.plantFlesh.name=Rotten Flesh Flower
+tile.resynth.planlesh.name=Rotten Flesh Flower
 tile.resynth.plantPrismarineCrystall.name=Prismarine Crystal Flower
 tile.resynth.plantPrismarineShard.name=Prismarine Shard Flower
-tile.resynth.plantRabbitFoot.name=Rabbit Foot Flower
+tile.resynth.plantRabbioot.name=Rabbit Foot Flower
 
 #Plant Ores
 
@@ -121,7 +121,7 @@ item.resynth.mobproduceLeather.name=Leather Bulb
 item.resynth.mobproduceFlesh.name=Rotten Flesh Bulb
 item.resynth.mobproducePrismarineCrystal.name=Prismarine Crystall Bulb
 item.resynth.mobproducePrismarineShard.name=Prismarine Shard Bulb
-item.resynth.mobproduceRabbitFoot.name=Rabbit Foot Bulb
+item.resynth.mobproduceRabbioot.name=Rabbit Foot Bulb
 
 ###################
 #    MOD PLANTS   #
@@ -134,7 +134,7 @@ item.resynth.produceAe2Quartz.name=Cerus Quartz Crystal Straw
 
 #Forestry
 item.resynth.seedForestryApatite.name=Apatite Seeds
-tile.resynth.plantForestryApatite.name=Apatite Patch
+tile.resynth.planorestryApatite.name=Apatite Patch
 item.resynth.produceForestryApatite.name=Apatite Straw
 
 #Tinkers' Construct
@@ -145,3 +145,44 @@ tile.resynth.oreCobalt.name=Organic Cobalt Ore
 item.resynth.seedArdite.name=Ardite Seeds
 tile.resynth.plantArdite.name=Ardite Plant
 tile.resynth.oreArdite.name=Organic Ardite Ore
+
+#Thermal Foundation/Thermal Expansion
+item.resynth.seedCopper.name=Copper Seeds
+tile.resynth.plantCopper.name=Copper Plant
+tile.resynth.oreCopper.name=Organic Copper Ore
+
+item.resynth.seedTin.name=Tin Seeds
+tile.resynth.plantTin.name=Tin Plant
+tile.resynth.oreTin.name=Organic Tin Ore
+
+item.resynth.seedSilver.name=Silver Seeds
+tile.resynth.plantSilver.name=Silver Plant
+tile.resynth.oreSilver.name=Organic Silver Ore
+
+item.resynth.seedLead.name=Lead Seeds
+tile.resynth.plantLead.name=Lead Plant
+tile.resynth.oreLead.name=Organic Lead Ore
+
+item.resynth.seedAluminum.name=Aluminum Seeds
+tile.resynth.plantAluminum.name=Aluminum Plant
+tile.resynth.oreAluminum.name=Organic Aluminum Ore
+
+item.resynth.seedNickel.name=Nickel Seeds
+tile.resynth.plantNickel.name=Nickel Plant
+tile.resynth.oreNickel.name=Organic Nickel Ore
+
+item.resynth.seedLead.name=Lead Seeds
+tile.resynth.plantLead.name=Lead Plant
+tile.resynth.oreLead.name=Organic Lead Ore
+
+item.resynth.seedPlatinum.name=Platinum Seeds
+tile.resynth.plantPlatinum.name=Platinum Plant
+tile.resynth.orePlatinum.name=Organic Platinum Ore
+
+item.resynth.seedIridium.name=Iridium Seeds
+tile.resynth.plantIridium.name=Iridium Plant
+tile.resynth.oreIridium.name=Organic Iridium Ore
+
+item.resynth.seedMana.name=Mana Infused Seeds
+tile.resynth.plantMana.name=Mana Infused Plant
+tile.resynth.oreMana.name=Organic Mana Infused Ore

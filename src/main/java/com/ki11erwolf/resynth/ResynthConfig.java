@@ -50,12 +50,16 @@ public class ResynthConfig {
     public static class Resynth {
 
         /**
-         * Disables the google analytics event from firing when true.
+         * Disables all analytics events from firing when true.
          */
-        @Name("Disable Analytics (Not in use)")
-        @Comment("Set to true to disable the mods analytics functionality (not in use).")
+        @Name("Disable Google Analytics")
+        @Comment(
+                "Set to true to disable the mods analytics functionality. " +
+                "This sends anonymous usage data (such as errors) to improve" +
+                "problems in the mod."
+        )
         @RequiresMcRestart
-        public boolean disableAnalytics = true;
+        public boolean disableGAnalytics = false;
 
         /**
          * Disables all version checks when true.
@@ -2720,6 +2724,108 @@ public class ResynthConfig {
                     1
             );
         else PLANT_ARDITE = null;
+
+        if(Loader.isModLoaded(ResynthMod.MODID_THERMAL_FOUNDATION)){
+            PLANT_COPPER = new ModPlantMetallicCfg(
+                    5.0F,
+                    false,
+                    true,
+                    true,
+                    4.0F,
+                    2.0F,
+                    1
+            );
+
+            PLANT_TIN = new ModPlantMetallicCfg(
+                    4.5F,
+                    false,
+                    true,
+                    true,
+                    3.5F,
+                    1.5F,
+                    1
+            );
+
+            PLANT_SILVER = new ModPlantMetallicCfg(
+                    3.0F,
+                    false,
+                    true,
+                    true,
+                    2.0F,
+                    1.0F,
+                    1
+            );
+
+            PLANT_LEAD = new ModPlantMetallicCfg(
+                    3.5F,
+                    false,
+                    true,
+                    true,
+                    2.5F,
+                    1.5F,
+                    1
+            );
+
+            PLANT_ALUMINUM = new ModPlantMetallicCfg(
+                    7.0F,
+                    false,
+                    true,
+                    true,
+                    3.7F,
+                    2.2F,
+                    1
+            );
+
+            PLANT_NICKEL = new ModPlantMetallicCfg(
+                    4.0F,
+                    false,
+                    true,
+                    true,
+                    3.0F,
+                    1.5F,
+                    1
+            );
+
+            PLANT_PLATINUM = new ModPlantMetallicCfg(
+                    1.2F,
+                    false,
+                    true,
+                    true,
+                    3.0F,
+                    1.5F,
+                    1
+            );
+
+            PLANT_IRIDIUM = new ModPlantMetallicCfg(
+                    1.1F,
+                    false,
+                    true,
+                    true,
+                    2.8F,
+                    1.3F,
+                    1
+            );
+
+            PLANT_MANA = new ModPlantMetallicCfg(
+                    1.0F,
+                    false,
+                    true,
+                    true,
+                    2.0F,
+                    1.0F,
+                    1
+            );
+        } else {
+            PLANT_COPPER = null;
+            PLANT_TIN = null;
+            PLANT_SILVER = null;
+            PLANT_LEAD = null;
+            PLANT_ALUMINUM = null;
+            PLANT_NICKEL = null;
+            PLANT_PLATINUM = null;
+            PLANT_IRIDIUM = null;
+            PLANT_MANA = null;
+        }
     }
 
     /**
@@ -2735,6 +2841,70 @@ public class ResynthConfig {
     @Name("Plant: Ardite (Tinkers' Construct)")
     @Comment("Settings for the Ardite plant from Tinkers' Construct.")
     public static final ModPlantMetallicCfg PLANT_ARDITE;
+
+    /**
+     * Settings for the copper plant.
+     */
+    @Name("Plant: Copper (Thermal Foundation)")
+    @Comment("Settings for the Copper plant from Thermal Foundation.")
+    public static final ModPlantMetallicCfg PLANT_COPPER;
+
+    /**
+     * Settings for the tin plant.
+     */
+    @Name("Plant: Tin (Thermal Foundation)")
+    @Comment("Settings for the Tin plant from Thermal Foundation.")
+    public static final ModPlantMetallicCfg PLANT_TIN;
+
+    /**
+     * Settings for the silver plant.
+     */
+    @Name("Plant: Silver (Thermal Foundation)")
+    @Comment("Settings for the Silver plant from Thermal Foundation.")
+    public static final ModPlantMetallicCfg PLANT_SILVER;
+
+
+    /**
+     * Settings for the lead plant.
+     */
+    @Name("Plant: Lead (Thermal Foundation)")
+    @Comment("Settings for the Lead plant from Thermal Foundation.")
+    public static final ModPlantMetallicCfg PLANT_LEAD;
+
+    /**
+     * Settings for the Aluminum plant.
+     */
+    @Name("Plant: Aluminum (Thermal Foundation)")
+    @Comment("Settings for the Aluminum plant from Thermal Foundation.")
+    public static final ModPlantMetallicCfg PLANT_ALUMINUM;
+
+    /**
+     * Settings for the Nickel plant.
+     */
+    @Name("Plant: Nickel (Thermal Foundation)")
+    @Comment("Settings for the Nickel plant from Thermal Foundation.")
+    public static final ModPlantMetallicCfg PLANT_NICKEL;
+
+    /**
+     * Settings for the Platinum plant.
+     */
+    @Name("Plant: Platinum (Thermal Foundation)")
+    @Comment("Settings for the Platinum plant from Thermal Foundation.")
+    public static final ModPlantMetallicCfg PLANT_PLATINUM;
+
+    /**
+     * Settings for the Iridium plant.
+     */
+    @Name("Plant: Iridium (Thermal Foundation)")
+    @Comment("Settings for the Iridium plant from Thermal Foundation.")
+    public static final ModPlantMetallicCfg PLANT_IRIDIUM;
+
+    /**
+     * Settings for the Mana plant.
+     */
+    @Name("Plant: Mana (Thermal Foundation)")
+    @Comment("Settings for the Mana plant from Thermal Foundation.")
+    public static final ModPlantMetallicCfg PLANT_MANA;
 
     /**
      * Configuration class for all mod metallic plants.

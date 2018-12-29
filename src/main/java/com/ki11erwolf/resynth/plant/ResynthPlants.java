@@ -944,8 +944,8 @@ public final class ResynthPlants {
      * Cobalt plant for tinkers' construct.
      */
     public static final ModPlantMetallic MOD_PLANT_TC_ORE_COBALT
-            = new ModPlantMetallic("cobalt", "tconstruct", "ore", 0,
-            "ingots", 0) {
+            = new ModPlantMetallic("cobalt", ResynthMod.MODID_TINKERS_CONSTRUCT,
+            "ore", 0, "ingots", 0) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_COBALT;
 
         @Override
@@ -988,8 +988,8 @@ public final class ResynthPlants {
      * Ardite plant for tinkers' construct.
      */
     public static final ModPlantMetallic MOD_PLANT_TC_ORE_ARDITE
-            = new ModPlantMetallic("ardite", "tconstruct", "ore", 1,
-            "ingots", 1) {
+            = new ModPlantMetallic("ardite", ResynthMod.MODID_TINKERS_CONSTRUCT
+            , "ore", 1, "ingots", 1) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_ARDITE;
 
         @Override
@@ -1027,6 +1027,403 @@ public final class ResynthPlants {
             return cfg.produceDropSeeds;
         }
     }.register();
+
+    /**
+     * Copper plant for Thermal Foundation.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TF_ORE_COPPER
+            = new ModPlantMetallic("copper", ResynthMod.MODID_THERMAL_FOUNDATION
+            , "ore", 0, "ore", 0) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_COPPER;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
+    /**
+     * Tin plant for Thermal Foundation.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TF_ORE_TIN
+            = new ModPlantMetallic("tin", ResynthMod.MODID_THERMAL_FOUNDATION
+            , "ore", 1, "ore", 1) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_TIN;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
+    /**
+     * Silver plant for Thermal Foundation.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TF_ORE_SILVER
+            = new ModPlantMetallic("silver", ResynthMod.MODID_THERMAL_FOUNDATION
+            , "ore", 2, "ore", 2) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_SILVER;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
+    /**
+     * Lead plant for Thermal Foundation.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TF_ORE_LEAD
+            = new ModPlantMetallic("lead", ResynthMod.MODID_THERMAL_FOUNDATION
+            , "ore", 3, "ore", 3) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_LEAD;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
+    /**
+     * Aluminum plant for Thermal Foundation.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TF_ORE_ALUMINUM
+            = new ModPlantMetallic("aluminum", ResynthMod.MODID_THERMAL_FOUNDATION
+            , "ore", 4, "ore", 4) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_ALUMINUM;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
+    /**
+     * Nickel plant for Thermal Foundation.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TF_ORE_NICKEL
+            = new ModPlantMetallic("nickel", ResynthMod.MODID_THERMAL_FOUNDATION
+            , "ore", 5, "ore", 5) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_NICKEL;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
+    /**
+     * Platinum plant for Thermal Foundation.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TF_ORE_PLATINUM
+            = new ModPlantMetallic("platinum", ResynthMod.MODID_THERMAL_FOUNDATION
+            , "ore", 6, "ore", 6) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_PLATINUM;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
+    /**
+     * Iridium plant for Thermal Foundation.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TF_ORE_IRIDIUM
+            = new ModPlantMetallic("iridium", ResynthMod.MODID_THERMAL_FOUNDATION
+            , "ore", 7, "ore", 7) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_IRIDIUM;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
+    /**
+     * Mana plant for Thermal Foundation.
+     */
+    public static final ModPlantMetallic MOD_PLANT_TF_ORE_MANA
+            = new ModPlantMetallic("mana", ResynthMod.MODID_THERMAL_FOUNDATION
+            , "ore", 8, "ore", 8) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_MANA;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
 
     //Static class.
     private ResynthPlants(){}

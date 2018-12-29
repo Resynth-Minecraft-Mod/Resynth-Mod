@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "resynth:plant/nickel/ore_nickel"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}
