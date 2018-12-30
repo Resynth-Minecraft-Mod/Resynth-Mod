@@ -16,8 +16,8 @@
 package com.ki11erwolf.resynth.analytics;
 
 import com.ki11erwolf.resynth.ResynthConfig;
+import com.ki11erwolf.resynth.versioning.ModVersionManager;
 import dmurph.tracking.AnalyticsConfigData;
-import dmurph.tracking.AnalyticsRequestData;
 import dmurph.tracking.JGoogleAnalyticsTracker;
 
 /**
@@ -25,6 +25,14 @@ import dmurph.tracking.JGoogleAnalyticsTracker;
  * Google Analytics events.
  */
 public final class ResynthAnalytics {
+
+    /*
+     * Disables SSL Verification before initializing
+     * Google Analytics.
+     */
+    static{
+        ModVersionManager.disableSSLVerification();
+    }
 
     /**
      * The Google Analytics code for resynth.
@@ -70,7 +78,9 @@ public final class ResynthAnalytics {
         if(ResynthConfig.RESYNTH.disableGAnalytics)
             return;
 
+        ModVersionManager.disableSSLVerification();
         ANALYTICS.makeCustomRequest(e);
+        ModVersionManager.enableSSLVerification();
     }
 
     /**
