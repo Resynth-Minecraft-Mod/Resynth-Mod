@@ -53,7 +53,7 @@ item.resynth.seedLeather.name=Leather Seeds
 item.resynth.seedFlesh.name=Rotten Flesh Seeds
 item.resynth.seedPrismarineCrystal.name=Prismarine Crystal Seeds
 item.resynth.seedPrismarineShard.name=Prismarine Shard Seeds
-item.resynth.seedRabbioot.name=Rabbit Foot Seeds
+item.resynth.seedRabbitFoot.name=Rabbit Foot Seeds
 
 #Plants
 
@@ -74,7 +74,7 @@ tile.resynth.plantGunpowder.name=Gunpowder Flower
 tile.resynth.plantBlaze.name=Blaze Flower
 tile.resynth.plantBone.name=Bone Flower
 tile.resynth.plantString.name=String Flower
-tile.resynth.planeather.name=Feather Flower
+tile.resynth.planLeather.name=Feather Flower
 tile.resynth.plantGhast.name=Ghast Flower
 tile.resynth.plantNetherstar.name=Nether Star Flower
 tile.resynth.plantSpidereye.name=Spider Eye Flower
@@ -82,10 +82,10 @@ tile.resynth.plantSlime.name=Slime Flower
 tile.resynth.plantShulker.name=Shulker Flower
 tile.resynth.plantInk.name=Ink Flower
 tile.resynth.plantLeather.name=Leather Flower
-tile.resynth.planlesh.name=Rotten Flesh Flower
-tile.resynth.plantPrismarineCrystall.name=Prismarine Crystal Flower
+tile.resynth.planFlesh.name=Rotten Flesh Flower
+tile.resynth.plantPrismarineCrystal.name=Prismarine Crystal Flower
 tile.resynth.plantPrismarineShard.name=Prismarine Shard Flower
-tile.resynth.plantRabbioot.name=Rabbit Foot Flower
+tile.resynth.plantRabbitFoot.name=Rabbit Foot Flower
 
 #Plant Ores
 
@@ -119,9 +119,9 @@ item.resynth.mobproduceShulker.name=Shulker Bulb
 item.resynth.mobproduceInk.name=Ink Bulb
 item.resynth.mobproduceLeather.name=Leather Bulb
 item.resynth.mobproduceFlesh.name=Rotten Flesh Bulb
-item.resynth.mobproducePrismarineCrystal.name=Prismarine Crystall Bulb
+item.resynth.mobproducePrismarineCrystal.name=Prismarine Crystal Bulb
 item.resynth.mobproducePrismarineShard.name=Prismarine Shard Bulb
-item.resynth.mobproduceRabbioot.name=Rabbit Foot Bulb
+item.resynth.mobproduceRabbitFoot.name=Rabbit Foot Bulb
 
 ###################
 #    MOD PLANTS   #
@@ -130,11 +130,11 @@ item.resynth.mobproduceRabbioot.name=Rabbit Foot Bulb
 #Applied Energistics 2
 item.resynth.seedAe2Quartz.name=Certus Quartz Crystal Seeds
 tile.resynth.plantAe2Quartz.name=Certus Quartz Crystal Patch
-item.resynth.produceAe2Quartz.name=Cerus Quartz Crystal Straw
+item.resynth.produceAe2Quartz.name=Certus Quartz Crystal Straw
 
 #Forestry
 item.resynth.seedForestryApatite.name=Apatite Seeds
-tile.resynth.planorestryApatite.name=Apatite Patch
+tile.resynth.plantForestryApatite.name=Apatite Patch
 item.resynth.produceForestryApatite.name=Apatite Straw
 
 #Tinkers' Construct
