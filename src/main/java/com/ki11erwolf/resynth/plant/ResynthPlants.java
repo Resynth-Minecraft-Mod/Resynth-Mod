@@ -1425,6 +1425,51 @@ public final class ResynthPlants {
     }.register();
 
 
+    //Will not work... it just won't
+    /**
+     * Plant for Black Quartz Ore from Actually Additions
+     */
+    /*
+    public static final ModPlantMetallic MOD_PLANT_BLACK_QUARTZ
+            = new ModPlantMetallic("blackQuartz", ResynthMod.MODID_ACTUALLY_ADDITIONS,
+            "block_misc", 3, "item_misc", 5) {
+        @Override
+        protected int getResultCount() {
+            return 1;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return true;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return 100;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return 100;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return true;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return 100;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return true;
+        }
+    }.register();
+    */
+
     //Static class.
     private ResynthPlants(){}
 

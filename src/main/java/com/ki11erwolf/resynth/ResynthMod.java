@@ -52,7 +52,8 @@ import java.util.function.Function;
                         "after:appliedenergistics2; " +
                         "after:tconstruct; " +
                         "after:forestry; " +
-                        "after:thermalfoundation"
+                        "after:thermalfoundation;" +
+                        "after:actuallyadditions;"
 )
 public class ResynthMod {
 
@@ -111,6 +112,11 @@ public class ResynthMod {
      * Thermal Foundation/Thermal Expansion modid.
      */
     public static final String MODID_THERMAL_FOUNDATION = "thermalfoundation";
+
+    /**
+     * Actually Additions modid
+     */
+    public static final String MODID_ACTUALLY_ADDITIONS = "actuallyadditions";
 
     /**
      * Path (including pack) to the server proxy class.
