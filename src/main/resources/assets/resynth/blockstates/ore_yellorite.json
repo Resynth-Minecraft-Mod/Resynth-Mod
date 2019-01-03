@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "resynth:plant/yellorite/ore_yellorite"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

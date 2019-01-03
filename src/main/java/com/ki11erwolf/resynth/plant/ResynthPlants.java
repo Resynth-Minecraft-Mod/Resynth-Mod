@@ -1426,7 +1426,7 @@ public final class ResynthPlants {
 
 
     //Will not work... it just won't
-    /**
+    /*
      * Plant for Black Quartz Ore from Actually Additions
      */
     /*
@@ -1469,6 +1469,49 @@ public final class ResynthPlants {
         }
     }.register();
     */
+
+    /**
+     * Yellorite plant for Extreme Reactors (port of Big Reactors)
+     */
+    public static final ModPlantMetallic MOD_PLANT_YELLORITE
+            = new ModPlantMetallic("yellorite", ResynthMod.MODID_EXTREME_REACTORS,
+            "brore", 0, "brore", 0) {
+        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_YELLORITE;
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemeal() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
 
     //Static class.
     private ResynthPlants(){}

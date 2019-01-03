@@ -2826,6 +2826,20 @@ public class ResynthConfig {
             PLANT_IRIDIUM = null;
             PLANT_MANA = null;
         }
+
+        if(Loader.isModLoaded(ResynthMod.MODID_EXTREME_REACTORS)){
+            PLANT_YELLORITE = new ModPlantMetallicCfg(
+                    5.5F,
+                    false,
+                    false,
+                    true,
+                    5.0F,
+                    3.0F,
+                    1
+            );
+        } else {
+            PLANT_YELLORITE = null;
+        }
     }
 
     /**
@@ -2905,6 +2919,10 @@ public class ResynthConfig {
     @Name("Plant: Mana (Thermal Foundation)")
     @Comment("Settings for the Mana plant from Thermal Foundation.")
     public static final ModPlantMetallicCfg PLANT_MANA;
+
+    @Name("Plant: Yellorite (Extreme Reactors)")
+    @Comment("Settings for the Yellorite plant from Extreme Reactors.")
+    public static final ModPlantMetallicCfg PLANT_YELLORITE;
 
     /**
      * Configuration class for all mod metallic plants.

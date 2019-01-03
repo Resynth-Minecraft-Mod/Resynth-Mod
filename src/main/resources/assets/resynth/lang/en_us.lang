@@ -186,3 +186,8 @@ tile.resynth.oreIridium.name=Organic Iridium Ore
 item.resynth.seedMana.name=Mana Infused Seeds
 tile.resynth.plantMana.name=Mana Infused Plant
 tile.resynth.oreMana.name=Organic Mana Infused Ore
+
+#Exreme Reactors (Formally Big Reactors)
+item.resynth.seedYellorite.name=Yellorite Seeds
+tile.resynth.plantYellorite.name=Yellorite Plant
+tile.resynth.oreYellorite.name=Organic Yellorite Ore

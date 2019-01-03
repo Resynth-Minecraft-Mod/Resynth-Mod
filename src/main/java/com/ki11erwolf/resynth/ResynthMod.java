@@ -53,7 +53,8 @@ import java.util.function.Function;
                         "after:tconstruct; " +
                         "after:forestry; " +
                         "after:thermalfoundation;" +
-                        "after:actuallyadditions;"
+                        //"after:actuallyadditions;" +
+                        "after:bigreactors"
 )
 public class ResynthMod {
 
@@ -117,6 +118,11 @@ public class ResynthMod {
      * Actually Additions modid
      */
     public static final String MODID_ACTUALLY_ADDITIONS = "actuallyadditions";
+
+    /**
+     * Extreme Reactors (port of Big Reactors) modid.
+     */
+    public static final String MODID_EXTREME_REACTORS = "bigreactors";
 
     /**
      * Path (including pack) to the server proxy class.
