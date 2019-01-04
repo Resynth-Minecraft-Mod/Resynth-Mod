@@ -2829,12 +2829,12 @@ public class ResynthConfig {
 
         if(Loader.isModLoaded(ResynthMod.MODID_EXTREME_REACTORS)){
             PLANT_YELLORITE = new ModPlantMetallicCfg(
-                    5.5F,
-                    false,
+                    3.0F,
                     false,
                     true,
-                    5.0F,
-                    3.0F,
+                    true,
+                    2.0F,
+                    1.5F,
                     1
             );
         } else {
