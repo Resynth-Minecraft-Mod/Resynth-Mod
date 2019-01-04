@@ -1,25 +1,9 @@
-# eclipse
-bin
-*.launch
-.settings
-.metadata
-.classpath
-.project
-
-# idea
+#Output
 out
-*.ipr
-*.iws
-*.iml
-.idea
 
-# gradle
+#Gradle
 build
 .gradle
 
-# other
-eclipse
+#Environment
 run
-/forge-1.12.2-14.23.4.2705-mdk.zip
-/forge-1.12.2-14.23.4.2705-changelog.txt
-/README.txt
