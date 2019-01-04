@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth.analytics;
 
 /**
- * Event fired when an error occurs.
+ * Event fired when a fatal error occurs.
  * This provides statistics and number of
  * errors and version the error
  * occurred on.

@@ -54,7 +54,8 @@ import java.util.function.Function;
                         "after:forestry; " +
                         "after:thermalfoundation;" +
                         //"after:actuallyadditions;" +
-                        "after:bigreactors"
+                        "after:bigreactors;"
+                        //"after:deepresonance;"
 )
 public class ResynthMod {
 
@@ -114,15 +115,22 @@ public class ResynthMod {
      */
     public static final String MODID_THERMAL_FOUNDATION = "thermalfoundation";
 
-    /**
-     * Actually Additions modid
-     */
-    public static final String MODID_ACTUALLY_ADDITIONS = "actuallyadditions";
+    //Failed attempt at adding black quartz ore.
+//    /**
+//     * Actually Additions modid
+//     */
+//    public static final String MODID_ACTUALLY_ADDITIONS = "actuallyadditions";
 
     /**
      * Extreme Reactors (port of Big Reactors) modid.
      */
     public static final String MODID_EXTREME_REACTORS = "bigreactors";
+
+    //Failed attempt at adding resonating ore.
+//    /**
+//     * Deep Resonance modid.
+//     */
+//    public static final String MODID_DEEP_RESONANCE = "deepresonance";
 
     /**
      * Path (including pack) to the server proxy class.

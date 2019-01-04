@@ -1513,6 +1513,50 @@ public final class ResynthPlants {
         }
     }.register();
 
+    //Failed attempt at adding resonating ore.
+//    /**
+//     * Resonating Ore plant for Deep Resonance.
+//     */
+//    public static final ModPlantMetallic MOD_PLANT_RESONATING_ORE
+//            = new ModPlantMetallic("resonatingOre", ResynthMod.MODID_DEEP_RESONANCE,
+//            "resonating_ore", 0, "resonating_ore", 0) {
+//        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_YELLORITE;
+//        @Override
+//        protected int getResultCount() {
+//            return 1;//return cfg.yield;
+//        }
+//
+//        @Override
+//        protected boolean doesModOreDropSeeds() {
+//            return true;//return cfg.oreDropSeeds;
+//        }
+//
+//        @Override
+//        protected float getModOreSeedDropChance() {
+//            return 100;//return cfg.oreSeedDropChance;
+//        }
+//
+//        @Override
+//        protected float getModPlantGrowthChance() {
+//            return 100;//return cfg.floweringPeriod;
+//        }
+//
+//        @Override
+//        protected boolean canBonemeal() {
+//            return true;//return cfg.canBonemeal;
+//        }
+//
+//        @Override
+//        protected float getModProduceSeedDropChance() {
+//            return 100;//return cfg.produceSeedDropChance;
+//        }
+//
+//        @Override
+//        protected boolean doesModProduceDropSeeds() {
+//            return true;//return cfg.produceDropSeeds;
+//        }
+//    }.register();
+
     //Static class.
     private ResynthPlants(){}
 
