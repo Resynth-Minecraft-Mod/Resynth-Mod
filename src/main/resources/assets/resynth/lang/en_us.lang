@@ -1,7 +1,3 @@
-#Examples
-item.noname.noitem.name=Example Item
-tile.noname.noblock.name=Example Block
-
 #Tabs
 itemGroup.resynth.tabResynth=Resynth
 itemGroup.resynth.tabResynthSeeds=Resynth Seeds

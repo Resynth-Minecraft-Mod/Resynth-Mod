@@ -15,6 +15,9 @@
  */
 package com.ki11erwolf.resynth.plant.block;
 
+import com.ki11erwolf.resynth.igtooltip.IGTooltipProvider;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.properties.PropertyDirection;
@@ -29,16 +32,18 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
 /**
  * The block class for plants that
  * produce metallic (gold and iron) ore drops.
  */
-public abstract class BlockPlantMetallic extends BlockPlantBase {
+public abstract class BlockPlantMetallic extends BlockPlantBase implements IGTooltipProvider{
 
     /**
      * The age property of the plant. I.e. how big it is.
@@ -305,4 +310,47 @@ public abstract class BlockPlantMetallic extends BlockPlantBase {
      * @return the seed item used to plant this block.
      */
     protected abstract Item getSeedItem();
+
+    /**
+     * {@inheritDoc}
+     *
+     * Provides the plants growth stage to the Hwyla tooltip.
+     *
+     * @param itemStack the item stack returned by the block.
+     * @param tooltip list of strings to pass to Hwyla to show in the tooltip.
+     * @param accessor accessor used to get data from the block such as NBT.
+     * @param config current Hwyla configuration
+     */
+    @Override
+    public void onHwylaBodyRequest(ItemStack itemStack, List<String> tooltip,
+                                   IWailaDataAccessor accessor, IWailaConfigHandler config){
+
+        tooltip.add(
+                TextFormatting.GREEN
+                + "Growth Stage: "
+                + getStageFromBlockMeta(accessor.getMetadata())
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Changes the plant name in the Hwyla tooltip.
+     *
+     * @param itemStack the block ItemStack.
+     * @param tooltip the head tooltip array (containing the block name).
+     * @param accessor Hwyla data provider.
+     * @param config current Hwyla config settings.
+     */
+    @Override
+    public void onHwylaHeadRequest(ItemStack itemStack, List<String> tooltip,
+                                   IWailaDataAccessor accessor, IWailaConfigHandler config){
+        String blockTitle = tooltip.get(0);
+        if(blockTitle.contains("Seeds")){
+            tooltip.clear();
+            tooltip.add(0, TextFormatting.GOLD
+                    + blockTitle.replace("Seeds", "Plant"));
+            tooltip.add(TextFormatting.RED + "Drops: " + blockTitle);
+        }
+    }
 }

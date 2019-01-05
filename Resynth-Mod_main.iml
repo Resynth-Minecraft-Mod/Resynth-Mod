@@ -51,6 +51,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Gradle: deobf.mcp.mobius.waila:Hwyla:1.8.20-B35_1.12" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>

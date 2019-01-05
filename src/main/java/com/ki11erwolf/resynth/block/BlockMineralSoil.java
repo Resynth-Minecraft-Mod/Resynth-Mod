@@ -18,9 +18,12 @@ package com.ki11erwolf.resynth.block;
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
+import com.ki11erwolf.resynth.igtooltip.IGTooltipProvider;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.BlockUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -32,14 +35,18 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -54,7 +61,7 @@ import java.util.Random;
  * The soil block for the mods plants.
  */
 @SuppressWarnings("deprecation")
-public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
+public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements IGTooltipProvider {
 
     /**
      * The value that correlates to the blocks appearance.
@@ -382,4 +389,86 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
 
         return worldIn.getBlockState(pos).withProperty(PERCENTAGE, 0/*10%*/);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Gives the block tile entity information to the Hwyla tooltip.
+     *
+     * @param itemStack the item stack returned by the block.
+     * @param currentTip {@inheritDoc}
+     * @param accessor accessor used to get data from the block such as NBT.
+     * @param config current Hwyla configuration
+     */
+    @Override
+    public void onHwylaBodyRequest(ItemStack itemStack, List<String> currentTip,
+                                   IWailaDataAccessor accessor, IWailaConfigHandler config) {
+
+        TileEntity te = accessor.getTileEntity();
+        if(!(te instanceof TileEntityMineralSoil)) {
+            return;
+        }
+
+        currentTip.add(
+                TextFormatting.GREEN
+                + "Mineral Content: "
+                + accessor.getNBTData().getFloat("mineral-content")
+                + "%"
+        );
+
+        currentTip.add(
+                TextFormatting.DARK_PURPLE
+                + "Mineral Stage: "
+                + percentToStage(accessor.getNBTData().getFloat("mineral-content"))
+        );
+    }
+
+    /**
+     * Gives the blocks tile entity data to the Hwyla client side NBT data
+     *
+     * @param player player looking at a block.
+     * @param te blocks tile entity.
+     * @param tag Hwyla client side NBT data.
+     * @param world current world the player is in.
+     * @param pos position of the block the player is looking at.
+     *
+     */
+    @Override
+    public void onHwylaNBTDataRequest(EntityPlayerMP player, TileEntity te,
+                                      NBTTagCompound tag, World world, BlockPos pos){
+
+        if(!(te instanceof TileEntityMineralSoil))
+            return;
+
+        tag.setFloat(
+                "mineral-content",
+                ((TileEntityMineralSoil)te).getPercentage()
+        );
+    }
+
+    /**
+     * @param percent mineral content percentage.
+     * @return a String containing information about which
+     * stage the block is in from its metadata.
+     */
+    private static String percentToStage(float percent){
+        if(percent > 49.9){
+            return "5 of 5";
+        }
+
+        if(percent > 39.9){
+            return "4 of 5";
+        }
+
+        if(percent > 29.9){
+            return "3 of 5";
+        }
+
+        if(percent > 19.9){
+            return "2 of 5";
+        }
+
+        return "1 of 5";
+    }
+
 }

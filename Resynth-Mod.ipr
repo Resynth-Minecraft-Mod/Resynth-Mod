@@ -21,6 +21,7 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
+  <component name="Encoding" addBOMForNewFiles="with NO BOM" />
   <component name="EntryPointsManager">
     <list size="3">
       <item index="0" class="java.lang.String" itemvalue="net.minecraftforge.fml.common.Mod" />
@@ -280,9 +281,13 @@
         <w>actuallyadditions</w>
         <w>ardite</w>
         <w>bigreactors</w>
+        <w>coords</w>
         <w>deepresonance</w>
+        <w>hwyla</w>
+        <w>igtooltip</w>
         <w>mana</w>
         <w>thermalfoundation</w>
+        <w>waila</w>
         <w>yellorite</w>
       </words>
     </dictionary>
@@ -504,6 +509,15 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/28bb0405fddaf04f15058fbfbe01fe2780d7d3b6/commons-logging-1.1.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: deobf.mcp.mobius.waila:Hwyla:1.8.20-B35_1.12">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/minecraft/deobfedDeps/deobf/mcp/mobius/waila/Hwyla/1.8.20-B35_1.12/Hwyla-1.8.20-B35_1.12.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/minecraft/deobfedDeps/deobf/mcp/mobius/waila/Hwyla/1.8.20-B35_1.12/Hwyla-1.8.20-B35_1.12-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: io.netty:netty-all:4.1.9.Final">

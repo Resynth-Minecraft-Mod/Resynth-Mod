@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.proxy;
 
+import com.ki11erwolf.resynth.igtooltip.ResynthIGTooltips;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -30,7 +31,7 @@ public class ClientProxy implements IProxy {
      * @param event pre init event.
      */
     public void preInit(FMLPreInitializationEvent event) {
-
+        ResynthIGTooltips.registerHwyla();
     }
 
     /**

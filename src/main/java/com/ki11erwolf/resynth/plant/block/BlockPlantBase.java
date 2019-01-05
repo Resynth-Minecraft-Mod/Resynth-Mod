@@ -351,4 +351,41 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * on the plant.
      */
     protected abstract boolean canBonemeal();
+
+    /**
+     * Generates a human readable string that gives a
+     * plants growth stage from the plant blocks metadata.
+     *
+     * <b>Only works for plants with 8 growth stages (0-7).</b>
+     *
+     * @param meta plant block metadata.
+     * @return the plants growth stage as a human readable String.
+     */
+    static String getStageFromBlockMeta(int meta){
+        if(meta == 0)
+            return "0 of 7 (0%)";
+
+        if(meta == 1)
+            return "1 of 7 (14%)";
+
+        if(meta == 2)
+            return "2 of 7 (29%)";
+
+        if(meta == 3)
+            return "3 of 7 (43%)";
+
+        if(meta == 4)
+            return "4 of 7 (57%)";
+
+        if(meta == 5)
+            return "5 of 7 (71%)";
+
+        if(meta == 6)
+            return "6 of 7 (85%)";
+
+        if(meta == 7)
+            return "7 of 7 (100%)";
+
+        return "Unknown";
+    }
 }

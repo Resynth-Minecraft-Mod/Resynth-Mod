@@ -50,6 +50,19 @@ public class ResynthConfig {
     public static class Resynth {
 
         /**
+         * Disable development features toggle.
+         */
+        @Name("Disable Development Help")
+        @Comment(
+                "Set to false to enable a few things that help with mod development/debugging. " +
+                "Unless you ACTUALLY have a reason to enable this " +
+                "(e.g. you're a mod developer. Curiosity doesn't count) - don't do it!\n\n" +
+                "If you're curious: it spams the logs with useless information (try it!)."
+        )
+        @RequiresMcRestart
+        public boolean disableDevelopmentHelp = true;
+
+        /**
          * Disables all analytics events from firing when true.
          */
         @Name("Disable Google Analytics")

@@ -58,6 +58,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Gradle: deobf.mcp.mobius.waila:Hwyla:1.8.20-B35_1.12" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.mojang:patchy:1.1" level="project" />
     <orderEntry type="library" name="Gradle: oshi-project:oshi-core:1.1" level="project" />

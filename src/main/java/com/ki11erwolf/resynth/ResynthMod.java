@@ -115,7 +115,7 @@ public class ResynthMod {
      */
     public static final String MODID_THERMAL_FOUNDATION = "thermalfoundation";
 
-    //Failed attempt at adding black quartz ore.
+//    Failed attempt at adding black quartz ore.
 //    /**
 //     * Actually Additions modid
 //     */
@@ -126,7 +126,7 @@ public class ResynthMod {
      */
     public static final String MODID_EXTREME_REACTORS = "bigreactors";
 
-    //Failed attempt at adding resonating ore.
+//    Failed attempt at adding resonating ore.
 //    /**
 //     * Deep Resonance modid.
 //     */
@@ -215,16 +215,23 @@ public class ResynthMod {
             worldGen.init();
             ResynthFurnaceRecipes.registerFurnaceRecipes();
 
-            //Prints all registered items to console.
-            for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
-                ResynthMod.getLogger().info("R LOC: " + entry.getKey().getResourceDomain() + ":"
-                        + entry.getKey().getResourcePath());
+            //Finally fixed this...
+            if(!ResynthConfig.RESYNTH.disableDevelopmentHelp){
+                //Prints all registered blocks/items to console.
+                //Helps with adding other mods ore plants
+                for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
+                    ResynthMod.getLogger().info("<Resynth-Development-Help> | Found item: "
+                            + entry.getKey().getResourceDomain() + ":"
+                            + entry.getKey().getResourcePath());
+                }
+
+                for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
+                    ResynthMod.getLogger().info("<Resynth-Development-Help> | Found block: "
+                            + entry.getKey().getResourceDomain() + ":"
+                            + entry.getKey().getResourcePath());
+                }
             }
 
-            for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
-                ResynthMod.getLogger().info("R LOC: " + entry.getKey().getResourceDomain() + ":"
-                        + entry.getKey().getResourcePath());
-            }
             return null;
         }));
     }
