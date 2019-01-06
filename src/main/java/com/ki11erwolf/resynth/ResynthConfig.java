@@ -93,6 +93,35 @@ public class ResynthConfig {
     }
 
     /**
+     * Settings related to the Mineral Hoe item.
+     */
+    @Name("Mineral Hoe")
+    @Comment("Settings for the Mineral Hoe item.")
+    public static final MineralHoe MINERAL_HOE = new MineralHoe();
+
+    /**
+     * Settings related to the Mineral Hoe item.
+     */
+    public static class MineralHoe {
+
+        /**
+         * Toggle that enables/disables using the item.
+         */
+        @Name("Enable")
+        @Comment("When set to false, the Mineral Hoe cannot be used to make mineral soil.")
+        public boolean canUse = true;
+
+        /**
+         * Initial number of charges to give the item when it's first created.
+         */
+        @Name("Initial Charges")
+        @Comment("The amount of charges a Mineral Hoe has when first crafted.")
+        @RangeInt(min = 0, max = 2)
+        @RequiresMcRestart
+        public int initialCharges = 2;
+    }
+
+    /**
      * Configuration settings for the ore the mod uses.
      */
     @Name("Mineral Stone and Mineral Rock")

@@ -92,7 +92,8 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
 
     /**
      * Drops the amount of ItemMineralRock put
-     * into it (within a an item or two of accuracy).
+     * into it (within a an item or two of accuracy)
+     * and a Mineral Crystal.
      *
      * @param worldIn -
      * @param pos -
@@ -105,6 +106,9 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         EntityItem items = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
                 new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, drops));
         worldIn.spawnEntity(items);
+        EntityItem mineralCrystal = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
+                new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1));
+        worldIn.spawnEntity(mineralCrystal);
     }
 
     /**
@@ -219,7 +223,10 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     }
 
     /**
-     * {@inheritDoc} This block.
+     * {@inheritDoc}
+     *
+     * Drops Minecraft Dirt instead of this block itself.
+     * The extra item drops and handled when the block is broken.
      *
      * @param state {@inheritDoc}
      * @param rand {@inheritDoc}
@@ -228,7 +235,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      */
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune){
-        return Item.getItemFromBlock(ResynthBlocks.BLOCK_MINERAL_SOIL);
+        return Item.getItemFromBlock(Blocks.DIRT);
     }
 
     /**

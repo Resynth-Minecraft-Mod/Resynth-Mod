@@ -15,7 +15,7 @@
  */
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.block.ResynthBlocks;
+import com.ki11erwolf.resynth.item.ResynthItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -43,6 +43,6 @@ public final class ResynthTab extends CreativeTabs {
      */
     @Override
     public ItemStack getTabIconItem() {
-        return new ItemStack(ResynthBlocks.BLOCK_MINERAL_ORE);
+        return new ItemStack(ResynthItems.ITEM_MINERAL_HOE);
     }
 }

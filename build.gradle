@@ -16,7 +16,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 //*******************************************************************************************************
 
-version = "1.2.3"                                           //** VERSION NUMBER **//
+version = "1.2.4"                                           //** VERSION NUMBER **//
 
 group = "com.ki11erwolf.resynth"
 archivesBaseName = "resynth"
@@ -30,9 +30,10 @@ compileJava {
 minecraft {
     version = "1.12.2-14.23.4.2705"
     runDir = "run"
-    
+
     mappings = "snapshot_20171003"
 }
+
 
 repositories {                                              //** Repositories **//
     //Hywla

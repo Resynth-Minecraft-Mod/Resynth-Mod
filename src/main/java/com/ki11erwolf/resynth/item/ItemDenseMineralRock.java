@@ -15,6 +15,13 @@
  */
 package com.ki11erwolf.resynth.item;
 
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
+
 /**
  * Dense Mineral Rock. x9 MineralRocks.
  */
@@ -26,5 +33,21 @@ public class ItemDenseMineralRock extends ResynthItem{
      */
     public ItemDenseMineralRock() {
         super("denseMineralRock");
+    }
+
+    /**
+     * {@inheritDoc}
+     * Adds a tooltip on how to use the item.
+     *
+     * @param stack
+     * @param worldIn
+     * @param tooltip
+     * @param flagIn
+     */
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+                               ITooltipFlag flagIn){
+        tooltip.add("9 Mineral Rocks compressed into 1 item.");
+        tooltip.add("Can also be added to Mineral Soil.");
     }
 }

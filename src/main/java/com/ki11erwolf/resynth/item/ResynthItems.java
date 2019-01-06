@@ -46,6 +46,11 @@ public class ResynthItems {
     public static final ResynthItem ITEM_MINERAL_CRYSTAL = new ItemMineralCrystal().register();
 
     /**
+     * Mineral Hoe. Tool used to turn dirt/grass into mineral soil.
+     */
+    public static final ResynthItem ITEM_MINERAL_HOE = new ItemMineralHoe().register();
+
+    /**
      * @return an array of all the registered resynth items.
      */
     public static Item[] getItems(){

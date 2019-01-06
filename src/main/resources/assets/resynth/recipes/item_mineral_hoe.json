@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XX ",
+    " Y ",
+    " Y "
+  ],
+  "key": {
+    "X": {
+      "item": "resynth:item_mineral_crystal"
+    },
+    "Y": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "resynth:item_mineral_hoe"
+  }
+}

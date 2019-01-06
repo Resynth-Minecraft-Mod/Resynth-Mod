@@ -2,7 +2,7 @@
 {
   "modid": "resynth",
   "name": "Resynth",
-  "description": "Adds growable resources to Minecraft.",
+  "description": "Adds growable ores, mob drops and resources to Minecraft.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://resynth-minecraft-mod.github.io",
