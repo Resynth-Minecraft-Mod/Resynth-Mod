@@ -62,7 +62,7 @@ public class BlockPlantOre extends ResynthBlock {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add("Can be blown up to obtain more seeds.");
+        tooltip.add("Can be blown up to for a chance to obtain more seeds.");
         tooltip.add("Can be smelted to obtain the resource.");
     }
 }

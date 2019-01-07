@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.ResynthTabSeeds;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
+import com.ki11erwolf.resynth.plant.block.BlockPlantBiochemical;
 import com.ki11erwolf.resynth.plant.block.BlockPlantCrystalline;
 import com.ki11erwolf.resynth.plant.block.BlockPlantMetallic;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -151,9 +152,11 @@ public class ItemPlantSeed extends ResynthItem implements IPlantable {
         BlockPlantBase base = (BlockPlantBase) plant;
 
         if(base instanceof BlockPlantCrystalline)
-            tooltip.add("Obtained by mining " + obtain + " ore");
+            tooltip.add("Spawns randomly when mining the ore");
         else if (base instanceof BlockPlantMetallic)
-            tooltip.add("Obtained by blowing up " + obtain + " ore");
+            tooltip.add("Spawns randomly when blowing up the ore");
+        else if (base instanceof BlockPlantBiochemical)
+            tooltip.add("Spawns randomly when killing the mob");
 
     }
 }

@@ -71,8 +71,8 @@ public abstract class ItemPlantMobProduce extends ResynthItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
                                ITooltipFlag flagIn) {
-        tooltip.add("Throw for a chance at getting more seeds.");
-        tooltip.add("Smelt to get the item.");
+        tooltip.add("Can be thrown for a chance at getting more seeds.");
+        tooltip.add("Can be smelted to obtain the resource.");
     }
 
     /**

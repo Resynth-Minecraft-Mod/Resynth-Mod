@@ -56,7 +56,7 @@ public class ItemPlantOreProduce extends ResynthItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add("Can be left in water to obtain more seeds.");
+        tooltip.add("Can be left in water for a chance to obtain more seeds.");
         tooltip.add("Can be smelted to obtain the resource.");
     }
 }

@@ -363,28 +363,28 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      */
     static String getStageFromBlockMeta(int meta){
         if(meta == 0)
-            return "0 of 7 (0%)";
+            return "1 of 8 (0%)";
 
         if(meta == 1)
-            return "1 of 7 (14%)";
+            return "2 of 8 (14%)";
 
         if(meta == 2)
-            return "2 of 7 (29%)";
+            return "3 of 8 (29%)";
 
         if(meta == 3)
-            return "3 of 7 (43%)";
+            return "4 of 8 (43%)";
 
         if(meta == 4)
-            return "4 of 7 (57%)";
+            return "5 of 8 (57%)";
 
         if(meta == 5)
-            return "5 of 7 (71%)";
+            return "6 of 8 (71%)";
 
         if(meta == 6)
-            return "6 of 7 (85%)";
+            return "7 of 8 (85%)";
 
         if(meta == 7)
-            return "7 of 7 (100%)";
+            return "8 of 8 (100%)";
 
         return "Unknown";
     }

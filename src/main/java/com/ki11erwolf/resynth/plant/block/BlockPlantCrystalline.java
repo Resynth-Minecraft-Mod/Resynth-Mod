@@ -52,14 +52,14 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements IG
      * List of bounding boxes.
      */
     private static final AxisAlignedBB[] CROPS_AABB = new AxisAlignedBB[] {
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D)
+            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.125D, 0.9D),
+            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.25D, 0.9D),
+            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.375D, 0.9D),
+            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.5D, 0.9D),
+            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.625D, 0.9D),
+            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.75D, 0.9D),
+            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.875D, 0.9D),
+            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 1.0D, 0.9D)
     };
 
     /**

@@ -23,8 +23,10 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -55,19 +57,19 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      */
     protected static final AxisAlignedBB FLOWER_AABB
             = new AxisAlignedBB(
-                0.30000001192092896D,
-                0.0D,
-                0.30000001192092896D,
-                0.699999988079071D,
-                0.875D,
-                0.699999988079071D
+            0.30000001192092896D,
+            0.0D,
+            0.30000001192092896D,
+            0.699999988079071D,
+            0.875D,
+            0.699999988079071D
     );
 
     /**
      * Default constructor.
      */
     public BlockSeedPod() {
-        super(Material.PLANTS, SoundType.PLANT,"seedPod");
+        super(Material.PLANTS, SoundType.PLANT, "seedPod");
     }
 
     /**
@@ -78,7 +80,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return true if the block below is dirt or grass.
      */
     @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos){
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
         IBlockState soil = worldIn.getBlockState(pos.down());
         return soil.getBlock().getClass() == Blocks.GRASS.getClass()
                 || soil.getBlock().getClass() == Blocks.DIRT.getClass();
@@ -93,17 +95,18 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return flower hit box
      */
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return FLOWER_AABB;
     }
 
     /**
      * {@inheritDoc}
+     *
      * @param state
      * @return false
      */
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
@@ -114,7 +117,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return false
      */
     @Override
-    public boolean isFullCube(IBlockState state){
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
@@ -126,7 +129,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return plains plant type
      */
     @Override
-    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos){
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return EnumPlantType.Plains;
     }
 
@@ -138,7 +141,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return this plants default state
      */
     @Override
-    public IBlockState getPlant(net.minecraft.world.IBlockAccess world, BlockPos pos){
+    public IBlockState getPlant(net.minecraft.world.IBlockAccess world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
 
         if (state.getBlock() != this)
@@ -149,11 +152,12 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
 
     /**
      * {@inheritDoc}
+     *
      * @return cutout
      */
     @SideOnly(Side.CLIENT)
     @Override
-    public BlockRenderLayer getBlockLayer(){
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 
@@ -167,7 +171,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return undefined
      */
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face){
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
 
@@ -181,7 +185,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      */
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos){
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return NULL_AABB;
     }
 
@@ -196,20 +200,20 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return the seeds item to drop, the plant itself or nothing (config dependent).
      */
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune){
-        if(MYSTICAL_SEED_POD.dropSeeds){
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        if (MYSTICAL_SEED_POD.dropSeeds) {
             List<PlantBiochemical> plants = Arrays.asList(ResynthPlants.getBiochemicalPlants());
 
             PlantBiochemical plant = ResynthPlants.getBiochemicalPlants()[0];
 
-            for(int i = 0; i <= MYSTICAL_SEED_POD.triesPerBreak; i++){
+            for (int i = 0; i <= MYSTICAL_SEED_POD.triesPerBreak; i++) {
                 plant = plants.get(MathUtil.getRandomIntegerInRange(0, plants.size() - 1));
-                if(MathUtil.chance(plant.getSeedPodDropPercentage())){
+                if (MathUtil.chance(plant.getSeedPodDropPercentage())) {
                     return plant.getSeeds();
                 }
             }
 
-            if(MYSTICAL_SEED_POD.alwaysDropSeeds){
+            if (MYSTICAL_SEED_POD.alwaysDropSeeds) {
                 return plant.getSeeds();
             } else {
                 return Item.getItemFromBlock(Blocks.AIR);
@@ -231,9 +235,25 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @param fromPos
      */
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos){
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
         this.checkAndDropBlock(worldIn, pos, state);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Adds information to the tooltip about what the block does.
+     *
+     * @param stack
+     * @param worldIn
+     * @param tooltip
+     * @param flagIn
+     */
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+                               ITooltipFlag flagIn) {
+        tooltip.add("Can drop seeds normally dropped by mobs for players in peaceful mode.");
     }
 
     /**
@@ -241,13 +261,16 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * place on dirt or grass.
      *
      * @param worldIn -
-     * @param pos -
-     * @param state -
+     * @param pos     -
+     * @param state   -
      */
-    protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state){
-        if (!this.canPlaceBlockAt(worldIn, pos)){
+    protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state) {
+        if (!this.canPlaceBlockAt(worldIn, pos)) {
             this.dropBlockAsItem(worldIn, pos, state, 0);
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         }
     }
+
+
+
 }
