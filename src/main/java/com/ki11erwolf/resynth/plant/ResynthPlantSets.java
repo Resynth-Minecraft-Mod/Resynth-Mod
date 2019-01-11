@@ -66,7 +66,7 @@ public final class ResynthPlantSets {
         protected boolean doesPlantOreDropSeeds() {return ResynthConfig.PLANT_IRON.organicOreDropSeeds;}
 
         @Override
-        public ItemStack getResult() {return new ItemStack(Items.IRON_INGOT, ResynthConfig.PLANT_IRON.yield);}
+        public ItemStack getResult() {return new ItemStack(Blocks.IRON_ORE, ResynthConfig.PLANT_IRON.yield);}
     }.register();
 
     /**
@@ -93,7 +93,7 @@ public final class ResynthPlantSets {
         protected boolean doesPlantOreDropSeeds() {return ResynthConfig.PLANT_GOLD.organicOreDropSeeds;}
 
         @Override
-        public ItemStack getResult() {return new ItemStack(Items.GOLD_INGOT, ResynthConfig.PLANT_GOLD.yield);}
+        public ItemStack getResult() {return new ItemStack(Blocks.GOLD_ORE, ResynthConfig.PLANT_GOLD.yield);}
     }.register();
 
     /*
@@ -951,7 +951,7 @@ public final class ResynthPlantSets {
      */
     public static final ModPlantSetMetallic MOD_PLANT_SET_TC_COBALT
             = new ModPlantSetMetallic("cobalt", ResynthMod.MODID_TINKERS_CONSTRUCT,
-            "ore", 0, "ingots", 0) {
+            "ore", 0, "ore", 0) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_COBALT;
 
         @Override
@@ -995,7 +995,7 @@ public final class ResynthPlantSets {
      */
     public static final ModPlantSetMetallic MOD_PLANT_SET_TC_ARDITE
             = new ModPlantSetMetallic("ardite", ResynthMod.MODID_TINKERS_CONSTRUCT
-            , "ore", 1, "ingots", 1) {
+            , "ore", 1, "ore", 1) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_ARDITE;
 
         @Override
