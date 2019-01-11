@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,9 +51,11 @@ public class BlockMineralOre extends ResynthBlock{
     }
 
     /**
-     * @param state -
-     * @param rand -
-     * @param fortune -
+     * {@inheritDoc}
+     *
+     * @param state
+     * @param rand
+     * @param fortune
      * @return {@link com.ki11erwolf.resynth.item.ItemMineralRock} as the item dropped.
      */
     @Nonnull
@@ -124,6 +126,6 @@ public class BlockMineralOre extends ResynthBlock{
     @Override
     @SuppressWarnings("ConstantConditions")
     protected ItemStack getSilkTouchDrop(@Nonnull IBlockState state){
-        return new ItemStack(ResynthItems.ITEM_MINERAL_ROCK);
+        return new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, quantityDropped(null));
     }
 }

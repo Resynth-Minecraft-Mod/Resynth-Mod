@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,18 +23,20 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
 /**
- * Base block class for all mod blocks.
+ * Base block class for all Resynth blocks.
  */
 public class ResynthBlock extends Block {
 
     /**
-     * The prefix for all block names.
+     * The prefix for all block names (excluding plant/seed/produce items).
      */
     private static final String BLOCK_PREFIX = "block";
 
     /**
+     * Default constructor for all mod blocks.
+     *
      * @param material the blocks material.
-     * @param name the general name of the block (e.g. stone).
+     * @param name the identifying name of the block (e.g. stone or woodenDoor).
      */
     public ResynthBlock(Material material, String name) {
         this(material, SoundType.STONE, name, BLOCK_PREFIX);

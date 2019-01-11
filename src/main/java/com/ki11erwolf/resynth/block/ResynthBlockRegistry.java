@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,14 @@ package com.ki11erwolf.resynth.block;
 import java.util.ArrayList;
 
 /**
- * Stores all registered resynth blocks.
+ * Stores instances of Resynth blocks that should be registered to forge.
+ *
+ * Note: This registry does NOT hold any plant or plant produce blocks.
  */
 public class ResynthBlockRegistry {
 
     /**
-     * Array list containing all blocks.
+     * Array list containing all the block instances.
      */
     private static final ArrayList<ResynthBlock> BLOCKS = new ArrayList<>();
 
@@ -37,7 +39,7 @@ public class ResynthBlockRegistry {
     }
 
     /**
-     * @return an array of all registered resynth blocks.
+     * @return an array of all Resynth block instances that should be registered.
      */
     protected static ResynthBlock[] getBlocks(){
         return BLOCKS.toArray(new ResynthBlock[0]);

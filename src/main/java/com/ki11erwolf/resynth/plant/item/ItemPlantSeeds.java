@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,39 +42,35 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * The base class for all items used to place
- * plant blocks.
+ * The item class for all plant seeds.
  */
-public class ItemPlantSeed extends ResynthItem implements IPlantable {
+public class ItemPlantSeeds extends ResynthItem implements IPlantable {
 
     /**
-     * Prefix for the item type.
+     * Prefix for the item.
      */
-    protected static final String SEED_PREFIX = "seed";
+    protected static final String PREFIX = "seed";
 
     /**
-     * The plant block the item places.
+     * The plant block the seed item places.
      */
     private final Block plant;
 
-    private final String obtain;
-
     /**
-     * Sets the creative tab, unlocalized name prefix
-     * and registry name.
+     * Default item constructor.
      *
      * @param plant the plant block to place.
-     * @param name the general name of the item (e.g. redstoneDust)
+     * @param name the name of the item (e.g. redstoneDust)
      */
-    public ItemPlantSeed(BlockPlantBase plant, String name, String obtain) {
-        super(name, SEED_PREFIX);
-        this.obtain = obtain;
+    public ItemPlantSeeds(BlockPlantBase plant, String name) {
+        super(name, PREFIX);
         this.plant = plant;
         this.setCreativeTab(ResynthTabSeeds.RESYNTH_TAB_SEEDS);
     }
 
     /**
      * {@inheritDoc}
+     *
      * <p>
      *     Places the given plant block
      *     in the world.
@@ -129,7 +125,8 @@ public class ItemPlantSeed extends ResynthItem implements IPlantable {
      *
      * @param world
      * @param pos
-     * @return the default state for the given plant block.
+     * @return the default state of the plant block
+     * this seed item places.
      */
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
@@ -138,7 +135,8 @@ public class ItemPlantSeed extends ResynthItem implements IPlantable {
 
     /**
      * {@inheritDoc}
-     * Adds a tooltip on how to obtain the item.
+     * Adds a tooltip on how to obtain the item. This tooltip
+     * changes depending on what type of plant it places.
      *
      * @param stack
      * @param worldIn
@@ -159,4 +157,5 @@ public class ItemPlantSeed extends ResynthItem implements IPlantable {
             tooltip.add("Spawns randomly when killing the mob");
 
     }
+
 }

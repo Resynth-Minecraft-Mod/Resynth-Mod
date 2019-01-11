@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,6 +58,7 @@ public class ItemMineralHoe extends ResynthItem {
      */
     public ItemMineralHoe() {
         super("mineralHoe");
+        this.setMaxStackSize(1);
     }
 
     /**

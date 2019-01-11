@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,10 +44,15 @@ public enum Status {
     FAILED(3);
 
     /**
-     * The internal status ID.
+     * The internal unique status ID.
      */
     public final int id;
 
+    /**
+     * Constructor accepting an ID.
+     *
+     * @param id the unique int ID for the status.
+     */
     Status(int id){
         this.id = id;
     }

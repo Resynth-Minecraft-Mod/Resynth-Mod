@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import net.minecraft.world.World;
 public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthBlock {
 
     /**
-     * Constructor.
+     * Basic constructor for all Resynth tile entities.
      *
      * @param material the material of the block.
      * @param name the name of the block (e.g. redstoneDust).
@@ -44,7 +44,7 @@ public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthB
     }
 
     /**
-     * Constructor.
+     * Extended constructor for all Resynth tile entities.
      *
      * @param material the material of the block.
      * @param sound the sound the block makes when broken or walked on.
@@ -56,7 +56,7 @@ public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthB
 
     /**
      * Gets the tile entity at the given location
-     * cast as tile entity generic type.
+     * cast as tile entity with generic type.
      *
      * @param world the world the tile entity is in.
      * @param pos the location in the world.
@@ -69,10 +69,10 @@ public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthB
 
     /**
      * Always returns {@code true} to indicate
-     * the block class implemented this class
+     * the block class implementing this class
      * has a tile entity class.
      *
-     * @param state the block state of the block.
+     * @param state the blocks state in the world.
      * @return {@code true}
      */
     @Override

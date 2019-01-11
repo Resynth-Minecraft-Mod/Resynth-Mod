@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package com.ki11erwolf.resynth.block;
 
-import com.ki11erwolf.resynth.plant.PlantBiochemical;
-import com.ki11erwolf.resynth.plant.ResynthPlants;
+import com.ki11erwolf.resynth.plant.PlantSetBiochemical;
+import com.ki11erwolf.resynth.plant.ResynthPlantSets;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -66,7 +66,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
     );
 
     /**
-     * Default constructor.
+     * Standard constructor.
      */
     public BlockSeedPod() {
         super(Material.PLANTS, SoundType.PLANT, "seedPod");
@@ -171,7 +171,8 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return undefined
      */
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state,
+                                            BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
 
@@ -185,7 +186,8 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      */
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState,
+                                                 IBlockAccess worldIn, BlockPos pos) {
         return NULL_AABB;
     }
 
@@ -202,9 +204,9 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         if (MYSTICAL_SEED_POD.dropSeeds) {
-            List<PlantBiochemical> plants = Arrays.asList(ResynthPlants.getBiochemicalPlants());
+            List<PlantSetBiochemical> plants = Arrays.asList(ResynthPlantSets.getBiochemicalPlantSets());
 
-            PlantBiochemical plant = ResynthPlants.getBiochemicalPlants()[0];
+            PlantSetBiochemical plant = ResynthPlantSets.getBiochemicalPlantSets()[0];
 
             for (int i = 0; i <= MYSTICAL_SEED_POD.triesPerBreak; i++) {
                 plant = plants.get(MathUtil.getRandomIntegerInRange(0, plants.size() - 1));
@@ -235,7 +237,8 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @param fromPos
      */
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos,
+                                Block blockIn, BlockPos fromPos) {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
         this.checkAndDropBlock(worldIn, pos, state);
     }
@@ -258,7 +261,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
 
     /**
      * Drops the plant block if it isn't
-     * place on dirt or grass.
+     * placed on dirt or grass.
      *
      * @param worldIn -
      * @param pos     -
@@ -270,7 +273,4 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         }
     }
-
-
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.Sys;
 
-public abstract class ModPlantMetallic extends ModPlant<PlantMetallic> {
+/**
+ * Wrapper API that allows adding crystalline plant sets for external
+ * mods.
+ */
+public abstract class ModPlantSetCrystalline extends ModPlantSetBase<PlantSetCrystalline> {
 
     /**
      * The logger for this class.
@@ -31,21 +34,23 @@ public abstract class ModPlantMetallic extends ModPlant<PlantMetallic> {
     private static final Logger LOG = ResynthMod.getLogger();
 
     /**
-     * The final produce mod item.
+     * The item from the mod the plants
+     * produce item will eventually smelt into.
      */
-    private Item modResourceItem;
+    private Item result;
 
     /**
+     * Default constructor.
+     *
      * @param name plant name.
      * @param modid mods modid.
-     * @param oreBlockName the mod ore blocks name.
-     * @param resourceName the mod resource item name.
-     * @param metaData the metadata for the resource item stack.
+     * @param oreBlockName the mods ore block name.
+     * @param resourceName the mods resource item name.
+     * @param metaData the metadata for the item stack holding
+     *                 the resource item.
      */
-    public ModPlantMetallic(String name, String modid,
-                               String oreBlockName, int oreMetaData, String resourceName,
-                            int metaData){
-
+    public ModPlantSetCrystalline(String name, String modid,
+                                  String oreBlockName, String resourceName, int metaData){
         if(Loader.isModLoaded(modid)){
             LOG.info("Loading mod plant: " + name + " | mod: " + modid);
         } else {
@@ -60,56 +65,40 @@ public abstract class ModPlantMetallic extends ModPlant<PlantMetallic> {
             return;
         }
 
-        backingPlant = new PlantMetallic(name, new ItemStack(modOreBlock, 1, oreMetaData)) {
+        backingPlantSet = new PlantSetCrystalline(name, modOreBlock) {
 
             @Override
             public ItemStack getResult() {
-                if(modResourceItem == null){
-                    modResourceItem = getModItem(modid, resourceName);
+                if(result == null){
+                    result = getModItem(modid, resourceName);
 
-                    if(modResourceItem == null){
+                    if(result == null){
                         LOG.error("Failed to get mod resource item: " + modid + ":" + resourceName);
-                        modResourceItem = getModItem("minecraft", "dirt");
+                        result = getModItem("minecraft", "dirt");
                     }
                 }
 
-                return new ItemStack(modResourceItem, getResultCount(), metaData);
+                return new ItemStack(result, getResultCount(), metaData);
             }
 
             @Override
-            protected float getFloweringPeriod() {
-                return getModPlantGrowthChance();
-            }
+            protected boolean doesOreDropSeeds() {return doesModOreDropSeeds();}
 
             @Override
-            protected boolean canBoneMeal() {
-                return canBonemeal();
-            }
+            protected float getOreSeedDropChance() {return getModOreSeedDropChance();}
 
             @Override
-            protected float getOreSeedDropChance() {
-                return getModOreSeedDropChance();
-            }
+            protected float getPlantGrowthChance() {return getModPlantGrowthChance();}
 
             @Override
-            protected float getOrganicOreSeedDropChance() {
-                return getModProduceSeedDropChance();
-            }
+            protected boolean canBonemealPlant() {return canBonemealModPlant();}
 
             @Override
-            protected boolean doesOreDropSeeds() {
-                return doesModOreDropSeeds();
-            }
+            protected float getProduceSeedDropChance() {return getModProduceSeedDropChance();}
 
             @Override
-            protected boolean doesOrganicOreDropSeeds() {
-                return doesModProduceDropSeeds();
-            }
+            protected boolean doesProduceDropSeeds() {return doesModProduceDropSeeds();}
         };
-
-        backingPlant.modid = modid;
-        backingPlant.oreBlockName = oreBlockName;
-        backingPlant.oreMetaData = oreMetaData;
     }
 
     /**
@@ -117,8 +106,8 @@ public abstract class ModPlantMetallic extends ModPlant<PlantMetallic> {
      * @return
      */
     @Override
-    public ModPlantMetallic register(){
-        return (ModPlantMetallic) super.register();
+    public ModPlantSetCrystalline register(){
+        return (ModPlantSetCrystalline)super.register();
     }
 
     /**
@@ -137,14 +126,14 @@ public abstract class ModPlantMetallic extends ModPlant<PlantMetallic> {
     protected abstract float getModOreSeedDropChance();
 
     /**
-     * @return the chance the plant will grow on a random tick.
+     * @return the chance the plant will grow on a random approved tick.
      */
     protected abstract float getModPlantGrowthChance();
 
     /**
      * @return true if bonemeal can be used on the plant.
      */
-    protected abstract boolean canBonemeal();
+    protected abstract boolean canBonemealModPlant();
 
     /**
      * @return the chance the plant produce will drop seeds.

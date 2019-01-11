@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,22 +23,52 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import java.util.Map;
 
 /**
- * Base class for all mod plant types.
+ * Base class for all apis that provide a plant set
+ * for external mods.
  *
- * @param <T>
+ * @param <T> plant set (e.g. metallic) this api wraps.
  */
-public class ModPlant<T> {
+public class ModPlantSetBase<T> {
 
     /**
-     * The resynth plant created for the mod resource.
+     * The plant set this mod api will wrap.
      */
-    protected T backingPlant;
+    protected T backingPlantSet;
 
     /**
-     * @return true if the backing plant was able to be initialized.
+     * @return true if the plant set for the external
+     * mod was able to be loaded.
      */
     public boolean isLoaded(){
-        return backingPlant != null;
+        return backingPlantSet != null;
+    }
+
+    /**
+     * Attempts to register the plant set to the game.
+     *
+     * @return this if the registration was successful,
+     * null if not.
+     */
+    public ModPlantSetBase<T> register(){
+        if(backingPlantSet == null){
+            return null;
+        }
+
+        if(backingPlantSet instanceof PlantSetCrystalline)
+            ((PlantSetCrystalline) backingPlantSet).register();
+
+        if(backingPlantSet instanceof PlantSetMetallic)
+            ((PlantSetMetallic) backingPlantSet).register();
+
+        return this;
+    }
+
+    /**
+     * @return the original plant set created
+     * by this wrapper API.
+     */
+    public T getBackingPlantSet(){
+        return backingPlantSet;
     }
 
     /**
@@ -79,25 +109,5 @@ public class ModPlant<T> {
         }
 
         return item;
-    }
-
-    /**
-     * Attempts to register the plant to the game.
-     *
-     * @return this if the registration was successfully,
-     * null if not.
-     */
-    public ModPlant<T> register(){
-        if(backingPlant == null){
-            return null;
-        }
-
-        if(backingPlant instanceof PlantCrystalline)
-            ((PlantCrystalline) backingPlant).register();
-
-        if(backingPlant instanceof PlantMetallic)
-            ((PlantMetallic) backingPlant).register();
-
-        return this;
     }
 }

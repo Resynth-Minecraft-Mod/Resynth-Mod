@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,31 +41,27 @@ import java.util.Random;
 
 /**
  * The block class for plants that
- * produce metallic (gold and iron) ore drops.
+ * ores that need to be smelted (e.g.
+ * gold and iron).
  */
 public abstract class BlockPlantMetallic extends BlockPlantBase implements IGTooltipProvider{
 
     /**
-     * The age property of the plant. I.e. how big it is.
+     * Growth stage (age) property of the plant type.
      */
-    public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
+    public static final PropertyInteger GROWTH_STAGE = PropertyInteger.create(
+            "age", 0, 7);
 
     /**
      * The direction the block is facing. Used when it's connected
-     * to another block.
+     * to its produce (i.e. flowering).
      */
     public static final PropertyDirection FACING = BlockTorch.FACING;
 
     /**
-     * The block the plant places.
+     * List of bounding boxes for the plants growth stages.
      */
-    private final Block produce;
-
-    /**
-     * List of aligned axises the plant
-     * can have.
-     */
-    protected static final AxisAlignedBB[] MC_STEM_AABB = new AxisAlignedBB[] {
+    protected static final AxisAlignedBB[] METALLIC_STEM_AABB = new AxisAlignedBB[] {
             new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.125D, 0.625D), //Age=0
             new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.25D, 0.625D),  //Age=1
             new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.375D, 0.625D), //Age=2
@@ -77,7 +73,12 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements IGToo
     };
 
     /**
-     * Constructs a new metallic plant block.
+     * The block the plant places as its produce.
+     */
+    private final Block produce;
+
+    /**
+     * Constructs a new metallic plant block type.
      *
      * @param produce the block the plant places.
      * @param name the name of the block.
@@ -85,28 +86,29 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements IGToo
     public BlockPlantMetallic(Block produce, String name) {
         super(name);
         this.setDefaultState(
-                this.blockState.getBaseState().withProperty(AGE, 0).withProperty(FACING, EnumFacing.UP)
+                this.blockState.getBaseState().withProperty(GROWTH_STAGE, 0)
+                        .withProperty(FACING, EnumFacing.UP)
         );
         this.produce = produce;
     }
 
     /**
-     * Allows the block to grow
-     * if it hasn't reached its max age (height)
+     * Checks if the block hasn't reached its max growth stage (7).
      *
      * @param worldIn -
      * @param pos -
      * @param state -
      * @param isClient -
-     * @return true if the block can grow more.
+     * @return true if the block isn't at its max growth stage.
      */
     @Override
     public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
-        return state.getValue(AGE) != 7;
+        return state.getValue(GROWTH_STAGE) != 7;
     }
 
     /**
-     * Grows the block by one.
+     * Grows the plant by one growth stage. This does
+     * not place produce.
      *
      * @param worldIn -
      * @param rand -
@@ -119,59 +121,60 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements IGToo
     }
 
     /**
-     * The correct bounding box for the plant
-     * in its current state.
+     * The correct bounding box for the plants growth stage.
      *
      * @param state -
      * @param source -
      * @param pos -
      * @return the bounding box for the plant
-     * with the given age(height)
+     * with the given growth stage.
      */
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
-        return MC_STEM_AABB[state.getValue(AGE)];
+        return METALLIC_STEM_AABB[state.getValue(GROWTH_STAGE)];
     }
 
     /**
-     * Ges the meta value from the blocks state.
+     * Gets the meta value from the blocks state.
      *
      * @param state -
      * @return the associated meta value.
      */
     @Override
     public int getMetaFromState(IBlockState state){
-        return state.getValue(AGE);
+        return state.getValue(GROWTH_STAGE);
     }
 
     /**
      * @return a newly constructed a new block state container
-     * with the given block properties (age and facing).
+     * with the given block properties (growth stage and facing).
      */
     @Override
     protected BlockStateContainer createBlockState(){
-        return new BlockStateContainer(this, AGE, FACING);
+        return new BlockStateContainer(this, GROWTH_STAGE, FACING);
     }
 
     /**
      * Gets the block state with the given meta value.
      *
      * @param meta -
-     * @return the block state with the given meta value.
+     * @return the block state from the given meta value.
      */
     @Override
     @SuppressWarnings("deprecation")
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(AGE, meta);
+        return this.getDefaultState().withProperty(GROWTH_STAGE, meta);
     }
 
     /**
      * {@inheritDoc}
+     * Returns the item stack the player should get
+     * when harvesting/picking the block.
      *
      * @param worldIn
      * @param pos
      * @param state
-     * @return the seed item for this plant.
+     * @return the plants seed type.
      */
     @Override
     @SuppressWarnings("deprecation")
@@ -195,8 +198,9 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements IGToo
 
     /**
      * {@inheritDoc}
+     *
      * <p>
-     *     Adds the seed item to the list.
+     *     Adds the seed item to the list of drops.
      * </p>
      *
      * @param drops
@@ -218,6 +222,8 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements IGToo
     /**
      * {@inheritDoc}
      *
+     * NO-OP.
+     *
      * @param worldIn
      * @param pos
      * @param state
@@ -232,15 +238,19 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements IGToo
     /**
      * {@inheritDoc}
      *
+     * Gets the full state of block with meta, growth stage
+     * and facing property.
+     *
      * @param state
      * @param worldIn
      * @param pos
-     * @return
+     *
+     * @return the full state of the block.
      */
     @Override
     @SuppressWarnings("deprecation")
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos){
-        int i =  state.getValue(AGE);
+        int i =  state.getValue(GROWTH_STAGE);
         state = state.withProperty(FACING, EnumFacing.UP);
 
         for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL){
@@ -255,6 +265,7 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements IGToo
 
     /**
      * {@inheritDoc}
+     *
      * <p>
      *     Grows the plant or places the produce block
      *     if a growth tick is approved.
@@ -267,11 +278,11 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements IGToo
      */
     @Override
     protected void onGrowApproved(World worldIn, BlockPos pos, IBlockState state, Random rand){
-        int i = state.getValue(AGE);
+        int i = state.getValue(GROWTH_STAGE);
 
         if (i < 7) {
             //Grow
-            IBlockState newState = state.withProperty(AGE, i + 1);
+            IBlockState newState = state.withProperty(GROWTH_STAGE, i + 1);
             worldIn.setBlockState(pos, newState, 2);
         } else {
             //Place ore block
@@ -294,22 +305,17 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements IGToo
     }
 
     /**
-     * Grows the plant. This increases it's age
-     * by one and updates the texture and bounding box.
+     * Grows the plant stem. This increases it's growth stage
+     * by one and updates the block state and bounding box.
      *
      * @param worldIn -
      * @param pos -
      * @param state -
      */
     private void growStem(World worldIn, BlockPos pos, IBlockState state){
-        int i = state.getValue(AGE) + MathHelper.getInt(worldIn.rand, 2, 5);
-        worldIn.setBlockState(pos, state.withProperty(AGE, Math.min(7, i)), 2);
+        int i = state.getValue(GROWTH_STAGE) + MathHelper.getInt(worldIn.rand, 2, 5);
+        worldIn.setBlockState(pos, state.withProperty(GROWTH_STAGE, Math.min(7, i)), 2);
     }
-
-    /**
-     * @return the seed item used to plant this block.
-     */
-    protected abstract Item getSeedItem();
 
     /**
      * {@inheritDoc}
@@ -353,4 +359,13 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements IGToo
             tooltip.add(TextFormatting.RED + "Drops: " + blockTitle);
         }
     }
+
+    /**
+     * Used to get the seed item this plant instance
+     * will actually drop. This is specified
+     * in the class creating this one.
+     *
+     * @return the seed item used to plant this block.
+     */
+    protected abstract Item getSeedItem();
 }

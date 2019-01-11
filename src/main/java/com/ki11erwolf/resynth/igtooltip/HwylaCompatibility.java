@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,18 +62,18 @@ public class HwylaCompatibility implements IWailaDataProvider {
     private HwylaCompatibility() {}
 
     /**
-     * Public init/register method.
-     *
      * Sets up the Hwyla interface API.
      */
     static void register(){
         if (registered)
             return;
+
         registered = true;
         FMLInterModComms.sendMessage(
                 "waila",
                 "register",
-                "com.ki11erwolf.resynth.igtooltip.HwylaCompatibility.load"
+                //Change this line to reflect the name if you change the name of the method below.
+                "com.ki11erwolf.resynth.igtooltip.HwylaCompatibility.onHwylaLoad"
         );
     }
 
@@ -82,25 +82,28 @@ public class HwylaCompatibility implements IWailaDataProvider {
      *
      * @param registrar Given Hwyla block registrar API.
      */
-    public static void load(IWailaRegistrar registrar) {
-        LOG.info("HwylaCompatibility.load()");
+    //MY GOD... this gave problems...
+    public static void onHwylaLoad(IWailaRegistrar registrar) {
+        try{
+            LOG.info("Hwyla register callback! Initializing...");
 
-        if (!registered){
-            throw new RuntimeException("Please register this handler using the provided method.");
-        }
+            for(Class tooltipProvider : ResynthIGTooltips.TOOLTIP_CLASSES){
+                registrar.registerHeadProvider(INSTANCE, tooltipProvider);
+                registrar.registerBodyProvider(INSTANCE, tooltipProvider);
+                registrar.registerTailProvider(INSTANCE, tooltipProvider);
+            }
 
-        if (!loaded) {
-            ResynthIGTooltips.getTooltipClasses().forEach(item -> {
-                registrar.registerHeadProvider(INSTANCE, item);
-                registrar.registerBodyProvider(INSTANCE, item);
-                registrar.registerTailProvider(INSTANCE, item);
-            });
+            for(Class nbtProvider : ResynthIGTooltips.TOOLTIP_TILE_ENTITY_CLASSES){
+                registrar.registerNBTProvider(INSTANCE, nbtProvider);
+            }
 
-            ResynthIGTooltips.getTileEntityClasses().forEach(
-                    item -> registrar.registerNBTProvider(INSTANCE, item)
-            );
+            LOG.info("Hwyla register callback initialized without fatal errors!");
 
             loaded = true;
+        } catch (Exception e){
+            LOG.error("Hwyla register callback ERRORED!", e);
+            loaded = false;
+            throw e;
         }
     }
 
@@ -227,9 +230,7 @@ public class HwylaCompatibility implements IWailaDataProvider {
         if(object instanceof IGTooltipProvider)
             return (IGTooltipProvider)object;
         else
-            return (itemStack, tooltip, accessor, config) -> {
-                //NO-OP
-            };
+            return IGTooltipProvider.BLANK_PROVIDER;
     }
 }
 

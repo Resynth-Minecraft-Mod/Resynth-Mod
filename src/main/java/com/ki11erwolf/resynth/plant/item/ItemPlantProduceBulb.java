@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,24 +36,26 @@ import java.util.List;
 /**
  * The produce item for biochemical plants.
  */
-public abstract class ItemPlantMobProduce extends ResynthItem {
+public abstract class ItemPlantProduceBulb extends ResynthItem {
 
     /**
      * Prefix for the item.
      */
+    //TODO: Change in 1.13
     private static final String PREFIX = "mobproduce";
 
     /**
-     * The seed item for the plant that produces this item.
+     * The seed item to drop when this item is thrown.
      */
-    private final ItemPlantSeed plantSeeds;
+    private final ItemPlantSeeds plantSeeds;
 
     /**
-     * Constructor.
+     * Default item constructor.
      *
      * @param name the name of the item.
+     * @param seeds the seeds item type this produce drops.
      */
-    public ItemPlantMobProduce(String name, ItemPlantSeed seeds) {
+    public ItemPlantProduceBulb(String name, ItemPlantSeeds seeds) {
         super(name, PREFIX);
         this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
         this.plantSeeds = seeds;
@@ -76,7 +78,7 @@ public abstract class ItemPlantMobProduce extends ResynthItem {
     }
 
     /**
-     * Throws the item (modified ender pearl) when right clicked.
+     * Throws the item when the player uses it.
      *
      * @param worldIn -
      * @param playerIn -
@@ -98,7 +100,7 @@ public abstract class ItemPlantMobProduce extends ResynthItem {
 
     /**
      * Creates a modified ender pearl entity that randomly spawns seeds
-     * and spawns it.
+     * and throws it.
      *
      * @param worldIn -
      * @param playerIn -
@@ -119,7 +121,9 @@ public abstract class ItemPlantMobProduce extends ResynthItem {
                     try{
                         if(!worldIn.isRemote && MathUtil.chance(getSeedSpawnChance())) {
                             worldIn.spawnEntity(new EntityItem(worldIn,
-                                    result.getBlockPos().getX(), result.getBlockPos().getY(), result.getBlockPos().getZ(),
+                                    result.getBlockPos().getX(),
+                                    result.getBlockPos().getY(),
+                                    result.getBlockPos().getZ(),
                                     new ItemStack(plantSeeds)));
                         }
                     } catch (Exception e){
@@ -142,7 +146,8 @@ public abstract class ItemPlantMobProduce extends ResynthItem {
     }
 
     /**
-     * <b>MUST OVERRIDE</b>
+     * <b>MUST OVERRIDE</b>. This is how the produce
+     * item knows the seeds spawn chance from config.
      *
      * @return the chance seeds will spawn from throwing a mob
      * produce item (0.0F - 100.0F).

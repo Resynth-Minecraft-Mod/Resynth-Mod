@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,36 +20,36 @@ import net.minecraft.tileentity.TileEntity;
 
 /**
  * The tile entity for the block BlockMineralSoil.
- * This class acts as the object container for the
- * blocks percentage value.
+ * This class acts as the container for the
+ * blocks mineralPercentage value.
  */
 public class TileEntityMineralSoil extends TileEntity {
 
     /**
-     * The given blocks mineral percentage. Range: {@code 0.1 < x < 50.0}.
+     * The given blocks mineral mineralPercentage. Range: {@code 0.1 < x < 50.0}.
      */
-    private float percentage = 1;
+    private float mineralPercentage = 1;
 
     /**
-     * Writes the percentage variable value to file.
+     * Writes the mineralPercentage variable value to NBT.
      *
      * @param compound the nbt tag compound we will write the variable to.
      * @return the nbt tag compound.
      */
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        compound.setFloat("percentage", percentage);
+        compound.setFloat("mineralPercentage", mineralPercentage);
         return super.writeToNBT(compound);
     }
 
     /**
-     * Reads the percentage variable value from file.
+     * Reads the mineralPercentage variable value from NBT.
      *
-     * @param compound the nbt tag compound we will write the variable to.
+     * @param compound the nbt tag compound we will read the variable from.
      */
     @Override
     public void readFromNBT(NBTTagCompound compound) {
-        percentage = compound.getFloat("percentage");
+        mineralPercentage = compound.getFloat("mineralPercentage");
         super.readFromNBT(compound);
     }
 
@@ -57,23 +57,23 @@ public class TileEntityMineralSoil extends TileEntity {
      * @return The given blocks mineral percentage.
      * Range: {@code 0.1 < x < 50.0}.
      */
-    public float getPercentage() {
-        return percentage;
+    public float getMineralPercentage() {
+        return mineralPercentage;
     }
 
     /**
      * Sets the given blocks mineral percentage.
      *
-     * @param percentage the percentage to set the value to.
+     * @param mineralPercentage the mineral percentage to set the value to.
      * Range: {@code 0.1 < x < 50.0}.
      */
-    public void setPercentage(float percentage) {
-        if(percentage < 0.1F)
-            percentage = 1.0F;
-        if(percentage > 50.0F)
-            percentage = 50.0F;
+    public void setMineralPercentage(float mineralPercentage) {
+        if(mineralPercentage < 0.1F)
+            mineralPercentage = 1.0F;
+        if(mineralPercentage > 50.0F)
+            mineralPercentage = 50.0F;
 
-        this.percentage = percentage;
+        this.mineralPercentage = mineralPercentage;
         markDirty();
     }
 
@@ -85,8 +85,8 @@ public class TileEntityMineralSoil extends TileEntity {
      * @param percentage the percentage to increase the
      * blocks mineral percentage by.
      */
-    public void incrementPercentage(float percentage) {
-        setPercentage(getPercentage() + percentage);
+    public void increaseMineralPercentage(float percentage) {
+        setMineralPercentage(getMineralPercentage() + percentage);
     }
 
     /**
@@ -97,7 +97,7 @@ public class TileEntityMineralSoil extends TileEntity {
      * @param percentage the percentage to decrease the
      * blocks mineral percentage by.
      */
-    public void decrementPercentage(float percentage) {
-        setPercentage(getPercentage() - percentage);
+    public void decreaseMineralPercentage(float percentage) {
+        setMineralPercentage(getMineralPercentage() - percentage);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package com.ki11erwolf.resynth;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.item.ResynthItems;
-import com.ki11erwolf.resynth.plant.ResynthPlants;
+import com.ki11erwolf.resynth.plant.ResynthPlantSets;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -48,7 +48,7 @@ public class ResynthObjectRegisterer {
         //Normal
         event.getRegistry().registerAll(ResynthItems.getItems());
 
-        for(Block b : ResynthBlocks.getBlocks()) {
+        for(Block b : ResynthBlocks.getResynthBlocks()) {
             event.getRegistry().register(new ItemBlock(b).setRegistryName(b.getRegistryName()));
 
             if (b instanceof ResynthTileEntity) {
@@ -59,15 +59,15 @@ public class ResynthObjectRegisterer {
 
 
         //Plants
-        event.getRegistry().registerAll(ResynthPlants.getSeedItems());
-        event.getRegistry().registerAll(ResynthPlants.getProduceItems());
-        event.getRegistry().registerAll(ResynthPlants.getMobProduceItems());
+        event.getRegistry().registerAll(ResynthPlantSets.getSeedItems());
+        event.getRegistry().registerAll(ResynthPlantSets.getShardProduceItems());
+        event.getRegistry().registerAll(ResynthPlantSets.getBulbProduceItems());
 
-        for(Block b : ResynthPlants.getPlantBlocks()) {
+        for(Block b : ResynthPlantSets.getPlantBlocks()) {
             event.getRegistry().register(new ItemBlock(b).setRegistryName(b.getRegistryName()));
         }
 
-        for(Block b : ResynthPlants.getOreBlocks()) {
+        for(Block b : ResynthPlantSets.getOrganicOreBlocks()) {
             event.getRegistry().register(new ItemBlock(b).setRegistryName(b.getRegistryName()));
         }
     }
@@ -80,11 +80,11 @@ public class ResynthObjectRegisterer {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         //Normal Items
-        event.getRegistry().registerAll(ResynthBlocks.getBlocks());
+        event.getRegistry().registerAll(ResynthBlocks.getResynthBlocks());
 
         //Plants
-        event.getRegistry().registerAll(ResynthPlants.getPlantBlocks());
-        event.getRegistry().registerAll(ResynthPlants.getOreBlocks());
+        event.getRegistry().registerAll(ResynthPlantSets.getPlantBlocks());
+        event.getRegistry().registerAll(ResynthPlantSets.getOrganicOreBlocks());
     }
 
     @Mod.EventBusSubscriber(Side.CLIENT)
@@ -100,19 +100,19 @@ public class ResynthObjectRegisterer {
             //Normal
             for(Item i : ResynthItems.getItems())
                 registerModel(i);
-            for(Block b : ResynthBlocks.getBlocks())
+            for(Block b : ResynthBlocks.getResynthBlocks())
                 registerModel(Item.getItemFromBlock(b));
 
             //Plants
-            for(Item i : ResynthPlants.getSeedItems())
+            for(Item i : ResynthPlantSets.getSeedItems())
                 registerModel(i);
-            for(Item i : ResynthPlants.getProduceItems())
+            for(Item i : ResynthPlantSets.getShardProduceItems())
                 registerModel(i);
-            for(Item i : ResynthPlants.getMobProduceItems())
+            for(Item i : ResynthPlantSets.getBulbProduceItems())
                 registerModel(i);
-            for(Block b : ResynthPlants.getPlantBlocks())
+            for(Block b : ResynthPlantSets.getPlantBlocks())
                 registerModel(Item.getItemFromBlock(b));
-            for(Block b : ResynthPlants.getOreBlocks())
+            for(Block b : ResynthPlantSets.getOrganicOreBlocks())
                 registerModel(Item.getItemFromBlock(b));
         }
 

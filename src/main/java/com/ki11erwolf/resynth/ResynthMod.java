@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.analytics.ConnectEvent;
@@ -54,8 +53,9 @@ import java.util.function.Function;
                         "after:forestry; " +
                         "after:thermalfoundation;" +
                         //"after:actuallyadditions;" +
-                        "after:bigreactors;"
+                        "after:bigreactors;" +
                         //"after:deepresonance;"
+                        "after:waila;"
 )
 public class ResynthMod {
 
@@ -72,7 +72,7 @@ public class ResynthMod {
     /**
      * Resynth version.
      */
-    public static final String MOD_VERSION = "1.2.4";
+    public static final String MOD_VERSION = "1.3.1-Alpha-4";
 
     /**
      * Minecraft version.

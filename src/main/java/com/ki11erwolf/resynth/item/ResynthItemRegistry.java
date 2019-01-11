@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,14 @@ package com.ki11erwolf.resynth.item;
 import java.util.ArrayList;
 
 /**
- * Stores all registered resynth items.
+ * Stores instances of Resynth items that should be registered to forge.
+ *
+ * Note: This registry does NOT hold any seeds or plant produce items.
  */
 public class ResynthItemRegistry {
 
     /**
-     * The array of registered resynth items.
+     * The array of resynth items to be registered.
      */
     private static final ArrayList<ResynthItem> ITEMS = new ArrayList<>();
 
@@ -37,7 +39,7 @@ public class ResynthItemRegistry {
     }
 
     /**
-     * @return an array of all the registered resynth items.
+     * @return an array of all the resynth items that should be registered.
      */
     protected static ResynthItem[] getItems(){
         return ITEMS.toArray(new ResynthItem[0]);

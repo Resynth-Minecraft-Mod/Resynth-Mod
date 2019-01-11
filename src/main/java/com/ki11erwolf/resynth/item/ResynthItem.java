@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import com.ki11erwolf.resynth.util.StringUtil;
 import net.minecraft.item.Item;
 
 /**
- * Base for all mod item classes.
+ * Base class for all Resynth items.
  */
 public class ResynthItem extends Item {
 
@@ -34,7 +34,7 @@ public class ResynthItem extends Item {
      * Sets the creative tab, unlocalized name prefix
      * and registry name.
      *
-     * @param name the general name of the item (e.g. redstoneDust)
+     * @param name the identifying name of the item (e.g. redstoneDust)
      */
     public ResynthItem(String name) {
         this(name, ITEM_PREFIX);

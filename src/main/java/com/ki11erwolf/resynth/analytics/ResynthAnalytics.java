@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,16 +26,8 @@ import dmurph.tracking.JGoogleAnalyticsTracker;
  */
 public final class ResynthAnalytics {
 
-    /*
-     * Disables SSL Verification before initializing
-     * Google Analytics.
-     */
-    static{
-        ModVersionManager.disableSSLVerification();
-    }
-
     /**
-     * The Google Analytics code for resynth.
+     * The Google Analytics ID code for resynth.
      */
     private static final String CODE = "UA-127648959-1";
 
@@ -45,7 +37,8 @@ public final class ResynthAnalytics {
     private static final String RESYNTH_DOMAIN = "https://resynth-minecraft-mod.github.io";
 
     /**
-     * Dummy page for identifying the mod client.
+     * Identifier page that all events are sent to. This
+     * allows see the mod events as "page hits".
      */
     private static final String IDENTIFIER_PAGE = "/jar";
 
@@ -53,6 +46,15 @@ public final class ResynthAnalytics {
      * The dummy page title.
      */
     private static final String TITLE = "Resynth - Jar";
+
+    /*
+     * Disables SSL Verification before initializing
+     * Google Analytics. If this isn't here the event
+     * messages will be block by java for some reason.
+     */
+    static{
+        ModVersionManager.disableSSLVerification();
+    }
 
     /**
      * The Google analytics API.
@@ -78,8 +80,10 @@ public final class ResynthAnalytics {
         if(ResynthConfig.RESYNTH.disableGAnalytics)
             return;
 
+        //Disable it again before sending the event.
         ModVersionManager.disableSSLVerification();
         ANALYTICS.makeCustomRequest(e);
+        //Re-enable it once we're done
         ModVersionManager.enableSSLVerification();
     }
 

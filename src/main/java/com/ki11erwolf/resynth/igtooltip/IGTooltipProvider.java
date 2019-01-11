@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,9 +33,17 @@ import java.util.List;
 public interface IGTooltipProvider {
 
     /**
+     * An instance of an IGTooltipProvider than does nothing. Used to prevent
+     * excessive instance creation of useless providers.
+     */
+    IGTooltipProvider BLANK_PROVIDER = (itemStack, tooltip, accessor, config) -> {
+        //NO-OP
+    };
+
+    /**
      * Called when Hwyla/Waila wants to get information about the block.
      *
-     * This is the primary way information about the block is passed to Hwyla
+     * This is the primary way information about the block is passed to Hwyla.
      *
      * @param itemStack the item stack returned by the block.
      * @param tooltip list of strings to pass to Hwyla to show in the tooltip.

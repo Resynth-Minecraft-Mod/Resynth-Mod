@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,21 +58,26 @@ import java.util.Random;
 
 /**
  * Mineral Enriched Soil.
+ *
  * The soil block for the mods plants.
  */
 @SuppressWarnings("deprecation")
 public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements IGTooltipProvider {
 
     /**
-     * The value that correlates to the blocks appearance.
+     * The metadata value for the blocks appearance.
      */
-    public static final PropertyInteger PERCENTAGE = PropertyInteger.create("percent", 0, 4);
+    public static final PropertyInteger
+            //TODO: change string value from percent to stage
+            STAGE = PropertyInteger.create("percent", 0, 4);
 
     /**
      * The bounding box for the block.
      */
-    protected static final AxisAlignedBB MINERAL_SOIL_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D,
-            0.9375D, 1.0D);
+    protected static final AxisAlignedBB MINERAL_SOIL_AABB = new AxisAlignedBB(
+            0.0D, 0.0D, 0.0D,
+            1.0D, 0.9375D, 1.0D
+    );
 
     /**
      * The configuration settings for this block.
@@ -80,12 +85,12 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     private static final ResynthConfig.MineralSoil MINERAL_SOIL_CONFIG = ResynthConfig.MINERAL_SOIL;
 
     /**
-     * Constructor.
+     * Standard block constructor.
      */
     protected BlockMineralSoil(){
         super(Material.GRASS, SoundType.GROUND, "mineralSoil");
         this.setHardness(2.0F);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(PERCENTAGE, 0));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
         this.setLightOpacity(255);
         BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.SHOVEL, 0);
     }
@@ -102,10 +107,12 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state){
         TileEntityMineralSoil te = getTileEntity(worldIn, pos);
-        int drops = (int)((te.getPercentage() - 1.0F) / MINERAL_SOIL_CONFIG.mineralValue);
+
+        int drops = (int)((te.getMineralPercentage() - 1.0F) / MINERAL_SOIL_CONFIG.mineralValue);
         EntityItem items = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
                 new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, drops));
         worldIn.spawnEntity(items);
+
         EntityItem mineralCrystal = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
                 new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1));
         worldIn.spawnEntity(mineralCrystal);
@@ -132,9 +139,10 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
                                     EntityPlayer playerIn, EnumHand hand, EnumFacing facing,
                                     float hitX, float hitY, float hitZ){
 
-        if(getTileEntity(worldIn, pos).getPercentage() >= 50)
+        if(getTileEntity(worldIn, pos).getMineralPercentage() >= 50)
             return false;
 
+        //Mineral Rock
         if(playerIn.getHeldItemMainhand().getItem().getClass().equals(ResynthItems.ITEM_MINERAL_ROCK.getClass())){
             new MinecraftUtil.SideSensitiveCode(worldIn){
                 @Override
@@ -145,16 +153,16 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
                     if(hand.equals(EnumHand.MAIN_HAND)){
                         if(!playerIn.isCreative())
                             offer.shrink(1);
-                        entity.incrementPercentage(MINERAL_SOIL_CONFIG.mineralValue);
+                        entity.increaseMineralPercentage(MINERAL_SOIL_CONFIG.mineralValue);
                     }
 
-                    float percentage = entity.getPercentage();
+                    float percentage = entity.getMineralPercentage();
                     updateState(worldIn, pos, state);
-                    ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setPercentage(percentage);
-                    String perc = String.valueOf(entity.getPercentage());
+                    ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
+                    String perc = String.valueOf(entity.getMineralPercentage());
 
-
-                    playerIn.sendMessage(new TextComponentString("Soil mineral content: "
+                    if(MINERAL_SOIL_CONFIG.enableChatMessage)
+                        playerIn.sendMessage(new TextComponentString("Soil mineral content: "
                             + perc
                             .substring(0, perc.length() > 4 ? 4 : perc.length())
                             + "%"));
@@ -163,6 +171,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
             return true;
         }
 
+        //Dense Mineral Rock
         if(playerIn.getHeldItemMainhand().getItem().getClass().equals(ResynthItems.ITEM_DENSE_MINERAL_ROCK.getClass())){
             new MinecraftUtil.SideSensitiveCode(worldIn) {
                 @Override
@@ -173,16 +182,16 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
                     if(hand.equals(EnumHand.MAIN_HAND)){
                         if(!playerIn.isCreative())
                             offer.shrink(1);
-                        entity.incrementPercentage(MINERAL_SOIL_CONFIG.mineralValue * 9);
+                        entity.increaseMineralPercentage(MINERAL_SOIL_CONFIG.mineralValue * 9);
                     }
 
-                    float percentage = entity.getPercentage();
+                    float percentage = entity.getMineralPercentage();
                     updateState(worldIn, pos, state);
-                    ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setPercentage(percentage);
-                    String perc = String.valueOf(entity.getPercentage());
+                    ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
+                    String perc = String.valueOf(entity.getMineralPercentage());
 
-
-                    playerIn.sendMessage(new TextComponentString("Soil mineral content: "
+                    if(MINERAL_SOIL_CONFIG.enableChatMessage)
+                        playerIn.sendMessage(new TextComponentString("Soil mineral content: "
                             + perc
                             .substring(0, perc.length() > 4 ? 4 : perc.length())
                             + "%"));
@@ -246,7 +255,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      */
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(PERCENTAGE, meta);
+        return this.getDefaultState().withProperty(STAGE, meta);
     }
 
     /**
@@ -257,7 +266,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      */
     @Override
     public int getMetaFromState(IBlockState state){
-        return state.getValue(PERCENTAGE);
+        return state.getValue(STAGE);
     }
 
     /**
@@ -268,7 +277,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     @SuppressWarnings("RedundantArrayCreation")
     @Override
     protected BlockStateContainer createBlockState(){
-        return new BlockStateContainer(this, new IProperty[] {PERCENTAGE});
+        return new BlockStateContainer(this, new IProperty[] {STAGE});
     }
 
     /**
@@ -286,6 +295,8 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Returns the bounding box.
      *
      * @param state -
@@ -363,7 +374,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      */
     private void updateState(World worldIn, BlockPos pos, IBlockState state){
         TileEntityMineralSoil entity = (TileEntityMineralSoil) worldIn.getTileEntity(pos);
-        float percentage = entity.getPercentage();
+        float percentage = entity.getMineralPercentage();
         worldIn.setBlockState(pos, getStateFromTileEntity(worldIn, pos));
     }
 
@@ -376,25 +387,25 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      * @return the block state matching the tile entities percentage value.
      */
     private static IBlockState getStateFromTileEntity(World worldIn, BlockPos pos){
-        float percentage = ((TileEntityMineralSoil)worldIn.getTileEntity(pos)).getPercentage();
+        float percentage = ((TileEntityMineralSoil)worldIn.getTileEntity(pos)).getMineralPercentage();
 
         if(percentage > 49.9){
-            return worldIn.getBlockState(pos).withProperty(PERCENTAGE, 4/*50%*/);
+            return worldIn.getBlockState(pos).withProperty(STAGE, 4/*50%*/);
         }
 
         if(percentage > 39.9){
-            return worldIn.getBlockState(pos).withProperty(PERCENTAGE, 3/*40%*/);
+            return worldIn.getBlockState(pos).withProperty(STAGE, 3/*40%*/);
         }
 
         if(percentage > 29.9){
-            return worldIn.getBlockState(pos).withProperty(PERCENTAGE, 2/*30%*/);
+            return worldIn.getBlockState(pos).withProperty(STAGE, 2/*30%*/);
         }
 
         if(percentage > 19.9){
-            return worldIn.getBlockState(pos).withProperty(PERCENTAGE, 1/*20%*/);
+            return worldIn.getBlockState(pos).withProperty(STAGE, 1/*20%*/);
         }
 
-        return worldIn.getBlockState(pos).withProperty(PERCENTAGE, 0/*10%*/);
+        return worldIn.getBlockState(pos).withProperty(STAGE, 0/*10%*/);
     }
 
     /**
@@ -449,7 +460,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
 
         tag.setFloat(
                 "mineral-content",
-                ((TileEntityMineralSoil)te).getPercentage()
+                ((TileEntityMineralSoil)te).getMineralPercentage()
         );
     }
 

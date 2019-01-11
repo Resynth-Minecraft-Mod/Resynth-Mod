@@ -1,17 +1,19 @@
+##########
+# BASICS #
+##########
+
 #Tabs
 itemGroup.resynth.tabResynth=Resynth
 itemGroup.resynth.tabResynthSeeds=Resynth Seeds
 itemGroup.resynth.tabResynthProduce=Resynth Produce
 
 #Blocks
-tile.resynth.blockTest.name=Test Block
 tile.resynth.blockMineralOre.name=Mineral Infused Stone
 tile.resynth.blockMineralSoil.name=Mineral Enriched Soil
 tile.resynth.blockSeedPod.name=Mystical Seed Pod
 
 #Items
-item.resynth.itemTest.name=Test Item
-item.resynth.itemMineralRock.name=Mineral Rocks
+item.resynth.itemMineralRock.name=Mineral Rock
 item.resynth.itemDenseMineralRock.name=Dense Mineral Rock
 item.resynth.itemMineralCrystal.name=Mineral Crystal
 item.resynth.itemMineralHoe.name=Mineral Hoe
@@ -20,11 +22,12 @@ item.resynth.itemMineralHoe.name=Mineral Hoe
 #  PLANTS  #
 ############
 
-#Seeds
+#Seed Items
 
+#Metallic seeds
 item.resynth.seedIron.name=Iron Seeds
 item.resynth.seedGold.name=Gold Seeds
-#crystalline
+#Crystalline Seeds
 item.resynth.seedMineral.name=Mineral Seeds
 item.resynth.seedDiamond.name=Diamond Seeds
 item.resynth.seedRedstone.name=Redstone Seeds
@@ -33,7 +36,7 @@ item.resynth.seedCoal.name=Coal Seeds
 item.resynth.seedEmerald.name=Emerald Seeds
 item.resynth.seedQuartz.name=Quartz Seeds
 item.resynth.seedGlowstone.name=Glowstone Seeds
-#biochemical
+#Biochemical Seeds
 item.resynth.seedEnderpearl.name=Ender Pearl Seeds
 item.resynth.seedGunpowder.name=Gunpowder Seeds
 item.resynth.seedBlaze.name=Blaze Seeds
@@ -52,11 +55,12 @@ item.resynth.seedPrismarineCrystal.name=Prismarine Crystal Seeds
 item.resynth.seedPrismarineShard.name=Prismarine Shard Seeds
 item.resynth.seedRabbitFoot.name=Rabbit Foot Seeds
 
-#Plants
+#Plant Blocks
 
+#Metallic plants
 tile.resynth.plantIron.name=Iron Plant
 tile.resynth.plantGold.name=Gold Plant
-#crystalline
+#Crystalline plants
 tile.resynth.plantMineral.name=Mineral Straw Patch
 tile.resynth.plantDiamond.name=Diamond Straw Patch
 tile.resynth.plantRedstone.name=Redstone Straw Patch
@@ -65,7 +69,7 @@ tile.resynth.plantCoal.name=Coal Straw Patch
 tile.resynth.plantEmerald.name=Emerald Straw Patch
 tile.resynth.plantQuartz.name=Quartz Straw Patch
 tile.resynth.plantGlowstone.name=Glowstone Straw Patch
-#biochemical
+#Biochemical plants
 tile.resynth.plantEnderpearl.name=Ender Pearl Flower
 tile.resynth.plantGunpowder.name=Gunpowder Flower
 tile.resynth.plantBlaze.name=Blaze Flower
@@ -79,28 +83,28 @@ tile.resynth.plantSlime.name=Slime Flower
 tile.resynth.plantShulker.name=Shulker Flower
 tile.resynth.plantInk.name=Ink Flower
 tile.resynth.plantLeather.name=Leather Flower
-tile.resynth.planFlesh.name=Rotten Flesh Flower
+tile.resynth.plantFlesh.name=Rotten Flesh Flower
 tile.resynth.plantPrismarineCrystal.name=Prismarine Crystal Flower
 tile.resynth.plantPrismarineShard.name=Prismarine Shard Flower
 tile.resynth.plantRabbitFoot.name=Rabbit Foot Flower
 
-#Plant Ores
+#Organic Ores
 
 tile.resynth.oreIron.name=Organic Iron Ore
 tile.resynth.oreGold.name=Organic Gold Ore
 
-#Produce
+#Shard Produce
 
-item.resynth.produceMineral.name=Mineral Straw
-item.resynth.produceDiamond.name=Diamond Straw
-item.resynth.produceRedstone.name=Redstone Straw
-item.resynth.produceLapis.name=Lapis Lazuli Straw
-item.resynth.produceCoal.name=Coal Straw
-item.resynth.produceEmerald.name=Emerald Straw
-item.resynth.produceQuartz.name=Quartz Straw
-item.resynth.produceGlowstone.name=Glowstone Straw
+item.resynth.produceMineral.name=Mineral Shard
+item.resynth.produceDiamond.name=Diamond Shard
+item.resynth.produceRedstone.name=Redstone Shard
+item.resynth.produceLapis.name=Lapis Lazuli Shard
+item.resynth.produceCoal.name=Coal Shard
+item.resynth.produceEmerald.name=Emerald Shard
+item.resynth.produceQuartz.name=Quartz Shard
+item.resynth.produceGlowstone.name=Glowstone Shard
 
-#Mob Produce
+#Bulb Produce
 
 item.resynth.mobproduceEnderpearl.name=Ender Pearl Bulb
 item.resynth.mobproduceGunpowder.name=Gunpowder Bulb
@@ -127,12 +131,12 @@ item.resynth.mobproduceRabbitFoot.name=Rabbit Foot Bulb
 #Applied Energistics 2
 item.resynth.seedAe2Quartz.name=Certus Quartz Crystal Seeds
 tile.resynth.plantAe2Quartz.name=Certus Quartz Crystal Patch
-item.resynth.produceAe2Quartz.name=Certus Quartz Crystal Straw
+item.resynth.produceAe2Quartz.name=Certus Quartz Crystal Shard
 
 #Forestry
 item.resynth.seedForestryApatite.name=Apatite Seeds
 tile.resynth.plantForestryApatite.name=Apatite Patch
-item.resynth.produceForestryApatite.name=Apatite Straw
+item.resynth.produceForestryApatite.name=Apatite Shard
 
 #Tinkers' Construct
 item.resynth.seedCobalt.name=Cobalt Seeds

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,20 +31,20 @@ import java.util.List;
  * The base class for all blocks produced
  * by metallic plants.
  */
-public class BlockPlantOre extends ResynthBlock {
+public class BlockOrganicPlantOre extends ResynthBlock {
 
     /**
-     * Prefix for the block.
+     * Prefix for the ore block.
      */
     protected static final String ORE_PREFIX = "ore";
 
     /**
-     * Constructs a new plant ore block.
+     * Constructs a new plant ore block instance.
      *
      * @param name the name of the block.
      */
-    public BlockPlantOre(String name) {
-        super(Material.GOURD, SoundType.PLANT, name, ORE_PREFIX);
+    public BlockOrganicPlantOre(String name) {
+        super(Material.GOURD, SoundType.STONE, name, ORE_PREFIX);
         this.setHardness(2.0F);
         this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
         BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.AXE, 2);
@@ -63,6 +63,6 @@ public class BlockPlantOre extends ResynthBlock {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
                                ITooltipFlag flagIn){
         tooltip.add("Can be blown up to for a chance to obtain more seeds.");
-        tooltip.add("Can be smelted to obtain the resource.");
+        tooltip.add("Can be smelted to obtain the original ore block.");
     }
 }

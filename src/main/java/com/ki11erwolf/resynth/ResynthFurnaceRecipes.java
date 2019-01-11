@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.item.ResynthItems;
-import com.ki11erwolf.resynth.plant.PlantBiochemical;
-import com.ki11erwolf.resynth.plant.PlantCrystalline;
-import com.ki11erwolf.resynth.plant.PlantMetallic;
-import com.ki11erwolf.resynth.plant.ResynthPlants;
+import com.ki11erwolf.resynth.plant.PlantSetBiochemical;
+import com.ki11erwolf.resynth.plant.PlantSetCrystalline;
+import com.ki11erwolf.resynth.plant.PlantSetMetallic;
+import com.ki11erwolf.resynth.plant.ResynthPlantSets;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -42,11 +42,11 @@ final class ResynthFurnaceRecipes {
                 new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1), 0F
         );
 
-        for(PlantMetallic plant : ResynthPlants.getMetallicPlants())
-            GameRegistry.addSmelting(plant.getOre(), plant.getResult(), 1.0F);
-        for(PlantCrystalline plant : ResynthPlants.getCrystallinePlants())
+        for(PlantSetMetallic plant : ResynthPlantSets.getMetallicPlantSets())
+            GameRegistry.addSmelting(plant.getPlantOre(), plant.getResult(), 1.0F);
+        for(PlantSetCrystalline plant : ResynthPlantSets.getCrystallinePlantSets())
             GameRegistry.addSmelting(plant.getProduce(), plant.getResult(), 2.0F);
-        for(PlantBiochemical plant : ResynthPlants.getBiochemicalPlants())
+        for(PlantSetBiochemical plant : ResynthPlantSets.getBiochemicalPlantSets())
             GameRegistry.addSmelting(plant.getProduce(), plant.getResult(), 1.5F);
     }
 }

@@ -281,8 +281,10 @@
         <w>actuallyadditions</w>
         <w>ardite</w>
         <w>bigreactors</w>
+        <w>brore</w>
         <w>coords</w>
         <w>deepresonance</w>
+        <w>errored</w>
         <w>hwyla</w>
         <w>igtooltip</w>
         <w>mana</w>
@@ -511,15 +513,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/28bb0405fddaf04f15058fbfbe01fe2780d7d3b6/commons-logging-1.1.3-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: deobf.mcp.mobius.waila:Hwyla:1.8.20-B35_1.12">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/minecraft/deobfedDeps/deobf/mcp/mobius/waila/Hwyla/1.8.20-B35_1.12/Hwyla-1.8.20-B35_1.12.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/minecraft/deobfedDeps/deobf/mcp/mobius/waila/Hwyla/1.8.20-B35_1.12/Hwyla-1.8.20-B35_1.12-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: io.netty:netty-all:4.1.9.Final">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/4.1.9.Final/97860965d6a0a6b98e7f569f3f966727b8db75/netty-all-4.1.9.Final.jar!/" />
@@ -551,23 +544,21 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/java3d/vecmath/1.5.2/42442b23189fbef9353c1751055610b63dd57e85/vecmath-1.5.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: jline:jline:2.13">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jline/jline/2.13/2d9530d0a25daffaffda7c35037b046b627bb171/jline-2.13.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jline/jline/2.13/77f395bce7cad8f3da6f6f3526d1923e8ea35942/jline-2.13-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jline/jline/2.13/e290282bf7683ae3307e85bdc5d5e08424dfb893/jline-2.13-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: lzma:lzma:0.0.1">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/lzma/lzma/0.0.1/521616dc7487b42bef0e803bd2fa3faf668101d7/lzma-0.0.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
+    </library>
+    <library name="Gradle: mcp.mobius.waila:Hwyla:1.8.26-B41_1.12.2">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/mcp.mobius.waila/Hwyla/1.8.26-B41_1.12.2/7280d5c0dab42436549bcefc63ff64a1049e5501/Hwyla-1.8.26-B41_1.12.2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/mcp.mobius.waila/Hwyla/1.8.26-B41_1.12.2/53ce70d716b0f8167a4b2503c2b91c45e7b3a7b/Hwyla-1.8.26-B41_1.12.2-sources.jar!/" />
+      </SOURCES>
     </library>
     <library name="Gradle: net.java.dev.jna:jna:4.4.0">
       <CLASSES>
@@ -753,15 +744,15 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-utils/3.1.0/d4062783613c4c6cf909c939d15fd1f2b584db03/plexus-utils-3.1.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.fusesource.jansi:jansi:1.11">
+    <library name="Gradle: org.jline:jline:3.5.1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.fusesource.jansi/jansi/1.11/655c643309c2f45a56a747fda70e3fadf57e9f11/jansi-1.11.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jline/jline/3.5.1/51800e9d7a13608894a5a28eed0f5c7fa2f300fb/jline-3.5.1.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.fusesource.jansi/jansi/1.11/b27814181cfd1b1c22ea6a287aeace376c53ffa7/jansi-1.11-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jline/jline/3.5.1/87d558277046b5a35a59ea1f152328442d51967c/jline-3.5.1-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.fusesource.jansi/jansi/1.11/2f0e4b53b6b0eec426dad7118bf54b3deb58000b/jansi-1.11-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jline/jline/3.5.1/11c92210c8ad3c9610334d66c4d8662cad8d26a2/jline-3.5.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.lwjgl.lwjgl:lwjgl-platform:natives-linux:2.9.4-nightly-20150209">

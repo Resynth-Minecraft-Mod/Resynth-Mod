@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.ki11erwolf.resynth;
 
 import net.minecraftforge.common.config.Config;
@@ -26,7 +25,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import static net.minecraftforge.common.config.Config.*;
 
 /**
- * Holds all the config values for the mod.
+ * Holds all the config settings for Resynth
  */
 @Config(modid = ResynthMod.MOD_ID)
 @LangKey(ResynthMod.MOD_ID + ".config.title")
@@ -351,6 +350,14 @@ public class ResynthConfig {
                 "content percentage value of Mineral Enriched Soil by this amount.")
         @RangeDouble(min = 0.1, max = 49.0)
         public float mineralValue = 1.0F;
+
+        /**
+         * Chat message toggle.
+         */
+        @Name("Display Chat Message")
+        @Comment("When true, a chat message will show up displaying the Mineral Soils mineral content percentage " +
+                 "when you add Mineral Rocks to it.")
+        public boolean enableChatMessage = true;
     }
 
     //*********************************

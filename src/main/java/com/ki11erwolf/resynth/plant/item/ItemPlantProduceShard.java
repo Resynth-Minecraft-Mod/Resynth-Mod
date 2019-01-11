@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,21 +25,22 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * The item crystalline plants grow.
+ * The produce item for crystalline plants.
  */
-public class ItemPlantOreProduce extends ResynthItem {
+public class ItemPlantProduceShard extends ResynthItem {
 
     /**
      * Prefix for the item.
      */
+    //TODO: Change in 1.13
     private static final String PREFIX = "produce";
 
     /**
-     * Constructor.
+     * Default item constructor.
      *
      * @param name the name of the item.
      */
-    public ItemPlantOreProduce(String name) {
+    public ItemPlantProduceShard(String name) {
         super(name, PREFIX);
         this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
     }

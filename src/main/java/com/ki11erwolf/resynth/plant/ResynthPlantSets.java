@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,10 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
-import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
-import com.ki11erwolf.resynth.plant.item.ItemPlantMobProduce;
-import com.ki11erwolf.resynth.plant.item.ItemPlantOreProduce;
-import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
+import com.ki11erwolf.resynth.plant.block.BlockOrganicPlantOre;
+import com.ki11erwolf.resynth.plant.item.ItemPlantProduceBulb;
+import com.ki11erwolf.resynth.plant.item.ItemPlantProduceShard;
+import com.ki11erwolf.resynth.plant.item.ItemPlantSeeds;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityChicken;
@@ -35,57 +35,62 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 /**
- * List of all plants.
+ * Holds all the definitions and public static
+ * instances of every available Resynth plant
+ * set as well as helper methods to get arrays
+ * of each plant set and registered block/item.
  */
-public final class ResynthPlants {
+public final class ResynthPlantSets {
 
     /**
-     * The iron plant instance.
+     * The iron plant set instance.
      */
-    public static final PlantMetallic PLANT_IRON = new PlantMetallic("iron", new ItemStack(Blocks.IRON_ORE)){
+    public static final PlantSetMetallic PLANT_SET_IRON
+            = new PlantSetMetallic("iron", new ItemStack(Blocks.IRON_ORE)){
         @Override
-        protected float getFloweringPeriod() {return ResynthConfig.PLANT_IRON.floweringPeriod;}
+        protected float getPlantGrowthChance() {return ResynthConfig.PLANT_IRON.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return ResynthConfig.PLANT_IRON.canBonemeal;}
+        protected boolean canBonemealPlant() {return ResynthConfig.PLANT_IRON.canBonemeal;}
 
         @Override
-        protected float getOreSeedDropChance() {return ResynthConfig.PLANT_IRON.oreSeedDropChance;}
+        protected float getSourceOreSeedDropChance() {return ResynthConfig.PLANT_IRON.oreSeedDropChance;}
 
         @Override
-        protected float getOrganicOreSeedDropChance() {return ResynthConfig.PLANT_IRON.organicOreSeedDropChance;}
+        protected float getPlantOreSeedDropChance() {return ResynthConfig.PLANT_IRON.organicOreSeedDropChance;}
 
         @Override
-        protected boolean doesOreDropSeeds() {return ResynthConfig.PLANT_IRON.oreDropSeeds;}
+        protected boolean doesSourceOreDropSeeds() {return ResynthConfig.PLANT_IRON.oreDropSeeds;}
 
         @Override
-        protected boolean doesOrganicOreDropSeeds() {return ResynthConfig.PLANT_IRON.organicOreDropSeeds;}
+        protected boolean doesPlantOreDropSeeds() {return ResynthConfig.PLANT_IRON.organicOreDropSeeds;}
 
         @Override
         public ItemStack getResult() {return new ItemStack(Items.IRON_INGOT, ResynthConfig.PLANT_IRON.yield);}
     }.register();
 
     /**
-     * The gold plant instance.
+     * The gold plant set instance.
      */
-    public static final PlantMetallic PLANT_GOLD = new PlantMetallic("gold", new ItemStack(Blocks.GOLD_ORE)) {
+    public static final PlantSetMetallic PLANT_SET_GOLD
+            = new PlantSetMetallic("gold", new ItemStack(Blocks.GOLD_ORE)) {
         @Override
-        protected float getFloweringPeriod() {return ResynthConfig.PLANT_GOLD.floweringPeriod;}
+        protected float getPlantGrowthChance() {return ResynthConfig.PLANT_GOLD.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return ResynthConfig.PLANT_GOLD.canBonemeal;}
+        protected boolean canBonemealPlant() {return ResynthConfig.PLANT_GOLD.canBonemeal;}
 
         @Override
-        protected float getOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.oreSeedDropChance;}
+        protected float getSourceOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.oreSeedDropChance;}
 
         @Override
-        protected float getOrganicOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.organicOreSeedDropChance;}
+        protected float getPlantOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.organicOreSeedDropChance;}
 
         @Override
-        protected boolean doesOreDropSeeds() {return ResynthConfig.PLANT_GOLD.oreDropSeeds;}
+        protected boolean doesSourceOreDropSeeds() {return ResynthConfig.PLANT_GOLD.oreDropSeeds;}
 
         @Override
-        protected boolean doesOrganicOreDropSeeds() {return ResynthConfig.PLANT_GOLD.organicOreDropSeeds;}
+        protected boolean doesPlantOreDropSeeds() {return ResynthConfig.PLANT_GOLD.organicOreDropSeeds;}
 
         @Override
         public ItemStack getResult() {return new ItemStack(Items.GOLD_INGOT, ResynthConfig.PLANT_GOLD.yield);}
@@ -96,10 +101,10 @@ public final class ResynthPlants {
      */
 
     /**
-     * The mineral plant instance.
+     * The mineral plant set instance.
      */
-    public static final PlantCrystalline PLANT_MINERAL = new PlantCrystalline("mineral",
-            ResynthBlocks.BLOCK_MINERAL_ORE) {
+    public static final PlantSetCrystalline PLANT_SET_MINERAL
+            = new PlantSetCrystalline("mineral", ResynthBlocks.BLOCK_MINERAL_ORE) {
         private final ResynthConfig.PlantMineral cfg = ResynthConfig.PLANT_MINERAL;
 
         @Override
@@ -109,10 +114,10 @@ public final class ResynthPlants {
         protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getPlantGrowthChance() { return cfg.floweringPeriod; }
 
         @Override
-        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+        protected boolean canBonemealPlant() { return cfg.canBonemeal; }
 
         @Override
         protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
@@ -125,9 +130,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * The diamond plant instance.
+     * The diamond plant set instance.
      */
-    public static final PlantCrystalline PLANT_DIAMOND = new PlantCrystalline("diamond", Blocks.DIAMOND_ORE) {
+    public static final PlantSetCrystalline PLANT_SET_DIAMOND
+            = new PlantSetCrystalline("diamond", Blocks.DIAMOND_ORE) {
         private final ResynthConfig.PlantDiamond cfg = ResynthConfig.PLANT_DIAMOND;
 
         @Override
@@ -137,10 +143,10 @@ public final class ResynthPlants {
         protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getPlantGrowthChance() { return cfg.floweringPeriod; }
 
         @Override
-        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+        protected boolean canBonemealPlant() { return cfg.canBonemeal; }
 
         @Override
         protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
@@ -153,10 +159,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * The redstone plant instance.
+     * The redstone plant set instance.
      */
-    public static final PlantCrystalline PLANT_REDSTONE
-            = new PlantCrystalline("redstone", Blocks.REDSTONE_ORE) {
+    public static final PlantSetCrystalline PLANT_SET_REDSTONE
+            = new PlantSetCrystalline("redstone", Blocks.REDSTONE_ORE) {
         private final ResynthConfig.PlantRedstone cfg = ResynthConfig.PLANT_REDSTONE;
 
         @Override
@@ -166,10 +172,10 @@ public final class ResynthPlants {
         protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getPlantGrowthChance() { return cfg.floweringPeriod; }
 
         @Override
-        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+        protected boolean canBonemealPlant() { return cfg.canBonemeal; }
 
         @Override
         protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
@@ -182,10 +188,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * The lapis plant instance.
+     * The lapis plant set instance.
      */
-    public static final PlantCrystalline PLANT_LAPIS
-            = new PlantCrystalline("lapis", Blocks.LAPIS_ORE) {
+    public static final PlantSetCrystalline PLANT_SET_LAPIS
+            = new PlantSetCrystalline("lapis", Blocks.LAPIS_ORE) {
         private final ResynthConfig.PlantLapis cfg = ResynthConfig.PLANT_LAPIS;
 
         @Override
@@ -195,10 +201,10 @@ public final class ResynthPlants {
         protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getPlantGrowthChance() { return cfg.floweringPeriod; }
 
         @Override
-        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+        protected boolean canBonemealPlant() { return cfg.canBonemeal; }
 
         @Override
         protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
@@ -211,10 +217,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * The coal plant instance.
+     * The coal plant set instance.
      */
-    public static final PlantCrystalline PLANT_COAL
-            = new PlantCrystalline("coal", Blocks.COAL_ORE) {
+    public static final PlantSetCrystalline PLANT_SET_COAL
+            = new PlantSetCrystalline("coal", Blocks.COAL_ORE) {
                 private final ResynthConfig.PlantCoal cfg = ResynthConfig.PLANT_COAL;
 
         @Override
@@ -224,10 +230,10 @@ public final class ResynthPlants {
         protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getPlantGrowthChance() { return cfg.floweringPeriod; }
 
         @Override
-        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+        protected boolean canBonemealPlant() { return cfg.canBonemeal; }
 
         @Override
         protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
@@ -240,10 +246,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * The emerald plant instance.
+     * The emerald plant set instance.
      */
-    public static final PlantCrystalline PLANT_EMERALD
-            = new PlantCrystalline("emerald", Blocks.EMERALD_ORE) {
+    public static final PlantSetCrystalline PLANT_SET_EMERALD
+            = new PlantSetCrystalline("emerald", Blocks.EMERALD_ORE) {
         private final ResynthConfig.PlantEmerald cfg = ResynthConfig.PLANT_EMERALD;
 
         @Override
@@ -253,10 +259,10 @@ public final class ResynthPlants {
         protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getPlantGrowthChance() { return cfg.floweringPeriod; }
 
         @Override
-        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+        protected boolean canBonemealPlant() { return cfg.canBonemeal; }
 
         @Override
         protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
@@ -269,10 +275,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * The quartz plant instance.
+     * The quartz plant set instance.
      */
-    public static final PlantCrystalline PLANT_QUARTZ
-            = new PlantCrystalline("quartz", Blocks.QUARTZ_ORE) {
+    public static final PlantSetCrystalline PLANT_SET_QUARTZ
+            = new PlantSetCrystalline("quartz", Blocks.QUARTZ_ORE) {
         private final ResynthConfig.PlantQuartz cfg = ResynthConfig.PLANT_QUARTZ;
 
         @Override
@@ -282,10 +288,10 @@ public final class ResynthPlants {
         protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getPlantGrowthChance() { return cfg.floweringPeriod; }
 
         @Override
-        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+        protected boolean canBonemealPlant() { return cfg.canBonemeal; }
 
         @Override
         protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
@@ -298,10 +304,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * The glowstone plant instance.
+     * The glowstone plant set instance.
      */
-    public static final PlantCrystalline PLANT_GLOWSTONE
-            = new PlantCrystalline("glowstone", Blocks.GLOWSTONE) {
+    public static final PlantSetCrystalline PLANT_SET_GLOWSTONE
+            = new PlantSetCrystalline("glowstone", Blocks.GLOWSTONE) {
         private final ResynthConfig.PlantGlowstone cfg = ResynthConfig.PLANT_GLOWSTONE;
 
         @Override
@@ -311,10 +317,10 @@ public final class ResynthPlants {
         protected float getOreSeedDropChance() { return cfg.oreSeedDropChance; }
 
         @Override
-        protected float getFloweringPeriod() { return cfg.floweringPeriod; }
+        protected float getPlantGrowthChance() { return cfg.floweringPeriod; }
 
         @Override
-        protected boolean canBoneMeal() { return cfg.canBonemeal; }
+        protected boolean canBonemealPlant() { return cfg.canBonemeal; }
 
         @Override
         protected float getProduceSeedDropChance() { return cfg.produceSeedDropChance; }
@@ -331,10 +337,10 @@ public final class ResynthPlants {
      */
 
     /**
-     * The ender pearl plant instance.
+     * The ender pearl plant set instance.
      */
-    public static final PlantBiochemical PLANT_ENDER_PEARL
-            = new PlantBiochemical("enderpearl", EntityEnderman.class){
+    public static final PlantSetBiochemical PLANT_SET_ENDER_PEARL
+            = new PlantSetBiochemical("enderpearl", EntityEnderman.class){
         ResynthConfig.PlantEnderpearl cfg = ResynthConfig.PLANT_ENDERPEARL;
 
         @Override
@@ -347,10 +353,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -363,10 +369,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The gunpowder plant instance.
+     * The gunpowder plant set instance.
      */
-    public static final PlantBiochemical PLANT_GUNPOWDER
-            = new PlantBiochemical("gunpowder", EntityCreeper.class){
+    public static final PlantSetBiochemical PLANT_SET_GUNPOWDER
+            = new PlantSetBiochemical("gunpowder", EntityCreeper.class){
         ResynthConfig.PlantGunpowder cfg = ResynthConfig.PLANT_GUNPOWDER;
 
         @Override
@@ -379,10 +385,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -395,10 +401,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The gunpowder plant instance.
+     * The gunpowder plant set instance.
      */
-    public static final PlantBiochemical PLANT_BLAZE
-            = new PlantBiochemical("blaze", EntityBlaze.class){
+    public static final PlantSetBiochemical PLANT_SET_BLAZE
+            = new PlantSetBiochemical("blaze", EntityBlaze.class){
         ResynthConfig.PlantBlaze cfg = ResynthConfig.PLANT_BLAZE;
 
         @Override
@@ -411,10 +417,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -427,10 +433,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The bone plant instance.
+     * The bone plant set instance.
      */
-    public static final PlantBiochemical PLANT_BONE
-            = new PlantBiochemical("bone", EntitySkeleton.class){
+    public static final PlantSetBiochemical PLANT_SET_BONE
+            = new PlantSetBiochemical("bone", EntitySkeleton.class){
         ResynthConfig.PlantBone cfg = ResynthConfig.PLANT_BONE;
 
         @Override
@@ -443,10 +449,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -459,10 +465,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The string plant instance.
+     * The string plant set instance.
      */
-    public static final PlantBiochemical PLANT_STRING
-            = new PlantBiochemical("string", EntitySpider.class){
+    public static final PlantSetBiochemical PLANT_SET_STRING
+            = new PlantSetBiochemical("string", EntitySpider.class){
         ResynthConfig.PlantString cfg = ResynthConfig.PLANT_STRING;
 
         @Override
@@ -475,10 +481,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -491,10 +497,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The feather plant instance.
+     * The feather plant set instance.
      */
-    public static final PlantBiochemical PLANT_FEATHER
-            = new PlantBiochemical("feather", EntityChicken.class){
+    public static final PlantSetBiochemical PLANT_SET_FEATHER
+            = new PlantSetBiochemical("feather", EntityChicken.class){
         ResynthConfig.PlantFeather cfg = ResynthConfig.PLANT_FEATHER;
 
         @Override
@@ -507,10 +513,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -523,10 +529,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The ghast plant instance.
+     * The ghast plant set instance.
      */
-    public static final PlantBiochemical PLANT_GHAST
-            = new PlantBiochemical("ghast", EntityGhast.class){
+    public static final PlantSetBiochemical PLANT_SET_GHAST
+            = new PlantSetBiochemical("ghast", EntityGhast.class){
         ResynthConfig.PlantGhast cfg = ResynthConfig.PLANT_GHAST;
 
         @Override
@@ -539,10 +545,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -555,10 +561,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The nether star plant instance.
+     * The nether star plant set instance.
      */
-    public static final PlantBiochemical PLANT_NETHERSTAR
-            = new PlantBiochemical("netherstar", EntityWither.class){
+    public static final PlantSetBiochemical PLANT_SET_NETHERSTAR
+            = new PlantSetBiochemical("netherstar", EntityWither.class){
         ResynthConfig.PlantNetherstar cfg = ResynthConfig.PLANT_NETHERSTAR;
 
         @Override
@@ -571,10 +577,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -587,10 +593,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The spider eye plant instance.
+     * The spider eye plant set instance.
      */
-    public static final PlantBiochemical PLANT_SPIDEREYE
-            = new PlantBiochemical("spidereye", EntitySpider.class){
+    public static final PlantSetBiochemical PLANT_SET_SPIDEREYE
+            = new PlantSetBiochemical("spidereye", EntitySpider.class){
         ResynthConfig.PlantSpidereye cfg = ResynthConfig.PLANT_SPIDEREYE;
 
         @Override
@@ -603,10 +609,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -619,10 +625,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The slime plant instance.
+     * The slime plant set instance.
      */
-    public static final PlantBiochemical PLANT_SLIME
-            = new PlantBiochemical("slime", EntitySlime.class){
+    public static final PlantSetBiochemical PLANT_SET_SLIME
+            = new PlantSetBiochemical("slime", EntitySlime.class){
         ResynthConfig.PlantSlime cfg = ResynthConfig.PLANT_SLIME;
 
         @Override
@@ -635,10 +641,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -651,10 +657,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The shulker plant instance.
+     * The shulker plant set instance.
      */
-    public static final PlantBiochemical PLANT_SHULKER
-            = new PlantBiochemical("shulker", EntityShulker.class){
+    public static final PlantSetBiochemical PLANT_SET_SHULKER
+            = new PlantSetBiochemical("shulker", EntityShulker.class){
         ResynthConfig.PlantShulker cfg = ResynthConfig.PLANT_SHULKER;
 
         @Override
@@ -667,10 +673,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -683,10 +689,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The ink plant instance.
+     * The ink plant set instance.
      */
-    public static final PlantBiochemical PLANT_INK
-            = new PlantBiochemical("ink", EntitySquid.class){
+    public static final PlantSetBiochemical PLANT_SET_INK
+            = new PlantSetBiochemical("ink", EntitySquid.class){
         ResynthConfig.PlantInk cfg = ResynthConfig.PLANT_INK;
 
         @Override
@@ -699,10 +705,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -715,10 +721,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The leather plant instance.
+     * The leather plant set instance.
      */
-    public static final PlantBiochemical PLANT_LEATHER
-            = new PlantBiochemical("leather", EntityCow.class){
+    public static final PlantSetBiochemical PLANT_SET_LEATHER
+            = new PlantSetBiochemical("leather", EntityCow.class){
         ResynthConfig.PlantLeather cfg = ResynthConfig.PLANT_LEATHER;
 
         @Override
@@ -731,10 +737,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -747,10 +753,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The flesh plant instance.
+     * The flesh plant set instance.
      */
-    public static final PlantBiochemical PLANT_FLESH
-            = new PlantBiochemical("flesh", EntityZombie.class){
+    public static final PlantSetBiochemical PLANT_SET_FLESH
+            = new PlantSetBiochemical("flesh", EntityZombie.class){
         ResynthConfig.PlantFlesh cfg = ResynthConfig.PLANT_FLESH;
 
         @Override
@@ -763,10 +769,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -779,10 +785,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The prismarine crystal plant instance.
+     * The prismarine crystal plant set instance.
      */
-    public static final PlantBiochemical PLANT_PRISMARINE_CRYSTAL
-            = new PlantBiochemical("prismarineCrystal", EntityGuardian.class){
+    public static final PlantSetBiochemical PLANT_SET_PRISMARINE_CRYSTAL
+            = new PlantSetBiochemical("prismarineCrystal", EntityGuardian.class){
         ResynthConfig.PlantPrismarineCrystal cfg = ResynthConfig.PLANT_PRISMARINE_CRYSTAL;
 
         @Override
@@ -795,10 +801,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -811,10 +817,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The prismarine shard plant instance.
+     * The prismarine shard plant set instance.
      */
-    public static final PlantBiochemical PLANT_PRISMARINE_SHARD
-            = new PlantBiochemical("prismarineShard", EntityGuardian.class){
+    public static final PlantSetBiochemical PLANT_SET_PRISMARINE_SHARD
+            = new PlantSetBiochemical("prismarineShard", EntityGuardian.class){
         ResynthConfig.PlantPrismarineShard cfg = ResynthConfig.PLANT_PRISMARINE_SHARD;
 
         @Override
@@ -827,10 +833,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -843,10 +849,10 @@ public final class ResynthPlants {
     };
 
     /**
-     * The rabbit foot plant instance.
+     * The rabbit foot plant set instance.
      */
-    public static final PlantBiochemical PLANT_RABBIT_FOOT
-            = new PlantBiochemical("rabbitFoot", EntityRabbit.class){
+    public static final PlantSetBiochemical PLANT_SET_RABBIT_FOOT
+            = new PlantSetBiochemical("rabbitFoot", EntityRabbit.class){
         ResynthConfig.PlantRabbitFoot cfg = ResynthConfig.PLANT_RABBIT_FOOT;
 
         @Override
@@ -859,10 +865,10 @@ public final class ResynthPlants {
         protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
 
         @Override
-        protected float getFloweringPeriod() {return cfg.floweringPeriod;}
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBoneMeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -881,10 +887,10 @@ public final class ResynthPlants {
      */
 
     /**
-     * The certus quartz crystal plant for Applied Energistics 2.
+     * The certus quartz crystal plant set for Applied Energistics 2.
      */
-    public static final ModPlantCrystalline MOD_PLANT_AE2_QUARTZ
-            = new ModPlantCrystalline("ae2Quartz", ResynthMod.MODID_AE2,
+    public static final ModPlantSetCrystalline MOD_PLANT_SET_AE2_QUARTZ
+            = new ModPlantSetCrystalline("ae2Quartz", ResynthMod.MODID_AE2,
             "quartz_ore", "material", 0) {
         private final ResynthConfig.ModPlantCrystallineCfg cfg = ResynthConfig.PLANT_CERTUS_QUARTZ;
 
@@ -901,7 +907,7 @@ public final class ResynthPlants {
         protected float getModPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBonemeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealModPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getModProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -911,10 +917,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * The apatite plant for Forestry.
+     * The apatite plant set for Forestry.
      */
-    public static final ModPlantCrystalline MOD_PLANT_FORESTRY_APATITE
-            = new ModPlantCrystalline("forestryApatite", ResynthMod.MODID_FORESTRY,
+    public static final ModPlantSetCrystalline MOD_PLANT_SET_FORESTRY_APATITE
+            = new ModPlantSetCrystalline("forestryApatite", ResynthMod.MODID_FORESTRY,
             "resources", "apatite", 0) {
         private final ResynthConfig.ModPlantCrystallineCfg cfg = ResynthConfig.PLANT_APATITE;
 
@@ -931,7 +937,7 @@ public final class ResynthPlants {
         protected float getModPlantGrowthChance() {return cfg.floweringPeriod;}
 
         @Override
-        protected boolean canBonemeal() {return cfg.canBonemeal;}
+        protected boolean canBonemealModPlant() {return cfg.canBonemeal;}
 
         @Override
         protected float getModProduceSeedDropChance() {return cfg.produceSeedDropChance;}
@@ -941,10 +947,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Cobalt plant for tinkers' construct.
+     * Cobalt plant set for tinkers' construct.
      */
-    public static final ModPlantMetallic MOD_PLANT_TC_ORE_COBALT
-            = new ModPlantMetallic("cobalt", ResynthMod.MODID_TINKERS_CONSTRUCT,
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TC_COBALT
+            = new ModPlantSetMetallic("cobalt", ResynthMod.MODID_TINKERS_CONSTRUCT,
             "ore", 0, "ingots", 0) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_COBALT;
 
@@ -969,7 +975,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -985,10 +991,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Ardite plant for tinkers' construct.
+     * Ardite plant set for tinkers' construct.
      */
-    public static final ModPlantMetallic MOD_PLANT_TC_ORE_ARDITE
-            = new ModPlantMetallic("ardite", ResynthMod.MODID_TINKERS_CONSTRUCT
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TC_ARDITE
+            = new ModPlantSetMetallic("ardite", ResynthMod.MODID_TINKERS_CONSTRUCT
             , "ore", 1, "ingots", 1) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_ARDITE;
 
@@ -1013,7 +1019,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1029,10 +1035,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Copper plant for Thermal Foundation.
+     * Copper plant set for Thermal Foundation.
      */
-    public static final ModPlantMetallic MOD_PLANT_TF_ORE_COPPER
-            = new ModPlantMetallic("copper", ResynthMod.MODID_THERMAL_FOUNDATION
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TF_COPPER
+            = new ModPlantSetMetallic("copper", ResynthMod.MODID_THERMAL_FOUNDATION
             , "ore", 0, "ore", 0) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_COPPER;
 
@@ -1057,7 +1063,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1073,10 +1079,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Tin plant for Thermal Foundation.
+     * Tin plant set for Thermal Foundation.
      */
-    public static final ModPlantMetallic MOD_PLANT_TF_ORE_TIN
-            = new ModPlantMetallic("tin", ResynthMod.MODID_THERMAL_FOUNDATION
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TF_TIN
+            = new ModPlantSetMetallic("tin", ResynthMod.MODID_THERMAL_FOUNDATION
             , "ore", 1, "ore", 1) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_TIN;
 
@@ -1101,7 +1107,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1117,10 +1123,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Silver plant for Thermal Foundation.
+     * Silver plant set for Thermal Foundation.
      */
-    public static final ModPlantMetallic MOD_PLANT_TF_ORE_SILVER
-            = new ModPlantMetallic("silver", ResynthMod.MODID_THERMAL_FOUNDATION
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TF_SILVER
+            = new ModPlantSetMetallic("silver", ResynthMod.MODID_THERMAL_FOUNDATION
             , "ore", 2, "ore", 2) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_SILVER;
 
@@ -1145,7 +1151,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1161,10 +1167,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Lead plant for Thermal Foundation.
+     * Lead plant set for Thermal Foundation.
      */
-    public static final ModPlantMetallic MOD_PLANT_TF_ORE_LEAD
-            = new ModPlantMetallic("lead", ResynthMod.MODID_THERMAL_FOUNDATION
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TF_LEAD
+            = new ModPlantSetMetallic("lead", ResynthMod.MODID_THERMAL_FOUNDATION
             , "ore", 3, "ore", 3) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_LEAD;
 
@@ -1189,7 +1195,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1205,10 +1211,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Aluminum plant for Thermal Foundation.
+     * Aluminum plant set for Thermal Foundation.
      */
-    public static final ModPlantMetallic MOD_PLANT_TF_ORE_ALUMINUM
-            = new ModPlantMetallic("aluminum", ResynthMod.MODID_THERMAL_FOUNDATION
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TF_ALUMINUM
+            = new ModPlantSetMetallic("aluminum", ResynthMod.MODID_THERMAL_FOUNDATION
             , "ore", 4, "ore", 4) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_ALUMINUM;
 
@@ -1233,7 +1239,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1249,10 +1255,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Nickel plant for Thermal Foundation.
+     * Nickel plant set for Thermal Foundation.
      */
-    public static final ModPlantMetallic MOD_PLANT_TF_ORE_NICKEL
-            = new ModPlantMetallic("nickel", ResynthMod.MODID_THERMAL_FOUNDATION
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TF_NICKEL
+            = new ModPlantSetMetallic("nickel", ResynthMod.MODID_THERMAL_FOUNDATION
             , "ore", 5, "ore", 5) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_NICKEL;
 
@@ -1277,7 +1283,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1293,10 +1299,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Platinum plant for Thermal Foundation.
+     * Platinum plant set for Thermal Foundation.
      */
-    public static final ModPlantMetallic MOD_PLANT_TF_ORE_PLATINUM
-            = new ModPlantMetallic("platinum", ResynthMod.MODID_THERMAL_FOUNDATION
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TF_PLATINUM
+            = new ModPlantSetMetallic("platinum", ResynthMod.MODID_THERMAL_FOUNDATION
             , "ore", 6, "ore", 6) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_PLATINUM;
 
@@ -1321,7 +1327,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1337,10 +1343,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Iridium plant for Thermal Foundation.
+     * Iridium plant set for Thermal Foundation.
      */
-    public static final ModPlantMetallic MOD_PLANT_TF_ORE_IRIDIUM
-            = new ModPlantMetallic("iridium", ResynthMod.MODID_THERMAL_FOUNDATION
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TF_IRIDIUM
+            = new ModPlantSetMetallic("iridium", ResynthMod.MODID_THERMAL_FOUNDATION
             , "ore", 7, "ore", 7) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_IRIDIUM;
 
@@ -1365,7 +1371,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1381,10 +1387,10 @@ public final class ResynthPlants {
     }.register();
 
     /**
-     * Mana plant for Thermal Foundation.
+     * Mana plant set for Thermal Foundation.
      */
-    public static final ModPlantMetallic MOD_PLANT_TF_ORE_MANA
-            = new ModPlantMetallic("mana", ResynthMod.MODID_THERMAL_FOUNDATION
+    public static final ModPlantSetMetallic MOD_PLANT_SET_TF_MANA
+            = new ModPlantSetMetallic("mana", ResynthMod.MODID_THERMAL_FOUNDATION
             , "ore", 8, "ore", 8) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_MANA;
 
@@ -1409,7 +1415,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1425,56 +1431,55 @@ public final class ResynthPlants {
     }.register();
 
 
-    //Will not work... it just won't
-    /*
-     * Plant for Black Quartz Ore from Actually Additions
-     */
-    /*
-    public static final ModPlantMetallic MOD_PLANT_BLACK_QUARTZ
-            = new ModPlantMetallic("blackQuartz", ResynthMod.MODID_ACTUALLY_ADDITIONS,
-            "block_misc", 3, "item_misc", 5) {
-        @Override
-        protected int getResultCount() {
-            return 1;
-        }
+//    //Will not work... it just won't
+//    /*
+//     * Plant for Black Quartz Ore from Actually Additions
+//     */
+//    public static final ModPlantSetMetallic MOD_PLANT_BLACK_QUARTZ
+//            = new ModPlantSetMetallic("blackQuartz", ResynthMod.MODID_ACTUALLY_ADDITIONS,
+//            "block_misc", 3, "item_misc", 5) {
+//        @Override
+//        protected int getResultCount() {
+//            return 1;
+//        }
+//
+//        @Override
+//        protected boolean doesModOreDropSeeds() {
+//            return true;
+//        }
+//
+//        @Override
+//        protected float getModOreSeedDropChance() {
+//            return 100;
+//        }
+//
+//        @Override
+//        protected float getModPlantGrowthChance() {
+//            return 100;
+//        }
+//
+//        @Override
+//        protected boolean canBonemealModPlant() {
+//            return true;
+//        }
+//
+//        @Override
+//        protected float getModProduceSeedDropChance() {
+//            return 100;
+//        }
+//
+//        @Override
+//        protected boolean doesModProduceDropSeeds() {
+//            return true;
+//        }
+//    }.register();
 
-        @Override
-        protected boolean doesModOreDropSeeds() {
-            return true;
-        }
-
-        @Override
-        protected float getModOreSeedDropChance() {
-            return 100;
-        }
-
-        @Override
-        protected float getModPlantGrowthChance() {
-            return 100;
-        }
-
-        @Override
-        protected boolean canBonemeal() {
-            return true;
-        }
-
-        @Override
-        protected float getModProduceSeedDropChance() {
-            return 100;
-        }
-
-        @Override
-        protected boolean doesModProduceDropSeeds() {
-            return true;
-        }
-    }.register();
-    */
 
     /**
-     * Yellorite plant for Extreme Reactors (port of Big Reactors)
+     * Yellorite plant set for Extreme Reactors (port of Big Reactors)
      */
-    public static final ModPlantMetallic MOD_PLANT_YELLORITE
-            = new ModPlantMetallic("yellorite", ResynthMod.MODID_EXTREME_REACTORS,
+    public static final ModPlantSetMetallic MOD_PLANT_SET_ER_YELLORITE
+            = new ModPlantSetMetallic("yellorite", ResynthMod.MODID_EXTREME_REACTORS,
             "brore", 0, "brore", 0) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_YELLORITE;
         @Override
@@ -1498,7 +1503,7 @@ public final class ResynthPlants {
         }
 
         @Override
-        protected boolean canBonemeal() {
+        protected boolean canBonemealModPlant() {
             return cfg.canBonemeal;
         }
 
@@ -1513,12 +1518,12 @@ public final class ResynthPlants {
         }
     }.register();
 
-    //Failed attempt at adding resonating ore.
+//    //Failed attempt at adding resonating ore.
 //    /**
 //     * Resonating Ore plant for Deep Resonance.
 //     */
-//    public static final ModPlantMetallic MOD_PLANT_RESONATING_ORE
-//            = new ModPlantMetallic("resonatingOre", ResynthMod.MODID_DEEP_RESONANCE,
+//    public static final ModPlantSetMetallic MOD_PLANT_RESONATING_ORE
+//            = new ModPlantSetMetallic("resonatingOre", ResynthMod.MODID_DEEP_RESONANCE,
 //            "resonating_ore", 0, "resonating_ore", 0) {
 //        ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_YELLORITE;
 //        @Override
@@ -1542,8 +1547,8 @@ public final class ResynthPlants {
 //        }
 //
 //        @Override
-//        protected boolean canBonemeal() {
-//            return true;//return cfg.canBonemeal;
+//        protected boolean canBonemealModPlant() {
+//            return true;//return cfg.canBonemealModPlant;
 //        }
 //
 //        @Override
@@ -1558,61 +1563,62 @@ public final class ResynthPlants {
 //    }.register();
 
     //Static class.
-    private ResynthPlants(){}
+    private ResynthPlantSets(){}
+
 
     /**
-     * @return an array of the metallic plants to register.
-     */
-    public static PlantMetallic[] getMetallicPlants(){
-        return ResynthPlantRegistry.getMetallicPlants();
-    }
-
-    /**
-     * @return an array of the plant blocks to register.
+     * @return an array of the registered plant blocks.
      */
     public static BlockPlantBase[] getPlantBlocks(){
-        return ResynthPlantRegistry.getPlantBlocks();
+        return ResynthPlantSetRegistry.getPlantBlocks();
     }
 
     /**
-     * @return an array of the seed items to register.
+     * @return an array of the registered seed items.
      */
-    public static ItemPlantSeed[] getSeedItems(){
-        return ResynthPlantRegistry.getSeedItems();
+    public static ItemPlantSeeds[] getSeedItems(){
+        return ResynthPlantSetRegistry.getSeedItems();
     }
 
     /**
-     * @return an array of the plant ore blocks to register.
+     * @return an array of the registered organic ore blocks.
      */
-    public static BlockPlantOre[] getOreBlocks(){
-        return ResynthPlantRegistry.getOreBlocks();
+    public static BlockOrganicPlantOre[] getOrganicOreBlocks(){
+        return ResynthPlantSetRegistry.getOrganicOreBlocks();
     }
 
     /**
-     * @return an array of the plant produce items to register.
+     * @return an array of the registered plant shard produce items.
      */
-    public static ItemPlantOreProduce[] getProduceItems(){
-        return ResynthPlantRegistry.getProduce();
+    public static ItemPlantProduceShard[] getShardProduceItems(){
+        return ResynthPlantSetRegistry.getShardProduceItems();
     }
 
     /**
-     * @return an array of the mob produce items to register.
+     * @return an array of the registered bulb produce items.
      */
-    public static ItemPlantMobProduce[] getMobProduceItems(){
-        return ResynthPlantRegistry.getMobProduce();
+    public static ItemPlantProduceBulb[] getBulbProduceItems(){
+        return ResynthPlantSetRegistry.getBulbProduceItems();
     }
 
     /**
-     * @return an array of the crystalline plants to register.
+     * @return an array of the registered metallic plant sets.
      */
-    public static PlantCrystalline[] getCrystallinePlants(){
-        return ResynthPlantRegistry.getCrystallinePlants();
+    public static PlantSetMetallic[] getMetallicPlantSets(){
+        return ResynthPlantSetRegistry.getMetallicPlantSets();
     }
 
     /**
-     * @return an array of the biochemical plants to register.
+     * @return an array of the registered crystalline plant sets.
      */
-    public static PlantBiochemical[] getBiochemicalPlants(){
-        return ResynthPlantRegistry.getBiochemicalPlants();
+    public static PlantSetCrystalline[] getCrystallinePlantSets(){
+        return ResynthPlantSetRegistry.getCrystallinePlantSets();
+    }
+
+    /**
+     * @return an array of the registered biochemical plant sets.
+     */
+    public static PlantSetBiochemical[] getBiochemicalPlantSets(){
+        return ResynthPlantSetRegistry.getBiochemicalPlantSets();
     }
 }

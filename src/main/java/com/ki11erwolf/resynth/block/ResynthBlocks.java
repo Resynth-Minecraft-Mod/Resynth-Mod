@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,11 @@
 package com.ki11erwolf.resynth.block;
 
 /**
- * List of block references and objects.
+ * Static list of Resynth block instances as well as a getAsArray method.
+ *
+ * Note: This class does NOT hold any plant or plant produce blocks.
  */
 public class ResynthBlocks {
-
-    /**
-     * Mods test block.
-     */
-    public static final ResynthBlock BLOCK_TEST = new BlockTest();
 
     /**
      * Mineral Rich Stone. The mods ore.
@@ -36,14 +33,15 @@ public class ResynthBlocks {
     public static final ResynthBlock BLOCK_MINERAL_SOIL = new BlockMineralSoil().register();
 
     /**
-     * Mystical Seed Pos. The random seed dropper.
+     * Mystical Seed Pos. The random biochemical seed dropper plant.
      */
     public static final ResynthBlock BLOCK_SEED_POD = new BlockSeedPod().register();
 
     /**
-     * @return an array of all the registered resynth blocks.
+     * @return an array of all the TO BE registered resynth blocks (the returned instances
+     * may not be registered yet!).
      */
-    public static ResynthBlock[] getBlocks(){
+    public static ResynthBlock[] getResynthBlocks(){
         return ResynthBlockRegistry.getBlocks();
     }
 }

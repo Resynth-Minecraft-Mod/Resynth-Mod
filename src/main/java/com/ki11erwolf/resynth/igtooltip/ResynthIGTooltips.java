@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,11 @@
 package com.ki11erwolf.resynth.igtooltip;
 
 import com.ki11erwolf.resynth.block.BlockMineralSoil;
-import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBiochemical;
 import com.ki11erwolf.resynth.plant.block.BlockPlantCrystalline;
 import com.ki11erwolf.resynth.plant.block.BlockPlantMetallic;
 import net.minecraftforge.fml.common.Loader;
-import scala.actors.threadpool.Arrays;
-
-import java.util.List;
 
 /**
  * Public initializer class and registry for
@@ -37,7 +33,7 @@ public class ResynthIGTooltips {
      * List of classes that provide custom Hwyla tooltip information.
      */
     //Maybe one day turn this into an annotation system...
-    private static final Class[] TOOLTIP_CLASSES = new Class[]{
+    static final Class[] TOOLTIP_CLASSES = new Class[]{
             BlockMineralSoil.class,
             BlockPlantMetallic.class,
             BlockPlantCrystalline.class,
@@ -48,27 +44,9 @@ public class ResynthIGTooltips {
      * List of tile entities for blocks that provide custom Hwyla
      * tooltip information.
      */
-    private static final Class[] TOOLTIP_TILE_ENTITY_CLASSES = new Class[]{
+    static final Class[] TOOLTIP_TILE_ENTITY_CLASSES = new Class[]{
             TileEntityMineralSoil.class
     };
-
-    /**
-     * @return an ArrayList of block classes
-     * that provide custom Hwyla tooltip information.
-     */
-    @SuppressWarnings("unchecked")
-    static List<Class> getTooltipClasses(){
-        return Arrays.asList(TOOLTIP_CLASSES);
-    }
-
-    /**
-     * @return an ArrayList of tile entity classes for blocks
-     * that provide custom Hwyla tooltip information.
-     */
-    @SuppressWarnings("unchecked")
-    static List<Class> getTileEntityClasses(){
-        return Arrays.asList(TOOLTIP_TILE_ENTITY_CLASSES);
-    }
 
     /**
      * <b>Public Hwyla initialization/register method.</b>

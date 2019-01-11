@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ResynthItems {
 
     /**
-     * Mods test item.
-     */
-    public static final ResynthItem ITEM_TEST = new ItemTest();
-
-    /**
      * Mineral Rock. The item dropped from Mineral Rich Rock.
      */
     public static final ResynthItem ITEM_MINERAL_ROCK = new ItemMineralRock().register();
@@ -41,7 +36,7 @@ public class ResynthItems {
     public static final ResynthItem ITEM_DENSE_MINERAL_ROCK = new ItemDenseMineralRock().register();
 
     /**
-     * Mineral Crystal. Recipe component for Mineral Soil.
+     * Mineral Crystal. Recipe component for the Mineral Hoe.
      */
     public static final ResynthItem ITEM_MINERAL_CRYSTAL = new ItemMineralCrystal().register();
 
@@ -51,7 +46,8 @@ public class ResynthItems {
     public static final ResynthItem ITEM_MINERAL_HOE = new ItemMineralHoe().register();
 
     /**
-     * @return an array of all the registered resynth items.
+     * @return an array of all the Resynth items that are in the registry (Note:
+     * these items may not be registered yet).
      */
     public static Item[] getItems(){
         return ResynthItemRegistry.getItems();

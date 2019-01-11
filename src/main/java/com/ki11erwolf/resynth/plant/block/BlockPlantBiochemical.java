@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import javax.xml.soap.Text;
 import java.util.List;
 import java.util.Random;
 
@@ -50,33 +49,34 @@ import java.util.Random;
 public abstract class BlockPlantBiochemical extends BlockPlantBase implements IGTooltipProvider {
 
     /**
-     * Age (height) property of the plant type.
+     * Age (growth stage) property of the plant type.
      */
-    public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
+    public static final PropertyInteger GROWTH_STAGE = PropertyInteger.create(
+            "age", 0, 7);
 
     /**
-     * List of bounding boxes.
+     * List of bounding boxes for each growth stage.
      */
-    protected static final AxisAlignedBB[] MC_STEM_AABB = new AxisAlignedBB[] {
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.125D, 0.625D), //Age=0
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.25D, 0.625D),  //Age=1
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.375D, 0.625D), //Age=2
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.375D, 0.625D),   //Age=3
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.50D, 0.625D), //Age=4
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.625D, 0.625D),  //Age=5
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.75D, 0.625D), //Age=6
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.875D, 0.625D)    //Age=7
+    protected static final AxisAlignedBB[] BIO_FLOWER_AABB = new AxisAlignedBB[] {
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.125D, 0.625D),    //Age=0
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.25D, 0.625D),     //Age=1
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.375D, 0.625D),    //Age=2
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.375D, 0.625D),    //Age=3
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.50D, 0.625D),     //Age=4
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.625D, 0.625D),    //Age=5
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.75D, 0.625D),     //Age=6
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.875D, 0.625D)     //Age=7
     };
 
     /**
-     * Creates a new generic biochemical plant type.
+     * Creates a new biochemical plant block instance.
      *
-     * @param name the name of the plants items.
+     * @param name the name of the plant block instance.
      */
     public BlockPlantBiochemical(String name){
         super(name);
         this.setDefaultState(
-                this.blockState.getBaseState().withProperty(this.getAgeProperty(), 0));
+                this.blockState.getBaseState().withProperty(this.getGrowthStageProperty(), 0));
         this.setTickRandomly(true);
         this.setCreativeTab(null);
         this.setHardness(0.0F);
@@ -85,37 +85,25 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
     }
 
     /**
-     * Determines the correct bounding box to use.
-     *
-     * @param state -
-     * @param source -
-     * @param pos -
-     * @return the correct bounding box for the given plants age.
+     * @param stage -
+     * @return the correct block state for the given growth stage.
      */
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
-        return MC_STEM_AABB[state.getValue(this.getAgeProperty())];
-    }
-
-    /**
-     * @param age -
-     * @return the correct block state for the given age.
-     */
-    public IBlockState withAge(int age){
-        return this.getDefaultState().withProperty(this.getAgeProperty(), age);
+    public IBlockState withGrowthStage(int stage){
+        return this.getDefaultState().withProperty(this.getGrowthStageProperty(), stage);
     }
 
     /**
      * @param state -
      * @return true if the given plant is fully grown.
      */
-    public boolean isMaxAge(IBlockState state){
-        return state.getValue(this.getAgeProperty()) >= this.getMaxAge();
+    public boolean isMaxGrowthStage(IBlockState state){
+        return state.getValue(this.getGrowthStageProperty()) >= this.getMaxGrowthStage();
     }
 
     /**
-     * @return the maximum age (height) this plant type can grow to.
+     * @return {@code 7}. The maximum growth stage this plant type can grow to.
      */
-    public int getMaxAge(){
+    public int getMaxGrowthStage(){
         return 7;
     }
 
@@ -135,21 +123,23 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
     }
 
     /**
-     * Increases the plants age (height) property.
+     * Increases the plants growth stage (age) property.
+     *
+     * This effectively grows the plant in the world.
      *
      * @param worldIn -
      * @param pos -
      * @param state -
      */
     public void grow(World worldIn, BlockPos pos, IBlockState state){
-        int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
-        int j = this.getMaxAge();
+        int i = this.getGrowthStage(state) + this.getBonemealGrowthStageIncrease(worldIn);
+        int j = this.getMaxGrowthStage();
 
         if (i > j){
             i = j;
         }
 
-        worldIn.setBlockState(pos, this.withAge(i), 2);
+        worldIn.setBlockState(pos, this.withGrowthStage(i), 2);
     }
 
     /**
@@ -161,31 +151,37 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
     }
 
     /**
-     * @return the plants age (height) property.
+     * @return the plants growth stage (age) property.
      */
-    protected PropertyInteger getAgeProperty(){
-        return AGE;
+    protected PropertyInteger getGrowthStageProperty(){
+        return GROWTH_STAGE;
     }
 
     /**
      * @param state -
-     * @return the actual age of the plant (0-7)
+     * @return the metadata growth stage of the plant from its
+     * block state.
      */
-    protected int getAge(IBlockState state){
-        return state.getValue(this.getAgeProperty());
+    protected int getGrowthStage(IBlockState state){
+        return state.getValue(this.getGrowthStageProperty());
     }
 
     /**
+     * Calculates the amount of stages to grow a plant
+     * using Math.random().
+     *
      * @param worldIn -
-     * @return he age to grow by if bonemeal is used.
+     * @return the calculated amount of stages to grow the plant.
      */
-    protected int getBonemealAgeIncrease(World worldIn){
+    protected int getBonemealGrowthStageIncrease(World worldIn){
         return MathHelper.getInt(worldIn.rand, 2, 5);
     }
 
     /**
      * {@inheritDoc}
-     * Grows the plant.
+     * <p><p>
+     * Handles growing the plant on a growth approved random tick.
+     * This also triggers the forge crop growing hooks.
      *
      * @param worldIn
      * @param pos
@@ -197,12 +193,12 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
         if (!worldIn.isAreaLoaded(pos, 1)) return;
 
         if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
-            int i = this.getAge(state);
+            int i = this.getGrowthStage(state);
 
-            if (i < this.getMaxAge()){
+            if (i < this.getMaxGrowthStage()){
                 if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(
                         worldIn, pos, state, true)){
-                    worldIn.setBlockState(pos, this.withAge(i + 1), 2);
+                    worldIn.setBlockState(pos, this.withGrowthStage(i + 1), 2);
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(
                             worldIn, pos, state, worldIn.getBlockState(pos));
                 }
@@ -229,7 +225,7 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state,
                                     EntityPlayer playerIn, EnumHand hand,
                                     EnumFacing facing, float hitX, float hitY, float hitZ){
-        if(this.getAge(state) >= getMaxAge() && !worldIn.isRemote){
+        if(this.getGrowthStage(state) >= getMaxGrowthStage() && !worldIn.isRemote){
             worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ,
                     SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS,
                     0.5F, 0.4F / (new Random().nextFloat() * 0.4F + 0.8F)
@@ -238,7 +234,7 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
             worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(),
                     new ItemStack(getProduce(), 1)));
 
-            worldIn.setBlockState(pos, this.withAge(3), 2);
+            worldIn.setBlockState(pos, this.withGrowthStage(3), 2);
             return true;
         }
 
@@ -259,11 +255,25 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
     public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops,
                          net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
         super.getDrops(drops, world, pos, state, 0);
-        int age = getAge(state);
+        int age = getGrowthStage(state);
 
-        if (age >= getMaxAge()){
+        if (age >= getMaxGrowthStage()){
             drops.add(new ItemStack(this.getSeed(), 1, 0));
         }
+    }
+
+    /**
+     * Determines the correct bounding box to use for the
+     * growth stage of the plant.
+     *
+     * @param state -
+     * @param source -
+     * @param pos -
+     * @return the correct bounding box for the given plants age/growth stage.
+     */
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+        return BIO_FLOWER_AABB[state.getValue(this.getGrowthStageProperty())];
     }
 
     /**
@@ -290,11 +300,13 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
      */
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune){
-        return this.isMaxAge(state) ? this.getProduce() : this.getSeed();
+        return this.isMaxGrowthStage(state) ? this.getProduce() : this.getSeed();
     }
 
     /**
      * {@inheritDoc}
+     * Returns the item stack the player should get
+     * when harvesting/picking the block.
      *
      * @param worldIn
      * @param pos
@@ -309,21 +321,21 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
 
     /**
      * {@inheritDoc}
+     * Determines if the plant can grow further.
      *
      * @param worldIn
      * @param pos
      * @param state
      * @param isClient
-     * @return true if this plant is not at its max age.
+     * @return true if this plant is not at its max growth stage.
      */
     @Override
     public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient){
-        return !this.isMaxAge(state);
+        return !this.isMaxGrowthStage(state);
     }
 
     /**
      * {@inheritDoc}
-     * Determines if bonemeal can be used on this plant.
      *
      * @param worldIn
      * @param rand
@@ -338,6 +350,8 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
 
     /**
      * {@inheritDoc}
+     * IGrowable interface grow method. Calls
+     * {@link #grow(World, BlockPos, IBlockState)}
      *
      * @param worldIn
      * @param rand
@@ -358,7 +372,7 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
     @Override
     @SuppressWarnings("deprecation")
     public IBlockState getStateFromMeta(int meta){
-        return this.withAge(meta);
+        return this.withGrowthStage(meta);
     }
 
     /**
@@ -369,7 +383,7 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
      */
     @Override
     public int getMetaFromState(IBlockState state){
-        return this.getAge(state);
+        return this.getGrowthStage(state);
     }
 
     /**
@@ -379,18 +393,8 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
      */
     @Override
     protected BlockStateContainer createBlockState(){
-        return new BlockStateContainer(this, AGE);
+        return new BlockStateContainer(this, GROWTH_STAGE);
     }
-
-    /**
-     * @return the seed type for this plant.
-     */
-    protected abstract Item getSeed();
-
-    /**
-     * @return the item this plant produces.
-     */
-    protected abstract Item getProduce();
 
     /**
      * {@inheritDoc}
@@ -434,4 +438,23 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements IG
             tooltip.add(TextFormatting.RED + "Drops: " +  blockTitle);
         }
     }
+
+    /**
+     * Used to get the seed item this plant instance
+     * will actually drop. This is specified
+     * in the class creating this one.
+     *
+     * @return the seed item instance for this plant.
+     */
+    protected abstract Item getSeed();
+
+    /**
+     * Used to get the produce item this plant instance
+     * will actually drop. This is specified
+     * in the class creating this one.
+     *
+     * @return the produce item instance for this plant.
+     */
+    protected abstract Item getProduce();
+
 }

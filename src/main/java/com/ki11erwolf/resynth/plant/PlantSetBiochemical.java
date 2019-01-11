@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@ package com.ki11erwolf.resynth.plant;
 
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBiochemical;
-import com.ki11erwolf.resynth.plant.item.ItemPlantMobProduce;
-import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
+import com.ki11erwolf.resynth.plant.item.ItemPlantProduceBulb;
+import com.ki11erwolf.resynth.plant.item.ItemPlantSeeds;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -30,11 +30,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
- * The class used to create new biochemical plants
- * with seeds item and produce item.
+ * API used to create new plant sets (this includes the:
+ * plant, seeds, produce and seed spawning logic) for
+ * vanilla mobs.
  */
 @Mod.EventBusSubscriber
-public abstract class PlantBiochemical {
+public abstract class PlantSetBiochemical {
 
     /**
      * The plant block.
@@ -44,12 +45,12 @@ public abstract class PlantBiochemical {
     /**
      * The produce item.
      */
-    private final ItemPlantMobProduce produce;
+    private final ItemPlantProduceBulb produce;
 
     /**
      * The seeds item.
      */
-    private final ItemPlantSeed seeds;
+    private final ItemPlantSeeds seeds;
 
     /**
      * The entity that drops this plants seeds.
@@ -57,12 +58,12 @@ public abstract class PlantBiochemical {
     private final Class<? extends EntityLiving> entity;
 
     /**
-     * Constructor.
+     * Default constructor.
      *
      * @param name the name of the plant, seeds and produce.
      * @param entity - the entity that drops this plants seeds.
      */
-    public PlantBiochemical(String name, Class<? extends EntityLiving> entity){
+    public PlantSetBiochemical(String name, Class<? extends EntityLiving> entity){
         this.entity = entity;
         this.plant = new BlockPlantBiochemical(name) {
 
@@ -73,15 +74,15 @@ public abstract class PlantBiochemical {
             protected Item getProduce() {return produce;}
 
             @Override
-            protected float getGrowthPeriod() {return getFloweringPeriod();}
+            protected float _getGrowthChance() {return getPlantGrowthChance();}
 
             @Override
-            protected boolean canBonemeal() {return canBoneMeal();}
+            protected boolean canBonemeal() {return canBonemealPlant();}
         };
 
-        this.seeds = new ItemPlantSeed(plant, name, name);
+        this.seeds = new ItemPlantSeeds(plant, name);
 
-        this.produce = new ItemPlantMobProduce(name, seeds) {
+        this.produce = new ItemPlantProduceBulb(name, seeds) {
             @Override
             protected float getSeedSpawnChance() {
                 return getProduceSeedDropChance();
@@ -90,79 +91,6 @@ public abstract class PlantBiochemical {
 
         this.register();
     }
-
-    /**
-     * @return The plant block.
-     */
-    public BlockPlantBiochemical getPlant(){
-        return this.plant;
-    }
-
-    /**
-     * @return the seeds item.
-     */
-    public ItemPlantSeed getSeeds(){
-        return this.seeds;
-    }
-
-    /**
-     * @return the produce item.
-     */
-    public ItemPlantMobProduce getProduce(){
-        return this.produce;
-    }
-
-    /**
-     * Adds this plant to the game.
-     */
-    private void register(){
-        ResynthPlantRegistry.addPlant(plant);
-        ResynthPlantRegistry.addMobProduce(produce);
-        ResynthPlantRegistry.addSeeds(seeds);
-        ResynthPlantRegistry.addPlant(this);
-    }
-
-    /**
-     * @return the item given when this plants produce item
-     * is smelted.
-     */
-    public abstract ItemStack getResult();
-
-    /**
-     * @return true if the given minecraft ore block should drop seeds.
-     */
-    protected abstract boolean doesMobDropSeeds();
-
-    /**
-     * @return the chance the minecraft ore block will drop this plants seeds.
-     */
-    protected abstract float getMobSeedDropChance();
-
-    /**
-     * @return how long this plant takes to grow.
-     */
-    protected abstract float getFloweringPeriod();
-
-    /**
-     * @return true if bonemeal can be used on this plant.
-     */
-    protected abstract boolean canBoneMeal();
-
-    /**
-     * @return the chance this plants produce will turn into seeds in water.
-     */
-    protected abstract float getProduceSeedDropChance();
-
-    /**
-     * @return true if this plants produce turns into seeds in water.
-     */
-    protected abstract boolean doesProduceDropSeeds();
-
-    /**
-     * @return the chance a mystical seed pod will drop this plant
-     * types seeds.
-     */
-    public abstract float getSeedPodDropPercentage();
 
     /**
      * Handles distributing seeds when a mob is killed by a player.
@@ -177,7 +105,7 @@ public abstract class PlantBiochemical {
         if(causer == null || causer.getClass() != EntityPlayerMP.class || !ResynthConfig.PLANTS_GENERAL.mobDropSeeds)
             return;
 
-        for(PlantBiochemical plant : ResynthPlantRegistry.getBiochemicalPlants()){
+        for(PlantSetBiochemical plant : ResynthPlantSetRegistry.getBiochemicalPlantSets()){
             if(victim.getClass() == plant.entity) {
                 if (plant.doesMobDropSeeds() && MathUtil.chance(plant.getMobSeedDropChance())) {
                     victim.getEntityWorld().spawnEntity(
@@ -189,4 +117,79 @@ public abstract class PlantBiochemical {
             }
         }
     }
+
+    /**
+     * @return The plant block.
+     */
+    public BlockPlantBiochemical getPlant(){
+        return this.plant;
+    }
+
+    /**
+     * @return the seeds item.
+     */
+    public ItemPlantSeeds getSeeds(){
+        return this.seeds;
+    }
+
+    /**
+     * @return the produce item.
+     */
+    public ItemPlantProduceBulb getProduce(){
+        return this.produce;
+    }
+
+    /**
+     * Adds this plant set to the forge registry.
+     */
+    private void register(){
+        ResynthPlantSetRegistry.addPlantBlock(plant);
+        ResynthPlantSetRegistry.addBulbProduce(produce);
+        ResynthPlantSetRegistry.addSeeds(seeds);
+        ResynthPlantSetRegistry.addPlantSet(this);
+    }
+
+    /**
+     * @return the item given when this plants produce item
+     * is smelted.
+     */
+    public abstract ItemStack getResult();
+
+    /**
+     * @return true if the given minecraft mob should drop this
+     * plant types seeds.
+     */
+    protected abstract boolean doesMobDropSeeds();
+
+    /**
+     * @return the chance the minecraft mob will drop this plants seeds.
+     */
+    protected abstract float getMobSeedDropChance();
+
+    /**
+     * @return the chance this plant will grow
+     * on an approved growth tick.
+     */
+    protected abstract float getPlantGrowthChance();
+
+    /**
+     * @return true if bonemeal can be used on this plant.
+     */
+    protected abstract boolean canBonemealPlant();
+
+    /**
+     * @return the chance this plants produce will turn into seeds when thrown
+     */
+    protected abstract float getProduceSeedDropChance();
+
+    /**
+     * @return true if this plants produce turns into seeds when thrown.
+     */
+    protected abstract boolean doesProduceDropSeeds();
+
+    /**
+     * @return the chance a mystical seed pod will drop this plant
+     * types seeds.
+     */
+    public abstract float getSeedPodDropPercentage();
 }

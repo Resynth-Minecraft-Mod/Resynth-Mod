@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -57,6 +56,8 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
 
     /**
      * The default bounding box for plant blocks.
+     *
+     * This isn't used.
      */
     protected static final AxisAlignedBB DEFAULT_AABB = new AxisAlignedBB(
             0.30000001192092896D, 0.0D, 0.30000001192092896D,
@@ -71,8 +72,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         super(Material.PLANTS, SoundType.PLANT, name, PLANT_PREFIX);
         this.setTickRandomly(true);
         //Don't make available in creative.
-        //noinspection RedundantCast
-        this.setCreativeTab((CreativeTabs)null);
+        this.setCreativeTab(null);
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
     }
@@ -89,6 +89,8 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
 
     /**
      * {@inheritDoc}
+     * Checks if the plant can be grown with bonemeal by looking
+     * at the config settings.
      *
      * @param worldIn
      * @param rand
@@ -121,7 +123,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
     /**
      * {@inheritDoc}
      *
-     * @return
+     * @return CUTOUT
      */
     @Override
     @SideOnly(Side.CLIENT)
@@ -136,11 +138,12 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * @param state
      * @param pos
      * @param face
-     * @return
+     * @return UNDEFINED
      */
     @Override
     @SuppressWarnings("deprecation")
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face){
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state,
+                                            BlockPos pos, EnumFacing face){
         return BlockFaceShape.UNDEFINED;
     }
 
@@ -148,7 +151,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * {@inheritDoc}
      *
      * @param state
-     * @return
+     * @return false
      */
     @Override
     @SuppressWarnings("deprecation")
@@ -160,7 +163,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * {@inheritDoc}
      *
      * @param state
-     * @return
+     * @return false
      */
     @Override
     @SuppressWarnings("deprecation")
@@ -189,7 +192,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * @param state
      * @param source
      * @param pos
-     * @return default aligned axis for all plants,
+     * @return default aligned axis for all plants. Not used.
      */
     @Override
     @SuppressWarnings("deprecation")
@@ -247,7 +250,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
     }
 
     /**
-     * Removes this block from the world is the block below cannot
+     * Removes this block from the world if the block below cannot
      * sustain this plant.
      *
      * @param worldIn -
@@ -272,9 +275,11 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
 
     /**
      * Randomly decides if the block should grow,
-     * taking into account the given {@link #getGrowthPeriod()}
+     * taking into account the given {@link #_getGrowthChance()}
      * and mineral content percentage of the
      * soil block below.
+     *
+     * This method handles growth chances.
      *
      * @param world -
      * @param pos -
@@ -282,12 +287,12 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      */
     protected boolean shouldGrow(World world, BlockPos pos){
         float randomChance = MathUtil.getRandomIntegerInRange(0, 100);
-        float chance = getGrowthChance(world, pos);
+        float chance = getSoilMineralContent(world, pos);
 
         if(!(chance > randomChance))
             return false;
 
-        return MathUtil.chance(getGrowthPeriod());
+        return MathUtil.chance(_getGrowthChance());
     }
 
     /**
@@ -298,17 +303,29 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * @param pos -
      * @return the mineral content percentage of the block below.
      */
-    protected float getGrowthChance(World world, BlockPos pos){
+    protected float getSoilMineralContent(World world, BlockPos pos){
         if(world.getTileEntity(pos.down()).getBlockType() != ResynthBlocks.BLOCK_MINERAL_SOIL)
             return 0F;
 
         TileEntityMineralSoil tEntity = (TileEntityMineralSoil)world.getTileEntity(pos.down());
-        return tEntity.getPercentage();
+        return tEntity.getMineralPercentage();
     }
 
     /**
      * Calls abstract grow method
-     * and ensured the block can stay.
+     * and ensures the block can stay.
+     *
+     * This method handles growth rules.
+     *
+     * <p>
+     *     The basic growth rules are light levels
+     *     above 9 and if the area loaded.
+     *
+     *     The rest of the growth is determined by
+     *     the specific plant instance and if the
+     *     {@link #shouldGrow(World, BlockPos)}
+     *     method gives the "go ahead".
+     * </p>
      *
      * @param worldIn -
      * @param pos -
@@ -330,8 +347,13 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
     }
 
     /**
-     * Called when a random tick decides the
+     * Called when a random update tick decides the
      * block can grow.
+     *
+     * This is the method that will
+     * actually handle growing the plant. This
+     * method does not handle growth rules and
+     * chances.
      *
      * @param world -
      * @param pos -
@@ -341,14 +363,20 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
     protected abstract void onGrowApproved(World world, BlockPos pos, IBlockState state, Random random);
 
     /**
+     * This is the internal growth chance method
+     * used by the plants Block classes. The
+     * "getGrowthChance()" method without
+     * the underscore is the one used by the
+     * actual plant set creator classes.
+     *
      * @return how long the plant takes to grow
      * in general.
      */
-    protected abstract float getGrowthPeriod();
+    protected abstract float _getGrowthChance();
 
     /**
      * @return true if bonemeal can be used
-     * on the plant.
+     * on the plant when bonemeal on plants is enabled.
      */
     protected abstract boolean canBonemeal();
 

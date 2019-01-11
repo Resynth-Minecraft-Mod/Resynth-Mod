@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@ package com.ki11erwolf.resynth.plant;
 
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.plant.block.BlockPlantMetallic;
-import com.ki11erwolf.resynth.plant.block.BlockPlantOre;
-import com.ki11erwolf.resynth.plant.item.ItemPlantSeed;
+import com.ki11erwolf.resynth.plant.block.BlockOrganicPlantOre;
+import com.ki11erwolf.resynth.plant.item.ItemPlantSeeds;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -35,21 +35,22 @@ import javax.swing.*;
 import java.util.List;
 
 /**
- * The class used to create new metallic plants
- * with seeds item and produce (ore) block.
+ * API used to create new plant sets (this includes the:
+ * plant, seeds, produce and seed spawning logic) for
+ * vanilla ores that drop the plantOre block (e.g. iron).
  */
 @Mod.EventBusSubscriber
-public abstract class PlantMetallic {
+public abstract class PlantSetMetallic {
 
     /**
-     * The minecraft ore block used to obtain seeds.
+     * The minecraft plantOre block used to obtain seeds.
      */
-    private final ItemStack seedOre;
+    private final ItemStack sourceOre;
 
     /**
      * The block the plant should place..
      */
-    private final BlockPlantOre ore;
+    private final BlockOrganicPlantOre plantOre;
 
     /**
      * The plant block.
@@ -59,91 +60,54 @@ public abstract class PlantMetallic {
     /**
      * The plants seeds item.
      */
-    private final ItemPlantSeed seeds;
+    private final ItemPlantSeeds seeds;
 
     /**
-     * modid if this instance represents a mod plant (e.g. tinkers)
+     * Modid of the mod if this instance represents a mod plant.
      */
     protected String modid;
 
     /**
-     * name of the mod ore block if this instance represents a mod plant (e.g. tinkers)
+     * Name of the mod plantOre block if this instance represents a mod plant.
      */
     protected String oreBlockName;
 
     /**
-     * mod block metadata if this instance represents a mod plant (e.g. tinkers).
+     * Mod block metadata if this instance represents a mod plant.
      */
     protected int oreMetaData;
 
     /**
-     * Constructs a new metallic plant
-     * instance.
+     * Default constructor.
      *
      * @param name the name of the plant block.
-     * @param seedOre the ore block seeds are obtained from.
+     * @param sourceOre the minecraft ore block seeds are obtained from.
      */
-    public PlantMetallic(String name, ItemStack seedOre){
-        this.seedOre = seedOre;
-        this.ore = new BlockPlantOre(name);
-        this.plant = new BlockPlantMetallic(ore, name){
+    public PlantSetMetallic(String name, ItemStack sourceOre){
+        this.sourceOre = sourceOre;
+        this.plantOre = new BlockOrganicPlantOre(name);
+        this.plant = new BlockPlantMetallic(plantOre, name){
             @Override
             protected Item getSeedItem(){
                 return seeds;
             }
 
             @Override
-            protected float getGrowthPeriod(){
-                return getFloweringPeriod();
+            protected float _getGrowthChance(){
+                return getPlantGrowthChance();
             }
 
             @Override
             protected boolean canBonemeal(){
-                return canBoneMeal();
+                return canBonemealPlant();
             }
         };
-        this.seeds = new ItemPlantSeed(plant, name, name);
-    }
-
-    /**
-     * Registers this plant (plant block, seeds and produce)
-     * to the game.
-     *
-     * @return this
-     */
-    protected PlantMetallic register(){
-        ResynthPlantRegistry.addOre(ore);
-        ResynthPlantRegistry.addPlant(plant);
-        ResynthPlantRegistry.addSeeds(seeds);
-        ResynthPlantRegistry.addPlant(this);
-        return this;
-    }
-
-    /**
-     * @return the block this plant places. Its
-     * produce.
-     */
-    public BlockPlantOre getOre(){
-        return this.ore;
-    }
-
-    /**
-     * @return the seeds item used to
-     * place this plant.
-     */
-    public ItemPlantSeed getSeeds(){
-        return this.seeds;
-    }
-
-    /**
-     * @return the plant block.
-     */
-    public BlockPlantMetallic getPlant(){
-        return this.plant;
+        this.seeds = new ItemPlantSeeds(plant, name);
     }
 
     /**
      * Called when an explosion occurs in the world.
+     *
      * <p>
      *     This handles the dropping of seeds
      *     from ore blocks.
@@ -160,15 +124,16 @@ public abstract class PlantMetallic {
         for(BlockPos blockPos : affectedBlocks){
             Block block = detonateEvent.getWorld().getBlockState(blockPos).getBlock();
             IBlockState state = detonateEvent.getWorld().getBlockState(blockPos);
-            for(PlantMetallic plant : ResynthPlantRegistry.getMetallicPlants()){
+            for(PlantSetMetallic plant : ResynthPlantSetRegistry.getMetallicPlantSets()){
                 //Separate logic for non-vanilla plants.
-                if(plant.modid != null && plant.doesOreDropSeeds() && ResynthConfig.PLANTS_GENERAL.oreDropSeeds){
+                if(plant.modid != null && plant.doesSourceOreDropSeeds()
+                        && ResynthConfig.PLANTS_GENERAL.oreDropSeeds){
                     //Same Block class
-                    if(block == ModPlant.getModBlock(plant.modid, plant.oreBlockName)){
+                    if(block == ModPlantSetBase.getModBlock(plant.modid, plant.oreBlockName)){
                         //Same block exactly
                         if(block.getMetaFromState(state) == plant.oreMetaData){
                             //Random chance.
-                            if(MathUtil.chance(plant.getOreSeedDropChance())){
+                            if(MathUtil.chance(plant.getSourceOreSeedDropChance())){
                                 detonateEvent.getWorld().setBlockToAir(blockPos);
                                 detonateEvent.getWorld().spawnEntity(
                                         new EntityItem(detonateEvent.getWorld(),
@@ -178,16 +143,16 @@ public abstract class PlantMetallic {
                             }
                         }
                     }
-                } else if(plant.doesOreDropSeeds() && block == Block.getBlockFromItem(plant.seedOre.getItem())
+                } else if(plant.doesSourceOreDropSeeds() && block == Block.getBlockFromItem(plant.sourceOre.getItem())
                         && ResynthConfig.PLANTS_GENERAL.oreDropSeeds){
-                    //A Seed ore block has been blown up.
+                    //A Seed plantOre block has been blown up.
 
                     //Don't spawn seeds from thin air...
-                    if(plant.seedOre.getItem() == Items.AIR)
+                    if(plant.sourceOre.getItem() == Items.AIR)
                         continue;
 
                     //Random chance.
-                    if(MathUtil.chance(plant.getOreSeedDropChance())){
+                    if(MathUtil.chance(plant.getSourceOreSeedDropChance())){
                         detonateEvent.getWorld().setBlockToAir(blockPos);
                         detonateEvent.getWorld().spawnEntity(
                                 new EntityItem(detonateEvent.getWorld(),
@@ -197,12 +162,12 @@ public abstract class PlantMetallic {
                     }
                 }
 
-                if(plant.doesOrganicOreDropSeeds() && block == plant.ore
+                if(plant.doesPlantOreDropSeeds() && block == plant.plantOre
                         && ResynthConfig.PLANTS_GENERAL.organicOreDropSeeds){
-                    //An organic ore block has been blown up.
+                    //An organic plantOre block has been blown up.
 
                     //Random chance.
-                    if(MathUtil.chance(plant.getOrganicOreSeedDropChance())){
+                    if(MathUtil.chance(plant.getPlantOreSeedDropChance())){
                         JOptionPane.showMessageDialog(null,
                                 "Spawning seeds 3"
                         );
@@ -219,45 +184,80 @@ public abstract class PlantMetallic {
     }
 
     /**
-     * @return the item to give
-     * when smelting this plants ore block.
+     * Registers this plant set (plant block, seeds and produce)
+     * to the game.
+     *
+     * @return this
+     */
+    protected PlantSetMetallic register(){
+        ResynthPlantSetRegistry.addOrganicOreBlock(plantOre);
+        ResynthPlantSetRegistry.addPlantBlock(plant);
+        ResynthPlantSetRegistry.addSeeds(seeds);
+        ResynthPlantSetRegistry.addPlantSet(this);
+        return this;
+    }
+
+    /**
+     * @return the produce block this plant places.
+     */
+    public BlockOrganicPlantOre getPlantOre(){
+        return this.plantOre;
+    }
+
+    /**
+     * @return the seeds item used to
+     * place this plant.
+     */
+    public ItemPlantSeeds getSeeds(){
+        return this.seeds;
+    }
+
+    /**
+     * @return the plant block.
+     */
+    public BlockPlantMetallic getPlant(){
+        return this.plant;
+    }
+
+    /**
+     * @return the item stack given when the plants
+     * produce block is smelted.
      */
     public abstract ItemStack getResult();
 
     /**
-     * @return how the long the plant takes
-     * to grow in general. This chance of
-     * growing is 1 in the number provided + 1.
+     * @return the chance this plant will grow
+     * on an approved growth tick.
      */
-    protected abstract float getFloweringPeriod();
+    protected abstract float getPlantGrowthChance();
 
     /**
      * @return true if bonemeal can be used
      * on this plant.
      */
-    protected abstract boolean canBoneMeal();
+    protected abstract boolean canBonemealPlant();
 
     /**
      * @return the integer chance of seeds
      * dropping from the minecraft ore block.
      */
-    protected abstract float getOreSeedDropChance();
+    protected abstract float getSourceOreSeedDropChance();
 
     /**
      * @return the integer chance of seeds
      * dropping from the plants ore block (produce).
      */
-    protected abstract float getOrganicOreSeedDropChance();
+    protected abstract float getPlantOreSeedDropChance();
 
     /**
      * @return true if seeds should drop from the
      * minecraft ore block.
      */
-    protected abstract boolean doesOreDropSeeds();
+    protected abstract boolean doesSourceOreDropSeeds();
 
     /**
      * @return true if seeds should drop from
      * the plants ore block (produce).
      */
-    protected abstract boolean doesOrganicOreDropSeeds();
+    protected abstract boolean doesPlantOreDropSeeds();
 }

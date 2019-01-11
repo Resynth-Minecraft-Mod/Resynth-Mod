@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Ki11er_wolf
+ * Copyright 2018-2019 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,33 +15,21 @@
  */
 package com.ki11erwolf.resynth.item;
 
-import com.ki11erwolf.resynth.block.ResynthBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * Mineral Crystal. Recipe component for Mineral Soil.
+ * Mineral Crystal. Recipe component and fuel for the Mineral Hoe.
  */
 public class ItemMineralCrystal extends ResynthItem {
 
     /**
-     * Sets the creative tab, unlocalized name prefix
-     * and registry name.
+     * Default item constructor.
      */
     public ItemMineralCrystal() {
         super("mineralCrystal");
