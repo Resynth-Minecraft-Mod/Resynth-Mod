@@ -28,15 +28,16 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -158,4 +159,17 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
 
     }
 
+    /**
+     * Plays a sound in the world
+     * when ever a seed item is dropped
+     *
+     * @param worldIn the world in which to play the sound.
+     * @param pos the location in the world.
+     */
+    @SideOnly(Side.CLIENT)
+    public static void addEffects(World worldIn, BlockPos pos){
+        worldIn.playSound(null, pos,
+                SoundEvents.BLOCK_NOTE_BELL, SoundCategory.BLOCKS,
+                0.5F, 1.0F);
+    }
 }

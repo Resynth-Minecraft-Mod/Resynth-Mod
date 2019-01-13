@@ -128,6 +128,7 @@ public abstract class PlantSetCrystalline {
                             + event.getPlayer().getHeldItemMainhand().getItem().getClass().getCanonicalName());
 
                 if(MathUtil.chance(plant.getOreSeedDropChance())){
+                    ItemPlantSeeds.addEffects(world, event.getPos());
                     world.spawnEntity(new EntityItem(world, x, y, z, new ItemStack(plant.seeds, 1)));
                     event.setCanceled(true);
                     world.setBlockToAir(event.getPos());
@@ -161,6 +162,7 @@ public abstract class PlantSetCrystalline {
             if(i == p.getProduce() && b == Blocks.WATER){
                 for(int j = 0; j < count; j++){
                     if(MathUtil.chance(p.getProduceSeedDropChance())){
+                        ItemPlantSeeds.addEffects(world, pos);
                         event.getEntityItem().world.spawnEntity(
                                 new EntityItem(
                                         event.getEntityItem().world,

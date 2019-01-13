@@ -218,7 +218,7 @@ public class ResynthWorldGen{
      */
     protected void init(){
         if(isInitialized){
-            ResynthMod.getLogger().warn("Attempt to initialized world generation twice. Skipping...");
+            ResynthMod.getLogger().warn("Attempt to initialize world generation twice. Skipping...");
             return;
         }
 

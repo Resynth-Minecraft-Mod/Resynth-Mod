@@ -285,9 +285,11 @@
         <w>coords</w>
         <w>deepresonance</w>
         <w>errored</w>
+        <w>gson</w>
         <w>hwyla</w>
         <w>igtooltip</w>
         <w>mana</w>
+        <w>minecraftforge</w>
         <w>thermalfoundation</w>
         <w>waila</w>
         <w>yellorite</w>
@@ -318,9 +320,6 @@
         <option value="$PROJECT_DIR$/run" />
       </list>
     </option>
-  </component>
-  <component name="SvnBranchConfigurationManager">
-    <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />

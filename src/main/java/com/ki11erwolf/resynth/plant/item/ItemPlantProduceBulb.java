@@ -120,6 +120,7 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
                     //Minecraft likes to crash from this randomly
                     try{
                         if(!worldIn.isRemote && MathUtil.chance(getSeedSpawnChance())) {
+                            ItemPlantSeeds.addEffects(worldIn, result.getBlockPos());
                             worldIn.spawnEntity(new EntityItem(worldIn,
                                     result.getBlockPos().getX(),
                                     result.getBlockPos().getY(),

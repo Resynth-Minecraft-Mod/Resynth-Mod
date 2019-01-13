@@ -26,6 +26,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -108,6 +109,10 @@ public abstract class PlantSetBiochemical {
         for(PlantSetBiochemical plant : ResynthPlantSetRegistry.getBiochemicalPlantSets()){
             if(victim.getClass() == plant.entity) {
                 if (plant.doesMobDropSeeds() && MathUtil.chance(plant.getMobSeedDropChance())) {
+                    ItemPlantSeeds.addEffects(victim.world, new BlockPos(
+                            victim.posX, victim.posY, victim.posZ
+                    ));
+
                     victim.getEntityWorld().spawnEntity(
                             new EntityItem(victim.getEntityWorld(),
                                     victim.posX, victim.posY, victim.posZ,

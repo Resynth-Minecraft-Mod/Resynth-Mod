@@ -135,6 +135,7 @@ public abstract class PlantSetMetallic {
                             //Random chance.
                             if(MathUtil.chance(plant.getSourceOreSeedDropChance())){
                                 detonateEvent.getWorld().setBlockToAir(blockPos);
+                                ItemPlantSeeds.addEffects(detonateEvent.getWorld(), blockPos);
                                 detonateEvent.getWorld().spawnEntity(
                                         new EntityItem(detonateEvent.getWorld(),
                                                 blockPos.getX(), blockPos.getY(), blockPos.getZ(),
@@ -154,6 +155,7 @@ public abstract class PlantSetMetallic {
                     //Random chance.
                     if(MathUtil.chance(plant.getSourceOreSeedDropChance())){
                         detonateEvent.getWorld().setBlockToAir(blockPos);
+                        ItemPlantSeeds.addEffects(detonateEvent.getWorld(), blockPos);
                         detonateEvent.getWorld().spawnEntity(
                                 new EntityItem(detonateEvent.getWorld(),
                                         blockPos.getX(), blockPos.getY(), blockPos.getZ(),
@@ -172,6 +174,7 @@ public abstract class PlantSetMetallic {
                                 "Spawning seeds 3"
                         );
                         detonateEvent.getWorld().setBlockToAir(blockPos);
+                        ItemPlantSeeds.addEffects(detonateEvent.getWorld(), blockPos);
                         detonateEvent.getWorld().spawnEntity(
                                 new EntityItem(detonateEvent.getWorld(),
                                         blockPos.getX(), blockPos.getY(), blockPos.getZ(),
