@@ -64,7 +64,8 @@ public class ItemMineralHoe extends ResynthItem {
     /**
      * {@inheritDoc}
      *
-     * Handles turning dirt/grass into mineral soil
+     * Handles both charging the hoe with mineral crystals
+     * and turning dirt/grass into mineral soil
      * using mineral crystal charges.
      *
      * @param player
@@ -79,14 +80,91 @@ public class ItemMineralHoe extends ResynthItem {
      */
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand,
                                       EnumFacing blockDirection, float x, float y, float z) {
+        if(!ResynthConfig.MINERAL_HOE.canUse){
+            return EnumActionResult.FAIL;
+        }
 
         Block type = world.getBlockState(blockPos).getBlock();
         ItemStack stack = player.getHeldItem(hand);
         NBTTagCompound nbt = stack.getTagCompound();
 
-        if(player.isSneaking() || !ResynthConfig.MINERAL_HOE.canUse){
+        if(player.isSneaking()){
+            new MinecraftUtil.SideSensitiveCode(world){
+                @Override
+                public void onServer() {
+                    //Creative
+                    if(player.isSneaking()){
+                        if(stack.getTagCompound().getInteger(NBT_TAG_CHARGES)
+                                >= ResynthConfig.MINERAL_HOE.maxCharges){
+                            world.playSound(
+                                    null, blockPos,
+                                    SoundEvents.ENTITY_HORSE_LAND,
+                                    SoundCategory.NEUTRAL,
+                                    0.7F, 1.0F);
+                            return;
+                        }
+
+                        if(player.isCreative()){
+                            stack.getTagCompound().setInteger(ItemMineralHoe.NBT_TAG_CHARGES,
+                                    stack.getTagCompound().getInteger(ItemMineralHoe.NBT_TAG_CHARGES) + 1);
+
+                            world.playSound(
+                                    null, blockPos,
+                                    SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
+                                    SoundCategory.NEUTRAL,
+                                    0.7F, 1.0F);
+                            return;
+                        }
+
+                        //Not creative
+                        int pos = 0;
+
+                        for(;;){
+                            try{
+                                if(player.inventory.getStackInSlot(pos).getItem()
+                                        == ResynthItems.ITEM_MINERAL_CRYSTAL){
+
+                                    player.inventory.getStackInSlot(pos).setCount(
+                                            player.inventory.getStackInSlot(pos).getCount()
+                                                    - 1
+                                    );
+
+                                    stack.getTagCompound().setInteger(ItemMineralHoe.NBT_TAG_CHARGES,
+                                            stack.getTagCompound().getInteger(
+                                                    ItemMineralHoe.NBT_TAG_CHARGES) + 1);
+
+                                    world.playSound(
+                                            null, blockPos,
+                                            SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
+                                            SoundCategory.NEUTRAL,
+                                            0.7F, 1.0F);
+                                    break;
+                                }
+
+                                if(player.inventory.getStackInSlot(pos) == ItemStack.EMPTY){
+                                    world.playSound(
+                                            null, blockPos,
+                                            SoundEvents.ENTITY_HORSE_LAND,
+                                            SoundCategory.NEUTRAL,
+                                            0.7F, 1.0F);
+                                    break;
+                                }
+
+
+                                pos++;
+                            } catch (Exception e){
+                                break;
+                            }
+                        }
+                    }
+                }
+            }.execute();
             return EnumActionResult.FAIL;
         }
+
+        //***********************
+        //Block replacement code.
+        //***********************
 
         //Non-creative charges check.
         if(!player.isCreative() && nbt.getInteger(NBT_TAG_CHARGES) <= 0){
@@ -94,7 +172,7 @@ public class ItemMineralHoe extends ResynthItem {
                     player, blockPos,
                     SoundEvents.ENTITY_HORSE_LAND,
                     SoundCategory.NEUTRAL,
-                    1.0F, 1.0F);
+                    0.7F, 1.0F);
             return EnumActionResult.FAIL;
         }
 
@@ -112,66 +190,6 @@ public class ItemMineralHoe extends ResynthItem {
         }
 
         return EnumActionResult.FAIL;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * Handles charging the hoe with mineral crystals.
-     *
-     * @param world
-     * @param player
-     * @param hand
-     * @return
-     */
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player,
-                                                    EnumHand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-
-        new MinecraftUtil.SideSensitiveCode(world){
-            @Override
-            public void onServer() {
-                //Creative
-                if(player.isSneaking()){
-                    if(player.isCreative()){
-                        stack.getTagCompound().setInteger(ItemMineralHoe.NBT_TAG_CHARGES,
-                                stack.getTagCompound()
-                                        .getInteger(ItemMineralHoe.NBT_TAG_CHARGES) + 1);
-                        return;
-                    }
-
-                    //Not creative
-                    int pos = 0;
-
-                    for(;;){
-                        try{
-                            if(player.inventory.getStackInSlot(pos).getItem()
-                                    == ResynthItems.ITEM_MINERAL_CRYSTAL){
-
-                                player.inventory.getStackInSlot(pos).setCount(
-                                        player.inventory.getStackInSlot(pos).getCount()
-                                                - 1
-                                );
-
-                                stack.getTagCompound().setInteger(ItemMineralHoe.NBT_TAG_CHARGES,
-                                        stack.getTagCompound()
-                                                .getInteger(ItemMineralHoe.NBT_TAG_CHARGES) + 1);
-                                break;
-                            }
-
-                            if(player.inventory.getStackInSlot(pos) == ItemStack.EMPTY)
-                                break;
-
-                            pos++;
-                        } catch (Exception e){
-                            break;
-                        }
-                    }
-                }
-            }
-        }.execute();
-
-        return super.onItemRightClick(world, player, hand);
     }
 
     /**
@@ -202,7 +220,7 @@ public class ItemMineralHoe extends ResynthItem {
         tooltip.add(TextFormatting.GOLD + "Charges: " + nbt.getInteger(NBT_TAG_CHARGES));
         //Usage tooltip
         tooltip.add(TextFormatting.GRAY
-                + "Sneak + Right Click with Mineral Crystals in inventory to charge.");
+                + "Sneak + Right Click on a block with Mineral Crystals in inventory to charge.");
     }
 
     /**

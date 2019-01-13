@@ -118,6 +118,15 @@ public class ResynthConfig {
         @RangeInt(min = 0, max = 2)
         @RequiresMcRestart
         public int initialCharges = 2;
+
+        /**
+         * The number of charges a mineral hoe can gain
+         * before it refuses to accept any more.
+         */
+        @Name("Max Charges")
+        @Comment("The maximum number of charges per mineral hoe.")
+        @RangeInt(min = 5, max = 128)
+        public int maxCharges = 64;
     }
 
     /**
