@@ -43,6 +43,14 @@ public class HwylaCompatibility implements IWailaDataProvider {
     public static final HwylaCompatibility INSTANCE = new HwylaCompatibility();
 
     /**
+     * An instance of an IGTooltipProvider than does nothing. Used to prevent
+     * excessive instance creation of useless providers.
+     */
+    protected static final IGTooltipProvider BLANK_PROVIDER = (itemStack, tooltip, accessor, config) -> {
+        //NO-OP
+    };
+
+    /**
      * Resynth logger instance.
      */
     public static final Logger LOG = ResynthMod.getLogger();
@@ -128,7 +136,6 @@ public class HwylaCompatibility implements IWailaDataProvider {
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te,
                                      NBTTagCompound tag, World world, BlockPos pos) {
-
         getProvider(world.getBlockState(pos).getBlock()).onHwylaNBTDataRequest(
                 player, te, tag, world, pos
         );
@@ -165,7 +172,6 @@ public class HwylaCompatibility implements IWailaDataProvider {
     @Override
     public List<String> getWailaHead(ItemStack itemStack, List<String> tooltip,
                                      IWailaDataAccessor accessor, IWailaConfigHandler config) {
-
         getProvider(accessor.getBlock()).onHwylaHeadRequest(
                 itemStack, tooltip, accessor, config
         );
@@ -188,7 +194,6 @@ public class HwylaCompatibility implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> tooltip,
                                      IWailaDataAccessor accessor, IWailaConfigHandler config) {
-
         getProvider(accessor.getBlock()).onHwylaBodyRequest(
                 itemStack, tooltip, accessor, config
         );
@@ -210,7 +215,6 @@ public class HwylaCompatibility implements IWailaDataProvider {
     @Override
     public List<String> getWailaTail(ItemStack itemStack, List<String> tooltip,
                                      IWailaDataAccessor accessor, IWailaConfigHandler config) {
-
         getProvider(accessor.getBlock()).onHwylaTailRequest(
                 itemStack, tooltip, accessor, config
         );
@@ -230,7 +234,7 @@ public class HwylaCompatibility implements IWailaDataProvider {
         if(object instanceof IGTooltipProvider)
             return (IGTooltipProvider)object;
         else
-            return IGTooltipProvider.BLANK_PROVIDER;
+            return BLANK_PROVIDER;
     }
 }
 

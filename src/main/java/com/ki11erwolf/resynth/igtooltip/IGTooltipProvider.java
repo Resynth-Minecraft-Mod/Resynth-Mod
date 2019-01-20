@@ -23,6 +23,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
 
 import java.util.List;
 
@@ -31,14 +32,6 @@ import java.util.List;
  * The One Probe(in the future).
  */
 public interface IGTooltipProvider {
-
-    /**
-     * An instance of an IGTooltipProvider than does nothing. Used to prevent
-     * excessive instance creation of useless providers.
-     */
-    IGTooltipProvider BLANK_PROVIDER = (itemStack, tooltip, accessor, config) -> {
-        //NO-OP
-    };
 
     /**
      * Called when Hwyla/Waila wants to get information about the block.
