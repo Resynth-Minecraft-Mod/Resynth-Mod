@@ -57,7 +57,7 @@ public final class ResynthPlantSets {
         protected float getSourceOreSeedDropChance() {return ResynthConfig.PLANT_IRON.oreSeedDropChance;}
 
         @Override
-        protected float getPlantOreSeedDropChance() {return ResynthConfig.PLANT_IRON.organicOreSeedDropChance;}
+        protected float getProduceSeedDropChance() {return ResynthConfig.PLANT_IRON.organicOreSeedDropChance;}
 
         @Override
         protected boolean doesSourceOreDropSeeds() {return ResynthConfig.PLANT_IRON.oreDropSeeds;}
@@ -84,7 +84,7 @@ public final class ResynthPlantSets {
         protected float getSourceOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.oreSeedDropChance;}
 
         @Override
-        protected float getPlantOreSeedDropChance() {return ResynthConfig.PLANT_GOLD.organicOreSeedDropChance;}
+        protected float getProduceSeedDropChance() {return ResynthConfig.PLANT_GOLD.organicOreSeedDropChance;}
 
         @Override
         protected boolean doesSourceOreDropSeeds() {return ResynthConfig.PLANT_GOLD.oreDropSeeds;}

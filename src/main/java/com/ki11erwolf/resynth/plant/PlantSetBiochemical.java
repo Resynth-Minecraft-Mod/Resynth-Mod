@@ -81,7 +81,7 @@ public abstract class PlantSetBiochemical {
             protected boolean canBonemeal() {return canBonemealPlant();}
         };
 
-        this.seeds = new ItemPlantSeeds(plant, name);
+        this.seeds = new ItemPlantSeeds(plant, name, this);
 
         this.produce = new ItemPlantProduceBulb(name, seeds) {
             @Override
@@ -152,6 +152,30 @@ public abstract class PlantSetBiochemical {
         ResynthPlantSetRegistry.addBulbProduce(produce);
         ResynthPlantSetRegistry.addSeeds(seeds);
         ResynthPlantSetRegistry.addPlantSet(this);
+    }
+
+    /**
+     * @return the chance of seeds dropping from the source mob
+     * formatted for human reading.
+     */
+    public String getTextualMobSeedDropChance(){
+        return Math.round(getMobSeedDropChance()) + "%";
+    }
+
+    /**
+     * @return the chance of seeds dropping from the produce
+     * formatted for human reading.
+     */
+    public String getTextualProduceSeedDropChance(){
+        return Math.round(getProduceSeedDropChance()) + "%";
+    }
+
+    /**
+     * @return the chance of the plant growing
+     * formatted for human reading.
+     */
+    public String getTextualPlantGrowthChance(){
+        return Math.round(getPlantGrowthChance()) + "%";
     }
 
     /**

@@ -18,6 +18,9 @@ package com.ki11erwolf.resynth.plant.item;
 import com.ki11erwolf.resynth.ResynthTabSeeds;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItem;
+import com.ki11erwolf.resynth.plant.PlantSetBiochemical;
+import com.ki11erwolf.resynth.plant.PlantSetCrystalline;
+import com.ki11erwolf.resynth.plant.PlantSetMetallic;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBiochemical;
 import com.ki11erwolf.resynth.plant.block.BlockPlantCrystalline;
@@ -32,6 +35,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -58,15 +62,76 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
     private final Block plant;
 
     /**
+     * The biochemical plant set that created this seed class
+     * if it exists.
+     */
+    private final PlantSetBiochemical setBiochemical;
+
+    /**
+     * The crystalline plant set that created this seed class
+     * if it exists.
+     */
+    private final PlantSetCrystalline setCrystalline;
+
+    /**
+     * The metallic plant set that created this seed class
+     * if it exists.
+     */
+    private final PlantSetMetallic setMetallic;
+
+    /**
      * Default item constructor.
      *
      * @param plant the plant block to place.
      * @param name the name of the item (e.g. redstoneDust)
+     * @param biochemical the biochemical plant set that created this seed class
+     *      * if it exists.
+     * @param metallic the metallic plant set that created this seed class
+     *      * if it exists.
+     * @param crystalline the crystalline plant set that created this seed class
+     *      * if it exists.
      */
-    public ItemPlantSeeds(BlockPlantBase plant, String name) {
+    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetBiochemical biochemical,
+                          PlantSetMetallic metallic, PlantSetCrystalline crystalline) {
         super(name, PREFIX);
+        this.setBiochemical = biochemical;
+        this.setCrystalline = crystalline;
+        this.setMetallic = metallic;
         this.plant = plant;
         this.setCreativeTab(ResynthTabSeeds.RESYNTH_TAB_SEEDS);
+    }
+
+    /**
+     * Item constructor.
+     *
+     * @param plant the plant block to place.
+     * @param name the name of the item (e.g. redstoneDust)
+     * @param biochemical the biochemical plant set that created this seed class.
+     */
+    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetBiochemical biochemical) {
+        this(plant, name, biochemical, null, null);
+    }
+
+    /**
+     * Item constructor.
+     *
+     * @param plant the plant block to place.
+     * @param name the name of the item (e.g. redstoneDust)
+     * @param metallic the metallic plant set that created this seed class.
+     */
+    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetMetallic metallic) {
+        this(plant, name, null, metallic, null);
+    }
+
+    /**
+     * Item constructor.
+     *
+     * @param plant the plant block to place.
+     * @param name the name of the item (e.g. redstoneDust)
+     * @param crystalline the crystalline plant set that created this seed class.
+     */
+    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetCrystalline crystalline) {
+        this(plant, name, null, null, crystalline);
     }
 
     /**
@@ -137,7 +202,9 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
     /**
      * {@inheritDoc}
      * Adds a tooltip on how to obtain the item. This tooltip
-     * changes depending on what type of plant it places.
+     * changes depending on what type of plant it places. Also
+     * adds seed drop chances and plant growth chances to the
+     * tooltip.
      *
      * @param stack
      * @param worldIn
@@ -150,13 +217,44 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
         tooltip.add("Place on Mineral Soil.");
         BlockPlantBase base = (BlockPlantBase) plant;
 
-        if(base instanceof BlockPlantCrystalline)
+        if(base instanceof BlockPlantCrystalline){
             tooltip.add("Spawns randomly when mining the ore");
-        else if (base instanceof BlockPlantMetallic)
+        } else if (base instanceof BlockPlantMetallic){
             tooltip.add("Spawns randomly when blowing up the ore");
-        else if (base instanceof BlockPlantBiochemical)
+        } else if (base instanceof BlockPlantBiochemical) {
             tooltip.add("Spawns randomly when killing the mob");
+        }
 
+        tooltip.add("");
+
+        if(setMetallic != null){
+            tooltip.add(TextFormatting.GOLD + "Drop Chance (Ore): " + setMetallic.getTextualOreSeedDropChance());
+            tooltip.add(
+                    TextFormatting.GREEN + "Drop Chance (Produce): " + setMetallic.getTextualProduceSeedDropChance()
+            );
+            tooltip.add(
+                    TextFormatting.DARK_PURPLE
+                            + "Plant Growth Chance: " + setMetallic.getTextualPlantGrowthChance()
+            );
+        } else if(setCrystalline != null){
+            tooltip.add(TextFormatting.GOLD + "Drop Chance (Ore): " + setCrystalline.getTextualOreSeedDropChance());
+            tooltip.add(
+                    TextFormatting.GREEN + "Drop Chance (Produce): " + setCrystalline.getTextualProduceSeedDropChance()
+            );
+            tooltip.add(
+                    TextFormatting.DARK_PURPLE
+                            + "Plant Growth Chance: " + setCrystalline.getTextualPlantGrowthChance()
+            );
+        } else if(setBiochemical != null){
+            tooltip.add(TextFormatting.GOLD + "Drop Chance (Mob): " + setBiochemical.getTextualMobSeedDropChance());
+            tooltip.add(
+                    TextFormatting.GREEN + "Drop Chance (Produce): " + setBiochemical.getTextualProduceSeedDropChance()
+            );
+            tooltip.add(
+                    TextFormatting.DARK_PURPLE
+                            + "Plant Growth Chance: " + setBiochemical.getTextualPlantGrowthChance()
+            );
+        }
     }
 
     /**
@@ -172,4 +270,5 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
                 SoundEvents.BLOCK_NOTE_BELL, SoundCategory.BLOCKS,
                 0.5F, 1.0F);
     }
+
 }

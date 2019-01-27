@@ -88,7 +88,7 @@ public abstract class PlantSetCrystalline {
         };
 
         this.produce = new ItemPlantProduceShard(name);
-        this.seeds = new ItemPlantSeeds(plant, name);
+        this.seeds = new ItemPlantSeeds(plant, name, this);
     }
 
     /**
@@ -209,6 +209,30 @@ public abstract class PlantSetCrystalline {
         ResynthPlantSetRegistry.addSeeds(seeds);
         ResynthPlantSetRegistry.addPlantSet(this);
         return this;
+    }
+
+    /**
+     * @return the chance of seeds dropping from the source ore
+     * formatted for human reading.
+     */
+    public String getTextualOreSeedDropChance(){
+        return Math.round(getOreSeedDropChance()) + "%";
+    }
+
+    /**
+     * @return the chance of seeds dropping from the produce
+     * formatted for human reading.
+     */
+    public String getTextualProduceSeedDropChance(){
+        return Math.round(getProduceSeedDropChance()) + "%";
+    }
+
+    /**
+     * @return the chance of the plant growing
+     * formatted for human reading.
+     */
+    public String getTextualPlantGrowthChance(){
+        return Math.round(getPlantGrowthChance()) + "%";
     }
 
     /**

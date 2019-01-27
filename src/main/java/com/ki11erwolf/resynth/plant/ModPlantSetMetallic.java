@@ -98,7 +98,7 @@ public abstract class ModPlantSetMetallic extends ModPlantSetBase<PlantSetMetall
             }
 
             @Override
-            protected float getPlantOreSeedDropChance() {
+            protected float getProduceSeedDropChance() {
                 return getModProduceSeedDropChance();
             }
 

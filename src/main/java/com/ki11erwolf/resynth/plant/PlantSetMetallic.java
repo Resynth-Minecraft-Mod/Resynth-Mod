@@ -102,7 +102,7 @@ public abstract class PlantSetMetallic {
                 return canBonemealPlant();
             }
         };
-        this.seeds = new ItemPlantSeeds(plant, name);
+        this.seeds = new ItemPlantSeeds(plant, name, this);
     }
 
     /**
@@ -169,7 +169,7 @@ public abstract class PlantSetMetallic {
                     //An organic plantOre block has been blown up.
 
                     //Random chance.
-                    if(MathUtil.chance(plant.getPlantOreSeedDropChance())){
+                    if(MathUtil.chance(plant.getProduceSeedDropChance())){
                         JOptionPane.showMessageDialog(null,
                                 "Spawning seeds 3"
                         );
@@ -198,6 +198,30 @@ public abstract class PlantSetMetallic {
         ResynthPlantSetRegistry.addSeeds(seeds);
         ResynthPlantSetRegistry.addPlantSet(this);
         return this;
+    }
+
+    /**
+     * @return the chance of seeds dropping from the source ore
+     * formatted for human reading.
+     */
+    public String getTextualOreSeedDropChance(){
+        return Math.round(getSourceOreSeedDropChance()) + "%";
+    }
+
+    /**
+     * @return the chance of seeds dropping from the produce
+     * formatted for human reading.
+     */
+    public String getTextualProduceSeedDropChance(){
+        return Math.round(getProduceSeedDropChance()) + "%";
+    }
+
+    /**
+     * @return the chance of the plant growing
+     * formatted for human reading.
+     */
+    public String getTextualPlantGrowthChance(){
+        return Math.round(getPlantGrowthChance()) + "%";
     }
 
     /**
@@ -250,7 +274,7 @@ public abstract class PlantSetMetallic {
      * @return the integer chance of seeds
      * dropping from the plants ore block (produce).
      */
-    protected abstract float getPlantOreSeedDropChance();
+    protected abstract float getProduceSeedDropChance();
 
     /**
      * @return true if seeds should drop from the
