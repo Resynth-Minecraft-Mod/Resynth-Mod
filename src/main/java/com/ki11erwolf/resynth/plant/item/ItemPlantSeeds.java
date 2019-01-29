@@ -228,27 +228,31 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
         tooltip.add("");
 
         if(setMetallic != null){
-            tooltip.add(TextFormatting.GOLD + "Drop Chance (Ore): " + setMetallic.getTextualOreSeedDropChance());
+            tooltip.add(TextFormatting.GOLD + "Seed Drop Chance (Ore): " + setMetallic.getTextualOreSeedDropChance());
             tooltip.add(
-                    TextFormatting.GREEN + "Drop Chance (Produce): " + setMetallic.getTextualProduceSeedDropChance()
+                    TextFormatting.GREEN + "Seed Drop Chance (Produce): " + setMetallic.getTextualProduceSeedDropChance()
             );
             tooltip.add(
                     TextFormatting.DARK_PURPLE
                             + "Plant Growth Chance: " + setMetallic.getTextualPlantGrowthChance()
             );
         } else if(setCrystalline != null){
-            tooltip.add(TextFormatting.GOLD + "Drop Chance (Ore): " + setCrystalline.getTextualOreSeedDropChance());
+            tooltip.add(TextFormatting.GOLD + "Seed Drop Chance (Ore): " + setCrystalline.getTextualOreSeedDropChance());
             tooltip.add(
-                    TextFormatting.GREEN + "Drop Chance (Produce): " + setCrystalline.getTextualProduceSeedDropChance()
+                    TextFormatting.GREEN + "Seed Drop Chance (Produce): " + setCrystalline.getTextualProduceSeedDropChance()
             );
             tooltip.add(
                     TextFormatting.DARK_PURPLE
                             + "Plant Growth Chance: " + setCrystalline.getTextualPlantGrowthChance()
             );
         } else if(setBiochemical != null){
-            tooltip.add(TextFormatting.GOLD + "Drop Chance (Mob): " + setBiochemical.getTextualMobSeedDropChance());
+            tooltip.add(TextFormatting.GOLD + "Seed Drop Chance (Mob): " + setBiochemical.getTextualMobSeedDropChance());
             tooltip.add(
-                    TextFormatting.GREEN + "Drop Chance (Produce): " + setBiochemical.getTextualProduceSeedDropChance()
+                    TextFormatting.GREEN + "Seed Drop Chance (Produce): " + setBiochemical.getTextualProduceSeedDropChance()
+            );
+            tooltip.add(
+                    TextFormatting.AQUA + "Seed Drop Chance (Mystical Seed Pod): "
+                            + setBiochemical.getTextualPodSeedDropChance()
             );
             tooltip.add(
                     TextFormatting.DARK_PURPLE

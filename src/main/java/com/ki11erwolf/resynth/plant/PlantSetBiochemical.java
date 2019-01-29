@@ -179,6 +179,18 @@ public abstract class PlantSetBiochemical {
     }
 
     /**
+     * @return the chance of seeds dropping
+     * from the mystical seed pod
+     * formatted for human reading.
+     */
+    public String getTextualPodSeedDropChance(){
+        if(!ResynthConfig.MYSTICAL_SEED_POD.dropSeeds)
+            return "Not Enabled";
+
+        return Math.round(getSeedPodDropPercentage()) + "%";
+    }
+
+    /**
      * @return the item given when this plants produce item
      * is smelted.
      */

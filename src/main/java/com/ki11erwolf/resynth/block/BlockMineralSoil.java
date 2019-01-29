@@ -360,6 +360,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
                                ITooltipFlag flagIn){
+        tooltip.add("Made by tilling (Right Clicking) dirt/grass with a Mineral Hoe.");
         tooltip.add("Right click with mineral rocks or dense mineral rock to" +
                 " increase plant growth.");
     }
