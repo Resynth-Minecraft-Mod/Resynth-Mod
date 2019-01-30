@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthTabProduce;
 import com.ki11erwolf.resynth.item.ResynthItem;
+import com.ki11erwolf.resynth.plant.PlantSetBiochemical;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityEnderPearl;
@@ -28,6 +29,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -50,13 +52,21 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
     private final ItemPlantSeeds plantSeeds;
 
     /**
+     * The biochemical plant set that created
+     * this item.
+     */
+    private final PlantSetBiochemical plantSet;
+
+    /**
      * Default item constructor.
      *
      * @param name the name of the item.
      * @param seeds the seeds item type this produce drops.
+     * @param set the biochemical plant set this item belongs to.
      */
-    public ItemPlantProduceBulb(String name, ItemPlantSeeds seeds) {
+    public ItemPlantProduceBulb(String name, ItemPlantSeeds seeds, PlantSetBiochemical set) {
         super(name, PREFIX);
+        this.plantSet = set;
         this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
         this.plantSeeds = seeds;
     }
@@ -75,6 +85,38 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
                                ITooltipFlag flagIn) {
         tooltip.add("Can be thrown for a chance at getting more seeds.");
         tooltip.add("Can be smelted to obtain the resource.");
+
+        tooltip.add("");
+
+        tooltip.add(
+                TextFormatting.GOLD
+                        + "Seed Drop Chance (Mob): " +
+                        plantSet.getTextualMobSeedDropChance()
+        );
+
+        tooltip.add(
+                TextFormatting.GREEN
+                        + "Seed Drop Chance (Produce): "
+                        + plantSet.getTextualProduceSeedDropChance()
+        );
+
+        tooltip.add(
+                TextFormatting.AQUA
+                        + "Seed Drop Chance (Mystical Seed Pod): "
+                        + plantSet.getTextualPodSeedDropChance()
+        );
+
+        tooltip.add(
+                TextFormatting.RED
+                        + "Resource Count (Smelting): x"
+                        + plantSet.getResult().getCount()
+        );
+
+        tooltip.add(
+                TextFormatting.DARK_PURPLE
+                        + "Plant Growth Chance: "
+                        + plantSet.getTextualPlantGrowthChance()
+        );
     }
 
     /**

@@ -87,7 +87,7 @@ public abstract class PlantSetCrystalline {
             protected boolean canBonemeal() {return canBonemealPlant();}
         };
 
-        this.produce = new ItemPlantProduceShard(name);
+        this.produce = new ItemPlantProduceShard(name, this);
         this.seeds = new ItemPlantSeeds(plant, name, this);
     }
 

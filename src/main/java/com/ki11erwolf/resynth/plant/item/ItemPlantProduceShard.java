@@ -17,8 +17,10 @@ package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.ResynthTabProduce;
 import com.ki11erwolf.resynth.item.ResynthItem;
+import com.ki11erwolf.resynth.plant.PlantSetCrystalline;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -36,12 +38,20 @@ public class ItemPlantProduceShard extends ResynthItem {
     private static final String PREFIX = "produce";
 
     /**
+     * The crystalline plant set that created
+     * this item.
+     */
+    private final PlantSetCrystalline plantSet;
+
+    /**
      * Default item constructor.
      *
      * @param name the name of the item.
+     * @param set the plant set this item belongs to.
      */
-    public ItemPlantProduceShard(String name) {
+    public ItemPlantProduceShard(String name, PlantSetCrystalline set) {
         super(name, PREFIX);
+        this.plantSet = set;
         this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
     }
 
@@ -59,5 +69,32 @@ public class ItemPlantProduceShard extends ResynthItem {
                                ITooltipFlag flagIn){
         tooltip.add("Can be left in water for a chance to obtain more seeds.");
         tooltip.add("Can be smelted to obtain the resource.");
+
+        tooltip.add("");
+
+        tooltip.add(
+                TextFormatting.GOLD
+                        + "Seed Drop Chance (Ore): " +
+                        plantSet.getTextualOreSeedDropChance()
+        );
+
+        tooltip.add(
+                TextFormatting.GREEN
+                        + "Seed Drop Chance (Produce): "
+                        + plantSet.getTextualProduceSeedDropChance()
+        );
+
+
+        tooltip.add(
+                TextFormatting.RED
+                        + "Resource Count (Smelting): x"
+                        + plantSet.getResult().getCount()
+        );
+
+        tooltip.add(
+                TextFormatting.DARK_PURPLE
+                        + "Plant Growth Chance: "
+                        + plantSet.getTextualPlantGrowthChance()
+        );
     }
 }

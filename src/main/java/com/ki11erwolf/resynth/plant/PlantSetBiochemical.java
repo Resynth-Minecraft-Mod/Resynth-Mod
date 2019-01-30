@@ -83,7 +83,7 @@ public abstract class PlantSetBiochemical {
 
         this.seeds = new ItemPlantSeeds(plant, name, this);
 
-        this.produce = new ItemPlantProduceBulb(name, seeds) {
+        this.produce = new ItemPlantProduceBulb(name, seeds, this) {
             @Override
             protected float getSeedSpawnChance() {
                 return getProduceSeedDropChance();
