@@ -1,4 +1,4 @@
-# Resynth Mod
+# Resynth Mod ![](http://cf.way2muchnoise.eu/full_303846_downloads.svg)
 ![](https://resynth-minecraft-mod.github.io/images/title.png)
 
 Resynth is a mod(modification) to [Minecraft](https://minecraft.net/) that
