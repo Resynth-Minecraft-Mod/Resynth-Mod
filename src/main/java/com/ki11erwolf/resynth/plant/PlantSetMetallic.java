@@ -85,7 +85,7 @@ public abstract class PlantSetMetallic {
      */
     public PlantSetMetallic(String name, ItemStack sourceOre){
         this.sourceOre = sourceOre;
-        this.plantOre = new BlockOrganicPlantOre(name);
+        this.plantOre = new BlockOrganicPlantOre(name, this);
         this.plant = new BlockPlantMetallic(plantOre, name){
             @Override
             protected Item getSeedItem(){

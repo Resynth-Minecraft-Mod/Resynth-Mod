@@ -17,11 +17,13 @@ package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.ResynthTabProduce;
 import com.ki11erwolf.resynth.block.ResynthBlock;
+import com.ki11erwolf.resynth.plant.PlantSetMetallic;
 import com.ki11erwolf.resynth.util.BlockUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -39,14 +41,21 @@ public class BlockOrganicPlantOre extends ResynthBlock {
     protected static final String ORE_PREFIX = "ore";
 
     /**
+     * The plant set that created this block.
+     */
+    private final PlantSetMetallic plantSet;
+
+    /**
      * Constructs a new plant ore block instance.
      *
      * @param name the name of the block.
+     * @param set the metallic plant set this block belongs to.
      */
-    public BlockOrganicPlantOre(String name) {
+    public BlockOrganicPlantOre(String name, PlantSetMetallic set) {
         super(Material.GOURD, SoundType.STONE, name, ORE_PREFIX);
         this.setHardness(2.0F);
         this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
+        this.plantSet = set;
         BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.AXE, 2);
     }
 
@@ -64,5 +73,32 @@ public class BlockOrganicPlantOre extends ResynthBlock {
                                ITooltipFlag flagIn){
         tooltip.add("Can be blown up to for a chance to obtain more seeds.");
         tooltip.add("Can be smelted to obtain the original ore block.");
+
+        tooltip.add("");
+
+        tooltip.add(
+                TextFormatting.GOLD
+                        + "Seed Drop Chance (Ore): " +
+                        plantSet.getTextualOreSeedDropChance()
+        );
+
+        tooltip.add(
+                TextFormatting.GREEN
+                        + "Seed Drop Chance (Produce): "
+                        + plantSet.getTextualProduceSeedDropChance()
+        );
+
+
+        tooltip.add(
+                TextFormatting.RED
+                        + "Resource Count (Smelting): x"
+                        + plantSet.getResult().getCount()
+        );
+
+        tooltip.add(
+                TextFormatting.DARK_PURPLE
+                        + "Plant Growth Chance: "
+                        + plantSet.getTextualPlantGrowthChance()
+        );
     }
 }
