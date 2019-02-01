@@ -17,7 +17,7 @@ package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
-import com.ki11erwolf.resynth.igtooltip.IGTooltipProvider;
+import com.ki11erwolf.resynth.igtooltip.HwylaDataProvider;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.SoundType;
@@ -41,7 +41,7 @@ import java.util.Random;
  * produce non metallic (diamond, redstone,
  * coal, nether quartz and lapis) ore drops.
  */
-public abstract class BlockPlantCrystalline extends BlockPlantBase implements IGTooltipProvider {
+public abstract class BlockPlantCrystalline extends BlockPlantBase implements HwylaDataProvider {
 
     /**
      * Growth stage (age) property of the plant type.

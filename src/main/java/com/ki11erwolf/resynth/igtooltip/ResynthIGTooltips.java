@@ -58,4 +58,15 @@ public class ResynthIGTooltips {
             HwylaCompatibility.register();
         }
     }
+
+    /**
+     * <b>Public TOP initialization/register method.</b>
+     *
+     * Use this method to set up The One Probe.
+     */
+    public static void registerTOP(){
+        if (Loader.isModLoaded("theoneprobe" )) {
+            TOPCompatibility.register();
+        }
+    }
 }

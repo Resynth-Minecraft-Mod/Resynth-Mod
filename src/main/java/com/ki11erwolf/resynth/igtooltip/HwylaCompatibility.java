@@ -32,8 +32,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 /**
- * Class that allows Resynth to interface with Hwyla/Waila
- * through its own in-game tooltip provider api.
+ * Sets up and initializes Hwyla compatibility for
+ * all blocks that provide information to Hwyla.
  */
 public class HwylaCompatibility implements IWailaDataProvider {
 
@@ -43,10 +43,10 @@ public class HwylaCompatibility implements IWailaDataProvider {
     public static final HwylaCompatibility INSTANCE = new HwylaCompatibility();
 
     /**
-     * An instance of an IGTooltipProvider than does nothing. Used to prevent
+     * An instance of an HwylaDataProvider than does nothing. Used to prevent
      * excessive instance creation of useless providers.
      */
-    protected static final IGTooltipProvider BLANK_PROVIDER = (itemStack, tooltip, accessor, config) -> {
+    protected static final HwylaDataProvider BLANK_PROVIDER = (itemStack, tooltip, accessor, config) -> {
         //NO-OP
     };
 
@@ -223,16 +223,16 @@ public class HwylaCompatibility implements IWailaDataProvider {
     }
 
     /**
-     * Casts the given object to an IGTooltipProvider
+     * Casts the given object to an HwylaDataProvider
      * if possible.
      *
-     * @param object possible IGTooltipProvider object.
-     * @return the object cast to an IGTooltipProvider or a blank
+     * @param object possible HwylaDataProvider object.
+     * @return the object cast to an HwylaDataProvider or a blank
      * tool provider if the given object could not be cast.
      */
-    private static IGTooltipProvider getProvider(Object object){
-        if(object instanceof IGTooltipProvider)
-            return (IGTooltipProvider)object;
+    private static HwylaDataProvider getProvider(Object object){
+        if(object instanceof HwylaDataProvider)
+            return (HwylaDataProvider)object;
         else
             return BLANK_PROVIDER;
     }

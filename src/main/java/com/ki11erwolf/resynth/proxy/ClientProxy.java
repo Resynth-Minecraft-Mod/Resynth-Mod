@@ -32,6 +32,7 @@ public class ClientProxy implements IProxy {
      */
     public void preInit(FMLPreInitializationEvent event) {
         ResynthIGTooltips.registerHwyla();
+        ResynthIGTooltips.registerTOP();
     }
 
     /**

@@ -23,7 +23,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Loader;
 
 import java.util.List;
 
@@ -31,7 +30,7 @@ import java.util.List;
  * Interface used to provide block information to Hwyla/Waila and
  * The One Probe(in the future).
  */
-public interface IGTooltipProvider {
+public interface HwylaDataProvider {
 
     /**
      * Called when Hwyla/Waila wants to get information about the block.

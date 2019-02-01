@@ -18,10 +18,14 @@ package com.ki11erwolf.resynth.block;
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
-import com.ki11erwolf.resynth.igtooltip.IGTooltipProvider;
+import com.ki11erwolf.resynth.igtooltip.HwylaDataProvider;
+import com.ki11erwolf.resynth.igtooltip.TOPDataProvider;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.BlockUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.ProbeMode;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
@@ -62,7 +66,8 @@ import java.util.Random;
  * The soil block for the mods plants.
  */
 @SuppressWarnings("deprecation")
-public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements IGTooltipProvider {
+public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
+        implements HwylaDataProvider, TOPDataProvider {
 
     /**
      * The metadata value for the blocks appearance.
@@ -463,6 +468,48 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
                 "mineral-content",
                 ((TileEntityMineralSoil)te).getMineralPercentage()
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param mode the usage mode the probe is in.
+     * @param probeInfo probe information holder. Add block
+     *                  information to this object.
+     * @param player the player the information will be provided to.
+     * @param world the world the player is in.
+     * @param blockState state of the block the probe is probing.
+     * @param data probe ray tracing results.
+     */
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player,
+                             World world, IBlockState blockState, IProbeHitData data) {
+        TileEntity te = world.getTileEntity(data.getPos());
+
+        if (!(te instanceof TileEntityMineralSoil)) {
+            return;
+        }
+
+        TileEntityMineralSoil dataTileEntity = (TileEntityMineralSoil) te;
+
+        probeInfo.horizontal()
+                .text(TextFormatting.GOLD + "Mineral Content: ");
+
+        probeInfo.horizontal()
+                .item(new ItemStack(ResynthBlocks.BLOCK_MINERAL_SOIL))
+                .text(
+                        TextFormatting.GOLD + "Stage: " +
+                        TextFormatting.AQUA + percentToStage(dataTileEntity.getMineralPercentage())
+                );
+
+        probeInfo.horizontal().text(TextFormatting.GOLD + "Percentage:");
+        probeInfo.horizontal()
+                .item(new ItemStack(ResynthItems.ITEM_MINERAL_ROCK))
+                .progress(
+                        Math.round(dataTileEntity.getMineralPercentage())
+                                % 100, 100,
+                        probeInfo.defaultProgressStyle().suffix("%")
+                );
     }
 
     /**

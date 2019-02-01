@@ -17,7 +17,7 @@ package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
-import com.ki11erwolf.resynth.igtooltip.IGTooltipProvider;
+import com.ki11erwolf.resynth.igtooltip.HwylaDataProvider;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.SoundType;
@@ -46,7 +46,7 @@ import java.util.Random;
  * The block class for all plants that
  * produce mob drops.
  */
-public abstract class BlockPlantBiochemical extends BlockPlantBase implements IGTooltipProvider {
+public abstract class BlockPlantBiochemical extends BlockPlantBase implements HwylaDataProvider {
 
     /**
      * Age (growth stage) property of the plant type.
