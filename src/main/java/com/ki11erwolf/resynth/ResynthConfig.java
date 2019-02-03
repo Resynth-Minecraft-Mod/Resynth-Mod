@@ -426,6 +426,13 @@ public class ResynthConfig {
         @Name("Enable Growth")
         @Comment("Set to false to disable growth of all plants. This effectively disables the mod")
         public boolean enableGrowth = true;
+
+        /**
+         * Should plants spawn flame particles.
+         */
+        @Name("Enable Flaming Plants")
+        @Comment("When enabled, plants will sometimes spawn flames around them.")
+        public boolean enableFlamingPlants = true;
     }
 
     /**

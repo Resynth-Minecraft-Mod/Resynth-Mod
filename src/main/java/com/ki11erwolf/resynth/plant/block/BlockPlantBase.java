@@ -29,6 +29,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -220,6 +221,46 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
     }
 
     /**
+     * Spawns particles around the plant.
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+        if(!ResynthConfig.PLANTS_GENERAL.enableFlamingPlants)
+            return;
+
+        IBlockState iblockstate = world.getBlockState(pos);
+        int amount = 3;
+
+        if(!MathUtil.chance(5.0F))
+            return;
+
+        if (iblockstate.getMaterial() != Material.AIR) {
+            for (int i = 0; i < amount; ++i){
+                double d0 = rand.nextGaussian() * 0.02D;
+                double d1 = rand.nextGaussian() * 0.02D;
+                double d2 = rand.nextGaussian() * 0.02D;
+                world.spawnParticle(EnumParticleTypes.FLAME,
+                        (double)((float)pos.getX() + rand.nextFloat()),
+                        (double)pos.getY() + (double)rand.nextFloat()
+                                * iblockstate.getBoundingBox(world, pos).maxY,
+                        (double)((float)pos.getZ() + rand.nextFloat()), d0, d1, d2);
+            }
+        }
+        else {
+            for (int i1 = 0; i1 < amount; ++i1) {
+                double d0 = rand.nextGaussian() * 0.02D;
+                double d1 = rand.nextGaussian() * 0.02D;
+                double d2 = rand.nextGaussian() * 0.02D;
+                world.spawnParticle(EnumParticleTypes.FLAME,
+                        (double)((float)pos.getX() + rand.nextFloat()),
+                        (double)pos.getY() + (double)rand.nextFloat() * 1.0f,
+                        (double)((float)pos.getZ() + rand.nextFloat()), d0, d1, d2);
+            }
+        }
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @param worldIn
@@ -347,40 +388,6 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
     }
 
     /**
-     * Called when a random update tick decides the
-     * block can grow.
-     *
-     * This is the method that will
-     * actually handle growing the plant. This
-     * method does not handle growth rules and
-     * chances.
-     *
-     * @param world -
-     * @param pos -
-     * @param state -
-     * @param random -
-     */
-    protected abstract void onGrowApproved(World world, BlockPos pos, IBlockState state, Random random);
-
-    /**
-     * This is the internal growth chance method
-     * used by the plants Block classes. The
-     * "getGrowthChance()" method without
-     * the underscore is the one used by the
-     * actual plant set creator classes.
-     *
-     * @return how long the plant takes to grow
-     * in general.
-     */
-    protected abstract float _getGrowthChance();
-
-    /**
-     * @return true if bonemeal can be used
-     * on the plant when bonemeal on plants is enabled.
-     */
-    protected abstract boolean canBonemeal();
-
-    /**
      * Generates a human readable string that gives a
      * plants growth stage from the plant blocks metadata.
      *
@@ -416,4 +423,38 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
 
         return "Unknown";
     }
+
+    /**
+     * Called when a random update tick decides the
+     * block can grow.
+     *
+     * This is the method that will
+     * actually handle growing the plant. This
+     * method does not handle growth rules and
+     * chances.
+     *
+     * @param world -
+     * @param pos -
+     * @param state -
+     * @param random -
+     */
+    protected abstract void onGrowApproved(World world, BlockPos pos, IBlockState state, Random random);
+
+    /**
+     * This is the internal growth chance method
+     * used by the plants Block classes. The
+     * "getGrowthChance()" method without
+     * the underscore is the one used by the
+     * actual plant set creator classes.
+     *
+     * @return how long the plant takes to grow
+     * in general.
+     */
+    protected abstract float _getGrowthChance();
+
+    /**
+     * @return true if bonemeal can be used
+     * on the plant when bonemeal on plants is enabled.
+     */
+    protected abstract boolean canBonemeal();
 }
