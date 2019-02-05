@@ -232,7 +232,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         IBlockState iblockstate = world.getBlockState(pos);
         int amount = 3;
 
-        if(!MathUtil.chance(5.0F))
+        if(!MathUtil.chance(2.0F))
             return;
 
         if (iblockstate.getMaterial() != Material.AIR) {
@@ -240,7 +240,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
                 double d0 = rand.nextGaussian() * 0.02D;
                 double d1 = rand.nextGaussian() * 0.02D;
                 double d2 = rand.nextGaussian() * 0.02D;
-                world.spawnParticle(EnumParticleTypes.FLAME,
+                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
                         (double)((float)pos.getX() + rand.nextFloat()),
                         (double)pos.getY() + (double)rand.nextFloat()
                                 * iblockstate.getBoundingBox(world, pos).maxY,
@@ -252,7 +252,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
                 double d0 = rand.nextGaussian() * 0.02D;
                 double d1 = rand.nextGaussian() * 0.02D;
                 double d2 = rand.nextGaussian() * 0.02D;
-                world.spawnParticle(EnumParticleTypes.FLAME,
+                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
                         (double)((float)pos.getX() + rand.nextFloat()),
                         (double)pos.getY() + (double)rand.nextFloat() * 1.0f,
                         (double)((float)pos.getZ() + rand.nextFloat()), d0, d1, d2);
