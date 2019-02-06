@@ -226,7 +226,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
     @SideOnly(Side.CLIENT)
     @Override
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
-        if(!ResynthConfig.PLANTS_GENERAL.enableFlamingPlants)
+        if(!ResynthConfig.PLANTS_GENERAL.enableSmokingPlants)
             return;
 
         IBlockState iblockstate = world.getBlockState(pos);

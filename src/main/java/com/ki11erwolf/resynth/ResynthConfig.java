@@ -416,8 +416,8 @@ public class ResynthConfig {
         /**
          * Can plant produce turn into seeds.
          */
-        @Name("Enable Seed Drops From Produce (straw)")
-        @Comment("Set to false to disable plant produce (straw) turning into seeds when left in water")
+        @Name("Enable Seed Drops From Produce (Shards)")
+        @Comment("Set to false to disable plant produce (shard) turning into seeds when left in water")
         public boolean produceDropSeeds = true;
 
         /**
@@ -430,9 +430,9 @@ public class ResynthConfig {
         /**
          * Should plants spawn flame particles.
          */
-        @Name("Enable Flaming Plants")
-        @Comment("When enabled, plants will sometimes spawn flames around them.")
-        public boolean enableFlamingPlants = true;
+        @Name("Enable Smokey Plants")
+        @Comment("When enabled, plants will sometimes spawn smoke particles around them.")
+        public boolean enableSmokingPlants = true;
     }
 
     /**
