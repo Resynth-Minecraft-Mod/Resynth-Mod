@@ -396,7 +396,7 @@ public class ResynthConfig {
          * Do minecraft ore blocks drop seeds.
          */
         @Name("Enable Seed Drops From Ore")
-        @Comment("Set to false to disable ores dropping seeds when blown up.")
+        @Comment("Set to false to disable ores dropping seeds.")
         public boolean oreDropSeeds = true;
 
         /**
@@ -416,8 +416,8 @@ public class ResynthConfig {
         /**
          * Can plant produce turn into seeds.
          */
-        @Name("Enable Seed Drops From Produce (Shards)")
-        @Comment("Set to false to disable plant produce (shard) turning into seeds when left in water")
+        @Name("Enable Seed Drops From Produce (Shards/Bulbs)")
+        @Comment("Set to false to disable plant produce (Shards/Bulbs) turning into seeds.")
         public boolean produceDropSeeds = true;
 
         /**

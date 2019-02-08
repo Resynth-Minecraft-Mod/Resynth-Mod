@@ -47,6 +47,7 @@ public class BlockMineralOre extends ResynthBlock{
         super(Material.ROCK, "mineralOre");
         oreCfg = ResynthConfig.ORE;
         this.setHardness(oreCfg.hardness);
+        this.setLightLevel(0.25F);
         BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.PICKAXE, 2);
     }
 
