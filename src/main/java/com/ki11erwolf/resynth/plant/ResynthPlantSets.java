@@ -35,7 +35,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 /**
- * Holds all the definitions and public static
+ * Holds all the definitions and {@code public static}
  * instances of every available Resynth plant
  * set as well as helper methods to get arrays
  * of each plant set and registered block/item.
@@ -94,6 +94,33 @@ public final class ResynthPlantSets {
 
         @Override
         public ItemStack getResult() {return new ItemStack(Blocks.GOLD_ORE, ResynthConfig.PLANT_GOLD.yield);}
+    }.register();
+
+    /**
+     * The clay plant set instance.
+     */
+    public static final PlantSetMetallic PLANT_SET_CLAY
+            = new PlantSetMetallic("clay", new ItemStack(Blocks.CLAY)) {
+        @Override
+        protected float getPlantGrowthChance() {return ResynthConfig.PLANT_CLAY.floweringPeriod;}
+
+        @Override
+        protected boolean canBonemealPlant() {return ResynthConfig.PLANT_CLAY.canBonemeal;}
+
+        @Override
+        protected float getSourceOreSeedDropChance() {return ResynthConfig.PLANT_CLAY.oreSeedDropChance;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return ResynthConfig.PLANT_CLAY.organicOreSeedDropChance;}
+
+        @Override
+        protected boolean doesSourceOreDropSeeds() {return ResynthConfig.PLANT_CLAY.oreDropSeeds;}
+
+        @Override
+        protected boolean doesPlantOreDropSeeds() {return ResynthConfig.PLANT_CLAY.organicOreDropSeeds;}
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Blocks.CLAY, ResynthConfig.PLANT_CLAY.yield);}
     }.register();
 
     /*

@@ -588,6 +588,82 @@ public class ResynthConfig {
     }
 
     /**
+     * Settings for the clay plant.
+     */
+    @Name("Plant: Clay")
+    @Comment("Settings for the clay plant.")
+    public static final PlantClay PLANT_CLAY = new PlantClay();
+
+    /**
+     * Settings for the clay plant.
+     */
+    public static class PlantClay{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance.  This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 20.0F;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant.")
+        public boolean canBonemeal = true;
+
+        /**
+         * Does the minecraft ore block this plant
+         * represents drop seeds.
+         */
+        @Name("Does Ore Drop Seeds")
+        @Comment("If set to true, clay blocks will occasionally drop clay seeds when blown up.")
+        public boolean oreDropSeeds = true;
+
+        /**
+         * Does the ore block this plant
+         * produces drop seeds.
+         */
+        @Name("Does Organic Ore Drop Seeds")
+        @Comment("If set to true, organic clay will occasionally drop clay seeds when blown up.")
+        public boolean organicOreDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from this species of plants ore block.
+         */
+        @Name("Seed Drop Chance From Ore")
+        @Comment("The chance of the ore block dropping seeds for this species of plant when blown up." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float oreSeedDropChance = 25.0F;
+
+        /**
+         * The chance of seeds dropping from
+         * this plant species' produce.
+         */
+        @Name("Seed Drop Chance From Organic Ore")
+        @Comment("The chance of this plants produce (organic ore) dropping seeds " +
+                "when blown up by TNT.  This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float organicOreSeedDropChance = 25.0F;
+
+        /**
+         * The number of ingots the plants ore
+         * block gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of clay blocks an Organic Clay block will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+    }
+
+    /**
      * Settings for the mineral plant.
      */
     @Name("Plant: Mineral")
