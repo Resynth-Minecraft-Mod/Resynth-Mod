@@ -27,6 +27,7 @@ item.resynth.itemMineralHoe.name=Mineral Hoe
 #Metallic seeds
 item.resynth.seedIron.name=Iron Seeds
 item.resynth.seedGold.name=Gold Seeds
+item.resynth.seedClay.name=Clay Seeds
 #Crystalline Seeds
 item.resynth.seedMineral.name=Mineral Seeds
 item.resynth.seedDiamond.name=Diamond Seeds
@@ -60,6 +61,7 @@ item.resynth.seedRabbitFoot.name=Rabbit Foot Seeds
 #Metallic plants
 tile.resynth.plantIron.name=Iron Plant
 tile.resynth.plantGold.name=Gold Plant
+tile.resynth.plantClay.name=Clay Plant
 #Crystalline plants
 tile.resynth.plantMineral.name=Mineral Straw Patch
 tile.resynth.plantDiamond.name=Diamond Straw Patch
@@ -92,6 +94,7 @@ tile.resynth.plantRabbitFoot.name=Rabbit Foot Flower
 
 tile.resynth.oreIron.name=Organic Iron Ore
 tile.resynth.oreGold.name=Organic Gold Ore
+tile.resynth.oreClay.name=Organic Clay Block
 
 #Shard Produce
 

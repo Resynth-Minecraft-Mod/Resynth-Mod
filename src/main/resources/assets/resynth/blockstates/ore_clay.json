@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "resynth:plant/clay/ore_clay"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}
