@@ -123,6 +123,33 @@ public final class ResynthPlantSets {
         public ItemStack getResult() {return new ItemStack(Blocks.CLAY, ResynthConfig.PLANT_CLAY.yield);}
     }.register();
 
+    /**
+     * The end stone plant set instance.
+     */
+    public static final PlantSetMetallic PLANT_SET_END
+            = new PlantSetMetallic("end", new ItemStack(Blocks.END_STONE)) {
+        @Override
+        protected float getPlantGrowthChance() {return ResynthConfig.PLANT_END.floweringPeriod;}
+
+        @Override
+        protected boolean canBonemealPlant() {return ResynthConfig.PLANT_END.canBonemeal;}
+
+        @Override
+        protected float getSourceOreSeedDropChance() {return ResynthConfig.PLANT_END.oreSeedDropChance;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return ResynthConfig.PLANT_END.organicOreSeedDropChance;}
+
+        @Override
+        protected boolean doesSourceOreDropSeeds() {return ResynthConfig.PLANT_END.oreDropSeeds;}
+
+        @Override
+        protected boolean doesPlantOreDropSeeds() {return ResynthConfig.PLANT_END.organicOreDropSeeds;}
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Blocks.END_STONE, ResynthConfig.PLANT_END.yield);}
+    }.register();
+
     /*
         CRYSTALLINE
      */
