@@ -1,0 +1,53 @@
+{
+  "variants": {
+    "inventory": [{"model": "resynth:plant/end/plant_end_7"}],
+    "age=0,facing=up": { "model": "resynth:plant/end/plant_end_0" },
+    "age=1,facing=up": { "model": "resynth:plant/end/plant_end_1" },
+    "age=2,facing=up": { "model": "resynth:plant/end/plant_end_2" },
+    "age=3,facing=up": { "model": "resynth:plant/end/plant_end_3" },
+    "age=4,facing=up": { "model": "resynth:plant/end/plant_end_4" },
+    "age=5,facing=up": { "model": "resynth:plant/end/plant_end_5" },
+    "age=6,facing=up": { "model": "resynth:plant/end/plant_end_6" },
+    "age=7,facing=up": { "model": "resynth:plant/end/plant_end_7" },
+
+    "age=0,facing=west": { "model": "resynth:plant/end/plant_end_blooming" },
+    "age=0,facing=east": { "model": "resynth:plant/end/plant_end_blooming", "y": 180 },
+    "age=0,facing=north": { "model": "resynth:plant/end/plant_end_blooming", "y": 90 },
+    "age=0,facing=south": { "model": "resynth:plant/end/plant_end_blooming", "y": 270 },
+
+    "age=1,facing=west": { "model": "resynth:plant/end/plant_end_blooming" },
+    "age=1,facing=east": { "model": "resynth:plant/end/plant_end_blooming", "y": 180 },
+    "age=1,facing=north": { "model": "resynth:plant/end/plant_end_blooming", "y": 90 },
+    "age=1,facing=south": { "model": "resynth:plant/end/plant_end_blooming", "y": 270 },
+
+    "age=2,facing=west": { "model": "resynth:plant/end/plant_end_blooming" },
+    "age=2,facing=east": { "model": "resynth:plant/end/plant_end_blooming", "y": 180 },
+    "age=2,facing=north": { "model": "resynth:plant/end/plant_end_blooming", "y": 90 },
+    "age=2,facing=south": { "model": "resynth:plant/end/plant_end_blooming", "y": 270 },
+
+    "age=3,facing=west": { "model": "resynth:plant/end/plant_end_blooming" },
+    "age=3,facing=east": { "model": "resynth:plant/end/plant_end_blooming", "y": 180 },
+    "age=3,facing=north": { "model": "resynth:plant/end/plant_end_blooming", "y": 90 },
+    "age=3,facing=south": { "model": "resynth:plant/end/plant_end_blooming", "y": 270 },
+
+    "age=4,facing=west": { "model": "resynth:plant/end/plant_end_blooming" },
+    "age=4,facing=east": { "model": "resynth:plant/end/plant_end_blooming", "y": 180 },
+    "age=4,facing=north": { "model": "resynth:plant/end/plant_end_blooming", "y": 90 },
+    "age=4,facing=south": { "model": "resynth:plant/end/plant_end_blooming", "y": 270 },
+
+    "age=5,facing=west": { "model": "resynth:plant/end/plant_end_blooming" },
+    "age=5,facing=east": { "model": "resynth:plant/end/plant_end_blooming", "y": 180 },
+    "age=5,facing=north": { "model": "resynth:plant/end/plant_end_blooming", "y": 90 },
+    "age=5,facing=south": { "model": "resynth:plant/end/plant_end_blooming", "y": 270 },
+
+    "age=6,facing=west": { "model": "resynth:plant/end/plant_end_blooming" },
+    "age=6,facing=east": { "model": "resynth:plant/end/plant_end_blooming", "y": 180 },
+    "age=6,facing=north": { "model": "resynth:plant/end/plant_end_blooming", "y": 90 },
+    "age=6,facing=south": { "model": "resynth:plant/end/plant_end_blooming", "y": 270 },
+
+    "age=7,facing=west": { "model": "resynth:plant/end/plant_end_blooming" },
+    "age=7,facing=east": { "model": "resynth:plant/end/plant_end_blooming", "y": 180 },
+    "age=7,facing=north": { "model": "resynth:plant/end/plant_end_blooming", "y": 90 },
+    "age=7,facing=south": { "model": "resynth:plant/end/plant_end_blooming", "y": 270 }
+  }
+}

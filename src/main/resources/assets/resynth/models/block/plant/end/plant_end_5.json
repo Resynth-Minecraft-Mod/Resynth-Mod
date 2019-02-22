@@ -1,0 +1,6 @@
+{
+  "parent": "resynth:block/plant/plant_metallic_5",
+  "textures": {
+    "stem": "resynth:blocks/plants/end/end_stem_disconnected"
+  }
+}
