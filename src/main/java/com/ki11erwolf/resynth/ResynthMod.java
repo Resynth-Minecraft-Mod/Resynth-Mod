@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.analytics.ConnectEvent;
 import com.ki11erwolf.resynth.analytics.ErrorEvent;
 import com.ki11erwolf.resynth.analytics.NewUserEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
+import com.ki11erwolf.resynth.proxy.ClientProxy;
 import com.ki11erwolf.resynth.proxy.IProxy;
 import com.ki11erwolf.resynth.versioning.ModVersionManager;
 import com.ki11erwolf.resynth.versioning.VersionManagerBuilder;
@@ -172,13 +173,20 @@ public class ResynthMod {
             logger.info("Entering pre-init phase...");
             proxy.preInit(event);
 
-            VersionManagerBuilder resynthVMBuilder
-                    = new VersionManagerBuilder(MOD_ID)
-                    .setEnabled(!ResynthConfig.RESYNTH.disableVersionChecks)
-                    .setOutOfDateConsoleWarningEnabled(!ResynthConfig.RESYNTH.disableVersionMessage)
-                    .addVersionJsonFileURL(UPDATE_URL);
-            ModVersionManager resynthVersionManager = new ModVersionManager(resynthVMBuilder);
-            resynthVersionManager.preInit();
+            logger.info("Resynth proxy: " + proxy.getClass().getName());
+
+            if(proxy instanceof ClientProxy){
+                logger.info("Attempting Resynth version check...");
+                VersionManagerBuilder resynthVMBuilder
+                        = new VersionManagerBuilder(MOD_ID)
+                        .setEnabled(!ResynthConfig.RESYNTH.disableVersionChecks)
+                        .setOutOfDateConsoleWarningEnabled(!ResynthConfig.RESYNTH.disableVersionMessage)
+                        .addVersionJsonFileURL(UPDATE_URL);
+                ModVersionManager resynthVersionManager = new ModVersionManager(resynthVMBuilder);
+                resynthVersionManager.preInit();
+            } else {
+                logger.info("Resynth is running server side - skipping version check...");
+            }
 
             ResynthAnalytics.send(new ConnectEvent());
 

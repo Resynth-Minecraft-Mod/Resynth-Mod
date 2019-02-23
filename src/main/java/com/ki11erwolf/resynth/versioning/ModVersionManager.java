@@ -30,6 +30,8 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.versioning.ComparableVersion;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
 import javax.net.ssl.*;
@@ -47,7 +49,7 @@ import java.util.*;
 /**
  * Manages all mods versioning.
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(Side.CLIENT)
 public class ModVersionManager {
 
     /**
@@ -373,6 +375,7 @@ public class ModVersionManager {
      * @param event Gui screen initialized event.
      */
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void onMainMenuInitialized(GuiScreenEvent event){
         if(event.getGui() instanceof GuiMainMenu){
             for(Map.Entry<String, ModVersionObject> versionObject : modVersionObjects.entrySet()) {
@@ -464,6 +467,7 @@ public class ModVersionManager {
      * @param event the player join event.
      */
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void onPlayerJoined(EntityJoinWorldEvent event){
         if(event.getEntity() instanceof EntityPlayerMP){
             LOG.info("player joined");
