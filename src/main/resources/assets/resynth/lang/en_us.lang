@@ -29,6 +29,7 @@ item.resynth.seedIron.name=Iron Seeds
 item.resynth.seedGold.name=Gold Seeds
 item.resynth.seedClay.name=Clay Seeds
 item.resynth.seedEnd.name=End Stone Seeds
+item.resynth.seedSand.name=Sand Seeds
 #Crystalline Seeds
 item.resynth.seedMineral.name=Mineral Seeds
 item.resynth.seedDiamond.name=Diamond Seeds
@@ -63,7 +64,8 @@ item.resynth.seedRabbitFoot.name=Rabbit Foot Seeds
 tile.resynth.plantIron.name=Iron Plant
 tile.resynth.plantGold.name=Gold Plant
 tile.resynth.plantClay.name=Clay Plant
-tile.resynth.playEnd.name=End Stone Plant
+tile.resynth.plantEnd.name=End Stone Plant
+tile.resynth.plantSand.name=Sand Plant
 #Crystalline plants
 tile.resynth.plantMineral.name=Mineral Straw Patch
 tile.resynth.plantDiamond.name=Diamond Straw Patch
@@ -98,6 +100,7 @@ tile.resynth.oreIron.name=Organic Iron Ore
 tile.resynth.oreGold.name=Organic Gold Ore
 tile.resynth.oreClay.name=Organic Clay Block
 tile.resynth.oreEnd.name=Organic End Stone
+tile.resynth.oreSand.name=Organic Sand Block
 
 #Shard Produce
 

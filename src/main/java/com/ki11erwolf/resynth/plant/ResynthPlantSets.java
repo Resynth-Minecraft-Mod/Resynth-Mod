@@ -150,6 +150,33 @@ public final class ResynthPlantSets {
         public ItemStack getResult() {return new ItemStack(Blocks.END_STONE, ResynthConfig.PLANT_END.yield);}
     }.register();
 
+    /**
+     * The sand plant set instance.
+     */
+    public static final PlantSetMetallic PLANT_SET_SAND
+            = new PlantSetMetallic("sand", new ItemStack(Blocks.SAND)) {
+        @Override
+        protected float getPlantGrowthChance() {return ResynthConfig.PLANT_SAND.floweringPeriod;}
+
+        @Override
+        protected boolean canBonemealPlant() {return ResynthConfig.PLANT_SAND.canBonemeal;}
+
+        @Override
+        protected float getSourceOreSeedDropChance() {return ResynthConfig.PLANT_SAND.oreSeedDropChance;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return ResynthConfig.PLANT_SAND.organicOreSeedDropChance;}
+
+        @Override
+        protected boolean doesSourceOreDropSeeds() {return ResynthConfig.PLANT_SAND.oreDropSeeds;}
+
+        @Override
+        protected boolean doesPlantOreDropSeeds() {return ResynthConfig.PLANT_SAND.organicOreDropSeeds;}
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Blocks.SAND, ResynthConfig.PLANT_SAND.yield);}
+    }.register();
+
     /*
         CRYSTALLINE
      */
