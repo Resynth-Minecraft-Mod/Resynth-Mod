@@ -231,7 +231,7 @@ public class ItemMineralHoe extends ResynthItem {
      * @param pos the location in the world.
      * @param amount amount of particles.
      */
-    @SideOnly(Side.CLIENT)
+    //@SideOnly(Side.CLIENT)
     public static void spawnBlockChangeParticles(World worldIn, BlockPos pos, int amount){
         if (amount == 0){
             amount = 15;

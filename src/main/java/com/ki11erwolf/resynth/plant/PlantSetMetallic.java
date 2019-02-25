@@ -31,7 +31,6 @@ import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import javax.swing.*;
 import java.util.List;
 
 /**
@@ -170,9 +169,6 @@ public abstract class PlantSetMetallic {
 
                     //Random chance.
                     if(MathUtil.chance(plant.getProduceSeedDropChance())){
-                        JOptionPane.showMessageDialog(null,
-                                "Spawning seeds 3"
-                        );
                         detonateEvent.getWorld().setBlockToAir(blockPos);
                         ItemPlantSeeds.addEffects(detonateEvent.getWorld(), blockPos);
                         detonateEvent.getWorld().spawnEntity(

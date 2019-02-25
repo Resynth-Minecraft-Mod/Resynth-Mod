@@ -297,7 +297,7 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
      * @param worldIn the world in which to play the sound.
      * @param pos the location in the world.
      */
-    @SideOnly(Side.CLIENT)
+    //@SideOnly(Side.CLIENT)
     public static void addEffects(World worldIn, BlockPos pos){
         worldIn.playSound(null, pos,
                 SoundEvents.BLOCK_NOTE_BELL, SoundCategory.BLOCKS,
