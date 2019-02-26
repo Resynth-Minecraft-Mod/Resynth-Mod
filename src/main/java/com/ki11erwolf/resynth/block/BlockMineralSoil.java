@@ -240,7 +240,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * {@inheritDoc}
      *
      * Drops Minecraft Dirt instead of this block itself.
-     * The extra item drops and handled when the block is broken.
+     * The extra item drops are handled when the block is broken.
      *
      * @param state {@inheritDoc}
      * @param rand {@inheritDoc}
