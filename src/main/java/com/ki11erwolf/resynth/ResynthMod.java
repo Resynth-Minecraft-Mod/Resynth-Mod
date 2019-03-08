@@ -15,49 +15,58 @@
  */
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.analytics.ConnectEvent;
+//import com.ki11erwolf.resynth.analytics.ConnectEvent;
 import com.ki11erwolf.resynth.analytics.ErrorEvent;
-import com.ki11erwolf.resynth.analytics.NewUserEvent;
+//import com.ki11erwolf.resynth.analytics.NewUserEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
-import com.ki11erwolf.resynth.proxy.ClientProxy;
-import com.ki11erwolf.resynth.proxy.IProxy;
-import com.ki11erwolf.resynth.versioning.ModVersionManager;
-import com.ki11erwolf.resynth.versioning.VersionManagerBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
+import com.ki11erwolf.resynth.proxy.Client;
+import com.ki11erwolf.resynth.proxy.Proxy;
+import com.ki11erwolf.resynth.proxy.Common;
+//import com.ki11erwolf.resynth.versioning.ModVersionManager;
+//import com.ki11erwolf.resynth.versioning.VersionManagerBuilder;
+//import net.minecraft.block.Block;
+//import net.minecraft.item.Item;
+//import net.minecraft.util.ResourceLocation;
+//import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+//import net.minecraftforge.fml.common.Mod.EventHandler;
+//import net.minecraftforge.fml.common.SidedProxy;
+//import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+//import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+//import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+//import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
+//import java.io.File;
+//import java.io.IOException;
+//import java.util.Map;
 import java.util.function.Function;
 
 /**
  * Resynth mod class.
  */
-@Mod(
-        modid = ResynthMod.MOD_ID,
-        name = ResynthMod.MOD_NAME,
-        version = ResynthMod.MOD_VERSION,
-        acceptedMinecraftVersions = ResynthMod.MC_VERSION,
-        dependencies =
-                        "after:appliedenergistics2; " +
-                        "after:tconstruct; " +
-                        "after:forestry; " +
-                        "after:thermalfoundation;" +
-                        //"after:actuallyadditions;" +
-                        "after:bigreactors;" +
-                        //"after:deepresonance;"
-                        "after:waila;"
-)
+//@Mod(
+//        modid = ResynthMod.MOD_ID,
+//        name = ResynthMod.MOD_NAME,
+//        version = ResynthMod.MOD_VERSION,
+//        acceptedMinecraftVersions = ResynthMod.MC_VERSION,
+//        dependencies =
+//                        "after:appliedenergistics2; " +
+//                        "after:tconstruct; " +
+//                        "after:forestry; " +
+//                        "after:thermalfoundation;" +
+//                        //"after:actuallyadditions;" +
+//                        "after:bigreactors;" +
+//                        //"after:deepresonance;"
+//                        "after:waila;"
+//)
+@Mod(ResynthMod.MOD_ID)
 public class ResynthMod {
 
     /**
@@ -73,12 +82,12 @@ public class ResynthMod {
     /**
      * Resynth version.
      */
-    public static final String MOD_VERSION = "1.3.3";
+    public static final String MOD_VERSION = "2.0.0";
 
     /**
      * Minecraft version.
      */
-    public static final String MC_VERSION = "[1.12.2]";
+    public static final String MC_VERSION = "[1.13.2]";
 
     /**
      * The package declaration for the mod.
@@ -93,8 +102,7 @@ public class ResynthMod {
     /**
      * FML initialized proxy. Can be server side proxy, client side proxy or both.
      */
-    @SidedProxy(clientSide = ResynthMod.CLIENT_PROXY, serverSide = ResynthMod.SERVER_PROXY)
-    public static IProxy proxy;
+    public static final Proxy proxy = DistExecutor.runForDist(() -> Client::new, () -> Common::new);
 
     /**
      * Modid for Applied energistics.
@@ -116,32 +124,20 @@ public class ResynthMod {
      */
     public static final String MODID_THERMAL_FOUNDATION = "thermalfoundation";
 
-//    Failed attempt at adding black quartz ore.
-//    /**
-//     * Actually Additions modid
-//     */
-//    public static final String MODID_ACTUALLY_ADDITIONS = "actuallyadditions";
-
     /**
      * Extreme Reactors (port of Big Reactors) modid.
      */
     public static final String MODID_EXTREME_REACTORS = "bigreactors";
 
-//    Failed attempt at adding resonating ore.
-//    /**
-//     * Deep Resonance modid.
-//     */
-//    public static final String MODID_DEEP_RESONANCE = "deepresonance";
-
     /**
      * Path (including pack) to the server proxy class.
      */
-    static final String SERVER_PROXY = MOD_PACKAGE + ".proxy.ServerProxy";
+    static final String SERVER_PROXY = MOD_PACKAGE + ".proxy.Common";
 
     /**
      * Path (including package) to the client proxy class.
      */
-    static final String CLIENT_PROXY = MOD_PACKAGE + ".proxy.ClientProxy";
+    static final String CLIENT_PROXY = MOD_PACKAGE + ".proxy.Client";
 
     /**
      * Resynth's new/returning user identification file.
@@ -161,101 +157,36 @@ public class ResynthMod {
     @SuppressWarnings("FieldCanBeLocal")
     private static ResynthWorldGen worldGen;
 
-    /**
-     * Stage 1 of 3 in the initialization event.
-     *
-     * @param event pre init event.
-     */
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event){
+    public ResynthMod(){
+        FMLJavaModLoadingContext.get().getModEventBus().register(this);
         wrapError((object) -> {
-            logger = event.getModLog();
-            logger.info("Entering pre-init phase...");
-            proxy.preInit(event);
-
-            logger.info("Resynth proxy: " + proxy.getClass().getName());
-
-            if(proxy instanceof ClientProxy){
-                logger.info("Attempting Resynth version check...");
-                VersionManagerBuilder resynthVMBuilder
-                        = new VersionManagerBuilder(MOD_ID)
-                        .setEnabled(!ResynthConfig.RESYNTH.disableVersionChecks)
-                        .setOutOfDateConsoleWarningEnabled(!ResynthConfig.RESYNTH.disableVersionMessage)
-                        .addVersionJsonFileURL(UPDATE_URL);
-                ModVersionManager resynthVersionManager = new ModVersionManager(resynthVMBuilder);
-                resynthVersionManager.preInit();
-            } else {
-                logger.info("Resynth is running server side - skipping version check...");
-            }
-
-            ResynthAnalytics.send(new ConnectEvent());
-
-            File resynthFile
-                    = new File( event.getModConfigurationDirectory().getAbsolutePath()
-                            + RESYNTH_NU_FILE);
-
-            if(!resynthFile.exists()){
-                ResynthAnalytics.send(new NewUserEvent());
-                try {
-                    boolean create = resynthFile.createNewFile();
-                    if(!create)
-                        getLogger().error("Failed to create Resynth NU file");
-                } catch (IOException e) {
-                    getLogger().error("Failed to create Resynth NU file", e);
-                }
-            }
-
+            proxy.construct();
             return null;
-        });
+        }, "construct");
     }
 
-    /**
-     * Stage 2 of 3 in the initialization event.
-     *
-     * @param event init event.
-     */
-    @EventHandler
-    public void init(FMLInitializationEvent event){
-        wrapError((object -> {
-            logger.info("Entering init phase...");
-            proxy.init(event);
-            worldGen = new ResynthWorldGen();
-            worldGen.init();
-            ResynthFurnaceRecipes.registerFurnaceRecipes();
-
-            //Finally fixed this...
-            if(!ResynthConfig.RESYNTH.disableDevelopmentHelp){
-                //Prints all registered blocks/items to console.
-                //Helps with adding other mods ore plants
-                for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
-                    ResynthMod.getLogger().info("<Resynth-Development-Help> | Found item: "
-                            + entry.getKey().getResourceDomain() + ":"
-                            + entry.getKey().getResourcePath());
-                }
-
-                for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
-                    ResynthMod.getLogger().info("<Resynth-Development-Help> | Found block: "
-                            + entry.getKey().getResourceDomain() + ":"
-                            + entry.getKey().getResourcePath());
-                }
-            }
-
+    @SubscribeEvent
+    public void commonSetup(FMLCommonSetupEvent setupEvent){
+        wrapError((object) -> {
+            proxy.commonSetup(setupEvent);
             return null;
-        }));
+        }, "commonSetup");
     }
 
-    /**
-     * Stage 3 of 3 in the initialization event.
-     *
-     * @param event post init event.
-     */
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event){
-        wrapError(object -> {
-            logger.info("Entering post-init phase...");
-            proxy.postInit(event);
+    @SubscribeEvent
+    public void clientSetup(FMLClientSetupEvent setupEvent){
+        wrapError((object) -> {
+            proxy.clientSetup(setupEvent);
             return null;
-        });
+        }, "clientSetup");
+    }
+
+    @SubscribeEvent
+    public void complete(FMLLoadCompleteEvent completeEvent){
+        wrapError((object) -> {
+            proxy.complete(completeEvent);
+            return null;
+        }, "complete");
     }
 
     /**
@@ -271,14 +202,123 @@ public class ResynthMod {
      *
      * @param t lambda block of code.
      */
-    public static void wrapError(Function<Void, Void> t){
+    private static void wrapError(Function<Void, Void> t, String initEvent){
         try{
             t.apply(null);
         } catch (Exception e){
-            getLogger().fatal("Error in Resynth init()", e);
+            getLogger().fatal("Error in Resynth " + initEvent + "()", e);
             ResynthAnalytics.send(new ErrorEvent());
             throw e;
         }
     }
 
+
+
+
+
+
+
+
+
+
+    //******************
+    // OLD INIT CODE
+    //******************
+
+//    /**
+//     * Stage 1 of 3 in the initialization event.
+//     *
+//     * @param event pre init event.
+//     */
+//    @EventHandler
+//    public void preInit(FMLPreInitializationEvent event){
+//        wrapError((object) -> {
+//            logger = event.getModLog();
+//            logger.info("Entering pre-init phase...");
+//            proxy.preInit(event);
+//
+//            logger.info("Resynth proxy: " + proxy.getClass().getName());
+//
+//            if(proxy instanceof Client){
+//                logger.info("Attempting Resynth version check...");
+//                VersionManagerBuilder resynthVMBuilder
+//                        = new VersionManagerBuilder(MOD_ID)
+//                        .setEnabled(!ResynthConfig.RESYNTH.disableVersionChecks)
+//                        .setOutOfDateConsoleWarningEnabled(!ResynthConfig.RESYNTH.disableVersionMessage)
+//                        .addVersionJsonFileURL(UPDATE_URL);
+//                ModVersionManager resynthVersionManager = new ModVersionManager(resynthVMBuilder);
+//                resynthVersionManager.preInit();
+//            } else {
+//                logger.info("Resynth is running server side - skipping version check...");
+//            }
+//
+//            ResynthAnalytics.send(new ConnectEvent());
+//
+//            File resynthFile
+//                    = new File( event.getModConfigurationDirectory().getAbsolutePath()
+//                            + RESYNTH_NU_FILE);
+//
+//            if(!resynthFile.exists()){
+//                ResynthAnalytics.send(new NewUserEvent());
+//                try {
+//                    boolean create = resynthFile.createNewFile();
+//                    if(!create)
+//                        getLogger().error("Failed to create Resynth NU file");
+//                } catch (IOException e) {
+//                    getLogger().error("Failed to create Resynth NU file", e);
+//                }
+//            }
+//
+//            return null;
+//        });
+//    }
+//
+//    /**
+//     * Stage 2 of 3 in the initialization event.
+//     *
+//     * @param event init event.
+//     */
+//    @EventHandler
+//    public void init(FMLInitializationEvent event){
+//        wrapError((object -> {
+//            logger.info("Entering init phase...");
+//            proxy.init(event);
+//            worldGen = new ResynthWorldGen();
+//            worldGen.init();
+//            ResynthFurnaceRecipes.registerFurnaceRecipes();
+//
+//            //Finally fixed this...
+//            if(!ResynthConfig.RESYNTH.disableDevelopmentHelp){
+//                //Prints all registered blocks/items to console.
+//                //Helps with adding other mods ore plants
+//                for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
+//                    ResynthMod.getLogger().info("<Resynth-Development-Help> | Found item: "
+//                            + entry.getKey().getResourceDomain() + ":"
+//                            + entry.getKey().getResourcePath());
+//                }
+//
+//                for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
+//                    ResynthMod.getLogger().info("<Resynth-Development-Help> | Found block: "
+//                            + entry.getKey().getResourceDomain() + ":"
+//                            + entry.getKey().getResourcePath());
+//                }
+//            }
+//
+//            return null;
+//        }));
+//    }
+//
+//    /**
+//     * Stage 3 of 3 in the initialization event.
+//     *
+//     * @param event post init event.
+//     */
+//    @EventHandler
+//    public void postInit(FMLPostInitializationEvent event){
+//        wrapError(object -> {
+//            logger.info("Entering post-init phase...");
+//            proxy.postInit(event);
+//            return null;
+//        });
+//    }
 }
