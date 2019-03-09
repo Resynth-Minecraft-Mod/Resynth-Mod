@@ -15,12 +15,15 @@
  */
 package com.ki11erwolf.resynth.proxy;
 
-//import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-//import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-//import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
+import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.analytics.ConnectEvent;
+import com.ki11erwolf.resynth.analytics.NewUserEvent;
+import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Server side initialization class.
@@ -29,7 +32,23 @@ public class Common implements Proxy {
 
     @Override
     public void construct() {
+        ResynthAnalytics.send(new ConnectEvent());
 
+        File resynthFile
+                = new File( //TODO: get mod directory
+                ResynthMod.RESYNTH_NU_FILE);
+
+        if(!resynthFile.exists()){
+            ResynthAnalytics.send(new NewUserEvent());
+            try {
+                boolean create = resynthFile.createNewFile();
+                if(!create)
+                    ;
+                    ResynthMod.getLogger().error("Failed to create Resynth NU file");
+            } catch (IOException e) {
+                ResynthMod.getLogger().error("Failed to create Resynth NU file", e);
+            }
+        }
     }
 
     @Override
@@ -41,51 +60,4 @@ public class Common implements Proxy {
     public void complete(FMLLoadCompleteEvent completeEvent) {
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param event pre init event.
-//     */
-//    public void preInit(FMLPreInitializationEvent event) {
-//
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param event init event.
-//     */
-//    public void init(FMLInitializationEvent event) {
-//
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param event post init event.
-//     */
-//    public void postInit(FMLPostInitializationEvent event) {
-//
-//    }
 }

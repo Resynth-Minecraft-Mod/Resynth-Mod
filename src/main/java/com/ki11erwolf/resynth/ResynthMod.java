@@ -144,7 +144,7 @@ public class ResynthMod {
      * This servers to separate new Resynth users
      * from existing ones.
      */
-    private static final String RESYNTH_NU_FILE = "/resynth.id";
+    public static final String RESYNTH_NU_FILE = "/resynth.id";
 
     /**
      * Logger for the mod.

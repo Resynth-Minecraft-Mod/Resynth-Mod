@@ -15,11 +15,10 @@
  */
 package com.ki11erwolf.resynth.proxy;
 
-//import com.ki11erwolf.resynth.igtooltip.ResynthIGTooltips;
-//import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-//import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-//import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
+import com.ki11erwolf.resynth.ResynthConfig;
+import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.versioning.ModVersionManager;
+import com.ki11erwolf.resynth.versioning.VersionManagerBuilder;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
@@ -35,7 +34,7 @@ public class Client implements Proxy {
 
     @Override
     public void clientSetup(FMLClientSetupEvent setupEvent) {
-
+        performVersionCheck();
     }
 
     @Override
@@ -43,51 +42,15 @@ public class Client implements Proxy {
 
     }
 
+    //Private methods.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param event pre init event.
-//     */
-//    public void preInit(FMLPreInitializationEvent event) {
-//        ResynthIGTooltips.registerHwyla();
-//        ResynthIGTooltips.registerTOP();
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param event init event.
-//     */
-//    public void init(FMLInitializationEvent event) {
-//
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param event post init event.
-//     */
-//    public void postInit(FMLPostInitializationEvent event) {
-//
-//    }
+    private void performVersionCheck(){
+        VersionManagerBuilder resynthVMBuilder
+                = new VersionManagerBuilder(ResynthMod.MOD_ID)
+                .setEnabled(!ResynthConfig.RESYNTH.disableVersionChecks)
+                .setOutOfDateConsoleWarningEnabled(!ResynthConfig.RESYNTH.disableVersionMessage)
+                .addVersionJsonFileURL(ResynthMod.UPDATE_URL);
+        ModVersionManager resynthVersionManager = new ModVersionManager(resynthVMBuilder);
+        resynthVersionManager.preInit();
+    }
 }
