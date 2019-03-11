@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 /**
  * Provides a method to register all furnace recipes.
  */
-final class ResynthFurnaceRecipes {
+public class ResynthFurnaceRecipes {
 
     /**
      * Static util class.
@@ -36,7 +36,7 @@ final class ResynthFurnaceRecipes {
     /**
      * Adds all furnace recipes to the game.
      */
-    static void registerFurnaceRecipes(){
+    public static void registerFurnaceRecipes(){
         GameRegistry.addSmelting(
                 ResynthItems.ITEM_DENSE_MINERAL_ROCK,
                 new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1), 0F

@@ -122,7 +122,7 @@ public class ResynthWorldGen{
          * @param minHeight the minimum height to generate clusters.
          * @param maxHeight the maximum height to generate clusters.
          */
-        WorldGenerators(boolean generate, Block target, IBlockState replacement, DimensionType world,
+        public WorldGenerators(boolean generate, Block target, IBlockState replacement, DimensionType world,
                         int blocksPerCluster, int clustersPerChunk, int minHeight, int maxHeight){
             this.generate = generate;
             this.target = target;
@@ -198,7 +198,7 @@ public class ResynthWorldGen{
     /**
      * Constructs a new resynth world generator manager.
      */
-    ResynthWorldGen(){
+    public ResynthWorldGen(){
         this(0);
     }
 
@@ -216,7 +216,7 @@ public class ResynthWorldGen{
      *
      * Constructs, initializes and registers all resynth world generators.
      */
-    protected void init(){
+    public void init(){
         if(isInitialized){
             ResynthMod.getLogger().warn("Attempt to initialize world generation twice. Skipping...");
             return;

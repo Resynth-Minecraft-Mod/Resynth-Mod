@@ -15,23 +15,63 @@
  */
 package com.ki11erwolf.resynth.proxy;
 
+import com.ki11erwolf.resynth.ResynthConfig;
+import com.ki11erwolf.resynth.ResynthFurnaceRecipes;
 import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.ResynthWorldGen;
 import com.ki11erwolf.resynth.analytics.ConnectEvent;
 import com.ki11erwolf.resynth.analytics.NewUserEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 /**
- * Server side initialization class.
+ * Common(server) side initialization class.
  */
 public class Common implements Proxy {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void construct() {
+        sendConnectEvent();
+
+        ResynthWorldGen worldGen = new ResynthWorldGen();
+        worldGen.init();
+
+        ResynthFurnaceRecipes.registerFurnaceRecipes();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void commonSetup(FMLCommonSetupEvent setupEvent) {
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void complete(FMLLoadCompleteEvent completeEvent) {
+
+    }
+
+    /**
+     * Sends the analytics connect event and
+     * new user event if enabled and appropriate.
+     */
+    private void sendConnectEvent(){
         ResynthAnalytics.send(new ConnectEvent());
 
         File resynthFile
@@ -43,7 +83,6 @@ public class Common implements Proxy {
             try {
                 boolean create = resynthFile.createNewFile();
                 if(!create)
-                    ;
                     ResynthMod.getLogger().error("Failed to create Resynth NU file");
             } catch (IOException e) {
                 ResynthMod.getLogger().error("Failed to create Resynth NU file", e);
@@ -51,13 +90,25 @@ public class Common implements Proxy {
         }
     }
 
-    @Override
-    public void commonSetup(FMLCommonSetupEvent setupEvent) {
+    /**
+     * Prints every registered block and item to the console
+     * if the debug setting is enabled.
+     */
+    private void printItemAndBlockRegisters(){
+        if(!ResynthConfig.RESYNTH.disableDevelopmentHelp){
+            //Prints all registered blocks/items to console.
+            //Helps with adding other mods ore plants
+            for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
+                ResynthMod.getLogger().info("<Resynth-Development-Help> | Found item: "
+                        + entry.getKey().getNamespace()+ ":"
+                        + entry.getKey().toString());
+            }
 
-    }
-
-    @Override
-    public void complete(FMLLoadCompleteEvent completeEvent) {
-
+            for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
+                ResynthMod.getLogger().info("<Resynth-Development-Help> | Found block: "
+                        + entry.getKey().getNamespace() + ":"
+                        + entry.getKey().toString());
+            }
+        }
     }
 }

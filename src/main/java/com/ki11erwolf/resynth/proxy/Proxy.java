@@ -15,10 +15,6 @@
  */
 package com.ki11erwolf.resynth.proxy;
 
-//import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-//import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-//import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -28,54 +24,35 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
  */
 public interface Proxy {
 
+    /**
+     * Called on Resynth mod class construction.
+     *
+     * Constructs the mod depending on what side it's running from.
+     */
     void construct();
 
+    /**
+     * Proxy handler for Forges common setup event.
+     *
+     * @param setupEvent FMLCommonSetupEvent
+     */
     default void commonSetup(FMLCommonSetupEvent setupEvent){
         //NO-OP
     }
 
+    /**
+     * Proxy handler for Forges common setup event.
+     *
+     * @param setupEvent FMLClientSetupEvent
+     */
     default void clientSetup(FMLClientSetupEvent setupEvent){
         //NO-OP
     }
 
+    /**
+     * Proxy handler for Forges complete event.
+     *
+     * @param completeEvent FMLLoadCompleteEvent
+     */
     void complete(FMLLoadCompleteEvent completeEvent);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    /**
-//     * On FML pre initialization.
-//     *
-//     * @param event pre init event.
-//     */
-//    void preInit(FMLPreInitializationEvent event);
-//
-//    /**
-//     * On FML initialization.
-//     *
-//     * @param event init event.
-//     */
-//    void init(FMLInitializationEvent event);
-//
-//    /**
-//     * On FML post initialization.
-//     *
-//     * @param event post init event.
-//     */
-//    void postInit(FMLPostInitializationEvent event);
-
 }

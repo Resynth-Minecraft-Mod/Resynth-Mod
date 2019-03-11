@@ -27,16 +27,25 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
  */
 public class Client implements Proxy {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void construct() {
-
-    }
-
-    @Override
-    public void clientSetup(FMLClientSetupEvent setupEvent) {
         performVersionCheck();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void clientSetup(FMLClientSetupEvent setupEvent) {
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void complete(FMLLoadCompleteEvent completeEvent) {
 
@@ -44,6 +53,10 @@ public class Client implements Proxy {
 
     //Private methods.
 
+    /**
+     * Checks for the latest version of Resynth
+     * and presents the findings to the user.
+     */
     private void performVersionCheck(){
         VersionManagerBuilder resynthVMBuilder
                 = new VersionManagerBuilder(ResynthMod.MOD_ID)
