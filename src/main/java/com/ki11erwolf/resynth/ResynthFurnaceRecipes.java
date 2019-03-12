@@ -37,16 +37,18 @@ public class ResynthFurnaceRecipes {
      * Adds all furnace recipes to the game.
      */
     public static void registerFurnaceRecipes(){
-        GameRegistry.addSmelting(
-                ResynthItems.ITEM_DENSE_MINERAL_ROCK,
-                new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1), 0F
-        );
+        //TODO: Fix smelting
 
-        for(PlantSetMetallic plant : ResynthPlantSets.getMetallicPlantSets())
-            GameRegistry.addSmelting(plant.getPlantOre(), plant.getResult(), 1.0F);
-        for(PlantSetCrystalline plant : ResynthPlantSets.getCrystallinePlantSets())
-            GameRegistry.addSmelting(plant.getProduce(), plant.getResult(), 2.0F);
-        for(PlantSetBiochemical plant : ResynthPlantSets.getBiochemicalPlantSets())
-            GameRegistry.addSmelting(plant.getProduce(), plant.getResult(), 1.5F);
+//        GameRegistry.addSmelting(
+//                ResynthItems.ITEM_DENSE_MINERAL_ROCK,
+//                new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1), 0F
+//        );
+//
+//        for(PlantSetMetallic plant : ResynthPlantSets.getMetallicPlantSets())
+//            GameRegistry.addSmelting(plant.getPlantOre(), plant.getResult(), 1.0F);
+//        for(PlantSetCrystalline plant : ResynthPlantSets.getCrystallinePlantSets())
+//            GameRegistry.addSmelting(plant.getProduce(), plant.getResult(), 2.0F);
+//        for(PlantSetBiochemical plant : ResynthPlantSets.getBiochemicalPlantSets())
+//            GameRegistry.addSmelting(plant.getProduce(), plant.getResult(), 1.5F);
     }
 }

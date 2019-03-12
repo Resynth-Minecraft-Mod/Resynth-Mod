@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth.block;
 
 import com.ki11erwolf.resynth.ResynthMod;
-import com.ki11erwolf.resynth.ResynthTab;
+import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -61,7 +61,7 @@ public class ResynthBlock extends Block {
         super(material);
         setUnlocalizedName(ResynthMod.MOD_ID + "." + prefix + StringUtil.capitalize(name));
         setRegistryName(prefix + "_" + StringUtil.toUnderscoreLowercase(name));
-        setCreativeTab(ResynthTab.RESYNTH_TAB);
+        setCreativeTab(ResynthTabs.RESYNTH_TAB);
         setSoundType(sound);
     }
 

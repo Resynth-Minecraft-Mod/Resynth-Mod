@@ -17,7 +17,6 @@ package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.ResynthMod;
-import com.ki11erwolf.resynth.ResynthTabProduce;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.PlantSetBiochemical;
 import com.ki11erwolf.resynth.util.MathUtil;

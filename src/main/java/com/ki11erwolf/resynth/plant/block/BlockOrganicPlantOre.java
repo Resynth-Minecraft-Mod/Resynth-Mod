@@ -15,7 +15,6 @@
  */
 package com.ki11erwolf.resynth.plant.block;
 
-import com.ki11erwolf.resynth.ResynthTabProduce;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.plant.PlantSetMetallic;
 import com.ki11erwolf.resynth.util.BlockUtil;

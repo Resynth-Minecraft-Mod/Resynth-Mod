@@ -15,7 +15,6 @@
  */
 package com.ki11erwolf.resynth.plant.item;
 
-import com.ki11erwolf.resynth.ResynthTabProduce;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.PlantSetCrystalline;
 import net.minecraft.client.util.ITooltipFlag;

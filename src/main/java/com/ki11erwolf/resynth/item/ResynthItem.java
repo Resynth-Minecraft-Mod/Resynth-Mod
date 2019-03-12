@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth.item;
 
 import com.ki11erwolf.resynth.ResynthMod;
-import com.ki11erwolf.resynth.ResynthTab;
+import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.util.StringUtil;
 import net.minecraft.item.Item;
 
@@ -47,7 +47,7 @@ public class ResynthItem extends Item {
     public ResynthItem(String name, String prefix){
         this.setUnlocalizedName(ResynthMod.MOD_ID + "." + prefix + StringUtil.capitalize(name));
         this.setRegistryName(prefix + "_" + StringUtil.toUnderscoreLowercase(name));
-        this.setCreativeTab(ResynthTab.RESYNTH_TAB);
+        this.setCreativeTab(ResynthTabs.RESYNTH_TAB);
     }
 
     /**
