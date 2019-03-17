@@ -21,19 +21,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.Random;
-
-import static com.ki11erwolf.resynth.ResynthConfig.ORE_GENERATION;
-import static com.ki11erwolf.resynth.ResynthConfig.MYSTICAL_SEED_POD;
 
 /**
  * Handles all world generation for resynth.
@@ -60,7 +55,7 @@ public class ResynthWorldGen{
          */
         MYSTICAL_SEED_POD_MINABLE(
                 MYSTICAL_SEED_POD.generate,
-                Blocks.TALLGRASS, ResynthBlocks.BLOCK_SEED_POD.getDefaultState(), DimensionType.OVERWORLD,
+                Blocks.TALL_GRASS, ResynthBlocks.BLOCK_SEED_POD.getDefaultState(), DimensionType.OVERWORLD,
                 MYSTICAL_SEED_POD.blockCount, MYSTICAL_SEED_POD.perChunk, MYSTICAL_SEED_POD.minHeight,
                 MYSTICAL_SEED_POD.maxHeight
         );
@@ -122,7 +117,7 @@ public class ResynthWorldGen{
          * @param minHeight the minimum height to generate clusters.
          * @param maxHeight the maximum height to generate clusters.
          */
-        public WorldGenerators(boolean generate, Block target, IBlockState replacement, DimensionType world,
+        WorldGenerators(boolean generate, Block target, IBlockState replacement, DimensionType world,
                         int blocksPerCluster, int clustersPerChunk, int minHeight, int maxHeight){
             this.generate = generate;
             this.target = target;
