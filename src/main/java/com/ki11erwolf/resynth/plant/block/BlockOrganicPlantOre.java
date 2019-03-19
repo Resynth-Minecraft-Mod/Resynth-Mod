@@ -17,7 +17,6 @@ package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.plant.PlantSetMetallic;
-import com.ki11erwolf.resynth.util.BlockUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;

@@ -21,7 +21,6 @@ import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.igtooltip.HwylaDataProvider;
 import com.ki11erwolf.resynth.igtooltip.TOPDataProvider;
 import com.ki11erwolf.resynth.item.ResynthItems;
-import com.ki11erwolf.resynth.util.BlockUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;

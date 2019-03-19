@@ -15,10 +15,6 @@
  */
 package com.ki11erwolf.resynth.proxy;
 
-import com.ki11erwolf.resynth.ResynthConfig;
-import com.ki11erwolf.resynth.ResynthMod;
-import com.ki11erwolf.resynth.versioning.ModVersionManager;
-import com.ki11erwolf.resynth.versioning.VersionManagerBuilder;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
@@ -32,7 +28,7 @@ public class Client implements Proxy {
      */
     @Override
     public void construct() {
-        performVersionCheck();
+
     }
 
     /**
@@ -49,21 +45,5 @@ public class Client implements Proxy {
     @Override
     public void complete(FMLLoadCompleteEvent completeEvent) {
 
-    }
-
-    //Private methods.
-
-    /**
-     * Checks for the latest version of Resynth
-     * and presents the findings to the user.
-     */
-    private void performVersionCheck(){
-        VersionManagerBuilder resynthVMBuilder
-                = new VersionManagerBuilder(ResynthMod.MOD_ID)
-                .setEnabled(!ResynthConfig.RESYNTH.disableVersionChecks)
-                .setOutOfDateConsoleWarningEnabled(!ResynthConfig.RESYNTH.disableVersionMessage)
-                .addVersionJsonFileURL(ResynthMod.UPDATE_URL);
-        ModVersionManager resynthVersionManager = new ModVersionManager(resynthVMBuilder);
-        resynthVersionManager.preInit();
     }
 }

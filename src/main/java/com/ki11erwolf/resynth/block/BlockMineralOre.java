@@ -17,7 +17,6 @@ package com.ki11erwolf.resynth.block;
 
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
-import com.ki11erwolf.resynth.util.BlockUtil;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

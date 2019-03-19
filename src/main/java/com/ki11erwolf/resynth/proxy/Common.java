@@ -44,10 +44,6 @@ public class Common implements Proxy {
     @Override
     public void construct() {
         sendConnectEvent();
-
-        ResynthWorldGen worldGen = new ResynthWorldGen();
-        worldGen.init();
-
         ResynthFurnaceRecipes.registerFurnaceRecipes();
     }
 
@@ -95,7 +91,7 @@ public class Common implements Proxy {
      * if the debug setting is enabled.
      */
     private void printItemAndBlockRegisters(){
-        if(!ResynthConfig.RESYNTH.disableDevelopmentHelp){
+        if(true/*TODO: config*/){
             //Prints all registered blocks/items to console.
             //Helps with adding other mods ore plants
             for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
