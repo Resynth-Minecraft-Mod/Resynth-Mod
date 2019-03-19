@@ -15,8 +15,7 @@
  */
 package com.ki11erwolf.resynth.analytics;
 
-import com.ki11erwolf.resynth.ResynthConfig;
-import com.ki11erwolf.resynth.versioning.ModVersionManager;
+import com.ki11erwolf.resynth.ResynthSSL;
 import dmurph.tracking.AnalyticsConfigData;
 import dmurph.tracking.JGoogleAnalyticsTracker;
 
@@ -53,7 +52,7 @@ public final class ResynthAnalytics {
      * messages will be block by java for some reason.
      */
     static{
-        ModVersionManager.disableSSLVerification();
+        ResynthSSL.disableSSL();
     }
 
     /**
@@ -77,14 +76,14 @@ public final class ResynthAnalytics {
      * @param e the event to send.
      */
     public static void send(Event e){
-        if(ResynthConfig.RESYNTH.disableGAnalytics)
+        if(false/*TODO: config*/)
             return;
 
         //Disable it again before sending the event.
-        ModVersionManager.disableSSLVerification();
+        ResynthSSL.disableSSL();
         ANALYTICS.makeCustomRequest(e);
         //Re-enable it once we're done
-        ModVersionManager.enableSSLVerification();
+        ResynthSSL.enableSSL();
     }
 
     /**
