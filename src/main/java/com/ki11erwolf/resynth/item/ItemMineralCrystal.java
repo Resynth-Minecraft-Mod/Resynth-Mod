@@ -17,6 +17,8 @@ package com.ki11erwolf.resynth.item;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
@@ -29,10 +31,15 @@ import java.util.List;
 public class ItemMineralCrystal extends ResynthItem {
 
     /**
+     * The registry name of the item.
+     */
+    public static final String ITEM_NAME = "mineral_crystal";
+
+    /**
      * Default item constructor.
      */
     public ItemMineralCrystal() {
-        super("mineralCrystal");
+
     }
 
     /**
@@ -46,10 +53,10 @@ public class ItemMineralCrystal extends ResynthItem {
      * @param flagIn
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add(TextFormatting.GRAY
-                + "Used to charge the Mineral Hoe.");
-        tooltip.add("Made by smelting Dense Mineral Rocks");
+        tooltip.add(new TextComponentString(TextFormatting.GRAY
+                + "Used to charge the Mineral Hoe."));
+        tooltip.add(new TextComponentString("Made by smelting Dense Mineral Rocks"));
     }
 }

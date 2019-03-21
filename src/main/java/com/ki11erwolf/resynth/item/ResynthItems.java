@@ -15,14 +15,13 @@
  */
 package com.ki11erwolf.resynth.item;
 
-import com.ki11erwolf.resynth.ResynthMod;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
- * Holds references to all the mod items.
+ * Holds references to all the mod items (excluding
+ * seeds and produce).
  */
-@GameRegistry.ObjectHolder(ResynthMod.MOD_ID)
+//@GameRegistry.ObjectHolder(ResynthMod.MOD_ID)
 public class ResynthItems {
 
     /**

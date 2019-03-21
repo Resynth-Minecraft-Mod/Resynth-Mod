@@ -17,6 +17,8 @@ package com.ki11erwolf.resynth.item;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -28,10 +30,15 @@ import java.util.List;
 public class ItemDenseMineralRock extends ResynthItem{
 
     /**
+     * The registry name of the item.
+     */
+    public static final String ITEM_NAME = "dense_mineral_rock";
+
+    /**
      * Default item constructor.
      */
     public ItemDenseMineralRock() {
-        super("denseMineralRock");
+
     }
 
     /**
@@ -44,9 +51,9 @@ public class ItemDenseMineralRock extends ResynthItem{
      * @param flagIn
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add("9 Mineral Rocks compressed into 1 item.");
-        tooltip.add("Can also be added to Mineral Soil.");
+        tooltip.add(new TextComponentString("9 Mineral Rocks compressed into 1 item."));
+        tooltip.add(new TextComponentString("Can also be added to Mineral Soil."));
     }
 }

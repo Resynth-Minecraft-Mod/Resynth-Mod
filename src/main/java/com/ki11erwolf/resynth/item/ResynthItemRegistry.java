@@ -34,7 +34,7 @@ public class ResynthItemRegistry {
      *
      * @param item the item to add.
      */
-    protected static void addItem(ResynthItem item){
+    static void addItem(ResynthItem item){
         ITEMS.add(item);
     }
 

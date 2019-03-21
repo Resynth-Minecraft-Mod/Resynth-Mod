@@ -17,7 +17,11 @@ package com.ki11erwolf.resynth.item;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -30,11 +34,9 @@ import java.util.List;
 public class ItemMineralRock extends ResynthItem {
 
     /**
-     * Default item constructor.
+     * The registry name of the item.
      */
-    public ItemMineralRock() {
-        super("mineralRock");
-    }
+    public static final String ITEM_NAME = "mineral_rock";
 
     /**
      * {@inheritDoc}
@@ -46,9 +48,10 @@ public class ItemMineralRock extends ResynthItem {
      * @param flagIn
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+    @OnlyIn(Dist.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add("Right click on Mineral Soil to increase");
-        tooltip.add("growth rate of plants on it.");
+        tooltip.add(new TextComponentString("Right click on Mineral Soil to increase growth rate"));
+        tooltip.add(new TextComponentString("of plants growing atop the Mineral Soil block."));
     }
 }
