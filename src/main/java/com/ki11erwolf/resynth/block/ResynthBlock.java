@@ -15,12 +15,8 @@
  */
 package com.ki11erwolf.resynth.block;
 
-import com.ki11erwolf.resynth.ResynthMod;
-import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.util.StringUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 
 /**
  * Base block class for all Resynth blocks.
@@ -35,34 +31,24 @@ public class ResynthBlock extends Block {
     /**
      * Default constructor for all mod blocks.
      *
-     * @param material the blocks material.
+     * @param properties the characteristics of the block.
      * @param name the identifying name of the block (e.g. stone or woodenDoor).
      */
-    public ResynthBlock(Material material, String name) {
-        this(material, SoundType.STONE, name, BLOCK_PREFIX);
+    public ResynthBlock(Properties properties, String name) {
+        this(properties, name, BLOCK_PREFIX);
     }
 
     /**
-     * @param material the blocks material.
-     * @param sound the sound the block makes when interacted with.
-     * @param name the general name of the block (e.g. stone).
-     */
-    public ResynthBlock(Material material, SoundType sound, String name){
-        this(material, sound, name, BLOCK_PREFIX);
-    }
-
-    /**
-     * @param material the blocks material.
+     * @param properties the characteristics of the block.
      * @param name the general name of the block (e.g. redstoneOre).
-     * @param sound the sound the block makes when interacted with.
      * @param prefix the prefix to add before all names of the block.
      */
-    public ResynthBlock(Material material, SoundType sound, String name, String prefix) {
-        super(material);
-        setUnlocalizedName(ResynthMod.MOD_ID + "." + prefix + StringUtil.capitalize(name));
+    public ResynthBlock(Properties properties, String name, String prefix) {
+        super(properties);
+        //setUnlocalizedName(ResynthMod.MOD_ID + "." + prefix + StringUtil.capitalize(name));
         setRegistryName(prefix + "_" + StringUtil.toUnderscoreLowercase(name));
-        setCreativeTab(ResynthTabs.RESYNTH_TAB);
-        setSoundType(sound);
+        //setCreativeTab(ResynthTabs.RESYNTH_TAB);
+        //setSoundType(sound);
     }
 
     /**

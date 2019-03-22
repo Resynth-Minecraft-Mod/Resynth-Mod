@@ -21,7 +21,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 /**
@@ -63,7 +63,7 @@ public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthB
      * @return the cast tile entity.
      */
     @SuppressWarnings("unchecked")
-    public TE getTileEntity(IBlockAccess world, BlockPos pos) {
+    public TE getTileEntity(IBlockReader world, BlockPos pos) {
         return (TE)world.getTileEntity(pos);
     }
 
@@ -93,6 +93,6 @@ public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthB
      * @param state the block state of the block.
      * @return the newly constructed tile entity.
      */
-    @Override
+    //@Override
     public abstract TE createTileEntity(World world, IBlockState state);
 }

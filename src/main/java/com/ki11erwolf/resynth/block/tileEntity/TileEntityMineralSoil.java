@@ -17,6 +17,8 @@ package com.ki11erwolf.resynth.block.tileEntity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityShulkerBox;
+import net.minecraft.tileentity.TileEntityType;
 
 /**
  * The tile entity for the block BlockMineralSoil.
@@ -26,9 +28,27 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityMineralSoil extends TileEntity {
 
     /**
+     * Registry ID for this tile entity.
+     */
+    public static final String TE_ID = "te_mineral_soil";
+
+    /**
+     * TileEntityType object registered to this tile entity.
+     */
+    public static final TileEntityType<TileEntityMineralSoil> TE_MINERAL_SOIL
+            = TileEntityType.register(TE_ID, TileEntityType.Builder.create(TileEntityMineralSoil::new));
+
+    /**
      * The given blocks mineral mineralPercentage. Range: {@code 0.1 < x < 50.0}.
      */
     private float mineralPercentage = 1;
+
+    /**
+     * Default constructor.
+     */
+    public TileEntityMineralSoil() {
+        super(TE_MINERAL_SOIL);
+    }
 
     /**
      * Writes the mineralPercentage variable value to NBT.
@@ -37,9 +57,9 @@ public class TileEntityMineralSoil extends TileEntity {
      * @return the nbt tag compound.
      */
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound write(NBTTagCompound compound) {
         compound.setFloat("mineralPercentage", mineralPercentage);
-        return super.writeToNBT(compound);
+        return super.write(compound);
     }
 
     /**
@@ -48,9 +68,9 @@ public class TileEntityMineralSoil extends TileEntity {
      * @param compound the nbt tag compound we will read the variable from.
      */
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void read(NBTTagCompound compound) {
         mineralPercentage = compound.getFloat("mineralPercentage");
-        super.readFromNBT(compound);
+        super.read(compound);
     }
 
     /**

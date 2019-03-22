@@ -15,14 +15,15 @@
  */
 package com.ki11erwolf.resynth.block;
 
-import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MathUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -35,33 +36,33 @@ import java.util.Random;
 public class BlockMineralOre extends ResynthBlock{
 
     /**
-     * Ore configuration settings.
-     */
-    public ResynthConfig.Ore oreCfg;
-
-    /**
      * Sets the basic properties of the block.
      */
     protected BlockMineralOre() {
-        super(Material.ROCK, "mineralOre");
-        oreCfg = ResynthConfig.ORE;
-        this.setHardness(oreCfg.hardness);
-        this.setLightLevel(0.25F);
-        BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.PICKAXE, 2);
+        super(
+                Block.Properties.create(Material.ROCK)
+                        .hardnessAndResistance(3.0F, 3.0F)
+                        .lightValue(1),
+
+                "mineralOre"
+        );
+        //this.setHardness(oreCfg.hardness);
+        //this.setLightLevel(0.25F);
+        //BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.PICKAXE, 2);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param state
-     * @param rand
-     * @param fortune
+     * @param state -
+     * @param worldIn -
+     * @param pos -
+     * @param fortune -
      * @return {@link com.ki11erwolf.resynth.item.ItemMineralRock} as the item dropped.
      */
     @Nonnull
     @Override
-    @SuppressWarnings("ConstantConditions")
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    public Item getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune) {
         return ResynthItems.ITEM_MINERAL_ROCK;
     }
 
@@ -73,16 +74,16 @@ public class BlockMineralOre extends ResynthBlock{
      * @return the number of items dropped with fortune.
      * Determined by config settings.
      */
-    @Override
+    //@Override
     public int quantityDroppedWithBonus(int fortune, @Nonnull Random random) {
         if(fortune == 0)
-            return this.quantityDropped(random);
+            return this.quantityDropped(null, random);
 
         if(fortune == 3)
-            return this.quantityDropped(random)
-                    + MathUtil.getRandomIntegerInRange(1, (fortune * oreCfg.multiplier) - 1);
+            return this.quantityDropped(null, random)
+                    + MathUtil.getRandomIntegerInRange(1, (fortune * 10/*TODO: Config*/) - 1);
 
-        return this.quantityDropped(random) + MathUtil.getRandomIntegerInRange(0, fortune * oreCfg.multiplier);
+        return this.quantityDropped(null, random) + MathUtil.getRandomIntegerInRange(0, fortune * 10/*TODO: Config*/);
     }
 
     /**
@@ -93,27 +94,27 @@ public class BlockMineralOre extends ResynthBlock{
      * Determined by config settings.
      */
     @Override
-    public int quantityDropped(Random random) {
-        return oreCfg.baseDrops + (MathUtil.chance(oreCfg.extraChance) ? oreCfg.extraDrops : 0);
+    public int quantityDropped(IBlockState state, Random random) {
+        return 10 + (MathUtil.chance(10/*TODO: Config*/) ? 10/*TODO: Config*/ : 0);
     }
 
-    /**
-     * The amount of experience dropped by the block.
-     *
-     * @param state -
-     * @param world -
-     * @param pos -
-     * @param fortune -
-     * @return Experience amount to drop. Determined by config. Minimum is 2.
-     */
-    @Override
-    public int getExpDrop(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune){
-        if (this.getItemDropped(state, RANDOM, fortune) != Item.getItemFromBlock(this)){
-            return 2 + RANDOM.nextInt(oreCfg.maxXP);
-        }
-
-        return 0;
-    }
+//    /**
+//     * The amount of experience dropped by the block.
+//     *
+//     * @param state -
+//     * @param world -
+//     * @param pos -
+//     * @param fortune -
+//     * @return Experience amount to drop. Determined by config. Minimum is 2.
+//     */
+//    @Override
+//    public int getExpDrop(IBlockState state, net.minecraft.world.IBlockReader world, BlockPos pos, int fortune){
+//        if (this.getItemDropped(null, null, null, 0) != Item.getItemFromBlock(this)){
+//            return 2 + RANDOM.nextInt(10/*TODO: Config*/);
+//        }
+//
+//        return 0;
+//    }
 
     /**
      * Drops the ore's item instead of the block when
@@ -124,8 +125,7 @@ public class BlockMineralOre extends ResynthBlock{
      */
     @Nonnull
     @Override
-    @SuppressWarnings("ConstantConditions")
     protected ItemStack getSilkTouchDrop(@Nonnull IBlockState state){
-        return new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, quantityDropped(null));
+        return new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, quantityDropped(null, null));
     }
 }
