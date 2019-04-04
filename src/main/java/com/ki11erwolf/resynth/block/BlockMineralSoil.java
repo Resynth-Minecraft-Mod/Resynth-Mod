@@ -15,7 +15,6 @@
  */
 package com.ki11erwolf.resynth.block;
 
-import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.igtooltip.HwylaDataProvider;
@@ -60,9 +59,9 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
     /**
      * The metadata value for the blocks appearance.
      */
-    public static final PropertyInteger
-            //TODO: change string value from percent to stage
-            STAGE = PropertyInteger.create("percent", 0, 4);
+//    public static final PropertyInteger
+//            //TODO: change string value from percent to stage
+//            STAGE = PropertyInteger.create("percent", 0, 4);
 
     /**
      * The bounding box for the block.
@@ -73,19 +72,15 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
     );
 
     /**
-     * The configuration settings for this block.
-     */
-    private static final ResynthConfig.MineralSoil MINERAL_SOIL_CONFIG = ResynthConfig.MINERAL_SOIL;
-
-    /**
      * Standard block constructor.
      */
     protected BlockMineralSoil(){
-        super(Material.GRASS, SoundType.GROUND, "mineralSoil");
-        this.setHardness(2.0F);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
-        this.setLightOpacity(255);
-        BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.SHOVEL, 0);
+        super(
+                Properties.create(Material.GRASS).hardnessAndResistance(2.0F).sound(SoundType.GROUND),
+                "mineralSoil");
+        //this.setHardness(2.0F);
+        //this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
+        //this.setLightOpacity(255);
     }
 
     /**

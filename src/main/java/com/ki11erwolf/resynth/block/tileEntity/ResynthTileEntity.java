@@ -16,8 +16,6 @@
 package com.ki11erwolf.resynth.block.tileEntity;
 
 import com.ki11erwolf.resynth.block.ResynthBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -36,22 +34,11 @@ public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthB
     /**
      * Basic constructor for all Resynth tile entities.
      *
-     * @param material the material of the block.
+     * @param properties the properties of this specific block.
      * @param name the name of the block (e.g. redstoneDust).
      */
-    protected ResynthTileEntity(Material material, String name) {
-        super(material, name);
-    }
-
-    /**
-     * Extended constructor for all Resynth tile entities.
-     *
-     * @param material the material of the block.
-     * @param sound the sound the block makes when broken or walked on.
-     * @param name the name of the block (e.g. redstoneDust).
-     */
-    protected ResynthTileEntity(Material material, SoundType sound, String name) {
-        super(material, sound, name);
+    protected ResynthTileEntity(Properties properties, String name) {
+        super(properties, name);
     }
 
     /**
