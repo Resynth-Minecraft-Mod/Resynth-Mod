@@ -54,6 +54,12 @@ public class ItemMineralHoe extends ResynthItem {
     public static final String NBT_TAG_CHARGES = "charges";
 
     /**
+     * The amount of inventory slots to search when
+     * looking for mineral crystals in the inventory.
+     */
+    private static final int INVENTORY_SLOT_TRIES = 80;
+
+    /**
      * Default constructor.
      */
     public ItemMineralHoe() {
@@ -141,7 +147,7 @@ public class ItemMineralHoe extends ResynthItem {
                                     break;
                                 }
 
-                                if(player.inventory.getStackInSlot(pos) == ItemStack.EMPTY){
+                                if(pos >= INVENTORY_SLOT_TRIES){
                                     world.playSound(
                                             null, blockPos,
                                             SoundEvents.ENTITY_HORSE_LAND,
@@ -149,7 +155,6 @@ public class ItemMineralHoe extends ResynthItem {
                                             0.7F, 1.0F);
                                     break;
                                 }
-
 
                                 pos++;
                             } catch (Exception e){
