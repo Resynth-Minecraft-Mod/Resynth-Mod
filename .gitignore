@@ -7,3 +7,9 @@ build
 
 #Environment
 run
+
+#Idea
+.idea
+
+#Eclipse
+eclipse
