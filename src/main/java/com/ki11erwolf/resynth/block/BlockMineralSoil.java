@@ -17,8 +17,6 @@ package com.ki11erwolf.resynth.block;
 
 import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
-import com.ki11erwolf.resynth.igtooltip.HwylaDataProvider;
-import com.ki11erwolf.resynth.igtooltip.TOPDataProvider;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
@@ -29,13 +27,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.state.IntegerProperty;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -43,7 +38,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -96,28 +90,42 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
         //this.setLightOpacity(255);
     }
 
-    /**
-     * Drops the amount of ItemMineralRock put
-     * into it (within a an item or two of accuracy)
-     * and a Mineral Crystal.
-     *
-     * @param worldIn -
-     * @param pos -
-     * @param state -
-     */
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state){
-        TileEntityMineralSoil te = getTileEntity(worldIn, pos);
+    public void onReplaced(IBlockState state, World world, BlockPos pos, IBlockState newState, boolean isMoving) {
+        TileEntityMineralSoil te = getTileEntity(world, pos);
 
         int drops = (int)((te.getMineralPercentage() - 1.0F) / 1.0F /*TODO: Config*/);
-        EntityItem items = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
+        EntityItem items = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(),
                 new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, drops));
-        worldIn.spawnEntity(items);
+        world.spawnEntity(items);
 
-        EntityItem mineralCrystal = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
+        EntityItem mineralCrystal = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(),
                 new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1));
-        worldIn.spawnEntity(mineralCrystal);
+        world.spawnEntity(mineralCrystal);
     }
+
+//    /**
+//     * Drops the amount of ItemMineralRock put
+//     * into it (within a an item or two of accuracy)
+//     * and a Mineral Crystal.
+//     *
+//     * @param worldIn -
+//     * @param pos -
+//     * @param state -
+//     */
+//    @Override
+//    public void breakBlock(World worldIn, BlockPos pos, IBlockState state){
+//        TileEntityMineralSoil te = getTileEntity(worldIn, pos);
+//
+//        int drops = (int)((te.getMineralPercentage() - 1.0F) / 1.0F /*TODO: Config*/);
+//        EntityItem items = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
+//                new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, drops));
+//        worldIn.spawnEntity(items);
+//
+//        EntityItem mineralCrystal = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
+//                new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1));
+//        worldIn.spawnEntity(mineralCrystal);
+//    }
 
     /**
      * Increases the blocks tile entity percentage value
@@ -362,7 +370,6 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      *
      * @param worldIn -
      * @param pos -
-     * @param state -
      */
     private void updateState(World worldIn, BlockPos pos, IBlockState state){
         worldIn.setBlockState(pos, getStateFromTileEntity(worldIn, pos));
