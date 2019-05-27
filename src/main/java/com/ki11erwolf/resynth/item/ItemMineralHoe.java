@@ -31,8 +31,6 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -51,7 +49,7 @@ public class ItemMineralHoe extends ResynthItem {
     /**
      * Change NBT value key.
      */
-    public static final String NBT_TAG_CHARGES = "charges";
+    private static final String NBT_TAG_CHARGES = "charges";
 
     /**
      * The amount of inventory slots to search when
@@ -62,7 +60,7 @@ public class ItemMineralHoe extends ResynthItem {
     /**
      * Default constructor.
      */
-    public ItemMineralHoe() {
+    ItemMineralHoe() {
         super("mineralHoe");
         this.setMaxStackSize(1);
     }
@@ -84,6 +82,7 @@ public class ItemMineralHoe extends ResynthItem {
      * @param z
      * @return
      */
+    @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand,
                                       EnumFacing blockDirection, float x, float y, float z) {
         if(!ResynthConfig.MINERAL_HOE.canUse){
@@ -93,6 +92,13 @@ public class ItemMineralHoe extends ResynthItem {
         Block type = world.getBlockState(blockPos).getBlock();
         ItemStack stack = player.getHeldItem(hand);
         NBTTagCompound nbt = stack.getTagCompound();
+
+        //Fix for a rare NullPointerException (Issue #13)
+        if(nbt == null){
+            nbt = new NBTTagCompound();
+            nbt.setInteger(NBT_TAG_CHARGES, 0);
+            stack.setTagCompound(nbt);
+        }
 
         if(player.isSneaking()){
             new MinecraftUtil.SideSensitiveCode(world){
@@ -186,7 +192,7 @@ public class ItemMineralHoe extends ResynthItem {
             world.playSound(null, blockPos, SoundEvents.BLOCK_GRASS_PLACE,
                     SoundCategory.BLOCKS, 0.4F, 1.2F
                             / (world.rand.nextFloat() * 0.2F + 0.9F));
-            spawnBlockChangeParticles(world, blockPos, 100);
+            spawnBlockChangeParticles(world, blockPos);
 
             world.setBlockState(blockPos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
             if(!player.isCreative())
@@ -234,13 +240,10 @@ public class ItemMineralHoe extends ResynthItem {
      *
      * @param worldIn the world in which to spawn the particles.
      * @param pos the location in the world.
-     * @param amount amount of particles.
      */
     //@SideOnly(Side.CLIENT)
-    public static void spawnBlockChangeParticles(World worldIn, BlockPos pos, int amount){
-        if (amount == 0){
-            amount = 15;
-        }
+    private static void spawnBlockChangeParticles(World worldIn, BlockPos pos){
+        int amount = 100;//Particle Frequency
 
         IBlockState iblockstate = worldIn.getBlockState(pos);
 
