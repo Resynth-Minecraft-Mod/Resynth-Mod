@@ -26,6 +26,7 @@ import com.ki11erwolf.resynth.versioning.VersionManagerBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -33,6 +34,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ForgeRegistry;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
@@ -175,6 +178,8 @@ public class ResynthMod {
 
             logger.info("Resynth proxy: " + proxy.getClass().getName());
 
+            ClientCommandHandler.instance.registerCommand(new ResynthCommand());
+
             if(proxy instanceof ClientProxy){
                 logger.info("Attempting Resynth version check...");
                 VersionManagerBuilder resynthVMBuilder
@@ -219,8 +224,10 @@ public class ResynthMod {
         wrapError((object -> {
             logger.info("Entering init phase...");
             proxy.init(event);
+
             worldGen = new ResynthWorldGen();
             worldGen.init();
+
             ResynthFurnaceRecipes.registerFurnaceRecipes();
 
             //Finally fixed this...

@@ -18,6 +18,9 @@ item.resynth.itemDenseMineralRock.name=Dense Mineral Rock
 item.resynth.itemMineralCrystal.name=Mineral Crystal
 item.resynth.itemMineralHoe.name=Mineral Hoe
 
+#Command
+command.resynth.usage:Prints the Resynth version number to the chat.
+
 ############
 #  PLANTS  #
 ############
