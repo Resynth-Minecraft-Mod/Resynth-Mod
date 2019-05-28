@@ -24,6 +24,7 @@ import com.ki11erwolf.resynth.plant.block.BlockOrganicPlantOre;
 import com.ki11erwolf.resynth.plant.item.ItemPlantProduceBulb;
 import com.ki11erwolf.resynth.plant.item.ItemPlantProduceShard;
 import com.ki11erwolf.resynth.plant.item.ItemPlantSeeds;
+import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityChicken;
@@ -40,6 +41,7 @@ import net.minecraft.item.ItemStack;
  * set as well as helper methods to get arrays
  * of each plant set and registered block/item.
  */
+@SuppressWarnings("unused")//Plant Sets register themselves when declared.
 public final class ResynthPlantSets {
 
     /**
@@ -519,7 +521,6 @@ public final class ResynthPlantSets {
     public static final PlantSetBiochemical PLANT_SET_BONE
             = new PlantSetBiochemical("bone", EntitySkeleton.class){
         ResynthConfig.PlantBone cfg = ResynthConfig.PLANT_BONE;
-
         @Override
         public ItemStack getResult() {return new ItemStack(Items.BONE, cfg.yield);}
 
@@ -938,6 +939,38 @@ public final class ResynthPlantSets {
 
         @Override
         public ItemStack getResult() {return new ItemStack(Items.RABBIT_FOOT, cfg.yield);}
+
+        @Override
+        protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}
+
+        @Override
+        protected float getMobSeedDropChance() {return cfg.mobSeedDropChance;}
+
+        @Override
+        protected float getPlantGrowthChance() {return cfg.floweringPeriod;}
+
+        @Override
+        protected boolean canBonemealPlant() {return cfg.canBonemeal;}
+
+        @Override
+        protected float getProduceSeedDropChance() {return cfg.produceSeedDropChance;}
+
+        @Override
+        protected boolean doesProduceDropSeeds() {return cfg.produceDropSeeds;}
+
+        @Override
+        public float getSeedPodDropPercentage() {return cfg.seedPodDropChance;}
+    };
+
+    /**
+     * Plant set for dragon's breath from the ender dragon.
+     */
+    public static final PlantSetBiochemical PLANT_SET_DRAGONS_BREATH
+            = new PlantSetBiochemical("dragonsBreath", EntityDragon.class) {
+        ResynthConfig.PlantDragonsBreath cfg = ResynthConfig.PLANT_DRAGONS_BREATH;
+
+        @Override
+        public ItemStack getResult() {return new ItemStack(Items.DRAGON_BREATH, cfg.yield);}
 
         @Override
         protected boolean doesMobDropSeeds() {return cfg.mobDropSeeds;}

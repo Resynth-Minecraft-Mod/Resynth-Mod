@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "inventory": [{"model": "resynth:plant/dragons_breath/plant_dragons_breath_7"}],
+    "age=0": { "model": "resynth:plant/dragons_breath/plant_dragons_breath_0" },
+    "age=1": { "model": "resynth:plant/dragons_breath/plant_dragons_breath_1" },
+    "age=2": { "model": "resynth:plant/dragons_breath/plant_dragons_breath_2" },
+    "age=3": { "model": "resynth:plant/dragons_breath/plant_dragons_breath_3" },
+    "age=4": { "model": "resynth:plant/dragons_breath/plant_dragons_breath_4" },
+    "age=5": { "model": "resynth:plant/dragons_breath/plant_dragons_breath_5" },
+    "age=6": { "model": "resynth:plant/dragons_breath/plant_dragons_breath_6" },
+    "age=7": { "model": "resynth:plant/dragons_breath/plant_dragons_breath_7" }
+  }
+}

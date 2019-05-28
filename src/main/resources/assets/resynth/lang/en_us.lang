@@ -57,6 +57,7 @@ item.resynth.seedFlesh.name=Rotten Flesh Seeds
 item.resynth.seedPrismarineCrystal.name=Prismarine Crystal Seeds
 item.resynth.seedPrismarineShard.name=Prismarine Shard Seeds
 item.resynth.seedRabbitFoot.name=Rabbit Foot Seeds
+item.resynth.seedDragonsBreath.name=Dragon's Breath Seeds
 
 #Plant Blocks
 
@@ -93,6 +94,7 @@ tile.resynth.plantFlesh.name=Rotten Flesh Flower
 tile.resynth.plantPrismarineCrystal.name=Prismarine Crystal Flower
 tile.resynth.plantPrismarineShard.name=Prismarine Shard Flower
 tile.resynth.plantRabbitFoot.name=Rabbit Foot Flower
+tile.resynth.plantDragonsBreath.name=Dragon's Breath Flower
 
 #Organic Ores
 
@@ -132,6 +134,7 @@ item.resynth.mobproduceFlesh.name=Rotten Flesh Bulb
 item.resynth.mobproducePrismarineCrystal.name=Prismarine Crystal Bulb
 item.resynth.mobproducePrismarineShard.name=Prismarine Shard Bulb
 item.resynth.mobproduceRabbitFoot.name=Rabbit Foot Bulb
+item.resynth.mobproduceDragonsBreath.name=Dragon's Breath Bulb
 
 ###################
 #    MOD PLANTS   #

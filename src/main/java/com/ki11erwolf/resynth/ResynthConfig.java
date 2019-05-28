@@ -2862,6 +2862,91 @@ public class ResynthConfig {
         public float seedPodDropChance = 15F;
     }
 
+    /**
+     * Settings for the dragons breath plant set.
+     */
+    @Name("Plant: Dragons Breath")
+    @Comment("Settings for the Dragons Breath plant.")
+    public static final PlantDragonsBreath PLANT_DRAGONS_BREATH = new PlantDragonsBreath();
+
+    /**
+     * Settings for the dragons breath plant set.
+     */
+    public static class PlantDragonsBreath{
+
+        /**
+         * How long it takes this plant type
+         * to grow.
+         */
+        @Name("Chance To Grow")
+        @Comment("The chance the plant species will grow when a random tick occurs. This" +
+                " is calculated after the mineral soil growth chance. This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float floweringPeriod = 07.0F;
+
+        /**
+         * Can bonemeal be used on this plant type.
+         */
+        @Name("Enable Bonemeal")
+        @Comment("Set to true to allow bonemeal to be used on this species of plant. " +
+                "WARNING: Breaks game mechanics when set to true")
+        public boolean canBonemeal = false;
+
+        /**
+         * Does the minecraft mob that represents
+         * this plant drop seeds?
+         */
+        @Name("Do Mobs Drop Seeds")
+        @Comment("If set to true, Ender Dragons will sometimes drop seeds when killed.")
+        public boolean mobDropSeeds = true;
+
+        /**
+         * Does the plants produce drop seeds.
+         */
+        @Name("Does Produce Drop Seeds")
+        @Comment("If set to true, Dragons Breath bulbs will occasionally turn into seeds when thrown.")
+        public boolean produceDropSeeds = true;
+
+        /**
+         * The chance of seeds dropping
+         * from this plants minecraft mob.
+         */
+        @Name("Seed Drop Chance From Mob")
+        @Comment("The chance an Ender Dragon will drop seeds when killed." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float mobSeedDropChance = 100.0F;
+
+        /**
+         * The chance of seeds dropping from
+         * this plant types produce.
+         */
+        @Name("Seed Drop Chance From Produce")
+        @Comment("The chance the produce (bulb) from this plant type will drop seeds when thrown." +
+                " This chance is percentage based.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float produceSeedDropChance = 04.0F;
+
+        /**
+         * The number of Dragons Breath items the plants produce
+         * item gives.
+         */
+        @Name("Yield")
+        @Comment("The amount of Dragons Breath items Dragons Breath bulbs will give when smelted.")
+        @RangeInt(min = 1, max = 64)
+        @RequiresMcRestart
+        public int yield = 1;
+
+        /**
+         * The chance this plants seeds will drop from a mystical seed pod.
+         */
+        @Name("Mystical Seed Pod Drop Chance")
+        @Comment("The chance this plant types seeds will be chosen to drop when a" +
+                " mystical seed pod is broken.")
+        @RangeDouble(min = 0.0F, max = 100.0F)
+        public float seedPodDropChance = 05.0F;
+    }
+
     /*
         OTHER MOD PLANTS CONFIG.
      */
