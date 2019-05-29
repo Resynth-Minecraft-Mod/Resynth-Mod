@@ -59,7 +59,8 @@ import java.util.function.Function;
                         //"after:actuallyadditions;" +
                         "after:bigreactors;" +
                         //"after:deepresonance;"
-                        "after:waila;"
+                        "after:waila;" +
+                        "after:draconicevolution"
 )
 public class ResynthMod {
 
@@ -129,6 +130,11 @@ public class ResynthMod {
      * Extreme Reactors (port of Big Reactors) modid.
      */
     public static final String MODID_EXTREME_REACTORS = "bigreactors";
+
+    /**
+     * Draconic Evolution modid.
+     */
+    public static final String MODID_DRACONIC_EVOLUTION = "draconicevolution";
 
 //    Failed attempt at adding resonating ore.
 //    /**

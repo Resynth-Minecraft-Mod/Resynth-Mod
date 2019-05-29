@@ -207,3 +207,8 @@ tile.resynth.oreMana.name=Organic Mana Infused Ore
 item.resynth.seedYellorite.name=Yellorite Seeds
 tile.resynth.plantYellorite.name=Yellorite Plant
 tile.resynth.oreYellorite.name=Organic Yellorite Ore
+
+#Draconic Evolution
+item.resynth.seedDraconium.name=Draconium Seeds
+tile.resynth.plantDraconium.name=Draconium Plant
+item.resynth.produceDraconium.name=Draconium Shard

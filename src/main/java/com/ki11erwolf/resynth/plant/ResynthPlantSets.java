@@ -1676,6 +1676,50 @@ public final class ResynthPlantSets {
 //        }
 //    }.register();
 
+    /**
+     * Draconium plant set for Draconic Evolution.
+     */
+    public static final ModPlantSetCrystalline MOD_PLANT_SET_DRACONIUM
+            = new ModPlantSetCrystalline("draconium", ResynthMod.MODID_DRACONIC_EVOLUTION,
+            "draconium_ore", "draconium_dust", 0) {
+        ResynthConfig.ModPlantCrystallineCfg cfg = ResynthConfig.PLANT_DRACONIUM;
+
+        @Override
+        protected int getResultCount() {
+            return cfg.yield;
+        }
+
+        @Override
+        protected boolean doesModOreDropSeeds() {
+            return cfg.oreDropSeeds;
+        }
+
+        @Override
+        protected float getModOreSeedDropChance() {
+            return cfg.oreSeedDropChance;
+        }
+
+        @Override
+        protected float getModPlantGrowthChance() {
+            return cfg.floweringPeriod;
+        }
+
+        @Override
+        protected boolean canBonemealModPlant() {
+            return cfg.canBonemeal;
+        }
+
+        @Override
+        protected float getModProduceSeedDropChance() {
+            return cfg.produceSeedDropChance;
+        }
+
+        @Override
+        protected boolean doesModProduceDropSeeds() {
+            return cfg.produceDropSeeds;
+        }
+    }.register();
+
     //Static class.
     private ResynthPlantSets(){}
 

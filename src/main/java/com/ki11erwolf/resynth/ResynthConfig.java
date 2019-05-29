@@ -3218,6 +3218,20 @@ public class ResynthConfig {
         } else {
             PLANT_YELLORITE = null;
         }
+
+        if(Loader.isModLoaded(ResynthMod.MODID_DRACONIC_EVOLUTION)){
+            PLANT_DRACONIUM = new ModPlantCrystallineCfg(
+                    15.0F,
+                    false,
+                    true,
+                    true,
+                    5.0F,
+                    2.5F,
+                    2
+            );
+        } else {
+            PLANT_DRACONIUM = null;
+        }
     }
 
     /**
@@ -3298,9 +3312,19 @@ public class ResynthConfig {
     @Comment("Settings for the Mana plant from Thermal Foundation.")
     public static final ModPlantMetallicCfg PLANT_MANA;
 
+    /**
+     * Settings for the yellorite plant.
+     */
     @Name("Plant: Yellorite (Extreme Reactors)")
     @Comment("Settings for the Yellorite plant from Extreme Reactors.")
     public static final ModPlantMetallicCfg PLANT_YELLORITE;
+
+    /**
+     * Settings for the draconium plant.
+     */
+    @Name("Plant: Draconium (Draconic Evolution)")
+    @Comment("Settings for the Draconic plant from Draconic Evolution.")
+    public static final ModPlantCrystallineCfg PLANT_DRACONIUM;
 
     /**
      * Configuration class for all mod metallic plants.
