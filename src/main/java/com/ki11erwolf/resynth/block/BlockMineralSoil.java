@@ -22,7 +22,6 @@ import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
@@ -33,7 +32,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
@@ -44,7 +42,6 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * Mineral Enriched Soil.
@@ -58,22 +55,14 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
     /**
      * The metadata value for the blocks appearance.
      */
-    public static final IntegerProperty
+    private static final IntegerProperty
             //TODO: change string value from percent to stage
             STAGE = IntegerProperty.create("percent", 0, 4);
 
     /**
-     * The bounding box for the block.
-     */
-    protected static final AxisAlignedBB MINERAL_SOIL_AABB = new AxisAlignedBB(
-            0.0D, 0.0D, 0.0D,
-            1.0D, 0.9375D, 1.0D
-    );
-
-    /**
      * The bounding box (or dimensions) of the block.
      */
-    protected static final VoxelShape SHAPE = Block.makeCuboidShape(
+    private static final VoxelShape SHAPE = Block.makeCuboidShape(
             0.0D, 0.0D, 0.0D,
             1.0D, 0.9375D, 1.0D
     );
@@ -81,7 +70,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
     /**
      * Standard block constructor.
      */
-    protected BlockMineralSoil(){
+    BlockMineralSoil(){
         super(
                 Properties.create(Material.GRASS).hardnessAndResistance(2.0F).sound(SoundType.GROUND),
                 "mineralSoil");
@@ -103,6 +92,20 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
                 new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1));
         world.spawnEntity(mineralCrystal);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Drops Minecraft Dirt instead of this block itself.
+     * The extra item drops are handled when the block is broken.
+     *
+     * @return {@inheritDoc} Minecraft Dirt.
+     */
+    @Override
+    public Item getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune){
+        return Item.getItemFromBlock(Blocks.DIRT);
+    }
+
 
 //    /**
 //     * Drops the amount of ItemMineralRock put
@@ -133,8 +136,8 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * of ItemMineralRocks.
      */
     @Override
-    public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
-
+    public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player,
+                                    EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
         if(getTileEntity(worldIn, pos).getMineralPercentage() >= 50)
             return false;
 
@@ -153,15 +156,27 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
                     }
 
                     float percentage = entity.getMineralPercentage();
-                    updateState(worldIn, pos, state);
-                    ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
-                    String perc = String.valueOf(entity.getMineralPercentage());
+                    updateState(worldIn, pos);
 
-                    if(true/*TODO: Config*/)
-                        player.sendMessage(new TextComponentString("Soil mineral content: "
-                            + perc
-                            .substring(0, perc.length() > 4 ? 4 : perc.length())
-                            + "%"));
+                    try{
+                        //noinspection ConstantConditions
+                        ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
+                        String perc = String.valueOf(entity.getMineralPercentage());
+
+                        if(true/*TODO: Config*/)
+                            player.sendMessage(new TextComponentString("Soil mineral content: "
+                                    + perc
+                                    .substring(0, perc.length() > 4 ? 4 : perc.length())
+                                    + "%")
+                            );
+                    } catch (NullPointerException e){
+                        player.sendMessage(new TextComponentString(
+                                "Failed to update mineral content of Mineral Soil block."
+                                + " Submit a bug report if you see this."
+                        ));
+                        LOGGER.error("Failed to update mineral content of Mineral Soil block.", e);
+                    }
+
                 }
             }.execute();
             return true;
@@ -182,15 +197,27 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
                     }
 
                     float percentage = entity.getMineralPercentage();
-                    updateState(worldIn, pos, state);
-                    ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
-                    String perc = String.valueOf(entity.getMineralPercentage());
+                    updateState(worldIn, pos);
 
-                    if(true /*TODO: Config*/)
-                        player.sendMessage(new TextComponentString("Soil mineral content: "
-                            + perc
-                            .substring(0, perc.length() > 4 ? 4 : perc.length())
-                            + "%"));
+
+                    try{
+                        //noinspection ConstantConditions
+                        ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
+                        String perc = String.valueOf(entity.getMineralPercentage());
+
+                        if(true/*TODO: Config*/)
+                            player.sendMessage(new TextComponentString("Soil mineral content: "
+                                    + perc
+                                    .substring(0, perc.length() > 4 ? 4 : perc.length())
+                                    + "%")
+                            );
+                    } catch (NullPointerException e){
+                        player.sendMessage(new TextComponentString(
+                                "Failed to update mineral content of Mineral Soil block."
+                                        + " Submit a bug report if you see this."
+                        ));
+                        LOGGER.error("Failed to update mineral content of Mineral Soil block.", e);
+                    }
                 }
             }.execute();
             return true;
@@ -200,110 +227,102 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @param blockState {@inheritDoc}
-     * @param blockAccess {@inheritDoc}
-     * @param pos {@inheritDoc}
-     * @param side {@inheritDoc}
-     * @return {@inheritDoc}
+     * @return the predefined 3D Voxel shape the block will take.
      */
     @Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos,
-                                        EnumFacing side){
-        switch (side){
-            case UP:
-                return true;
-            case NORTH:
-            case SOUTH:
-            case WEST:
-            case EAST:
-                IBlockState iblockstate = blockAccess.getBlockState(pos.offset(side));
-                Block block = iblockstate.getBlock();
-                return !iblockstate.isOpaqueCube() && block != this && block != Blocks.GRASS_PATH;
-            default:
-                return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
-        }
+    public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+        return SHAPE;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * Drops Minecraft Dirt instead of this block itself.
-     * The extra item drops are handled when the block is broken.
-     *
-     * @param state {@inheritDoc}
-     * @param rand {@inheritDoc}
-     * @param fortune {@inheritDoc}
-     * @return {@inheritDoc} This block.
-     */
-    @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune){
-        return Item.getItemFromBlock(Blocks.DIRT);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param meta {@inheritDoc}
-     * @return {@inheritDoc}
-     */
-    @Override
-    public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(STAGE, meta);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param state {@inheritDoc}
-     * @return {@inheritDoc}
-     */
-    @Override
-    public int getMetaFromState(IBlockState state){
-        return state.getValue(STAGE);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return {@inheritDoc}
-     */
-    @SuppressWarnings("RedundantArrayCreation")
-    @Override
-    protected BlockStateContainer createBlockState(){
-        return new BlockStateContainer(this, new IProperty[] {STAGE});
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param worldIn {@inheritDoc}
-     * @param state {@inheritDoc}
-     * @param pos {@inheritDoc}
-     * @param face {@inheritDoc}
-     * @return {@inheritDoc}
-     */
-    @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face){
-        return face == EnumFacing.DOWN ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * Returns the bounding box.
-     *
-     * @param state -
-     * @param source -
-     * @param pos -
-     * @return the bounding box. {@link #MINERAL_SOIL_AABB}
-     */
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
-        return MINERAL_SOIL_AABB;
-    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param blockState {@inheritDoc}
+//     * @param blockAccess {@inheritDoc}
+//     * @param pos {@inheritDoc}
+//     * @param side {@inheritDoc}
+//     * @return {@inheritDoc}
+//     */
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos,
+//                                        EnumFacing side){
+//        switch (side){
+//            case UP:
+//                return true;
+//            case NORTH:
+//            case SOUTH:
+//            case WEST:
+//            case EAST:
+//                IBlockState iblockstate = blockAccess.getBlockState(pos.offset(side));
+//                Block block = iblockstate.getBlock();
+//                return !iblockstate.isOpaqueCube() && block != this && block != Blocks.GRASS_PATH;
+//            default:
+//                return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+//        }
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param meta {@inheritDoc}
+//     * @return {@inheritDoc}
+//     */
+//    @Override
+//    public IBlockState getStateFromMeta(int meta){
+//        return this.getDefaultState().withProperty(STAGE, meta);
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param state {@inheritDoc}
+//     * @return {@inheritDoc}
+//     */
+//    @Override
+//    public int getMetaFromState(IBlockState state){
+//        return state.getValue(STAGE);
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @return {@inheritDoc}
+//     */
+//    @SuppressWarnings("RedundantArrayCreation")
+//    @Override
+//    protected BlockStateContainer createBlockState(){
+//        return new BlockStateContainer(this, new IProperty[] {STAGE});
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param worldIn {@inheritDoc}
+//     * @param state {@inheritDoc}
+//     * @param pos {@inheritDoc}
+//     * @param face {@inheritDoc}
+//     * @return {@inheritDoc}
+//     */
+//    @Override
+//    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face){
+//        return face == EnumFacing.DOWN ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * Returns the bounding box.
+//     *
+//     * @param state -
+//     * @param source -
+//     * @param pos -
+//     * @return the bounding box. {@link #MINERAL_SOIL_AABB}
+//     */
+//    @Override
+//    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+//        return MINERAL_SOIL_AABB;
+//    }
 
     /**
      * @param state -
@@ -371,7 +390,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * @param worldIn -
      * @param pos -
      */
-    private void updateState(World worldIn, BlockPos pos, IBlockState state){
+    private void updateState(World worldIn, BlockPos pos){
         worldIn.setBlockState(pos, getStateFromTileEntity(worldIn, pos));
     }
 
