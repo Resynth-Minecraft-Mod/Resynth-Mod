@@ -28,6 +28,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
@@ -66,7 +67,6 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
     public ItemPlantProduceBulb(String name, ItemPlantSeeds seeds, PlantSetBiochemical set) {
         super(name, PREFIX);
         this.plantSet = set;
-        this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
         this.plantSeeds = seeds;
     }
 
@@ -80,61 +80,61 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
      * @param flagIn
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
-                               ITooltipFlag flagIn) {
-        tooltip.add("Can be thrown for a chance at getting more seeds.");
-        tooltip.add("Can be smelted to obtain the resource.");
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
+                               ITooltipFlag flagIn){
+        tooltip.add(stringToTextComponent("Can be thrown for a chance at getting more seeds."));
+        tooltip.add(stringToTextComponent("Can be smelted to obtain the resource."));
 
-        tooltip.add("");
+        tooltip.add(stringToTextComponent(""));
 
-        tooltip.add(
+        tooltip.add(stringToTextComponent(
                 TextFormatting.GOLD
                         + "Seed Drop Chance (Mob): " +
                         plantSet.getTextualMobSeedDropChance()
-        );
+        ));
 
-        tooltip.add(
+        tooltip.add(stringToTextComponent(
                 TextFormatting.GREEN
                         + "Seed Drop Chance (Produce): "
                         + plantSet.getTextualProduceSeedDropChance()
-        );
+        ));
 
-        tooltip.add(
+        tooltip.add(stringToTextComponent(
                 TextFormatting.AQUA
                         + "Seed Drop Chance (Mystical Seed Pod): "
                         + plantSet.getTextualPodSeedDropChance()
-        );
+        ));
 
-        tooltip.add(
+        tooltip.add(stringToTextComponent(
                 TextFormatting.RED
                         + "Resource Count (Smelting): x"
                         + plantSet.getResult().getCount()
-        );
+        ));
 
-        tooltip.add(
+        tooltip.add(stringToTextComponent(
                 TextFormatting.DARK_PURPLE
                         + "Plant Growth Chance: "
                         + plantSet.getTextualPlantGrowthChance()
-        );
+        ));
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Throws the item when the player uses it.
      *
-     * @param worldIn -
-     * @param playerIn -
-     * @param handIn -
      * @return Result Success
      */
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn){
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
+        ItemStack itemstack = player.getHeldItem(hand);
 
-        if (!playerIn.capabilities.isCreativeMode){
+        if (!player.isCreative()){
             itemstack.shrink(1);
         }
 
-        if(ResynthConfig.PLANTS_GENERAL.produceDropSeeds)
-            throwItem(worldIn, playerIn);
+        if(/*ResynthConfig.PLANTS_GENERAL.produceDropSeeds*/ true)//TODO: Config
+            throwItem(world, player);
 
         return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
     }
@@ -148,8 +148,8 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
      */
     protected void throwItem(World worldIn, EntityPlayer playerIn){
         worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ,
-                SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.PLAYERS,
-                0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F)
+                SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.PLAYERS,
+                0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F)
         );
 
         if (!worldIn.isRemote){
@@ -160,7 +160,7 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
                     //Generic catch of all code as
                     //Minecraft likes to crash from this randomly
                     try{
-                        if(!worldIn.isRemote && MathUtil.chance(getSeedSpawnChance())) {
+                        if(MathUtil.chance(getSeedSpawnChance())) {
                             ItemPlantSeeds.addEffects(worldIn, result.getBlockPos());
                             worldIn.spawnEntity(new EntityItem(worldIn,
                                     result.getBlockPos().getX(),
@@ -172,7 +172,7 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
                         ResynthMod.getLogger().error("Failed to spawn seeds from bulb entity", e);
                     } finally {
                         try{
-                            this.setDead();
+                            this.remove();
                         } catch (Exception e){
                             ResynthMod.getLogger().error("Failed to kill off bulb entity", e);
                         }

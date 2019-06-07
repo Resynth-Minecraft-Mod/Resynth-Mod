@@ -38,7 +38,7 @@ public class ItemDenseMineralRock extends ResynthItem{
      * Default item constructor.
      */
     public ItemDenseMineralRock() {
-
+        super(ITEM_NAME);
     }
 
     /**

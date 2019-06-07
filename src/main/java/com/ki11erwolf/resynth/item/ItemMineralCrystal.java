@@ -39,7 +39,7 @@ public class ItemMineralCrystal extends ResynthItem {
      * Default item constructor.
      */
     public ItemMineralCrystal() {
-
+        super(ITEM_NAME);
     }
 
     /**

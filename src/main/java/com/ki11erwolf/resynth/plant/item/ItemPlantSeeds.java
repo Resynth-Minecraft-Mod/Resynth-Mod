@@ -32,15 +32,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -97,7 +97,6 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
         this.setCrystalline = crystalline;
         this.setMetallic = metallic;
         this.plant = plant;
-        this.setCreativeTab(ResynthTabSeeds.RESYNTH_TAB_SEEDS);
     }
 
     /**
@@ -141,26 +140,22 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
      *     in the world.
      * </p>
      *
-     * @param player
-     * @param worldIn
-     * @param pos
-     * @param hand
-     * @param facing
-     * @param hitX
-     * @param hitY
-     * @param hitZ
-     * @return
+     * @return Success if the plant was placed.
      */
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos,
-                                      EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        ItemStack itemstack = player.getHeldItem(hand);
-        net.minecraft.block.state.IBlockState state = worldIn.getBlockState(pos);
-        if (facing == EnumFacing.UP
-                && player.canPlayerEdit(pos.offset(facing), facing, itemstack)
-                && worldIn.getBlockState(pos).getBlock() == ResynthBlocks.BLOCK_MINERAL_SOIL
-                && worldIn.isAirBlock(pos.up())) {
-            worldIn.setBlockState(pos.up(), this.plant.getDefaultState());
+    public EnumActionResult onItemUse(ItemUseContext context) {
+        EntityPlayer player = context.getPlayer();
+        World world = context.getWorld();
+        BlockPos pos = context.getPos();
+
+        ItemStack itemstack = context.getPlayer().getHeldItem(context.getPlayer().getActiveHand());
+        net.minecraft.block.state.IBlockState state = context.getWorld().getBlockState(context.getPos());
+
+        if (context.getFace() == EnumFacing.UP
+                && player.canPlayerEdit(pos.offset(context.getFace()), context.getFace(), itemstack)
+                && world.getBlockState(pos).getBlock() == ResynthBlocks.BLOCK_MINERAL_SOIL
+                && world.isAirBlock(pos.up())) {
+            world.setBlockState(pos.up(), this.plant.getDefaultState());
 
             if (player instanceof EntityPlayerMP) {
                 CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos.up(), itemstack);
@@ -181,7 +176,7 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
      * @return {@link EnumPlantType#Crop}
      */
     @Override
-    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+    public EnumPlantType getPlantType(IBlockReader world, BlockPos pos) {
         return EnumPlantType.Crop;
     }
 
@@ -194,7 +189,7 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
      * this seed item places.
      */
     @Override
-    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+    public IBlockState getPlant(IBlockReader world, BlockPos pos) {
         return this.plant.getDefaultState();
     }
 
@@ -211,81 +206,81 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
      * @param flagIn
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add("Place on Mineral Soil.");
+        tooltip.add(stringToTextComponent("Place on Mineral Soil."));
         BlockPlantBase base = (BlockPlantBase) plant;
 
         if(base instanceof BlockPlantCrystalline){
-            tooltip.add("Spawns randomly when mining the ore");
+            tooltip.add(stringToTextComponent("Spawns randomly when mining the ore"));
         } else if (base instanceof BlockPlantMetallic){
-            tooltip.add("Spawns randomly when blowing up the ore");
+            tooltip.add(stringToTextComponent("Spawns randomly when blowing up the ore"));
         } else if (base instanceof BlockPlantBiochemical) {
-            tooltip.add("Spawns randomly when killing the mob");
+            tooltip.add(stringToTextComponent("Spawns randomly when killing the mob"));
         }
 
-        tooltip.add("");
+        tooltip.add(stringToTextComponent(""));
 
         if(setMetallic != null){
-            tooltip.add(
+            tooltip.add(stringToTextComponent(
                     TextFormatting.GOLD
                             + "Seed Drop Chance (Ore): "
                             + setMetallic.getTextualOreSeedDropChance()
-            );
+            ));
 
-            tooltip.add(
+            tooltip.add(stringToTextComponent(
                     TextFormatting.GREEN
                             + "Seed Drop Chance (Produce): "
                             + setMetallic.getTextualProduceSeedDropChance()
-            );
+            ));
 
-            tooltip.add(
+            tooltip.add(stringToTextComponent(
                     TextFormatting.DARK_PURPLE
                             + "Plant Growth Chance: "
                             + setMetallic.getTextualPlantGrowthChance()
-            );
+            ));
         } else if(setCrystalline != null){
-            tooltip.add(
+            tooltip.add(stringToTextComponent(
                     TextFormatting.GOLD
                             + "Seed Drop Chance (Ore): "
                             + setCrystalline.getTextualOreSeedDropChance()
-            );
+            ));
 
-            tooltip.add(
+            tooltip.add(stringToTextComponent(
                     TextFormatting.GREEN
                             + "Seed Drop Chance (Produce): "
                             + setCrystalline.getTextualProduceSeedDropChance()
-            );
+            ));
 
-            tooltip.add(
+            tooltip.add(stringToTextComponent(
                     TextFormatting.DARK_PURPLE
                             + "Plant Growth Chance: " +
                             setCrystalline.getTextualPlantGrowthChance()
-            );
+            ));
         } else if(setBiochemical != null){
-            tooltip.add(
+            tooltip.add(stringToTextComponent(
                     TextFormatting.GOLD
                             + "Seed Drop Chance (Mob): " +
                             setBiochemical.getTextualMobSeedDropChance()
-            );
+            ));
 
-            tooltip.add(
+            tooltip.add(stringToTextComponent(
                     TextFormatting.GREEN
                             + "Seed Drop Chance (Produce): "
                             + setBiochemical.getTextualProduceSeedDropChance()
-            );
+            ));
 
-            tooltip.add(
+            tooltip.add(stringToTextComponent(
                     TextFormatting.AQUA
                             + "Seed Drop Chance (Mystical Seed Pod): "
                             + setBiochemical.getTextualPodSeedDropChance()
-            );
+            ));
 
-            tooltip.add(
+            tooltip.add(stringToTextComponent(
                     TextFormatting.DARK_PURPLE
                             + "Plant Growth Chance: "
                             + setBiochemical.getTextualPlantGrowthChance()
-            );
+            ));
         }
     }
 
@@ -299,7 +294,7 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
     //@SideOnly(Side.CLIENT)
     public static void addEffects(World worldIn, BlockPos pos){
         worldIn.playSound(null, pos,
-                SoundEvents.BLOCK_NOTE_BELL, SoundCategory.BLOCKS,
+                SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
                 0.5F, 1.0F);
     }
 

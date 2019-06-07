@@ -40,6 +40,13 @@ public class ItemMineralRock extends ResynthItem {
 
     /**
      * {@inheritDoc}
+     */
+    public ItemMineralRock() {
+        super(ITEM_NAME);
+    }
+
+    /**
+     * {@inheritDoc}
      * Adds a tooltip on how to use the item.
      *
      * @param stack

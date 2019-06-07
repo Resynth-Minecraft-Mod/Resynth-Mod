@@ -17,6 +17,8 @@ package com.ki11erwolf.resynth.item;
 
 import com.ki11erwolf.resynth.ResynthTabs;
 import net.minecraft.item.Item;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 /**
  * Base class for all Resynth items.
@@ -57,8 +59,9 @@ public class ResynthItem extends Item {
      * @param properties the items properties. The item
      *                   group will be set by this class.
      */
-    public ResynthItem(Properties properties){
+    public ResynthItem(Properties properties, String name){
         super(setItemGroup(properties));
+        this.setRegistryName(ITEM_PREFIX + name);
     }
 
     /**
@@ -67,8 +70,31 @@ public class ResynthItem extends Item {
      * item group set to the default Resynth
      * item group {@link ResynthTabs#TAB_RESYNTH}.
      */
-    public ResynthItem(){
-        this(new Properties());
+    public ResynthItem(String name){
+        this(new Properties(), ITEM_PREFIX + name);
+    }
+
+    /**
+     * Constructor that allows a custom prefix.
+     *
+     * @param name the name of the item.
+     * @param prefix prefix to the name of the item.
+     */
+    public ResynthItem(String name, String prefix){
+        super(setItemGroup(new Properties()));
+        this.setRegistryName(prefix + name);
+    }
+
+    /**
+     * Constructor that allows a custom prefix.
+     *
+     * @param name the name of the item.
+     * @param prefix prefix to the name of the item.
+     * @param properties item properties.
+     */
+    public ResynthItem(Properties properties, String name, String prefix){
+        super(setItemGroup(properties));
+        this.setRegistryName(prefix + name);
     }
 
     /**
@@ -92,5 +118,9 @@ public class ResynthItem extends Item {
     private static Properties setItemGroup(Properties properties){
         properties.group(ResynthTabs.TAB_RESYNTH);
         return properties;
+    }
+
+    protected static ITextComponent stringToTextComponent(String text){
+        return new TextComponentString(text);
     }
 }

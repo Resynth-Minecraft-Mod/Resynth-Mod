@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.PlantSetCrystalline;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
@@ -51,7 +52,6 @@ public class ItemPlantProduceShard extends ResynthItem {
     public ItemPlantProduceShard(String name, PlantSetCrystalline set) {
         super(name, PREFIX);
         this.plantSet = set;
-        this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
     }
 
     /**
@@ -64,36 +64,36 @@ public class ItemPlantProduceShard extends ResynthItem {
      * @param flagIn
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add("Can be left in water for a chance to obtain more seeds.");
-        tooltip.add("Can be smelted to obtain the resource.");
+        tooltip.add(stringToTextComponent("Can be left in water for a chance to obtain more seeds."));
+        tooltip.add(stringToTextComponent("Can be smelted to obtain the resource."));
 
-        tooltip.add("");
+        tooltip.add(stringToTextComponent(""));
 
-        tooltip.add(
+        tooltip.add(stringToTextComponent(
                 TextFormatting.GOLD
                         + "Seed Drop Chance (Ore): " +
                         plantSet.getTextualOreSeedDropChance()
-        );
+        ));
 
-        tooltip.add(
+        tooltip.add(stringToTextComponent(
                 TextFormatting.GREEN
                         + "Seed Drop Chance (Produce): "
                         + plantSet.getTextualProduceSeedDropChance()
-        );
+        ));
 
 
-        tooltip.add(
+        tooltip.add(stringToTextComponent(
                 TextFormatting.RED
                         + "Resource Count (Smelting): x"
                         + plantSet.getResult().getCount()
-        );
+        ));
 
-        tooltip.add(
+        tooltip.add(stringToTextComponent(
                 TextFormatting.DARK_PURPLE
                         + "Plant Growth Chance: "
                         + plantSet.getTextualPlantGrowthChance()
-        );
+        ));
     }
 }

@@ -66,7 +66,7 @@ public class ItemMineralHoe extends ResynthItem {
      * Default constructor.
      */
     public ItemMineralHoe() {
-        super(new Properties().maxStackSize(1));
+        super(new Properties().maxStackSize(1), ITEM_NAME);
     }
 
     /**
