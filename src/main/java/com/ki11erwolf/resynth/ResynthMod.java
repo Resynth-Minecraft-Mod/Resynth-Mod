@@ -183,10 +183,8 @@ public class ResynthMod {
             proxy.preInit(event);
 
             logger.info("Resynth proxy: " + proxy.getClass().getName());
-
-            ClientCommandHandler.instance.registerCommand(new ResynthCommand());
-
             if(proxy instanceof ClientProxy){
+                ClientCommandHandler.instance.registerCommand(new ResynthCommand());
                 logger.info("Attempting Resynth version check...");
                 VersionManagerBuilder resynthVMBuilder
                         = new VersionManagerBuilder(MOD_ID)
