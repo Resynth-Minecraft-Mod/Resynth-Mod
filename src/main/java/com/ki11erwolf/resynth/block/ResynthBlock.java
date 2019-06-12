@@ -15,8 +15,12 @@
  */
 package com.ki11erwolf.resynth.block;
 
+import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.event.RegistryEvent;
 
 /**
  * Base block class for all Resynth blocks.
@@ -60,5 +64,9 @@ public class ResynthBlock extends Block {
     protected ResynthBlock register(){
         ResynthBlockRegistry.addBlock(this);
         return this;
+    }
+
+    protected static ITextComponent stringToTextComponent(String text){
+        return new TextComponentString(text);
     }
 }

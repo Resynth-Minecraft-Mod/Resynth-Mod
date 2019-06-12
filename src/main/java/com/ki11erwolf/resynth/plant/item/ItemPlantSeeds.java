@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.item;
 
+import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.PlantSetBiochemical;
@@ -92,7 +93,7 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
      */
     public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetBiochemical biochemical,
                           PlantSetMetallic metallic, PlantSetCrystalline crystalline) {
-        super(name, PREFIX);
+        super(new Properties().group(ResynthTabs.TAB_RESYNTH_SEEDS), name, PREFIX);
         this.setBiochemical = biochemical;
         this.setCrystalline = crystalline;
         this.setMetallic = metallic;

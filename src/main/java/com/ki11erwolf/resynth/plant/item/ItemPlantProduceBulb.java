@@ -17,6 +17,7 @@ package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.PlantSetBiochemical;
 import com.ki11erwolf.resynth.util.MathUtil;
@@ -65,7 +66,7 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
      * @param set the biochemical plant set this item belongs to.
      */
     public ItemPlantProduceBulb(String name, ItemPlantSeeds seeds, PlantSetBiochemical set) {
-        super(name, PREFIX);
+        super(new Properties().group(ResynthTabs.TAB_RESYNTH_PRODUCE), name, PREFIX);
         this.plantSet = set;
         this.plantSeeds = seeds;
     }

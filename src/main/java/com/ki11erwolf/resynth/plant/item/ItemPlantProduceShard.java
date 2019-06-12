@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.item;
 
+import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.PlantSetCrystalline;
 import net.minecraft.client.util.ITooltipFlag;
@@ -50,7 +51,7 @@ public class ItemPlantProduceShard extends ResynthItem {
      * @param set the plant set this item belongs to.
      */
     public ItemPlantProduceShard(String name, PlantSetCrystalline set) {
-        super(name, PREFIX);
+        super(new Properties().group(ResynthTabs.TAB_RESYNTH_PRODUCE), name, PREFIX);
         this.plantSet = set;
     }
 
