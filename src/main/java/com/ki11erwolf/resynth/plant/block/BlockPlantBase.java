@@ -15,7 +15,6 @@
  */
 package com.ki11erwolf.resynth.plant.block;
 
-import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
@@ -29,15 +28,17 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReaderBase;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -64,18 +65,27 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
             0.30000001192092896D, 0.0D, 0.30000001192092896D,
             0.699999988079071D, 0.6000000238418579D, 0.699999988079071D);
 
+    private static final VoxelShape SHAPE = Block.makeCuboidShape(
+            0.30000001192092896D, 0.0D, 0.30000001192092896D,
+            0.699999988079071D, 0.6000000238418579D, 0.699999988079071D
+    );
+
     /**
      * Default constructor.
      *
      * @param name the name the block is identified by.
      */
     protected BlockPlantBase(String name) {
-        super(Material.PLANTS, SoundType.PLANT, name, PLANT_PREFIX);
-        this.setTickRandomly(true);
+        super(
+                Properties.create(Material.PLANTS)
+                        .sound(SoundType.PLANT).needsRandomTick().hardnessAndResistance(0.0F),
+                name, PLANT_PREFIX
+        );
+        //this.setTickRandomly(true);
         //Don't make available in creative.
-        this.setCreativeTab(null);
-        this.setHardness(0.0F);
-        this.setSoundType(SoundType.PLANT);
+        //this.setCreativeTab(null);
+        //this.setHardness(0.0F);
+        //this.setSoundType(SoundType.PLANT);
     }
 
     /**
@@ -84,7 +94,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * @return {@link EnumPlantType#Crop}
      */
     @Override
-    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+    public EnumPlantType getPlantType(IBlockReader world, BlockPos pos) {
         return EnumPlantType.Crop;
     }
 
@@ -101,7 +111,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      */
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state){
-        return ResynthConfig.PLANTS_GENERAL.canBonemeal && this.canBonemeal();
+        return /*ResynthConfig.PLANTS_GENERAL.canBonemeal TODO: Config && */ this.canBonemeal();
     }
 
     /**
@@ -112,7 +122,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * @return the default state of this block.
      */
     @Override
-    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+    public IBlockState getPlant(IBlockReader world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
 
         if (state.getBlock() != this)
@@ -127,8 +137,8 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * @return CUTOUT
      */
     @Override
-    @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer(){
+    @OnlyIn(Dist.CLIENT)
+    public BlockRenderLayer getRenderLayer(){
         return BlockRenderLayer.CUTOUT;
     }
 
@@ -143,7 +153,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      */
     @Override
     @SuppressWarnings("deprecation")
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state,
+    public BlockFaceShape getBlockFaceShape(IBlockReader worldIn, IBlockState state,
                                             BlockPos pos, EnumFacing face){
         return BlockFaceShape.UNDEFINED;
     }
@@ -154,8 +164,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * @param state
      * @return false
      */
-    @Override
-    @SuppressWarnings("deprecation")
+    //@Override //TODO: Something
     public boolean isOpaqueCube(IBlockState state){
         return false;
     }
@@ -172,33 +181,45 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param blockState
-     * @param worldIn
-     * @param pos
-     * @return no collision box.
-     */
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param blockState
+//     * @param worldIn
+//     * @param pos
+//     * @return no collision box.
+//     */
+//    @Override
+//    @Nullable
+//    @SuppressWarnings("deprecation")
+//    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos){
+//        return NULL_AABB;
+//    }
+
     @Override
-    @Nullable
-    @SuppressWarnings("deprecation")
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos){
-        return NULL_AABB;
+    @Deprecated //No alternative yet
+    public VoxelShape getCollisionShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+        return VoxelShapes.empty();//Can walk through.
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param state
-     * @param source
-     * @param pos
-     * @return default aligned axis for all plants. Not used.
-     */
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param state
+//     * @param source
+//     * @param pos
+//     * @return default aligned axis for all plants. Not used.
+//     */
+//    @Override
+//    @SuppressWarnings("deprecation")
+//    public AxisAlignedBB getBoundingBox(){
+//        return DEFAULT_AABB;
+//    }
+
     @Override
-    @SuppressWarnings("deprecation")
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
-        return DEFAULT_AABB;
+    @Deprecated //No alternative yet
+    public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+        return SHAPE;
     }
 
     /**
@@ -220,57 +241,66 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         this.dropIfShould(worldIn, pos, state);
     }
 
-    /**
-     * Spawns particles around the plant.
-     */
-    @SideOnly(Side.CLIENT)
+    //TODO: Fix this later
+//    /**
+//     * Spawns particles around the plant.
+//     */
+//    //@SideOnly(Side.CLIENT)
+//    @OnlyIn(Dist.CLIENT)
+//    @Override
+//    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+//        if(!ResynthConfig.PLANTS_GENERAL.enableSmokingPlants)
+//            return;
+//
+//        IBlockState iblockstate = world.getBlockState(pos);
+//        int amount = 3;
+//
+//        if(!MathUtil.chance(2.0F))
+//            return;
+//
+//        if (iblockstate.getMaterial() != Material.AIR) {
+//            for (int i = 0; i < amount; ++i){
+//                double d0 = rand.nextGaussian() * 0.02D;
+//                double d1 = rand.nextGaussian() * 0.02D;
+//                double d2 = rand.nextGaussian() * 0.02D;
+//                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
+//                        (double)((float)pos.getX() + rand.nextFloat()),
+//                        (double)pos.getY() + (double)rand.nextFloat()
+//                                * iblockstate.getBoundingBox(world, pos).maxY,
+//                        (double)((float)pos.getZ() + rand.nextFloat()), d0, d1, d2);
+//            }
+//        }
+//        else {
+//            for (int i1 = 0; i1 < amount; ++i1) {
+//                double d0 = rand.nextGaussian() * 0.02D;
+//                double d1 = rand.nextGaussian() * 0.02D;
+//                double d2 = rand.nextGaussian() * 0.02D;
+//                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
+//                        (double)((float)pos.getX() + rand.nextFloat()),
+//                        (double)pos.getY() + (double)rand.nextFloat() * 1.0f,
+//                        (double)((float)pos.getZ() + rand.nextFloat()), d0, d1, d2);
+//            }
+//        }
+//    }
+
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param worldIn
+//     * @param pos
+//     * @return true if the block underneath is mineral soil.
+//     */
+//    @Override
+//    public boolean canPlaceBlockAt(World worldIn, BlockPos pos){
+//        //Does NOT seem to work right...
+//        return (worldIn.getBlockState(pos.down()).getBlock() == getSoilBlock());
+//    }
+
     @Override
-    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
-        if(!ResynthConfig.PLANTS_GENERAL.enableSmokingPlants)
-            return;
-
-        IBlockState iblockstate = world.getBlockState(pos);
-        int amount = 3;
-
-        if(!MathUtil.chance(2.0F))
-            return;
-
-        if (iblockstate.getMaterial() != Material.AIR) {
-            for (int i = 0; i < amount; ++i){
-                double d0 = rand.nextGaussian() * 0.02D;
-                double d1 = rand.nextGaussian() * 0.02D;
-                double d2 = rand.nextGaussian() * 0.02D;
-                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
-                        (double)((float)pos.getX() + rand.nextFloat()),
-                        (double)pos.getY() + (double)rand.nextFloat()
-                                * iblockstate.getBoundingBox(world, pos).maxY,
-                        (double)((float)pos.getZ() + rand.nextFloat()), d0, d1, d2);
-            }
-        }
-        else {
-            for (int i1 = 0; i1 < amount; ++i1) {
-                double d0 = rand.nextGaussian() * 0.02D;
-                double d1 = rand.nextGaussian() * 0.02D;
-                double d2 = rand.nextGaussian() * 0.02D;
-                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
-                        (double)((float)pos.getX() + rand.nextFloat()),
-                        (double)pos.getY() + (double)rand.nextFloat() * 1.0f,
-                        (double)((float)pos.getZ() + rand.nextFloat()), d0, d1, d2);
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param worldIn
-     * @param pos
-     * @return true if the block underneath is mineral soil.
-     */
-    @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos){
-        //Does NOT seem to work right...
-        return (worldIn.getBlockState(pos.down()).getBlock() == getSoilBlock());
+    @Deprecated //
+    public boolean isValidPosition(IBlockState state, IWorldReaderBase worldIn, BlockPos pos) {
+        return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.canSeeSky(pos))
+                && (worldIn.getBlockState(pos.down()).getBlock() == getSoilBlock());
     }
 
     /**
@@ -300,7 +330,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      */
     protected void dropIfShould(World worldIn, BlockPos pos, IBlockState state){
         if(!canStay(worldIn, pos)){
-            this.dropBlockAsItem(worldIn, pos, state, 0);
+            this.dropBlockAsItemWithChance(state, worldIn, pos, 1.0F, 0);
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         }
     }
@@ -345,45 +375,60 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      * @return the mineral content percentage of the block below.
      */
     protected float getSoilMineralContent(World world, BlockPos pos){
-        if(world.getTileEntity(pos.down()).getBlockType() != ResynthBlocks.BLOCK_MINERAL_SOIL)
+        if(world.getTileEntity(pos.down()).getBlockState().getBlock() != ResynthBlocks.BLOCK_MINERAL_SOIL)
             return 0F;
 
         TileEntityMineralSoil tEntity = (TileEntityMineralSoil)world.getTileEntity(pos.down());
         return tEntity.getMineralPercentage();
     }
 
-    /**
-     * Calls abstract grow method
-     * and ensures the block can stay.
-     *
-     * This method handles growth rules.
-     *
-     * <p>
-     *     The basic growth rules are light levels
-     *     above 9 and if the area loaded.
-     *
-     *     The rest of the growth is determined by
-     *     the specific plant instance and if the
-     *     {@link #shouldGrow(World, BlockPos)}
-     *     method gives the "go ahead".
-     * </p>
-     *
-     * @param worldIn -
-     * @param pos -
-     * @param state -
-     * @param rand -
-     */
+//    /**
+//     * Calls abstract grow method
+//     * and ensures the block can stay.
+//     *
+//     * This method handles growth rules.
+//     *
+//     * <p>
+//     *     The basic growth rules are light levels
+//     *     above 9 and if the area loaded.
+//     *
+//     *     The rest of the growth is determined by
+//     *     the specific plant instance and if the
+//     *     {@link #shouldGrow(World, BlockPos)}
+//     *     method gives the "go ahead".
+//     * </p>
+//     *
+//     * @param worldIn -
+//     * @param pos -
+//     * @param state -
+//     * @param rand -
+//     */
+//    @Override
+//    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+//        this.dropIfShould(worldIn, pos, state);
+//
+//        if (!worldIn.isAreaLoaded(pos, 1)) return;
+//        if (worldIn.getLightFromNeighbors(pos.up()) < 9)return;
+//
+//        boolean grow = this.shouldGrow(worldIn, pos);
+//        if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, grow)) {
+//            if(ResynthConfig.PLANTS_GENERAL.enableGrowth)
+//                onGrowApproved(worldIn, pos, state, rand);
+//        }
+//    }
+
     @Override
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+    @Deprecated //Why even?
+    public void tick(IBlockState state, World worldIn, BlockPos pos, Random random) {
         this.dropIfShould(worldIn, pos, state);
 
         if (!worldIn.isAreaLoaded(pos, 1)) return;
-        if (worldIn.getLightFromNeighbors(pos.up()) < 9)return;
+        if (worldIn.getLight(pos.up()) < 9)return;
 
         boolean grow = this.shouldGrow(worldIn, pos);
         if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, grow)) {
-            if(ResynthConfig.PLANTS_GENERAL.enableGrowth)
-                onGrowApproved(worldIn, pos, state, rand);
+            if(/*ResynthConfig.PLANTS_GENERAL.enableGrowth TODO: Config*/ true)
+                onGrowApproved(worldIn, pos, state, random);
         }
     }
 
