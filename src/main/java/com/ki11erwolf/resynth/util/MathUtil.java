@@ -27,6 +27,7 @@ public final class MathUtil {
      * Static final instance of {@link Random} to
      * prevent unneeded object creation.
      */
+    //TODO: Get the global random instance
     private static final Random RANDOM_INSTANCE = new Random();
 
     //Static class.

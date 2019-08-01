@@ -40,7 +40,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
 /**
