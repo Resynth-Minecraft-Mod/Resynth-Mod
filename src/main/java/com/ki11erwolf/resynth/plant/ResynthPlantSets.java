@@ -1594,7 +1594,7 @@ public final class ResynthPlantSets {
      */
     public static final ModPlantSetMetallic MOD_PLANT_SET_ER_YELLORITE
             = new ModPlantSetMetallic("yellorite", ResynthMod.MODID_EXTREME_REACTORS,
-            "brore", 0, "brore", 0) {
+            "oreyellorite", 0, "oreyellorite", 0) {
         ResynthConfig.ModPlantMetallicCfg cfg = ResynthConfig.PLANT_YELLORITE;
         @Override
         protected int getResultCount() {
