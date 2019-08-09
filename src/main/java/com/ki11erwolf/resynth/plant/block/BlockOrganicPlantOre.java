@@ -17,7 +17,6 @@ package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.block.ResynthBlock;
-import com.ki11erwolf.resynth.plant.PlantSetMetallic;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -45,7 +44,7 @@ public class BlockOrganicPlantOre extends ResynthBlock {
     /**
      * The plant set that created this block.
      */
-    private final PlantSetMetallic plantSet;
+    //private final PlantSetMetallic plantSet;
 
     /**
      * Constructs a new plant ore block instance.
@@ -53,13 +52,13 @@ public class BlockOrganicPlantOre extends ResynthBlock {
      * @param name the name of the block.
      * @param set the metallic plant set this block belongs to.
      */
-    public BlockOrganicPlantOre(String name, PlantSetMetallic set) {
+    public BlockOrganicPlantOre(String name) {
         super(
                 Properties.create(Material.GROUND).sound(SoundType.STONE).hardnessAndResistance(2.0F),
                 name, ORE_PREFIX);
         //this.setHardness(2.0F);
         //this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
-        this.plantSet = set;
+        //this.plantSet = set;
         //BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.AXE, 2);
     }
 
@@ -75,35 +74,35 @@ public class BlockOrganicPlantOre extends ResynthBlock {
     //@Override//TODO: Move to itemblock class.
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
-        tooltip.add(stringToTextComponent("Can be blown up to for a chance to obtain more seeds."));
-        tooltip.add(stringToTextComponent("Can be smelted to obtain the original ore block."));
-
-        tooltip.add(stringToTextComponent(""));
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.GOLD
-                        + "Seed Drop Chance (Ore): " +
-                        plantSet.getTextualOreSeedDropChance()
-        ));
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.GREEN
-                        + "Seed Drop Chance (Produce): "
-                        + plantSet.getTextualProduceSeedDropChance()
-        ));
-
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.RED
-                        + "Resource Count (Smelting): x"
-                        + plantSet.getResult().getCount()
-        ));
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.DARK_PURPLE
-                        + "Plant Growth Chance: "
-                        + plantSet.getTextualPlantGrowthChance()
-        ));
+//        tooltip.add(stringToTextComponent("Can be blown up to for a chance to obtain more seeds."));
+//        tooltip.add(stringToTextComponent("Can be smelted to obtain the original ore block."));
+//
+//        tooltip.add(stringToTextComponent(""));
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.GOLD
+//                        + "Seed Drop Chance (Ore): " +
+//                        plantSet.getTextualOreSeedDropChance()
+//        ));
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.GREEN
+//                        + "Seed Drop Chance (Produce): "
+//                        + plantSet.getTextualProduceSeedDropChance()
+//        ));
+//
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.RED
+//                        + "Resource Count (Smelting): x"
+//                        + plantSet.getResult().getCount()
+//        ));
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.DARK_PURPLE
+//                        + "Plant Growth Chance: "
+//                        + plantSet.getTextualPlantGrowthChance()
+//        ));
     }
 
 }

@@ -15,11 +15,9 @@
  */
 package com.ki11erwolf.resynth.plant.item;
 
-import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
-import com.ki11erwolf.resynth.plant.PlantSetBiochemical;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityEnderPearl;
@@ -56,18 +54,17 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
      * The biochemical plant set that created
      * this item.
      */
-    private final PlantSetBiochemical plantSet;
+    //private final PlantSetBiochemical plantSet;
 
     /**
      * Default item constructor.
      *
      * @param name the name of the item.
      * @param seeds the seeds item type this produce drops.
-     * @param set the biochemical plant set this item belongs to.
      */
-    public ItemPlantProduceBulb(String name, ItemPlantSeeds seeds, PlantSetBiochemical set) {
+    public ItemPlantProduceBulb(String name, ItemPlantSeeds seeds) {
         super(new Properties().group(ResynthTabs.TAB_RESYNTH_PRODUCE), name, PREFIX);
-        this.plantSet = set;
+        //this.plantSet = set;
         this.plantSeeds = seeds;
     }
 
@@ -86,37 +83,37 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
         tooltip.add(stringToTextComponent("Can be thrown for a chance at getting more seeds."));
         tooltip.add(stringToTextComponent("Can be smelted to obtain the resource."));
 
-        tooltip.add(stringToTextComponent(""));
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.GOLD
-                        + "Seed Drop Chance (Mob): " +
-                        plantSet.getTextualMobSeedDropChance()
-        ));
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.GREEN
-                        + "Seed Drop Chance (Produce): "
-                        + plantSet.getTextualProduceSeedDropChance()
-        ));
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.AQUA
-                        + "Seed Drop Chance (Mystical Seed Pod): "
-                        + plantSet.getTextualPodSeedDropChance()
-        ));
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.RED
-                        + "Resource Count (Smelting): x"
-                        + plantSet.getResult().getCount()
-        ));
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.DARK_PURPLE
-                        + "Plant Growth Chance: "
-                        + plantSet.getTextualPlantGrowthChance()
-        ));
+//        tooltip.add(stringToTextComponent(""));
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.GOLD
+//                        + "Seed Drop Chance (Mob): " +
+//                        plantSet.getTextualMobSeedDropChance()
+//        ));
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.GREEN
+//                        + "Seed Drop Chance (Produce): "
+//                        + plantSet.getTextualProduceSeedDropChance()
+//        ));
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.AQUA
+//                        + "Seed Drop Chance (Mystical Seed Pod): "
+//                        + plantSet.getTextualPodSeedDropChance()
+//        ));
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.RED
+//                        + "Resource Count (Smelting): x"
+//                        + plantSet.getResult().getCount()
+//        ));
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.DARK_PURPLE
+//                        + "Plant Growth Chance: "
+//                        + plantSet.getTextualPlantGrowthChance()
+//        ));
     }
 
     /**

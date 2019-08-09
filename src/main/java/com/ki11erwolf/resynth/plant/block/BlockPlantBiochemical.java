@@ -16,7 +16,6 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.block.ResynthBlocks;
-import com.ki11erwolf.resynth.igtooltip.HwylaDataProvider;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -41,7 +40,7 @@ import java.util.Random;
  * The block class for all plants that
  * produce mob drops.
  */
-public abstract class BlockPlantBiochemical extends BlockPlantBase implements HwylaDataProvider {
+public abstract class BlockPlantBiochemical extends BlockPlantBase {
 
     /**
      * Age (growth stage) property of the plant type.

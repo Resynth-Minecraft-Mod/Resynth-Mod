@@ -15,9 +15,6 @@
  */
 package com.ki11erwolf.resynth.block;
 
-import com.ki11erwolf.resynth.plant.PlantSetBiochemical;
-import com.ki11erwolf.resynth.plant.ResynthPlantSets;
-import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
@@ -123,41 +120,42 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
         return BlockFaceShape.UNDEFINED;
     }
 
-    /**
-     * {@inheritDoc}
-     * Determines what seeds to drop (random percentage chance)
-     * if seeds should be dropped.
-     *
-     * @param state
-     * @param worldIn
-     * @param fortune
-     * @param pos
-     * @return the seeds item to drop, the plant itself or nothing (config dependent).
-     */
-    @Override
-    @Nonnull
-    public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune) {
-        if (true/*TODO: config*/) {
-            List<PlantSetBiochemical> plants = Arrays.asList(ResynthPlantSets.getBiochemicalPlantSets());
-
-            PlantSetBiochemical plant = ResynthPlantSets.getBiochemicalPlantSets()[0];
-
-            for (int i = 0; i <= 10/*TODO: config: MYSTICAL_SEED_POD.triesPerBreak*/; i++) {
-                plant = plants.get(MathUtil.getRandomIntegerInRange(0, plants.size() - 1));
-                if (MathUtil.chance(plant.getSeedPodDropPercentage())) {
-                    return plant.getSeeds();
-                }
-            }
-
-            if (true/*TODO: config: MYSTICAL_SEED_POD.alwaysDropSeeds*/) {
-                return plant.getSeeds();
-            } else {
-                return Item.getItemFromBlock(Blocks.AIR);
-            }
-        }
-
-        return this;
-    }
+    //TODO: Redo this.
+//    /**
+//     * {@inheritDoc}
+//     * Determines what seeds to drop (random percentage chance)
+//     * if seeds should be dropped.
+//     *
+//     * @param state
+//     * @param worldIn
+//     * @param fortune
+//     * @param pos
+//     * @return the seeds item to drop, the plant itself or nothing (config dependent).
+//     */
+//    @Override
+//    @Nonnull
+//    public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune) {
+//        if (true/*TODO: config*/) {
+//            List<PlantSetBiochemical> plants = Arrays.asList(ResynthPlantSets.getBiochemicalPlantSets());
+//
+//            PlantSetBiochemical plant = ResynthPlantSets.getBiochemicalPlantSets()[0];
+//
+//            for (int i = 0; i <= 10/*TODO: config: MYSTICAL_SEED_POD.triesPerBreak*/; i++) {
+//                plant = plants.get(MathUtil.getRandomIntegerInRange(0, plants.size() - 1));
+//                if (MathUtil.chance(plant.getSeedPodDropPercentage())) {
+//                    return plant.getSeeds();
+//                }
+//            }
+//
+//            if (true/*TODO: config: MYSTICAL_SEED_POD.alwaysDropSeeds*/) {
+//                return plant.getSeeds();
+//            } else {
+//                return Item.getItemFromBlock(Blocks.AIR);
+//            }
+//        }
+//
+//        return this;
+//    }
 
     /**
      * {@inheritDoc}

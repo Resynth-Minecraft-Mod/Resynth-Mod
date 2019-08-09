@@ -17,7 +17,6 @@ package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
-import com.ki11erwolf.resynth.plant.PlantSetCrystalline;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -42,17 +41,16 @@ public class ItemPlantProduceShard extends ResynthItem {
      * The crystalline plant set that created
      * this item.
      */
-    private final PlantSetCrystalline plantSet;
+    //private final PlantSetCrystalline plantSet;
 
     /**
      * Default item constructor.
      *
      * @param name the name of the item.
-     * @param set the plant set this item belongs to.
      */
-    public ItemPlantProduceShard(String name, PlantSetCrystalline set) {
+    public ItemPlantProduceShard(String name) {
         super(new Properties().group(ResynthTabs.TAB_RESYNTH_PRODUCE), name, PREFIX);
-        this.plantSet = set;
+        //this.plantSet = set;
     }
 
     /**
@@ -72,29 +70,29 @@ public class ItemPlantProduceShard extends ResynthItem {
 
         tooltip.add(stringToTextComponent(""));
 
-        tooltip.add(stringToTextComponent(
-                TextFormatting.GOLD
-                        + "Seed Drop Chance (Ore): " +
-                        plantSet.getTextualOreSeedDropChance()
-        ));
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.GREEN
-                        + "Seed Drop Chance (Produce): "
-                        + plantSet.getTextualProduceSeedDropChance()
-        ));
-
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.RED
-                        + "Resource Count (Smelting): x"
-                        + plantSet.getResult().getCount()
-        ));
-
-        tooltip.add(stringToTextComponent(
-                TextFormatting.DARK_PURPLE
-                        + "Plant Growth Chance: "
-                        + plantSet.getTextualPlantGrowthChance()
-        ));
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.GOLD
+//                        + "Seed Drop Chance (Ore): " +
+//                        plantSet.getTextualOreSeedDropChance()
+//        ));
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.GREEN
+//                        + "Seed Drop Chance (Produce): "
+//                        + plantSet.getTextualProduceSeedDropChance()
+//        ));
+//
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.RED
+//                        + "Resource Count (Smelting): x"
+//                        + plantSet.getResult().getCount()
+//        ));
+//
+//        tooltip.add(stringToTextComponent(
+//                TextFormatting.DARK_PURPLE
+//                        + "Plant Growth Chance: "
+//                        + plantSet.getTextualPlantGrowthChance()
+//        ));
     }
 }

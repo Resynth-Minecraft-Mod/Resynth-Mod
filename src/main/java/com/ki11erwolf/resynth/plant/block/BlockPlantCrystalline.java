@@ -16,7 +16,6 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.block.ResynthBlocks;
-import com.ki11erwolf.resynth.igtooltip.HwylaDataProvider;
 
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
@@ -40,7 +39,7 @@ import java.util.Random;
  * produce non metallic (diamond, redstone,
  * coal, nether quartz and lapis) ore drops.
  */
-public abstract class BlockPlantCrystalline extends BlockPlantBase implements HwylaDataProvider {
+public abstract class BlockPlantCrystalline extends BlockPlantBase{
 
     /**
      * Growth stage (age) property of the plant type.

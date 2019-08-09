@@ -18,9 +18,6 @@ package com.ki11erwolf.resynth.plant.item;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItem;
-import com.ki11erwolf.resynth.plant.PlantSetBiochemical;
-import com.ki11erwolf.resynth.plant.PlantSetCrystalline;
-import com.ki11erwolf.resynth.plant.PlantSetMetallic;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBase;
 import com.ki11erwolf.resynth.plant.block.BlockPlantBiochemical;
 import com.ki11erwolf.resynth.plant.block.BlockPlantCrystalline;
@@ -49,7 +46,11 @@ import java.util.List;
 /**
  * The item class for all plant seeds.
  */
-public class ItemPlantSeeds extends ResynthItem implements IPlantable {
+public class ItemPlantSeeds extends ResynthItem /*implements IPlantable*/ {
+
+    public ItemPlantSeeds(){
+        super("");
+    }
 
     /**
      * Prefix for the item.
@@ -59,140 +60,141 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
     /**
      * The plant block the seed item places.
      */
-    private final Block plant;
+    //private final Block plant;
 
-    /**
-     * The biochemical plant set that created this seed class
-     * if it exists.
-     */
-    private final PlantSetBiochemical setBiochemical;
+//    /**
+//     * The biochemical plant set that created this seed class
+//     * if it exists.
+//     */
+//    private final PlantSetBiochemical setBiochemical;
+//
+//    /**
+//     * The crystalline plant set that created this seed class
+//     * if it exists.
+//     */
+//    private final PlantSetCrystalline setCrystalline;
+//
+//    /**
+//     * The metallic plant set that created this seed class
+//     * if it exists.
+//     */
+//    private final PlantSetMetallic setMetallic;
 
-    /**
-     * The crystalline plant set that created this seed class
-     * if it exists.
-     */
-    private final PlantSetCrystalline setCrystalline;
+//    /**
+//     * Default item constructor.
+//     *
+//     * @param plant the plant block to place.
+//     * @param name the name of the item (e.g. redstoneDust)
+//     * @param biochemical the biochemical plant set that created this seed class
+//     *      * if it exists.
+//     * @param metallic the metallic plant set that created this seed class
+//     *      * if it exists.
+//     * @param crystalline the crystalline plant set that created this seed class
+//     *      * if it exists.
+//     */
+//    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetBiochemical biochemical,
+//                          PlantSetMetallic metallic, PlantSetCrystalline crystalline) {
+//        super(new Properties().group(ResynthTabs.TAB_RESYNTH_SEEDS), name, PREFIX);
+//        this.setBiochemical = biochemical;
+//        this.setCrystalline = crystalline;
+//        this.setMetallic = metallic;
+//        this.plant = plant;
+//    }
 
-    /**
-     * The metallic plant set that created this seed class
-     * if it exists.
-     */
-    private final PlantSetMetallic setMetallic;
+//    /**
+//     * Item constructor.
+//     *
+//     * @param plant the plant block to place.
+//     * @param name the name of the item (e.g. redstoneDust)
+//     * @param biochemical the biochemical plant set that created this seed class.
+//     */
+//    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetBiochemical biochemical) {
+//        this(plant, name, biochemical, null, null);
+//    }
+//
+//    /**
+//     * Item constructor.
+//     *
+//     * @param plant the plant block to place.
+//     * @param name the name of the item (e.g. redstoneDust)
+//     * @param metallic the metallic plant set that created this seed class.
+//     */
+//    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetMetallic metallic) {
+//        this(plant, name, null, metallic, null);
+//    }
+//
+//    /**
+//     * Item constructor.
+//     *
+//     * @param plant the plant block to place.
+//     * @param name the name of the item (e.g. redstoneDust)
+//     * @param crystalline the crystalline plant set that created this seed class.
+//     */
+//    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetCrystalline crystalline) {
+//        this(plant, name, null, null, crystalline);
+//    }
 
-    /**
-     * Default item constructor.
-     *
-     * @param plant the plant block to place.
-     * @param name the name of the item (e.g. redstoneDust)
-     * @param biochemical the biochemical plant set that created this seed class
-     *      * if it exists.
-     * @param metallic the metallic plant set that created this seed class
-     *      * if it exists.
-     * @param crystalline the crystalline plant set that created this seed class
-     *      * if it exists.
-     */
-    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetBiochemical biochemical,
-                          PlantSetMetallic metallic, PlantSetCrystalline crystalline) {
-        super(new Properties().group(ResynthTabs.TAB_RESYNTH_SEEDS), name, PREFIX);
-        this.setBiochemical = biochemical;
-        this.setCrystalline = crystalline;
-        this.setMetallic = metallic;
-        this.plant = plant;
-    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * <p>
+//     *     Places the given plant block
+//     *     in the world.
+//     * </p>
+//     *
+//     * @return Success if the plant was placed.
+//     */
+//    @Override
+//    public EnumActionResult onItemUse(ItemUseContext context) {
+//        EntityPlayer player = context.getPlayer();
+//        World world = context.getWorld();
+//        BlockPos pos = context.getPos();
+//
+//        ItemStack itemstack = context.getPlayer().getHeldItem(context.getPlayer().getActiveHand());
+//        net.minecraft.block.state.IBlockState state = context.getWorld().getBlockState(context.getPos());
+//
+//        if (context.getFace() == EnumFacing.UP
+//                && player.canPlayerEdit(pos.offset(context.getFace()), context.getFace(), itemstack)
+//                && world.getBlockState(pos).getBlock() == ResynthBlocks.BLOCK_MINERAL_SOIL
+//                && world.isAirBlock(pos.up())) {
+//            world.setBlockState(pos.up(), this.plant.getDefaultState());
+//
+//            if (player instanceof EntityPlayerMP) {
+//                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos.up(), itemstack);
+//            }
+//
+//            itemstack.shrink(1);
+//            return EnumActionResult.SUCCESS;
+//        } else {
+//            return EnumActionResult.FAIL;
+//        }
+//    }
 
-    /**
-     * Item constructor.
-     *
-     * @param plant the plant block to place.
-     * @param name the name of the item (e.g. redstoneDust)
-     * @param biochemical the biochemical plant set that created this seed class.
-     */
-    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetBiochemical biochemical) {
-        this(plant, name, biochemical, null, null);
-    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param world
+//     * @param pos
+//     * @return {@link EnumPlantType#Crop}
+//     */
+//    @Override
+//    public EnumPlantType getPlantType(IBlockReader world, BlockPos pos) {
+//        return EnumPlantType.Crop;
+//    }
 
-    /**
-     * Item constructor.
-     *
-     * @param plant the plant block to place.
-     * @param name the name of the item (e.g. redstoneDust)
-     * @param metallic the metallic plant set that created this seed class.
-     */
-    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetMetallic metallic) {
-        this(plant, name, null, metallic, null);
-    }
-
-    /**
-     * Item constructor.
-     *
-     * @param plant the plant block to place.
-     * @param name the name of the item (e.g. redstoneDust)
-     * @param crystalline the crystalline plant set that created this seed class.
-     */
-    public ItemPlantSeeds(BlockPlantBase plant, String name, PlantSetCrystalline crystalline) {
-        this(plant, name, null, null, crystalline);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>
-     *     Places the given plant block
-     *     in the world.
-     * </p>
-     *
-     * @return Success if the plant was placed.
-     */
-    @Override
-    public EnumActionResult onItemUse(ItemUseContext context) {
-        EntityPlayer player = context.getPlayer();
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
-
-        ItemStack itemstack = context.getPlayer().getHeldItem(context.getPlayer().getActiveHand());
-        net.minecraft.block.state.IBlockState state = context.getWorld().getBlockState(context.getPos());
-
-        if (context.getFace() == EnumFacing.UP
-                && player.canPlayerEdit(pos.offset(context.getFace()), context.getFace(), itemstack)
-                && world.getBlockState(pos).getBlock() == ResynthBlocks.BLOCK_MINERAL_SOIL
-                && world.isAirBlock(pos.up())) {
-            world.setBlockState(pos.up(), this.plant.getDefaultState());
-
-            if (player instanceof EntityPlayerMP) {
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos.up(), itemstack);
-            }
-
-            itemstack.shrink(1);
-            return EnumActionResult.SUCCESS;
-        } else {
-            return EnumActionResult.FAIL;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param world
-     * @param pos
-     * @return {@link EnumPlantType#Crop}
-     */
-    @Override
-    public EnumPlantType getPlantType(IBlockReader world, BlockPos pos) {
-        return EnumPlantType.Crop;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param world
-     * @param pos
-     * @return the default state of the plant block
-     * this seed item places.
-     */
-    @Override
-    public IBlockState getPlant(IBlockReader world, BlockPos pos) {
-        return this.plant.getDefaultState();
-    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param world
+//     * @param pos
+//     * @return the default state of the plant block
+//     * this seed item places.
+//     */
+//    @Override
+//    public IBlockState getPlant(IBlockReader world, BlockPos pos) {
+//        return this.plant.getDefaultState();
+//    }
 
     /**
      * {@inheritDoc}
@@ -209,80 +211,80 @@ public class ItemPlantSeeds extends ResynthItem implements IPlantable {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add(stringToTextComponent("Place on Mineral Soil."));
-        BlockPlantBase base = (BlockPlantBase) plant;
+//        tooltip.add(stringToTextComponent("Place on Mineral Soil."));
+//        BlockPlantBase base = (BlockPlantBase) plant;
+//
+//        if(base instanceof BlockPlantCrystalline){
+//            tooltip.add(stringToTextComponent("Spawns randomly when mining the ore"));
+//        } else if (base instanceof BlockPlantMetallic){
+//            tooltip.add(stringToTextComponent("Spawns randomly when blowing up the ore"));
+//        } else if (base instanceof BlockPlantBiochemical) {
+//            tooltip.add(stringToTextComponent("Spawns randomly when killing the mob"));
+//        }
+//
+//        tooltip.add(stringToTextComponent(""));
 
-        if(base instanceof BlockPlantCrystalline){
-            tooltip.add(stringToTextComponent("Spawns randomly when mining the ore"));
-        } else if (base instanceof BlockPlantMetallic){
-            tooltip.add(stringToTextComponent("Spawns randomly when blowing up the ore"));
-        } else if (base instanceof BlockPlantBiochemical) {
-            tooltip.add(stringToTextComponent("Spawns randomly when killing the mob"));
-        }
-
-        tooltip.add(stringToTextComponent(""));
-
-        if(setMetallic != null){
-            tooltip.add(stringToTextComponent(
-                    TextFormatting.GOLD
-                            + "Seed Drop Chance (Ore): "
-                            + setMetallic.getTextualOreSeedDropChance()
-            ));
-
-            tooltip.add(stringToTextComponent(
-                    TextFormatting.GREEN
-                            + "Seed Drop Chance (Produce): "
-                            + setMetallic.getTextualProduceSeedDropChance()
-            ));
-
-            tooltip.add(stringToTextComponent(
-                    TextFormatting.DARK_PURPLE
-                            + "Plant Growth Chance: "
-                            + setMetallic.getTextualPlantGrowthChance()
-            ));
-        } else if(setCrystalline != null){
-            tooltip.add(stringToTextComponent(
-                    TextFormatting.GOLD
-                            + "Seed Drop Chance (Ore): "
-                            + setCrystalline.getTextualOreSeedDropChance()
-            ));
-
-            tooltip.add(stringToTextComponent(
-                    TextFormatting.GREEN
-                            + "Seed Drop Chance (Produce): "
-                            + setCrystalline.getTextualProduceSeedDropChance()
-            ));
-
-            tooltip.add(stringToTextComponent(
-                    TextFormatting.DARK_PURPLE
-                            + "Plant Growth Chance: " +
-                            setCrystalline.getTextualPlantGrowthChance()
-            ));
-        } else if(setBiochemical != null){
-            tooltip.add(stringToTextComponent(
-                    TextFormatting.GOLD
-                            + "Seed Drop Chance (Mob): " +
-                            setBiochemical.getTextualMobSeedDropChance()
-            ));
-
-            tooltip.add(stringToTextComponent(
-                    TextFormatting.GREEN
-                            + "Seed Drop Chance (Produce): "
-                            + setBiochemical.getTextualProduceSeedDropChance()
-            ));
-
-            tooltip.add(stringToTextComponent(
-                    TextFormatting.AQUA
-                            + "Seed Drop Chance (Mystical Seed Pod): "
-                            + setBiochemical.getTextualPodSeedDropChance()
-            ));
-
-            tooltip.add(stringToTextComponent(
-                    TextFormatting.DARK_PURPLE
-                            + "Plant Growth Chance: "
-                            + setBiochemical.getTextualPlantGrowthChance()
-            ));
-        }
+//        if(setMetallic != null){
+//            tooltip.add(stringToTextComponent(
+//                    TextFormatting.GOLD
+//                            + "Seed Drop Chance (Ore): "
+//                            + setMetallic.getTextualOreSeedDropChance()
+//            ));
+//
+//            tooltip.add(stringToTextComponent(
+//                    TextFormatting.GREEN
+//                            + "Seed Drop Chance (Produce): "
+//                            + setMetallic.getTextualProduceSeedDropChance()
+//            ));
+//
+//            tooltip.add(stringToTextComponent(
+//                    TextFormatting.DARK_PURPLE
+//                            + "Plant Growth Chance: "
+//                            + setMetallic.getTextualPlantGrowthChance()
+//            ));
+//        } else if(setCrystalline != null){
+//            tooltip.add(stringToTextComponent(
+//                    TextFormatting.GOLD
+//                            + "Seed Drop Chance (Ore): "
+//                            + setCrystalline.getTextualOreSeedDropChance()
+//            ));
+//
+//            tooltip.add(stringToTextComponent(
+//                    TextFormatting.GREEN
+//                            + "Seed Drop Chance (Produce): "
+//                            + setCrystalline.getTextualProduceSeedDropChance()
+//            ));
+//
+//            tooltip.add(stringToTextComponent(
+//                    TextFormatting.DARK_PURPLE
+//                            + "Plant Growth Chance: " +
+//                            setCrystalline.getTextualPlantGrowthChance()
+//            ));
+//        } else if(setBiochemical != null){
+//            tooltip.add(stringToTextComponent(
+//                    TextFormatting.GOLD
+//                            + "Seed Drop Chance (Mob): " +
+//                            setBiochemical.getTextualMobSeedDropChance()
+//            ));
+//
+//            tooltip.add(stringToTextComponent(
+//                    TextFormatting.GREEN
+//                            + "Seed Drop Chance (Produce): "
+//                            + setBiochemical.getTextualProduceSeedDropChance()
+//            ));
+//
+//            tooltip.add(stringToTextComponent(
+//                    TextFormatting.AQUA
+//                            + "Seed Drop Chance (Mystical Seed Pod): "
+//                            + setBiochemical.getTextualPodSeedDropChance()
+//            ));
+//
+//            tooltip.add(stringToTextComponent(
+//                    TextFormatting.DARK_PURPLE
+//                            + "Plant Growth Chance: "
+//                            + setBiochemical.getTextualPlantGrowthChance()
+//            ));
+//        }
     }
 
     /**

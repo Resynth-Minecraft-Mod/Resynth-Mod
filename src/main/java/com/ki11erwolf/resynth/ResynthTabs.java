@@ -16,7 +16,6 @@
 package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.item.ResynthItems;
-import com.ki11erwolf.resynth.plant.ResynthPlantSets;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -50,7 +49,7 @@ public final class ResynthTabs {
     public static final ItemGroup TAB_RESYNTH_SEEDS = new ItemGroup("resynth_seeds") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ResynthPlantSets.PLANT_SET_DIAMOND.getSeeds());
+            return new ItemStack(ResynthItems.ITEM_MINERAL_ROCK);
         }
     };
 
@@ -60,7 +59,7 @@ public final class ResynthTabs {
     public static final ItemGroup TAB_RESYNTH_PRODUCE = new ItemGroup("resynth_produce") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ResynthPlantSets.PLANT_SET_ENDER_PEARL.getProduce());
+            return new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL);
         }
     };
 }
