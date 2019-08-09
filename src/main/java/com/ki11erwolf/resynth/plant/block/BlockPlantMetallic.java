@@ -16,27 +16,25 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.igtooltip.HwylaDataProvider;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
+
+import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockTorch;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockStateContainer;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -49,27 +47,28 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
     /**
      * Growth stage (age) property of the plant type.
      */
-    public static final PropertyInteger GROWTH_STAGE = PropertyInteger.create(
+    public static final IntegerProperty GROWTH_STAGE = IntegerProperty.create(
             "age", 0, 7);
 
     /**
      * The direction the block is facing. Used when it's connected
      * to its produce (i.e. flowering).
      */
-    public static final PropertyDirection FACING = BlockTorch.FACING;
+    public static final DirectionProperty FACING
+            = DirectionProperty.create("facing", EnumFacing.Plane.HORIZONTAL);
 
     /**
      * List of bounding boxes for the plants growth stages.
      */
-    protected static final AxisAlignedBB[] METALLIC_STEM_AABB = new AxisAlignedBB[] {
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.125D, 0.625D), //Age=0
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.25D, 0.625D),  //Age=1
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.375D, 0.625D), //Age=2
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.5D, 0.625D),   //Age=3
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.625D, 0.625D), //Age=4
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.75D, 0.625D),  //Age=5
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.875D, 0.625D), //Age=6
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 1.0D, 0.625D)    //Age=7
+    protected static final VoxelShape[] METALLIC_STEM_AABB = new VoxelShape[] {
+            Block.makeCuboidShape(0.375D, 0.0D, 0.375D, 0.625D, 0.125D, 0.625D), //Age=0
+            Block.makeCuboidShape(0.375D, 0.0D, 0.375D, 0.625D, 0.25D, 0.625D),  //Age=1
+            Block.makeCuboidShape(0.375D, 0.0D, 0.375D, 0.625D, 0.375D, 0.625D), //Age=2
+            Block.makeCuboidShape(0.375D, 0.0D, 0.375D, 0.625D, 0.5D, 0.625D),   //Age=3
+            Block.makeCuboidShape(0.375D, 0.0D, 0.375D, 0.625D, 0.625D, 0.625D), //Age=4
+            Block.makeCuboidShape(0.375D, 0.0D, 0.375D, 0.625D, 0.75D, 0.625D),  //Age=5
+            Block.makeCuboidShape(0.375D, 0.0D, 0.375D, 0.625D, 0.875D, 0.625D), //Age=6
+            Block.makeCuboidShape(0.375D, 0.0D, 0.375D, 0.625D, 1.0D, 0.625D)    //Age=7
     };
 
     /**
@@ -86,8 +85,8 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
     public BlockPlantMetallic(Block produce, String name) {
         super(name);
         this.setDefaultState(
-                this.blockState.getBaseState().withProperty(GROWTH_STAGE, 0)
-                        .withProperty(FACING, EnumFacing.UP)
+                this.getStateContainer().getBaseState().with(GROWTH_STAGE, 0)
+                        .with(FACING, EnumFacing.UP)
         );
         this.produce = produce;
     }
@@ -102,8 +101,8 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
      * @return true if the block isn't at its max growth stage.
      */
     @Override
-    public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
-        return state.getValue(GROWTH_STAGE) != 7;
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, IBlockState state, boolean isClient) {
+        return state.get(GROWTH_STAGE) != 7;
     }
 
     /**
@@ -120,51 +119,51 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
         this.growStem(worldIn, pos, state);
     }
 
-    /**
-     * The correct bounding box for the plants growth stage.
-     *
-     * @param state -
-     * @param source -
-     * @param pos -
-     * @return the bounding box for the plant
-     * with the given growth stage.
-     */
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
-        return METALLIC_STEM_AABB[state.getValue(GROWTH_STAGE)];
-    }
+//    /**
+//     * The correct bounding box for the plants growth stage.
+//     *
+//     * @param state -
+//     * @param source -
+//     * @param pos -
+//     * @return the bounding box for the plant
+//     * with the given growth stage.
+//     */
+//    @Override
+//    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+//        return METALLIC_STEM_AABB[state.getValue(GROWTH_STAGE)];
+//    }
 
-    /**
-     * Gets the meta value from the blocks state.
-     *
-     * @param state -
-     * @return the associated meta value.
-     */
-    @Override
-    public int getMetaFromState(IBlockState state){
-        return state.getValue(GROWTH_STAGE);
-    }
-
-    /**
-     * @return a newly constructed a new block state container
-     * with the given block properties (growth stage and facing).
-     */
-    @Override
-    protected BlockStateContainer createBlockState(){
-        return new BlockStateContainer(this, GROWTH_STAGE, FACING);
-    }
-
-    /**
-     * Gets the block state with the given meta value.
-     *
-     * @param meta -
-     * @return the block state from the given meta value.
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(GROWTH_STAGE, meta);
-    }
+//    /**
+//     * Gets the meta value from the blocks state.
+//     *
+//     * @param state -
+//     * @return the associated meta value.
+//     */
+//    @Override
+//    public int getMetaFromState(IBlockState state){
+//        return state.get(GROWTH_STAGE);
+//    }
+//
+//    /**
+//     * @return a newly constructed a new block state container
+//     * with the given block properties (growth stage and facing).
+//     */
+//    @Override
+//    protected BlockStateContainer createBlockState(){
+//        return new BlockStateContainer(this, GROWTH_STAGE, FACING);
+//    }
+//
+//    /**
+//     * Gets the block state with the given meta value.
+//     *
+//     * @param meta -
+//     * @return the block state from the given meta value.
+//     */
+//    @Override
+//    @SuppressWarnings("deprecation")
+//    public IBlockState getStateFromMeta(int meta){
+//        return this.getDefaultState().withProperty(GROWTH_STAGE, meta);
+//    }
 
     /**
      * {@inheritDoc}
@@ -178,7 +177,7 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state){
+    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, IBlockState state){
         Item item = this.getSeedItem();
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
@@ -187,12 +186,12 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
      * {@inheritDoc}
      *
      * @param state
-     * @param rand
+     * @param worldIn
      * @param fortune
-     * @return nothing.
+     * @return nothing (air).
      */
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune){
+    public Item getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune){
         return Items.AIR;
     }
 
@@ -210,29 +209,12 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
      * @param fortune
      */
     @Override
-    public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops,
-                         IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+    public void getDrops(IBlockState state, NonNullList<ItemStack> drops, World world, BlockPos pos, int fortune){
         Item item = this.getSeedItem();
 
         if (item != null){
             drops.add(new ItemStack(item));
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * NO-OP.
-     *
-     * @param worldIn
-     * @param pos
-     * @param state
-     * @param chance
-     * @param fortune
-     */
-    @Override
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-        super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune);
     }
 
     /**
@@ -247,15 +229,14 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
      *
      * @return the full state of the block.
      */
-    @Override
-    @SuppressWarnings("deprecation")
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos){
-        int i =  state.getValue(GROWTH_STAGE);
-        state = state.withProperty(FACING, EnumFacing.UP);
+    //@Override//TODO: Something
+    public IBlockState getActualState(IBlockState state, IBlockReader worldIn, BlockPos pos){
+        int i =  state.get(GROWTH_STAGE);
+        state = state.with(FACING, EnumFacing.UP);
 
         for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL){
             if (worldIn.getBlockState(pos.offset(enumfacing)).getBlock() == this.produce && i == 7){
-                state = state.withProperty(FACING, enumfacing);
+                state = state.with(FACING, enumfacing);
                 break;
             }
         }
@@ -278,11 +259,11 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
      */
     @Override
     protected void onGrowApproved(World worldIn, BlockPos pos, IBlockState state, Random rand){
-        int i = state.getValue(GROWTH_STAGE);
+        int i = state.get(GROWTH_STAGE);
 
         if (i < 7) {
             //Grow
-            IBlockState newState = state.withProperty(GROWTH_STAGE, i + 1);
+            IBlockState newState = state.with(GROWTH_STAGE, i + 1);
             worldIn.setBlockState(pos, newState, 2);
         } else {
             //Place ore block
@@ -301,7 +282,7 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
                 worldIn.setBlockState(pos, this.produce.getDefaultState());
             }
         }
-        net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+        net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
     }
 
     /**
@@ -313,52 +294,57 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
      * @param state -
      */
     private void growStem(World worldIn, BlockPos pos, IBlockState state){
-        int i = state.getValue(GROWTH_STAGE) + MathHelper.getInt(worldIn.rand, 2, 5);
-        worldIn.setBlockState(pos, state.withProperty(GROWTH_STAGE, Math.min(7, i)), 2);
+        int i = state.get(GROWTH_STAGE) + MathUtil.getRandomIntegerInRange(5, 5);
+        worldIn.setBlockState(pos, state.with(GROWTH_STAGE, Math.min(7, i)), 2);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * Provides the plants growth stage to the Hwyla tooltip.
-     *
-     * @param itemStack the item stack returned by the block.
-     * @param tooltip list of strings to pass to Hwyla to show in the tooltip.
-     * @param accessor accessor used to get data from the block such as NBT.
-     * @param config current Hwyla configuration
-     */
     @Override
-    public void onHwylaBodyRequest(ItemStack itemStack, List<String> tooltip,
-                                   IWailaDataAccessor accessor, IWailaConfigHandler config){
-
-        tooltip.add(
-                TextFormatting.GREEN
-                + "Growth Stage: "
-                + getStageFromBlockMeta(accessor.getMetadata())
-        );
+    public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+        return METALLIC_STEM_AABB[state.get(GROWTH_STAGE)];
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * Changes the plant name in the Hwyla tooltip.
-     *
-     * @param itemStack the block ItemStack.
-     * @param tooltip the head tooltip array (containing the block name).
-     * @param accessor Hwyla data provider.
-     * @param config current Hwyla config settings.
-     */
-    @Override
-    public void onHwylaHeadRequest(ItemStack itemStack, List<String> tooltip,
-                                   IWailaDataAccessor accessor, IWailaConfigHandler config){
-        String blockTitle = tooltip.get(0);
-        if(blockTitle.contains("Seeds")){
-            tooltip.clear();
-            tooltip.add(0, TextFormatting.GOLD
-                    + blockTitle.replace("Seeds", "Plant"));
-            tooltip.add(TextFormatting.RED + "Drops: " + blockTitle);
-        }
-    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * Provides the plants growth stage to the Hwyla tooltip.
+//     *
+//     * @param itemStack the item stack returned by the block.
+//     * @param tooltip list of strings to pass to Hwyla to show in the tooltip.
+//     * @param accessor accessor used to get data from the block such as NBT.
+//     * @param config current Hwyla configuration
+//     */
+//    @Override
+//    public void onHwylaBodyRequest(ItemStack itemStack, List<String> tooltip,
+//                                   IWailaDataAccessor accessor, IWailaConfigHandler config){
+//
+//        tooltip.add(
+//                TextFormatting.GREEN
+//                + "Growth Stage: "
+//                + getStageFromBlockMeta(accessor.getMetadata())
+//        );
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * Changes the plant name in the Hwyla tooltip.
+//     *
+//     * @param itemStack the block ItemStack.
+//     * @param tooltip the head tooltip array (containing the block name).
+//     * @param accessor Hwyla data provider.
+//     * @param config current Hwyla config settings.
+//     */
+//    @Override
+//    public void onHwylaHeadRequest(ItemStack itemStack, List<String> tooltip,
+//                                   IWailaDataAccessor accessor, IWailaConfigHandler config){
+//        String blockTitle = tooltip.get(0);
+//        if(blockTitle.contains("Seeds")){
+//            tooltip.clear();
+//            tooltip.add(0, TextFormatting.GOLD
+//                    + blockTitle.replace("Seeds", "Plant"));
+//            tooltip.add(TextFormatting.RED + "Drops: " + blockTitle);
+//        }
+//    }
 
     /**
      * Used to get the seed item this plant instance

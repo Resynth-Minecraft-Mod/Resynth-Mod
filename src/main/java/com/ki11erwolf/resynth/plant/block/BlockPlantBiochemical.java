@@ -72,7 +72,8 @@ public abstract class BlockPlantBiochemical extends BlockPlantBase implements Hw
     public BlockPlantBiochemical(String name){
         super(name);
         this.setDefaultState(
-                this.getStateContainer().getBaseState().with(this.getGrowthStageProperty(), 0));
+                this.getStateContainer().getBaseState().with(this.getGrowthStageProperty(), 0)
+        );
         //this.setTickRandomly(true);
         //this.setCreativeTab(null);
         //this.setHardness(0.0F);

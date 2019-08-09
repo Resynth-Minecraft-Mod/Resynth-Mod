@@ -15,22 +15,21 @@
  */
 package com.ki11erwolf.resynth.plant.block;
 
-import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.igtooltip.HwylaDataProvider;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockStateContainer;
+
+import com.ki11erwolf.resynth.util.MathUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.EnumLightType;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -46,21 +45,21 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
     /**
      * Growth stage (age) property of the plant type.
      */
-    public static final PropertyInteger GROWTH_STAGE = PropertyInteger.create(
+    public static final IntegerProperty GROWTH_STAGE = IntegerProperty.create(
             "age", 0, 7);
 
     /**
      * List of bounding boxes for the plants growth stages.
      */
-    private static final AxisAlignedBB[] CRYSTALLINE_PATCH_AABB = new AxisAlignedBB[] {
-            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.125D, 0.9D),        //Age=0
-            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.25D, 0.9D),         //Age=1
-            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.375D, 0.9D),        //Age=2
-            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.5D, 0.9D),          //Age=3
-            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.625D, 0.9D),        //Age=4
-            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.75D, 0.9D),         //Age=5
-            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.875D, 0.9D),        //Age=6
-            new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 1.0D, 0.9D)           //Age=7
+    private static final VoxelShape[] CRYSTALLINE_PATCH_AABB = new VoxelShape[] {
+            Block.makeCuboidShape(0.1D, 0.0D, 0.1D, 0.9D, 0.125D, 0.9D),        //Age=0
+            Block.makeCuboidShape(0.1D, 0.0D, 0.1D, 0.9D, 0.25D, 0.9D),         //Age=1
+            Block.makeCuboidShape(0.1D, 0.0D, 0.1D, 0.9D, 0.375D, 0.9D),        //Age=2
+            Block.makeCuboidShape(0.1D, 0.0D, 0.1D, 0.9D, 0.5D, 0.9D),          //Age=3
+            Block.makeCuboidShape(0.1D, 0.0D, 0.1D, 0.9D, 0.625D, 0.9D),        //Age=4
+            Block.makeCuboidShape(0.1D, 0.0D, 0.1D, 0.9D, 0.75D, 0.9D),         //Age=5
+            Block.makeCuboidShape(0.1D, 0.0D, 0.1D, 0.9D, 0.875D, 0.9D),        //Age=6
+            Block.makeCuboidShape(0.1D, 0.0D, 0.1D, 0.9D, 1.0D, 0.9D)           //Age=7
     };
 
     /**
@@ -70,13 +69,17 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
      */
     public BlockPlantCrystalline(String name){
         super(name);
+
         this.setDefaultState(
-                this.blockState.getBaseState().withProperty(this.getGrowthStageProperty(), 0));
-        this.setTickRandomly(true);
-        this.setCreativeTab(null);
-        this.setHardness(0.0F);
-        this.setSoundType(SoundType.PLANT);
-        this.disableStats();
+                this.getStateContainer().getBaseState().with(this.getGrowthStageProperty(), 0)
+        );
+//        this.setDefaultState(
+//                this.blockState.getBaseState().withProperty(this.getGrowthStageProperty(), 0));
+//        this.setTickRandomly(true);
+//        this.setCreativeTab(null);
+//        this.setHardness(0.0F);
+//        this.setSoundType(SoundType.PLANT);
+//        this.disableStats();
     }
 
     /**
@@ -84,7 +87,7 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
      * @return the correct block state for the given growth stage.
      */
     public IBlockState withGrowthStage(int stage){
-        return this.getDefaultState().withProperty(this.getGrowthStageProperty(), stage);
+        return this.getDefaultState().with(this.getGrowthStageProperty(), stage);
     }
 
     /**
@@ -92,7 +95,7 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
      * @return true if the given plant is fully grown.
      */
     public boolean isMaxGrowthStage(IBlockState state){
-        return state.getValue(this.getGrowthStageProperty()) >= this.getMaxGrowthStage();
+        return state.get(GROWTH_STAGE) >= this.getMaxGrowthStage();
     }
 
     /**
@@ -148,7 +151,7 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
     /**
      * @return the plants growth stage property.
      */
-    protected PropertyInteger getGrowthStageProperty(){
+    protected IntegerProperty getGrowthStageProperty(){
         return GROWTH_STAGE;
     }
 
@@ -157,7 +160,7 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
      * @return the meta growth stage of the block its block state.
      */
     protected int getGrowthStage(IBlockState state){
-        return state.getValue(this.getGrowthStageProperty());
+        return state.get(this.getGrowthStageProperty());
     }
 
     /**
@@ -168,7 +171,8 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
      * @return the calculated amount of stages to grow the plant.
      */
     protected int getBonemealGrowthStageIncrease(World worldIn){
-        return MathHelper.getInt(worldIn.rand, 2, 5);
+        return MathUtil.getRandomIntegerInRange(2, 5);
+        //return MathHelper.getInt(worldIn.rand, 2, 5);
     }
 
     /**
@@ -186,15 +190,14 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
     public void onGrowApproved(World worldIn, BlockPos pos, IBlockState state, Random rand){
         if (!worldIn.isAreaLoaded(pos, 1)) return;
 
-        if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
+        if (worldIn.getLightFromNeighborsFor(EnumLightType.BLOCK, pos.up()) >= 9) {
             int i = this.getGrowthStage(state);
 
             if (i < this.getMaxGrowthStage()){
                 if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(
                         worldIn, pos, state, true)){
                     worldIn.setBlockState(pos, this.withGrowthStage(i + 1), 2);
-                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(
-                            worldIn, pos, state, worldIn.getBlockState(pos));
+                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost( worldIn, pos, state);
                 }
             }
         }
@@ -212,55 +215,58 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
      * @param fortune
      */
     @Override
-    public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops,
-                         net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        super.getDrops(drops, world, pos, state, 0);
+    public void getDrops(IBlockState state, NonNullList<ItemStack> drops, World world, BlockPos pos, int fortune){
+        super.getDrops(state, drops, world, pos, fortune);
         int age = getGrowthStage(state);
 
         if (age >= getMaxGrowthStage()){
-            drops.add(new ItemStack(this.getSeed(), 1, 0));
+            drops.add(new ItemStack(this.getSeed(), 1, new NBTTagCompound()));
         }
     }
 
-    /**
-     * Determines the correct bounding box to use for
-     * the growth stage of the plant.
-     *
-     * @param state -
-     * @param source -
-     * @param pos -
-     * @return the correct bounding box for the given plants growth stage.
-     */
+//    /**
+//     * Determines the correct bounding box to use for
+//     * the growth stage of the plant.
+//     *
+//     * @param state -
+//     * @param source -
+//     * @param pos -
+//     * @return the correct bounding box for the given plants growth stage.
+//     */
+//    @Override
+//    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+//        return CRYSTALLINE_PATCH_AABB[state.getValue(this.getGrowthStageProperty())];
+//    }
+
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
-        return CRYSTALLINE_PATCH_AABB[state.getValue(this.getGrowthStageProperty())];
+    public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+        return CRYSTALLINE_PATCH_AABB[state.get(GROWTH_STAGE)];
     }
+
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param worldIn
+//     * @param pos
+//     * @param state
+//     * @param chance
+//     * @param fortune
+//     */
+//    @Override
+//    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state,
+//                                          float chance, int fortune){
+//        super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune);
+//    }
 
     /**
      * {@inheritDoc}
      *
-     * @param worldIn
-     * @param pos
      * @param state
-     * @param chance
-     * @param fortune
-     */
-    @Override
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state,
-                                          float chance, int fortune){
-        super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param state
-     * @param rand
      * @param fortune
      * @return the produce or the seeds.
      */
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune){
+    public Item getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune){
         return this.isMaxGrowthStage(state) ? this.getProduce() : this.getSeed();
     }
 
@@ -276,7 +282,7 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state){
+    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, IBlockState state){
         return new ItemStack(this.getSeed());
     }
 
@@ -291,7 +297,7 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
      * @return true if this plant is not at its max growth stage.
      */
     @Override
-    public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient){
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, IBlockState state, boolean isClient){
         return !this.isMaxGrowthStage(state);
     }
 
@@ -306,7 +312,7 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
      */
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state){
-        return ResynthConfig.PLANTS_GENERAL.canBonemeal && this.canBonemeal();
+        return /* ResynthConfig.PLANTS_GENERAL.canBonemeal && TODO: Config*/ this.canBonemeal();
     }
 
     /**
@@ -324,81 +330,81 @@ public abstract class BlockPlantCrystalline extends BlockPlantBase implements Hw
         this.grow(worldIn, pos, state);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param meta
-     * @return
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public IBlockState getStateFromMeta(int meta){
-        return this.withGrowthStage(meta);
-    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param meta
+//     * @return
+//     */
+//    @Override
+//    @SuppressWarnings("deprecation")
+//    public IBlockState getStateFromMeta(int meta){
+//        return this.withGrowthStage(meta);
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @param state
+//     * @return
+//     */
+//    @Override
+//    public int getMetaFromState(IBlockState state){
+//        return this.getGrowthStage(state);
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @return
+//     */
+//    @Override
+//    protected BlockStateContainer createBlockState(){
+//        return new BlockStateContainer(this, GROWTH_STAGE);
+//    }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param state
-     * @return
-     */
-    @Override
-    public int getMetaFromState(IBlockState state){
-        return this.getGrowthStage(state);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return
-     */
-    @Override
-    protected BlockStateContainer createBlockState(){
-        return new BlockStateContainer(this, GROWTH_STAGE);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * Provides the plants growth stage to the Hwyla tooltip.
-     *
-     * @param itemStack the item stack returned by the block.
-     * @param tooltip list of strings to pass to Hwyla to show in the tooltip.
-     * @param accessor accessor used to get data from the block such as NBT.
-     * @param config current Hwyla configuration
-     */
-    @Override
-    public void onHwylaBodyRequest(ItemStack itemStack, List<String> tooltip,
-                                   IWailaDataAccessor accessor, IWailaConfigHandler config){
-
-        tooltip.add(
-                TextFormatting.GREEN
-                        + "Growth Stage: "
-                        + getStageFromBlockMeta(accessor.getMetadata())
-        );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * Changes the plant name in the Hwyla tooltip.
-     *
-     * @param itemStack the block ItemStack.
-     * @param tooltip the head tooltip array (containing the block name).
-     * @param accessor Hwyla data provider.
-     * @param config current Hwyla config settings.
-     */
-    @Override
-    public void onHwylaHeadRequest(ItemStack itemStack, List<String> tooltip,
-                                       IWailaDataAccessor accessor, IWailaConfigHandler config){
-        String blockTitle = tooltip.get(0);
-        if(blockTitle.contains("Seeds")){
-            tooltip.clear();
-            tooltip.add(0, TextFormatting.GOLD
-                    + blockTitle.replace("Seeds", "Patch"));
-            tooltip.add(TextFormatting.RED + "Drops: " + blockTitle);
-        }
-    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * Provides the plants growth stage to the Hwyla tooltip.
+//     *
+//     * @param itemStack the item stack returned by the block.
+//     * @param tooltip list of strings to pass to Hwyla to show in the tooltip.
+//     * @param accessor accessor used to get data from the block such as NBT.
+//     * @param config current Hwyla configuration
+//     */
+//    @Override
+//    public void onHwylaBodyRequest(ItemStack itemStack, List<String> tooltip,
+//                                   IWailaDataAccessor accessor, IWailaConfigHandler config){
+//
+//        tooltip.add(
+//                TextFormatting.GREEN
+//                        + "Growth Stage: "
+//                        + getStageFromBlockMeta(accessor.getMetadata())
+//        );
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * Changes the plant name in the Hwyla tooltip.
+//     *
+//     * @param itemStack the block ItemStack.
+//     * @param tooltip the head tooltip array (containing the block name).
+//     * @param accessor Hwyla data provider.
+//     * @param config current Hwyla config settings.
+//     */
+//    @Override
+//    public void onHwylaHeadRequest(ItemStack itemStack, List<String> tooltip,
+//                                       IWailaDataAccessor accessor, IWailaConfigHandler config){
+//        String blockTitle = tooltip.get(0);
+//        if(blockTitle.contains("Seeds")){
+//            tooltip.clear();
+//            tooltip.add(0, TextFormatting.GOLD
+//                    + blockTitle.replace("Seeds", "Patch"));
+//            tooltip.add(TextFormatting.RED + "Drops: " + blockTitle);
+//        }
+//    }
 
     /**
      * Used to get the seed item this plant instance
