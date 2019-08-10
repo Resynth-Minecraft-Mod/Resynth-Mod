@@ -37,7 +37,7 @@ public final class ResynthAnalytics {
 
     /**
      * Identifier page that all events are sent to. This
-     * allows see the mod events as "page hits".
+     * allows us to see the mod events as "page hits".
      */
     private static final String IDENTIFIER_PAGE = "/jar";
 
