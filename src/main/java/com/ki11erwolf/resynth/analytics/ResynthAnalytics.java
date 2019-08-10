@@ -15,15 +15,31 @@
  */
 package com.ki11erwolf.resynth.analytics;
 
+import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthSSL;
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.General;
 import dmurph.tracking.AnalyticsConfigData;
 import dmurph.tracking.JGoogleAnalyticsTracker;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Provides an API for more easily sending
  * Google Analytics events.
  */
+//TODO: Create event that notifies when a modded plant fails to load.
 public final class ResynthAnalytics {
+
+    /**
+     * Logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
+
+    /**
+     * Analytics enable/disable flag.
+     */
+    private static final boolean ENABLED
+            = ResynthConfig.GENERAL_CONFIG.getCategory(General.class).isAnalyticsEnabled();
 
     /**
      * The Google Analytics ID code for resynth.
@@ -76,11 +92,16 @@ public final class ResynthAnalytics {
      * @param e the event to send.
      */
     public static void send(Event e){
-        if(false/*TODO: config*/)
+        //Never send an event if analytics is disabled.
+        if(!ENABLED){
+            LOG.info("Analytics disabled! Event prevented from sending.");
             return;
+        }
+
 
         //Disable it again before sending the event.
         ResynthSSL.disableSSL();
+        LOG.info("Analytics enabled! Sending analytics event: " + e.getClass().getName());
         ANALYTICS.makeCustomRequest(e);
         //Re-enable it once we're done
         ResynthSSL.enableSSL();
@@ -91,7 +112,7 @@ public final class ResynthAnalytics {
      *
      * @param event the event
      */
-    protected static void setEventHost(Event event){
+    static void setEventHost(Event event){
         event.setHostName(RESYNTH_DOMAIN);
         event.setPageURL(IDENTIFIER_PAGE);
         event.setPageTitle(TITLE);

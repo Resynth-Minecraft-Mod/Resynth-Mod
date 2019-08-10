@@ -21,6 +21,7 @@ import com.ki11erwolf.resynth.analytics.ConnectEvent;
 import com.ki11erwolf.resynth.analytics.NewUserEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
 import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.General;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -81,7 +82,7 @@ public class ServerProxy implements Proxy {
      * new modded plants.
      */
     private void printItemAndBlockRegisters(){
-        if(true/*TODO: config*/){
+        if(ResynthConfig.GENERAL_CONFIG.getCategory(General.class).isDevHelpEnabled()){
             for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
                 ResynthMod.getNewLogger().info("<Resynth-Development-Help> | Found item: "
                         + entry.getKey().getNamespace()+ ":"

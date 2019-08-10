@@ -1,7 +1,5 @@
 package com.ki11erwolf.resynth.config;
 
-import com.ki11erwolf.resynth.config.categories.General;
-
 import java.io.File;
 
 /**
@@ -63,7 +61,5 @@ public class ResynthConfig {
             Dummy method that allows us to
             instruct the JVM to initialize this class.
          */
-
-        GENERAL_CONFIG.getCategory(General.class);
     }
 }

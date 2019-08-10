@@ -2,6 +2,7 @@ package com.ki11erwolf.resynth.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.ki11erwolf.resynth.ResynthMod;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,11 @@ import java.util.Objects;
  * and config values.
  */
 public class ConfigFile {
+
+    /**
+     * Logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
 
     /**
      * List of already parsed and loaded config categories.
@@ -29,15 +35,17 @@ public class ConfigFile {
      * @param file the file on disk.
      */
     ConfigFile(String file){
-       this.config = CommentedFileConfig.builder(Objects.requireNonNull(file)).autosave().build();
+        LOG.info("Loading config file: " + file);
+        this.config = CommentedFileConfig.builder(Objects.requireNonNull(file)).autosave().build();
 
-       try{
-           config.load();
-       } catch (Exception e){//We want a broad catch.
-           //TODO: Handle this error better.
-           ResynthMod.getNewLogger().fatal("Config load failure", e);
-           throw e;
-       }
+        try{
+            config.load();
+            LOG.info("File loaded without errors.");
+        } catch (Exception e){//We want a broad catch.
+            //TODO: Handle this error better.
+            LOG.fatal("Config load failure", e);
+            throw e;
+        }
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             config.save();
@@ -65,6 +73,7 @@ public class ConfigFile {
         try {
             category = catClass.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
+            LOG.error("Failed to instantiate config category class", e);
             throw new IllegalArgumentException("Category class not instantiatable");
         }
 
