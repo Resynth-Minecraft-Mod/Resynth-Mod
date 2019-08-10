@@ -26,31 +26,25 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * Mineral Crystal. Recipe component and fuel for the Mineral Hoe.
+ * Mineral Crystal.
+ *
+ * Recipe component and "fuel" for the Mineral Hoe.
  */
-public class ItemMineralCrystal extends ResynthItem {
-
-    /**
-     * The registry name of the item.
-     */
-    public static final String ITEM_NAME = "mineral_crystal";
+public class ItemMineralCrystal extends ResynthItem<ItemMineralCrystal> {
 
     /**
      * Default item constructor.
+     *
+     * Sets the name of the item.
      */
-    public ItemMineralCrystal() {
-        super(ITEM_NAME);
+    ItemMineralCrystal() {
+        super("mineral_crystal");
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
-     * Tooltip displaying what the item is for.
-     *
-     * @param stack
-     * @param worldIn
-     * @param tooltip
-     * @param flagIn
+     * Constructs the tooltip for the item.
      */
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,

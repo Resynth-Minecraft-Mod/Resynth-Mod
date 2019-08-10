@@ -45,28 +45,52 @@ import java.util.List;
  * Item Mineral Hoe.
  *
  * The tool of Resynth. It's used to turn dirt
- * into mineral soil by using mineral crystals.
+ * into mineral soil using mineral crystals as fuel.
  *
  * It was put in place to replace the hold way of
  * obtaining mineral soil.
  */
-public class ItemMineralHoe extends ResynthItem {
+public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
     /**
-     * Change NBT value key.
+     * NBT key used to store the number of charges in the hoe.
      */
-    public static final String NBT_TAG_CHARGES = "charges";
+    private static final String NBT_TAG_CHARGES = "charges";
 
     /**
-     * The registry name of the item.
+     * Default item constructor.
+     *
+     * Sets the name and properties of the item.
      */
-    public static final String ITEM_NAME = "mineral_hoe";
+    ItemMineralHoe() {
+        super(new Properties().maxStackSize(1), "mineral_hoe");
+    }
 
     /**
-     * Default constructor.
+     * {@inheritDoc}.
+     *
+     * Displays a tooltip with the amount of charges left
+     * and how to use the item.
      */
-    public ItemMineralHoe() {
-        super(new Properties().maxStackSize(1), ITEM_NAME);
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
+                               ITooltipFlag flagIn){
+
+        //TODO: Move to another method.
+        //NBT Initialization
+        NBTTagCompound nbt = stack.getTag();
+
+        if(nbt == null){
+            nbt = new NBTTagCompound();
+            stack.setTag(nbt);
+            nbt.setInt(NBT_TAG_CHARGES, 2/*TODO: config*/);
+        }
+
+        //NBT tooltip
+        tooltip.add(new TextComponentString(TextFormatting.GOLD + "Charges: " + nbt.getInt(NBT_TAG_CHARGES)));
+        //Usage tooltip
+        tooltip.add(new TextComponentString(
+                "Sneak + Right Click on a block with Mineral Crystals in inventory to charge."));
     }
 
     /**
@@ -82,6 +106,7 @@ public class ItemMineralHoe extends ResynthItem {
     @Override
     @SuppressWarnings("ConstantConditions")
     public EnumActionResult onItemUse(ItemUseContext context) {
+        //TODO: This is broken. Rewrite this.
         if(false/*TODO: Config*/){
             return EnumActionResult.FAIL;
         }
@@ -191,7 +216,7 @@ public class ItemMineralHoe extends ResynthItem {
             world.playSound(null, blockPos, SoundEvents.BLOCK_GRASS_PLACE,
                     SoundCategory.BLOCKS, 0.4F, 1.2F
                             / (world.rand.nextFloat() * 0.2F + 0.9F));
-            spawnBlockChangeParticles(world, blockPos, 100);
+            spawnBlockChangeParticles(world, blockPos);
 
             world.setBlockState(blockPos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
             if(!player.isCreative())
@@ -203,50 +228,16 @@ public class ItemMineralHoe extends ResynthItem {
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * Displays a tooltip with the amount of charges left
-     * and how to use the item.
-     *
-     * @param stack
-     * @param worldIn
-     * @param tooltip
-     * @param flagIn
-     */
-    @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
-                               ITooltipFlag flagIn){
-
-        //NBT Initialization
-        NBTTagCompound nbt = stack.getTag();
-
-        if(nbt == null){
-            nbt = new NBTTagCompound();
-            stack.setTag(nbt);
-            nbt.setInt(NBT_TAG_CHARGES, 2/*TODO: config*/);
-        }
-
-        //NBT tooltip
-        tooltip.add(new TextComponentString(TextFormatting.GOLD + "Charges: " + nbt.getInt(NBT_TAG_CHARGES)));
-        //Usage tooltip
-        tooltip.add(new TextComponentString(
-                "Sneak + Right Click on a block with Mineral Crystals in inventory to charge."));
-    }
-
-    /**
      * Spawns particles in the world when ever a dirt/grass
      * block is turned into mineral soil.
      *
      * @param worldIn the world in which to spawn the particles.
      * @param pos the location in the world.
-     * @param amount amount of particles.
      */
     //@SideOnly(Side.CLIENT)
     @OnlyIn(Dist.CLIENT)
-    public static void spawnBlockChangeParticles(World worldIn, BlockPos pos, int amount){
-        if (amount == 0){
-            amount = 15;
-        }
+    private static void spawnBlockChangeParticles(World worldIn, BlockPos pos){
+        int amount = 100;
 
         IBlockState iblockstate = worldIn.getBlockState(pos);
 
@@ -256,10 +247,10 @@ public class ItemMineralHoe extends ResynthItem {
                 double d1 = random.nextGaussian() * 0.02D;
                 double d2 = random.nextGaussian() * 0.02D;
                 worldIn.spawnParticle(Particles.FIREWORK,
-                        (double)((float)pos.getX() + random.nextFloat()),
+                        (float)pos.getX() + random.nextFloat(),
                         (double)pos.getY() + (double)random.nextFloat()
                                 * iblockstate.getShape(worldIn, pos).getEnd(EnumFacing.Axis.Y),
-                        (double)((float)pos.getZ() + random.nextFloat()), d0, d1, d2);
+                        (float)pos.getZ() + random.nextFloat(), d0, d1, d2);
             }
         }
         else {
@@ -268,9 +259,9 @@ public class ItemMineralHoe extends ResynthItem {
                 double d1 = random.nextGaussian() * 0.02D;
                 double d2 = random.nextGaussian() * 0.02D;
                 worldIn.spawnParticle(Particles.FIREWORK,
-                        (double)((float)pos.getX() + random.nextFloat()),
+                        (float)pos.getX() + random.nextFloat(),
                         (double)pos.getY() + (double)random.nextFloat() * 1.0f,
-                        (double)((float)pos.getZ() + random.nextFloat()), d0, d1, d2);
+                        (float)pos.getZ() + random.nextFloat(), d0, d1, d2);
             }
         }
     }

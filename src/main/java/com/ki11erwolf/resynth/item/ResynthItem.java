@@ -22,35 +22,17 @@ import net.minecraft.util.text.TextComponentString;
 
 /**
  * Base class for all Resynth items.
+ *
+ * Provides extra utility and item registration.
+ * @param <T> the subclass to this class (e.i. the inheriting class).
  */
-public class ResynthItem extends Item {
+public class ResynthItem<T> extends Item {
 
     /**
-     * The prefix for all item names.
+     * Flag to prevent queuing an item
+     * more than once.
      */
-    private static final String ITEM_PREFIX = "item";
-
-//    Old 1.12.2 constructor.
-//    /**
-//     * Sets the creative tab, unlocalized name prefix
-//     * and registry name.
-//     *
-//     * @param name the identifying name of the item (e.g. redstoneDust)
-//     */
-//    public ResynthItem(String name) {
-//        this(name, ITEM_PREFIX);
-//    }
-
-//    Old 1.12.2 constructor.
-//    /**
-//     * @param name the general name of the item (e.g. redstoneDust)
-//     * @param prefix the prefix to add before all names of the item.
-//     */
-//    public ResynthItem(String name, String prefix){
-//        this.setUnlocalizedName(ResynthMod.MOD_ID + "." + prefix + StringUtil.capitalize(name));
-//        this.setRegistryName(prefix + "_" + StringUtil.toUnderscoreLowercase(name));
-//        this.setCreativeTab(ResynthTabs.RESYNTH_TAB);
-//    }
+    private boolean isQueued = false;
 
     /**
      * Constructor for all Resynth items that takes
@@ -59,9 +41,9 @@ public class ResynthItem extends Item {
      * @param properties the items properties. The item
      *                   group will be set by this class.
      */
-    public ResynthItem(Properties properties, String name){
+    ResynthItem(Properties properties, String name){
         super(setItemGroup(properties));
-        this.setRegistryName(ITEM_PREFIX + name);
+        this.setRegistryName(name);
     }
 
     /**
@@ -71,18 +53,7 @@ public class ResynthItem extends Item {
      * item group {@link ResynthTabs#TAB_RESYNTH}.
      */
     public ResynthItem(String name){
-        this(new Properties(), ITEM_PREFIX + name);
-    }
-
-    /**
-     * Constructor that allows a custom prefix.
-     *
-     * @param name the name of the item.
-     * @param prefix prefix to the name of the item.
-     */
-    public ResynthItem(String name, String prefix){
-        super(setItemGroup(new Properties()));
-        this.setRegistryName(prefix + name);
+        this(new Properties(), name);
     }
 
     /**
@@ -97,16 +68,22 @@ public class ResynthItem extends Item {
         this.setRegistryName(prefix + name);
     }
 
-    /**
-     * Adds this item to the list of items to be
-     * registered to the game though forge.
-     *
-     * @return {@code this} item.
-     */
-    protected ResynthItem register(){
-        ResynthItemRegistry.addItem(this);
-        return this;
+    T queueRegistration(){
+        if(isQueued)
+            throw new IllegalStateException(
+                    String.format("Item: %s already queued for registration.", this.getClass().getCanonicalName())
+            );
+
+        ResynthItems.queueItem(this);
+        isQueued = true;
+
+        //noinspection unchecked //Should NOT be possible.
+        return (T)this;
     }
+
+    // ***************
+    // Utility Methods
+    // ***************
 
     /**
      * Sets the item group in the properties object
@@ -120,6 +97,13 @@ public class ResynthItem extends Item {
         return properties;
     }
 
+    /**
+     * Turns a given string into a {@link TextComponentString}
+     * containing the given string.
+     *
+     * @param text the given string text.
+     * @return a new TextComponentString containing the given string.
+     */
     protected static ITextComponent stringToTextComponent(String text){
         return new TextComponentString(text);
     }

@@ -31,28 +31,19 @@ import java.util.List;
  *
  * The item dropped from Mineral Rich Stone.
  */
-public class ItemMineralRock extends ResynthItem {
+public class ItemMineralRock extends ResynthItem<ItemMineralRock> {
 
     /**
-     * The registry name of the item.
+     * Default item constructor.
      */
-    public static final String ITEM_NAME = "mineral_rock";
-
-    /**
-     * {@inheritDoc}
-     */
-    public ItemMineralRock() {
-        super(ITEM_NAME);
+    ItemMineralRock() {
+        super("mineral_rock");
     }
 
     /**
      * {@inheritDoc}
-     * Adds a tooltip on how to use the item.
      *
-     * @param stack
-     * @param worldIn
-     * @param tooltip
-     * @param flagIn
+     * Adds a tooltip on how to use the item.
      */
     @Override
     @OnlyIn(Dist.CLIENT)

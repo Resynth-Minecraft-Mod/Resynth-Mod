@@ -25,30 +25,25 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * Dense Mineral Rock. x9 MineralRocks.
+ * Dense Mineral Rock.
+ *
+ * Compressed form of Mineral Rocks. Worth 9 Mineral Rocks.
  */
-public class ItemDenseMineralRock extends ResynthItem{
-
-    /**
-     * The registry name of the item.
-     */
-    public static final String ITEM_NAME = "dense_mineral_rock";
+public class ItemDenseMineralRock extends ResynthItem<ItemDenseMineralRock> {
 
     /**
      * Default item constructor.
+     *
+     * Sets the name of the item.
      */
-    public ItemDenseMineralRock() {
-        super(ITEM_NAME);
+    ItemDenseMineralRock() {
+        super("dense_mineral_rock");
     }
 
     /**
-     * {@inheritDoc}
-     * Adds a tooltip on how to use the item.
+     * {@inheritDoc}.
      *
-     * @param stack
-     * @param worldIn
-     * @param tooltip
-     * @param flagIn
+     * Constructs the tooltip for the item.
      */
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,

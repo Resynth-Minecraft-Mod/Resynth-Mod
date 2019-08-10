@@ -1,0 +1,12 @@
+{
+  "COMMENT": "----Tabs----",
+  "itemGroup.resynth":                                      "Resynth",
+  "itemGroup.resynth_seeds":                                "Resynth Seeds",
+  "itemGroup.resynth_produce":                              "Resynth Produce",
+
+  "_COMMENT": "----Items----",
+  "item.resynth.mineral_hoe":                               "Mineral Hoe",
+  "item.resynth.mineral_crystal":                           "Mineral Crystal",
+  "item.resynth.mineral_rock":                              "Mineral Rock",
+  "item.resynth.dense_mineral_rock":                        "Dense Mineral Rock"
+}

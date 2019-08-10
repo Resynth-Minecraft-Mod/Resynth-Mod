@@ -15,40 +15,77 @@
  */
 package com.ki11erwolf.resynth.item;
 
+import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.util.QueueRegisterer;
 import net.minecraft.item.Item;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 /**
- * Holds references to all the mod items (excluding
- * seeds and produce).
+ * Holds static references to all the mods base items (not including
+ * seeds and produce and plants).
+ *
+ * This class also handles the registering of items.
  */
-//@GameRegistry.ObjectHolder(ResynthMod.MOD_ID)
-public class ResynthItems {
+@Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
+public class ResynthItems extends QueueRegisterer<Item> {
+
+    /**
+     * Static singleton instance.
+     */
+    private static final ResynthItems INSTANCE = new ResynthItems();
+
+    /**
+     * Private constructor.
+     */
+    private ResynthItems() {}
+
+    // **************
+    // Item Instances
+    // **************
 
     /**
      * Mineral Rock. The item dropped from Mineral Rich Rock.
      */
-    public static final ResynthItem ITEM_MINERAL_ROCK = new ItemMineralRock().register();
+    public static final ResynthItem ITEM_MINERAL_ROCK = new ItemMineralRock().queueRegistration();
 
     /**
      * Dense Mineral Rock. x9 MineralRocks.
      */
-    public static final ResynthItem ITEM_DENSE_MINERAL_ROCK = new ItemDenseMineralRock().register();
+    public static final ResynthItem ITEM_DENSE_MINERAL_ROCK = new ItemDenseMineralRock().queueRegistration();
 
     /**
      * Mineral Crystal. Recipe component for the Mineral Hoe.
      */
-    public static final ResynthItem ITEM_MINERAL_CRYSTAL = new ItemMineralCrystal().register();
+    public static final ResynthItem ITEM_MINERAL_CRYSTAL = new ItemMineralCrystal().queueRegistration();
 
     /**
      * Mineral Hoe. Tool used to turn dirt/grass into mineral soil.
      */
-    public static final ResynthItem ITEM_MINERAL_HOE = new ItemMineralHoe().register();
+    public static final ResynthItem ITEM_MINERAL_HOE = new ItemMineralHoe().queueRegistration();
+
+    // *****
+    // Logic
+    // *****
 
     /**
-     * @return an array of all the Resynth items that are in the registry (Note:
-     * these items may not be registered yet).
+     * Registers all the queued items to the game.
+     *
+     * @param event forge event.
      */
-    public static Item[] getItems(){
-        return ResynthItemRegistry.getItems();
+    @SubscribeEvent
+    @SuppressWarnings("unused")//Reflection
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+        INSTANCE.iterateQueue(item -> event.getRegistry().register(item));
+    }
+
+    /**
+     * Adds the given item to the item registering queue.
+     *
+     * @param item the given item.
+     */
+    static void queueItem(ResynthItem item){
+        INSTANCE.queueForRegistration(item);
     }
 }
