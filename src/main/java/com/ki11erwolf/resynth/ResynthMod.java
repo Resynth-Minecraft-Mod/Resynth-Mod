@@ -15,52 +15,39 @@
  */
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.analytics.ErrorEvent;
-import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
-import com.ki11erwolf.resynth.proxy.Client;
+import com.ki11erwolf.resynth.proxy.ClientProxy;
 import com.ki11erwolf.resynth.proxy.Proxy;
-import com.ki11erwolf.resynth.proxy.Common;
+import com.ki11erwolf.resynth.proxy.ServerProxy;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.event.lifecycle.*;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.function.Function;
+import org.apache.logging.log4j.util.StackLocatorUtil;
 
 /**
  * Resynth mod class.
  */
-//@Mod(
-//        modid = ResynthMod.MOD_ID,
-//        name = ResynthMod.MOD_NAME,
-//        version = ResynthMod.MOD_VERSION,
-//        acceptedMinecraftVersions = ResynthMod.MC_VERSION,
-//        dependencies =
-//                        "after:appliedenergistics2; " +
-//                        "after:tconstruct; " +
-//                        "after:forestry; " +
-//                        "after:thermalfoundation;" +
-//                        //"after:actuallyadditions;" +
-//                        "after:bigreactors;" +
-//                        //"after:deepresonance;"
-//                        "after:waila;"
-//)
 @Mod(ResynthMod.MOD_ID)
 public class ResynthMod {
+
+    /**
+     * The logger for this class.
+     */
+    private static final Logger LOG = getNewLogger();
+
+    // *************
+    // Global Values
+    // *************
 
     /**
      * Resynth mod ID.
      */
     public static final String MOD_ID = "resynth";
-
-    /**
-     * Resynth mod name.
-     */
-    public static final String MOD_NAME = "Resynth";
 
     /**
      * Resynth version.
@@ -73,72 +60,24 @@ public class ResynthMod {
     public static final String MC_VERSION = "[1.13.2]";
 
     /**
-     * The package declaration for the mod.
-     */
-    public static final String MOD_PACKAGE = "com.ki11erwolf.resynth";
-
-    /**
-     * The URL to versions.json file.
-     */
-    public static final String UPDATE_URL = "https://resynth-minecraft-mod.github.io/mod/versions.json";
-
-    /**
-     * FML initialized proxy. Can be server side proxy, client side proxy or both.
-     */
-    public static final Proxy proxy = DistExecutor.runForDist(() -> Client::new, () -> Common::new);
-
-    /**
-     * Modid for Applied energistics.
-     */
-    public static final String MODID_AE2 = "appliedenergistics2";
-
-    /**
-     * Modid for Forestry.
-     */
-    public static final String MODID_FORESTRY = "forestry";
-
-    /**
-     * Modid for Tinkers' Construct.
-     */
-    public static final String MODID_TINKERS_CONSTRUCT = "tconstruct";
-
-    /**
-     * Thermal Foundation/Thermal Expansion modid.
-     */
-    public static final String MODID_THERMAL_FOUNDATION = "thermalfoundation";
-
-    /**
-     * Extreme Reactors (port of Big Reactors) modid.
-     */
-    public static final String MODID_EXTREME_REACTORS = "bigreactors";
-
-    /**
-     * Path (including pack) to the server proxy class.
-     */
-    static final String SERVER_PROXY = MOD_PACKAGE + ".proxy.Common";
-
-    /**
-     * Path (including package) to the client proxy class.
-     */
-    static final String CLIENT_PROXY = MOD_PACKAGE + ".proxy.Client";
-
-    /**
      * Resynth's new/returning user identification file.
      * This servers to separate new Resynth users
      * from existing ones.
      */
     public static final String RESYNTH_NU_FILE = "/resynth.id";
 
-    /**
-     * Logger for the mod.
-     */
-    private static Logger logger;
+    // *****
+    // Proxy
+    // *****
 
     /**
-     * The resynth world generator instance.
+     * FML initialized proxy. Can be server side proxy, client side proxy or both.
      */
-    @SuppressWarnings("FieldCanBeLocal")
-    private static ResynthWorldGen worldGen;
+    private static final Proxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
+
+    // ****************
+    // Mod Construction
+    // ****************
 
     /**
      * Mod constructor.
@@ -146,72 +85,89 @@ public class ResynthMod {
      * Calls the construct method of the selected proxy class.
      */
     public ResynthMod(){
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
-        wrapError((object) -> {
-            proxy.construct();
-            return null;
-        }, "construct");
+    }
+
+    // ************
+    // Proxy Events
+    // ************
+
+    /**
+     * First mod registration event. Called to
+     * initialize and register the Resynth mod.
+     *
+     * @param event forge provided event.
+     */
+    private void setup(final FMLCommonSetupEvent event){
+        LOG.info(String.format("Starting Resynth %s setup...", MOD_VERSION));
+        proxy.setup(event);
     }
 
     /**
-     * Forge FMLCommonSetupEvent handler.
+     * Client side mod registration event.
      *
-     * @param setupEvent forge common setup event.
+     * @param event forge provided event.
+     */
+    private void doClientStuff(final FMLClientSetupEvent event) {
+        if(proxy instanceof ClientProxy)
+            proxy.doClientStuff(event);
+    }
+
+    /**
+     * InterModCommunication message send event.
+     *
+     * @param event forge provided event.
+     */
+    private void enqueueIMC(final InterModEnqueueEvent event){
+        proxy.enqueueIMC(event);
+    }
+
+    /**
+     * InterModCommunication process event.
+     *
+     * @param event forge provided event.
+     */
+    private void processIMC(final InterModProcessEvent event){
+        proxy.processIMC(event);
+    }
+
+    /**
+     * Server side registration event.
+     *
+     * @param event forge provided event.
      */
     @SubscribeEvent
-    public void commonSetup(FMLCommonSetupEvent setupEvent){
-        wrapError((object) -> {
-            proxy.commonSetup(setupEvent);
-            return null;
-        }, "commonSetup");
+    @SuppressWarnings("unused")//Reflection
+    public void onServerStarting(FMLServerStartingEvent event) {
+        proxy.onServerStarting(event);
     }
 
     /**
-     * Forge FMLClientSetupEvent handler.
+     * Called when the game is stopping.
      *
-     * @param setupEvent forge client setup event.
+     * @param event Forge event.
      */
     @SubscribeEvent
-    public void clientSetup(FMLClientSetupEvent setupEvent){
-        wrapError((object) -> {
-            proxy.clientSetup(setupEvent);
-            return null;
-        }, "clientSetup");
+    @SuppressWarnings("unused")//Reflection
+    public void onServerStopped(FMLServerStoppedEvent event){
+        if(!(proxy instanceof ClientProxy))
+            proxy.onServerStopped(event);
     }
 
-    /**
-     * Forge FMLLoadCompleteEvent handler.
-     *
-     * @param completeEvent forge complete event.
-     */
-    @SubscribeEvent
-    public void complete(FMLLoadCompleteEvent completeEvent){
-        wrapError((object) -> {
-            proxy.complete(completeEvent);
-            return null;
-        }, "complete");
-    }
+    // ******
+    // Logger
+    // ******
 
     /**
-     * @return the logger for the mod.
+     * @return a new apache log4j logging instance.
+     * Equivalent to {@link LogManager#getLogger()}.
      */
-    public static Logger getLogger(){
-        return logger;
-    }
-
-    /**
-     * Wraps a block of code in a try/catch
-     * that reports and logs any exceptions.
-     *
-     * @param t lambda block of code.
-     */
-    private static void wrapError(Function<Void, Void> t, String initEvent){
-        try{
-            t.apply(null);
-        } catch (Exception e){
-            getLogger().fatal("Error in Resynth " + initEvent + "()", e);
-            ResynthAnalytics.send(new ErrorEvent());
-            throw e;
-        }
+    //TODO: Fix lazy calls to this method.
+    public static Logger getNewLogger(){
+        return LogManager.getLogger(StackLocatorUtil.getCallerClass(2));
     }
 }

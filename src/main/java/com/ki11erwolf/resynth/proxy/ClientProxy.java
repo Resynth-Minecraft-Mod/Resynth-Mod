@@ -16,34 +16,28 @@
 package com.ki11erwolf.resynth.proxy;
 
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 /**
  * Client side initialization class.
  */
-public class Client implements Proxy {
+public class ClientProxy extends ServerProxy {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void construct() {
-
+    public void setup(FMLCommonSetupEvent event) {
+        //Do registration for the server as well (dedicated server)
+        super.setup(event);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void clientSetup(FMLClientSetupEvent setupEvent) {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void complete(FMLLoadCompleteEvent completeEvent) {
+    public void doClientStuff(FMLClientSetupEvent event) {
 
     }
 }

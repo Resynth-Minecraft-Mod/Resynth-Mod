@@ -15,10 +15,8 @@
  */
 package com.ki11erwolf.resynth.proxy;
 
-import com.ki11erwolf.resynth.ResynthConfig;
 import com.ki11erwolf.resynth.ResynthFurnaceRecipes;
 import com.ki11erwolf.resynth.ResynthMod;
-import com.ki11erwolf.resynth.ResynthWorldGen;
 import com.ki11erwolf.resynth.analytics.ConnectEvent;
 import com.ki11erwolf.resynth.analytics.NewUserEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
@@ -26,7 +24,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.File;
@@ -34,33 +31,24 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Common(server) side initialization class.
+ * Server(common) side initialization class.
  */
-public class Common implements Proxy {
+public class ServerProxy implements Proxy {
 
     /**
      * {@inheritDoc}
+     *
+     * <p/>
+     *
+     * Handles the bulk of the mod initialization.
+     *
+     * @param event forge provided event.
      */
     @Override
-    public void construct() {
+    public void setup(FMLCommonSetupEvent event) {
         sendConnectEvent();
+        printItemAndBlockRegisters();
         ResynthFurnaceRecipes.registerFurnaceRecipes();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void commonSetup(FMLCommonSetupEvent setupEvent) {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void complete(FMLLoadCompleteEvent completeEvent) {
-
     }
 
     /**
@@ -71,37 +59,35 @@ public class Common implements Proxy {
         ResynthAnalytics.send(new ConnectEvent());
 
         File resynthFile
-                = new File( //TODO: get mod directory
-                ResynthMod.RESYNTH_NU_FILE);
+                = new File(System.getProperty("user.home") + "/" + ResynthMod.RESYNTH_NU_FILE);
 
         if(!resynthFile.exists()){
             ResynthAnalytics.send(new NewUserEvent());
             try {
                 boolean create = resynthFile.createNewFile();
                 if(!create)
-                    ResynthMod.getLogger().error("Failed to create Resynth NU file");
+                    ResynthMod.getNewLogger().error("Failed to create Resynth NU file");
             } catch (IOException e) {
-                ResynthMod.getLogger().error("Failed to create Resynth NU file", e);
+                ResynthMod.getNewLogger().error("Failed to create Resynth NU file", e);
             }
         }
     }
 
     /**
      * Prints every registered block and item to the console
-     * if the debug setting is enabled.
+     * if the debug setting is enabled. This helps with adding
+     * new modded plants.
      */
     private void printItemAndBlockRegisters(){
         if(true/*TODO: config*/){
-            //Prints all registered blocks/items to console.
-            //Helps with adding other mods ore plants
             for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
-                ResynthMod.getLogger().info("<Resynth-Development-Help> | Found item: "
+                ResynthMod.getNewLogger().info("<Resynth-Development-Help> | Found item: "
                         + entry.getKey().getNamespace()+ ":"
                         + entry.getKey().toString());
             }
 
             for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
-                ResynthMod.getLogger().info("<Resynth-Development-Help> | Found block: "
+                ResynthMod.getNewLogger().info("<Resynth-Development-Help> | Found block: "
                         + entry.getKey().getNamespace() + ":"
                         + entry.getKey().toString());
             }

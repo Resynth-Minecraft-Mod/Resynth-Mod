@@ -413,7 +413,7 @@ public class JGoogleAnalyticsTracker {
      */
     public synchronized void makeCustomRequest(AnalyticsRequestData argData) {
         if (!enabled) {
-            ResynthMod.getLogger().debug("Ignoring tracking request, enabled is false");
+            ResynthMod.getNewLogger().debug("Ignoring tracking request, enabled is false");
             return;
         }
         if (argData == null) {
@@ -452,7 +452,7 @@ public class JGoogleAnalyticsTracker {
                     fifo.notify();
                 }
         		if(!backgroundThreadMayRun){
-        			ResynthMod.getLogger().error("A tracker request has been added to the queue but the background thread isn't running.", url);
+        			ResynthMod.getNewLogger().error("A tracker request has been added to the queue but the background thread isn't running.", url);
         		}
         		break;
         }
@@ -467,10 +467,10 @@ public class JGoogleAnalyticsTracker {
             connection.connect();
             int responseCode = connection.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
-                ResynthMod.getLogger().error("JGoogleAnalyticsTracker: Error requesting url '{}', received response code {}", argURL, responseCode);
+                ResynthMod.getNewLogger().error("JGoogleAnalyticsTracker: Error requesting url '{}', received response code {}", argURL, responseCode);
             }
         } catch (Exception e) {
-            ResynthMod.getLogger().warn("Error in analytics", e);
+            ResynthMod.getNewLogger().warn("Error in analytics", e);
         }
     }
     
@@ -519,7 +519,7 @@ public class JGoogleAnalyticsTracker {
                                 }
                             }
                         } catch (Exception e) {
-                            ResynthMod.getLogger().warn("Error in analytics", e);
+                            ResynthMod.getNewLogger().warn("Error in analytics", e);
                         }
                     }
                 }

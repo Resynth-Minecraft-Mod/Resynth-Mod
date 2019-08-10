@@ -167,12 +167,12 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
                                     new ItemStack(plantSeeds)));
                         }
                     } catch (Exception e){
-                        ResynthMod.getLogger().error("Failed to spawn seeds from bulb entity", e);
+                        ResynthMod.getNewLogger().error("Failed to spawn seeds from bulb entity", e);
                     } finally {
                         try{
                             this.remove();
                         } catch (Exception e){
-                            ResynthMod.getLogger().error("Failed to kill off bulb entity", e);
+                            ResynthMod.getNewLogger().error("Failed to kill off bulb entity", e);
                         }
                     }
                 }

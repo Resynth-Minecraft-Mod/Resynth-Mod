@@ -86,7 +86,7 @@ public class ResynthSSL {
                 //Install the all-trusting host verifier
                 HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
             } catch (NoSuchAlgorithmException | KeyManagementException e) {
-                ResynthMod.getLogger().error("Failed to disable SSL", e);
+                ResynthMod.getNewLogger().error("Failed to disable SSL", e);
             }
             isSSLDisabled = true;
         }
