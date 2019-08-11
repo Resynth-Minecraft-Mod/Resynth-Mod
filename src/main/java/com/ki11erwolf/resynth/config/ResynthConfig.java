@@ -5,7 +5,11 @@ import java.io.File;
 /**
  * Holds references to the various configuration
  * files used by Resynth. As well as handles
- * initialization.
+ * initialization of config.
+ *
+ * This class (including all config) is loaded when it's
+ * first used (i.e. lazily initialized). So it should be
+ * ready to use at any point in the application/mod life-cycle.
  */
 public class ResynthConfig {
 
@@ -51,15 +55,5 @@ public class ResynthConfig {
     @SuppressWarnings("SameParameterValue")
     private static String newConfig(String name){
         return CONFIG_FOLDER + name + ".toml";
-    }
-
-    /**
-     * Initializes the mods config classes and functionality.
-     */
-    public static void init(){
-        /*
-            Dummy method that allows us to
-            instruct the JVM to initialize this class.
-         */
     }
 }

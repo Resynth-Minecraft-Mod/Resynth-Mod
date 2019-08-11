@@ -48,8 +48,12 @@ public class ConfigFile {
         }
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            LOG.info("Saving config file: " + file + "...");
+
             config.save();
             config.close();
+
+            LOG.info("Config file saved!");
         }));
     }
 

@@ -68,7 +68,7 @@ public class ConfigBooleanValue implements ConfigValue {
      */
     @Override
     public String getComment() {
-        return comment + " (type=boolean, default=" + defaultValue +")";
+        return comment + "\n(type=boolean, default=" + defaultValue +")";
     }
 
     /**

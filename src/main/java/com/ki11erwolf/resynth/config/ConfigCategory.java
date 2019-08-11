@@ -28,10 +28,10 @@ public abstract class ConfigCategory {
      * grouping.
      *
      * @param uniqueName The unique name (not enforced) of this
-     * category/group.
+     * category/group. All spaces are replaced with hyphens (-).
      */
     public ConfigCategory(String uniqueName){
-        this.uniqueName = Objects.requireNonNull(uniqueName);
+        this.uniqueName = Objects.requireNonNull(uniqueName.replace(' ', '-'));
     }
 
     /**

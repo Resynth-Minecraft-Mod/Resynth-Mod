@@ -18,7 +18,7 @@ package com.ki11erwolf.resynth.analytics;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthSSL;
 import com.ki11erwolf.resynth.config.ResynthConfig;
-import com.ki11erwolf.resynth.config.categories.General;
+import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import dmurph.tracking.AnalyticsConfigData;
 import dmurph.tracking.JGoogleAnalyticsTracker;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +39,7 @@ public final class ResynthAnalytics {
      * Analytics enable/disable flag.
      */
     private static final boolean ENABLED
-            = ResynthConfig.GENERAL_CONFIG.getCategory(General.class).isAnalyticsEnabled();
+            = ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).isAnalyticsEnabled();
 
     /**
      * The Google Analytics ID code for resynth.

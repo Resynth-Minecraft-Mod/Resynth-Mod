@@ -68,7 +68,7 @@ public class ConfigStringValue implements ConfigValue {
      */
     @Override
     public String getComment() {
-        return comment + " (type=string, default=" + defaultValue + ")";
+        return comment + "\n(type=string, default=" + defaultValue + ")";
     }
 
     /**

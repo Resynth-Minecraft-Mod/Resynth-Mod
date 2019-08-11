@@ -5,7 +5,7 @@ import com.ki11erwolf.resynth.config.*;
 /**
  * General configuration settings used by Resynth.
  */
-public class General extends ConfigCategory {
+public class GeneralConfig extends ConfigCategory {
 
     // *************
     // Config Values
@@ -37,7 +37,7 @@ public class General extends ConfigCategory {
     /**
      * Constructor.
      */
-    public General() {
+    public GeneralConfig() {
         super("general-resynth-config");
     }
 

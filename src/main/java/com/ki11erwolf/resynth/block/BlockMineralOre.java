@@ -15,6 +15,8 @@
  */
 package com.ki11erwolf.resynth.block;
 
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.MineralOreConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
@@ -24,40 +26,40 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Random;
 
 /**
- * Mineral Rich Stone.
- *
- * The mods ore block.
+ * Mineral Rich Stone. The mods ore block.
  */
+//TODO: Maybe rename to BlockMineralStone or just MineralStone
 public class BlockMineralOre extends ResynthBlock{
+
+    /**
+     * The configuration settings for this block.
+     */
+    private static final MineralOreConfig CONFIG = ResynthConfig.GENERAL_CONFIG.getCategory(MineralOreConfig.class);
 
     /**
      * Sets the basic properties of the block.
      */
-    protected BlockMineralOre() {
+    BlockMineralOre() {
         super(
                 Block.Properties.create(Material.ROCK)
                         .hardnessAndResistance(3.0F, 3.0F)
                         .lightValue(1),
                 "mineral_ore"
         );
-        //this.setHardness(oreCfg.hardness);
-        //this.setLightLevel(0.25F);
-        //BlockUtil.setHarvestLevel(this, BlockUtil.HarvestTools.PICKAXE, 2);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param state -
-     * @param worldIn -
-     * @param pos -
-     * @param fortune -
-     * @return {@link com.ki11erwolf.resynth.item.ItemMineralRock} as the item dropped.
+     * @return The item dropped when the block is broken:
+     * {@link ResynthItems#ITEM_MINERAL_ROCK}.
      */
     @Nonnull
     @Override
@@ -66,61 +68,68 @@ public class BlockMineralOre extends ResynthBlock{
     }
 
     /**
-     * The number of items dropped (with fortune)
+     * {@inheritDoc}
      *
-     * @param fortune fortune level.
-     * @param random random object instance.
-     * @return the number of items dropped with fortune.
-     * Determined by config settings.
-     */
-    //@Override
-    public int quantityDroppedWithBonus(int fortune, @Nonnull Random random) {
-        if(fortune == 0)
-            return this.quantityDropped(null, random);
-
-        if(fortune == 3)
-            return this.quantityDropped(null, random)
-                    + MathUtil.getRandomIntegerInRange(1, (fortune * 10/*TODO: Config*/) - 1);
-
-        return this.quantityDropped(null, random) + MathUtil.getRandomIntegerInRange(0, fortune * 10/*TODO: Config*/);
-    }
-
-    /**
-     * The number of items dropped.
-     *
-     * @param random random object instance.
-     * @return the number of items dropped without fortune.
+     * @return the number of items to drop when this block is broken.
      * Determined by config settings.
      */
     @Override
+    @SuppressWarnings("deprecation")
     public int quantityDropped(IBlockState state, Random random) {
-        return 10 + (MathUtil.chance(10/*TODO: Config*/) ? 10/*TODO: Config*/ : 0);
+        return CONFIG.getBaseDrops()
+                + (MathUtil.chance((float)CONFIG.getExtraDropsChance()) ? CONFIG.getExtraDrops() : 0);
     }
 
-//    /**
-//     * The amount of experience dropped by the block.
-//     *
-//     * @param state -
-//     * @param world -
-//     * @param pos -
-//     * @param fortune -
-//     * @return Experience amount to drop. Determined by config. Minimum is 2.
-//     */
-//    @Override
-//    public int getExpDrop(IBlockState state, net.minecraft.world.IBlockReader world, BlockPos pos, int fortune){
-//        if (this.getItemDropped(null, null, null, 0) != Item.getItemFromBlock(this)){
-//            return 2 + RANDOM.nextInt(10/*TODO: Config*/);
-//        }
-//
-//        return 0;
-//    }
+    /**
+     * {@inheritDoc}
+     *
+     * @return the amount of experience points to give the player
+     * when they break the block. Determined by config.
+     */
+    @Override
+    public int getExpDrop(IBlockState state, net.minecraft.world.IWorldReader reader, BlockPos pos, int fortune) {
+        //noinspection deprecation
+        if (this.getItemDropped(null, null, null, 0) != Item.getItemFromBlock(this)){
+            int min = CONFIG.getMinExpDropped(); int max = CONFIG.getMaxExpDropped();
+
+            if(min > max)
+                min = max;
+
+            return MathUtil.getRandomIntegerInRange(min, max);
+        }
+
+        return 0;
+    }
 
     /**
-     * Drops the ore's item instead of the block when
-     * silk touch is used. This block is useless.
+     * {@inheritDoc}
      *
-     * @param state -
-     * @return {@link com.ki11erwolf.resynth.item.ItemMineralRock}
+     * @return The tool needed to break this block: Pickaxe.
+     */
+    @Nullable
+    @Override
+    public ToolType getHarvestTool(IBlockState state) {
+        return ToolType.PICKAXE;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return the required tool level to break this block: 2 (iron).
+     */
+    @Override
+    public int getHarvestLevel(IBlockState state) {
+        return 2;
+    }
+
+    /**
+     * {@inheritDoc}.
+     *
+     * Overrides silk touch - it's not wanted.
+     *
+     * @param state
+     * @return the item to drop when the block is broken with a
+     * silk touch pickaxe: {@link ResynthItems#ITEM_MINERAL_ROCK}.
      */
     @Nonnull
     @Override

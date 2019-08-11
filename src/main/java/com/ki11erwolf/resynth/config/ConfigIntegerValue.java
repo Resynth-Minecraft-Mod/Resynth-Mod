@@ -97,9 +97,9 @@ public class ConfigIntegerValue implements ConfigValue {
     @Override
     public String getComment() {
         return comment + ((min == 0 && max == 0)
-                ? " (type=integer, min=" + Integer.MIN_VALUE + ", max="
+                ? "\n(type=integer, min=" + Integer.MIN_VALUE + ", max="
                     + Integer.MAX_VALUE + ", default=" + defaultValue + ")"
-                : " (type=integer, min=" + min + ", max=" + max + ", default=" + defaultValue + ")");
+                : "\n(type=integer, min=" + min + ", max=" + max + ", default=" + defaultValue + ")");
     }
 
     /**

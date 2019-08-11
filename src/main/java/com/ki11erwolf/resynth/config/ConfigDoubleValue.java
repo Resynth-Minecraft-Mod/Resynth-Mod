@@ -97,9 +97,9 @@ public class ConfigDoubleValue implements ConfigValue {
     @Override
     public String getComment() {
         return comment + ((min == 0 && max == 0)
-                ? " (type=double, min=" + Double.MIN_VALUE + ", max="
+                ? "\n(type=double, min=" + Double.MIN_VALUE + ", max="
                     + Double.MAX_VALUE + ", default=" + defaultValue + ")"
-                : " (type=double, min=" + min + ", max=" + max + ", default=" + defaultValue + ")");
+                : "\n(type=double, min=" + min + ", max=" + max + ", default=" + defaultValue + ")");
     }
 
     /**
