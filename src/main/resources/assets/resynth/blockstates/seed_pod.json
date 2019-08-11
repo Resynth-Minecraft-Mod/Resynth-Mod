@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": [
+      { "model": "resynth:block/seed_pod" }
+    ]
+  }
+}

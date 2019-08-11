@@ -53,7 +53,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
     /**
      * Prefix for all plant blocks.
      */
-    protected static final String PLANT_PREFIX = "plant";
+    protected static final String PLANT_PREFIX = "plant_";
 
     /**
      * The default bounding box for plant blocks.
@@ -78,7 +78,7 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         super(
                 Properties.create(Material.PLANTS)
                         .sound(SoundType.PLANT).needsRandomTick().hardnessAndResistance(0.0F),
-                name, PLANT_PREFIX
+                PLANT_PREFIX + name
         );
         //this.setTickRandomly(true);
         //Don't make available in creative.

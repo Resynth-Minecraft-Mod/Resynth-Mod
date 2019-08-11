@@ -34,7 +34,7 @@ public class ResynthItems extends QueueRegisterer<Item> {
     /**
      * Static singleton instance.
      */
-    private static final ResynthItems INSTANCE = new ResynthItems();
+    static final ResynthItems INSTANCE = new ResynthItems();
 
     /**
      * Private constructor.
@@ -78,14 +78,5 @@ public class ResynthItems extends QueueRegisterer<Item> {
     @SuppressWarnings("unused")//Reflection
     public static void registerItems(RegistryEvent.Register<Item> event) {
         INSTANCE.iterateQueue(item -> event.getRegistry().register(item));
-    }
-
-    /**
-     * Adds the given item to the item registering queue.
-     *
-     * @param item the given item.
-     */
-    static void queueItem(ResynthItem item){
-        INSTANCE.queueForRegistration(item);
     }
 }

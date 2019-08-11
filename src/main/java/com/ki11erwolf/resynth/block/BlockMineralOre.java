@@ -43,8 +43,7 @@ public class BlockMineralOre extends ResynthBlock{
                 Block.Properties.create(Material.ROCK)
                         .hardnessAndResistance(3.0F, 3.0F)
                         .lightValue(1),
-
-                "mineralOre"
+                "mineral_ore"
         );
         //this.setHardness(oreCfg.hardness);
         //this.setLightLevel(0.25F);

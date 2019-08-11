@@ -39,7 +39,7 @@ public class BlockOrganicPlantOre extends ResynthBlock {
     /**
      * Prefix for the ore block.
      */
-    protected static final String ORE_PREFIX = "ore";
+    protected static final String ORE_PREFIX = "ore_";
 
     /**
      * The plant set that created this block.
@@ -50,12 +50,12 @@ public class BlockOrganicPlantOre extends ResynthBlock {
      * Constructs a new plant ore block instance.
      *
      * @param name the name of the block.
-     * @param set the metallic plant set this block belongs to.
      */
     public BlockOrganicPlantOre(String name) {
         super(
                 Properties.create(Material.GROUND).sound(SoundType.STONE).hardnessAndResistance(2.0F),
-                name, ORE_PREFIX);
+                ORE_PREFIX + name
+        );
         //this.setHardness(2.0F);
         //this.setCreativeTab(ResynthTabProduce.RESYNTH_TAB_PRODUCE);
         //this.plantSet = set;

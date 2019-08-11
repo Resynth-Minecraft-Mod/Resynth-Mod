@@ -71,7 +71,7 @@ public class ResynthMod {
     // *****
 
     /**
-     * FML initialized proxy. Can be server side proxy, client side proxy or both.
+     * FML initialized proxy. Will be ServerProxy on dedicated server, ClientProxy otherwise.
      */
     private static final Proxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 

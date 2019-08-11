@@ -16,56 +16,95 @@
 package com.ki11erwolf.resynth.block;
 
 import com.ki11erwolf.resynth.ResynthTabs;
-import com.ki11erwolf.resynth.util.StringUtil;
+import com.ki11erwolf.resynth.item.ResynthItemBlock;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.event.RegistryEvent;
 
 /**
  * Base block class for all Resynth blocks.
+ *
+ * Provides extra utility, registration and a linked ItemBlock.
+ *
+ * @param <T> the subclass to this class (e.i. the inheriting class).
  */
-public class ResynthBlock extends Block {
+public class ResynthBlock<T extends ResynthBlock> extends Block {
 
     /**
-     * The prefix for all block names (excluding plant/seed/produce items).
+     * Flag to prevent queuing a block
+     * more than once.
      */
-    private static final String BLOCK_PREFIX = "block";
+    private boolean isQueued = false;
 
     /**
-     * Default constructor for all mod blocks.
+     * The ItemBlock instance for this block instance.
+     */
+    private final ResynthItemBlock itemBlock;
+
+    /**
+     * Creates a new Resynth Block with the given name
+     * and properties.
      *
-     * @param properties the characteristics of the block.
-     * @param name the identifying name of the block (e.g. stone or woodenDoor).
+     * @param properties the properties that define the block.
+     * @param name the name of the block.
      */
-    public ResynthBlock(Properties properties, String name) {
-        this(properties, name, BLOCK_PREFIX);
+    public ResynthBlock(Properties properties, String name){
+        this(properties, new Item.Properties().group(ResynthTabs.TAB_RESYNTH), name);
     }
 
     /**
-     * @param properties the characteristics of the block.
-     * @param name the general name of the block (e.g. redstoneOre).
-     * @param prefix the prefix to add before all names of the block.
+     * Creates a new Resynth Block with the given name, ItemBlock
+     * properties and block properties.
+     *
+     * @param properties the properties that define the block.
+     * @param itemProperties the properties that defines the blocks item.
+     * @param name the name of the block.
      */
-    public ResynthBlock(Properties properties, String name, String prefix) {
+    @SuppressWarnings("WeakerAccess")
+    public ResynthBlock(Properties properties, Item.Properties itemProperties, String name) {
         super(properties);
-        //setUnlocalizedName(ResynthMod.MOD_ID + "." + prefix + StringUtil.capitalize(name));
-        setRegistryName(prefix + "_" + StringUtil.toUnderscoreLowercase(name));
-        //setCreativeTab(ResynthTabs.RESYNTH_TAB);
-        //setSoundType(sound);
+        setRegistryName(name);
+
+        itemBlock = new ResynthItemBlock(this, itemProperties);
+        itemBlock.setRegistryName(name);
     }
 
     /**
-     * Adds this block to the list of blocks to be
-     * registered to the game though forge.
+     * Adds this block instance to ItemRegistrationQueue, which will then
+     * be registered to the game from the queue. This will also register
+     * the ItemBlock instance associated with this block instance.
      *
-     * @return {@code this} block.
+     * @return {@code this}.
      */
-    protected ResynthBlock register(){
-        ResynthBlockRegistry.addBlock(this);
-        return this;
+    @SuppressWarnings("WeakerAccess")//Lies
+    protected T queueRegistration(){
+        if(isQueued)
+            throw new IllegalStateException(
+                    String.format("Block: %s already queued for registration.",
+                            this.getClass().getCanonicalName())
+            );
+
+        ResynthBlocks.INSTANCE.queueForRegistration(this);
+        isQueued = true;
+
+        itemBlock.queueRegistration();
+
+        //noinspection unchecked //Should NOT be possible.
+        return (T)this;
     }
 
+    // *******
+    // Utility
+    // *******
+
+    /**
+     * Turns a given string into a {@link TextComponentString}
+     * containing the given string.
+     *
+     * @param text the given string text.
+     * @return a new TextComponentString containing the given string.
+     */
     protected static ITextComponent stringToTextComponent(String text){
         return new TextComponentString(text);
     }

@@ -8,5 +8,10 @@
   "item.resynth.mineral_hoe":                               "Mineral Hoe",
   "item.resynth.mineral_crystal":                           "Mineral Crystal",
   "item.resynth.mineral_rock":                              "Mineral Rock",
-  "item.resynth.dense_mineral_rock":                        "Dense Mineral Rock"
+  "item.resynth.dense_mineral_rock":                        "Dense Mineral Rock",
+
+  "__COMMENT": "----Blocks----",
+  "block.resynth.mineral_ore":                              "Mineral Stone",
+  "block.resynth.seed_pod":                                 "Mystical Seed Pod",
+  "block.resynth.mineral_soil":                             "Mineral Enriched Soil"
 }

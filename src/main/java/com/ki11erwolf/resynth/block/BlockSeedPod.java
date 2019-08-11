@@ -23,10 +23,11 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockReader;
@@ -40,40 +41,18 @@ import java.util.Arrays;
 import java.util.List;
 
 
-/**
- * Mystical Seed Pod. A flower that spawns randomly in the
- * world and drops biochemical seeds.
- */
 @SuppressWarnings("deprecation")
 public class BlockSeedPod extends ResynthBlock implements IPlantable {
 
-    /**
-     * Hit box for the plant.
-     */
-    protected static final AxisAlignedBB FLOWER_AABB
-            = new AxisAlignedBB(
-            0.30000001192092896D,
-            0.0D,
-            0.30000001192092896D,
-            0.699999988079071D,
-            0.875D,
-            0.699999988079071D
+    protected static final VoxelShape FLOWER_AABB = Block.makeCuboidShape(
+             3.0D, 0.0D, 3.0D,
+            14.0D, 15.0D, 14.0D
     );
 
-    /**
-     * Default constructor.
-     */
     public BlockSeedPod() {
-        super(Properties.create(Material.PLANTS), "seedPod");
+        super(Properties.create(Material.PLANTS), "seed_pod");
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param worldIn
-     * @param pos
-     * @return true if the block below is dirt or grass.
-     */
     //@Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
         IBlockState soil = worldIn.getBlockState(pos.down());
@@ -81,38 +60,16 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
                 || soil.getBlock().getClass() == Blocks.DIRT.getClass();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param state
-     * @return false
-     */
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param world
-     * @param pos
-     * @return plains plant type
-     */
     @Override
     public EnumPlantType getPlantType(IBlockReader world, BlockPos pos) {
         return EnumPlantType.Plains;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param worldIn
-     * @param state
-     * @param pos
-     * @param face
-     * @return undefined
-     */
     @Override
     @Nonnull
     public BlockFaceShape getBlockFaceShape(IBlockReader worldIn, IBlockState state,
@@ -157,34 +114,13 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
 //        return this;
 //    }
 
-    /**
-     * {@inheritDoc}
-     * Updates and drops (if on invalid block) the block when a neighbour
-     * changes.
-     *
-     * @param state
-     * @param worldIn
-     * @param pos
-     * @param blockIn
-     * @param fromPos
-     */
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos,
                                 Block blockIn, BlockPos fromPos) {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
-        this.checkAndDropBlock(worldIn, pos, state);
+        //this.checkAndDropBlock(worldIn, pos, state);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * Adds information to the tooltip about what the block does.
-     *
-     * @param stack
-     * @param worldIn
-     * @param tooltip
-     * @param flagIn
-     */
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
@@ -192,14 +128,6 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
                 "Can drop seeds normally dropped by mobs for players in peaceful mode."));
     }
 
-    /**
-     * Drops the plant block if it isn't
-     * placed on dirt or grass.
-     *
-     * @param worldIn -
-     * @param pos     -
-     * @param state   -
-     */
     protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state) {
         if (!this.canPlaceBlockAt(worldIn, pos)) {
             //this.dropBlockAsItem(worldIn, pos, state, 0);
@@ -207,13 +135,6 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param world
-     * @param pos
-     * @return this plants default state
-     */
     @Override
     public IBlockState getPlant(IBlockReader world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
@@ -222,5 +143,31 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
             return getDefaultState();
 
         return state;
+    }
+
+    @Override
+    public Block.EnumOffsetType getOffsetType() {
+        return Block.EnumOffsetType.XZ;
+    }
+
+    @Override
+    public boolean isSolid(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
+    public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+        Vec3d vec3d = state.getOffset(worldIn, pos);
+        return FLOWER_AABB.withOffset(vec3d.x, vec3d.y, vec3d.z);
+    }
+
+    @Override
+    public int getOpacity(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+        return 0;
     }
 }

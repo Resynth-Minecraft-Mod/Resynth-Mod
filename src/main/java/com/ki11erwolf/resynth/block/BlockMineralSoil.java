@@ -73,7 +73,8 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
     BlockMineralSoil(){
         super(
                 Properties.create(Material.GRASS).hardnessAndResistance(2.0F).sound(SoundType.GROUND),
-                "mineralSoil");
+                "mineral_soil"
+        );
         //this.setHardness(2.0F);
         //this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
         //this.setLightOpacity(255);

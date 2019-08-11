@@ -15,33 +15,63 @@
  */
 package com.ki11erwolf.resynth.block;
 
+import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.util.QueueRegisterer;
+import net.minecraft.block.Block;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+
 /**
- * Static list of Resynth block instances as well as a getAsArray method.
+ * Holds static references to all the mods base blocks (not including
+ * plant blocks/produce).
  *
- * Note: This class does NOT hold any plant or plant produce blocks.
+ * This class also handles the registering of blocks(and their ItemBlock).
  */
-public class ResynthBlocks {
+@Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
+public class ResynthBlocks extends QueueRegisterer<Block> {
+
+    /**
+     * Singleton instance of this class. NOT EXPOSED.
+     */
+    static final ResynthBlocks INSTANCE = new ResynthBlocks();
+
+    /**
+     * Private (non-instantiatable) constructor.
+     */
+    private ResynthBlocks(){}
+
+    // ***************
+    // Block Instances
+    // ***************
 
     /**
      * Mineral Rich Stone. The mods ore.
      */
-    public static final ResynthBlock BLOCK_MINERAL_ORE = new BlockMineralOre().register();
+    public static final ResynthBlock BLOCK_MINERAL_ORE = new BlockMineralOre().queueRegistration();
 
     /**
      * Mineral Enriched Soil. The farmland block for the mod.
      */
-    public static final ResynthBlock BLOCK_MINERAL_SOIL = new BlockMineralSoil().register();
+    public static final ResynthBlock BLOCK_MINERAL_SOIL = new BlockMineralSoil().queueRegistration();
 
     /**
      * Mystical Seed Pos. The random biochemical seed dropper plant.
      */
-    public static final ResynthBlock BLOCK_SEED_POD = new BlockSeedPod().register();
+    public static final ResynthBlock BLOCK_SEED_POD = new BlockSeedPod().queueRegistration();
+
+    // *****
+    // Logic
+    // *****
 
     /**
-     * @return an array of all the TO BE registered resynth blocks (the returned instances
-     * may not be registered yet!).
+     * Registers all the queued blocks to the game.
+     *
+     * @param event forge event.
      */
-    public static ResynthBlock[] getResynthBlocks(){
-        return ResynthBlockRegistry.getBlocks();
+    @SubscribeEvent
+    @SuppressWarnings("unused")//Reflection
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+        INSTANCE.iterateQueue(block -> event.getRegistry().register(block));
     }
 }

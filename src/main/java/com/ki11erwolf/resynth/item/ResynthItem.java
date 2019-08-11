@@ -24,9 +24,10 @@ import net.minecraft.util.text.TextComponentString;
  * Base class for all Resynth items.
  *
  * Provides extra utility and item registration.
+ *
  * @param <T> the subclass to this class (e.i. the inheriting class).
  */
-public class ResynthItem<T> extends Item {
+public class ResynthItem<T extends ResynthItem> extends Item {
 
     /**
      * Flag to prevent queuing an item
@@ -68,13 +69,20 @@ public class ResynthItem<T> extends Item {
         this.setRegistryName(prefix + name);
     }
 
+    /**
+     * Adds this item instance to ItemRegistrationQueue, which will then
+     * be registered to the game from the queue.
+     *
+     * @return {@code this}.
+     */
     T queueRegistration(){
         if(isQueued)
             throw new IllegalStateException(
-                    String.format("Item: %s already queued for registration.", this.getClass().getCanonicalName())
+                    String.format("Item: %s already queued for registration.",
+                            this.getClass().getCanonicalName())
             );
 
-        ResynthItems.queueItem(this);
+        ResynthItems.INSTANCE.queueForRegistration(this);
         isQueued = true;
 
         //noinspection unchecked //Should NOT be possible.
