@@ -48,13 +48,17 @@ public class ConfigDoubleValue implements ConfigValue {
      * @param defaultValue the default value of the config value.
      * @param min the minimum value the actual value can be.
      * @param max the maximum value the actual value can be.
+     * @param category the config category this value belongs to.
      */
-    public ConfigDoubleValue(String uniqueName, String comment, double defaultValue, double min, double max){
+    public ConfigDoubleValue(String uniqueName, String comment, double defaultValue, double min, double max,
+                             ConfigCategory category){
         this.uniqueName = Objects.requireNonNull(uniqueName).replace(' ', '-');
         this.comment = Objects.requireNonNull(comment);
         this.defaultValue = defaultValue;
         this.min = min;
         this.max = max;
+
+        category.registerConfigValue(this);
     }
 
     /**
@@ -64,10 +68,11 @@ public class ConfigDoubleValue implements ConfigValue {
      * @param uniqueName the unique name of the value (not enforced).
      * @param comment the comment attached to the config value.
      * @param defaultValue the default value of the config value.
+     * @param category the config category this value belongs to.
      */
     @SuppressWarnings("unused")
-    public ConfigDoubleValue(String uniqueName, String comment, double defaultValue){
-        this(uniqueName, comment, defaultValue, 0, 0);
+    public ConfigDoubleValue(String uniqueName, String comment, double defaultValue, ConfigCategory category){
+        this(uniqueName, comment, defaultValue, 0, 0, category);
     }
 
     /**

@@ -19,7 +19,8 @@ public class General extends ConfigCategory {
             "Enables or disables all the analytical features of the mod.\n" +
                       "Including usage and error reports (all sent reports are anonymous).\n" +
                       "False to disable, true to enable.",
-            true
+            true,
+            this
     );
 
     /**
@@ -29,7 +30,8 @@ public class General extends ConfigCategory {
             "enable debug help",
             "Enables features related to debugging and development.\n" +
                       "It's unlikely you'd want to enable this.",
-            false
+            false,
+            this
     );
 
     /**
@@ -57,13 +59,5 @@ public class General extends ConfigCategory {
      */
     public boolean isDevHelpEnabled(){
         return enableDebugHelp.getValue();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ConfigValue[] getValues() {
-        return new ConfigValue[]{enableAnalytics, enableDebugHelp};
     }
 }

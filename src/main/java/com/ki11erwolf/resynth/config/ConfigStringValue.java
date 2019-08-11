@@ -37,11 +37,14 @@ public class ConfigStringValue implements ConfigValue {
      * @param uniqueName the unique name of the value (not enforced).
      * @param comment the comment attached to the config value.
      * @param defaultValue the default value of the config value.
+     * @param category the config category this value belongs to.
      */
-    public ConfigStringValue(String uniqueName, String comment, String defaultValue){
+    public ConfigStringValue(String uniqueName, String comment, String defaultValue, ConfigCategory category){
         this.uniqueName = Objects.requireNonNull(uniqueName).replace(' ', '-');
         this.comment = Objects.requireNonNull(comment);
         this.defaultValue = Objects.requireNonNull(defaultValue);
+
+        category.registerConfigValue(this);
     }
 
     /**

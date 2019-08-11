@@ -48,13 +48,17 @@ public class ConfigIntegerValue implements ConfigValue {
      * @param defaultValue the default value of the config value.
      * @param min the minimum value the actual value can be.
      * @param max the maximum value the actual value can be.
+     * @param category the config category this value belongs to.
      */
-    public ConfigIntegerValue(String uniqueName, String comment, int defaultValue, int min, int max){
+    public ConfigIntegerValue(String uniqueName, String comment, int defaultValue, int min, int max,
+                              ConfigCategory category){
         this.uniqueName = Objects.requireNonNull(uniqueName).replace(' ', '-');
         this.comment = Objects.requireNonNull(comment);
         this.defaultValue = defaultValue;
         this.min = min;
         this.max = max;
+
+        category.registerConfigValue(this);
     }
 
     /**
@@ -64,10 +68,11 @@ public class ConfigIntegerValue implements ConfigValue {
      * @param uniqueName the unique name of the value (not enforced).
      * @param comment the comment attached to the config value.
      * @param defaultValue the default value of the config value.
+     * @param category the config category this value belongs to.
      */
     @SuppressWarnings("unused")
-    public ConfigIntegerValue(String uniqueName, String comment, int defaultValue){
-        this(uniqueName, comment, defaultValue, 0, 0);
+    public ConfigIntegerValue(String uniqueName, String comment, int defaultValue, ConfigCategory category){
+        this(uniqueName, comment, defaultValue, 0, 0, category);
     }
 
     /**

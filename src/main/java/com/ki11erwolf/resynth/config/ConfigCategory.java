@@ -2,6 +2,8 @@ package com.ki11erwolf.resynth.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -15,6 +17,11 @@ public abstract class ConfigCategory {
      * category/group.
      */
     private final String uniqueName;
+
+    /**
+     * List of config values registered to this category.
+     */
+    private final List<ConfigValue> values = new ArrayList<>();
 
     /**
      * Creates a new, unique configuration category
@@ -39,7 +46,7 @@ public abstract class ConfigCategory {
      * @param config the config file.
      */
     void initValues(CommentedFileConfig config){
-        for(ConfigValue configValue : getValues()){
+        for(ConfigValue configValue : values){
             String key = getValueKey(uniqueName, configValue.getUniqueName());
 
             if(config.contains(key))
@@ -54,17 +61,13 @@ public abstract class ConfigCategory {
     }
 
     /**
-     * USED BY IMPLEMENTING CLASSES.
+     * Adds the config value to the category.
      *
-     * <p/>
-     *
-     * Should return an array of all the ConfigValues
-     * used by the implementing class.
-     *
-     * @return an array of every used ConfigValue by this
-     * config category.
+     * @param value the config value.
      */
-    protected abstract ConfigValue[] getValues();
+    void registerConfigValue(ConfigValue value){
+        values.add(value);
+    }
 
     /**
      * Used to turn a config category and a config value
