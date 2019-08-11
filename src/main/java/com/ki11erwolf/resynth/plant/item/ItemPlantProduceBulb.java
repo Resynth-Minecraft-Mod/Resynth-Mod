@@ -30,6 +30,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -38,6 +39,11 @@ import java.util.List;
  * The produce item for biochemical plants.
  */
 public abstract class ItemPlantProduceBulb extends ResynthItem {
+
+    /**
+     * Logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
 
     /**
      * Prefix for the item.
@@ -167,12 +173,12 @@ public abstract class ItemPlantProduceBulb extends ResynthItem {
                                     new ItemStack(plantSeeds)));
                         }
                     } catch (Exception e){
-                        ResynthMod.getNewLogger().error("Failed to spawn seeds from bulb entity", e);
+                        LOG.error("Failed to spawn seeds from bulb entity", e);
                     } finally {
                         try{
                             this.remove();
                         } catch (Exception e){
-                            ResynthMod.getNewLogger().error("Failed to kill off bulb entity", e);
+                            LOG.error("Failed to kill off bulb entity", e);
                         }
                     }
                 }

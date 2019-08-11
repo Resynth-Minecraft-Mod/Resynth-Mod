@@ -20,18 +20,15 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
 /**
- * {@code final} class holding {@code static
- * final} instances of all the creative tabs ({@code ItemGroup}s)
- * the mod uses.
+ * Holds references to the various ItemGroups(Creative
+ * Tabs) used by Resynth.
  */
 public final class ResynthTabs {
 
     /**
      * Private constructor.
      */
-    private ResynthTabs(){
-
-    }
+    private ResynthTabs(){}
 
     /**
      * The mods main creative tab. Used for general blocks/items.

@@ -27,6 +27,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +37,11 @@ import java.util.Map;
  * Server(common) side initialization class.
  */
 public class ServerProxy implements Proxy {
+
+    /**
+     * Logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
 
     /**
      * {@inheritDoc}
@@ -69,9 +75,9 @@ public class ServerProxy implements Proxy {
             try {
                 boolean create = resynthFile.createNewFile();
                 if(!create)
-                    ResynthMod.getNewLogger().error("Failed to create Resynth NU file");
+                    LOG.error("Failed to create Resynth NU file");
             } catch (IOException e) {
-                ResynthMod.getNewLogger().error("Failed to create Resynth NU file", e);
+                LOG.error("Failed to create Resynth NU file", e);
             }
         }
     }
@@ -84,13 +90,13 @@ public class ServerProxy implements Proxy {
     private void printItemAndBlockRegisters(){
         if(ResynthConfig.GENERAL_CONFIG.getCategory(General.class).isDevHelpEnabled()){
             for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
-                ResynthMod.getNewLogger().info("<Resynth-Development-Help> | Found item: "
+                LOG.info("<Resynth-Development-Help> | Found item: "
                         + entry.getKey().getNamespace()+ ":"
                         + entry.getKey().toString());
             }
 
             for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
-                ResynthMod.getNewLogger().info("<Resynth-Development-Help> | Found block: "
+                LOG.info("<Resynth-Development-Help> | Found block: "
                         + entry.getKey().getNamespace() + ":"
                         + entry.getKey().toString());
             }

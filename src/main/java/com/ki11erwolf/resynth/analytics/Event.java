@@ -31,7 +31,7 @@ public abstract class Event extends AnalyticsRequestData {
     /**
      * Constructs a new event.
      */
-    public Event(){
+    Event(){
         ResynthAnalytics.setEventHost(this);
         this.setEventAction(getAction() + VERSION);
         this.setEventCategory(getCategory());
@@ -47,14 +47,14 @@ public abstract class Event extends AnalyticsRequestData {
      * @return copy of event name/ID.
      * Alternatively, extra information.
      */
-    public String getCategory(){
+    private String getCategory(){
         return getAction() + VERSION;
     }
 
     /**
      * @return Minecraft version.
      */
-    public String getLabel(){
+    private String getLabel(){
         return "Minecraft - " + ResynthMod.MC_VERSION;
     }
 

@@ -15,6 +15,8 @@
  */
 package com.ki11erwolf.resynth;
 
+import org.apache.logging.log4j.Logger;
+
 import javax.net.ssl.*;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -35,6 +37,11 @@ public class ResynthSSL {
      * Private constructor.
      */
     private ResynthSSL(){}
+
+    /**
+     * Logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
 
     /**
      * True if SSL has been disabled.
@@ -60,6 +67,8 @@ public class ResynthSSL {
     //MODIFIED
     public static void disableSSL() {
         if(!isSSLDisabled){
+            LOG.debug("Disabling SSL...");
+
             try{
                 defaultSocketFactory = HttpsURLConnection.getDefaultSSLSocketFactory();
                 defaultHostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
@@ -98,6 +107,8 @@ public class ResynthSSL {
     //To fix the above fix
     public static void enableSSL(){
         if(defaultSocketFactory != null && defaultHostnameVerifier != null){
+            LOG.debug("Enabling SSL...");
+
             HttpsURLConnection.setDefaultSSLSocketFactory(defaultSocketFactory);
             HttpsURLConnection.setDefaultSSLSocketFactory(defaultSocketFactory);
             isSSLDisabled = false;

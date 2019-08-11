@@ -166,7 +166,6 @@ public class ResynthMod {
      * @return a new apache log4j logging instance.
      * Equivalent to {@link LogManager#getLogger()}.
      */
-    //TODO: Fix lazy calls to this method.
     public static Logger getNewLogger(){
         return LogManager.getLogger(StackLocatorUtil.getCallerClass(2));
     }

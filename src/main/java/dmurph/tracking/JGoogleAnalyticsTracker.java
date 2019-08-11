@@ -29,6 +29,7 @@
 package dmurph.tracking;
 
 import com.ki11erwolf.resynth.ResynthMod;
+import org.apache.logging.log4j.Logger;
 
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -79,6 +80,11 @@ import java.util.regex.MatchResult;
 //THIS FILE HAS BEEN MODIFIED
 public class JGoogleAnalyticsTracker {
     //THIS FILE HAS BEEN MODIFIED
+
+    /**
+     * Logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
 
 	public static enum DispatchMode {
 		/**
@@ -413,7 +419,7 @@ public class JGoogleAnalyticsTracker {
      */
     public synchronized void makeCustomRequest(AnalyticsRequestData argData) {
         if (!enabled) {
-            ResynthMod.getNewLogger().debug("Ignoring tracking request, enabled is false");
+            LOG.debug("Ignoring tracking request, enabled is false");
             return;
         }
         if (argData == null) {
@@ -452,7 +458,7 @@ public class JGoogleAnalyticsTracker {
                     fifo.notify();
                 }
         		if(!backgroundThreadMayRun){
-        			ResynthMod.getNewLogger().error("A tracker request has been added to the queue but the background thread isn't running.", url);
+        			LOG.error("A tracker request has been added to the queue but the background thread isn't running.", url);
         		}
         		break;
         }
@@ -467,10 +473,10 @@ public class JGoogleAnalyticsTracker {
             connection.connect();
             int responseCode = connection.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
-                ResynthMod.getNewLogger().error("JGoogleAnalyticsTracker: Error requesting url '{}', received response code {}", argURL, responseCode);
+                LOG.error("JGoogleAnalyticsTracker: Error requesting url '{}', received response code {}", argURL, responseCode);
             }
         } catch (Exception e) {
-            ResynthMod.getNewLogger().warn("Error in analytics", e);
+            LOG.warn("Error in analytics", e);
         }
     }
     
@@ -519,7 +525,7 @@ public class JGoogleAnalyticsTracker {
                                 }
                             }
                         } catch (Exception e) {
-                            ResynthMod.getNewLogger().warn("Error in analytics", e);
+                            LOG.warn("Error in analytics", e);
                         }
                     }
                 }
