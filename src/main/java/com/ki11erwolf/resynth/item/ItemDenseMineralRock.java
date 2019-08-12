@@ -48,7 +48,6 @@ public class ItemDenseMineralRock extends ResynthItem<ItemDenseMineralRock> {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add(new TextComponentString("9 Mineral Rocks compressed into 1 item."));
-        tooltip.add(new TextComponentString("Can also be added to Mineral Soil."));
+        setDescriptiveTooltip(tooltip, this);
     }
 }

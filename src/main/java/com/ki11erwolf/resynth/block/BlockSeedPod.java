@@ -32,7 +32,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReaderBase;
@@ -193,8 +192,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
-        tooltip.add(new TextComponentString(
-                "Can drop seeds normally dropped by mobs for players in peaceful mode."));
+        setDescriptiveTooltip(tooltip, this);
     }
 
     // *********

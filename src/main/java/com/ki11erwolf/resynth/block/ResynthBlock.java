@@ -16,11 +16,17 @@
 package com.ki11erwolf.resynth.block;
 
 import com.ki11erwolf.resynth.ResynthTabs;
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.item.ResynthItemBlock;
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+
+import java.util.List;
 
 /**
  * Base block class for all Resynth blocks.
@@ -105,7 +111,57 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
      * @param text the given string text.
      * @return a new TextComponentString containing the given string.
      */
-    protected static ITextComponent stringToTextComponent(String text){
+    @SuppressWarnings("WeakerAccess")
+    static ITextComponent stringToTextComponent(String text){
         return new TextComponentString(text);
+    }
+
+    /**
+     * Allows getting a tooltip from the language file. This method
+     * ignores config settings.
+     *
+     * @param key the tooltip key.
+     * @return the text as an {@link ITextComponent} given by the
+     * language file.
+     */
+    @SuppressWarnings("WeakerAccess")
+    static ITextComponent getTooltip(String key){
+        return stringToTextComponent(TextFormatting.GRAY + I18n.format("tooltip.block." + key));
+    }
+
+    /**
+     * Allows getting a blocks tooltip from the language file. This method
+     * ignores config settings.
+     *
+     * @param block the block who's tooltip we want.
+     * @return the text as an {@link ITextComponent} given by the
+     * language file.
+     */
+    static ITextComponent getTooltip(ResynthBlock block){
+        if(block.getRegistryName() == null){
+            return stringToTextComponent(TextFormatting.RED + "Error");
+        }
+
+        return getTooltip(block.getRegistryName().toString().replace(":", "."));
+    }
+
+    /**
+     * Will add a blocks tooltip (from lang file) to the given
+     * tooltip array, provided the config allows it.
+     *
+     * @param tooltip the tooltip array object.
+     * @param block the block who's tooltip we want.
+     */
+    static void setDescriptiveTooltip(List<ITextComponent> tooltip, ResynthBlock block){
+        if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled())
+            return;
+
+        if(block.getRegistryName() == null){
+            tooltip.add(stringToTextComponent(TextFormatting.RED + "Error"));
+        }
+
+        tooltip.add(stringToTextComponent(TextFormatting.GRAY + I18n.format(
+                "tooltip.block." + block.getRegistryName().toString().replace(":", ".")
+        )));
     }
 }

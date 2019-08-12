@@ -49,7 +49,6 @@ public class ItemMineralRock extends ResynthItem<ItemMineralRock> {
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add(new TextComponentString("Right click on Mineral Soil to increase growth rate"));
-        tooltip.add(new TextComponentString("of plants growing atop the Mineral Soil block."));
+        setDescriptiveTooltip(tooltip, this);
     }
 }

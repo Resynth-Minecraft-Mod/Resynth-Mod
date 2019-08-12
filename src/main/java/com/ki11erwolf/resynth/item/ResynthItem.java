@@ -16,9 +16,15 @@
 package com.ki11erwolf.resynth.item;
 
 import com.ki11erwolf.resynth.ResynthTabs;
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.GeneralConfig;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+
+import java.util.List;
 
 /**
  * Base class for all Resynth items.
@@ -114,5 +120,84 @@ public class ResynthItem<T extends ResynthItem> extends Item {
      */
     protected static ITextComponent stringToTextComponent(String text){
         return new TextComponentString(text);
+    }
+
+    /**
+     * Allows getting an items tooltip from the language file. This method
+     * ignores config settings.
+     *
+     * @param key the tooltip key.
+     * @return the text as an {@link ITextComponent} given by the
+     * language file.
+     */
+    @SuppressWarnings("WeakerAccess")
+    static ITextComponent getTooltip(String key){
+        return stringToTextComponent(TextFormatting.GRAY + I18n.format("tooltip.item.resynth." + key));
+    }
+
+    /**
+     * Allows getting an items tooltip from the language file. This method
+     * ignores config settings.
+     *
+     * @param key the tooltip key.
+     * @param color the color of the tooltip.
+     * @param params list of formatting parameters.
+     * @return the text as an {@link ITextComponent} given by the
+     * language file.
+     */
+    @SuppressWarnings("SameParameterValue")
+    static ITextComponent getFormattedTooltip(String key, TextFormatting color, Object... params){
+        return stringToTextComponent(color + I18n.format("tooltip.item.resynth." + key, params));
+    }
+
+    /**
+     * Allows getting an items tooltip from the language file. This method
+     * ignores config settings.
+     *
+     * @param key the tooltip key.
+     * @param color the color of the tooltip.
+     * @return the text as an {@link ITextComponent} given by the
+     * language file.
+     */
+    @SuppressWarnings("unused")
+    static ITextComponent getTooltip(String key, TextFormatting color){
+        return stringToTextComponent(color + I18n.format("tooltip.item.resynth." + key));
+    }
+
+    /**
+     * Allows getting an items tooltip from the language file. This method
+     * ignores config settings.
+     *
+     * @param item the item who's tooltip we want.
+     * @return the text as an {@link ITextComponent} given by the
+     * language file.
+     */
+    @SuppressWarnings("unused")
+    static ITextComponent getTooltip(ResynthItem item){
+        if(item.getRegistryName() == null){
+            return stringToTextComponent(TextFormatting.RED + "Error");
+        }
+
+        return getTooltip(item.getRegistryName().toString().replace(":", "."));
+    }
+
+    /**
+     * Will add an items tooltip (from lang file) to the given
+     * tooltip array, provided the config allows it.
+     *
+     * @param tooltip the tooltip array object.
+     * @param item the items who's tooltip we want.
+     */
+    static void setDescriptiveTooltip(List<ITextComponent> tooltip, ResynthItem item){
+        if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled())
+            return;
+
+        if(item.getRegistryName() == null){
+            tooltip.add(stringToTextComponent(TextFormatting.RED + "Error"));
+        }
+
+        tooltip.add(stringToTextComponent(TextFormatting.GRAY + I18n.format(
+                "tooltip.item." + item.getRegistryName().toString().replace(":", ".")
+        )));
     }
 }

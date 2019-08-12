@@ -35,6 +35,16 @@ public class GeneralConfig extends ConfigCategory {
     );
 
     /**
+     * Helpful tooltips enable/disable flag.
+     */
+    private final ConfigBooleanValue enableHelpTooltips = new ConfigBooleanValue(
+            "enable help tooltips",
+            "Set to true to enable explanatory/descriptive tooltips on Resynth blocks and items.",
+            true,
+            this
+    );
+
+    /**
      * Constructor.
      */
     public GeneralConfig() {
@@ -59,5 +69,14 @@ public class GeneralConfig extends ConfigCategory {
      */
     public boolean isDevHelpEnabled(){
         return enableDebugHelp.getValue();
+    }
+
+    /**
+     * @return {@code true} if the helpful/explanatory/descriptive
+     * tooltips are enabled for blocks and items.
+     */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    public boolean areTooltipsEnabled(){
+        return this.enableHelpTooltips.getValue();
     }
 }

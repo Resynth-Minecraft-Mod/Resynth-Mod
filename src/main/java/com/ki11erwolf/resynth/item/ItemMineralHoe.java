@@ -31,7 +31,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -86,11 +85,10 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             nbt.setInt(NBT_TAG_CHARGES, 2/*TODO: config*/);
         }
 
-        //NBT tooltip
-        tooltip.add(new TextComponentString(TextFormatting.GOLD + "Charges: " + nbt.getInt(NBT_TAG_CHARGES)));
-        //Usage tooltip
-        tooltip.add(new TextComponentString(
-                "Sneak + Right Click on a block with Mineral Crystals in inventory to charge."));
+        tooltip.add(getFormattedTooltip(
+                "mineral_hoe_charges", TextFormatting.GOLD, nbt.getInt(NBT_TAG_CHARGES))
+        );
+        setDescriptiveTooltip(tooltip, this);
     }
 
     /**

@@ -13,5 +13,23 @@
   "__COMMENT": "----Blocks----",
   "block.resynth.mineral_ore":                              "Mineral Infused Stone",
   "block.resynth.seed_pod":                                 "Mystical Seed Pod",
-  "block.resynth.mineral_soil":                             "Mineral Enriched Soil"
+  "block.resynth.mineral_soil":                             "Mineral Enriched Soil",
+
+  "___COMMENT": "---Tooltips----",
+  "tooltip.block.resynth.mineral_ore":
+  "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
+  "tooltip.block.resynth.mineral_soil":
+  "Resynth's soil block. Needed to grow Resynth plants.\nMade by tilling dirt or grass with a Mineral Hoe.\nPlant growth rates can be increased by adding Mineral Rocks or Dense Mineral Rocks to the Mineral Enriched Soil.",
+  "tooltip.block.resynth.seed_pod":
+  "A naturally spawning flower that can be configured to drop\nBiochemical (Mob Drops) seeds when broken for players\nwho are playing on peaceful mode.\nWhen not enabled, this flower will act like a normal decoration block.",
+
+  "tooltip.item.resynth.mineral_hoe":
+  "Resynth's tool of choice. Needed to till dirt or grass into a\nspecial farmland needed for Resynth plants.\nEach use of the Mineral Hoe requires a charge.\n1 charge = 1 Mineral Crystal.\nCharges can be added to the Mineral Hoe by shift-right-clicking with\nthe Hoe in hand, with Mineral Crystals in your inventory.",
+  "tooltip.item.resynth.mineral_hoe_charges": "Charges: %s",
+  "tooltip.item.resynth.mineral_crystal":
+  "A crafting component, and consumable \"fuel\" for the Mineral Hoe.\nMineral Crystals are required to turn dirt or grass into Mineral Soil, and as such, are required to progress in the mod.",
+  "tooltip.item.resynth.dense_mineral_rock":
+  "A compressed form of Mineral Rocks (x9). Used as a crafting recipe. Can also be added to Mineral Soil.",
+  "tooltip.item.resynth.mineral_rock":
+  "Resynth's core item. Used as a crafting recipe to most Resynth blocks and items.\nAlso used as a consumable for creating Mineral Enriched Soil and as fertilizer/growth accelerator for Resynth plants.\nMined from Mineral Infused Stone."
 }

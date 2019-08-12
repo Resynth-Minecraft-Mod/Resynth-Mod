@@ -18,8 +18,6 @@ package com.ki11erwolf.resynth.item;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -49,8 +47,6 @@ public class ItemMineralCrystal extends ResynthItem<ItemMineralCrystal> {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add(new TextComponentString(TextFormatting.GRAY
-                + "Used to charge the Mineral Hoe."));
-        tooltip.add(new TextComponentString("Made by smelting Dense Mineral Rocks"));
+        setDescriptiveTooltip(tooltip, this);
     }
 }
