@@ -131,101 +131,101 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
 //        worldIn.spawnEntity(mineralCrystal);
 //    }
 
-    /**
-     * Increases the blocks tile entity percentage value
-     * by a config specified value at the cost
-     * of ItemMineralRocks.
-     */
-    @Override
-    public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player,
-                                    EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
-        if(getTileEntity(worldIn, pos).getMineralPercentage() >= 50)
-            return false;
-
-        //Mineral Rock
-        if(player.getHeldItemMainhand().getItem().getClass().equals(ResynthItems.ITEM_MINERAL_ROCK.getClass())){
-            new MinecraftUtil.SideSensitiveCode(worldIn){
-                @Override
-                public void onServer(){
-                    ItemStack offer = player.getHeldItemMainhand();
-                    TileEntityMineralSoil entity = getTileEntity(worldIn, pos);
-
-                    if(hand.equals(EnumHand.MAIN_HAND)){
-                        if(!player.isCreative())
-                            offer.shrink(1);
-                        entity.increaseMineralPercentage(1.0F/*TODO: Config*/);
-                    }
-
-                    float percentage = entity.getMineralPercentage();
-                    updateState(worldIn, pos);
-
-                    try{
-                        //noinspection ConstantConditions
-                        ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
-                        String perc = String.valueOf(entity.getMineralPercentage());
-
-                        if(true/*TODO: Config*/)
-                            player.sendMessage(new TextComponentString("Soil mineral content: "
-                                    + perc
-                                    .substring(0, perc.length() > 4 ? 4 : perc.length())
-                                    + "%")
-                            );
-                    } catch (NullPointerException e){
-                        player.sendMessage(new TextComponentString(
-                                "Failed to update mineral content of Mineral Soil block."
-                                + " Submit a bug report if you see this."
-                        ));
-                        LOGGER.error("Failed to update mineral content of Mineral Soil block.", e);
-                    }
-
-                }
-            }.execute();
-            return true;
-        }
-
-        //Dense Mineral Rock
-        if(player.getHeldItemMainhand().getItem().getClass().equals(ResynthItems.ITEM_DENSE_MINERAL_ROCK.getClass())){
-            new MinecraftUtil.SideSensitiveCode(worldIn) {
-                @Override
-                public void onServer() {
-                    ItemStack offer = player.getHeldItemMainhand();
-                    TileEntityMineralSoil entity = getTileEntity(worldIn, pos);
-
-                    if(hand.equals(EnumHand.MAIN_HAND)){
-                        if(!player.isCreative())
-                            offer.shrink(1);
-                        entity.increaseMineralPercentage(1.0F /*TODO: Config*/ * 9);
-                    }
-
-                    float percentage = entity.getMineralPercentage();
-                    updateState(worldIn, pos);
-
-
-                    try{
-                        //noinspection ConstantConditions
-                        ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
-                        String perc = String.valueOf(entity.getMineralPercentage());
-
-                        if(true/*TODO: Config*/)
-                            player.sendMessage(new TextComponentString("Soil mineral content: "
-                                    + perc
-                                    .substring(0, perc.length() > 4 ? 4 : perc.length())
-                                    + "%")
-                            );
-                    } catch (NullPointerException e){
-                        player.sendMessage(new TextComponentString(
-                                "Failed to update mineral content of Mineral Soil block."
-                                        + " Submit a bug report if you see this."
-                        ));
-                        LOGGER.error("Failed to update mineral content of Mineral Soil block.", e);
-                    }
-                }
-            }.execute();
-            return true;
-        }
-
-        return false;
-    }
+//    /**
+//     * Increases the blocks tile entity percentage value
+//     * by a config specified value at the cost
+//     * of ItemMineralRocks.
+//     */
+//    @Override
+//    public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player,
+//                                    EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+//        if(getTileEntity(worldIn, pos).getMineralPercentage() >= 50)
+//            return false;
+//
+//        //Mineral Rock
+//        if(player.getHeldItemMainhand().getItem().getClass().equals(ResynthItems.ITEM_MINERAL_ROCK.getClass())){
+//            new MinecraftUtil.SideSensitiveCode(worldIn){
+//                @Override
+//                public void onServer(){
+//                    ItemStack offer = player.getHeldItemMainhand();
+//                    TileEntityMineralSoil entity = getTileEntity(worldIn, pos);
+//
+//                    if(hand.equals(EnumHand.MAIN_HAND)){
+//                        if(!player.isCreative())
+//                            offer.shrink(1);
+//                        entity.increaseMineralPercentage(1.0F/*TODO: Config*/);
+//                    }
+//
+//                    float percentage = entity.getMineralPercentage();
+//                    updateState(worldIn, pos);
+//
+//                    try{
+//                        //noinspection ConstantConditions
+//                        ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
+//                        String perc = String.valueOf(entity.getMineralPercentage());
+//
+//                        if(true/*TODO: Config*/)
+//                            player.sendMessage(new TextComponentString("Soil mineral content: "
+//                                    + perc
+//                                    .substring(0, perc.length() > 4 ? 4 : perc.length())
+//                                    + "%")
+//                            );
+//                    } catch (NullPointerException e){
+//                        player.sendMessage(new TextComponentString(
+//                                "Failed to update mineral content of Mineral Soil block."
+//                                + " Submit a bug report if you see this."
+//                        ));
+//                        LOGGER.error("Failed to update mineral content of Mineral Soil block.", e);
+//                    }
+//
+//                }
+//            }.execute();
+//            return true;
+//        }
+//
+//        //Dense Mineral Rock
+//        if(player.getHeldItemMainhand().getItem().getClass().equals(ResynthItems.ITEM_DENSE_MINERAL_ROCK.getClass())){
+//            new MinecraftUtil.SideSensitiveCode(worldIn) {
+//                @Override
+//                public void onServer() {
+//                    ItemStack offer = player.getHeldItemMainhand();
+//                    TileEntityMineralSoil entity = getTileEntity(worldIn, pos);
+//
+//                    if(hand.equals(EnumHand.MAIN_HAND)){
+//                        if(!player.isCreative())
+//                            offer.shrink(1);
+//                        entity.increaseMineralPercentage(1.0F /*TODO: Config*/ * 9);
+//                    }
+//
+//                    float percentage = entity.getMineralPercentage();
+//                    updateState(worldIn, pos);
+//
+//
+//                    try{
+//                        //noinspection ConstantConditions
+//                        ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
+//                        String perc = String.valueOf(entity.getMineralPercentage());
+//
+//                        if(true/*TODO: Config*/)
+//                            player.sendMessage(new TextComponentString("Soil mineral content: "
+//                                    + perc
+//                                    .substring(0, perc.length() > 4 ? 4 : perc.length())
+//                                    + "%")
+//                            );
+//                    } catch (NullPointerException e){
+//                        player.sendMessage(new TextComponentString(
+//                                "Failed to update mineral content of Mineral Soil block."
+//                                        + " Submit a bug report if you see this."
+//                        ));
+//                        LOGGER.error("Failed to update mineral content of Mineral Soil block.", e);
+//                    }
+//                }
+//            }.execute();
+//            return true;
+//        }
+//
+//        return false;
+//    }
 
     /**
      * @return the predefined 3D Voxel shape the block will take.

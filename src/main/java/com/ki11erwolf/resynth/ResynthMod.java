@@ -104,6 +104,7 @@ public class ResynthMod {
      */
     private void setup(final FMLCommonSetupEvent event){
         LOG.info(String.format("Starting Resynth %s setup...", MOD_VERSION));
+        LOG.info("Good morning, Minecraft!");
         proxy.setup(event);
     }
 

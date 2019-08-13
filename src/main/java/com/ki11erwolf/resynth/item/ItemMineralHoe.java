@@ -15,9 +15,10 @@
  */
 package com.ki11erwolf.resynth.item;
 
+import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
-import com.ki11erwolf.resynth.util.MinecraftUtil;
-import net.minecraft.block.Block;
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.MineralHoeConfig;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -35,6 +36,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -52,6 +54,16 @@ import java.util.List;
 public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
     /**
+     * The configuration settings for this item.
+     */
+    private static final MineralHoeConfig CONFIG = ResynthConfig.GENERAL_CONFIG.getCategory(MineralHoeConfig.class);
+
+    /**
+     * Logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
+
+    /**
      * NBT key used to store the number of charges in the hoe.
      */
     private static final String NBT_TAG_CHARGES = "charges";
@@ -66,200 +78,216 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     }
 
     /**
+     * Ensures that the NBT tag and required
+     * NBT values are set on the given ItemStack.
+     *
+     * @param stack the given ItemStack.
+     */
+    private void ensureNBT(ItemStack stack){
+        //NBT Initialization
+        NBTTagCompound nbt = stack.getTag();
+
+        if(nbt == null){
+            nbt = new NBTTagCompound();
+            nbt.setInt(NBT_TAG_CHARGES, (Math.min(CONFIG.getInitialCharges(), 2)));
+            stack.setTag(nbt);
+        }
+    }
+
+    /**
      * {@inheritDoc}.
      *
      * Displays a tooltip with the amount of charges left
      * and how to use the item.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
-                               ITooltipFlag flagIn){
+    public void addInformation(ItemStack stack, @Nullable World worldIn,
+                               List<ITextComponent> tooltip, ITooltipFlag flagIn){
+        ensureNBT(stack);
 
-        //TODO: Move to another method.
-        //NBT Initialization
-        NBTTagCompound nbt = stack.getTag();
+        if(stack.getTag() != null)
+            tooltip.add(getFormattedTooltip(
+                "mineral_hoe_charges", TextFormatting.GOLD, stack.getTag().getInt(NBT_TAG_CHARGES))
+            );
 
-        if(nbt == null){
-            nbt = new NBTTagCompound();
-            stack.setTag(nbt);
-            nbt.setInt(NBT_TAG_CHARGES, 2/*TODO: config*/);
-        }
-
-        tooltip.add(getFormattedTooltip(
-                "mineral_hoe_charges", TextFormatting.GOLD, nbt.getInt(NBT_TAG_CHARGES))
-        );
         setDescriptiveTooltip(tooltip, this);
     }
+
+    // ********
+    // Charging
+    // ********
 
     /**
      * {@inheritDoc}
      *
-     * Handles both charging the hoe with mineral crystals
-     * and turning dirt/grass into mineral soil
-     * using mineral crystal charges.
+     * Handles charging the Mineral Hoe with Mineral Crystals.
      *
-     * @return the result of the action.
+     * @return {@link EnumActionResult#SUCCESS} if the Mineral Hoe
+     * was charged.
+     */
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        ItemStack stack = player.getHeldItem(hand);
+        ensureNBT(stack);
+        //noinspection ConstantConditions //Already taken care of.
+        int charges = stack.getTag().getInt(NBT_TAG_CHARGES);
+
+        //At capacity
+        if(charges >= CONFIG.getMaxCharges()){
+            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+        }
+
+        //Can charge
+        if(player.isCreative() || takeCharge(player)){
+            stack.getTag().setInt(NBT_TAG_CHARGES, charges + 1);
+            world.playSound(
+                    player, player.getPosition(), SoundEvents.BLOCK_NOTE_BLOCK_CHIME,
+                    SoundCategory.BLOCKS, 1.0F, 1.0F
+            );
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+        }
+
+        return ActionResult.newResult(EnumActionResult.FAIL, stack);
+    }
+
+    /**
+     * Attempts to take a charge (Mineral Crystal) from the
+     * players inventory.
+     *
+     * @param player the player who we want to take the charge from.
+     * @return {@code true} if a charge was taken from the players
+     * inventory.
+     */
+    private boolean takeCharge(EntityPlayer player){
+        for(ItemStack itemStack : player.inventoryContainer.getInventory()){
+            if(itemStack.getItem() == ResynthItems.ITEM_MINERAL_CRYSTAL){
+                itemStack.shrink(1);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // *******
+    // Tilling
+    // *******
+
+    /**
+     * {@inheritDoc}
+     *
+     * Handles tilling dirt/grass into Mineral Soil.
+     * Also handles charging the hoe if the player
+     * is sneaking.
+     *
+     * @return {@link EnumActionResult#SUCCESS} if the block
+     * the player is looking at was tilted or the hoe was charged.
      */
     @Nonnull
     @Override
-    @SuppressWarnings("ConstantConditions")
     public EnumActionResult onItemUse(ItemUseContext context) {
-        //TODO: This is broken. Rewrite this.
-        if(false/*TODO: Config*/){
+        //Pre Checks
+        if(!CONFIG.isEnabled()){
             return EnumActionResult.FAIL;
         }
 
+        ensureNBT(context.getItem());
+        if(context.getPlayer() == null){
+            LOG.warn("Invalid player using the Mineral Hoe...");
+            return EnumActionResult.FAIL;
+        }
+
+        if(context.getPlayer().isSneaking()){
+            return onItemRightClick(context.getWorld(), context.getPlayer(), EnumHand.MAIN_HAND).getType();
+        }
+
+        //Creative mode
+        if(context.getPlayer().isCreative())
+            return replace(context);
+
+        //Not creative
+        //noinspection ConstantConditions //Should be taken care of.
+        int charges = context.getItem().getTag().getInt(NBT_TAG_CHARGES);
+        if(charges < 1){
+            if(CONFIG.playFailSound())
+                context.getWorld().playSound(
+                        context.getPlayer(), context.getPos(), SoundEvents.BLOCK_NOTE_BLOCK_HAT,
+                        SoundCategory.BLOCKS, 1.0F, 1.0F
+                );
+
+            return EnumActionResult.FAIL;
+        }
+
+        //Remove a charge.
+        EnumActionResult result = replace(context);
+        if(result == EnumActionResult.SUCCESS)
+            context.getItem().getTag().setInt(NBT_TAG_CHARGES, charges - 1);
+
+        return result;
+    }
+
+    /**
+     * Replaces the block the player is looking at
+     * to Mineral Soil if possible.
+     *
+     * @param context the ItemUseContext instance given by
+     *                {@link #onItemUse(ItemUseContext)}.
+     * @return {@link EnumActionResult#SUCCESS} if the block
+     * was replaced.
+     */
+    private EnumActionResult replace(ItemUseContext context){
         World world = context.getWorld();
-        BlockPos blockPos = context.getPos();
-        EntityPlayer player = context.getPlayer();
+        BlockPos pos = context.getPos();
+        IBlockState source = world.getBlockState(pos);
 
-        Block type = world.getBlockState(blockPos).getBlock();
-        ItemStack stack = player.getActiveItemStack();
+        if(source.getBlock() == Blocks.DIRT || source.getBlock() == Blocks.GRASS_BLOCK){
+            if (context.getFace() != EnumFacing.DOWN && world.isAirBlock(pos.up())) {
+                //Replacement
+                world.setBlockState(pos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
 
-        if(stack == null)
-            return EnumActionResult.FAIL;
+                if(CONFIG.showParticles())
+                    spawnParticles(world, pos.up());
 
-        NBTTagCompound nbt = stack.getTag();
+                world.playSound(
+                        context.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL,
+                        SoundCategory.BLOCKS, 1.0F, 1.0F
+                );
 
-        if(player.isSneaking()){
-            new MinecraftUtil.SideSensitiveCode(world){
-                @Override
-                public void onServer() {
-                    //Creative
-                    if(player.isSneaking()){
-                        if(stack.getTag().getInt(NBT_TAG_CHARGES)
-                                >= 64/*TODO: Config*/){
-                            world.playSound(
-                                    null, blockPos,
-                                    SoundEvents.ENTITY_HORSE_LAND,
-                                    SoundCategory.NEUTRAL,
-                                    0.7F, 1.0F);
-                            return;
-                        }
-
-                        if(player.isCreative()){
-                            stack.getTag().setInt(ItemMineralHoe.NBT_TAG_CHARGES,
-                                    stack.getTag().getInt(ItemMineralHoe.NBT_TAG_CHARGES) + 1);
-
-                            world.playSound(
-                                    null, blockPos,
-                                    SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
-                                    SoundCategory.NEUTRAL,
-                                    0.7F, 1.0F);
-                            return;
-                        }
-
-                        //Not creative
-                        int pos = 0;
-
-                        for(;;){
-                            try{
-                                if(player.inventory.getStackInSlot(pos).getItem()
-                                        == ResynthItems.ITEM_MINERAL_CRYSTAL){
-
-                                    player.inventory.getStackInSlot(pos).setCount(
-                                            player.inventory.getStackInSlot(pos).getCount()
-                                                    - 1
-                                    );
-
-                                    stack.getTag().setInt(ItemMineralHoe.NBT_TAG_CHARGES,
-                                            stack.getTag().getInt(
-                                                    ItemMineralHoe.NBT_TAG_CHARGES) + 1);
-
-                                    world.playSound(
-                                            null, blockPos,
-                                            SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
-                                            SoundCategory.NEUTRAL,
-                                            0.7F, 1.0F);
-                                    break;
-                                }
-
-                                if(player.inventory.getStackInSlot(pos) == ItemStack.EMPTY){
-                                    world.playSound(
-                                            null, blockPos,
-                                            SoundEvents.ENTITY_HORSE_LAND,
-                                            SoundCategory.NEUTRAL,
-                                            0.7F, 1.0F);
-                                    break;
-                                }
-
-
-                                pos++;
-                            } catch (Exception e){
-                                break;
-                            }
-                        }
-                    }
-                }
-            }.execute();
-            return EnumActionResult.FAIL;
-        }
-
-        //***********************
-        //Block replacement code.
-        //***********************
-
-        //Non-creative charges check.
-        if(!player.isCreative() && nbt.getInt(NBT_TAG_CHARGES) <= 0){
-            world.playSound(
-                    player, blockPos,
-                    SoundEvents.ENTITY_HORSE_LAND,
-                    SoundCategory.NEUTRAL,
-                    0.7F, 1.0F);
-            return EnumActionResult.FAIL;
-        }
-
-        //Block change action
-        if(type == Blocks.DIRT || type == Blocks.GRASS){
-            world.playSound(null, blockPos, SoundEvents.BLOCK_GRASS_PLACE,
-                    SoundCategory.BLOCKS, 0.4F, 1.2F
-                            / (world.rand.nextFloat() * 0.2F + 0.9F));
-            spawnBlockChangeParticles(world, blockPos);
-
-            world.setBlockState(blockPos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
-            if(!player.isCreative())
-                nbt.setInt(NBT_TAG_CHARGES, nbt.getInt(NBT_TAG_CHARGES) - 1);
-            return EnumActionResult.SUCCESS;
+                return EnumActionResult.SUCCESS;
+            }
         }
 
         return EnumActionResult.FAIL;
     }
 
     /**
-     * Spawns particles in the world when ever a dirt/grass
-     * block is turned into mineral soil.
+     * Spawns fire particles in the world.
      *
-     * @param worldIn the world in which to spawn the particles.
-     * @param pos the location in the world.
+     * @param worldIn the world to spawn the particles in.
+     * @param pos the position in the world to spawn the particles in.
      */
-    //@SideOnly(Side.CLIENT)
     @OnlyIn(Dist.CLIENT)
-    private static void spawnBlockChangeParticles(World worldIn, BlockPos pos){
-        int amount = 100;
+    private static void spawnParticles(World worldIn, BlockPos pos){
+        double d = random.nextGaussian() * 0.02D;
+        int amount = 5;
 
         IBlockState iblockstate = worldIn.getBlockState(pos);
 
         if (iblockstate.getMaterial() != Material.AIR) {
             for (int i = 0; i < amount; ++i){
-                double d0 = random.nextGaussian() * 0.02D;
-                double d1 = random.nextGaussian() * 0.02D;
-                double d2 = random.nextGaussian() * 0.02D;
-                worldIn.spawnParticle(Particles.FIREWORK,
+                worldIn.spawnParticle(Particles.FLAME,
                         (float)pos.getX() + random.nextFloat(),
                         (double)pos.getY() + (double)random.nextFloat()
                                 * iblockstate.getShape(worldIn, pos).getEnd(EnumFacing.Axis.Y),
-                        (float)pos.getZ() + random.nextFloat(), d0, d1, d2);
+                        (float)pos.getZ() + random.nextFloat(), d, d, d);
             }
         }
         else {
             for (int i1 = 0; i1 < amount; ++i1) {
-                double d0 = random.nextGaussian() * 0.02D;
-                double d1 = random.nextGaussian() * 0.02D;
-                double d2 = random.nextGaussian() * 0.02D;
-                worldIn.spawnParticle(Particles.FIREWORK,
+                worldIn.spawnParticle(Particles.FLAME,
                         (float)pos.getX() + random.nextFloat(),
                         (double)pos.getY() + (double)random.nextFloat() * 1.0f,
-                        (float)pos.getZ() + random.nextFloat(), d0, d1, d2);
+                        (float)pos.getZ() + random.nextFloat(), d, d, d);
             }
         }
     }
