@@ -1,8 +1,8 @@
 package com.ki11erwolf.resynth.config.categories;
 
 import com.ki11erwolf.resynth.config.ConfigCategory;
-import com.ki11erwolf.resynth.config.ConfigDoubleValue;
-import com.ki11erwolf.resynth.config.ConfigIntegerValue;
+import com.ki11erwolf.resynth.config.DoubleConfigValue;
+import com.ki11erwolf.resynth.config.IntegerConfigValue;
 
 /**
  * Config settings for the {@link com.ki11erwolf.resynth.block.BlockMineralOre}
@@ -18,7 +18,7 @@ public class MineralOreConfig extends ConfigCategory {
      * The config value definition for the base (minimum) number of drops
      * Mineral Stone will give.
      */
-    private final ConfigIntegerValue baseDrops = new ConfigIntegerValue(
+    private final IntegerConfigValue baseDrops = new IntegerConfigValue(
             "number of base drops",
             "The minimum number of Mineral Rocks dropped by Mineral Stone when it's mined.",
             1,
@@ -30,7 +30,7 @@ public class MineralOreConfig extends ConfigCategory {
      * The config value definition for the amount of extra drops
      * Mineral Stone will give.
      */
-    private final ConfigIntegerValue extraDrops = new ConfigIntegerValue(
+    private final IntegerConfigValue extraDrops = new IntegerConfigValue(
             "number of extra drops",
             "The amount of extra Mineral Rocks Mineral Stone will give" +
                       "\nwhen mined (based on [chance-of-extra-drops]).",
@@ -43,7 +43,7 @@ public class MineralOreConfig extends ConfigCategory {
      * The config value definition for the percentage chance of Mineral
      * Stone dropping extra drops.
      */
-    private final ConfigDoubleValue extraDropsChance = new ConfigDoubleValue(
+    private final DoubleConfigValue extraDropsChance = new DoubleConfigValue(
             "chance of extra drops",
             "The chance of Mineral Stone giving extra Mineral Rocks when mined (0% to 100%).",
             20,
@@ -55,7 +55,7 @@ public class MineralOreConfig extends ConfigCategory {
      * The config value definition for the minimum number of experience orbs
      * Mineral Stone will drop when mined.
      */
-    private final ConfigIntegerValue minimumExperience = new ConfigIntegerValue(
+    private final IntegerConfigValue minimumExperience = new IntegerConfigValue(
             "minimum experience dropped",
             "The minimum number of experience orbs Mineral Stone will drop when mined.",
             3,
@@ -67,7 +67,7 @@ public class MineralOreConfig extends ConfigCategory {
      * The config value definition for the maximum number of experience orbs
      * Mineral Stone will drop when mined
      */
-    private final ConfigIntegerValue maximumExperience = new ConfigIntegerValue(
+    private final IntegerConfigValue maximumExperience = new IntegerConfigValue(
             "maximum experience dropped",
             "The maximum number of experience orbs Mineral Stone will drop when mined.",
             7,

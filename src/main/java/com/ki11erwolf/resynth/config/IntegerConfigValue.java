@@ -7,7 +7,7 @@ import java.util.Objects;
  * ConfigCategory} with an identifiable name, comment,
  * default value, minimum and maximum value.
  */
-public class ConfigIntegerValue implements ConfigValue {
+public class IntegerConfigValue implements ConfigValue {
 
     /**
      * The unique name of the value (not enforced).
@@ -50,7 +50,7 @@ public class ConfigIntegerValue implements ConfigValue {
      * @param max the maximum value the actual value can be.
      * @param category the config category this value belongs to.
      */
-    public ConfigIntegerValue(String uniqueName, String comment, int defaultValue, int min, int max,
+    public IntegerConfigValue(String uniqueName, String comment, int defaultValue, int min, int max,
                               ConfigCategory category){
         this.uniqueName = Objects.requireNonNull(uniqueName).replace(' ', '-');
         this.comment = Objects.requireNonNull(comment);
@@ -71,7 +71,7 @@ public class ConfigIntegerValue implements ConfigValue {
      * @param category the config category this value belongs to.
      */
     @SuppressWarnings("unused")
-    public ConfigIntegerValue(String uniqueName, String comment, int defaultValue, ConfigCategory category){
+    public IntegerConfigValue(String uniqueName, String comment, int defaultValue, ConfigCategory category){
         this(uniqueName, comment, defaultValue, 0, 0, category);
     }
 

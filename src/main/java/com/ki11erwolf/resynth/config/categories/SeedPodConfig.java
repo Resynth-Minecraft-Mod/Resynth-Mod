@@ -1,8 +1,8 @@
 package com.ki11erwolf.resynth.config.categories;
 
-import com.ki11erwolf.resynth.config.ConfigBooleanValue;
+import com.ki11erwolf.resynth.config.BooleanConfigValue;
 import com.ki11erwolf.resynth.config.ConfigCategory;
-import com.ki11erwolf.resynth.config.ConfigIntegerValue;
+import com.ki11erwolf.resynth.config.IntegerConfigValue;
 
 /**
  * Config settings for the {@link com.ki11erwolf.resynth.block.BlockSeedPod}.
@@ -17,7 +17,7 @@ public class SeedPodConfig extends ConfigCategory {
      * Config value definition that allows enabling/disabling
      * drops from the Mystical Seed Pod.
      */
-    private final ConfigBooleanValue enabled = new ConfigBooleanValue(
+    private final BooleanConfigValue enabled = new BooleanConfigValue(
             "enable-drops-from-seed-pod",
             "Set to true to make the Mystical Seed Pod drop a random Biochemical (mob drop)" +
                       "\nseed when broken. This can be useful for players playing on peaceful mode who can" +
@@ -30,7 +30,7 @@ public class SeedPodConfig extends ConfigCategory {
      * Config value definition that allows enabling/disabling
      * the "always drop seeds" functionality of the Seed Pod.
      */
-    private final ConfigBooleanValue alwaysDropSeeds = new ConfigBooleanValue(
+    private final BooleanConfigValue alwaysDropSeeds = new BooleanConfigValue(
             "always-drop-seeds",
             "Set to true to make sure the Mystical Seed Pod always drops seeds." +
                       "\nThis does NOT override [enable-drops-from-seed-pod], it only makes" +
@@ -43,7 +43,7 @@ public class SeedPodConfig extends ConfigCategory {
      * Config value definition that allows setting the
      * number of tries before giving up.
      */
-    private final ConfigIntegerValue tries = new ConfigIntegerValue(
+    private final IntegerConfigValue tries = new IntegerConfigValue(
             "number-of-tries",
             "The amount of times the Mystical Seed Pod will try find a Biochemical" +
                       "\nseed before giving up and dropping nothing. Disable this with [always-drop-seeds].",

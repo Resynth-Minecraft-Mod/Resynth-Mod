@@ -14,7 +14,7 @@ public class GeneralConfig extends ConfigCategory {
     /**
      * Analytics enable/disable switch.
      */
-    private final ConfigBooleanValue enableAnalytics = new ConfigBooleanValue(
+    private final BooleanConfigValue enableAnalytics = new BooleanConfigValue(
             "enable analytics",
             "Enables or disables all the analytical features of the mod.\n" +
                       "Including usage and error reports (all sent reports are anonymous).\n" +
@@ -26,7 +26,7 @@ public class GeneralConfig extends ConfigCategory {
     /**
      * Debug/Development features enable/disable flag.
      */
-    private final ConfigBooleanValue enableDebugHelp = new ConfigBooleanValue(
+    private final BooleanConfigValue enableDebugHelp = new BooleanConfigValue(
             "enable debug help",
             "Enables features related to debugging and development.\n" +
                       "It's unlikely you'd want to enable this.",
@@ -37,7 +37,7 @@ public class GeneralConfig extends ConfigCategory {
     /**
      * Helpful tooltips enable/disable flag.
      */
-    private final ConfigBooleanValue enableHelpTooltips = new ConfigBooleanValue(
+    private final BooleanConfigValue enableHelpTooltips = new BooleanConfigValue(
             "enable help tooltips",
             "Set to true to enable explanatory/descriptive tooltips on Resynth blocks and items.",
             true,

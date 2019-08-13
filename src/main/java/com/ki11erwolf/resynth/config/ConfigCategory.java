@@ -10,7 +10,6 @@ import java.util.Objects;
  * Represents a category (or group) of config options
  * within a configuration file.
  */
-//TODO: Use reflection to obtain config values.
 public abstract class ConfigCategory {
 
     /**

@@ -7,7 +7,7 @@ import java.util.Objects;
  * ConfigCategory} with an identifiable name, comment and
  * default value.
  */
-public class ConfigBooleanValue implements ConfigValue {
+public class BooleanConfigValue implements ConfigValue {
 
     /**
      * The unique name of the value (not enforced).
@@ -39,7 +39,7 @@ public class ConfigBooleanValue implements ConfigValue {
      * @param defaultValue the default value of the config value.
      * @param category the config category this value belongs to.
      */
-    public ConfigBooleanValue(String uniqueName, String comment, boolean defaultValue, ConfigCategory category){
+    public BooleanConfigValue(String uniqueName, String comment, boolean defaultValue, ConfigCategory category){
         this.uniqueName = Objects.requireNonNull(uniqueName).replace(' ', '-');
         this.comment = Objects.requireNonNull(comment);
         this.defaultValue = defaultValue;

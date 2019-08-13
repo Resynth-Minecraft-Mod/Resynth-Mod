@@ -1,5 +1,7 @@
 package com.ki11erwolf.resynth.config;
 
+import org.apache.logging.log4j.util.StackLocatorUtil;
+
 import java.util.Objects;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Objects;
  * ConfigCategory} with an identifiable name, comment,
  * default value, minimum and maximum value.
  */
-public class ConfigDoubleValue implements ConfigValue {
+public class DoubleConfigValue implements ConfigValue {
 
     /**
      * The unique name of the value (not enforced).
@@ -50,7 +52,7 @@ public class ConfigDoubleValue implements ConfigValue {
      * @param max the maximum value the actual value can be.
      * @param category the config category this value belongs to.
      */
-    public ConfigDoubleValue(String uniqueName, String comment, double defaultValue, double min, double max,
+    public DoubleConfigValue(String uniqueName, String comment, double defaultValue, double min, double max,
                              ConfigCategory category){
         this.uniqueName = Objects.requireNonNull(uniqueName).replace(' ', '-');
         this.comment = Objects.requireNonNull(comment);
@@ -71,7 +73,7 @@ public class ConfigDoubleValue implements ConfigValue {
      * @param category the config category this value belongs to.
      */
     @SuppressWarnings("unused")
-    public ConfigDoubleValue(String uniqueName, String comment, double defaultValue, ConfigCategory category){
+    public DoubleConfigValue(String uniqueName, String comment, double defaultValue, ConfigCategory category){
         this(uniqueName, comment, defaultValue, 0, 0, category);
     }
 
