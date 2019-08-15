@@ -15,13 +15,13 @@
  */
 package com.ki11erwolf.resynth.proxy;
 
-import com.ki11erwolf.resynth.ResynthFurnaceRecipes;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.analytics.ConnectEvent;
 import com.ki11erwolf.resynth.analytics.NewUserEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
+import com.ki11erwolf.resynth.features.ResynthFeatures;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -56,7 +56,7 @@ public class ServerProxy implements Proxy {
     public void setup(FMLCommonSetupEvent event) {
         sendConnectEvent();
         printItemAndBlockRegisters();
-        ResynthFurnaceRecipes.registerFurnaceRecipes();
+        ResynthFeatures.init();
     }
 
     /**

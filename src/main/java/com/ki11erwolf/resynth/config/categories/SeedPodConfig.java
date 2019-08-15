@@ -53,6 +53,31 @@ public class SeedPodConfig extends ConfigCategory {
     );
 
     /**
+     * Config value definition that allows enabling/disabling Mystical Seed Pod
+     * world generation.
+     */
+    private final BooleanConfigValue generate = new BooleanConfigValue(
+            "generate-in-world",
+            "Allows enabling or disabling the generating of Mystical Seed Pods in the world." +
+                      "\nSet this to false to prevent Mystical Seed Pods from generating in the world.",
+            true,
+            this
+    );
+
+    /**
+     * Config value definition that allows setting the spawn frequency
+     * of Mystical Seed Pods.
+     */
+    private final IntegerConfigValue generationFrequency = new IntegerConfigValue(
+            "frequency-of-generation",
+            "The frequency (or the number of times) that Mystical Seed Pods will generate in the world." +
+                      "\nSetting this to a higher value will generate more Mystical Seed Pods",
+            1,
+            1, 50,
+            this
+    );
+
+    /**
      * Creates a new, unique configuration category
      * grouping.
      */
@@ -86,5 +111,21 @@ public class SeedPodConfig extends ConfigCategory {
      */
     public int getTries(){
         return this.tries.getValue();
+    }
+
+    /**
+     * @return {@code true} if the config allows
+     * generating Mystical Seed Pods in the world.
+     */
+    public boolean generate(){
+        return this.generate.getValue();
+    }
+
+    /**
+     * @return the frequency of Mystical Seed
+     * Pod generation as specified by the config.
+     */
+    public int getGenerationFrequency(){
+        return this.generationFrequency.getValue();
     }
 }
