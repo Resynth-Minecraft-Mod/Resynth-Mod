@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "resynth:item_dense_mineral_rock"
+      "item": "resynth:dense_mineral_rock"
     }
   ],
   "result": {
-    "item": "resynth:item_mineral_rock",
+    "item": "resynth:mineral_rock",
     "count": 9
   }
 }

@@ -7,13 +7,13 @@
   ],
   "key": {
     "X": {
-      "item": "resynth:item_mineral_crystal"
+      "item": "resynth:mineral_crystal"
     },
     "Y": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "resynth:item_mineral_hoe"
+    "item": "resynth:mineral_hoe"
   }
 }
