@@ -118,7 +118,7 @@ public class DoubleConfigValue implements ConfigValue {
     @Override
     public void setValue(Object value) {
         try{
-            this.value = Integer.parseInt(String.valueOf(value));
+            this.value = Double.parseDouble(String.valueOf(value));
         } catch (NumberFormatException e){
             this.value = defaultValue;
         }

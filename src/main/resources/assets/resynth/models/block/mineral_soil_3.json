@@ -1,7 +1,7 @@
 {
-  "parent": "resynth:block/block_mineral_soil",
+  "parent": "resynth:block/mineral_soil",
   "textures": {
-    "particle": "minecraft:blocks/dirt",
+    "particle": "resynth:blocks/mineral_soil/cover_5",
     "cover": "resynth:blocks/mineral_soil/cover_3",
     "top": "resynth:blocks/mineral_soil/top_3"
   }

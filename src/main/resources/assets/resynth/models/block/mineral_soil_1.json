@@ -1,0 +1,8 @@
+{
+  "parent": "resynth:block/mineral_soil",
+  "textures": {
+    "particle": "resynth:blocks/mineral_soil/cover_5",
+    "cover": "resynth:blocks/mineral_soil/cover_1",
+    "top": "resynth:blocks/mineral_soil/top_1"
+  }
+}

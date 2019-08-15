@@ -15,10 +15,10 @@
  */
 package com.ki11erwolf.resynth.block.tileEntity;
 
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityShulkerBox;
-import net.minecraft.tileentity.TileEntityType;
 
 /**
  * The tile entity for the block BlockMineralSoil.
@@ -28,27 +28,36 @@ import net.minecraft.tileentity.TileEntityType;
 public class TileEntityMineralSoil extends TileEntity {
 
     /**
-     * Registry ID for this tile entity.
+     * Configuration settings for this tile entity.
      */
-    public static final String TE_ID = "te_mineral_soil";
+    private static final MineralSoilConfig CONFIG
+            = ResynthConfig.GENERAL_CONFIG.getCategory(MineralSoilConfig.class);
 
     /**
-     * TileEntityType object registered to this tile entity.
+     * The NBT tag key for Mineral Content.
      */
-    public static final TileEntityType<TileEntityMineralSoil> TE_MINERAL_SOIL
-            = TileEntityType.register(TE_ID, TileEntityType.Builder.create(TileEntityMineralSoil::new));
+    private static final String MINERAL_CONTENT_TAG = "mineralPercentage";
+
+    /**
+     * Registry ID for this tile entity.
+     */
+    static final String TE_ID = "te_mineral_soil";
 
     /**
      * The given blocks mineral mineralPercentage. Range: {@code 0.1 < x < 50.0}.
      */
-    private float mineralPercentage = 1;
+    private float mineralPercentage = (float) CONFIG.getStartingMineralContent();
 
     /**
-     * Default constructor.
+     * Default Constructor.
      */
-    public TileEntityMineralSoil() {
-        super(TE_MINERAL_SOIL);
+    public TileEntityMineralSoil(){
+        super(TileEntityTypeMineralSoil.TE_MINERAL_SOIL);
     }
+
+    // **************
+    // Read and write
+    // **************
 
     /**
      * Writes the mineralPercentage variable value to NBT.
@@ -58,8 +67,9 @@ public class TileEntityMineralSoil extends TileEntity {
      */
     @Override
     public NBTTagCompound write(NBTTagCompound compound) {
-        compound.setFloat("mineralPercentage", mineralPercentage);
-        return super.write(compound);
+        super.write(compound);
+        compound.setFloat(MINERAL_CONTENT_TAG, mineralPercentage);
+        return compound;
     }
 
     /**
@@ -69,9 +79,13 @@ public class TileEntityMineralSoil extends TileEntity {
      */
     @Override
     public void read(NBTTagCompound compound) {
-        mineralPercentage = compound.getFloat("mineralPercentage");
         super.read(compound);
+        mineralPercentage = compound.getFloat(MINERAL_CONTENT_TAG);
     }
+
+    // ***
+    // API
+    // ***
 
     /**
      * @return The given blocks mineral percentage.
@@ -87,6 +101,7 @@ public class TileEntityMineralSoil extends TileEntity {
      * @param mineralPercentage the mineral percentage to set the value to.
      * Range: {@code 0.1 < x < 50.0}.
      */
+    @SuppressWarnings("WeakerAccess")
     public void setMineralPercentage(float mineralPercentage) {
         if(mineralPercentage < 0.1F)
             mineralPercentage = 1.0F;
@@ -105,6 +120,7 @@ public class TileEntityMineralSoil extends TileEntity {
      * @param percentage the percentage to increase the
      * blocks mineral percentage by.
      */
+    @SuppressWarnings("unused")
     public void increaseMineralPercentage(float percentage) {
         setMineralPercentage(getMineralPercentage() + percentage);
     }
@@ -117,6 +133,7 @@ public class TileEntityMineralSoil extends TileEntity {
      * @param percentage the percentage to decrease the
      * blocks mineral percentage by.
      */
+    @SuppressWarnings("unused")
     public void decreaseMineralPercentage(float percentage) {
         setMineralPercentage(getMineralPercentage() - percentage);
     }

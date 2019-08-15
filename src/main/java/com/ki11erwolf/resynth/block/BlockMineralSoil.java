@@ -17,19 +17,23 @@ package com.ki11erwolf.resynth.block;
 
 import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
-import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -41,292 +45,78 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Mineral Enriched Soil.
- *
- * The soil block for the mods plants.
+ * <p/>
+ * Resynth's farmland block. Used to plant Resynth Plants.
+ * Has a Mineral Content value associated with it that
+ * determines plant growth.
  */
 @SuppressWarnings("deprecation")
-public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
-        /*implements HwylaDataProvider, TOPDataProvider*/ {
+public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
 
     /**
-     * The metadata value for the blocks appearance.
+     * Configuration settings for this block class.
      */
-    private static final IntegerProperty
-            //TODO: change string value from percent to stage
-            STAGE = IntegerProperty.create("percent", 0, 4);
+    private static final MineralSoilConfig CONFIG
+            = ResynthConfig.GENERAL_CONFIG.getCategory(MineralSoilConfig.class);
 
     /**
-     * The bounding box (or dimensions) of the block.
+     * The Mineral Content stage this block is on. Determines
+     * the texture of the block based on the Mineral Content.
      */
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(
+    private static final IntegerProperty STAGE
+            = IntegerProperty.create("stage", 0, 4);
+
+    /**
+     * The shape of the block.
+     */
+    private static final VoxelShape MINERAL_SOIL_SHAPE = Block.makeCuboidShape(
             0.0D, 0.0D, 0.0D,
-            1.0D, 0.9375D, 1.0D
+            16.0D, 15.0D, 16.0D
     );
 
     /**
-     * Standard block constructor.
+     * Default constructor.
      */
     BlockMineralSoil(){
         super(
                 Properties.create(Material.GRASS).hardnessAndResistance(2.0F).sound(SoundType.GROUND),
                 "mineral_soil"
         );
-        //this.setHardness(2.0F);
-        //this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
-        //this.setLightOpacity(255);
-    }
-
-    @Override
-    public void onReplaced(IBlockState state, World world, BlockPos pos, IBlockState newState, boolean isMoving) {
-        TileEntityMineralSoil te = getTileEntity(world, pos);
-
-        int drops = (int)((te.getMineralPercentage() - 1.0F) / 1.0F /*TODO: Config*/);
-        EntityItem items = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(),
-                new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, drops));
-        world.spawnEntity(items);
-
-        EntityItem mineralCrystal = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(),
-                new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1));
-        world.spawnEntity(mineralCrystal);
+        this.setDefaultState(this.stateContainer.getBaseState().with(STAGE, 0));
     }
 
     /**
      * {@inheritDoc}
-     *
-     * Drops Minecraft Dirt instead of this block itself.
-     * The extra item drops are handled when the block is broken.
-     *
-     * @return {@inheritDoc} Minecraft Dirt.
+     * <p/>
+     * Sets the tooltip for the block.
      */
     @Override
-    public Item getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune){
-        return Item.getItemFromBlock(Blocks.DIRT);
+    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
+                               ITooltipFlag flagIn){
+        ResynthBlock.setDescriptiveTooltip(tooltip, this);
     }
 
-
-//    /**
-//     * Drops the amount of ItemMineralRock put
-//     * into it (within a an item or two of accuracy)
-//     * and a Mineral Crystal.
-//     *
-//     * @param worldIn -
-//     * @param pos -
-//     * @param state -
-//     */
-//    @Override
-//    public void breakBlock(World worldIn, BlockPos pos, IBlockState state){
-//        TileEntityMineralSoil te = getTileEntity(worldIn, pos);
-//
-//        int drops = (int)((te.getMineralPercentage() - 1.0F) / 1.0F /*TODO: Config*/);
-//        EntityItem items = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
-//                new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, drops));
-//        worldIn.spawnEntity(items);
-//
-//        EntityItem mineralCrystal = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
-//                new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL, 1));
-//        worldIn.spawnEntity(mineralCrystal);
-//    }
-
-//    /**
-//     * Increases the blocks tile entity percentage value
-//     * by a config specified value at the cost
-//     * of ItemMineralRocks.
-//     */
-//    @Override
-//    public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player,
-//                                    EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
-//        if(getTileEntity(worldIn, pos).getMineralPercentage() >= 50)
-//            return false;
-//
-//        //Mineral Rock
-//        if(player.getHeldItemMainhand().getItem().getClass().equals(ResynthItems.ITEM_MINERAL_ROCK.getClass())){
-//            new MinecraftUtil.SideSensitiveCode(worldIn){
-//                @Override
-//                public void onServer(){
-//                    ItemStack offer = player.getHeldItemMainhand();
-//                    TileEntityMineralSoil entity = getTileEntity(worldIn, pos);
-//
-//                    if(hand.equals(EnumHand.MAIN_HAND)){
-//                        if(!player.isCreative())
-//                            offer.shrink(1);
-//                        entity.increaseMineralPercentage(1.0F/*TODO: Config*/);
-//                    }
-//
-//                    float percentage = entity.getMineralPercentage();
-//                    updateState(worldIn, pos);
-//
-//                    try{
-//                        //noinspection ConstantConditions
-//                        ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
-//                        String perc = String.valueOf(entity.getMineralPercentage());
-//
-//                        if(true/*TODO: Config*/)
-//                            player.sendMessage(new TextComponentString("Soil mineral content: "
-//                                    + perc
-//                                    .substring(0, perc.length() > 4 ? 4 : perc.length())
-//                                    + "%")
-//                            );
-//                    } catch (NullPointerException e){
-//                        player.sendMessage(new TextComponentString(
-//                                "Failed to update mineral content of Mineral Soil block."
-//                                + " Submit a bug report if you see this."
-//                        ));
-//                        LOGGER.error("Failed to update mineral content of Mineral Soil block.", e);
-//                    }
-//
-//                }
-//            }.execute();
-//            return true;
-//        }
-//
-//        //Dense Mineral Rock
-//        if(player.getHeldItemMainhand().getItem().getClass().equals(ResynthItems.ITEM_DENSE_MINERAL_ROCK.getClass())){
-//            new MinecraftUtil.SideSensitiveCode(worldIn) {
-//                @Override
-//                public void onServer() {
-//                    ItemStack offer = player.getHeldItemMainhand();
-//                    TileEntityMineralSoil entity = getTileEntity(worldIn, pos);
-//
-//                    if(hand.equals(EnumHand.MAIN_HAND)){
-//                        if(!player.isCreative())
-//                            offer.shrink(1);
-//                        entity.increaseMineralPercentage(1.0F /*TODO: Config*/ * 9);
-//                    }
-//
-//                    float percentage = entity.getMineralPercentage();
-//                    updateState(worldIn, pos);
-//
-//
-//                    try{
-//                        //noinspection ConstantConditions
-//                        ((TileEntityMineralSoil) worldIn.getTileEntity(pos)).setMineralPercentage(percentage);
-//                        String perc = String.valueOf(entity.getMineralPercentage());
-//
-//                        if(true/*TODO: Config*/)
-//                            player.sendMessage(new TextComponentString("Soil mineral content: "
-//                                    + perc
-//                                    .substring(0, perc.length() > 4 ? 4 : perc.length())
-//                                    + "%")
-//                            );
-//                    } catch (NullPointerException e){
-//                        player.sendMessage(new TextComponentString(
-//                                "Failed to update mineral content of Mineral Soil block."
-//                                        + " Submit a bug report if you see this."
-//                        ));
-//                        LOGGER.error("Failed to update mineral content of Mineral Soil block.", e);
-//                    }
-//                }
-//            }.execute();
-//            return true;
-//        }
-//
-//        return false;
-//    }
+    // ***
+    // LAF
+    // ***
 
     /**
-     * @return the predefined 3D Voxel shape the block will take.
+     * {@inheritDoc}
+     * <p/>
+     * Sets the shape (i.e. collision/bounding box) of the block.
+     *
+     * @return {@link #MINERAL_SOIL_SHAPE}.
      */
     @Override
     public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
-        return SHAPE;
+        return MINERAL_SOIL_SHAPE;
     }
 
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param blockState {@inheritDoc}
-//     * @param blockAccess {@inheritDoc}
-//     * @param pos {@inheritDoc}
-//     * @param side {@inheritDoc}
-//     * @return {@inheritDoc}
-//     */
-//    @Override
-//    @SideOnly(Side.CLIENT)
-//    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos,
-//                                        EnumFacing side){
-//        switch (side){
-//            case UP:
-//                return true;
-//            case NORTH:
-//            case SOUTH:
-//            case WEST:
-//            case EAST:
-//                IBlockState iblockstate = blockAccess.getBlockState(pos.offset(side));
-//                Block block = iblockstate.getBlock();
-//                return !iblockstate.isOpaqueCube() && block != this && block != Blocks.GRASS_PATH;
-//            default:
-//                return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
-//        }
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param meta {@inheritDoc}
-//     * @return {@inheritDoc}
-//     */
-//    @Override
-//    public IBlockState getStateFromMeta(int meta){
-//        return this.getDefaultState().withProperty(STAGE, meta);
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param state {@inheritDoc}
-//     * @return {@inheritDoc}
-//     */
-//    @Override
-//    public int getMetaFromState(IBlockState state){
-//        return state.getValue(STAGE);
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @return {@inheritDoc}
-//     */
-//    @SuppressWarnings("RedundantArrayCreation")
-//    @Override
-//    protected BlockStateContainer createBlockState(){
-//        return new BlockStateContainer(this, new IProperty[] {STAGE});
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param worldIn {@inheritDoc}
-//     * @param state {@inheritDoc}
-//     * @param pos {@inheritDoc}
-//     * @param face {@inheritDoc}
-//     * @return {@inheritDoc}
-//     */
-//    @Override
-//    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face){
-//        return face == EnumFacing.DOWN ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * Returns the bounding box.
-//     *
-//     * @param state -
-//     * @param source -
-//     * @param pos -
-//     * @return the bounding box. {@link #MINERAL_SOIL_AABB}
-//     */
-//    @Override
-//    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
-//        return MINERAL_SOIL_AABB;
-//    }
-
     /**
-     * @param state -
+     * {@inheritDoc}
      * @return {@code false}.
      */
     @Override
@@ -335,7 +125,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
     }
 
     /**
-     * @param state -
+     * {@inheritDoc}
      * @return {@code false}.
      */
     @Override
@@ -344,9 +134,96 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
     }
 
     /**
+     * Handles updating the blocks texture based
+     * on the Mineral Content of the block.
+     *
+     * @param mineralContent the blocks/tile entities Mineral Content.
+     * @param world the world the block is in.
+     * @param state the state of the block. i.e. BlockState.
+     * @param pos the BlockPos of the block in the world.
+     */
+    private void updateState(float mineralContent, World world, IBlockState state, BlockPos pos){
+        if(mineralContent > 49.9){
+            world.setBlockState(pos, state.with(STAGE, 4));
+        } else if(mineralContent > 39.9){
+            world.setBlockState(pos, state.with(STAGE, 3));
+        } else if(mineralContent > 29.9){
+            world.setBlockState(pos, state.with(STAGE, 2));
+        } else if(mineralContent > 19.9){
+            world.setBlockState(pos, state.with(STAGE, 1));
+        } else world.setBlockState(pos, state.with(STAGE, 0));
+    }
+
+    // *****
+    // State
+    // *****
+
+    /**
+     * {@inheritDoc}.
+     * <p/>
+     * Makes the {@link #STAGE} property known.
+     *
+     * @param builder StateContainer builder.
+     */
+    protected void fillStateContainer(StateContainer.Builder<Block, IBlockState> builder) {
+        builder.add(STAGE);
+    }
+
+    // **********
+    // Drop Logic
+    // **********
+
+    /**
      * {@inheritDoc}
      *
-     * @return {@inheritDoc}
+     * @return {@link Blocks#DIRT}.
+     */
+    @Override
+    public Item getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune){
+        return Item.getItemFromBlock(Blocks.DIRT);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Handles dropping the {@link ResynthItems#ITEM_MINERAL_CRYSTAL} required to
+     * make Mineral Soil as well the number of {@link ResynthItems#ITEM_MINERAL_ROCK}'s
+     * put into the Mineral Soil block.
+     */
+    public void onReplaced(IBlockState state, World world, BlockPos pos, IBlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            //Checks
+            TileEntity tileentity = world.getTileEntity(pos);
+            if (!(tileentity instanceof TileEntityMineralSoil)) {
+                super.onReplaced(state, world, pos, newState, isMoving);
+            }
+
+            //Mineral Crystal
+            InventoryHelper.spawnItemStack(
+                    world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL)
+            );
+
+            //Mineral Rocks
+            assert tileentity != null;
+            assert tileentity instanceof TileEntityMineralSoil;
+            float content = ((TileEntityMineralSoil)tileentity).getMineralPercentage();
+
+            int rocks = (int)((content - CONFIG.getStartingMineralContent())/CONFIG.getMineralRockWorth());
+            InventoryHelper.spawnItemStack(
+                    world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, rocks)
+            );
+
+            super.onReplaced(state, world, pos, newState, isMoving);
+        }
+    }
+
+    // ***********
+    // Tile Entity
+    // ***********
+
+    /**
+     * {@inheritDoc}
+     * @return {@code {@link TileEntityMineralSoil}.class}.
      */
     @Override
     public Class<TileEntityMineralSoil> getTileEntityClass() {
@@ -355,193 +232,76 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
 
     /**
      * {@inheritDoc}
-     * @param world the world the block is in.
-     * @param state the block state of the block.
-     * @return {@inheritDoc}
+     * @return {@code new} {@link TileEntityMineralSoil}.
      */
     @Override
-    public TileEntityMineralSoil createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
         return new TileEntityMineralSoil();
     }
 
+    // *****
+    // Logic
+    // *****
+
     /**
      * {@inheritDoc}
-     * Adds a tooltip on how to use the block.
      *
-     * @param stack
-     * @param worldIn
-     * @param tooltip
-     * @param flagIn
+     * <p/>
+     *
+     * Handles adding Mineral Rocks/Dense Mineral Rocks to the Mineral Soil
+     * block when a player uses the item on the block. Also handles the changing
+     * the texture of the block and displaying the Mineral Content when the block is
+     * hit with a stick.
+     *
+     * @return {@code true} if the item used is an accepted (usable) item.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
-                               ITooltipFlag flagIn){
-        ResynthBlock.setDescriptiveTooltip(tooltip, this);
+    public boolean onBlockActivated(IBlockState state, World world, BlockPos pos, EntityPlayer player,
+                                    EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+        ItemStack usedItem = player.getHeldItem(hand);
+        TileEntityMineralSoil entityMineralSoil = getTileEntity(world, pos);
+        float mineralContent = entityMineralSoil.getMineralPercentage();
+        float increase;
+
+        //Debug help
+        if(usedItem.getItem() == Items.STICK){
+            if(!world.isRemote)
+                player.sendMessage(new TextComponentString(
+                        //TODO: I18N
+                        "Mineral Content: " + entityMineralSoil.getMineralPercentage()
+                ));
+            return true;
+        }
+
+        //At max mineral content
+        if(mineralContent >= 50){
+            return false;
+        }
+
+        //Determined used item.
+        if(usedItem.getItem() == ResynthItems.ITEM_MINERAL_ROCK){
+           increase = (float)CONFIG.getMineralRockWorth();
+        } else if(usedItem.getItem() == ResynthItems.ITEM_DENSE_MINERAL_ROCK){
+            increase = (float)CONFIG.getMineralRockWorth() * 9;
+        }  else return false;
+
+        //Do increase
+        if(world.isRemote)
+            return true;
+
+        if(!player.isCreative()){
+            usedItem.shrink(1);
+        }
+
+        entityMineralSoil.increaseMineralPercentage(increase);
+        updateState(entityMineralSoil.getMineralPercentage(), world, state, pos);
+
+        if(CONFIG.isChatMessageEnabled())
+            player.sendMessage(new TextComponentString(
+                    //TODO: I18N
+                    "Mineral Content: " + entityMineralSoil.getMineralPercentage()
+            ));
+
+        return true;
     }
-
-    /**
-     * Updates the look of the block to match
-     * the percentage value in its tile entity.
-     *
-     * @param worldIn -
-     * @param pos -
-     */
-    private void updateState(World worldIn, BlockPos pos){
-        worldIn.setBlockState(pos, getStateFromTileEntity(worldIn, pos));
-    }
-
-    /**
-     * Get's the correct block state for the percentage
-     * value in the blocks tile entity.
-     *
-     * @param worldIn -
-     * @param pos -
-     * @return the block state matching the tile entities percentage value.
-     */
-    private static IBlockState getStateFromTileEntity(World worldIn, BlockPos pos){
-        float percentage =
-                ((TileEntityMineralSoil) Objects.requireNonNull(worldIn.getTileEntity(pos))).getMineralPercentage();
-
-        if(percentage > 49.9){
-            return worldIn.getBlockState(pos).with(STAGE, 4/*50%*/);
-        }
-
-        if(percentage > 39.9){
-            return worldIn.getBlockState(pos).with(STAGE, 3/*40%*/);
-        }
-
-        if(percentage > 29.9){
-            return worldIn.getBlockState(pos).with(STAGE, 2/*30%*/);
-        }
-
-        if(percentage > 19.9){
-            return worldIn.getBlockState(pos).with(STAGE, 1/*20%*/);
-        }
-
-        return worldIn.getBlockState(pos).with(STAGE, 0/*10%*/);
-    }
-
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * Gives the block tile entity information to the Hwyla tooltip.
-//     *
-//     * @param itemStack the item stack returned by the block.
-//     * @param currentTip {@inheritDoc}
-//     * @param accessor accessor used to get data from the block such as NBT.
-//     * @param config current Hwyla configuration
-//     */
-//    @Override
-//    public void onHwylaBodyRequest(ItemStack itemStack, List<String> currentTip,
-//                                   IWailaDataAccessor accessor, IWailaConfigHandler config) {
-//
-//        TileEntity te = accessor.getTileEntity();
-//        if(!(te instanceof TileEntityMineralSoil)) {
-//            return;
-//        }
-//
-//        currentTip.add(
-//                TextFormatting.GREEN
-//                + "Mineral Content: "
-//                + accessor.getNBTData().getFloat("mineral-content")
-//                + "%"
-//        );
-//
-//        currentTip.add(
-//                TextFormatting.DARK_PURPLE
-//                + "Mineral Stage: "
-//                + percentToStage(accessor.getNBTData().getFloat("mineral-content"))
-//        );
-//    }
-//
-//    /**
-//     * Gives the blocks tile entity data to the Hwyla client side NBT data
-//     *
-//     * @param player player looking at a block.
-//     * @param te blocks tile entity.
-//     * @param tag Hwyla client side NBT data.
-//     * @param world current world the player is in.
-//     * @param pos position of the block the player is looking at.
-//     *
-//     */
-//    @Override
-//    public void onHwylaNBTDataRequest(EntityPlayerMP player, TileEntity te,
-//                                      NBTTagCompound tag, World world, BlockPos pos){
-//
-//        if(!(te instanceof TileEntityMineralSoil))
-//            return;
-//
-//        tag.setFloat(
-//                "mineral-content",
-//                ((TileEntityMineralSoil)te).getMineralPercentage()
-//        );
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param mode the usage mode the probe is in.
-//     * @param probeInfo probe information holder. Add block
-//     *                  information to this object.
-//     * @param player the player the information will be provided to.
-//     * @param world the world the player is in.
-//     * @param blockState state of the block the probe is probing.
-//     * @param data probe ray tracing results.
-//     */
-//    @Override
-//    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player,
-//                             World world, IBlockState blockState, IProbeHitData data) {
-//        TileEntity te = world.getTileEntity(data.getPos());
-//
-//        if (!(te instanceof TileEntityMineralSoil)) {
-//            return;
-//        }
-//
-//        TileEntityMineralSoil dataTileEntity = (TileEntityMineralSoil) te;
-//
-//        probeInfo.horizontal()
-//                .text(TextFormatting.GOLD + "Mineral Content: ");
-//
-//        probeInfo.horizontal()
-//                .item(new ItemStack(ResynthBlocks.BLOCK_MINERAL_SOIL))
-//                .text(
-//                        TextFormatting.GOLD + "Stage: " +
-//                        TextFormatting.AQUA + percentToStage(dataTileEntity.getMineralPercentage())
-//                );
-//
-//        probeInfo.horizontal().text(TextFormatting.GOLD + "Percentage:");
-//        probeInfo.horizontal()
-//                .item(new ItemStack(ResynthItems.ITEM_MINERAL_ROCK))
-//                .progress(
-//                        Math.round(dataTileEntity.getMineralPercentage())
-//                                % 100, 100,
-//                        probeInfo.defaultProgressStyle().suffix("%")
-//                );
-//    }
-
-    /**
-     * @param percent mineral content percentage.
-     * @return a String containing information about which
-     * stage the block is in from its metadata.
-     */
-    private static String percentToStage(float percent){
-        if(percent > 49.9){
-            return "5 of 5";
-        }
-
-        if(percent > 39.9){
-            return "4 of 5";
-        }
-
-        if(percent > 29.9){
-            return "3 of 5";
-        }
-
-        if(percent > 19.9){
-            return "2 of 5";
-        }
-
-        return "1 of 5";
-    }
-
 }
