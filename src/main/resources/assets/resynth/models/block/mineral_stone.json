@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "resynth:blocks/mineral_ore"
+    "all": "resynth:blocks/mineral_stone"
   }
 }

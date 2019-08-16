@@ -11,7 +11,7 @@
   "item.resynth.dense_mineral_rock":                        "Dense Mineral Rock",
 
   "__COMMENT": "----Blocks----",
-  "block.resynth.mineral_ore":                              "Mineral Infused Stone",
+  "block.resynth.mineral_stone":                            "Mineral Infused Stone",
   "block.resynth.seed_pod":                                 "Mystical Seed Pod",
   "block.resynth.mineral_soil":                             "Mineral Enriched Soil",
 

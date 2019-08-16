@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth.block;
 
 import com.ki11erwolf.resynth.config.ResynthConfig;
-import com.ki11erwolf.resynth.config.categories.MineralOreConfig;
+import com.ki11erwolf.resynth.config.categories.MineralStoneConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
@@ -39,23 +39,22 @@ import java.util.Random;
 /**
  * Mineral Rich Stone. The mods ore block.
  */
-//TODO: Maybe rename to BlockMineralStone or just MineralStone
-public class BlockMineralOre extends ResynthBlock{
+public class BlockMineralStone extends ResynthBlock{
 
     /**
      * The configuration settings for this block.
      */
-    private static final MineralOreConfig CONFIG = ResynthConfig.GENERAL_CONFIG.getCategory(MineralOreConfig.class);
+    private static final MineralStoneConfig CONFIG = ResynthConfig.GENERAL_CONFIG.getCategory(MineralStoneConfig.class);
 
     /**
      * Sets the basic properties of the block.
      */
-    BlockMineralOre() {
+    BlockMineralStone() {
         super(
                 Block.Properties.create(Material.ROCK)
                         .hardnessAndResistance(3.0F, 3.0F)
                         .lightValue(1),
-                "mineral_ore"
+                "mineral_stone"
         );
     }
 

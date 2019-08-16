@@ -20,7 +20,7 @@ import static net.minecraft.world.biome.Biome.createCompositeFlowerFeature;
  * in the world as a flower. The Seed Pod will generate
  * in every biome.
  */
-public class SeedPodFeature extends AbstractFlowersFeature {
+class SeedPodFeature extends AbstractFlowersFeature {
 
     /**
      * Configuration settings for Seed Pod generation.

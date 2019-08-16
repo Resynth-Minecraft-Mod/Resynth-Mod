@@ -12,6 +12,11 @@ public class ResynthFeatures {
      */
     private static final SeedPodFeature SEED_POD_FEATURE = new SeedPodFeature();
 
+    /**
+     * Reference to the {@link MineralStoneFeature}.
+     */
+    private static final MineralStoneFeature MINERAL_ROCK_FEATURE = new MineralStoneFeature();
+
     /**Private Constructor.*/
     private ResynthFeatures(){}
 

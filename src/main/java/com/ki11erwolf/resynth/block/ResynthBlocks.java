@@ -48,7 +48,7 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
     /**
      * Mineral Rich Stone. The mods ore.
      */
-    public static final ResynthBlock BLOCK_MINERAL_ORE = new BlockMineralOre().queueRegistration();
+    public static final ResynthBlock BLOCK_MINERAL_ORE = new BlockMineralStone().queueRegistration();
 
     /**
      * Mineral Enriched Soil. The farmland block for the mod.

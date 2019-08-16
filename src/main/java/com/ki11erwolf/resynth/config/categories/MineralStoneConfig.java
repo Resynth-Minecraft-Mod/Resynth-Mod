@@ -1,14 +1,15 @@
 package com.ki11erwolf.resynth.config.categories;
 
+import com.ki11erwolf.resynth.block.BlockMineralStone;
 import com.ki11erwolf.resynth.config.ConfigCategory;
 import com.ki11erwolf.resynth.config.DoubleConfigValue;
 import com.ki11erwolf.resynth.config.IntegerConfigValue;
 
 /**
- * Config settings for the {@link com.ki11erwolf.resynth.block.BlockMineralOre}
+ * Config settings for the {@link BlockMineralStone}
  * block.
  */
-public class MineralOreConfig extends ConfigCategory {
+public class MineralStoneConfig extends ConfigCategory {
 
     // *************
     // Config Values
@@ -79,8 +80,8 @@ public class MineralOreConfig extends ConfigCategory {
      * Creates a new, unique configuration category
      * grouping.
      */
-    public MineralOreConfig() {
-        super("mineral ore");
+    public MineralStoneConfig() {
+        super("mineral-stone");
     }
 
     // ****************
