@@ -24,6 +24,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -266,10 +267,9 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
         //Debug help
         if(usedItem.getItem() == Items.STICK){
             if(!world.isRemote)
-                player.sendMessage(new TextComponentString(
-                        //TODO: I18N
-                        "Mineral Content: " + entityMineralSoil.getMineralPercentage()
-                ));
+                player.sendMessage(new TextComponentString(I18n.format(
+                        "misc.resynth.mineral_content", entityMineralSoil.getMineralPercentage()
+                ) + "%"));
             return true;
         }
 
@@ -297,10 +297,9 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
         updateState(entityMineralSoil.getMineralPercentage(), world, state, pos);
 
         if(CONFIG.isChatMessageEnabled())
-            player.sendMessage(new TextComponentString(
-                    //TODO: I18N
-                    "Mineral Content: " + entityMineralSoil.getMineralPercentage()
-            ));
+            player.sendMessage(new TextComponentString(I18n.format(
+                    "misc.resynth.mineral_content", entityMineralSoil.getMineralPercentage()
+            ) + "%"));
 
         return true;
     }
