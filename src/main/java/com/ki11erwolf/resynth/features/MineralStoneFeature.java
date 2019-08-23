@@ -46,7 +46,7 @@ class MineralStoneFeature extends MinableFeature {
                         this,
                         new MinableConfig(
                                 MinableConfig.IS_ROCK,
-                                ResynthBlocks.BLOCK_MINERAL_ORE.getDefaultState(),
+                                ResynthBlocks.BLOCK_MINERAL_STONE.getDefaultState(),
                                 CONFIG.getSize()
                         ),
                         Biome.COUNT_RANGE,

@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:crystalline_shard_mineral_rock"
+  },
+  "result": "resynth:mineral_rock",
+  "experience": 7.0,
+  "cookingtime": 200
+}

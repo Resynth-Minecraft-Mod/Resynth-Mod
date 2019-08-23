@@ -48,7 +48,7 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
     /**
      * Mineral Rich Stone. The mods ore.
      */
-    public static final ResynthBlock BLOCK_MINERAL_ORE = new BlockMineralStone().queueRegistration();
+    public static final ResynthBlock BLOCK_MINERAL_STONE = new BlockMineralStone().queueRegistration();
 
     /**
      * Mineral Enriched Soil. The farmland block for the mod.
@@ -72,6 +72,9 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
     @SubscribeEvent
     @SuppressWarnings("unused")//Reflection
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
-        INSTANCE.iterateQueue(block -> event.getRegistry().register(block));
+        INSTANCE.iterateQueue(block -> {
+            ResynthMod.getNewLogger().debug("Registering Resynth Block: " + block);
+            event.getRegistry().register(block);
+        });
     }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "resynth:block/plant/plant_crystalline",
   "textures": {
-    "crop": "resynth:blocks/plants/mineral/mineral_0"
+    "crop": "resynth:blocks/plants/mineral_rock/plant_0"
   }
 }

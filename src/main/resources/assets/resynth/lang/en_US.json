@@ -16,6 +16,10 @@
   "block.resynth.mineral_soil":                             "Mineral Enriched Soil",
 
   "___COMMENT": "----Plant Sets----",
+  "block.resynth.crystalline_plant_mineral_rock":           "Mineral Rock Plant",
+  "item.resynth.crystalline_seeds_mineral_rock":            "Mineral Rock Seeds",
+  "item.resynth.crystalline_shard_mineral_rock":            "Mineral Rock Shard",
+
   "block.resynth.crystalline_plant_diamond":                "Diamond Plant",
   "item.resynth.crystalline_seeds_diamond":                 "Diamond Seeds",
   "item.resynth.crystalline_shard_diamond":                 "Diamond Shard",

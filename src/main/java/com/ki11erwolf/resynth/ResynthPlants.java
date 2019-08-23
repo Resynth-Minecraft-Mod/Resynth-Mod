@@ -1,5 +1,6 @@
 package com.ki11erwolf.resynth;
 
+import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.plantsets.set.CrystallineSetProperties;
 import com.ki11erwolf.resynth.plantsets.set.PlantSet;
 import com.ki11erwolf.resynth.plantsets.set.PlantSetFactory;
@@ -18,6 +19,21 @@ import net.minecraft.init.Blocks;
  */
 @SuppressWarnings("WeakerAccess")
 public class ResynthPlants {
+
+    /**
+     * The plant set for Resynth Mineral Rocks
+     */
+    public static final PlantSet MINERAL_ROCKS = PlantSetFactory.newVanillaCrystallineSet(
+            "mineral_rock",
+            new CrystallineSetProperties(
+                    false,
+                    10,
+                    3,
+                    10,
+                    15
+            ),
+            ResynthBlocks.BLOCK_MINERAL_STONE
+    ).register();
 
     /**
      * The plant set for Vanilla Diamonds.

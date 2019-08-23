@@ -25,7 +25,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
  * into a set and how they interact, as well as handling
  * how seeds are obtained (through events).
  */
-class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
+abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
 
     /**
      * The name of this plant set type.
@@ -43,21 +43,12 @@ class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
     private final ICrystallineSetProperties setProperties;
 
     /**
-     * The ore block seeds for this plant set instance
-     * are obtained from.
-     */
-    private final Block sourceOre;
-
-    /**
      * @param setName the name of the specific plant set instance (e.g. diamond).
      * @param properties the properties for the specific plant set instance.
-     * @param sourceOre the source ore from which seeds for the specific
-     *                  plant set instance are obtained from.
      */
-    CrystallineSet(String setName, ICrystallineSetProperties properties, ItemStack sourceOre) {
+    CrystallineSet(String setName, ICrystallineSetProperties properties) {
         super(SET_TYPE_NAME, setName, SEED_HOOKS);
         this.setProperties = properties;
-        this.sourceOre = Block.getBlockFromItem(sourceOre.getItem());
 
         //Plant
         this.produceItemOrBlock = new ItemOrBlock(new ItemShard(SET_TYPE_NAME, setName, properties));
@@ -74,6 +65,21 @@ class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
         };
         this.seedsItem = new ItemSeeds(SET_TYPE_NAME, setName, plantBlock, properties);
     }
+
+    // ****************
+    // Abstract Methods
+    // ****************
+
+    /**
+     * Allows the plant set factory to provide the source ore block
+     * only when it's needed (when a block is broken in game). This
+     * allows providing source ore blocks that are not yet registered
+     * to the game. This in turn allows adding source ore blocks from
+     * Resynth and other mods.
+     *
+     * @return the ore block seeds from this set are obtained from.
+     */
+    abstract ItemStack getSourceOre();
 
     // **********
     // Seed Hooks
@@ -114,7 +120,7 @@ class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
                 CrystallineSet crystallineSet = (CrystallineSet) set;
                 float spawnChance = crystallineSet.setProperties.seedSpawnChanceFromOre();
 
-                if(spawnChance < 0 || !(block == crystallineSet.sourceOre))
+                if(spawnChance < 0 || !(block == Block.getBlockFromItem(crystallineSet.getSourceOre().getItem())))
                     continue;
 
                 //Spawn

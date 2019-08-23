@@ -77,6 +77,9 @@ public class ResynthItems extends QueueRegisterer<Item> {
     @SubscribeEvent
     @SuppressWarnings("unused")//Reflection
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        INSTANCE.iterateQueue(item -> event.getRegistry().register(item));
+        INSTANCE.iterateQueue(item -> {
+            ResynthMod.getNewLogger().debug("Registering Resynth Item: " + item.getClass().getName());
+            event.getRegistry().register(item);
+        });
     }
 }
