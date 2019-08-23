@@ -15,16 +15,21 @@
   "block.resynth.seed_pod":                                 "Mystical Seed Pod",
   "block.resynth.mineral_soil":                             "Mineral Enriched Soil",
 
-  "___COMMENT": "---Tooltips----",
+  "___COMMENT": "----Plant Sets----",
+  "block.resynth.crystalline_plant_diamond":                "Diamond Plant",
+  "item.resynth.crystalline_seeds_diamond":                 "Diamond Seeds",
+  "item.resynth.crystalline_shard_diamond":                 "Diamond Shard",
+
+  "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
   "tooltip.block.resynth.mineral_soil":
-  "Resynth's soil block. Needed to grow Resynth plants.\nMade by tilling dirt or grass with a Mineral Hoe.\nPlant growth rates can be increased by adding Mineral Rocks or Dense Mineral Rocks to the Mineral Enriched Soil.\nA stick can be used on Mineral Soil to check the Mineral Content.",
+  "Resynth's soil block. Needed to grow Resynth plants.\nMade by tilling dirt or grass with a Mineral Hoe.\nPlant growth rates can be increased by adding Mineral Rocks or Dense Mineral Rocks to the Mineral Enriched Soil.\nA Mineral Hoe can be used on Mineral Soil (right-clicked) to check the Mineral Content.",
   "tooltip.block.resynth.seed_pod":
   "A naturally spawning flower that can be configured to drop\nBiochemical (Mob Drops) seeds when broken for players\nwho are playing on peaceful mode.\nWhen not enabled, this flower will act like a normal decoration block.",
 
   "tooltip.item.resynth.mineral_hoe":
-  "Resynth's tool of choice. Needed to till dirt or grass into a\nspecial farmland block needed for Resynth plants.\nEach use of the Mineral Hoe requires a charge.\n1 charge = 1 Mineral Crystal.\nCharges can be added to the Mineral Hoe by right-clicking air,\nor shift-right-clicking a block, with\nthe Hoe in hand and Mineral Crystals in your inventory.",
+  "Resynth's tool of choice. Needed to till dirt or grass into a\nspecial farmland block needed for Resynth plants.\nEach use of the Mineral Hoe requires a charge.\n1 charge = 1 Mineral Crystal.\nCharges can be added to the Mineral Hoe by right-clicking air,\nor shift-right-clicking a block, with\nthe Hoe in hand and Mineral Crystals in your inventory.\nCan be used to check the growth stage of a plant by right-clicking it, or the Mineral Content of Mineral Soil by right clicking it.",
   "tooltip.item.resynth.mineral_hoe_charges": "Charges: %s",
   "tooltip.item.resynth.mineral_crystal":
   "A crafting component, and consumable \"fuel\" for the Mineral Hoe.\nMineral Crystals are required to turn dirt or grass into Mineral Soil, and as such, are required to progress in the mod.",
@@ -33,6 +38,19 @@
   "tooltip.item.resynth.mineral_rock":
   "Resynth's core item. Used as a crafting recipe to most Resynth blocks and items.\nAlso used as a consumable for creating Mineral Enriched Soil and as fertilizer/growth accelerator for Resynth plants.\nMined from Mineral Infused Stone.",
 
-  "____COMMENT": "---Miscellaneous---",
-  "misc.resynth.mineral_content": "Mineral Content: %s"
+  "_____COMMENT": "----Plant Item Tooltips----",
+  "tooltip.item.resynth.seeds":
+  "Obtained by mining %s ore, or by leaving the plant produce (shards) to despawn in water.\nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
+  "tooltip.item.resynth.shard":
+  "Can be smelted into the final resource or left in water to despawn for a chance at getting more seeds. \nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
+
+  "tooltip.item.resynth.plant_growth_chance": "Growth Chance: %s%%",
+  "tooltip.item.resynth.plant_plant_yield": "Plant Yield: %s drop(s).",
+  "tooltip.item.resynth.plant_bonemeal_enabled": "Allows Bonemeal: %s",
+  "tooltip.item.resynth.plant_seed_spawn_chance_from_ore": "Seed Spawn Chance from Ore Block: %s%%",
+  "tooltip.item.resynth.plant_seed_spawn_chance_from_shard": "Seed Spawn Chance from Shard Item: %s%%",
+
+  "______COMMENT": "---Miscellaneous---",
+  "misc.resynth.mineral_content": "Mineral Content: %s%%",
+  "misc.resynth.growth_stage": "Growth Stage: %s"
 }

@@ -58,7 +58,9 @@ public class ConfigFile {
     }
 
     /**
-     * Reads a config category from file by its class.
+     * Reads a config category from file by its class. Used to
+     * obtain references to config categories with only one instance
+     * (e.g. GeneralConfig). Only one config category can be registered by class.
      *
      * @param catClass the config category class.
      * @param <T> the config category class type.
@@ -85,6 +87,24 @@ public class ConfigFile {
 
         //Cache
         loadedCategories.put(catClass, category);
+        return category;
+    }
+
+    /**
+     * Reads a config category from file and attempts to store
+     * the values in the category provided. This method
+     * allows multiple config categories per class, unlike
+     * {@link #getCategory(Class)}, however, it requires
+     * an instance to be provided.
+     *
+     * @param category the provided category that will
+     *                 represent the config on file.
+     * @param <T> category class.
+     * @return the provided category with the config
+     * values loaded from file.
+     */
+    public <T extends ConfigCategory> T loadCategory(T category){
+        Objects.requireNonNull(category).initValues(config);
         return category;
     }
 }

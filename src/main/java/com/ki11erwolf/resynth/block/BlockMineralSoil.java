@@ -28,7 +28,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -264,12 +263,12 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
         float mineralContent = entityMineralSoil.getMineralPercentage();
         float increase;
 
-        //Debug help
-        if(usedItem.getItem() == Items.STICK){
+        //Debug help //TODO: Maybe move to the Mineral Hoe class
+        if(usedItem.getItem() == ResynthItems.ITEM_MINERAL_HOE){
             if(!world.isRemote)
                 player.sendMessage(new TextComponentString(I18n.format(
                         "misc.resynth.mineral_content", entityMineralSoil.getMineralPercentage()
-                ) + "%"));
+                )));
             return true;
         }
 

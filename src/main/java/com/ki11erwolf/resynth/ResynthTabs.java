@@ -46,7 +46,7 @@ public final class ResynthTabs {
     public static final ItemGroup TAB_RESYNTH_SEEDS = new ItemGroup("resynth_seeds") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ResynthItems.ITEM_MINERAL_ROCK);
+            return new ItemStack(ResynthPlants.DIAMOND.getSeedsItem());
         }
     };
 
@@ -56,7 +56,7 @@ public final class ResynthTabs {
     public static final ItemGroup TAB_RESYNTH_PRODUCE = new ItemGroup("resynth_produce") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL);
+            return new ItemStack(ResynthPlants.DIAMOND.getProduceItemOrBlock().getItem());
         }
     };
 }

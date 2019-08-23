@@ -22,6 +22,7 @@ import com.ki11erwolf.resynth.item.ResynthItemBlock;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -74,6 +75,13 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
 
         itemBlock = new ResynthItemBlock(this, itemProperties);
         itemBlock.setRegistryName(name);
+    }
+
+    /**
+     * @return the {@link ItemBlock} for this block instance.
+     */
+    public ResynthItemBlock getItemBlock(){
+        return this.itemBlock;
     }
 
     /**
@@ -137,6 +145,7 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
      * @return the text as an {@link ITextComponent} given by the
      * language file.
      */
+    @SuppressWarnings("unused")
     static ITextComponent getTooltip(ResynthBlock block){
         if(block.getRegistryName() == null){
             return stringToTextComponent(TextFormatting.RED + "Error");

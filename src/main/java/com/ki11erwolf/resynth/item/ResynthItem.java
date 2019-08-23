@@ -20,6 +20,7 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -61,6 +62,18 @@ public class ResynthItem<T extends ResynthItem> extends Item {
      */
     public ResynthItem(String name){
         this(new Properties(), name);
+    }
+
+    /**
+     * Constructor that allows providing a custom
+     * ItemGroup.
+     *
+     * @param name the item name.
+     * @param group the custom ItemGroup.
+     */
+    public ResynthItem(String name, ItemGroup group){
+        super(new Properties().group(group));
+        this.setRegistryName(name);
     }
 
     /**
@@ -146,7 +159,7 @@ public class ResynthItem<T extends ResynthItem> extends Item {
      * language file.
      */
     @SuppressWarnings("SameParameterValue")
-    static ITextComponent getFormattedTooltip(String key, TextFormatting color, Object... params){
+    protected static ITextComponent getFormattedTooltip(String key, TextFormatting color, Object... params){
         return stringToTextComponent(color + I18n.format("tooltip.item.resynth." + key, params));
     }
 
@@ -198,6 +211,26 @@ public class ResynthItem<T extends ResynthItem> extends Item {
 
         tooltip.add(stringToTextComponent(TextFormatting.GRAY + I18n.format(
                 "tooltip.item." + item.getRegistryName().toString().replace(":", ".")
+        )));
+    }
+
+    /**
+     * Will add an items tooltip (from lang file) to the given
+     * tooltip array, provided the config allows it.
+     *
+     * @param tooltip the tooltip array object.
+     * @param item the name of the items who's tooltip we want and key appended.
+     */
+    protected static void setDescriptiveTooltip(List<ITextComponent> tooltip, String item, Object... params){
+        if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled())
+            return;
+
+        if(item == null){
+            tooltip.add(stringToTextComponent(TextFormatting.RED + "Error"));
+        }
+
+        tooltip.add(stringToTextComponent(TextFormatting.GRAY + I18n.format(
+                "tooltip.item.resynth." + item, params
         )));
     }
 }

@@ -42,42 +42,21 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
 
-/**
- * Base class for all plants.
- *
- * Provides the base implementation for plants
- * as well as the interaction with mineral soil.
- */
 public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, IPlantable {
 
-    /**
-     * Prefix for all plant blocks.
-     */
     protected static final String PLANT_PREFIX = "plant_";
-
-    /**
-     * The default bounding box for plant blocks.
-     *
-     * This isn't used.
-     */
-    protected static final AxisAlignedBB DEFAULT_AABB = new AxisAlignedBB(
-            0.30000001192092896D, 0.0D, 0.30000001192092896D,
-            0.699999988079071D, 0.6000000238418579D, 0.699999988079071D);
 
     private static final VoxelShape SHAPE = Block.makeCuboidShape(
             0.30000001192092896D, 0.0D, 0.30000001192092896D,
             0.699999988079071D, 0.6000000238418579D, 0.699999988079071D
     );
 
-    /**
-     * Default constructor.
-     *
-     * @param name the name the block is identified by.
-     */
     protected BlockPlantBase(String name) {
         super(
                 Properties.create(Material.PLANTS)
-                        .sound(SoundType.PLANT).needsRandomTick().hardnessAndResistance(0.0F),
+                        .sound(SoundType.PLANT)
+                        .needsRandomTick()
+                        .hardnessAndResistance(0.0F),
                 PLANT_PREFIX + name
         );
         //this.setTickRandomly(true);
@@ -87,39 +66,16 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         //this.setSoundType(SoundType.PLANT);
     }
 
-    /**
-     * @param world -
-     * @param pos -
-     * @return {@link EnumPlantType#Crop}
-     */
     @Override
     public EnumPlantType getPlantType(IBlockReader world, BlockPos pos) {
         return EnumPlantType.Crop;
     }
 
-    /**
-     * {@inheritDoc}
-     * Checks if the plant can be grown with bonemeal by looking
-     * at the config settings.
-     *
-     * @param worldIn
-     * @param rand
-     * @param pos
-     * @param state
-     * @return dependent on configuration.
-     */
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state){
         return /*ResynthConfig.PLANTS_GENERAL.canBonemeal TODO: Config && */ this.canBonemeal();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param world
-     * @param pos
-     * @return the default state of this block.
-     */
     @Override
     public IBlockState getPlant(IBlockReader world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
@@ -130,26 +86,12 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         return state;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return CUTOUT
-     */
     @Override
     @OnlyIn(Dist.CLIENT)
     public BlockRenderLayer getRenderLayer(){
         return BlockRenderLayer.CUTOUT;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param worldIn
-     * @param state
-     * @param pos
-     * @param face
-     * @return UNDEFINED
-     */
     @Override
     @SuppressWarnings("deprecation")
     public BlockFaceShape getBlockFaceShape(IBlockReader worldIn, IBlockState state,
@@ -157,43 +99,16 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         return BlockFaceShape.UNDEFINED;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param state
-     * @return false
-     */
     //@Override //TODO: Something
     public boolean isOpaqueCube(IBlockState state){
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param state
-     * @return false
-     */
     @Override
     @SuppressWarnings("deprecation")
     public boolean isFullCube(IBlockState state){
         return false;
     }
-
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param blockState
-//     * @param worldIn
-//     * @param pos
-//     * @return no collision box.
-//     */
-//    @Override
-//    @Nullable
-//    @SuppressWarnings("deprecation")
-//    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos){
-//        return NULL_AABB;
-//    }
 
     @Override
     @Deprecated //No alternative yet
@@ -201,38 +116,12 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         return VoxelShapes.empty();//Can walk through.
     }
 
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param state
-//     * @param source
-//     * @param pos
-//     * @return default aligned axis for all plants. Not used.
-//     */
-//    @Override
-//    @SuppressWarnings("deprecation")
-//    public AxisAlignedBB getBoundingBox(){
-//        return DEFAULT_AABB;
-//    }
-
     @Override
     @Deprecated //No alternative yet
     public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
         return SHAPE;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     *     Makes sure the block drops if it is not on the correct block.
-     * </p>
-     *
-     * @param state
-     * @param worldIn
-     * @param pos
-     * @param blockIn
-     * @param fromPos
-     */
     @Override
     @SuppressWarnings("deprecation")
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos){
@@ -296,37 +185,20 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
 //    }
 
     @Override
-    @Deprecated //
+    @Deprecated
     public boolean isValidPosition(IBlockState state, IWorldReaderBase worldIn, BlockPos pos) {
         return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.canSeeSky(pos))
                 && (worldIn.getBlockState(pos.down()).getBlock() == getSoilBlock());
     }
 
-    /**
-     * Checks if the given block can sustain this plant.
-     *
-     * @param state the instance of the given block
-     * @return true if the given block state is mineral soil.
-     */
     protected boolean canSustainPlant(IBlockState state){
         return state.getBlock() == getSoilBlock();
     }
 
-    /**
-     * @return {@link com.ki11erwolf.resynth.block.BlockMineralSoil}
-     */
     protected Block getSoilBlock(){
         return ResynthBlocks.BLOCK_MINERAL_SOIL;
     }
 
-    /**
-     * Removes this block from the world if the block below cannot
-     * sustain this plant.
-     *
-     * @param worldIn -
-     * @param pos -
-     * @param state -
-     */
     protected void dropIfShould(World worldIn, BlockPos pos, IBlockState state){
         if(!canStay(worldIn, pos)){
             this.dropBlockAsItemWithChance(state, worldIn, pos, 1.0F, 0);
@@ -334,27 +206,10 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         }
     }
 
-    /**
-     * @param worldIn -
-     * @param pos -
-     * @return false if the block below cannot sustain this plant.
-     */
     protected boolean canStay(World worldIn, BlockPos pos){
         return worldIn.getBlockState(pos.down()).getBlock() == getSoilBlock();
     }
 
-    /**
-     * Randomly decides if the block should grow,
-     * taking into account the given {@link #_getGrowthChance()}
-     * and mineral content percentage of the
-     * soil block below.
-     *
-     * This method handles growth chances.
-     *
-     * @param world -
-     * @param pos -
-     * @return true if the block should grow.
-     */
     protected boolean shouldGrow(World world, BlockPos pos){
         float randomChance = MathUtil.getRandomIntegerInRange(0, 100);
         float chance = getSoilMineralContent(world, pos);
@@ -365,14 +220,6 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         return MathUtil.chance(_getGrowthChance());
     }
 
-    /**
-     * Gets the mineral content percentage
-     * of the soil block below.
-     *
-     * @param world -
-     * @param pos -
-     * @return the mineral content percentage of the block below.
-     */
     protected float getSoilMineralContent(World world, BlockPos pos){
         if(world.getTileEntity(pos.down()).getBlockState().getBlock() != ResynthBlocks.BLOCK_MINERAL_SOIL)
             return 0F;
@@ -431,74 +278,9 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         }
     }
 
-    /**
-     * Generates a human readable string that gives a
-     * plants growth stage from the plant blocks metadata.
-     *
-     * <b>Only works for plants with 8 growth stages (0-7).</b>
-     *
-     * @param meta plant block metadata.
-     * @return the plants growth stage as a human readable String.
-     */
-    static String getStageFromBlockMeta(int meta){
-        if(meta == 0)
-            return "1 of 8 (0%)";
-
-        if(meta == 1)
-            return "2 of 8 (14%)";
-
-        if(meta == 2)
-            return "3 of 8 (29%)";
-
-        if(meta == 3)
-            return "4 of 8 (43%)";
-
-        if(meta == 4)
-            return "5 of 8 (57%)";
-
-        if(meta == 5)
-            return "6 of 8 (71%)";
-
-        if(meta == 6)
-            return "7 of 8 (85%)";
-
-        if(meta == 7)
-            return "8 of 8 (100%)";
-
-        return "Unknown";
-    }
-
-    /**
-     * Called when a random update tick decides the
-     * block can grow.
-     *
-     * This is the method that will
-     * actually handle growing the plant. This
-     * method does not handle growth rules and
-     * chances.
-     *
-     * @param world -
-     * @param pos -
-     * @param state -
-     * @param random -
-     */
     protected abstract void onGrowApproved(World world, BlockPos pos, IBlockState state, Random random);
 
-    /**
-     * This is the internal growth chance method
-     * used by the plants Block classes. The
-     * "getGrowthChance()" method without
-     * the underscore is the one used by the
-     * actual plant set creator classes.
-     *
-     * @return how long the plant takes to grow
-     * in general.
-     */
     protected abstract float _getGrowthChance();
 
-    /**
-     * @return true if bonemeal can be used
-     * on the plant when bonemeal on plants is enabled.
-     */
     protected abstract boolean canBonemeal();
 }

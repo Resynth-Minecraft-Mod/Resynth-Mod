@@ -41,6 +41,11 @@ public class ResynthConfig {
     public static final ConfigFile GENERAL_CONFIG = new ConfigFile(newConfig("general"));
 
     /**
+     * Config file used to store Vanilla plat set settings.
+     */
+    public static final ConfigFile VANILLA_PLANTS_CONFIG = new ConfigFile(newConfig("vanilla-plants"));
+
+    /**
      * Private (non-instantiatable) constructor.
      */
     private ResynthConfig(){}
