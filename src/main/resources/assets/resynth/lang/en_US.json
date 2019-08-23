@@ -20,6 +20,10 @@
   "item.resynth.crystalline_seeds_diamond":                 "Diamond Seeds",
   "item.resynth.crystalline_shard_diamond":                 "Diamond Shard",
 
+  "block.resynth.crystalline_plant_redstone":               "Redstone Plant",
+  "item.resynth.crystalline_seeds_redstone":                "Redstone Seeds",
+  "item.resynth.crystalline_shard_redstone":                "Redstone Shard",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",

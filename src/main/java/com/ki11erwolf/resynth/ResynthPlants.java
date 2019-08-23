@@ -28,10 +28,25 @@ public class ResynthPlants {
                     false,
                     6.0F,
                     1,
-                    5.0F,
-                    2.5F
+                    2.0F,
+                    3.5F
             ),
             Blocks.DIAMOND_ORE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Redstone.
+     */
+    public static final PlantSet REDSTONE = PlantSetFactory.newVanillaCrystallineSet(
+            "redstone",
+            new CrystallineSetProperties(
+                    false,
+                    15.0F,
+                    2,
+                    1.0F,
+                    3.5F
+            ),
+            Blocks.REDSTONE_ORE
     ).register();
 
     /**Private constructor*/
