@@ -32,6 +32,22 @@
   "item.resynth.crystalline_seeds_lapis_lazuli":            "Lapis Lazuli Seeds",
   "item.resynth.crystalline_shard_lapis_lazuli":            "Lapis Lazuli Shard",
 
+  "block.resynth.crystalline_plant_coal":                   "Coal Plant",
+  "item.resynth.crystalline_seeds_coal":                    "Coal Seeds",
+  "item.resynth.crystalline_shard_coal":                    "Coal Shard",
+
+  "block.resynth.crystalline_plant_emerald":                "Emerald Plant",
+  "item.resynth.crystalline_seeds_emerald":                 "Emerald Seeds",
+  "item.resynth.crystalline_shard_emerald":                 "Emerald Shard",
+
+  "block.resynth.crystalline_plant_glowstone":              "Glowstone Plant",
+  "item.resynth.crystalline_seeds_glowstone":               "Glowstone Seeds",
+  "item.resynth.crystalline_shard_glowstone":               "Glowstone Shard",
+
+  "block.resynth.crystalline_plant_quartz":                 "Nether Quartz Plant",
+  "item.resynth.crystalline_seeds_quartz":                  "Nether Quartz Seeds",
+  "item.resynth.crystalline_shard_quartz":                  "Nether Quartz Shard",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",

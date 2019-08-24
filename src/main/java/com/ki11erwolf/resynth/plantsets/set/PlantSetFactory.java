@@ -1,6 +1,5 @@
 package com.ki11erwolf.resynth.plantsets.set;
 
-import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.CrystallinePlantSetConfig;
 import net.minecraft.block.Block;
@@ -30,9 +29,14 @@ public class PlantSetFactory {
         );
 
         return new CrystallineSet(setName, config){
+            private ItemStack sourceOreStack = null;
+
             @Override
             ItemStack getSourceOre() {
-                return new ItemStack(sourceOre);
+                if(sourceOreStack == null)
+                    sourceOreStack = new ItemStack(sourceOre);
+
+                return sourceOreStack;
             }
         };
     }

@@ -17,7 +17,7 @@ import net.minecraft.init.Blocks;
  *
  * All plant sets in this class are referred to as Vanilla plant sets.
  */
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class ResynthPlants {
 
     /**
@@ -29,7 +29,7 @@ public class ResynthPlants {
                     false,
                     10,
                     3,
-                    10,
+                    6,
                     15
             ),
             ResynthBlocks.BLOCK_MINERAL_STONE
@@ -44,8 +44,8 @@ public class ResynthPlants {
                     false,
                     6.0F,
                     1,
-                    2.0F,
-                    3.5F
+                    3.0F,
+                    1.0F
             ),
             Blocks.DIAMOND_ORE
     ).register();
@@ -78,6 +78,66 @@ public class ResynthPlants {
                     3.5F
             ),
             Blocks.LAPIS_ORE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Coal.
+     */
+    public static final PlantSet COAL = PlantSetFactory.newVanillaCrystallineSet(
+            "coal",
+            new CrystallineSetProperties(
+                    false,
+                    30,
+                    2,
+                    1.0F,
+                    3.0F
+            ),
+            Blocks.COAL_ORE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Emeralds.
+     */
+    public static final PlantSet EMERALD = PlantSetFactory.newVanillaCrystallineSet(
+            "emerald",
+            new CrystallineSetProperties(
+                    false,
+                    2.0F,
+                    1,
+                    4.0F,
+                    0.5F
+            ),
+            Blocks.EMERALD_ORE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Glowstone.
+     */
+    public static final PlantSet GLOWSTONE = PlantSetFactory.newVanillaCrystallineSet(
+            "glowstone",
+            new CrystallineSetProperties(
+                    false,
+                    40,
+                    1,
+                    3.0F,
+                    3.0F
+            ),
+            Blocks.GLOWSTONE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Nether Quartz.
+     */
+    public static final PlantSet QUARTZ = PlantSetFactory.newVanillaCrystallineSet(
+            "quartz",
+            new CrystallineSetProperties(
+                    false,
+                    25,
+                    2,
+                    5,
+                    2.5F
+            ),
+            Blocks.NETHER_QUARTZ_ORE
     ).register();
 
     /**Private constructor*/

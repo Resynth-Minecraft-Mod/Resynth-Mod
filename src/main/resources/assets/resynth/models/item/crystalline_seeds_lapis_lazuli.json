@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "resynth:items/seeds/crystalline_seeds_lapis_lazuli"
+    "layer0": "resynth:items/seeds/crystalline/lapis_lazuli"
   }
 }
