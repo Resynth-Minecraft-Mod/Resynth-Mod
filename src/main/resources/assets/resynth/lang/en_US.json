@@ -28,6 +28,10 @@
   "item.resynth.crystalline_seeds_redstone":                "Redstone Seeds",
   "item.resynth.crystalline_shard_redstone":                "Redstone Shard",
 
+  "block.resynth.crystalline_plant_lapis_lazuli":           "Lapis Lazuli Plant",
+  "item.resynth.crystalline_seeds_lapis_lazuli":            "Lapis Lazuli Seeds",
+  "item.resynth.crystalline_shard_lapis_lazuli":            "Lapis Lazuli Shard",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
@@ -48,7 +52,7 @@
 
   "_____COMMENT": "----Plant Item Tooltips----",
   "tooltip.item.resynth.seeds":
-  "Obtained by mining %s ore, or by leaving the plant produce (shards) to despawn in water.\nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
+  "Obtained by mining the ore the final resource is obtained from, or by leaving the plant produce (shards) to despawn in water.\nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
   "tooltip.item.resynth.shard":
   "Can be smelted into the final resource or left in water to despawn for a chance at getting more seeds. \nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
 

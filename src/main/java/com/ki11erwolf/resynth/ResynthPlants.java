@@ -65,6 +65,21 @@ public class ResynthPlants {
             Blocks.REDSTONE_ORE
     ).register();
 
+    /**
+     * The plant set for Vanilla Lapis Lazuli.
+     */
+    public static final PlantSet LAPIS_LAZULI = PlantSetFactory.newVanillaCrystallineSet(
+            "lapis_lazuli",
+            new CrystallineSetProperties(
+                    false,
+                    6,
+                    2,
+                    2,
+                    3.5F
+            ),
+            Blocks.LAPIS_ORE
+    ).register();
+
     /**Private constructor*/
     private ResynthPlants(){}
 
