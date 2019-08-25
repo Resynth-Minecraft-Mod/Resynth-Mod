@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
+import com.ki11erwolf.resynth.item.ItemMineralHoe;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -54,7 +55,7 @@ import java.util.List;
  * determines plant growth.
  */
 @SuppressWarnings("deprecation")
-public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
+public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements ItemMineralHoe.InfoProvider {
 
     /**
      * Configuration settings for this block class.
@@ -263,15 +264,6 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
         float mineralContent = entityMineralSoil.getMineralPercentage();
         float increase;
 
-        //Debug help //TODO: Maybe move to the Mineral Hoe class
-        if(usedItem.getItem() == ResynthItems.ITEM_MINERAL_HOE){
-            if(!world.isRemote)
-                player.sendMessage(new TextComponentString(I18n.format(
-                        "misc.resynth.mineral_content", entityMineralSoil.getMineralPercentage()
-                )));
-            return true;
-        }
-
         //At max mineral content
         if(mineralContent >= 50){
             return false;
@@ -301,5 +293,21 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> {
             ) + "%"));
 
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getInfo(World world, BlockPos pos) {
+        TileEntityMineralSoil entity = getTileEntity(world, pos);
+
+        if(entity == null)
+            return "Error";
+
+        return I18n.format(
+                "misc.resynth.mineral_content",
+                entity.getMineralPercentage()
+        );
     }
 }

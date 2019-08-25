@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralHoeConfig;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -32,6 +33,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -197,6 +199,15 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             return EnumActionResult.FAIL;
         }
 
+        Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
+        if(block instanceof InfoProvider){
+            if(!context.getWorld().isRemote)
+                context.getPlayer().sendMessage(
+                        new TextComponentString(((InfoProvider)block).getInfo(context.getWorld(), context.getPos()))
+                );
+            return EnumActionResult.SUCCESS;
+        }
+
         if(context.getPlayer().isSneaking()){
             return onItemRightClick(context.getWorld(), context.getPlayer(), EnumHand.MAIN_HAND).getType();
         }
@@ -290,5 +301,24 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                         (float)pos.getZ() + random.nextFloat(), d, d, d);
             }
         }
+    }
+
+    /**
+     * Allows blocks to provide information
+     * to the user in a chat message when
+     * they right-click the block with a
+     * Mineral Hoe.
+     */
+    public interface InfoProvider {
+
+        /**
+         * Called by the Mineral Hoe to obtain
+         * the message it should display to
+         * the player.
+         *
+         * @return the message that should
+         * be displayed to the player.
+         */
+        String getInfo(World world, BlockPos pos);
     }
 }

@@ -3,7 +3,7 @@ package com.ki11erwolf.resynth.plantsets.block;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
-import com.ki11erwolf.resynth.item.ResynthItems;
+import com.ki11erwolf.resynth.item.ItemMineralHoe.InfoProvider;
 import com.ki11erwolf.resynth.plantsets.set.PlantSetProperties;
 import com.ki11erwolf.resynth.plantsets.item.ItemSeeds;
 import com.ki11erwolf.resynth.util.MathUtil;
@@ -14,18 +14,15 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReaderBase;
@@ -46,7 +43,7 @@ import java.util.Random;
  * @param <T> the inheriting class (e.i. plant block).
  */
 public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T>
-        implements IPlantable, IGrowable {
+        implements IPlantable, IGrowable, InfoProvider {
 
     /**
      * The prefix for all plant blocks.
@@ -298,36 +295,6 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
             drops.add(getProduce());
     }
 
-    // ****************
-    // Activation Logic
-    // ****************
-
-    /**
-     * Allows the player to check the plant growth
-     * stage using a Mineral Hoe.
-     *
-     * @return {@code true} if the plants growth stage
-     * was displayed.
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public boolean onBlockActivated(IBlockState state, World world, BlockPos pos, EntityPlayer player,
-                                    EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        ItemStack usedItem = player.getHeldItem(hand);
-
-        //Debug help //TODO: Maybe move to the Mineral Hoe class
-        if (usedItem.getItem() == ResynthItems.ITEM_MINERAL_HOE) {
-            if (!world.isRemote)
-                player.sendMessage(new TextComponentString(I18n.format(
-                        "misc.resynth.growth_stage",
-                        (getGrowthStage(state) + 1) + "/" + (getMaxAge() + 1)
-                )));
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * Used to specify what block/item to
      * give the player when they pick
@@ -404,6 +371,21 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     @Override
     public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
         growPlant(worldIn, state, pos, getBonemealIncrease());
+    }
+
+    // *************
+    // Info Provider
+    // *************
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getInfo(World world, BlockPos pos) {
+        return I18n.format(
+                "misc.resynth.growth_stage",
+                (getGrowthStage(world.getBlockState(pos)) + 1) + "/" + (getMaxAge() + 1)
+        );
     }
 
     // ****************

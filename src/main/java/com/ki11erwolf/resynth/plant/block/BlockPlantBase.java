@@ -99,11 +99,6 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
         return BlockFaceShape.UNDEFINED;
     }
 
-    //@Override //TODO: Something
-    public boolean isOpaqueCube(IBlockState state){
-        return false;
-    }
-
     @Override
     @SuppressWarnings("deprecation")
     public boolean isFullCube(IBlockState state){
@@ -112,12 +107,14 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
 
     @Override
     @Deprecated //No alternative yet
+    @SuppressWarnings("deprecation")
     public VoxelShape getCollisionShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
         return VoxelShapes.empty();//Can walk through.
     }
 
     @Override
     @Deprecated //No alternative yet
+    @SuppressWarnings("deprecation")
     public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
         return SHAPE;
     }
