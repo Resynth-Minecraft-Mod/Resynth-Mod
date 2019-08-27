@@ -15,8 +15,8 @@ import net.minecraft.world.World;
  * (diamond vs redstone) are referred to as the plant type.
  * <p/>
  * This class defines the look and feel (how the plant looks and behaves)
- * of the Crystalline plant set type. This class DOES NOT handle any logic
- * other the way in which the plant set type grows.
+ * of the Crystalline plant type. This class DOES NOT handle any logic
+ * other the way in which the plant type grows.
  */
 public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallinePlant> {
 

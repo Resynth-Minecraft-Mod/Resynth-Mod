@@ -1,6 +1,6 @@
 {
   "parent": "resynth:block/plant/plant_metallic_5",
   "textures": {
-    "stem": "resynth:blocks/plants/iron/iron_stem_disconnected"
+    "stem": "resynth:blocks/plants/iron/plant_growing"
   }
 }

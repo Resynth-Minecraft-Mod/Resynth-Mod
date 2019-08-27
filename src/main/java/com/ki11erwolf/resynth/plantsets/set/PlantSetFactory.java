@@ -2,6 +2,7 @@ package com.ki11erwolf.resynth.plantsets.set;
 
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.CrystallinePlantSetConfig;
+import com.ki11erwolf.resynth.config.categories.MetallicPlantSetConfig;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
@@ -29,6 +30,33 @@ public class PlantSetFactory {
         );
 
         return new CrystallineSet(setName, config){
+            private ItemStack sourceOreStack = null;
+
+            @Override
+            ItemStack getSourceOre() {
+                if(sourceOreStack == null)
+                    sourceOreStack = new ItemStack(sourceOre);
+
+                return sourceOreStack;
+            }
+        };
+    }
+
+    /**
+     * Creates a new Metallic plant set for a Vanilla Minecraft resource.
+     *
+     * @param setName the name of the plant set (e.g. iron).
+     * @param properties the properties (e.g. growth chance) of the plant set.
+     * @param sourceOre the source ore (from which seeds are obtained) for the set.
+     * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
+     */
+    public static PlantSet newVanillaMetallicPlantSet(String setName, MetallicSetProperties properties,
+                                                      Block sourceOre){
+        MetallicPlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
+                new MetallicPlantSetConfig(setName, properties)
+        );
+
+        return new MetallicSet(setName, config) {
             private ItemStack sourceOreStack = null;
 
             @Override

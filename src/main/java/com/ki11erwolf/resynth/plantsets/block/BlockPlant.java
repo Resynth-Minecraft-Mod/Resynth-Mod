@@ -211,7 +211,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @return a random int in the range of 1 to 3 (inclusive).
      */
     private int getBonemealIncrease(){
-        return 1;//MathUtil.getRandomIntegerInRange(1, 3);//TODO: Uncomment/Config
+        return MathUtil.getRandomIntegerInRange(1, 3);
     }
 
     /**
@@ -274,8 +274,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
             return;
 
         if(MathUtil.chance(getMineralPercent(worldIn, pos)) && MathUtil.chance(getPlantGrowthChance())){
-            growPlant(worldIn, state, pos, 1);
-            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+            callGrowPlant(worldIn, state, pos, 1);
         }
     }
 
@@ -370,7 +369,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        growPlant(worldIn, state, pos, getBonemealIncrease());
+        callGrowPlant(worldIn, state, pos, getBonemealIncrease());
     }
 
     // *************
@@ -436,6 +435,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     abstract boolean dropsProduceWhenGrown();
 
     /**
+     * SHOULD NEVER BE CALLED DIRECTLY.
+     *
      * Allows the implement plant set type class to specify
      * how the plant grows (all plants grow differently)
      * without having to worry about growth chances and all.
@@ -449,6 +450,16 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      *                 the plant by.
      */
     abstract void growPlant(World world, IBlockState state, BlockPos pos, int increase);
+
+    /**
+     * Used to call {@link #growPlant(World, IBlockState, BlockPos, int)}
+     * while notifying forge hooks of a plant growth.
+     */
+    private void callGrowPlant(World world, IBlockState state, BlockPos pos, int increase){
+        ForgeHooks.onCropsGrowPre(world, pos, state, false);
+        growPlant(world, state, pos, increase);
+        ForgeHooks.onCropsGrowPost(world, pos, state);
+    }
 
     // ***************************
     // Propagated Abstract Methods

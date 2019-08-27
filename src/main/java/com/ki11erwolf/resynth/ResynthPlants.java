@@ -2,6 +2,7 @@ package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.plantsets.set.CrystallineSetProperties;
+import com.ki11erwolf.resynth.plantsets.set.MetallicSetProperties;
 import com.ki11erwolf.resynth.plantsets.set.PlantSet;
 import com.ki11erwolf.resynth.plantsets.set.PlantSetFactory;
 import net.minecraft.init.Blocks;
@@ -19,6 +20,10 @@ import net.minecraft.init.Blocks;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class ResynthPlants {
+
+    // ****************
+    // Crystalline Sets
+    // ****************
 
     /**
      * The plant set for Resynth Mineral Rocks
@@ -138,6 +143,24 @@ public class ResynthPlants {
                     2.5F
             ),
             Blocks.NETHER_QUARTZ_ORE
+    ).register();
+
+    // *************
+    // Metallic Sets
+    // *************
+
+    /**
+     * The plant set for Vanilla Iron.
+     */
+    public static final PlantSet IRON = PlantSetFactory.newVanillaMetallicPlantSet(
+            "iron",
+            new MetallicSetProperties(
+                    false,
+                    10,
+                    6,
+                    6
+            ),
+            Blocks.IRON_ORE
     ).register();
 
     /**Private constructor*/

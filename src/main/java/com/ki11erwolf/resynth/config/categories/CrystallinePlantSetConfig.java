@@ -64,7 +64,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
      * given plant set with the given default values.
      *
      * @param plantSetName the name of the plant set the this config
-     *                     category instance if for.=
+     *                     category instance if for.
      * @param defaultProperties default config values.
      */
     public CrystallinePlantSetConfig(String plantSetName, CrystallineSetProperties defaultProperties) {

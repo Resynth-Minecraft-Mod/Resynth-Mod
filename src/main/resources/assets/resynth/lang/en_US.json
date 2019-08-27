@@ -48,6 +48,10 @@
   "item.resynth.crystalline_seeds_quartz":                  "Nether Quartz Seeds",
   "item.resynth.crystalline_shard_quartz":                  "Nether Quartz Shard",
 
+  "block.resynth.metallic_plant_iron":                      "Iron Plant",
+  "item.resynth.metallic_seeds_iron":                       "Iron Seeds",
+  "block.resynth.metallic_organic_ore_iron":                 "Organic Iron Ore",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
@@ -67,18 +71,26 @@
   "Resynth's core item. Used as a crafting recipe to most Resynth blocks and items.\nAlso used as a consumable for creating Mineral Enriched Soil and as fertilizer/growth accelerator for Resynth plants.\nMined from Mineral Infused Stone.",
 
   "_____COMMENT": "----Plant Item Tooltips----",
-  "tooltip.item.resynth.seeds":
-  "Obtained by mining the ore the final resource is obtained from, or by leaving the plant produce (shards) to despawn in water.\nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
+  "tooltip.item.resynth.crystalline_seeds":
+  "Obtained by mining the ore the final resource is obtained from, or by leaving the plant produce (Shards) to despawn in water.\nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
+  "tooltip.item.resynth.metallic_seeds":
+  "Obtained by blowing up the ore the final resource is obtained from with TNT, or by blowing up the plant produce (Organic Ore) with TNT.\nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
   "tooltip.item.resynth.shard":
-  "Can be smelted into the final resource or left in water to despawn for a chance at getting more seeds. \nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
+  "Can be smelted into the final resource or left in water to despawn for a chance at getting more seeds.",
 
-  "tooltip.item.resynth.plant_growth_chance": "Growth Chance: %s%%",
-  "tooltip.item.resynth.plant_plant_yield": "Plant Yield: %s drop(s).",
-  "tooltip.item.resynth.plant_bonemeal_enabled": "Allows Bonemeal: %s",
-  "tooltip.item.resynth.plant_seed_spawn_chance_from_ore": "Seed Spawn Chance from Ore Block: %s%%",
-  "tooltip.item.resynth.plant_seed_spawn_chance_from_shard": "Seed Spawn Chance from Shard Item: %s%%",
+  "______COMMENT": "----Plant Block Tooltips----",
+  "tooltip.block.resynth.organic_ore":
+  "Can be smelted into the final resource ore, or blown up for a chance at getting more seeds. ",
 
-  "______COMMENT": "---Miscellaneous---",
+  "_______COMMENT": "----Plant Property Tooltips----",
+  "tooltip.property.resynth.growth_chance": "Growth Chance: %s%%",
+  "tooltip.property.resynth.plant_yield": "Plant Yield: %s drop(s).",
+  "tooltip.property.resynth.bonemeal_enabled": "Allows Bonemeal: %s",
+  "tooltip.property.resynth.seed_spawn_chance_from_ore": "Seed Spawn Chance from Ore Block: %s%%",
+  "tooltip.property.resynth.seed_spawn_chance_from_shard": "Seed Spawn Chance from Shard Item: %s%%",
+  "tooltip.property.resynth.seed_spawn_chance_from_organic_ore": "Seed Spawn Chance from Organic Ore Block: %s%%",
+
+  "________COMMENT": "---Miscellaneous---",
   "misc.resynth.mineral_content": "Mineral Content: %s%%",
   "misc.resynth.growth_stage": "Growth Stage: %s"
 }

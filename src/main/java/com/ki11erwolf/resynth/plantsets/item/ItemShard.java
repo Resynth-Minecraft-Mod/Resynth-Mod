@@ -3,6 +3,7 @@ package com.ki11erwolf.resynth.plantsets.item;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plantsets.set.ICrystallineSetProperties;
+import com.ki11erwolf.resynth.plantsets.set.PlantSetUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -49,28 +50,7 @@ public class ItemShard extends ResynthItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        tooltip.add(getFormattedTooltip(
-                "plant_growth_chance", TextFormatting.GOLD, setProperties.chanceToGrow())
-        );
-
-        tooltip.add(getFormattedTooltip(
-                "plant_bonemeal_enabled", TextFormatting.AQUA, setProperties.canBonemeal())
-        );
-
-        tooltip.add(getFormattedTooltip(
-                "plant_plant_yield", TextFormatting.DARK_PURPLE, setProperties.numberOfProduceDrops())
-        );
-
-        tooltip.add(getFormattedTooltip(
-                "plant_seed_spawn_chance_from_ore", TextFormatting.GREEN,
-                setProperties.seedSpawnChanceFromOre())
-        );
-
-        tooltip.add(getFormattedTooltip(
-                "plant_seed_spawn_chance_from_shard", TextFormatting.RED,
-                setProperties.seedSpawnChanceFromShard())
-        );
-
+        PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltip, setProperties);
         setDescriptiveTooltip(tooltip, PREFIX, setName);
     }
 }

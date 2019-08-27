@@ -4,6 +4,7 @@ import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plantsets.set.ICrystallineSetProperties;
 import com.ki11erwolf.resynth.plantsets.set.PlantSetProperties;
+import com.ki11erwolf.resynth.plantsets.set.PlantSetUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -50,6 +51,12 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
     private final String setName;
 
     /**
+     * The name of the plant set type
+     * this seeds item is for.
+     */
+    private final String setTypeName;
+
+    /**
      * The properties specific to the plant set
      * this seeds item type is registered to.
      */
@@ -63,6 +70,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      */
     public ItemSeeds(String setType, String setName, Block plant, PlantSetProperties setProperties){
         super(setType + "_" + PREFIX + "_" + setName, ResynthTabs.TAB_RESYNTH_SEEDS);
+        this.setTypeName = setType;
         this.setProperties = setProperties;
         this.setName = setName;
         this.plant = plant.getDefaultState();
@@ -104,33 +112,8 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        //TODO: Fix up
-        tooltip.add(getFormattedTooltip(
-                "plant_growth_chance", TextFormatting.GOLD, setProperties.chanceToGrow())
-        );
-
-        tooltip.add(getFormattedTooltip(
-                "plant_bonemeal_enabled", TextFormatting.AQUA, setProperties.canBonemeal())
-        );
-
-        if(setProperties instanceof ICrystallineSetProperties){
-            tooltip.add(getFormattedTooltip(
-                    "plant_plant_yield", TextFormatting.DARK_PURPLE,
-                    ((ICrystallineSetProperties)setProperties).numberOfProduceDrops())
-            );
-
-            tooltip.add(getFormattedTooltip(
-                    "plant_seed_spawn_chance_from_ore", TextFormatting.GREEN,
-                    ((ICrystallineSetProperties)setProperties).seedSpawnChanceFromOre())
-            );
-
-            tooltip.add(getFormattedTooltip(
-                    "plant_seed_spawn_chance_from_shard", TextFormatting.RED,
-                    ((ICrystallineSetProperties)setProperties).seedSpawnChanceFromShard())
-            );
-        }
-
-        setDescriptiveTooltip(tooltip, PREFIX, setName);
+        PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltip, setProperties);
+        setDescriptiveTooltip(tooltip, setTypeName + "_" + PREFIX, setName);
     }
 
     /**

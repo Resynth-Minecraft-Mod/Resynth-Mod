@@ -2,6 +2,7 @@ package com.ki11erwolf.resynth.plantsets.set;
 
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthPlants;
+import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.util.ItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -131,19 +132,27 @@ class PlantSetRegistry {
         }
 
         /**
-         * Registers a given plant sets produce block/item to the game.
+         * Registers a given plant sets produce block(and itemblock)/item to the game.
          */
         @SuppressWarnings("unchecked")//It is checked
         private static void registerProduceItemOrBlock(PlantSet set, IForgeRegistry registry, boolean item){
             ItemOrBlock itemOrBlock = set.getProduceItemOrBlock();
 
+            //Block
             if(itemOrBlock.isBlock() && !item){
-                LOG.debug("Registering plant produce item: " + itemOrBlock.getBlock().getRegistryName());
+                LOG.debug("Registering plant produce block: " + itemOrBlock.getBlock().getRegistryName());
                 registry.register(itemOrBlock.getBlock());
             }
 
+            //ItemBlock
+            if(itemOrBlock.isBlock() && item){
+                LOG.debug("Registering plant produce ItemBlock: " + itemOrBlock.getBlock().getRegistryName());
+                registry.register(((ResynthBlock)itemOrBlock.getBlock()).getItemBlock());
+            }
+
+            //Item
             if(itemOrBlock.isItem() && item){
-                LOG.debug("Registering plant produce block: " + itemOrBlock.getItem().getRegistryName());
+                LOG.debug("Registering plant produce item: " + itemOrBlock.getItem().getRegistryName());
                 registry.register(itemOrBlock.getItem());
             }
         }

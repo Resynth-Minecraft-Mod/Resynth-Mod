@@ -68,7 +68,6 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
      * @param itemProperties the properties that defines the blocks item.
      * @param name the name of the block.
      */
-    @SuppressWarnings("WeakerAccess")
     public ResynthBlock(Properties properties, Item.Properties itemProperties, String name) {
         super(properties);
         setRegistryName(name);
@@ -171,6 +170,26 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
 
         tooltip.add(stringToTextComponent(TextFormatting.GRAY + I18n.format(
                 "tooltip.block." + block.getRegistryName().toString().replace(":", ".")
+        )));
+    }
+
+    /**
+     * Will add a blocks tooltip (from lang file) to the given
+     * tooltip array, provided the config allows it.
+     *
+     * @param tooltip the tooltip array object.
+     * @param block the name of the block who's tooltip we want and key appended.
+     */
+    protected static void setDescriptiveTooltip(List<ITextComponent> tooltip, String block, Object... params){
+        if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled())
+            return;
+
+        if(block == null){
+            tooltip.add(stringToTextComponent(TextFormatting.RED + "Error"));
+        }
+
+        tooltip.add(stringToTextComponent(TextFormatting.GRAY + I18n.format(
+                "tooltip.block.resynth." + block, params
         )));
     }
 }
