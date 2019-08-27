@@ -50,7 +50,11 @@
 
   "block.resynth.metallic_plant_iron":                      "Iron Plant",
   "item.resynth.metallic_seeds_iron":                       "Iron Seeds",
-  "block.resynth.metallic_organic_ore_iron":                 "Organic Iron Ore",
+  "block.resynth.metallic_organic_ore_iron":                "Organic Iron Ore",
+
+  "block.resynth.metallic_plant_gold":                      "Gold Plant",
+  "item.resynth.metallic_seeds_gold":                       "Gold Seeds",
+  "block.resynth.metallic_organic_ore_gold":                "Organic Gold Ore",
 
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":

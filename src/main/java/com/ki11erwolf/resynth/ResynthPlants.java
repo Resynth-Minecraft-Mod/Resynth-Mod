@@ -163,6 +163,20 @@ public class ResynthPlants {
             Blocks.IRON_ORE
     ).register();
 
+    /**
+     * The plant set for Vanilla Gold.
+     */
+    public static final PlantSet GOLD = PlantSetFactory.newVanillaMetallicPlantSet(
+            "gold",
+            new MetallicSetProperties(
+                    false,
+                    8,
+                    5,
+                    5
+            ),
+            Blocks.GOLD_ORE
+    ).register();
+
     /**Private constructor*/
     private ResynthPlants(){}
 
