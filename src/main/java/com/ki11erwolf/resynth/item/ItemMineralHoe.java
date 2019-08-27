@@ -20,6 +20,7 @@ import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralHoeConfig;
 import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -178,9 +179,9 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     /**
      * {@inheritDoc}
      *
-     * Handles tilling dirt/grass into Mineral Soil.
-     * Also handles charging the hoe if the player
-     * is sneaking.
+     * Handles what happens when the hoe is used on a block.
+     * This can be many things, from charging the hoe,
+     * tilling soil, getting block info or growing a plant.
      *
      * @return {@link EnumActionResult#SUCCESS} if the block
      * the player is looking at was tilted or the hoe was charged.
@@ -188,6 +189,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     @Nonnull
     @Override
     public EnumActionResult onItemUse(ItemUseContext context) {
+        //TODO: Split up into smaller methods.
         //Pre Checks
         if(!CONFIG.isEnabled()){
             return EnumActionResult.FAIL;
@@ -199,7 +201,25 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             return EnumActionResult.FAIL;
         }
 
+        //Begin
         Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
+
+        //Grow plant
+        if(context.getPlayer().isCreative() && context.getPlayer().isSneaking()){
+            //If block is plant and can grow.
+            if(block instanceof IGrowable){
+                if(!context.getWorld().isRemote)
+                    ((IGrowable)block).grow(
+                            context.getWorld(),
+                            random,
+                            context.getPos(),
+                            context.getWorld().getBlockState(context.getPos())
+                    );
+                return EnumActionResult.SUCCESS;
+            }
+        }
+
+        //Info Provider
         if(block instanceof InfoProvider){
             if(!context.getWorld().isRemote)
                 context.getPlayer().sendMessage(
@@ -208,10 +228,12 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             return EnumActionResult.SUCCESS;
         }
 
+        //Charge
         if(context.getPlayer().isSneaking()){
             return onItemRightClick(context.getWorld(), context.getPlayer(), EnumHand.MAIN_HAND).getType();
         }
 
+        //Tilling
         //Creative mode
         if(context.getPlayer().isCreative())
             return replace(context);
