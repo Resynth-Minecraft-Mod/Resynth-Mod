@@ -177,6 +177,48 @@ public class ResynthPlants {
             Blocks.GOLD_ORE
     ).register();
 
+    /**
+     * The plant set for Vanilla Clay.
+     */
+    public static final PlantSet CLAY = PlantSetFactory.newVanillaMetallicPlantSet(
+            "clay",
+            new MetallicSetProperties(
+                    false,
+                    20,
+                    10,
+                    10
+            ),
+            Blocks.CLAY
+    ).register();
+
+    /**
+     * The plant set for Vanilla End Stone
+     */
+    public static final PlantSet END_STONE = PlantSetFactory.newVanillaMetallicPlantSet(
+            "end_stone",
+            new MetallicSetProperties(
+                    false,
+                    9,
+                    4,
+                    4
+            ),
+            Blocks.END_STONE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Sand.
+     */
+    public static final PlantSet SAND = PlantSetFactory.newVanillaMetallicPlantSet(
+            "sand",
+            new MetallicSetProperties(
+                false,
+                    50,
+                    3,
+                    3
+            ),
+            Blocks.SAND
+    ).register();
+
     /**Private constructor*/
     private ResynthPlants(){}
 

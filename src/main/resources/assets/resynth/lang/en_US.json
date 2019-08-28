@@ -56,6 +56,18 @@
   "item.resynth.metallic_seeds_gold":                       "Gold Seeds",
   "block.resynth.metallic_organic_ore_gold":                "Organic Gold Ore",
 
+  "block.resynth.metallic_plant_clay":                      "Clay Plant",
+  "item.resynth.metallic_seeds_clay":                       "Clay Seeds",
+  "block.resynth.metallic_organic_ore_clay":                "Organic Clay",
+
+  "block.resynth.metallic_plant_end_stone":                 "End Stone Plant",
+  "item.resynth.metallic_seeds_end_stone":                  "End Stone Seeds",
+  "block.resynth.metallic_organic_ore_end_stone":           "Organic End Stone",
+
+  "block.resynth.metallic_plant_sand":                      "Sand Plant",
+  "item.resynth.metallic_seeds_sand":                       "Sand Seeds",
+  "block.resynth.metallic_organic_ore_sand":                "Organic Sand",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
