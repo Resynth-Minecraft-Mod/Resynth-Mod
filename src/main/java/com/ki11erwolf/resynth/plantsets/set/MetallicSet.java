@@ -63,7 +63,7 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
     }
 
     // ****************
-    // Abstract Methods
+    // Abstract Getters
     // ****************
 
     /**

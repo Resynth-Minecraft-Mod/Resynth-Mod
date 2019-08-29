@@ -453,9 +453,16 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
 
     /**
      * Used to call {@link #growPlant(World, IBlockState, BlockPos, int)}
-     * while notifying forge hooks of a plant growth.
+     * while notifying forge hooks of a plant growth. Also ensures the plant
+     * is not already fully grown.
      */
     private void callGrowPlant(World world, IBlockState state, BlockPos pos, int increase){
+        //Don't grow if fully grown.
+        if(
+                ((BlockPlant)world.getBlockState(pos).getBlock()).getGrowthStage(world.getBlockState(pos))
+                >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxAge()
+        ) return;
+
         ForgeHooks.onCropsGrowPre(world, pos, state, false);
         growPlant(world, state, pos, increase);
         ForgeHooks.onCropsGrowPost(world, pos, state);
@@ -476,7 +483,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
 
     /**
      * Used by the specific {@link com.ki11erwolf.resynth.plantsets.set.PlantSet}
-     * to specific the produce block/item of this plant type
+     * to specify the produce block/item of this plant type
      * as it's only known when creating the plant set.
      *
      * @return the produce block/item for this specific plant type.

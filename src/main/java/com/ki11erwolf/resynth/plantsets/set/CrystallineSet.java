@@ -67,7 +67,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
     }
 
     // ****************
-    // Abstract Methods
+    // Abstract Getters
     // ****************
 
     /**

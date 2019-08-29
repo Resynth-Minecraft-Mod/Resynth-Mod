@@ -9,7 +9,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 
 /**
- * The Crystalline plant set type - used to grow resources that
+ * The Crystalline set plant block - used to grow resources that
  * drop when ores are mined (e.g. diamond). Specific plant blocks
  * are usually referred to as plant set types, while their instances
  * (diamond vs redstone) are referred to as the plant type.

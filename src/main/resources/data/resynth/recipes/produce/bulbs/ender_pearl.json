@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:biochemical_bulb_ender_pearl"
+  },
+  "result": "minecraft:ender_pearl",
+  "experience": 7.0,
+  "cookingtime": 200
+}

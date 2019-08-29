@@ -1,10 +1,8 @@
 package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.block.ResynthBlocks;
-import com.ki11erwolf.resynth.plantsets.set.CrystallineSetProperties;
-import com.ki11erwolf.resynth.plantsets.set.MetallicSetProperties;
-import com.ki11erwolf.resynth.plantsets.set.PlantSet;
-import com.ki11erwolf.resynth.plantsets.set.PlantSetFactory;
+import com.ki11erwolf.resynth.plantsets.set.*;
+import net.minecraft.entity.EntityType;
 import net.minecraft.init.Blocks;
 
 /**
@@ -217,6 +215,25 @@ public class ResynthPlants {
                     3
             ),
             Blocks.SAND
+    ).register();
+
+    // ****************
+    // Biochemical Sets
+    // ****************
+
+    /**
+     * The plant set for Vanilla Ender Pearls.
+     */
+    public static final PlantSet ENDER_PEARL = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "ender_pearl",
+            new BiochemicalSetProperties(
+                    false,
+                    10,
+                    1,
+                    6,
+                    5
+            ),
+            EntityType.ENDERMAN
     ).register();
 
     /**Private constructor*/

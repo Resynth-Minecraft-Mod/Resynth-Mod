@@ -1,9 +1,11 @@
 package com.ki11erwolf.resynth.plantsets.set;
 
 import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.BiochemicalPlantSetConfig;
 import com.ki11erwolf.resynth.config.categories.CrystallinePlantSetConfig;
 import com.ki11erwolf.resynth.config.categories.MetallicPlantSetConfig;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -65,6 +67,33 @@ public class PlantSetFactory {
                     sourceOreStack = new ItemStack(sourceOre);
 
                 return sourceOreStack;
+            }
+        };
+    }
+
+    /**
+     * Creates a new Biochemical plant set for a Vanilla Minecraft resource.
+     *
+     * @param setName the name of the plant set (e.g. string).
+     * @param properties the properties (e.g. growth chance) of the plant set.
+     * @param sourceMobs the list of mobs seeds can be obtained from.
+     * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
+     */
+    public static PlantSet newVanillaBiochemicalPlantSet(String setName, BiochemicalSetProperties properties,
+                                                         EntityType... sourceMobs){
+        BiochemicalPlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
+                new BiochemicalPlantSetConfig(setName, properties)
+        );
+
+        return new BiochemicalSet(setName, config) {
+            private EntityType[] sourceMobEntities = null;
+
+            @Override
+            EntityType[] getSourceMobs() {
+                if(sourceMobEntities == null)
+                    sourceMobEntities = sourceMobs;
+
+                return sourceMobEntities;
             }
         };
     }

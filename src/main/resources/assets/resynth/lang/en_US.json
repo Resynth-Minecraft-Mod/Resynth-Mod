@@ -68,6 +68,10 @@
   "item.resynth.metallic_seeds_sand":                       "Sand Seeds",
   "block.resynth.metallic_organic_ore_sand":                "Organic Sand",
 
+  "block.resynth.biochemical_plant_ender_pearl":            "Ender Pearl Plant",
+  "item.resynth.biochemical_seeds_ender_pearl":             "Ender Pearl Seeds",
+  "item.resynth.biochemical_bulb_ender_pearl":              "Ender Pearl Bulb",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
@@ -91,8 +95,12 @@
   "Obtained by mining the ore the final resource is obtained from, or by leaving the plant produce (Shards) to despawn in water.\nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
   "tooltip.item.resynth.metallic_seeds":
   "Obtained by blowing up the ore the final resource is obtained from with TNT, or by blowing up the plant produce (Organic Ore) with TNT.\nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
+  "tooltip.item.resynth.biochemical_seeds":
+  "Obtained by killing the mob the final resource is obtained from, or by smashing the plant produce (Bulbs).\nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
   "tooltip.item.resynth.shard":
   "Can be smelted into the final resource or left in water to despawn for a chance at getting more seeds.",
+  "tooltip.item.resynth.bulb":
+  "Can be smelted into the final resource, or smashed (by holding right-click) for a chance at getting more seeds.",
 
   "______COMMENT": "----Plant Block Tooltips----",
   "tooltip.block.resynth.organic_ore":
@@ -105,6 +113,8 @@
   "tooltip.property.resynth.seed_spawn_chance_from_ore": "Seed Spawn Chance from Ore Block: %s%%",
   "tooltip.property.resynth.seed_spawn_chance_from_shard": "Seed Spawn Chance from Shard Item: %s%%",
   "tooltip.property.resynth.seed_spawn_chance_from_organic_ore": "Seed Spawn Chance from Organic Ore Block: %s%%",
+  "tooltip.property.resynth.seed_spawn_chance_from_mob": "Seed Spawn Chance from Mob: %s%%",
+  "tooltip.property.resynth.seed_spawn_chance_from_bulb": "Seed Spawn Chance from Bulb: %s%%",
 
   "________COMMENT": "---Miscellaneous---",
   "misc.resynth.mineral_content": "Mineral Content: %s%%",

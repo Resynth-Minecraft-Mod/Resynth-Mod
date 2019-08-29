@@ -43,6 +43,8 @@ public class PlantSetUtil {
                 setPropertiesTooltip(tooltip, (ICrystallineSetProperties)plantSetProperties);
             else if (plantSetProperties instanceof IMetallicSetProperties)
                 setPropertiesTooltip(tooltip, (IMetallicSetProperties)plantSetProperties);
+            else if (plantSetProperties instanceof IBiochemicalSetProperties)
+                setPropertiesTooltip(tooltip, (IBiochemicalSetProperties)plantSetProperties);
         }
 
         /**
@@ -77,6 +79,26 @@ public class PlantSetUtil {
             tooltip.add(getFormattedTooltip(
                     "seed_spawn_chance_from_organic_ore", TextFormatting.BLUE,
                     properties.seedSpawnChanceFromOrganicOre())
+            );
+        }
+
+        /**
+         * Handles Biochemical set properties and tooltips.
+         */
+        private static void setPropertiesTooltip(List<ITextComponent> tooltip, IBiochemicalSetProperties properties){
+            tooltip.add(getFormattedTooltip(
+                    "plant_yield", TextFormatting.DARK_PURPLE,
+                    properties.numberOfProduceDrops())
+            );
+
+            tooltip.add(getFormattedTooltip(
+                    "seed_spawn_chance_from_mob", TextFormatting.DARK_GREEN,
+                    properties.seedSpawnChanceFromMob())
+            );
+
+            tooltip.add(getFormattedTooltip(
+                    "seed_spawn_chance_from_bulb", TextFormatting.YELLOW,
+                    properties.seedSpawnChanceFromMob())
             );
         }
     }
