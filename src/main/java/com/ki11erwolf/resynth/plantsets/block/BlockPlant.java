@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018-2019 Ki11er_wolf
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ki11erwolf.resynth.plantsets.block;
 
 import com.ki11erwolf.resynth.block.ResynthBlock;
@@ -200,7 +215,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * is fully grown.
      */
     private boolean isFullyGrown(IBlockState state){
-        return getGrowthStage(state) >= getMaxAge();
+        return getGrowthStage(state) >= getMaxGrowthStage();
     }
 
     /**
@@ -290,7 +305,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
                          World world, BlockPos pos, int fortune) {
         drops.add(new ItemStack(getSeedsItem(), 1));
 
-        if(getGrowthStage(state) == getMaxAge() && dropsProduceWhenGrown() && getProduce() != null)
+        if(getGrowthStage(state) == getMaxGrowthStage() && dropsProduceWhenGrown() && getProduce() != null)
             drops.add(getProduce());
     }
 
@@ -383,7 +398,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     public String getInfo(World world, BlockPos pos) {
         return I18n.format(
                 "misc.resynth.growth_stage",
-                (getGrowthStage(world.getBlockState(pos)) + 1) + "/" + (getMaxAge() + 1)
+                (getGrowthStage(world.getBlockState(pos)) + 1) + "/" + (getMaxGrowthStage() + 1)
         );
     }
 
@@ -420,7 +435,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * stages this specific plant set
      * type has.
      */
-    abstract int getMaxAge();
+    abstract int getMaxGrowthStage();
 
     /**
      * Allows implementing classes to specify
@@ -460,7 +475,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         //Don't grow if fully grown.
         if(
                 ((BlockPlant)world.getBlockState(pos).getBlock()).getGrowthStage(world.getBlockState(pos))
-                >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxAge()
+                >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage()
         ) return;
 
         ForgeHooks.onCropsGrowPre(world, pos, state, false);

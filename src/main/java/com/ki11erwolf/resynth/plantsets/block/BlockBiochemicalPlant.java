@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018-2019 Ki11er_wolf
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ki11erwolf.resynth.plantsets.block;
 
 import com.ki11erwolf.resynth.plantsets.set.IBiochemicalSetProperties;
@@ -74,7 +89,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * {@inheritDoc}
      */
     @Override
-    int getMaxAge() {
+    int getMaxGrowthStage() {
         return 7;
     }
 
@@ -105,7 +120,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
         int growth = world.getBlockState(pos).get(getGrowthProperty());
         int postHarvestGrowth = growth - 4;
 
-        if(growth >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxAge()){
+        if(growth >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage()){
             if(world.setBlockState(pos, world.getBlockState(pos)
                     .with(getGrowthProperty(), postHarvestGrowth), 2)){
                 if(!world.isRemote)
@@ -145,8 +160,8 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
     void growPlant(World world, IBlockState state, BlockPos pos, int increase) {
         int growth = increase + getGrowthStage(state);
 
-        if(growth > getMaxAge())
-            growth = getMaxAge();
+        if(growth > getMaxGrowthStage())
+            growth = getMaxGrowthStage();
 
         world.setBlockState(pos, this.getDefaultState().with(this.getGrowthProperty(), growth), 2);
     }

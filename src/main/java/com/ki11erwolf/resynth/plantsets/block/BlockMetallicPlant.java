@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018-2019 Ki11er_wolf
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ki11erwolf.resynth.plantsets.block;
 
 import com.ki11erwolf.resynth.plantsets.set.PlantSetProperties;
@@ -79,7 +94,7 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * {@inheritDoc}
      */
     @Override
-    int getMaxAge() {
+    int getMaxGrowthStage() {
         return 8;
     }
 
@@ -117,10 +132,10 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
         if(blockIn == Block.getBlockFromItem(getProduce().getItem())){
-            if(worldIn.getBlockState(pos).get(getGrowthProperty()) == this.getMaxAge())
+            if(worldIn.getBlockState(pos).get(getGrowthProperty()) == this.getMaxGrowthStage())
                 //Reset the plant if the player breaks its produce.
                 worldIn.setBlockState(
-                        pos, this.getDefaultState().with(this.getGrowthProperty(), this.getMaxAge() - 1)
+                        pos, this.getDefaultState().with(this.getGrowthProperty(), this.getMaxGrowthStage() - 1)
                 );
         }
     }
@@ -139,9 +154,9 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
     void growPlant(World world, IBlockState state, BlockPos pos, int increase) {
         int growth = increase + getGrowthStage(state);
 
-        if(growth >= getMaxAge()){
+        if(growth >= getMaxGrowthStage()){
             //Produce
-            growth = getMaxAge();
+            growth = getMaxGrowthStage();
             EnumFacing facing = placeProduce(world, pos);
             if(facing != null)
                 world.setBlockState(pos, this.getDefaultState()
