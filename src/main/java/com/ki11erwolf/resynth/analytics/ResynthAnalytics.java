@@ -27,7 +27,7 @@ import org.apache.logging.log4j.Logger;
  * Provides an API for more easily sending
  * Google Analytics events.
  */
-//TODO: Create event that notifies when a modded plant fails to load.
+//TODO: Create event that notifies when a modded plant fails to load (1.14).
 public final class ResynthAnalytics {
 
     /**

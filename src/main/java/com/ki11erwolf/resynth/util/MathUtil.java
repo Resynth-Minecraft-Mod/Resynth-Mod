@@ -61,10 +61,11 @@ public final class MathUtil {
      * with the given percentage chance.
      */
     public static boolean chance(float percentage){
-        if(percentage > 100.0)
-            percentage = 100.0F;
-        if(percentage < 0.0F)
-            percentage = 0.0F;
+        //Hard code 0% and 100%
+        if(percentage >= 100.0)
+            return true;
+        if(percentage <= 0.0F)
+            return false;
 
         float random = RANDOM_INSTANCE.nextFloat();
         return (percentage / 100) > random;

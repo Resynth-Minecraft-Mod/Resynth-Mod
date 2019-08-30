@@ -104,6 +104,42 @@
   "item.resynth.biochemical_seeds_spider_eye":              "Spider Eye Seeds",
   "item.resynth.biochemical_bulb_spider_eye":               "Spider Eye Bulb",
 
+  "block.resynth.biochemical_plant_slime_ball":             "Slime Ball Plant",
+  "item.resynth.biochemical_seeds_slime_ball":              "Slime Ball Seeds",
+  "item.resynth.biochemical_bulb_slime_ball":               "Slime Ball Bulb",
+
+  "block.resynth.biochemical_plant_shulker_shell":          "Shulker Shell Plant",
+  "item.resynth.biochemical_seeds_shulker_shell":           "Shulker Shell Seeds",
+  "item.resynth.biochemical_bulb_shulker_shell":            "Shulker Shell Bulb",
+
+  "block.resynth.biochemical_plant_ink_sac":                "Ink Sac Plant",
+  "item.resynth.biochemical_seeds_ink_sac":                 "Ink Sac Seeds",
+  "item.resynth.biochemical_bulb_ink_sac":                  "Ink Sac Bulb",
+
+  "block.resynth.biochemical_plant_leather":                "Leather Plant",
+  "item.resynth.biochemical_seeds_leather":                 "Leather Seeds",
+  "item.resynth.biochemical_bulb_leather":                  "Leather Bulb",
+
+  "block.resynth.biochemical_plant_rotten_flesh":           "Rotten Flesh Plant",
+  "item.resynth.biochemical_seeds_rotten_flesh":            "Rotten Flesh Seeds",
+  "item.resynth.biochemical_bulb_rotten_flesh":             "Rotten Flesh Bulb",
+
+  "block.resynth.biochemical_plant_prismarine_crystal":     "Prismarine Crystal Plant",
+  "item.resynth.biochemical_seeds_prismarine_crystal":      "Prismarine Crystal Seeds",
+  "item.resynth.biochemical_bulb_prismarine_crystal":       "Prismarine Crystal Bulb",
+
+  "block.resynth.biochemical_plant_prismarine_shard":       "Prismarine Shard Plant",
+  "item.resynth.biochemical_seeds_prismarine_shard":        "Prismarine Shard Seeds",
+  "item.resynth.biochemical_bulb_prismarine_shard":         "Prismarine Shard Bulb",
+
+  "block.resynth.biochemical_plant_rabbit_foot":            "Rabbit Foot Plant",
+  "item.resynth.biochemical_seeds_rabbit_foot":             "Rabbit Foot Seeds",
+  "item.resynth.biochemical_bulb_rabbit_foot":              "Rabbit Foot Bulb",
+
+  "block.resynth.biochemical_plant_dragons_breath":         "Dragons Breath Plant",
+  "item.resynth.biochemical_seeds_dragons_breath":          "Dragons Breath Seeds",
+  "item.resynth.biochemical_bulb_dragons_breath":           "Dragons Breath Bulb",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",

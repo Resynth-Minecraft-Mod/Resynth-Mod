@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.plant.set.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 
 /**
  * Holds the definitions and references to every Resynth
@@ -369,6 +370,141 @@ public class ResynthPlants {
                     3
             ),
             EntityType.SPIDER, EntityType.CAVE_SPIDER
+    ).register();
+
+    /**
+     * The plant set for Vanilla Slime Balls.
+     */
+    public static final PlantSet SLIME_BALL = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "slime_ball",
+            new BiochemicalSetProperties(
+                    false,
+                    15,
+                    2,
+                    5,
+                    3
+            ),
+            EntityType.SLIME
+    ).register();
+
+    /**
+     * The plant set for Vanilla Shulker Shells.
+     */
+    public static final PlantSet SHULKER_SHELL = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "shulker_shell",
+            new BiochemicalSetProperties(
+                    false,
+                    12,
+                    1,
+                    10,
+                    5
+            ),
+            EntityType.SHULKER
+    ).register();
+
+    /**
+     * The plant set for Vanilla Ink Sacs.
+     */
+    public static final PlantSet INK_SAC = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "ink_sac",
+            new BiochemicalSetProperties(
+                    false,
+                    20,
+                    2,
+                    5,
+                    2
+            ),
+            EntityType.SQUID
+    ).register();
+
+    /**
+     * The plant set for Vanilla Leather.
+     */
+    public static final PlantSet LEATHER = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "leather",
+            new BiochemicalSetProperties(
+                    false,
+                    13,
+                    1,
+                    4,
+                    4
+            ),
+            EntityType.COW
+    ).register();
+
+    /**
+     * The plant set for Vanilla Rotten Flesh
+     */
+    public static final PlantSet ROTTEN_FLESH = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "rotten_flesh",
+            new BiochemicalSetProperties(
+                    false,
+                    50,
+                    2,
+                    14,
+                    12
+            ),
+            EntityType.ZOMBIE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Prismarine Crystals.
+     */
+    public static final PlantSet PRISMARINE_CRYSTAL = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "prismarine_crystal",
+            new BiochemicalSetProperties(
+                    false,
+                    10,
+                    1,
+                    7,
+                    5
+            ),
+            EntityType.GUARDIAN
+    ).register();
+
+    /**
+     * The plant set for Vanilla Prismarine Shards.
+     */
+    public static final PlantSet PRISMARINE_SHARD = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "prismarine_shard",
+            new BiochemicalSetProperties(
+                    false,
+                    10,
+                    1,
+                    7,
+                    5
+            ),
+            EntityType.GUARDIAN
+    ).register();
+
+    /**
+     * The plant set for Vanilla Rabbits Foot.
+     */
+    public static final PlantSet RABBIT_FOOT = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "rabbit_foot",
+            new BiochemicalSetProperties(
+                    false,
+                    25,
+                    1,
+                    10,
+                    5
+            ),
+            EntityType.RABBIT
+    ).register();
+
+    /**
+     * The plant set for Vanilla Dragons Breath.
+     */
+    public static final PlantSet DRAGONS_BREATH = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "dragons_breath",
+            new BiochemicalSetProperties(
+                    false,
+                    15,
+                    1,
+                    100,
+                    10
+            ),
+            EntityType.ENDER_DRAGON
     ).register();
 
     /**Private constructor*/

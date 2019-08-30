@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:biochemical_bulb_slime_ball"
+  },
+  "result": "minecraft:slime_ball",
+  "experience": 7.0,
+  "cookingtime": 200
+}
