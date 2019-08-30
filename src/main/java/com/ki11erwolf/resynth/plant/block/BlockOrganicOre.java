@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plantsets.block;
+package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.block.ResynthBlock;
-import com.ki11erwolf.resynth.plantsets.set.IMetallicSetProperties;
-import com.ki11erwolf.resynth.plantsets.set.PlantSetUtil;
+import com.ki11erwolf.resynth.plant.set.IMetallicSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;

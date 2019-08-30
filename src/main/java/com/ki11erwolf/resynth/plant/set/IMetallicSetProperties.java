@@ -13,31 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plantsets.set;
+package com.ki11erwolf.resynth.plant.set;
 
 /**
- * Defines the required "settings" (properties) needed for Crystalline
+ * Defines the required "settings" (properties) needed for Metallic
  * plant sets specifically.
  */
-public interface ICrystallineSetProperties extends PlantSetProperties {
-
-    /**
-     * @return the number of produce item the plant type
-     * will drop when harvested. May be specified by config.
-     */
-    int numberOfProduceDrops();
+public interface IMetallicSetProperties extends PlantSetProperties {
 
     /**
      * @return the percentage (0.0 - 100.0) chance that seeds
-     * will spawn when the product ore is broken. May be
+     * will spawn when the final product ore is blown up. May be
      * specified by config.
      */
     float seedSpawnChanceFromOre();
 
     /**
      * @return the percentage (0.0 - 100.0) chance that seeds
-     * will spawn when the plant set produce (shard) is left
-     * in water to despawn. May be specified by config.
+     * will spawn when the plant set produce (Organic Ore) is
+     * blown up. May be specified by config.
      */
-    float seedSpawnChanceFromShard();
+    float seedSpawnChanceFromOrganicOre();
 }

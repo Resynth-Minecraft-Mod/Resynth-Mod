@@ -19,8 +19,8 @@ import com.ki11erwolf.resynth.config.BooleanConfigValue;
 import com.ki11erwolf.resynth.config.ConfigCategory;
 import com.ki11erwolf.resynth.config.DoubleConfigValue;
 import com.ki11erwolf.resynth.config.IntegerConfigValue;
-import com.ki11erwolf.resynth.plantsets.set.BiochemicalSetProperties;
-import com.ki11erwolf.resynth.plantsets.set.IBiochemicalSetProperties;
+import com.ki11erwolf.resynth.plant.set.BiochemicalSetProperties;
+import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
 
 /**
  * Defines the configuration settings used by Biochemical plant sets.

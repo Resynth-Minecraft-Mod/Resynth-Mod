@@ -36,6 +36,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -44,6 +45,7 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Item Mineral Hoe.
@@ -173,7 +175,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     }
 
     // *******
-    // Tilling
+    // Actions
     // *******
 
     /**
@@ -189,7 +191,6 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     @Nonnull
     @Override
     public EnumActionResult onItemUse(ItemUseContext context) {
-        //TODO: Split up into smaller methods.
         //Pre Checks
         if(!CONFIG.isEnabled()){
             return EnumActionResult.FAIL;
@@ -206,25 +207,13 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
         //Grow plant
         if(context.getPlayer().isCreative() && context.getPlayer().isSneaking()){
-            //If block is plant and can grow.
-            if(block instanceof IGrowable){
-                if(!context.getWorld().isRemote)
-                    ((IGrowable)block).grow(
-                            context.getWorld(),
-                            random,
-                            context.getPos(),
-                            context.getWorld().getBlockState(context.getPos())
-                    );
+            if(tryGrowPlant(block, context))
                 return EnumActionResult.SUCCESS;
-            }
         }
 
         //Info Provider
         if(block instanceof InfoProvider){
-            if(!context.getWorld().isRemote)
-                context.getPlayer().sendMessage(
-                        new TextComponentString(((InfoProvider)block).getInfo(context.getWorld(), context.getPos()))
-                );
+            getInfo(block, context);
             return EnumActionResult.SUCCESS;
         }
 
@@ -239,7 +228,9 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             return replace(context);
 
         //Not creative
-        //noinspection ConstantConditions //Should be taken care of.
+        if(context.getItem().getTag() == null)
+            return EnumActionResult.FAIL;
+
         int charges = context.getItem().getTag().getInt(NBT_TAG_CHARGES);
         if(charges < 1){
             if(CONFIG.playFailSound())
@@ -257,6 +248,40 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             context.getItem().getTag().setInt(NBT_TAG_CHARGES, charges - 1);
 
         return result;
+    }
+
+    /**
+     * Attempts to grow a plant similar to bonemeal,
+     * however it ignores {@link IGrowable#canGrow(IBlockReader, BlockPos, IBlockState, boolean)}
+     * and {@link IGrowable#canUseBonemeal(World, Random, BlockPos, IBlockState)}.
+     *
+     * @return {@code true} if the plant could be grown.
+     */
+    private boolean tryGrowPlant(Block block, ItemUseContext context){
+        if(block instanceof IGrowable){
+            if(!context.getWorld().isRemote)
+                ((IGrowable)block).grow(
+                        context.getWorld(),
+                        random,
+                        context.getPos(),
+                        context.getWorld().getBlockState(context.getPos())
+                );
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Shows the provided info from an info provider
+     * block in chat.
+     */
+    private void getInfo(Block block, ItemUseContext context){
+        if(!context.getWorld().isRemote)
+            if(context.getPlayer() != null)
+            context.getPlayer().sendMessage(
+                    new TextComponentString(((InfoProvider)block).getInfo(context.getWorld(), context.getPos()))
+            );
     }
 
     /**

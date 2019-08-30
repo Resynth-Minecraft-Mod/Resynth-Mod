@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.block.ResynthBlocks;
-import com.ki11erwolf.resynth.plantsets.set.*;
+import com.ki11erwolf.resynth.plant.set.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.init.Blocks;
 

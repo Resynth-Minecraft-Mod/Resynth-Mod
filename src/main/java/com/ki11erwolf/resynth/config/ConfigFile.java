@@ -57,7 +57,6 @@ public class ConfigFile {
             config.load();
             LOG.info("File loaded without errors.");
         } catch (Exception e){//We want a broad catch.
-            //TODO: Handle this error better.
             LOG.fatal("Config load failure", e);
             throw e;
         }

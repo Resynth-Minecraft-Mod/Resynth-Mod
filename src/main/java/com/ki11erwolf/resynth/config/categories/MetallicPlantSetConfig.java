@@ -18,8 +18,8 @@ package com.ki11erwolf.resynth.config.categories;
 import com.ki11erwolf.resynth.config.BooleanConfigValue;
 import com.ki11erwolf.resynth.config.ConfigCategory;
 import com.ki11erwolf.resynth.config.DoubleConfigValue;
-import com.ki11erwolf.resynth.plantsets.set.IMetallicSetProperties;
-import com.ki11erwolf.resynth.plantsets.set.MetallicSetProperties;
+import com.ki11erwolf.resynth.plant.set.IMetallicSetProperties;
+import com.ki11erwolf.resynth.plant.set.MetallicSetProperties;
 
 /**
  * Defines the configuration settings used by Metallic plant sets.

@@ -19,8 +19,8 @@ import com.ki11erwolf.resynth.config.BooleanConfigValue;
 import com.ki11erwolf.resynth.config.ConfigCategory;
 import com.ki11erwolf.resynth.config.DoubleConfigValue;
 import com.ki11erwolf.resynth.config.IntegerConfigValue;
-import com.ki11erwolf.resynth.plantsets.set.CrystallineSetProperties;
-import com.ki11erwolf.resynth.plantsets.set.ICrystallineSetProperties;
+import com.ki11erwolf.resynth.plant.set.CrystallineSetProperties;
+import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
 
 /**
  * Defines the configuration settings used by Crystalline plant sets.

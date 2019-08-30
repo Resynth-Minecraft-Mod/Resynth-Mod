@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plantsets.set;
+package com.ki11erwolf.resynth.plant.set;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;

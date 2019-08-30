@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plantsets.item;
+package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
-import com.ki11erwolf.resynth.plantsets.set.IBiochemicalSetProperties;
-import com.ki11erwolf.resynth.plantsets.set.PlantSetUtil;
+import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

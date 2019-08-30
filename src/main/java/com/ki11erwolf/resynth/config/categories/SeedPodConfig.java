@@ -42,32 +42,6 @@ public class SeedPodConfig extends ConfigCategory {
     );
 
     /**
-     * Config value definition that allows enabling/disabling
-     * the "always drop seeds" functionality of the Seed Pod.
-     */
-    private final BooleanConfigValue alwaysDropSeeds = new BooleanConfigValue(
-            "always-drop-seeds",
-            "Set to true to make sure the Mystical Seed Pod always drops seeds." +
-                      "\nThis does NOT override [enable-drops-from-seed-pod], it only makes" +
-                      "\nsure the plant will always drop seeds instead of occasionally dropping nothing.",
-            false,
-            this
-    );
-
-    /**
-     * Config value definition that allows setting the
-     * number of tries before giving up.
-     */
-    private final IntegerConfigValue tries = new IntegerConfigValue(
-            "number-of-tries",
-            "The amount of times the Mystical Seed Pod will try find a Biochemical" +
-                      "\nseed before giving up and dropping nothing. Disable this with [always-drop-seeds].",
-            10,
-            5, 150,
-            this
-    );
-
-    /**
      * Config value definition that allows enabling/disabling Mystical Seed Pod
      * world generation.
      */
@@ -110,22 +84,6 @@ public class SeedPodConfig extends ConfigCategory {
      */
     public boolean areDropsEnabled(){
         return enabled.getValue();
-    }
-
-    /**
-     * @return {@code true} if the config has
-     * enabled the "always drop seeds" functionality.
-     */
-    public boolean alwaysDropSeeds(){
-        return this.alwaysDropSeeds.getValue();
-    }
-
-    /**
-     * @return the amount of times to try and
-     * find valid seeds before giving up.
-     */
-    public int getTries(){
-        return this.tries.getValue();
     }
 
     /**

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plantsets.block;
+package com.ki11erwolf.resynth.plant.block;
 
-import com.ki11erwolf.resynth.plantsets.set.IBiochemicalSetProperties;
+import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

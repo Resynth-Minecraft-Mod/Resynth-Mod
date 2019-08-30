@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plantsets.block;
+package com.ki11erwolf.resynth.plant.block;
 
-import com.ki11erwolf.resynth.plantsets.set.ICrystallineSetProperties;
+import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.state.IntegerProperty;

@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plantsets.block;
+package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.item.ItemMineralHoe.InfoProvider;
-import com.ki11erwolf.resynth.plantsets.set.PlantSetProperties;
-import com.ki11erwolf.resynth.plantsets.item.ItemSeeds;
+import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
+import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -488,7 +488,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     // ***************************
 
     /**
-     * Used by the specific {@link com.ki11erwolf.resynth.plantsets.set.PlantSet}
+     * Used by the specific {@link com.ki11erwolf.resynth.plant.set.PlantSet}
      * to specific the seeds item of this plant type
      * as it's only known when creating the plant set.
      *
@@ -497,7 +497,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     protected abstract ItemSeeds getSeedsItem();
 
     /**
-     * Used by the specific {@link com.ki11erwolf.resynth.plantsets.set.PlantSet}
+     * Used by the specific {@link com.ki11erwolf.resynth.plant.set.PlantSet}
      * to specify the produce block/item of this plant type
      * as it's only known when creating the plant set.
      *

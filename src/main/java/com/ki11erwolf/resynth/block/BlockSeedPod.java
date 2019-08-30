@@ -17,6 +17,9 @@ package com.ki11erwolf.resynth.block;
 
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
+import com.ki11erwolf.resynth.plant.set.PublicPlantSetRegistry;
+import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -27,6 +30,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -35,6 +39,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReaderBase;
+import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nonnull;
@@ -253,29 +258,25 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
     // Plant Logic
     // ***********
 
-    //TODO: Fix.
-//    @Override
-//    @Nonnull
-//    public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune) {
-//        if (true/*TODO: config*/) {
-//            List<PlantSetBiochemical> plants = Arrays.asList(ResynthPlantSets.getBiochemicalPlantSets());
-//
-//            PlantSetBiochemical plant = ResynthPlantSets.getBiochemicalPlantSets()[0];
-//
-//            for (int i = 0; i <= 10/*TODO: config: MYSTICAL_SEED_POD.triesPerBreak*/; i++) {
-//                plant = plants.get(MathUtil.getRandomIntegerInRange(0, plants.size() - 1));
-//                if (MathUtil.chance(plant.getSeedPodDropPercentage())) {
-//                    return plant.getSeeds();
-//                }
-//            }
-//
-//            if (true/*TODO: config: MYSTICAL_SEED_POD.alwaysDropSeeds*/) {
-//                return plant.getSeeds();
-//            } else {
-//                return Item.getItemFromBlock(Blocks.AIR);
-//            }
-//        }
-//
-//        return this;
-//    }
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Handles what happens when the player breaks this plant.
+     * <p/>
+     * Will either drop this plant block or seeds from a random
+     * Biochemical plant set depending on config.
+     *
+     * @return the item to drop.
+     */
+    @Override
+    @Nonnull
+    public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune) {
+        if (!CONFIG.areDropsEnabled()) {
+            return this;
+        }
+
+        PlantSet[] plantSets = PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL);
+        PlantSet randomSet = plantSets[MathUtil.getRandomIntegerInRange(0, plantSets.length - 1)];
+        return randomSet.getSeedsItem();
+    }
 }
