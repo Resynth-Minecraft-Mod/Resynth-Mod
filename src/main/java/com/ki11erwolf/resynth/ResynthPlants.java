@@ -326,6 +326,36 @@ public class ResynthPlants {
             EntityType.GHAST
     ).register();
 
+    /**
+     * The plant set for Vanilla Nether Stars.
+     */
+    public static final PlantSet NETHER_STAR = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "nether_star",
+            new BiochemicalSetProperties(
+                    false,
+                    2,
+                    1,
+                    12,
+                    4
+            ),
+            EntityType.WITHER
+    ).register();
+
+    /**
+     * The plant set for Vanilla Spider Eyes.
+     */
+    public static final PlantSet SPIDER_EYE = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "spider_eye",
+            new BiochemicalSetProperties(
+                    false,
+                    20,
+                    1,
+                    5,
+                    3
+            ),
+            EntityType.SPIDER, EntityType.CAVE_SPIDER
+    ).register();
+
     /**Private constructor*/
     private ResynthPlants(){}
 

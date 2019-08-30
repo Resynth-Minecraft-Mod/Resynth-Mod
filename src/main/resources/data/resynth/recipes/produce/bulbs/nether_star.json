@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:biochemical_bulb_nether_star"
+  },
+  "result": "minecraft:nether_star",
+  "experience": 7.0,
+  "cookingtime": 200
+}

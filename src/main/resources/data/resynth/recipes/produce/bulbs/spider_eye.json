@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:biochemical_bulb_spider_eye"
+  },
+  "result": "minecraft:spider_eye",
+  "experience": 7.0,
+  "cookingtime": 200
+}

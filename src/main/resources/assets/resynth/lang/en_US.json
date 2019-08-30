@@ -96,6 +96,14 @@
   "item.resynth.biochemical_seeds_ghast_tear":              "Ghast Tear Seeds",
   "item.resynth.biochemical_bulb_ghast_tear":               "Ghast Tear Bulb",
 
+  "block.resynth.biochemical_plant_nether_star":            "Nether Star Plant",
+  "item.resynth.biochemical_seeds_nether_star":             "Nether Star Seeds",
+  "item.resynth.biochemical_bulb_nether_star":              "Nether Star Bulb",
+
+  "block.resynth.biochemical_plant_spider_eye":             "Spider Eye Plant",
+  "item.resynth.biochemical_seeds_spider_eye":              "Spider Eye Seeds",
+  "item.resynth.biochemical_bulb_spider_eye":               "Spider Eye Bulb",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",

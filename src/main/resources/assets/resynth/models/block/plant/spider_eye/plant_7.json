@@ -1,6 +1,6 @@
 {
   "parent": "resynth:block/plant/plant_biochemical",
   "textures": {
-    "flower": "resynth:blocks/plants/spidereye/spidereye_1"
+    "flower": "resynth:blocks/plants/spider_eye/plant_7"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "resynth:block/plant/plant_biochemical",
   "textures": {
-    "flower": "resynth:blocks/plants/netherstar/netherstar_7"
+    "flower": "resynth:blocks/plants/nether_star/plant_6"
   }
 }
