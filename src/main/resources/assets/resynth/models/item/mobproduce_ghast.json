@@ -1,6 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "resynth:items/mobproduce/mobproduce_ghast"
-    }
-}

@@ -1,6 +1,0 @@
-{
-  "parent": "resynth:block/plant/plant_crystalline",
-  "textures": {
-    "crop": "resynth:blocks/plants/ae2_quartz/ae2_quartz_1"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "parent": "resynth:block/plant/plant_metallic_blooming",
-  "textures": {
-    "stem": "resynth:blocks/plants/silver/silver_stem_disconnected",
-    "upperstem": "resynth:blocks/plants/silver/silver_stem_connected"
-  }
-}

@@ -19,7 +19,6 @@ import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.plant.set.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 
 /**
  * Holds the definitions and references to every Resynth
@@ -429,7 +428,7 @@ public class ResynthPlants {
                     4,
                     4
             ),
-            EntityType.COW
+            EntityType.COW, EntityType.HORSE
     ).register();
 
     /**

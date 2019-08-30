@@ -1,6 +1,0 @@
-{
-  "parent": "resynth:block/plant/plant_metallic_4",
-  "textures": {
-    "stem": "resynth:blocks/plants/ardite/ardite_stem_disconnected"
-  }
-}

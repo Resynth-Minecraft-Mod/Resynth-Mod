@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "resynth:blocks/plants/iridium/ore_iridium"
-  }
-}

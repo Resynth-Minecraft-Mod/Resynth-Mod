@@ -1,6 +1,0 @@
-{
-  "parent": "resynth:block/plant/plant_crystalline",
-  "textures": {
-    "crop": "resynth:blocks/plants/forestry_apatite/forestry_apatite_2"
-  }
-}
