@@ -52,7 +52,6 @@ public class PublicPlantSetRegistry {
         List<PlantSet> plantSets = new ArrayList<>();
 
         for(PlantSet plantSet : PlantSetRegistry.getPlantSets()){
-            System.out.println("set class -> " + plantSet.getClass().getSuperclass());
             if(setType.matches(plantSet))
                 plantSets.add(plantSet);
         }
