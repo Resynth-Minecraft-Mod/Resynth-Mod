@@ -69,7 +69,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * The unique properties of this specific plant type instance. Should
      * be config specified.
      */
-    private final PlantSetProperties properties;
+    final PlantSetProperties properties;
 
     /**
      * Resynth plant block constructor.

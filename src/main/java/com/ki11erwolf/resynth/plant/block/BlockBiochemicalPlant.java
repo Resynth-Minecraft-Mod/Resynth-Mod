@@ -21,6 +21,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -124,8 +125,13 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
             if(world.setBlockState(pos, world.getBlockState(pos)
                     .with(getGrowthProperty(), postHarvestGrowth), 2)){
                 if(!world.isRemote)
-                    MinecraftUtil.spawnItemInWorld(getProduce().getItem(), world, pos);
-
+                    MinecraftUtil.spawnItemStackInWorld(
+                            new ItemStack(
+                                    getProduce().getItem(),
+                                    ((IBiochemicalSetProperties) properties).numberOfProduceDrops()
+                            ),
+                            world, pos
+                    );
                 playPopSound(world, player);
                 return true;
             }

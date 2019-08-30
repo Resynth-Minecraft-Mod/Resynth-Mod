@@ -23,9 +23,8 @@ import net.minecraftforge.common.MinecraftForge;
  * plant seeds in the world from player actions.
  * <p/>
  * Provides implementing classes with an easy way
- * of registration and some utilities.
+ * of registration.
  */
-//TODO: Add utility
 class PlantSetSeedHooks {
 
     /**
