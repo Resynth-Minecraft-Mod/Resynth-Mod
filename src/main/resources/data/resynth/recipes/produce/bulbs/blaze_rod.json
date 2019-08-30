@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:biochemical_bulb_blaze_rod"
+  },
+  "result": "minecraft:blaze_rod",
+  "experience": 7.0,
+  "cookingtime": 200
+}

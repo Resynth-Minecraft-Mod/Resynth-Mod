@@ -230,10 +230,100 @@ public class ResynthPlants {
                     false,
                     10,
                     1,
-                    6,
-                    5
+                    8,
+                    6
             ),
             EntityType.ENDERMAN
+    ).register();
+
+    /**
+     * The plant set for Vanilla Gunpowder.
+     */
+    public static final PlantSet GUNPOWDER = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "gunpowder",
+            new BiochemicalSetProperties(
+                    false,
+                    30,
+                    1,
+                    7,
+                    5
+            ),
+            EntityType.CREEPER
+    ).register();
+
+    /**
+     * The plant set for Vanilla Blaze Rods.
+     */
+    public static final PlantSet BLAZE_ROD = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "blaze_rod",
+            new BiochemicalSetProperties(
+                    false,
+                    12,
+                    1,
+                    8,
+                    6
+            ),
+            EntityType.BLAZE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Bones.
+     */
+    public static final PlantSet BONE = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "bone",
+            new BiochemicalSetProperties(
+                    false,
+                    30,
+                    2,
+                    5,
+                    3
+            ),
+            EntityType.SKELETON
+    ).register();
+
+    /**
+     * The plant set for Vanilla String.
+     */
+    public static final PlantSet STRING = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "string",
+            new BiochemicalSetProperties(
+                    false,
+                    25,
+                    2,
+                    5,
+                    3
+            ),
+            EntityType.SPIDER, EntityType.CAVE_SPIDER
+    ).register();
+
+    /**
+     * The plant set for Vanilla Feathers.
+     */
+    public static final PlantSet FEATHER = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "feather",
+            new BiochemicalSetProperties(
+                    false,
+                    35,
+                    2,
+                    4,
+                    3
+            ),
+            EntityType.CHICKEN
+    ).register();
+
+    /**
+     * The plant set for Vanilla Ghast Tears.
+     */
+    public static final PlantSet GHAST_TEAR = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "ghast_tear",
+            new BiochemicalSetProperties(
+                    false,
+                    5,
+                    1,
+                    10,
+                    3
+            ),
+            EntityType.GHAST
     ).register();
 
     /**Private constructor*/

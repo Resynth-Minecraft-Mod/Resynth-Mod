@@ -1,0 +1,6 @@
+{
+  "parent": "resynth:block/plant/plant_biochemical",
+  "textures": {
+    "flower": "resynth:blocks/plants/string/plant_4"
+  }
+}

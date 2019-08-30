@@ -72,6 +72,30 @@
   "item.resynth.biochemical_seeds_ender_pearl":             "Ender Pearl Seeds",
   "item.resynth.biochemical_bulb_ender_pearl":              "Ender Pearl Bulb",
 
+  "block.resynth.biochemical_plant_gunpowder":              "Gunpowder Plant",
+  "item.resynth.biochemical_seeds_gunpowder":               "Gunpowder Seeds",
+  "item.resynth.biochemical_bulb_gunpowder":                "Gunpowder Bulb",
+
+  "block.resynth.biochemical_plant_blaze_rod":              "Blaze Rod Plant",
+  "item.resynth.biochemical_seeds_blaze_rod":               "Blaze Rod Seeds",
+  "item.resynth.biochemical_bulb_blaze_rod":                "Blaze Rod Bulb",
+
+  "block.resynth.biochemical_plant_bone":                   "Bone Plant",
+  "item.resynth.biochemical_seeds_bone":                    "Bone Seeds",
+  "item.resynth.biochemical_bulb_bone":                     "Bone Bulb",
+
+  "block.resynth.biochemical_plant_string":                 "String Plant",
+  "item.resynth.biochemical_seeds_string":                  "String Seeds",
+  "item.resynth.biochemical_bulb_string":                   "String Bulb",
+
+  "block.resynth.biochemical_plant_feather":                "Feather Plant",
+  "item.resynth.biochemical_seeds_feather":                 "Feather Seeds",
+  "item.resynth.biochemical_bulb_feather":                  "Feather Bulb",
+
+  "block.resynth.biochemical_plant_ghast_tear":             "Ghast Tear Plant",
+  "item.resynth.biochemical_seeds_ghast_tear":              "Ghast Tear Seeds",
+  "item.resynth.biochemical_bulb_ghast_tear":               "Ghast Tear Bulb",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",

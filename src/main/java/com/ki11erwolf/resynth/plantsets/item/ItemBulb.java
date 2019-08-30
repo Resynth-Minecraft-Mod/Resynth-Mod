@@ -123,7 +123,7 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      * @return {@link EnumAction#SPEAR}.
      */
     public EnumAction getUseAction(ItemStack stack) {
-        return EnumAction.SPEAR;
+        return EnumAction.BOW;
     }
 
     /**

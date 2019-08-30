@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:biochemical_bulb_ghast_tear"
+  },
+  "result": "minecraft:ghast_tear",
+  "experience": 7.0,
+  "cookingtime": 200
+}

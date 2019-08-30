@@ -98,7 +98,7 @@ public class PlantSetUtil {
 
             tooltip.add(getFormattedTooltip(
                     "seed_spawn_chance_from_bulb", TextFormatting.YELLOW,
-                    properties.seedSpawnChanceFromMob())
+                    properties.seedSpawnChanceFromBulb())
             );
         }
     }
