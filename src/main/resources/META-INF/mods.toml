@@ -15,7 +15,7 @@ version="2.0.0" #mandatory
  # A display name for the mod
 displayName="Resynth" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://shopperycraft.github.io/versions.json" #optional
+updateJSONURL="https://resynth-minecraft-mod.github.io/versions.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 displayURL="https://resynth-minecraft-mod.github.io/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
