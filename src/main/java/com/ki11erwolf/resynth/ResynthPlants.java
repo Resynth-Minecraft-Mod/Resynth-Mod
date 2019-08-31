@@ -17,8 +17,9 @@ package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.plant.set.*;
-import net.minecraft.entity.EntityType;
 import net.minecraft.init.Blocks;
+
+import static net.minecraft.entity.EntityType.*;
 
 /**
  * Holds the definitions and references to every Resynth
@@ -248,7 +249,7 @@ public class ResynthPlants {
                     8,
                     6
             ),
-            EntityType.ENDERMAN
+            ENDERMAN
     ).register();
 
     /**
@@ -263,7 +264,7 @@ public class ResynthPlants {
                     7,
                     5
             ),
-            EntityType.CREEPER
+            CREEPER
     ).register();
 
     /**
@@ -278,7 +279,7 @@ public class ResynthPlants {
                     8,
                     6
             ),
-            EntityType.BLAZE
+            BLAZE
     ).register();
 
     /**
@@ -293,7 +294,7 @@ public class ResynthPlants {
                     5,
                     3
             ),
-            EntityType.SKELETON
+            SKELETON
     ).register();
 
     /**
@@ -308,7 +309,7 @@ public class ResynthPlants {
                     5,
                     3
             ),
-            EntityType.SPIDER, EntityType.CAVE_SPIDER
+            SPIDER, CAVE_SPIDER
     ).register();
 
     /**
@@ -323,7 +324,7 @@ public class ResynthPlants {
                     4,
                     3
             ),
-            EntityType.CHICKEN
+            CHICKEN
     ).register();
 
     /**
@@ -338,7 +339,7 @@ public class ResynthPlants {
                     10,
                     3
             ),
-            EntityType.GHAST
+            GHAST
     ).register();
 
     /**
@@ -353,7 +354,7 @@ public class ResynthPlants {
                     12,
                     4
             ),
-            EntityType.WITHER
+            WITHER
     ).register();
 
     /**
@@ -368,7 +369,7 @@ public class ResynthPlants {
                     5,
                     3
             ),
-            EntityType.SPIDER, EntityType.CAVE_SPIDER
+            SPIDER, CAVE_SPIDER
     ).register();
 
     /**
@@ -383,7 +384,7 @@ public class ResynthPlants {
                     5,
                     3
             ),
-            EntityType.SLIME
+            SLIME
     ).register();
 
     /**
@@ -398,7 +399,7 @@ public class ResynthPlants {
                     10,
                     5
             ),
-            EntityType.SHULKER
+            SHULKER
     ).register();
 
     /**
@@ -413,7 +414,7 @@ public class ResynthPlants {
                     5,
                     2
             ),
-            EntityType.SQUID
+            SQUID
     ).register();
 
     /**
@@ -428,7 +429,7 @@ public class ResynthPlants {
                     4,
                     4
             ),
-            EntityType.COW, EntityType.HORSE
+            COW, HORSE
     ).register();
 
     /**
@@ -443,7 +444,7 @@ public class ResynthPlants {
                     14,
                     12
             ),
-            EntityType.ZOMBIE
+            ZOMBIE
     ).register();
 
     /**
@@ -458,7 +459,7 @@ public class ResynthPlants {
                     7,
                     5
             ),
-            EntityType.GUARDIAN
+            GUARDIAN
     ).register();
 
     /**
@@ -473,7 +474,7 @@ public class ResynthPlants {
                     7,
                     5
             ),
-            EntityType.GUARDIAN
+            GUARDIAN
     ).register();
 
     /**
@@ -488,7 +489,7 @@ public class ResynthPlants {
                     10,
                     5
             ),
-            EntityType.RABBIT
+            RABBIT
     ).register();
 
     /**
@@ -503,7 +504,42 @@ public class ResynthPlants {
                     100,
                     10
             ),
-            EntityType.ENDER_DRAGON
+            ENDER_DRAGON
+    ).register();
+
+    /**
+     * The plant set for Vanilla Experience Bottles.
+     */
+    public static final PlantSet EXPERIENCE_BOTTLE = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "experience_bottle",
+            new BiochemicalSetProperties(
+                    false,
+                    4,
+                    2,
+                    0.5F,
+                    0.5F
+            ),
+            BAT, BLAZE, CAVE_SPIDER, CHICKEN, COD, COW, CREEPER, DONKEY, DOLPHIN, DROWNED, ELDER_GUARDIAN,
+            ENDER_DRAGON, ENDERMAN, ENDERMITE, EVOKER, GHAST, GIANT, GUARDIAN, HORSE, HUSK, LLAMA, MAGMA_CUBE,
+            MULE, MOOSHROOM, OCELOT, PARROT, PIG, PUFFERFISH, ZOMBIE_PIGMAN, POLAR_BEAR, RABBIT, SALMON,
+            SHEEP, SHULKER, SILVERFISH, SKELETON, SKELETON_HORSE, SLIME, SPIDER, SQUID, TURTLE, TROPICAL_FISH,
+            VILLAGER, IRON_GOLEM, WITCH, WITHER, WITHER_SKELETON, WOLF, ZOMBIE, ZOMBIE_PIGMAN, ZOMBIE_VILLAGER,
+            ZOMBIE_HORSE, PHANTOM
+    ).register();
+
+    /**
+     * The plant set for Vanilla Nautilus Shells.
+     */
+    public static final PlantSet NAUTILUS_SHELL = PlantSetFactory.newVanillaBiochemicalPlantSet(
+            "nautilus_shell",
+            new BiochemicalSetProperties(
+                    false,
+                    6,
+                    1,
+                    2,
+                    1
+            ),
+            DROWNED
     ).register();
 
     /**Private constructor*/

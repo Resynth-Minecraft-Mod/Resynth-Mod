@@ -140,6 +140,14 @@
   "item.resynth.biochemical_seeds_dragons_breath":          "Dragons Breath Seeds",
   "item.resynth.biochemical_bulb_dragons_breath":           "Dragons Breath Bulb",
 
+  "block.resynth.biochemical_plant_experience_bottle":      "XP Plant",
+  "item.resynth.biochemical_seeds_experience_bottle":       "XP Bottle Seeds",
+  "item.resynth.biochemical_bulb_experience_bottle":        "XP Bottle Bulb",
+
+  "block.resynth.biochemical_plant_nautilus_shell":         "Nautilus Shell Plant",
+  "item.resynth.biochemical_seeds_nautilus_shell":          "Nautilus Shell Seeds",
+  "item.resynth.biochemical_bulb_nautilus_shell":           "Nautilus Shell Bulb",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_ore":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
