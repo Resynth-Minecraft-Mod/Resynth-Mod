@@ -30,6 +30,7 @@ import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Particles;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -42,6 +43,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReaderBase;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 
@@ -200,6 +203,52 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
         return getShapeByAge()[state.get(this.getGrowthProperty())];
+    }
+
+    // *********
+    // Particles
+    // *********
+
+    /**
+     * Handles spawning particles randomly around the plant.
+     */
+    @Override
+    public void animateTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        if(MathUtil.chance(5))
+            spawnParticles(worldIn, pos);
+    }
+
+    /**
+     * Spawns end rod sparkle particles in the world.
+     *
+     * @param worldIn the world to spawn the particles in.
+     * @param pos the position in the world to spawn the particles in.
+     */
+    @OnlyIn(Dist.CLIENT)
+    private static void spawnParticles(World worldIn, BlockPos pos){
+        Random random = worldIn.rand;
+        double d = random.nextGaussian() * 0.02D;
+        int amount = 1;
+
+        IBlockState iblockstate = worldIn.getBlockState(pos);
+
+        if (iblockstate.getMaterial() != Material.AIR) {
+            for (int i = 0; i < amount; ++i){
+                worldIn.spawnParticle(Particles.END_ROD,
+                        (float)pos.getX() + random.nextFloat(),
+                        (double)pos.getY() + (double)random.nextFloat()
+                                * iblockstate.getShape(worldIn, pos).getEnd(EnumFacing.Axis.Y),
+                        (float)pos.getZ() + random.nextFloat(), d, d, d);
+            }
+        }
+        else {
+            for (int i1 = 0; i1 < amount; ++i1) {
+                worldIn.spawnParticle(Particles.END_ROD,
+                        (float)pos.getX() + random.nextFloat(),
+                        (double)pos.getY() + (double)random.nextFloat() * 1.0f,
+                        (float)pos.getZ() + random.nextFloat(), d, d, d);
+            }
+        }
     }
 
     // ************
