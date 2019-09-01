@@ -149,7 +149,7 @@
   "item.resynth.biochemical_bulb_nautilus_shell":           "Nautilus Shell Bulb",
 
   "____COMMENT": "---Tooltips----",
-  "tooltip.block.resynth.mineral_ore":
+  "tooltip.block.resynth.mineral_stone":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
   "tooltip.block.resynth.mineral_soil":
   "Resynth's soil block. Needed to grow Resynth plants.\nMade by tilling dirt or grass with a Mineral Hoe.\nPlant growth rates can be increased by adding Mineral Rocks or Dense Mineral Rocks to the Mineral Enriched Soil.\nA Mineral Hoe can be used on Mineral Soil (right-clicked) to check the Mineral Content.",

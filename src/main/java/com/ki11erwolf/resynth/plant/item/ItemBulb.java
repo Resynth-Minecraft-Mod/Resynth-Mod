@@ -100,7 +100,8 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      * {@link ForgeEventFactory#onPlayerDestroyItem(EntityPlayer, ItemStack, EnumHand)} event.
      */
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entityLiving) {
-        playSmashSound(world, entityLiving);
+        if(world.isRemote)
+            playSmashSound(world, entityLiving);
 
         if(!(entityLiving instanceof EntityPlayer))
             return stack;

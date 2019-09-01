@@ -35,7 +35,7 @@ public class MinecraftUtil {
      *
      * @return {@code true} if the item was spawned.
      */
-    @SuppressWarnings("UnusedReturnValue")
+    @SuppressWarnings({"UnusedReturnValue", "unused"})
     public static boolean spawnItemInWorld(Item item, World world, BlockPos pos){
         return spawnItemStackInWorld(new ItemStack(item), world, pos);
     }
@@ -45,7 +45,6 @@ public class MinecraftUtil {
      *
      * @return {@code true} if the ItemStack was spawned.
      */
-    @SuppressWarnings("WeakerAccess")
     public static boolean spawnItemStackInWorld(ItemStack stack, World world, BlockPos pos){
         return world.spawnEntity(new EntityItem(
                 world,
