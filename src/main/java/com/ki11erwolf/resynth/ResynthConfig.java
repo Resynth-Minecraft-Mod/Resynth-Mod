@@ -36,6 +36,7 @@ public class ResynthConfig {
      */
     private ResynthConfig(){}
 
+
     /**
      * Settings related to core of resynth.
      */
