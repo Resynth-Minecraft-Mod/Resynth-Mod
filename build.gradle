@@ -1,5 +1,5 @@
 //////////////////////////////
-//          1.13.2          //
+//          1.14.4          //
 //////////////////////////////
 
 buildscript {
@@ -27,8 +27,9 @@ archivesBaseName = "resynth"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20180921-1.13'
-    
+    mappings channel: 'snapshot', version: '20190719-1.14.3'
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+
     runs {
         client {
             workingDirectory project.file('run')
@@ -45,9 +46,24 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-            
+
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
 
             mods {
                 examplemod {
@@ -59,7 +75,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.13.2-25.0.219'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.0.83'
 }
 
 jar {
