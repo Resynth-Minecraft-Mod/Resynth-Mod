@@ -71,11 +71,9 @@ public abstract class BlockPlantBase extends ResynthBlock implements IGrowable, 
      */
     protected BlockPlantBase(String name) {
         super(Material.PLANTS, SoundType.PLANT, name, PLANT_PREFIX);
-        this.setTickRandomly(true);
+
         //Don't make available in creative.
-        this.setCreativeTab(null);
-        this.setHardness(0.0F);
-        this.setSoundType(SoundType.PLANT);
+        //this.setCreativeTab(null);
     }
 
     /**
