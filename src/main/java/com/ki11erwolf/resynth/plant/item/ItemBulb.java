@@ -20,15 +20,12 @@ import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumAction;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.item.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -43,7 +40,7 @@ import java.util.Random;
  * The produce item for Biochemical plants.
  * <p/>
  * Can be used (right-click) to fire a
- * {@link ForgeEventFactory#onPlayerDestroyItem(EntityPlayer, ItemStack, EnumHand)}
+ * {@link ForgeEventFactory#onPlayerDestroyItem(PlayerEntity, ItemStack, Hand)}
  * event which is handled in the plant set seed hooks
  * when distributing seeds. This is done for consistency
  * with seed hooks and plant sets.
@@ -97,20 +94,21 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      * <p/>
      * Handles what happens when the player finishes
      * using the item - fires a
-     * {@link ForgeEventFactory#onPlayerDestroyItem(EntityPlayer, ItemStack, EnumHand)} event.
+     * {@link ForgeEventFactory#onPlayerDestroyItem(PlayerEntity, ItemStack, Hand)} event.
      */
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entityLiving) {
+    @Override
+    public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entityLiving) {
         if(world.isRemote)
             playSmashSound(world, entityLiving);
 
-        if(!(entityLiving instanceof EntityPlayer))
+        if(!(entityLiving instanceof ServerPlayerEntity))
             return stack;
 
-        if(!((EntityPlayer)entityLiving).isCreative())
+        if(!((PlayerEntity)entityLiving).isCreative())
             stack.shrink(1);
 
         //Fire event so we can handle it in seed hooks.
-        ForgeEventFactory.onPlayerDestroyItem((EntityPlayer) entityLiving, stack, EnumHand.MAIN_HAND);
+        ForgeEventFactory.onPlayerDestroyItem((PlayerEntity) entityLiving, stack, Hand.MAIN_HAND);
         return stack;
     }
 
@@ -119,7 +117,7 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      * is smashed in the world.
      */
     @OnlyIn(Dist.CLIENT)
-    private static void playSmashSound(World world, EntityLivingBase player){
+    private static void playSmashSound(World world, LivingEntity player){
         world.playSound(null, player.posX, player.posY, player.posZ,
                 SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.PLAYERS,
                 0.4F, 0.4F / (new Random().nextFloat() * 0.4F + 0.8F)
@@ -136,18 +134,19 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
 
     /**
      * {@inheritDoc}
-     * @return {@link EnumAction#SPEAR}.
+     * @return {@link UseAction#BOW}.
      */
-    public EnumAction getUseAction(ItemStack stack) {
-        return EnumAction.BOW;
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.BOW;
     }
 
     /**
      * {@inheritDoc}.
      */
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         playerIn.setActiveHand(handIn);
-        return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
+        return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 }

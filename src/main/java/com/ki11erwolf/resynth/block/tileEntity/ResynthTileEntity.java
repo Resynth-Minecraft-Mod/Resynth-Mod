@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth.block.tileEntity;
 
 import com.ki11erwolf.resynth.block.ResynthBlock;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -58,11 +58,11 @@ public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthB
      * the block class implementing this class
      * has a tile entity class.
      *
-     * @param state the blocks state in the world.
      * @return {@code true}
      */
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    @SuppressWarnings("deprecation")
+    public boolean hasTileEntity() {
         return true;
     }
 
@@ -85,5 +85,5 @@ public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthB
      * @return the newly constructed tile entity.
      */
     @Override
-    public abstract TileEntity createTileEntity(IBlockState state, IBlockReader world);
+    public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
 }

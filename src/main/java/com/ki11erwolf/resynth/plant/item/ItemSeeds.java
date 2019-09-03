@@ -21,14 +21,14 @@ import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
@@ -55,7 +55,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      * The specific plant type (plant block)
      * this seeds item type will spawn.
      */
-    private final IBlockState plant;
+    private final BlockState plant;
 
     /**
      * The name of the set this seeds item
@@ -93,29 +93,29 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      * Handles placing the plant type (plant block
      * instance) in the world.
      *
-     * @return {@link EnumActionResult#SUCCESS} if the plant
-     * was placed, {@link EnumActionResult#FAIL} otherwise.
+     * @return {@link ActionResultType#SUCCESS} if the plant
+     * was placed, {@link ActionResultType#FAIL} otherwise.
      */
     @Override
-    public EnumActionResult onItemUse(ItemUseContext context) {
+    public ActionResultType onItemUse(ItemUseContext context) {
         IWorld world = context.getWorld();
         BlockPos blockpos = context.getPos().up();
 
-        if (context.getFace() == EnumFacing.UP && world.isAirBlock(blockpos)
+        if (context.getFace() == Direction.UP && world.isAirBlock(blockpos)
                 && this.plant.isValidPosition(world, blockpos)) {
 
             world.setBlockState(blockpos, this.plant, 11);
             ItemStack itemstack = context.getItem();
-            EntityPlayer entityplayer = context.getPlayer();
+            PlayerEntity playerEntity = context.getPlayer();
 
-            if (entityplayer instanceof EntityPlayerMP) {
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)entityplayer, blockpos, itemstack);
+            if (playerEntity instanceof ServerPlayerEntity) {
+                CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) playerEntity, blockpos, itemstack);
             }
 
             itemstack.shrink(1);
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         } else {
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         }
     }
 
@@ -135,7 +135,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      * @return the plant type (plant block) this seeds item type (instance) spawns.
      */
     @Override
-    public IBlockState getPlant(IBlockReader world, BlockPos pos) {
+    public BlockState getPlant(IBlockReader world, BlockPos pos) {
         return plant;
     }
 }

@@ -17,7 +17,7 @@ package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -114,7 +114,7 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
      * the plant growth property by the given amount.
      */
     @Override
-    void growPlant(World world, IBlockState state, BlockPos pos, int increase) {
+    void growPlant(World world, BlockState state, BlockPos pos, int increase) {
         int growth = increase + getGrowthStage(state);
 
         if(growth > getMaxGrowthStage())

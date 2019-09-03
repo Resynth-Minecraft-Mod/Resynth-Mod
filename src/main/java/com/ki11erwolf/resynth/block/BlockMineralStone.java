@@ -20,10 +20,9 @@ import com.ki11erwolf.resynth.config.categories.MineralStoneConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -31,15 +30,13 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Mineral Rich Stone. The mods ore block.
  */
-public class BlockMineralStone extends ResynthBlock{
+public class BlockMineralStone extends ResynthBlock<BlockMineralStone>{
 
     /**
      * The configuration settings for this block.
@@ -71,28 +68,39 @@ public class BlockMineralStone extends ResynthBlock{
 
     /**
      * {@inheritDoc}
-     *
-     * @return The item dropped when the block is broken:
-     * {@link ResynthItems#ITEM_MINERAL_ROCK}.
+     * Handles dropping a random amount of Mineral Rocks.
      */
-    @Nonnull
-    @Override
-    public Item getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune) {
-        return ResynthItems.ITEM_MINERAL_ROCK;
+    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
+        return new ItemStack(
+                ResynthItems.ITEM_DENSE_MINERAL_ROCK,
+                (MathUtil.chance((float) CONFIG.getExtraDropsChance()) ? CONFIG.getExtraDrops() : 0)
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return the number of items to drop when this block is broken.
-     * Determined by config settings.
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public int quantityDropped(IBlockState state, Random random) {
-        return CONFIG.getBaseDrops()
-                + (MathUtil.chance((float)CONFIG.getExtraDropsChance()) ? CONFIG.getExtraDrops() : 0);
-    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @return The item dropped when the block is broken:
+//     * {@link ResynthItems#ITEM_MINERAL_ROCK}.
+//     */
+//    @Nonnull
+//    @Override
+//    public Item getItemDropped(BlockState state, World worldIn, BlockPos pos, int fortune) {
+//        return ResynthItems.ITEM_MINERAL_ROCK;
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @return the number of items to drop when this block is broken.
+//     * Determined by config settings.
+//     */
+//    @Override
+//    @SuppressWarnings("deprecation")
+//    public int quantityDropped(BlockState state, Random random) {
+//        return CONFIG.getBaseDrops()
+//                + (MathUtil.chance((float)CONFIG.getExtraDropsChance()) ? CONFIG.getExtraDrops() : 0);
+//    }
 
     /**
      * {@inheritDoc}
@@ -101,18 +109,14 @@ public class BlockMineralStone extends ResynthBlock{
      * when they break the block. Determined by config.
      */
     @Override
-    public int getExpDrop(IBlockState state, net.minecraft.world.IWorldReader reader, BlockPos pos, int fortune) {
-        //noinspection deprecation
-        if (this.getItemDropped(null, null, null, 0) != Item.getItemFromBlock(this)){
-            int min = CONFIG.getMinExpDropped(); int max = CONFIG.getMaxExpDropped();
+    public int getExpDrop(BlockState state, net.minecraft.world.IWorldReader reader, BlockPos pos, int fortune,
+                          int silktouch) {
+        int min = CONFIG.getMinExpDropped(); int max = CONFIG.getMaxExpDropped();
 
-            if(min > max)
-                min = max;
+        if(min > max)
+            min = max;
 
-            return MathUtil.getRandomIntegerInRange(min, max);
-        }
-
-        return 0;
+        return MathUtil.getRandomIntegerInRange(min, max);
     }
 
     /**
@@ -122,7 +126,7 @@ public class BlockMineralStone extends ResynthBlock{
      */
     @Nullable
     @Override
-    public ToolType getHarvestTool(IBlockState state) {
+    public ToolType getHarvestTool(BlockState state) {
         return ToolType.PICKAXE;
     }
 
@@ -132,22 +136,7 @@ public class BlockMineralStone extends ResynthBlock{
      * @return the required tool level to break this block: 2 (iron).
      */
     @Override
-    public int getHarvestLevel(IBlockState state) {
+    public int getHarvestLevel(BlockState state) {
         return 2;
-    }
-
-    /**
-     * {@inheritDoc}.
-     *
-     * Overrides silk touch - it's not wanted.
-     *
-     * @param state
-     * @return the item to drop when the block is broken with a
-     * silk touch pickaxe: {@link ResynthItems#ITEM_MINERAL_ROCK}.
-     */
-    @Nonnull
-    @Override
-    protected ItemStack getSilkTouchDrop(@Nonnull IBlockState state){
-        return new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, quantityDropped(null, null));
     }
 }

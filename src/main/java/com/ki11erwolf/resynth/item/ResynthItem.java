@@ -22,7 +22,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.List;
@@ -125,14 +125,14 @@ public class ResynthItem<T extends ResynthItem> extends Item {
     }
 
     /**
-     * Turns a given string into a {@link TextComponentString}
+     * Turns a given string into a {@link net.minecraft.util.text.StringTextComponent}
      * containing the given string.
      *
      * @param text the given string text.
      * @return a new TextComponentString containing the given string.
      */
     protected static ITextComponent stringToTextComponent(String text){
-        return new TextComponentString(text);
+        return new StringTextComponent(text);
     }
 
     /**

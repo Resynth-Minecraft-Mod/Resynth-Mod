@@ -16,13 +16,13 @@
 package com.ki11erwolf.resynth.item;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 
 /**
  * A special Resynth ItemBlock created to easily register
  * ItemBlocks when registering normals blocks.
  */
-public class ResynthItemBlock extends ItemBlock {
+public class ResynthItemBlock extends BlockItem {
 
     /**
      * Flag to prevent queuing an item

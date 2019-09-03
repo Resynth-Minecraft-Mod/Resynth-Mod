@@ -17,7 +17,7 @@ package com.ki11erwolf.resynth.plant.set;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.List;
@@ -128,6 +128,6 @@ public class PlantSetUtil {
      * @return the formatted tooltip from the language file.
      */
     private static ITextComponent getFormattedTooltip(String key, TextFormatting color, Object... params){
-        return new TextComponentString(color + I18n.format("tooltip.property.resynth." + key, params));
+        return new StringTextComponent(color + I18n.format("tooltip.property.resynth." + key, params));
     }
 }

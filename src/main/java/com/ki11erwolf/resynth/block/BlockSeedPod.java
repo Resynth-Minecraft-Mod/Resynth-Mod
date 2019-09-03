@@ -21,24 +21,23 @@ import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.plant.set.PublicPlantSetRegistry;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReaderBase;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
@@ -51,7 +50,7 @@ import java.util.List;
  * in peaceful mode.
  */
 @SuppressWarnings("deprecation")
-public class BlockSeedPod extends ResynthBlock implements IPlantable {
+public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantable {
 
     /**
      * The configuration settings for this block.
@@ -78,45 +77,45 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
     // Visual & Shape
     // **************
 
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @return {@code false}.
+//     */
+//    @Override
+//    public boolean isFullCube(IBlockState state) {
+//        return false;
+//    }
+
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @return {@link BlockFaceShape#UNDEFINED}.
+//     */
+//    @Override
+//    @Nonnull
+//    public BlockFaceShape getBlockFaceShape(IBlockReader worldIn, IBlockState state,
+//                                            BlockPos pos, EnumFacing face) {
+//        return BlockFaceShape.UNDEFINED;
+//    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return {@link Block.OffsetType#XZ}.
+     */
+    @Override
+    public Block.OffsetType getOffsetType() {
+        return Block.OffsetType.XZ;
+    }
+
     /**
      * {@inheritDoc}
      *
      * @return {@code false}.
      */
     @Override
-    public boolean isFullCube(IBlockState state) {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return {@link BlockFaceShape#UNDEFINED}.
-     */
-    @Override
-    @Nonnull
-    public BlockFaceShape getBlockFaceShape(IBlockReader worldIn, IBlockState state,
-                                            BlockPos pos, EnumFacing face) {
-        return BlockFaceShape.UNDEFINED;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return {@link Block.EnumOffsetType#XZ}.
-     */
-    @Override
-    public Block.EnumOffsetType getOffsetType() {
-        return Block.EnumOffsetType.XZ;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return {@code false}.
-     */
-    @Override
-    public boolean isSolid(IBlockState state) {
+    public boolean isSolid(BlockState state) {
         return false;
     }
 
@@ -134,13 +133,13 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * {@inheritDoc}.
      *
      * This does not affect the collision box of the plant as it's
-     * set by {@link #getCollisionShape(IBlockState, IBlockReader, BlockPos)}.
+     * set by {@link #getCollisionShape(BlockState, IBlockReader, BlockPos, ISelectionContext)}
      *
      * @return the bounding box/hit box of this plant. {@link #SEED_POD_SHAPE}
      * with the offset.
      */
     @Override
-    public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         Vec3d vec3d = state.getOffset(worldIn, pos);
         return SEED_POD_SHAPE.withOffset(vec3d.x, vec3d.y, vec3d.z);
     }
@@ -151,7 +150,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return {@code 0}.
      */
     @Override
-    public int getOpacity(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+    public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return 0;
     }
 
@@ -161,7 +160,8 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return {@link VoxelShapes#empty()}.
      */
     @Override
-    public VoxelShape getCollisionShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
+                                        ISelectionContext context) {
         return VoxelShapes.empty();
     }
 
@@ -176,8 +176,8 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * state in the world at the given position.
      */
     @Override
-    public IBlockState getPlant(IBlockReader world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
+    public BlockState getPlant(IBlockReader world, BlockPos pos) {
+        BlockState state = world.getBlockState(pos);
 
         if (state.getBlock() != this)
             return getDefaultState();
@@ -212,7 +212,7 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * @return {@code true} if the given block is valid ground
      * (this plant can be placed on it).
      */
-    private boolean isValidGround(IBlockState state) {
+    private boolean isValidGround(BlockState state) {
         Block block = state.getBlock();
         return  block == Blocks.GRASS_BLOCK
                 || block == Blocks.DIRT
@@ -224,15 +224,15 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      * {@inheritDoc}
      *
      * @return {@code true} if the block underneath this block is valid ground
-     * ({@link #isValidGround(IBlockState)}).
+     * ({@link #isValidGround(BlockState)}).
      */
     @Override
-    public boolean isValidPosition(IBlockState state, IWorldReaderBase worldIn, BlockPos pos) {
+    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
         BlockPos blockpos = pos.down();
         //Forge: This function is called during world gen and placement,
         //before this block is set, so if we are not 'here' then assume it's the pre-check.
         if (state.getBlock() == this)
-            return worldIn.getBlockState(blockpos).canSustainPlant(worldIn, blockpos, EnumFacing.UP, this);
+            return worldIn.getBlockState(blockpos).canSustainPlant(worldIn, blockpos, Direction.UP, this);
 
         return this.isValidGround(worldIn.getBlockState(blockpos));
     }
@@ -240,14 +240,14 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
     /**
      * {@inheritDoc}
      *
-     * Checks if this plant block is still on {@link #isValidGround(IBlockState)}
+     * Checks if this plant block is still on {@link #isValidGround(BlockState)}
      * after a neighbour block changes.
      *
      * @return the updated state of this block. Can be air if the plant
      * is no longer on valid ground.
      */
     @Override
-    public IBlockState updatePostPlacement(IBlockState stateIn, EnumFacing facing, IBlockState facingState,
+    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState,
                                            IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
         return !stateIn.isValidPosition(worldIn, currentPos)
                 ? Blocks.AIR.getDefaultState()
@@ -270,13 +270,13 @@ public class BlockSeedPod extends ResynthBlock implements IPlantable {
      */
     @Override
     @Nonnull
-    public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune) {
+    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
         if (!CONFIG.areDropsEnabled()) {
-            return this;
+            return new ItemStack(this);
         }
 
         PlantSet[] plantSets = PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL);
         PlantSet randomSet = plantSets[MathUtil.getRandomIntegerInRange(0, plantSets.length - 1)];
-        return randomSet.getSeedsItem();
+        return new ItemStack(randomSet.getSeedsItem());
     }
 }

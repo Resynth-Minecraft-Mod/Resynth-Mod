@@ -21,8 +21,8 @@ import com.ki11erwolf.resynth.plant.item.ItemShard;
 import com.ki11erwolf.resynth.util.ItemOrBlock;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -136,7 +136,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
 
                 //Spawn
                 if(MathUtil.chance(spawnChance)){
-                    world.spawnEntity(new EntityItem(
+                    world.addEntity(new ItemEntity(
                             world.getWorld(), x, y, z, new ItemStack(crystallineSet.seedsItem, 1)
                     ));
                     event.setCanceled(true);
@@ -180,8 +180,8 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
                 //Spawn
                 for(int j = 0; j < count; j++){
                     if(MathUtil.chance(spawnChance)){
-                        event.getEntityItem().world.spawnEntity(
-                                new EntityItem(
+                        event.getEntityItem().world.addEntity(
+                                new ItemEntity(
                                         event.getEntityItem().world,
                                         event.getEntityItem().posX,
                                         event.getEntityItem().posY,

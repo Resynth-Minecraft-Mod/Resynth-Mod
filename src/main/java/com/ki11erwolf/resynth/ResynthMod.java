@@ -56,12 +56,12 @@ public class ResynthMod {
     /**
      * Resynth version.
      */
-    public static final String MOD_VERSION = "2.0.0";
+    public static final String MOD_VERSION = "3.0.0";
 
     /**
      * Minecraft version.
      */
-    public static final String MC_VERSION = "[1.13.2]";
+    public static final String MC_VERSION = "[1.14.4]";
 
     /**
      * Resynth's new/returning user identification file.

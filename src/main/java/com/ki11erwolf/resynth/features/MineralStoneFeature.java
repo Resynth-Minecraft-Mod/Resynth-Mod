@@ -21,16 +21,17 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralStoneGenConfig;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.MinableConfig;
-import net.minecraft.world.gen.feature.MinableFeature;
+import net.minecraft.world.gen.feature.OreFeature;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
+import net.minecraft.world.gen.placement.Placement;
 
 /**
  * Mineral Infused Stone ore generation feature. Handles
  * generating {@link BlockMineralStone} in the world
  * as ore veins.
  */
-class MineralStoneFeature extends MinableFeature {
+class MineralStoneFeature extends OreFeature {
 
     /**
      * Configuration settings for Mineral Stone ore generation.
@@ -43,6 +44,8 @@ class MineralStoneFeature extends MinableFeature {
      * to every biome provided the config allows it.
      */
     MineralStoneFeature(){
+        super(OreFeatureConfig::deserialize);
+
         if(!CONFIG.shouldGenerate())
             return;
 
@@ -57,14 +60,14 @@ class MineralStoneFeature extends MinableFeature {
     private void add(Biome biome){
         biome.addFeature(
                 GenerationStage.Decoration.UNDERGROUND_ORES,
-                Biome.createCompositeFeature(
+                Biome.createDecoratedFeature(
                         this,
-                        new MinableConfig(
-                                MinableConfig.IS_ROCK,
+                        new OreFeatureConfig(
+                                OreFeatureConfig.FillerBlockType.NATURAL_STONE,
                                 ResynthBlocks.BLOCK_MINERAL_STONE.getDefaultState(),
                                 CONFIG.getSize()
                         ),
-                        Biome.COUNT_RANGE,
+                        Placement.COUNT_RANGE,
                         getRangeCount()
                 )
         );

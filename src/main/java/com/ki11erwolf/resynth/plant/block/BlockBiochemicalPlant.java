@@ -18,15 +18,15 @@ package com.ki11erwolf.resynth.plant.block;
 import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -116,8 +116,8 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      */
     @Override
     @SuppressWarnings("deprecation")
-    public boolean onBlockActivated(IBlockState state, World world, BlockPos pos, EntityPlayer player,
-                                    EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
+                                    BlockRayTraceResult hit){
         int growth = world.getBlockState(pos).get(getGrowthProperty());
         int postHarvestGrowth = growth - 4;
 
@@ -145,7 +145,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * plant is harvested.
      */
     @OnlyIn(Dist.CLIENT)
-    private static void playPopSound(World world, EntityPlayer player){
+    private static void playPopSound(World world, PlayerEntity player){
         world.playSound(null, player.posX, player.posY, player.posZ,
                 SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS,
                 0.5F, 0.4F / (new Random().nextFloat() * 0.4F + 0.8F)
@@ -163,7 +163,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * the plant growth property by the given amount.
      */
     @Override
-    void growPlant(World world, IBlockState state, BlockPos pos, int increase) {
+    void growPlant(World world, BlockState state, BlockPos pos, int increase) {
         int growth = increase + getGrowthStage(state);
 
         if(growth > getMaxGrowthStage())

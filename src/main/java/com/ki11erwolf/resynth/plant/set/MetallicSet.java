@@ -21,8 +21,8 @@ import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.util.ItemOrBlock;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -116,7 +116,7 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
 
             //For each block
             for(BlockPos pos : detonateEvent.getAffectedBlocks()){
-                IBlockState block = world.getBlockState(pos);
+                BlockState block = world.getBlockState(pos);
 
                 //For each set
                 for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.METALLIC)) {
@@ -130,7 +130,7 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
 
                     //Spawn item.
                     if(MathUtil.chance(chance)){
-                        world.spawnEntity(new EntityItem(
+                        world.addEntity(new ItemEntity(
                                 world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(set.seedsItem)
                         ));
                     }

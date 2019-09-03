@@ -23,10 +23,10 @@ package com.ki11erwolf.resynth.features;
 @SuppressWarnings("unused")
 public class ResynthFeatures {
 
-    /**
-     * Reference to the {@link SeedPodFeature}.
-     */
-    private static final SeedPodFeature SEED_POD_FEATURE = new SeedPodFeature();
+//    /**
+//     * Reference to the {@link SeedPodFeature}.
+//     */
+//    private static final SeedPodFeature SEED_POD_FEATURE = new SeedPodFeature();
 
     /**
      * Reference to the {@link MineralStoneFeature}.

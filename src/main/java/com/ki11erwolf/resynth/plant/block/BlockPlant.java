@@ -22,26 +22,23 @@ import com.ki11erwolf.resynth.item.ItemMineralHoe.InfoProvider;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.util.MathUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.SoundType;
+import com.ki11erwolf.resynth.util.MinecraftUtil;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Particles;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReaderBase;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -86,7 +83,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         super(
                 Properties.create(Material.PLANTS)
                 .sound(SoundType.PLANT)
-                .needsRandomTick()
+                .tickRandomly()
                 .hardnessAndResistance(0.0F),
 
                 plantTypeName + "_" + PLANT_PREFIX + "_" + plantName
@@ -107,7 +104,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @return {@code true} if the given ground
      * is {@link ResynthBlocks#BLOCK_MINERAL_SOIL}.
      */
-    private boolean isValidGround(IBlockState state) {
+    private boolean isValidGround(BlockState state) {
         return state.getBlock() == ResynthBlocks.BLOCK_MINERAL_SOIL;
     }
 
@@ -123,8 +120,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public boolean isValidPosition(IBlockState state, IWorldReaderBase worldIn, BlockPos pos) {
-        return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.canSeeSky(pos))
+    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.canBlockSeeSky(pos))
                 && this.isValidGround(worldIn.getBlockState(pos.down()));
     }
 
@@ -136,7 +133,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public IBlockState updatePostPlacement(IBlockState stateIn, EnumFacing facing, IBlockState facingState,
+    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState,
                                            IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
         return !stateIn.isValidPosition(worldIn, currentPos) ?
                 Blocks.AIR.getDefaultState() :
@@ -147,14 +144,14 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     // Look and Feel
     // *************
 
-    /**
-     * @return {@code false}.
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public boolean isFullCube(IBlockState state) {
-        return false;
-    }
+//    /**
+//     * @return {@code false}.
+//     */
+//    @Override
+//    @SuppressWarnings("deprecation")
+//    public boolean isFullCube(BlockState state) {
+//        return false;
+//    }
 
     /**
      * @return {@link BlockRenderLayer#CUTOUT}.
@@ -164,21 +161,21 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         return BlockRenderLayer.CUTOUT;
     }
 
-    /**
-     * @return {@link BlockFaceShape#UNDEFINED}.
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public BlockFaceShape getBlockFaceShape(IBlockReader worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-        return BlockFaceShape.UNDEFINED;
-    }
+//    /**
+//     * @return {@link BlockFaceShape#UNDEFINED}.
+//     */
+//    @Override
+//    @SuppressWarnings("deprecation")
+//    public BlockFaceShape getBlockFaceShape(IBlockReader worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+//        return BlockFaceShape.UNDEFINED;
+//    }
 
     /**
      * @return {@code 0}.
      */
     @Override
     @SuppressWarnings("deprecation")
-    public int getOpacity(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+    public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return 0;
     }
 
@@ -189,7 +186,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public VoxelShape getCollisionShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
+                                        ISelectionContext context) {
         return VoxelShapes.empty();
     }
 
@@ -201,7 +199,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return getShapeByAge()[state.get(this.getGrowthProperty())];
     }
 
@@ -213,7 +211,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * Handles spawning particles randomly around the plant.
      */
     @Override
-    public void animateTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if(MathUtil.chance(5))
             spawnParticles(worldIn, pos);
     }
@@ -230,20 +228,20 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         double d = random.nextGaussian() * 0.02D;
         int amount = 1;
 
-        IBlockState iblockstate = worldIn.getBlockState(pos);
+        BlockState iblockstate = worldIn.getBlockState(pos);
 
         if (iblockstate.getMaterial() != Material.AIR) {
             for (int i = 0; i < amount; ++i){
-                worldIn.spawnParticle(Particles.END_ROD,
+                worldIn.addParticle(ParticleTypes.END_ROD,
                         (float)pos.getX() + random.nextFloat(),
                         (double)pos.getY() + (double)random.nextFloat()
-                                * iblockstate.getShape(worldIn, pos).getEnd(EnumFacing.Axis.Y),
+                                * iblockstate.getShape(worldIn, pos).getEnd(Direction.Axis.Y),
                         (float)pos.getZ() + random.nextFloat(), d, d, d);
             }
         }
         else {
             for (int i1 = 0; i1 < amount; ++i1) {
-                worldIn.spawnParticle(Particles.END_ROD,
+                worldIn.addParticle(ParticleTypes.END_ROD,
                         (float)pos.getX() + random.nextFloat(),
                         (double)pos.getY() + (double)random.nextFloat() * 1.0f,
                         (float)pos.getZ() + random.nextFloat(), d, d, d);
@@ -263,7 +261,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @return {@code true} if the given plant
      * is fully grown.
      */
-    private boolean isFullyGrown(IBlockState state){
+    private boolean isFullyGrown(BlockState state){
         return getGrowthStage(state) >= getMaxGrowthStage();
     }
 
@@ -314,7 +312,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @return the integer growth stage
      * of the given plant block.
      */
-    int getGrowthStage(IBlockState state){
+    int getGrowthStage(BlockState state){
         return state.get(getGrowthProperty());
     }
 
@@ -328,7 +326,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public void tick(IBlockState state, World worldIn, BlockPos pos, Random random) {
+    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
         super.tick(state, worldIn, pos, random);
 
         if (!worldIn.isAreaLoaded(pos, 1))
@@ -350,12 +348,10 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * Handles dropping the plants seeds and produce when it is broken.
      */
     @Override
-    public void getDrops(IBlockState state, net.minecraft.util.NonNullList<ItemStack> drops,
-                         World world, BlockPos pos, int fortune) {
-        drops.add(new ItemStack(getSeedsItem(), 1));
-
+    @SuppressWarnings("deprecation")
+    public void spawnAdditionalDrops(BlockState state, World worldIn, BlockPos pos, ItemStack stack) {
         if(getGrowthStage(state) == getMaxGrowthStage() && dropsProduceWhenGrown() && getProduce() != null)
-            drops.add(getProduce());
+            MinecraftUtil.spawnItemStackInWorld(getProduce(), worldIn, pos);
     }
 
     /**
@@ -367,7 +363,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, IBlockState state) {
+    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
         return new ItemStack(getSeedsItem());
     }
 
@@ -380,7 +376,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * of the plant.
      */
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, IBlockState> builder) {
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(getGrowthProperty());
     }
 
@@ -393,8 +389,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * or the default state of this plant type.
      */
     @Override
-    public IBlockState getPlant(IBlockReader world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
+    public BlockState getPlant(IBlockReader world, BlockPos pos) {
+        BlockState state = world.getBlockState(pos);
         if (state.getBlock() != this) return getDefaultState();
         return state;
     }
@@ -411,7 +407,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * plant is not fully grown.
      */
     @Override
-    public boolean canGrow(IBlockReader worldIn, BlockPos pos, IBlockState state, boolean isClient) {
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return properties.canBonemeal() && !isFullyGrown(state);
     }
 
@@ -423,7 +419,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * for the plant type.
      */
     @Override
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
         return properties.canBonemeal();
     }
 
@@ -432,7 +428,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * Grows the plant.
      */
     @Override
-    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+    public void grow(World worldIn, Random rand, BlockPos pos, BlockState state) {
         callGrowPlant(worldIn, state, pos, getBonemealIncrease());
     }
 
@@ -513,14 +509,14 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @param increase the amount of growth stages to grow
      *                 the plant by.
      */
-    abstract void growPlant(World world, IBlockState state, BlockPos pos, int increase);
+    abstract void growPlant(World world, BlockState state, BlockPos pos, int increase);
 
     /**
-     * Used to call {@link #growPlant(World, IBlockState, BlockPos, int)}
+     * Used to call {@link #growPlant(World, BlockState, BlockPos, int)}
      * while notifying forge hooks of a plant growth. Also ensures the plant
      * is not already fully grown.
      */
-    private void callGrowPlant(World world, IBlockState state, BlockPos pos, int increase){
+    private void callGrowPlant(World world, BlockState state, BlockPos pos, int increase){
         //Don't grow if fully grown.
         if(
                 ((BlockPlant)world.getBlockState(pos).getBlock()).getGrowthStage(world.getBlockState(pos))

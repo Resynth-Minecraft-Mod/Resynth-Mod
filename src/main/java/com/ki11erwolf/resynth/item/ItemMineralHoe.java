@@ -20,21 +20,20 @@ import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralHoeConfig;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Particles;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -90,11 +89,11 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      */
     private void ensureNBT(ItemStack stack){
         //NBT Initialization
-        NBTTagCompound nbt = stack.getTag();
+        CompoundNBT nbt = stack.getTag();
 
         if(nbt == null){
-            nbt = new NBTTagCompound();
-            nbt.setInt(NBT_TAG_CHARGES, (Math.min(CONFIG.getInitialCharges(), 2)));
+            nbt = new CompoundNBT();
+            nbt.putInt(NBT_TAG_CHARGES, (Math.min(CONFIG.getInitialCharges(), 2)));
             stack.setTag(nbt);
         }
     }
@@ -127,11 +126,11 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      *
      * Handles charging the Mineral Hoe with Mineral Crystals.
      *
-     * @return {@link EnumActionResult#SUCCESS} if the Mineral Hoe
+     * @return {@link ActionResultType#SUCCESS} if the Mineral Hoe
      * was charged.
      */
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         ensureNBT(stack);
         //noinspection ConstantConditions //Already taken care of.
@@ -139,20 +138,20 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
         //At capacity
         if(charges >= CONFIG.getMaxCharges()){
-            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+            return ActionResult.newResult(ActionResultType.FAIL, stack);
         }
 
         //Can charge
         if(player.isCreative() || takeCharge(player)){
-            stack.getTag().setInt(NBT_TAG_CHARGES, charges + 1);
+            stack.getTag().putInt(NBT_TAG_CHARGES, charges + 1);
             world.playSound(
                     player, player.getPosition(), SoundEvents.BLOCK_NOTE_BLOCK_CHIME,
                     SoundCategory.BLOCKS, 1.0F, 1.0F
             );
-            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+            return ActionResult.newResult(ActionResultType.SUCCESS, stack);
         }
 
-        return ActionResult.newResult(EnumActionResult.FAIL, stack);
+        return ActionResult.newResult(ActionResultType.FAIL, stack);
     }
 
     /**
@@ -163,8 +162,8 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * @return {@code true} if a charge was taken from the players
      * inventory.
      */
-    private boolean takeCharge(EntityPlayer player){
-        for(ItemStack itemStack : player.inventoryContainer.getInventory()){
+    private boolean takeCharge(PlayerEntity player){
+        for(ItemStack itemStack : player.container.getInventory()){
             if(itemStack.getItem() == ResynthItems.ITEM_MINERAL_CRYSTAL){
                 itemStack.shrink(1);
                 return true;
@@ -185,21 +184,21 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * This can be many things, from charging the hoe,
      * tilling soil, getting block info or growing a plant.
      *
-     * @return {@link EnumActionResult#SUCCESS} if the block
+     * @return {@link ActionResultType#SUCCESS} if the block
      * the player is looking at was tilted or the hoe was charged.
      */
     @Nonnull
     @Override
-    public EnumActionResult onItemUse(ItemUseContext context) {
+    public ActionResultType onItemUse(ItemUseContext context) {
         //Pre Checks
         if(!CONFIG.isEnabled()){
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         }
 
         ensureNBT(context.getItem());
         if(context.getPlayer() == null){
             LOG.warn("Invalid player using the Mineral Hoe...");
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         }
 
         //Begin
@@ -208,18 +207,18 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         //Grow plant
         if(context.getPlayer().isCreative() && context.getPlayer().isSneaking()){
             if(tryGrowPlant(block, context))
-                return EnumActionResult.SUCCESS;
+                return ActionResultType.SUCCESS;
         }
 
         //Info Provider
         if(block instanceof InfoProvider){
             getInfo(block, context);
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
         //Charge
         if(context.getPlayer().isSneaking()){
-            return onItemRightClick(context.getWorld(), context.getPlayer(), EnumHand.MAIN_HAND).getType();
+            return onItemRightClick(context.getWorld(), context.getPlayer(), Hand.MAIN_HAND).getType();
         }
 
         //Tilling
@@ -229,7 +228,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
         //Not creative
         if(context.getItem().getTag() == null)
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
 
         int charges = context.getItem().getTag().getInt(NBT_TAG_CHARGES);
         if(charges < 1){
@@ -239,21 +238,21 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                         SoundCategory.BLOCKS, 1.0F, 1.0F
                 );
 
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         }
 
         //Remove a charge.
-        EnumActionResult result = replace(context);
-        if(result == EnumActionResult.SUCCESS)
-            context.getItem().getTag().setInt(NBT_TAG_CHARGES, charges - 1);
+        ActionResultType result = replace(context);
+        if(result == ActionResultType.SUCCESS)
+            context.getItem().getTag().putInt(NBT_TAG_CHARGES, charges - 1);
 
         return result;
     }
 
     /**
      * Attempts to grow a plant similar to bonemeal,
-     * however it ignores {@link IGrowable#canGrow(IBlockReader, BlockPos, IBlockState, boolean)}
-     * and {@link IGrowable#canUseBonemeal(World, Random, BlockPos, IBlockState)}.
+     * however it ignores {@link IGrowable#canGrow(IBlockReader, BlockPos, BlockState, boolean)}
+     * and {@link IGrowable#canUseBonemeal(World, Random, BlockPos, BlockState)}.
      *
      * @return {@code true} if the plant could be grown.
      */
@@ -280,7 +279,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         if(!context.getWorld().isRemote)
             if(context.getPlayer() != null)
             context.getPlayer().sendMessage(
-                    new TextComponentString(((InfoProvider)block).getInfo(context.getWorld(), context.getPos()))
+                    new StringTextComponent(((InfoProvider)block).getInfo(context.getWorld(), context.getPos()))
             );
     }
 
@@ -290,16 +289,16 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      *
      * @param context the ItemUseContext instance given by
      *                {@link #onItemUse(ItemUseContext)}.
-     * @return {@link EnumActionResult#SUCCESS} if the block
+     * @return {@link ActionResultType#SUCCESS} if the block
      * was replaced.
      */
-    private EnumActionResult replace(ItemUseContext context){
+    private ActionResultType replace(ItemUseContext context){
         World world = context.getWorld();
         BlockPos pos = context.getPos();
-        IBlockState source = world.getBlockState(pos);
+        BlockState source = world.getBlockState(pos);
 
         if(source.getBlock() == Blocks.DIRT || source.getBlock() == Blocks.GRASS_BLOCK){
-            if (context.getFace() != EnumFacing.DOWN && world.isAirBlock(pos.up())) {
+            if (context.getFace() != Direction.DOWN && world.isAirBlock(pos.up())) {
                 //Replacement
                 world.setBlockState(pos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
 
@@ -311,11 +310,11 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                         SoundCategory.BLOCKS, 1.0F, 1.0F
                 );
 
-                return EnumActionResult.SUCCESS;
+                return ActionResultType.SUCCESS;
             }
         }
 
-        return EnumActionResult.FAIL;
+        return ActionResultType.FAIL;
     }
 
     /**
@@ -329,20 +328,20 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         double d = random.nextGaussian() * 0.02D;
         int amount = 5;
 
-        IBlockState iblockstate = worldIn.getBlockState(pos);
+        BlockState blockstate = worldIn.getBlockState(pos);
 
-        if (iblockstate.getMaterial() != Material.AIR) {
+        if (blockstate.getMaterial() != Material.AIR) {
             for (int i = 0; i < amount; ++i){
-                worldIn.spawnParticle(Particles.FLAME,
+                worldIn.addParticle(ParticleTypes.FLAME,
                         (float)pos.getX() + random.nextFloat(),
                         (double)pos.getY() + (double)random.nextFloat()
-                                * iblockstate.getShape(worldIn, pos).getEnd(EnumFacing.Axis.Y),
+                                * blockstate.getShape(worldIn, pos).getEnd(Direction.Axis.Y),
                         (float)pos.getZ() + random.nextFloat(), d, d, d);
             }
         }
         else {
             for (int i1 = 0; i1 < amount; ++i1) {
-                worldIn.spawnParticle(Particles.FLAME,
+                worldIn.addParticle(ParticleTypes.FLAME,
                         (float)pos.getX() + random.nextFloat(),
                         (double)pos.getY() + (double)random.nextFloat() * 1.0f,
                         (float)pos.getZ() + random.nextFloat(), d, d, d);

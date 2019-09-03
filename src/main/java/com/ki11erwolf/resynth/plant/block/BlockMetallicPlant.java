@@ -18,13 +18,13 @@ package com.ki11erwolf.resynth.plant.block;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
@@ -47,7 +47,7 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * The direction the plant is facing when its grown
      * produce.
      */
-    private static final DirectionProperty FACING = BlockHorizontal.HORIZONTAL_FACING;
+    private static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
     /**
      * @param plantTypeName the name of the plant set type (e.g. crystalline).
@@ -116,7 +116,7 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * Registers the {@link #FACING} property.
      */
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, IBlockState> builder) {
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(FACING);
     }
@@ -129,8 +129,9 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      */
     @Deprecated
     @SuppressWarnings("deprecation")
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-        super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos,
+                                boolean isMoving) {
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
         if(blockIn == Block.getBlockFromItem(getProduce().getItem())){
             if(worldIn.getBlockState(pos).get(getGrowthProperty()) == this.getMaxGrowthStage())
                 //Reset the plant if the player breaks its produce.
@@ -151,17 +152,17 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * its produce when it's already fully grown.
      */
     @Override
-    void growPlant(World world, IBlockState state, BlockPos pos, int increase) {
+    void growPlant(World world, BlockState state, BlockPos pos, int increase) {
         int growth = increase + getGrowthStage(state);
 
         if(growth >= getMaxGrowthStage()){
             //Produce
             growth = getMaxGrowthStage();
-            EnumFacing facing = placeProduce(world, pos);
+            Direction facing = placeProduce(world, pos);
             if(facing != null)
                 world.setBlockState(pos, this.getDefaultState()
                         .with(this.getGrowthProperty(), growth)
-                        .with(BlockHorizontal.HORIZONTAL_FACING, facing), 2);
+                        .with(HorizontalBlock.HORIZONTAL_FACING, facing), 2);
         } else {
             //Grow
             world.setBlockState(pos, this.getDefaultState().with(this.getGrowthProperty(), growth), 2);
@@ -176,15 +177,15 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * if the produce could not be placed.
      */
     @Nullable
-    private EnumFacing placeProduce(World world, BlockPos pos){
+    private Direction placeProduce(World world, BlockPos pos){
         //Random direction.
         int random = MathUtil.getRandomIntegerInRange(0, 4);
 
         for(int i = 0; i < 4; i++){
             //For each side
             BlockPos pos1 = null;
-            IBlockState block = null;
-            EnumFacing facing = null;
+            BlockState block = null;
+            Direction facing = null;
 
             if(random > 3)
                 random = 0;
@@ -192,22 +193,22 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
             switch (random){
                 case 0:
                     pos1 = pos.north();
-                    facing = EnumFacing.NORTH;
+                    facing = Direction.NORTH;
                     block = world.getBlockState(pos1);
                     break;
                 case 1:
                     pos1 = pos.south();
-                    facing = EnumFacing.SOUTH;
+                    facing = Direction.SOUTH;
                     block = world.getBlockState(pos1);
                     break;
                 case 2:
                     pos1 = pos.east();
-                    facing = EnumFacing.EAST;
+                    facing = Direction.EAST;
                     block = world.getBlockState(pos1);
                     break;
                 case 3:
                     pos1 = pos.west();
-                    facing = EnumFacing.WEST;
+                    facing = Direction.WEST;
                     block = world.getBlockState(pos1);
                     break;
             }
@@ -216,7 +217,7 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
                 return null;
 
             //Place produce block.
-            if(block.getBlock() == Blocks.AIR && world.getBlockState(pos1.down()).isFullCube()){
+            if(block.getBlock() == Blocks.AIR && world.getBlockState(pos1.down()).isSolid()){
                 if(world.setBlockState(pos1, Block.getBlockFromItem(getProduce().getItem()).getDefaultState()))
                     return facing;
                 else return null;

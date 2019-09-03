@@ -21,7 +21,7 @@ import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.util.ItemOrBlock;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
@@ -119,12 +119,13 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
 
                 //For each mob type
                 for(EntityType entity : plantSet.getSourceMobs()){
-                    if(entity.getEntityClass() == event.getEntity().getClass()) {
+                    if(entity.getName().getUnformattedComponentText().equals(
+                            event.getEntity().getName().getUnformattedComponentText())) {
                         if (MathUtil.chance(plantSet.setProperties.seedSpawnChanceFromMob())) {
                             //Spawn seeds if lucky
                             if(!event.getEntity().getEntityWorld().isRemote)
-                                event.getEntity().getEntityWorld().spawnEntity(
-                                        new EntityItem(
+                                event.getEntity().getEntityWorld().addEntity(
+                                        new ItemEntity(
                                                 event.getEntity().getEntityWorld(),
                                                 event.getEntity().posX,
                                                 event.getEntity().posY,
@@ -154,9 +155,9 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
                 if(event.getOriginal().getItem() == plantSet.getProduceItemOrBlock().getItem()){
                     if(MathUtil.chance(plantSet.setProperties.seedSpawnChanceFromBulb())) {
                         if(!event.getEntity().getEntityWorld().isRemote)
-                            event.getEntity().getEntityWorld().spawnEntity(
+                            event.getEntity().getEntityWorld().addEntity(
                                     //Spawn seeds if lucky
-                                    new EntityItem(
+                                    new ItemEntity(
                                             event.getEntity().getEntityWorld(),
                                             event.getEntity().posX + (MathUtil.chance(50) ?
                                                     MathUtil.getRandomIntegerInRange(1, 2)

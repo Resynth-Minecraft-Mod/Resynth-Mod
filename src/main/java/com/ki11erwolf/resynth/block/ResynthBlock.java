@@ -20,13 +20,18 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.item.ResynthItemBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,7 +82,7 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
     }
 
     /**
-     * @return the {@link ItemBlock} for this block instance.
+     * @return the {@link net.minecraft.item.BlockItem} for this block instance.
      */
     public ResynthItemBlock getItemBlock(){
         return this.itemBlock;
@@ -91,8 +96,8 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
      * @return {@code this}.
      */
     @SuppressWarnings("WeakerAccess")//Lies
-    protected T queueRegistration(){
-        if(isQueued)
+    protected T queueRegistration() {
+        if (isQueued)
             throw new IllegalStateException(
                     String.format("Block: %s already queued for registration.",
                             this.getClass().getCanonicalName())
@@ -104,7 +109,7 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
         itemBlock.queueRegistration();
 
         //noinspection unchecked //Should NOT be possible.
-        return (T)this;
+        return (T) this;
     }
 
     // *******
@@ -112,7 +117,7 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
     // *******
 
     /**
-     * Turns a given string into a {@link TextComponentString}
+     * Turns a given string into a {@link StringTextComponent}
      * containing the given string.
      *
      * @param text the given string text.
@@ -120,7 +125,7 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
      */
     @SuppressWarnings("WeakerAccess")
     static ITextComponent stringToTextComponent(String text){
-        return new TextComponentString(text);
+        return new StringTextComponent(text);
     }
 
     /**

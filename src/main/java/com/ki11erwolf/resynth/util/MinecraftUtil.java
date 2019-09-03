@@ -15,7 +15,7 @@
  */
 package com.ki11erwolf.resynth.util;
 
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -46,7 +46,7 @@ public class MinecraftUtil {
      * @return {@code true} if the ItemStack was spawned.
      */
     public static boolean spawnItemStackInWorld(ItemStack stack, World world, BlockPos pos){
-        return world.spawnEntity(new EntityItem(
+        return world.addEntity(new ItemEntity(
                 world,
                 pos.getX(), pos.getY(), pos.getZ(),
                 stack
