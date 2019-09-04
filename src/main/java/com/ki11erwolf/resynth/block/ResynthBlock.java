@@ -123,36 +123,6 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
     }
 
     /**
-     * Allows getting a tooltip from the language file. This method
-     * ignores config settings.
-     *
-     * @param key the tooltip key.
-     * @return the text as an {@link ITextComponent} given by the
-     * language file.
-     */
-    @SuppressWarnings("WeakerAccess")
-    static ITextComponent getTooltip(String key){
-        return stringToTextComponent(TextFormatting.GRAY + I18n.format("tooltip.block." + key));
-    }
-
-    /**
-     * Allows getting a blocks tooltip from the language file. This method
-     * ignores config settings.
-     *
-     * @param block the block who's tooltip we want.
-     * @return the text as an {@link ITextComponent} given by the
-     * language file.
-     */
-    @SuppressWarnings("unused")
-    static ITextComponent getTooltip(ResynthBlock block){
-        if(block.getRegistryName() == null){
-            return stringToTextComponent(TextFormatting.RED + "Error");
-        }
-
-        return getTooltip(block.getRegistryName().toString().replace(":", "."));
-    }
-
-    /**
      * Will add a blocks tooltip (from lang file) to the given
      * tooltip array, provided the config allows it.
      *

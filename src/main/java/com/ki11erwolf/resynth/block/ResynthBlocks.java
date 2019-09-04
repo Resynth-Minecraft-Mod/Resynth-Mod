@@ -37,11 +37,6 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
      */
     static final ResynthBlocks INSTANCE = new ResynthBlocks();
 
-    /**
-     * Private (non-instantiatable) constructor.
-     */
-    private ResynthBlocks(){}
-
     // ***************
     // Block Instances
     // ***************
@@ -64,6 +59,11 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
     // *****
     // Logic
     // *****
+
+    /**
+     * Private (non-instantiatable) constructor.
+     */
+    private ResynthBlocks(){}
 
     /**
      * Registers all the queued blocks to the game.

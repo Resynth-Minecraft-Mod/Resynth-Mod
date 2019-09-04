@@ -26,9 +26,9 @@ import net.minecraft.world.IBlockReader;
  * This class extends the functionality of the base class (ResynthBlock)
  * for tile entities.
  *
- * @param <TE> the tile entity class.
+ * @param <T> the tile entity class.
  */
-public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthBlock {
+public abstract class ResynthTileEntity <T extends TileEntity> extends ResynthBlock {
 
     /**
      * Basic constructor for all Resynth tile entities.
@@ -48,9 +48,9 @@ public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthB
      * @param pos the location in the world.
      * @return the cast tile entity.
      */
-    @SuppressWarnings({"unchecked", "unused"})
-    protected TE getTileEntity(IBlockReader world, BlockPos pos) {
-        return (TE)world.getTileEntity(pos);
+    @SuppressWarnings({"unchecked"})
+    protected T getTileEntity(IBlockReader world, BlockPos pos) {
+        return (T)world.getTileEntity(pos);
     }
 
     /**
@@ -74,7 +74,7 @@ public abstract class ResynthTileEntity <TE extends TileEntity> extends ResynthB
      * @return this blocks tile entity class.
      */
     @SuppressWarnings("unused")
-    public abstract Class<TE> getTileEntityClass();
+    public abstract Class<T> getTileEntityClass();
 
     /**
      * Constructs and returns the tile entity object instance

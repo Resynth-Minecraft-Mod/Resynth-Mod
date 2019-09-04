@@ -15,7 +15,8 @@
  */
 package com.ki11erwolf.resynth.config.categories;
 
-import com.ki11erwolf.resynth.config.*;
+import com.ki11erwolf.resynth.config.BooleanConfigValue;
+import com.ki11erwolf.resynth.config.ConfigCategory;
 
 /**
  * General configuration settings used by Resynth.
