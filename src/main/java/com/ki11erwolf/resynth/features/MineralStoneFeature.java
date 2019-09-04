@@ -80,8 +80,8 @@ class MineralStoneFeature extends OreFeature {
     private CountRangeConfig getRangeCount(){
         return new CountRangeConfig(
                 CONFIG.getCount(),
-                CONFIG.getMinHeight(),
-                CONFIG.getMaxBaseHeight(),
+                CONFIG.getBottomOffset(),
+                CONFIG.getTopOffset(),
                 CONFIG.getMaxHeight()
         );
     }

@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralStoneConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MathUtil;
+import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -67,40 +68,21 @@ public class BlockMineralStone extends ResynthBlock<BlockMineralStone>{
     }
 
     /**
-     * {@inheritDoc}
-     * Handles dropping a random amount of Mineral Rocks.
+     * Handles spawning Mineral Rocks in the world
+     * when the player mines this block.
      */
-    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return new ItemStack(
-                ResynthItems.ITEM_DENSE_MINERAL_ROCK,
-                (MathUtil.chance((float) CONFIG.getExtraDropsChance()) ? CONFIG.getExtraDrops() : 0)
+    @Override
+    @SuppressWarnings("deprecation")
+    public void spawnAdditionalDrops(BlockState state, World worldIn, BlockPos pos, ItemStack stack) {
+        MinecraftUtil.spawnItemStackInWorld(
+                new ItemStack(
+                        ResynthItems.ITEM_MINERAL_ROCK,
+                        CONFIG.getBaseDrops()
+                                + (MathUtil.chance((float) CONFIG.getExtraDropsChance()) ? CONFIG.getExtraDrops() : 0)
+                ),
+                worldIn, pos
         );
     }
-
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @return The item dropped when the block is broken:
-//     * {@link ResynthItems#ITEM_MINERAL_ROCK}.
-//     */
-//    @Nonnull
-//    @Override
-//    public Item getItemDropped(BlockState state, World worldIn, BlockPos pos, int fortune) {
-//        return ResynthItems.ITEM_MINERAL_ROCK;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @return the number of items to drop when this block is broken.
-//     * Determined by config settings.
-//     */
-//    @Override
-//    @SuppressWarnings("deprecation")
-//    public int quantityDropped(BlockState state, Random random) {
-//        return CONFIG.getBaseDrops()
-//                + (MathUtil.chance((float)CONFIG.getExtraDropsChance()) ? CONFIG.getExtraDrops() : 0);
-//    }
 
     /**
      * {@inheritDoc}

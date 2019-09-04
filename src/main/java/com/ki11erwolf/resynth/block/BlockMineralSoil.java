@@ -21,6 +21,7 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
 import com.ki11erwolf.resynth.item.ItemMineralHoe;
 import com.ki11erwolf.resynth.item.ResynthItems;
+import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -192,64 +193,45 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      */
     @Override
     public void spawnAdditionalDrops(BlockState state, World world, BlockPos pos, ItemStack stack) {
-        //Checks
-        TileEntity tileentity = world.getTileEntity(pos);
-        if (!(tileentity instanceof TileEntityMineralSoil)) {
-            super.spawnAdditionalDrops(state, world, pos, stack);
-        }
+        if(world.isRemote)
+            return;
 
-        //Mineral Crystal
-        InventoryHelper.spawnItemStack(
-                world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL)
-        );
-
-        //Mineral Rocks
-        assert tileentity != null;
-        assert tileentity instanceof TileEntityMineralSoil;
-        float content = ((TileEntityMineralSoil)tileentity).getMineralPercentage();
-
-        int rocks = (int)((content - CONFIG.getStartingMineralContent())/CONFIG.getMineralRockWorth());
-        InventoryHelper.spawnItemStack(
-                world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, rocks)
-        );
+        //Dirt and Mineral Crystal
+        MinecraftUtil.spawnItemInWorld(ResynthItems.ITEM_MINERAL_CRYSTAL, world, pos);
+        MinecraftUtil.spawnItemStackInWorld(new ItemStack(Blocks.DIRT), world, pos);
 
         super.spawnAdditionalDrops(state, world, pos, stack);
     }
 
-//    /**
-//     * {@inheritDoc}
-//     * <p/>
-//     * Handles dropping the {@link ResynthItems#ITEM_MINERAL_CRYSTAL} required to
-//     * make Mineral Soil as well the number of {@link ResynthItems#ITEM_MINERAL_ROCK}'s
-//     * put into the Mineral Soil block.
-//     */
-//    @Override
-//    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-//        if (state.getBlock() != newState.getBlock()) {
-//            //Checks
-//            TileEntity tileentity = world.getTileEntity(pos);
-//            if (!(tileentity instanceof TileEntityMineralSoil)) {
-//                super.onReplaced(state, world, pos, newState, isMoving);
-//            }
-//
-//            //Mineral Crystal
-//            InventoryHelper.spawnItemStack(
-//                    world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ResynthItems.ITEM_MINERAL_CRYSTAL)
-//            );
-//
-//            //Mineral Rocks
-//            assert tileentity != null;
-//            assert tileentity instanceof TileEntityMineralSoil;
-//            float content = ((TileEntityMineralSoil)tileentity).getMineralPercentage();
-//
-//            int rocks = (int)((content - CONFIG.getStartingMineralContent())/CONFIG.getMineralRockWorth());
-//            InventoryHelper.spawnItemStack(
-//                    world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, rocks)
-//            );
-//
-//            super.onReplaced(state, world, pos, newState, isMoving);
-//        }
-//    }
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Handles dropping the {@link ResynthItems#ITEM_MINERAL_CRYSTAL} required to
+     * make Mineral Soil as well the number of {@link ResynthItems#ITEM_MINERAL_ROCK}'s
+     * put into the Mineral Soil block.
+     */
+    @Override
+    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            //Checks
+            TileEntity tileentity = world.getTileEntity(pos);
+            if (!(tileentity instanceof TileEntityMineralSoil)) {
+                super.onReplaced(state, world, pos, newState, isMoving);
+            }
+
+            //Mineral Rocks
+            assert tileentity != null;
+            assert tileentity instanceof TileEntityMineralSoil;
+            float content = ((TileEntityMineralSoil)tileentity).getMineralPercentage();
+
+            int rocks = (int)((content - CONFIG.getStartingMineralContent())/CONFIG.getMineralRockWorth());
+            InventoryHelper.spawnItemStack(
+                    world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, rocks)
+            );
+
+            super.onReplaced(state, world, pos, newState, isMoving);
+        }
+    }
 
     // ***********
     // Tile Entity
@@ -273,6 +255,14 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         return new TileEntityMineralSoil();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasTileEntity(BlockState state){
+        return true;
+    }
+
     // *****
     // Logic
     // *****
@@ -294,6 +284,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
                                     Hand hand, BlockRayTraceResult hit){
         ItemStack usedItem = player.getHeldItem(hand);
         TileEntityMineralSoil entityMineralSoil = getTileEntity(world, pos);
+
         float mineralContent = entityMineralSoil.getMineralPercentage();
         float increase;
 

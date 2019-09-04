@@ -20,6 +20,7 @@ import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
 import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.plant.set.PublicPlantSetRegistry;
 import com.ki11erwolf.resynth.util.MathUtil;
+import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -76,28 +77,6 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
     // **************
     // Visual & Shape
     // **************
-
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @return {@code false}.
-//     */
-//    @Override
-//    public boolean isFullCube(IBlockState state) {
-//        return false;
-//    }
-
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @return {@link BlockFaceShape#UNDEFINED}.
-//     */
-//    @Override
-//    @Nonnull
-//    public BlockFaceShape getBlockFaceShape(IBlockReader worldIn, IBlockState state,
-//                                            BlockPos pos, EnumFacing face) {
-//        return BlockFaceShape.UNDEFINED;
-//    }
 
     /**
      * {@inheritDoc}
@@ -260,23 +239,34 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
 
     /**
      * {@inheritDoc}
-     * <p/>
-     * Handles what happens when the player breaks this plant.
-     * <p/>
-     * Will either drop this plant block or seeds from a random
-     * Biochemical plant set depending on config.
      *
-     * @return the item to drop.
+     * Handles what happens when the user breaks this block.
+     * Will either drop the block itself or a the seeds item
+     * of a random biochemical plant set depending on config.
      */
     @Override
-    @Nonnull
-    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
+    public void spawnAdditionalDrops(BlockState state, World world, BlockPos pos, ItemStack stack) {
         if (!CONFIG.areDropsEnabled()) {
-            return new ItemStack(this);
+            MinecraftUtil.spawnItemStackInWorld(new ItemStack(this), world, pos);
+            return;
         }
 
         PlantSet[] plantSets = PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL);
         PlantSet randomSet = plantSets[MathUtil.getRandomIntegerInRange(0, plantSets.length - 1)];
-        return new ItemStack(randomSet.getSeedsItem());
+        MinecraftUtil.spawnItemInWorld(randomSet.getSeedsItem(), world, pos);
+    }
+
+    /**
+     * {@inheritDoc}
+     * Handles what happens when the users
+     * picks this block (middle-click).
+     *
+     * @return the item to give the player
+     * when the pick the block.
+     */
+    @Override
+    @Nonnull
+    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
+        return new ItemStack(this);
     }
 }

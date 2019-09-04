@@ -47,26 +47,26 @@ public interface Proxy {
      *
      * @param event forge provided event.
      */
-    default void enqueueIMC(final InterModEnqueueEvent event){}
+    default void enqueueIMC(@SuppressWarnings("unused") final InterModEnqueueEvent event){}
 
     /**
      * InterModCommunication process event.
      *
      * @param event forge provided event.
      */
-    default void processIMC(final InterModProcessEvent event){}
+    default void processIMC(@SuppressWarnings("unused") final InterModProcessEvent event){}
 
     /**
      * Server side registration event.
      *
      * @param event forge provided event.
      */
-    default void onServerStarting(FMLServerStartingEvent event){}
+    default void onServerStarting(@SuppressWarnings("unused") FMLServerStartingEvent event){}
 
     /**
      * Called when the game is stopping.
      *
      * @param event Forge event.
      */
-    default void onServerStopped(FMLServerStoppedEvent event){}
+    default void onServerStopped(@SuppressWarnings("unused") FMLServerStoppedEvent event){}
 }

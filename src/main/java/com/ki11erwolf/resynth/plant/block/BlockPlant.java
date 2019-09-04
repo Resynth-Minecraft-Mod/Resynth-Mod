@@ -350,6 +350,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     @Override
     @SuppressWarnings("deprecation")
     public void spawnAdditionalDrops(BlockState state, World worldIn, BlockPos pos, ItemStack stack) {
+        MinecraftUtil.spawnItemInWorld(getSeedsItem(), worldIn, pos);
+
         if(getGrowthStage(state) == getMaxGrowthStage() && dropsProduceWhenGrown() && getProduce() != null)
             MinecraftUtil.spawnItemStackInWorld(getProduce(), worldIn, pos);
     }

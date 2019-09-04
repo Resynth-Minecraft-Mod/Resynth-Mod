@@ -45,7 +45,7 @@ public class MineralStoneGenConfig extends ConfigCategory {
             "The average size of Mineral Stone veins. Set this number" +
                       "\nhigher to increase the amount of Mineral Stone blocks" +
                       "\nin an ore vein.",
-            10,
+            7,
             1, 100,
             this
     );
@@ -58,7 +58,7 @@ public class MineralStoneGenConfig extends ConfigCategory {
             "vein-count",
             "The average count/frequency of Mineral Stone veins in a chunk." +
                       "\nSet this number higher to increase the number of Mineral Stone ore veins.",
-            8,
+            10,
             1, 100,
             this
     );
@@ -67,11 +67,11 @@ public class MineralStoneGenConfig extends ConfigCategory {
      * Config value that allows setting the min gen height of Mineral Stone
      * veins.
      */
-    private final IntegerConfigValue minHeight = new IntegerConfigValue(
-            "minimum-height",
+    private final IntegerConfigValue bottomOffset = new IntegerConfigValue(
+            "bottom-offset",
             "The minimum height (Y-level) that Mineral Stone blocks will generate.",
-            3,
-            1, 255,
+            0,
+            0, 255,
             this
     );
 
@@ -91,11 +91,11 @@ public class MineralStoneGenConfig extends ConfigCategory {
      * Config value that allows setting the max base height of Mineral Stone
      * veins.
      */
-    private final IntegerConfigValue maxBaseHeight = new IntegerConfigValue(
-            "maximum-base-height",
-            "The maximum height (Y-level) that Mineral Stone ore veins will generate",
-            7,
-            1, 255,
+    private final IntegerConfigValue topOffset = new IntegerConfigValue(
+            "top-offset",
+            "The amount of blocks Mineral Stone generation will be offset by on the Y-Axis.",
+            0,
+            0, 255,
             this
     );
 
@@ -135,8 +135,8 @@ public class MineralStoneGenConfig extends ConfigCategory {
      * @return the min height of Mineral Stone veins
      * as specified by the config.
      */
-    public int getMinHeight(){
-        return this.minHeight.getValue();
+    public int getBottomOffset(){
+        return this.bottomOffset.getValue();
     }
 
     /**
@@ -151,7 +151,7 @@ public class MineralStoneGenConfig extends ConfigCategory {
      * @return the max base height of Mineral Stone veins
      * as specified by the config.
      */
-    public int getMaxBaseHeight(){
-        return this.maxBaseHeight.getValue();
+    public int getTopOffset(){
+        return this.topOffset.getValue();
     }
 }
