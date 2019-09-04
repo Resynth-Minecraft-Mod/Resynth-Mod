@@ -120,6 +120,9 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
 
                 //For each set
                 for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.METALLIC)) {
+                    if(set.isFailure() || ((MetallicSet)set).getSourceOre() == null)
+                        continue;
+
                     //Chance of spawning item.
                     float chance = 0.0F;
                     if(block.getBlock() == Block.getBlockFromItem(((MetallicSet) set).getSourceOre().getItem())){

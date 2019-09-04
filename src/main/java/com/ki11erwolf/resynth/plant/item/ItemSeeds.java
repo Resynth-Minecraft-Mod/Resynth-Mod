@@ -31,6 +31,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -76,6 +77,12 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
     private final PlantSetProperties setProperties;
 
     /**
+     * {@code true} if the plant set this seeds
+     * item belongs to was flagged as a failure.
+     */
+    private boolean isFailure = false;
+
+    /**
      * @param setType the name of the plant set type (e.g. crystalline).
      * @param setName the name of the plant set (e.g. diamond).
      * @param plant the specific plant type (plant block instance) to place.
@@ -98,6 +105,9 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      */
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
+        if(isFailure)
+            return ActionResultType.FAIL;
+
         IWorld world = context.getWorld();
         BlockPos blockpos = context.getPos().up();
 
@@ -127,6 +137,9 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
                                ITooltipFlag flagIn){
         PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltip, setProperties);
         setDescriptiveTooltip(tooltip, setTypeName + "_" + PREFIX, setName);
+
+        if(isFailure)
+            tooltip.add(getFormattedTooltip(PREFIX + ".failure", TextFormatting.RED));
     }
 
     /**
@@ -137,5 +150,16 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
     @Override
     public BlockState getPlant(IBlockReader world, BlockPos pos) {
         return plant;
+    }
+
+    /**
+     * Flags this seeds item instance as a failure.
+     * When declared as a failure, the seeds will
+     * no longer be able to plant a block and will
+     * will display the plant set failure message
+     * in the tooltip.
+     */
+    public void flagAsFailure(){
+        isFailure = true;
     }
 }

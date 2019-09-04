@@ -15,19 +15,33 @@
  */
 package com.ki11erwolf.resynth.plant.set;
 
+import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.BiochemicalPlantSetConfig;
 import com.ki11erwolf.resynth.config.categories.CrystallinePlantSetConfig;
 import com.ki11erwolf.resynth.config.categories.MetallicPlantSetConfig;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Used to create and obtain references to
  * the various Resynth plant sets.
  */
 public class PlantSetFactory {
+
+    /**
+     * The logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
 
     /**Private constructor.*/
     private PlantSetFactory(){}
@@ -53,6 +67,67 @@ public class PlantSetFactory {
             ItemStack getSourceOre() {
                 if(sourceOreStack == null)
                     sourceOreStack = new ItemStack(sourceOre);
+
+                return sourceOreStack;
+            }
+        };
+    }
+
+    /**
+     * Handles creating a Crystalline plant set for an ore
+     * block that isn't from Vanilla Minecraft - that is,
+     * a block that we don't have a reference to.
+     * <p/>
+     * This method of registration allows us to check for
+     * the presence of the mod before creating the plant
+     * set and allows us to provide a block name instead
+     * of a block reference.
+     *
+     * @param modid the modid of the mod the ore block is from.
+     * @param setName the name of the plant set (actual name will
+     *                have mod-id prepended).
+     * @param properties the plant set properties.
+     * @param sourceOreRegistryName the registry name of the source
+     *                           ore block.
+     * @return the newly created plant set.
+     */
+    public static PlantSet newModdedCrystallineSet(String modid, String setName, CrystallineSetProperties properties,
+                                                   String sourceOreRegistryName){
+        ResourceLocation sourceOreRL = new ResourceLocation(modid, sourceOreRegistryName);
+        LOG.info("Attempting to create modded crystalline plant set: " + modid + ":" + setName);
+
+        //Is mod loaded
+        if(ModList.get().isLoaded(modid)){
+            LOG.info("Mod: " + modid + " is present! Continuing...");
+        } else {
+            LOG.info("Mod: " + modid + " is not present! Skipping plant set: " + setName);
+            return null;
+        }
+
+        //Config
+        CrystallinePlantSetConfig config = ResynthConfig.MODDED_PLANTS_CONFIG.loadCategory(
+                new CrystallinePlantSetConfig(modid + "-" + setName, properties)
+        );
+
+        //Plant set
+        return new CrystallineSet(modid + "_" + setName, config) {
+            private ItemStack sourceOreStack = null;
+
+            @Override
+            ItemStack getSourceOre() {
+                if(sourceOreStack != null)
+                    return sourceOreStack;
+
+                Block sourceOre = ForgeRegistries.BLOCKS.getValue(sourceOreRL);
+
+                //Failed to get modded block...
+                if(!ForgeRegistries.BLOCKS.containsKey(sourceOreRL) || sourceOre == null  || sourceOre == Blocks.AIR){
+                    LOG.error("Failed to get source ore: " + sourceOreRL.toString());
+                    this.flagAsFailure();
+                } else {
+                    LOG.info("Found source ore: " + sourceOre.getNameTextComponent().getUnformattedComponentText());
+                    sourceOreStack = new ItemStack(sourceOre);
+                }
 
                 return sourceOreStack;
             }
@@ -87,6 +162,67 @@ public class PlantSetFactory {
     }
 
     /**
+     * Handles creating a Metallic plant set for an ore
+     * block that isn't from Vanilla Minecraft - that is,
+     * a block that we don't have a reference to.
+     * <p/>
+     * This method of registration allows us to check for
+     * the presence of the mod before creating the plant
+     * set and allows us to provide a block name instead
+     * of a block reference.
+     *
+     * @param modid the modid of the mod the ore block is from.
+     * @param setName the name of the plant set (actual name will
+     *                have mod-id prepended).
+     * @param properties the plant set properties.
+     * @param sourceOreRegistryName the registry name of the source
+     *                           ore block.
+     * @return the newly created plant set.
+     */
+    public static PlantSet newModdedMetallicSet(String modid, String setName, MetallicSetProperties properties,
+                                                   String sourceOreRegistryName){
+        ResourceLocation sourceOreRL = new ResourceLocation(modid, sourceOreRegistryName);
+        LOG.info("Attempting to create modded Metallic plant set: " + modid + ":" + setName);
+
+        //Is mod loaded
+        if(ModList.get().isLoaded(modid)){
+            LOG.info("Mod: " + modid + " is present! Continuing...");
+        } else {
+            LOG.info("Mod: " + modid + " is not present! Skipping plant set: " + setName);
+            return null;
+        }
+
+        //Config
+        MetallicPlantSetConfig config = ResynthConfig.MODDED_PLANTS_CONFIG.loadCategory(
+                new MetallicPlantSetConfig(modid + "-" + setName, properties)
+        );
+
+        //Plant set
+        return new MetallicSet(modid + "_" + setName, config) {
+            private ItemStack sourceOreStack = null;
+
+            @Override
+            ItemStack getSourceOre() {
+                if(sourceOreStack != null)
+                    return sourceOreStack;
+
+                Block sourceOre = ForgeRegistries.BLOCKS.getValue(sourceOreRL);
+
+                //Failed to get modded block...
+                if(!ForgeRegistries.BLOCKS.containsKey(sourceOreRL) || sourceOre == null || sourceOre == Blocks.AIR){
+                    LOG.error("Failed to get source ore: " + sourceOreRL.toString());
+                    this.flagAsFailure();
+                } else {
+                    LOG.info("Found source ore: " + sourceOre.getNameTextComponent().getUnformattedComponentText());
+                    sourceOreStack = new ItemStack(sourceOre);
+                }
+
+                return sourceOreStack;
+            }
+        };
+    }
+
+    /**
      * Creates a new Biochemical plant set for a Vanilla Minecraft resource.
      *
      * @param setName the name of the plant set (e.g. string).
@@ -112,5 +248,75 @@ public class PlantSetFactory {
             }
         };
     }
-}
 
+    /**
+     * Handles creating a Biochemical plant set for an entity
+     * that isn't from Vanilla Minecraft - that is,
+     * an entity that we don't have a reference to.
+     * <p/>
+     * This method of registration allows us to check for
+     * the presence of the mod before creating the plant
+     * set and allows us to provide an entity name instead
+     * of an entity reference.
+     *
+     * @param modid the modid of the mod the ore block is from.
+     * @param setName the name of the plant set (actual name will
+     *                have mod-id prepended).
+     * @param properties the plant set properties.
+     * @param sourceEntityRegistryNames the registry names of the source
+     *                           entities.
+     * @return the newly created plant set.
+     */
+    public static PlantSet newModdedBiochemicalSet(String modid, String setName, BiochemicalSetProperties properties,
+                                                String... sourceEntityRegistryNames){
+        LOG.info("Attempting to create modded Biochemical plant set: " + modid + ":" + setName);
+
+        //Is mod loaded
+        if(ModList.get().isLoaded(modid)){
+            LOG.info("Mod: " + modid + " is present! Continuing...");
+        } else {
+            LOG.info("Mod: " + modid + " is not present! Skipping plant set: " + setName);
+            return null;
+        }
+
+        //Config
+        BiochemicalPlantSetConfig config = ResynthConfig.MODDED_PLANTS_CONFIG.loadCategory(
+                new BiochemicalPlantSetConfig(modid + "-" + setName, properties)
+        );
+
+        //Plant set
+        return new BiochemicalSet(modid + "_" + setName, config) {
+            private List<EntityType> sourceEntities;
+
+            @Override
+            EntityType[] getSourceMobs() {
+                if(sourceEntities != null)
+                    return sourceEntities.toArray(new EntityType[0]);
+
+                //Look for entities.
+                LOG.info("Looking for source entities for plant set: " + this.getSetName());
+                for(String registryName : sourceEntityRegistryNames){
+                    ResourceLocation entityRL = new ResourceLocation(modid, registryName);
+                    LOG.info("Looking for source entity: " + entityRL.toString());
+
+                    EntityType entity = ForgeRegistries.ENTITIES.getValue(entityRL);
+
+                    if(ForgeRegistries.ENTITIES.containsKey(entityRL) && entity != null){
+                        LOG.info("Found source entity: " + entity.getName().getUnformattedComponentText());
+                        if(sourceEntities == null) sourceEntities = new ArrayList<>();
+                        sourceEntities.add(entity);
+                    } else {
+                        LOG.error("Failed to find source entity: " + entityRL);
+                    }
+                }
+
+                if(sourceEntities == null){
+                    LOG.error("Failed to find any source entities for plant set:" + this.getSetName());
+                    flagAsFailure();
+                }
+
+                return null;
+            }
+        };
+    }
+}

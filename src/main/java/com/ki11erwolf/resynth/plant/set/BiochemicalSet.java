@@ -115,7 +115,10 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
         public void onEntityKilled(LivingDeathEvent event){
             //For each plant set
             for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)){
+                if(set.isFailure()) continue;
+
                 BiochemicalSet plantSet = (BiochemicalSet) set;
+                if(plantSet.getSourceMobs() == null) continue;
 
                 //For each mob type
                 for(EntityType entity : plantSet.getSourceMobs()){
@@ -148,8 +151,14 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
         @SubscribeEvent
         @SuppressWarnings("unused")
         public void onItemDestroyed(PlayerDestroyItemEvent event){
+            //noinspection ConstantConditions // Apparently not
+            if(event.getOriginal() == null)
+                return;
+
             //For each plant set
             for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)) {
+                if(set.isFailure()) continue;
+
                 BiochemicalSet plantSet = (BiochemicalSet) set;
 
                 if(event.getOriginal().getItem() == plantSet.getProduceItemOrBlock().getItem()){

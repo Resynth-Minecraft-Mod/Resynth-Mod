@@ -21,9 +21,12 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.DefaultFlowersFeature;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.placement.FrequencyConfig;
 import net.minecraft.world.gen.placement.Placement;
@@ -36,7 +39,7 @@ import java.util.Random;
  * in the world as a flower. The Seed Pod will generate
  * in every biome.
  */
-class SeedPodFeature extends DefaultFlowersFeature {
+class SeedPodFeature extends Feature<NoFeatureConfig> {
 
     /**
      * Configuration settings for Seed Pod generation.
@@ -68,10 +71,31 @@ class SeedPodFeature extends DefaultFlowersFeature {
     }
 
     /**
-     * @return {@link ResynthBlocks#BLOCK_SEED_POD} as this is the
-     * only block we want to spawn.
+     * {@inheritDoc}
+     * Handles placing the Mystical Seed Pod in the world.
+     *
+     * @return
      */
-    public BlockState getRandomFlower(Random random, BlockPos pos) {
-        return ResynthBlocks.BLOCK_SEED_POD.getDefaultState();
+    public boolean place(IWorld worldIn, ChunkGenerator<? extends GenerationSettings> generator, Random rand,
+                         BlockPos pos, NoFeatureConfig config) {
+        BlockState blockstate = ResynthBlocks.BLOCK_SEED_POD.getDefaultState();
+        int tries = 64;
+        int i = 0;
+
+        for(int j = 0; j < tries; ++j) {
+            BlockPos blockpos = pos.add(
+                    rand.nextInt(8) - rand.nextInt(8),
+                    rand.nextInt(4) - rand.nextInt(4),
+                    rand.nextInt(8) - rand.nextInt(8)
+            );
+
+            if (worldIn.isAirBlock(blockpos) && blockpos.getY() < 255
+                    && blockstate.isValidPosition(worldIn, blockpos)) {
+                worldIn.setBlockState(blockpos, blockstate, 2);
+                ++i;
+            }
+        }
+
+        return i > 0;
     }
 }

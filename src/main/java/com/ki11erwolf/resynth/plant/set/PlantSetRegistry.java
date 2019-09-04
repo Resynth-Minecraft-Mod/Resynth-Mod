@@ -16,6 +16,7 @@
 package com.ki11erwolf.resynth.plant.set;
 
 import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.ResynthModdedPlants;
 import com.ki11erwolf.resynth.ResynthPlants;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.util.ItemOrBlock;
@@ -89,6 +90,7 @@ class PlantSetRegistry {
         static {
             LOG.info("Queuing plant set registration...");
             ResynthPlants.initSets();
+            ResynthModdedPlants.initSets();
         }
 
         /**

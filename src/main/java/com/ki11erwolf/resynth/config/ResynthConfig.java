@@ -56,9 +56,14 @@ public class ResynthConfig {
     public static final ConfigFile GENERAL_CONFIG = new ConfigFile(newConfig("general"));
 
     /**
-     * Config file used to store Vanilla plat set settings.
+     * Config file used to store Vanilla plant set settings.
      */
     public static final ConfigFile VANILLA_PLANTS_CONFIG = new ConfigFile(newConfig("vanilla-plants"));
+
+    /**
+     * Config file used to store modded plant set settings.
+     */
+    public static final ConfigFile MODDED_PLANTS_CONFIG = new ConfigFile(newConfig("modded-plants"));
 
     /**
      * Private (non-instantiatable) constructor.

@@ -15,6 +15,8 @@
  */
 package com.ki11erwolf.resynth.plant.set;
 
+import com.ki11erwolf.resynth.analytics.PlantSetFailureEvent;
+import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
 import com.ki11erwolf.resynth.plant.block.BlockPlant;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.util.ItemOrBlock;
@@ -50,7 +52,16 @@ public class PlantSet<P extends BlockPlant> {
      */
     private final String setTypeName;
 
+    /**
+     * The properties for this plant set.
+     */
     private final PlantSetProperties basicPlantSetProperties;
+
+    /**
+     * {@code true} if this plant set has been
+     * flagged as a failure.
+     */
+    private boolean isFailure;
 
     /**
      * The plant block instance in the set.
@@ -77,6 +88,34 @@ public class PlantSet<P extends BlockPlant> {
         this.setName = Objects.requireNonNull(setName);
         this.basicPlantSetProperties = properties;
         seedHooks.register();
+    }
+
+    /**
+     * Allows flagging this plant set as a failure -
+     * that is, a plant set that will not work
+     * for some or other reason.
+     * This is useful when failure can only
+     * be determined after the set has been
+     * created and registered to the game.
+     * This action cannot be undone.
+     * <p/>
+     * Will prevent seeds from planting as
+     * well as notifies the user of a problem.
+     */
+    void flagAsFailure(){
+        if(isFailure)
+            return;
+
+        this.getSeedsItem().flagAsFailure();
+        ResynthAnalytics.send(new PlantSetFailureEvent(setName));
+    }
+
+    /**
+     * @return {@code true} if this plant set
+     * has been flagged as a failure.
+     */
+    boolean isFailure(){
+        return this.isFailure;
     }
 
     /**
@@ -120,6 +159,10 @@ public class PlantSet<P extends BlockPlant> {
         return this.seedsItem;
     }
 
+    /**
+     * @return the properties for this plant set. May be
+     * any of the plant set properties types.
+     */
     public PlantSetProperties getPlantSetProperties(){
         return this.basicPlantSetProperties;
     }

@@ -128,6 +128,9 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
 
             //Sets
             for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)){
+                if(set.isFailure() || ((CrystallineSet)set).getSourceOre() == null)
+                    continue;
+
                 CrystallineSet crystallineSet = (CrystallineSet) set;
                 float spawnChance = crystallineSet.setProperties.seedSpawnChanceFromOre();
 
@@ -168,6 +171,9 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
             //Sets
             for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)) {
                 //Checks
+                if(set.isFailure() || ((CrystallineSet)set).getSourceOre() == null)
+                    continue;
+
                 if (i != set.getProduceItemOrBlock().getItem()) {
                     continue;
                 }

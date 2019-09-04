@@ -32,7 +32,7 @@ import static net.minecraft.entity.EntityType.*;
  *
  * All plant sets in this class are referred to as Vanilla plant sets.
  */
-@SuppressWarnings({"WeakerAccess", "unused"})
+@SuppressWarnings({"WeakerAccess", "unused"/*Fields register themselves.*/})
 public class ResynthPlants {
 
     // ****************

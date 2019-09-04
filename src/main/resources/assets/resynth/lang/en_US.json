@@ -177,6 +177,8 @@
   "Can be smelted into the final resource or left in water to despawn for a chance at getting more seeds.",
   "tooltip.item.resynth.bulb":
   "Can be smelted into the final resource, or smashed (by holding right-click) for a chance at getting more seeds.",
+  "tooltip.item.resynth.seeds.failure":
+  "THIS PLANT TYPE IS DISABLED! An error has occurred with this plant set and it cannot be used. Submit a bug report if you see this!",
 
   "______COMMENT": "----Plant Block Tooltips----",
   "tooltip.block.resynth.organic_ore":
