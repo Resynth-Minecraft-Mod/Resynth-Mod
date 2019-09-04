@@ -22,6 +22,10 @@ import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
 import com.ki11erwolf.resynth.item.ItemMineralHoe;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
+import mcp.mobius.waila.api.IComponentProvider;
+import mcp.mobius.waila.api.IDataAccessor;
+import mcp.mobius.waila.api.IPluginConfig;
+import mcp.mobius.waila.api.IServerDataProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -30,8 +34,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -42,6 +48,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -56,7 +63,8 @@ import java.util.List;
  * determines plant growth.
  */
 @SuppressWarnings("deprecation")
-public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements ItemMineralHoe.InfoProvider {
+public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements ItemMineralHoe.InfoProvider,
+        IComponentProvider, IServerDataProvider<TileEntity> {
 
     /**
      * Configuration settings for this block class.
@@ -125,15 +133,6 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos){
         return false;
     }
-
-//    /**
-//     * {@inheritDoc}
-//     * @return {@code false}.
-//     */
-//    @Override
-//    public boolean isFullCube(IBlockState state){
-//        return false;
-//    }
 
     /**
      * Handles updating the blocks texture based
@@ -264,6 +263,41 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     }
 
     // *****
+    // Hwyla
+    // *****
+
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Handles displaying the soil blocks mineral content
+     * and message in the hwyla tooltip.
+     */
+    @Override
+    public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
+        tooltip.add(new StringTextComponent(
+                getMineralContentMessage(accessor.getServerData().getFloat(TileEntityMineralSoil.MINERAL_CONTENT_TAG))
+        ));
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Handles sending the server side tile entity data (mineral content)
+     * to the client side for presentation in the Hwyla tooltip.
+     */
+    @Override
+    public void appendServerData(CompoundNBT clientServerNBT, ServerPlayerEntity serverPlayerEntity,
+                                 World world, TileEntity tileEntity){
+        if(!(tileEntity instanceof TileEntityMineralSoil))
+            return;
+
+        clientServerNBT.putFloat(
+                TileEntityMineralSoil.MINERAL_CONTENT_TAG,
+                ((TileEntityMineralSoil) tileEntity).getMineralPercentage()
+        );
+    }
+
+    // *****
     // Logic
     // *****
 
@@ -329,9 +363,23 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         if(entity == null)
             return "Error";
 
-        return I18n.format(
-                "misc.resynth.mineral_content",
-                entity.getMineralPercentage()
-        );
+        return getMineralContentMessage(entity.getMineralPercentage());
+    }
+
+    /**
+     * Gets the mineral content message from the
+     * lang file formatted with the provided
+     * info.
+     *
+     * @param mineralPercentage the soil blocks mineral content
+     *                          value.
+     * @return the formatted localized message.
+     */
+    private static String getMineralContentMessage(float mineralPercentage){
+        return TextFormatting.RED +
+                I18n.format(
+                        "misc.resynth.mineral_content",
+                        TextFormatting.GOLD + String.valueOf(mineralPercentage)
+                );
     }
 }

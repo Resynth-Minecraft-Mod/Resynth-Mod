@@ -74,19 +74,27 @@ minecraft {
     }
 }
 
+repositories {
+    maven {
+        url = "http://tehnut.info/maven/"
+    }
+}
+
 dependencies {
     minecraft 'net.minecraftforge:forge:1.14.4-28.0.91'
+
+    compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.5-B66_1.14.4')
 }
 
 jar {
     manifest {
         attributes([
-                "Specification-Title": "resynth",
-                "Specification-Vendor": "resynth",
+                "Specification-Title": "Resynth",
+                "Specification-Vendor": "Ki11er_wolf",
                 "Specification-Version": "1",
                 "Implementation-Title": project.name,
                 "Implementation-Version": "${version}",
-                "Implementation-Vendor" :"resynth",
+                "Implementation-Vendor" :"Ki11er_wolf",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }

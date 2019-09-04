@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthModdedPlants;
 import com.ki11erwolf.resynth.ResynthPlants;
 import com.ki11erwolf.resynth.block.ResynthBlock;
+import com.ki11erwolf.resynth.integration.RHwylaIntegration;
 import com.ki11erwolf.resynth.util.ItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -130,6 +131,9 @@ class PlantSetRegistry {
         private static void registerPlantBlock(PlantSet set, IForgeRegistry<Block> registry){
             LOG.debug("Registering plant block: " + set.getPlantBlock().getRegistryName());
             registry.register(set.getPlantBlock());
+
+            //Hwyla
+            RHwylaIntegration.addIfProvider(set.getPlantBlock());
         }
 
         /**
@@ -159,6 +163,9 @@ class PlantSetRegistry {
             if(itemOrBlock.isBlock() && !item){
                 LOG.debug("Registering plant produce block: " + itemOrBlock.getBlock().getRegistryName());
                 registry.register(itemOrBlock.getBlock());
+
+                //Hwyla
+                RHwylaIntegration.addIfProvider(itemOrBlock.getBlock());
             }
 
             //ItemBlock

@@ -36,7 +36,7 @@ public class TileEntityMineralSoil extends TileEntity {
     /**
      * The NBT tag key for Mineral Content.
      */
-    private static final String MINERAL_CONTENT_TAG = "mineralPercentage";
+    public static final String MINERAL_CONTENT_TAG = "mineralPercentage";
 
     /**
      * Registry ID for this tile entity.
