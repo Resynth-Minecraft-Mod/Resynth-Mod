@@ -22,7 +22,6 @@ import com.ki11erwolf.resynth.util.ItemOrBlock;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -122,10 +121,6 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
             Block block = event.getWorld().getBlockState(event.getPos()).getBlock();
             IWorld world = event.getWorld();
 
-            double  x = event.getPos().getX(),
-                    y = event.getPos().getY(),
-                    z = event.getPos().getZ();
-
             //Sets
             for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)){
                 if(set.isFailure() || ((CrystallineSet)set).getSourceOre() == null)
@@ -139,9 +134,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
 
                 //Spawn
                 if(MathUtil.chance(spawnChance)){
-                    world.addEntity(new ItemEntity(
-                            world.getWorld(), x, y, z, new ItemStack(crystallineSet.seedsItem, 1)
-                    ));
+                    spawnSeeds(crystallineSet.seedsItem, world.getWorld(), event.getPos());
                     event.setCanceled(true);
                     world.setBlockState(event.getPos(), Blocks.AIR.getDefaultState(), 2);
                 }
@@ -179,22 +172,13 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
                 }
 
                 float spawnChance = ((CrystallineSet) set).setProperties.seedSpawnChanceFromShard();
-
                 if(spawnChance < 0)
                     continue;
 
                 //Spawn
                 for(int j = 0; j < count; j++){
                     if(MathUtil.chance(spawnChance)){
-                        event.getEntityItem().world.addEntity(
-                                new ItemEntity(
-                                        event.getEntityItem().world,
-                                        event.getEntityItem().posX,
-                                        event.getEntityItem().posY,
-                                        event.getEntityItem().posZ,
-                                        new ItemStack(set.getSeedsItem(), 1)
-                                )
-                        );
+                        spawnSeeds(set.getSeedsItem(), world, pos);
                     }
                 }
                 return;

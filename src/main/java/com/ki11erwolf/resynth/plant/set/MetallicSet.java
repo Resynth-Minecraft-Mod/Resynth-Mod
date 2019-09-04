@@ -22,7 +22,6 @@ import com.ki11erwolf.resynth.util.ItemOrBlock;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -133,9 +132,7 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
 
                     //Spawn item.
                     if(MathUtil.chance(chance)){
-                        world.addEntity(new ItemEntity(
-                                world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(set.seedsItem)
-                        ));
+                        spawnSeeds(set.getSeedsItem(), world, pos);
                     }
                 }
             }
