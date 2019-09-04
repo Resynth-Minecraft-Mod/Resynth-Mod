@@ -15,7 +15,10 @@
  */
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.plant.set.*;
+import com.ki11erwolf.resynth.plant.set.CrystallineSetProperties;
+import com.ki11erwolf.resynth.plant.set.MetallicSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
+import com.ki11erwolf.resynth.plant.set.PlantSetFactory;
 
 /**
  * Holds the definitions and references to every Resynth
@@ -36,6 +39,100 @@ import com.ki11erwolf.resynth.plant.set.*;
  */
 @SuppressWarnings("unused")//Fields register themselves.
 public class ResynthModdedPlants {
+
+    // *******
+    // MOD IDS
+    // *******
+
+    /**
+     * The mod id for the Simple Ores mod.
+     */
+    private static final String SIMPLE_ORES = "simpleores";
+
+    // *******************
+    // GENERAL DEFINITIONS
+    // *******************
+
+    // Crystalline
+
+    /**
+     * The set properties for general onyx gems and onyx ore.
+     */
+    private static final CrystallineSetProperties ONYX_PROPERTIES = new CrystallineSetProperties(
+            false, 9, 1,
+            7, 5
+    );
+
+    // Metallic
+
+    /**
+     * The set properties for general copper and copper ore.
+     */
+    private static final MetallicSetProperties COPPER_PROPERTIES = new MetallicSetProperties(
+            false, 14, 7, 7
+    );
+
+    /**
+     * The set properties for general tin and tin ore.
+     */
+    private static final MetallicSetProperties TIN_PROPERTIES = new MetallicSetProperties(
+            false, 14, 7, 7
+    );
+
+    /**
+     * The set properties for general mythril and mythril ore.
+     */
+    private static final MetallicSetProperties MYTHRIL_PROPERTIES = new MetallicSetProperties(
+            false, 7, 5, 5
+    );
+
+    /**
+     * The set properties for general adamantium and adamantium ore.
+     */
+    private static final MetallicSetProperties ADAMANTIUM_PROPERTIES = new MetallicSetProperties(
+            false, 7, 5, 5
+    );
+
+    // **********
+    // PLANT SETS
+    // **********
+
+    //Simple Ores
+
+    /**
+     * The plant set instance for onyx from Simple Ores.
+     */
+    public static final PlantSet SIMPLE_ORES_ONYX = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            SIMPLE_ORES, "onyx", ONYX_PROPERTIES, "onyx_ore"
+    ));
+
+    /**
+     * The plant set instance for copper ore from Simple Ores.
+     */
+    public static final PlantSet SIMPLE_ORES_COPPER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            SIMPLE_ORES, "copper", COPPER_PROPERTIES, "copper_ore"
+    ));
+
+    /**
+     * The plant set instance for tin ore from Simple Ores.
+     */
+    public static final PlantSet SIMPLE_ORES_TIN = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            SIMPLE_ORES, "tin", TIN_PROPERTIES, "tin_ore"
+    ));
+
+    /**
+     * The plant set instance for mythril ore from Simple Ores.
+     */
+    public static final PlantSet SIMPLE_ORES_MYTHRIL = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            SIMPLE_ORES, "mythril", MYTHRIL_PROPERTIES, "mythril_ore"
+    ));
+
+    /**
+     * The plant set instance for adamantium ore from Simple Ores.
+     */
+    public static final PlantSet SIMPLE_ORES_ADAMANTIUM = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            SIMPLE_ORES, "adamantium", ADAMANTIUM_PROPERTIES, "adamantium_ore"
+    ));
 
     /**Private constructor.*/
     private ResynthModdedPlants(){}
