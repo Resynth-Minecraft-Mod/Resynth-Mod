@@ -148,6 +148,10 @@
   "item.resynth.biochemical_seeds_nautilus_shell":          "Nautilus Shell Seeds",
   "item.resynth.biochemical_bulb_nautilus_shell":           "Nautilus Shell Bulb",
 
+  "block.resynth.metallic_plant_simpleores_copper":                     "Copper Plant",
+  "item.resynth.metallic_seeds_simpleores_copper":                      "Copper Seeds (Simple Ores)",
+  "block.resynth.metallic_organic_ore_simpleores_copper":               "Organic Copper Ore (Simple Ores)",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_stone":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",

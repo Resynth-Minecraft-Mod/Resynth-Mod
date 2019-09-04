@@ -39,9 +39,9 @@ public class RHwylaIntegration implements mcp.mobius.waila.api.IWailaPlugin{
      */
     private static final Logger LOG = ResynthMod.getNewLogger();
 
-    // **********
-    // PUBLIC API
-    // **********
+    // ************
+    // INTERNAL API
+    // ************
 
     /**
      * A list of all registered blocks that implement a Hwyla data provider
