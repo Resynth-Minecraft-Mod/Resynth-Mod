@@ -19,13 +19,18 @@ import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.plant.set.IMetallicSetProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
+import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -55,7 +60,8 @@ public class BlockOrganicOre extends ResynthBlock<BlockOrganicOre> {
      */
     public BlockOrganicOre(String setTypeName, String name, IMetallicSetProperties properties) {
         super(
-                Block.Properties.create(Material.ROCK),
+                Block.Properties.create(Material.ROCK).harvestTool(ToolType.AXE)
+                .hardnessAndResistance(2),
                 new Item.Properties().group(ResynthTabs.TAB_RESYNTH_PRODUCE),
                 setTypeName + "_" + PREFIX + "_" + name
         );
@@ -70,5 +76,17 @@ public class BlockOrganicOre extends ResynthBlock<BlockOrganicOre> {
                                ITooltipFlag flagIn){
         PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltip, properties);
         setDescriptiveTooltip(tooltip, PREFIX);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Handles dropping the block in the world
+     * when it is broken.
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public void spawnAdditionalDrops(BlockState state, World worldIn, BlockPos pos, ItemStack stack) {
+        MinecraftUtil.spawnItemStackInWorld(new ItemStack(state.getBlock()), worldIn, pos);
     }
 }
