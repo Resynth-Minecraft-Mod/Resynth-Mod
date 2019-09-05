@@ -168,6 +168,22 @@
   "item.resynth.metallic_seeds_simpleores_adamantium":                  "Adamantium Seeds (Simple Ores)",
   "block.resynth.metallic_organic_ore_simpleores_adamantium":           "Organic Adamantium Ore (Simple Ores)",
 
+  "block.resynth.crystalline_plant_moreoresinone_ruby":             "Ruby Plant",
+  "item.resynth.crystalline_seeds_moreoresinone_ruby":              "Ruby Seeds (More Ones in ONE)",
+  "item.resynth.crystalline_shard_moreoresinone_ruby":              "Ruby Shard (More Ones in ONE)",
+
+  "block.resynth.crystalline_plant_moreoresinone_topaz":            "Topaz Plant",
+  "item.resynth.crystalline_seeds_moreoresinone_topaz":             "Topaz Seeds (More Ones in ONE)",
+  "item.resynth.crystalline_shard_moreoresinone_topaz":             "Topaz Shard (More Ones in ONE)",
+
+  "block.resynth.crystalline_plant_moreoresinone_sapphire":         "Sapphire Plant",
+  "item.resynth.crystalline_seeds_moreoresinone_sapphire":          "Sapphire Seeds (More Ones in ONE)",
+  "item.resynth.crystalline_shard_moreoresinone_sapphire":          "Sapphire Shard (More Ones in ONE)",
+
+  "block.resynth.crystalline_plant_moreoresinone_amethyst":         "Amethyst Plant",
+  "item.resynth.crystalline_seeds_moreoresinone_amethyst":          "Amethyst Seeds (More Ones in ONE)",
+  "item.resynth.crystalline_shard_moreoresinone_amethyst":          "Amethyst Shard (More Ones in ONE)",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_stone":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",

@@ -49,6 +49,11 @@ public class ResynthModdedPlants {
      */
     private static final String SIMPLE_ORES = "simpleores";
 
+    /**
+     * The mod id for the More Ores in ONE mod.
+     */
+    private static final String MORE_ORES_IN_ONE = "moreoresinone";
+
     // *******************
     // GENERAL DEFINITIONS
     // *******************
@@ -61,6 +66,38 @@ public class ResynthModdedPlants {
     private static final CrystallineSetProperties ONYX_PROPERTIES = new CrystallineSetProperties(
             false, 9, 1,
             7, 5
+    );
+
+    /**
+     * The set properties for general ruby ore and gems.
+     */
+    private static final CrystallineSetProperties RUBY_PROPERTIES = new CrystallineSetProperties(
+            false, 5, 1,
+            3, 2
+    );
+
+    /**
+     * The set properties for general sapphire ore and gems.
+     */
+    private static final CrystallineSetProperties SAPPHIRE_PROPERTIES = new CrystallineSetProperties(
+            false, 4, 1,
+            2, 2
+    );
+
+    /**
+     * The set properties for general topaz ore and gems.
+     */
+    private static final CrystallineSetProperties TOPAZ_PROPERTIES = new CrystallineSetProperties(
+            false, 3, 1,
+            2, 1
+    );
+
+    /**
+     * The set properties for general amethyst ore and gems.
+     */
+    private static final CrystallineSetProperties AMETHYST_PROPERTIES = new CrystallineSetProperties(
+            false, 2, 1,
+            2, 1
     );
 
     // Metallic
@@ -132,6 +169,36 @@ public class ResynthModdedPlants {
      */
     public static final PlantSet SIMPLE_ORES_ADAMANTIUM = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             SIMPLE_ORES, "adamantium", ADAMANTIUM_PROPERTIES, "adamantium_ore"
+    ));
+
+    //More Ores in ONE
+
+    /**
+     * The plant set for ruby ore from More Ores in ONE.
+     */
+    public static final PlantSet MORE_ORES_RUBY = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            MORE_ORES_IN_ONE, "ruby", RUBY_PROPERTIES, "ruby_ore"
+    ));
+
+    /**
+     * The plant set for sapphire ore from More Ores in ONE.
+     */
+    public static final PlantSet MORE_ORES_SAPPHIRE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            MORE_ORES_IN_ONE, "sapphire", SAPPHIRE_PROPERTIES, "sapphire_ore"
+    ));
+
+    /**
+     * The plant set for topaz ore from More Ores in ONE.
+     */
+    public static final PlantSet MORE_ORES_TOPAZ = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            MORE_ORES_IN_ONE, "topaz", TOPAZ_PROPERTIES, "topaz_ore"
+    ));
+
+    /**
+     * The plant set for ruby ore from More Ores in ONE.
+     */
+    public static final PlantSet MORE_ORES_AMETHYST = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            MORE_ORES_IN_ONE, "amethyst", AMETHYST_PROPERTIES, "amethyst_ore"
     ));
 
     /**Private constructor.*/
