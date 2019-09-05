@@ -184,6 +184,14 @@
   "item.resynth.crystalline_seeds_moreoresinone_amethyst":          "Amethyst Seeds (More Ones in ONE)",
   "item.resynth.crystalline_shard_moreoresinone_amethyst":          "Amethyst Shard (More Ones in ONE)",
 
+  "block.resynth.crystalline_plant_ruby_ruby":                          "Ruby Plant",
+  "item.resynth.crystalline_seeds_ruby_ruby":                           "Ruby Seeds (Just Another Ruby Mod)",
+  "item.resynth.crystalline_shard_ruby_ruby":                           "Ruby Shard (Just Another Ruby Mod)",
+
+  "block.resynth.crystalline_plant_ruby_opal":                          "Opal Plant",
+  "item.resynth.crystalline_seeds_ruby_opal":                           "Opal Seeds (Just Another Ruby Mod)",
+  "item.resynth.crystalline_shard_ruby_opal":                           "Opal Shard (Just Another Ruby Mod)",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_stone":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",

@@ -54,6 +54,11 @@ public class ResynthModdedPlants {
      */
     private static final String MORE_ORES_IN_ONE = "moreoresinone";
 
+    /**
+     * The mod id for the Just Another Ruby Mod.
+     */
+    private static final String JUST_ANOTHER_RUBY_MOD = "ruby";
+
     // *******************
     // GENERAL DEFINITIONS
     // *******************
@@ -98,6 +103,14 @@ public class ResynthModdedPlants {
     private static final CrystallineSetProperties AMETHYST_PROPERTIES = new CrystallineSetProperties(
             false, 2, 1,
             2, 1
+    );
+
+    /**
+     * The set properties for general opal ore and gems.
+     */
+    private static final CrystallineSetProperties OPAL_PROPERTIES = new CrystallineSetProperties(
+            false, 4, 1,
+            3, 2
     );
 
     // Metallic
@@ -195,10 +208,26 @@ public class ResynthModdedPlants {
     ));
 
     /**
-     * The plant set for ruby ore from More Ores in ONE.
+     * The plant set for amethyst ore from More Ores in ONE.
      */
     public static final PlantSet MORE_ORES_AMETHYST = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             MORE_ORES_IN_ONE, "amethyst", AMETHYST_PROPERTIES, "amethyst_ore"
+    ));
+
+    //Just Another Ruby Mod
+
+    /**
+     * The plant set for ruby from the Just Another Ruby Mod.
+     */
+    public static final PlantSet JUST_ANOTHER_RUBY_MOD_RUBY = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            JUST_ANOTHER_RUBY_MOD, "ruby", RUBY_PROPERTIES, "ruby_ore"
+    ));
+
+    /**
+     * The plant set for opal from the Just Another Ruby Mod.
+     */
+    public static final PlantSet JUST_ANOTHER_RUBY_MOD_OPAL = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            JUST_ANOTHER_RUBY_MOD, "opal", OPAL_PROPERTIES, "opal_ore"
     ));
 
     /**Private constructor.*/
