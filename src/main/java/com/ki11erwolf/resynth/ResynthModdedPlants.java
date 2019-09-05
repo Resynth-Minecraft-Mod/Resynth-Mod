@@ -59,6 +59,11 @@ public class ResynthModdedPlants {
      */
     private static final String JUST_ANOTHER_RUBY_MOD = "ruby";
 
+    /**
+     * The mod id for the Blue Power mod.
+     */
+    private static final String BLUE_POWER = "bluepower";
+
     // *******************
     // GENERAL DEFINITIONS
     // *******************
@@ -113,6 +118,22 @@ public class ResynthModdedPlants {
             3, 2
     );
 
+    /**
+     * The set properties for general malachite ore and gems.
+     */
+    private static final CrystallineSetProperties MALACHITE_PROPERTIES = new CrystallineSetProperties(
+            false, 4, 1,
+            3, 2
+    );
+
+    /**
+     * The set properties for general teslatite ore and gems.
+     */
+    private static final CrystallineSetProperties TESLATITE_PROPERTIES = new CrystallineSetProperties(
+            false, 3, 1,
+            3, 2
+    );
+
     // Metallic
 
     /**
@@ -127,6 +148,27 @@ public class ResynthModdedPlants {
      */
     private static final MetallicSetProperties TIN_PROPERTIES = new MetallicSetProperties(
             false, 14, 7, 7
+    );
+
+    /**
+     * The set properties for general silver and silver ore.
+     */
+    private static final MetallicSetProperties SILVER_PROPERTIES = new MetallicSetProperties(
+            false, 7, 8, 8
+    );
+
+    /**
+     * The set properties for general zinc and zinc ore.
+     */
+    private static final MetallicSetProperties ZINC_PROPERTIES = new MetallicSetProperties(
+            false, 10, 8, 8
+    );
+
+    /**
+     * The set properties for general tungsten and tungsten ore.
+     */
+    private static final MetallicSetProperties TUNGSTEN_PROPERTIES = new MetallicSetProperties(
+            false, 9, 8, 8
     );
 
     /**
@@ -229,6 +271,72 @@ public class ResynthModdedPlants {
     public static final PlantSet JUST_ANOTHER_RUBY_MOD_OPAL = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             JUST_ANOTHER_RUBY_MOD, "opal", OPAL_PROPERTIES, "opal_ore"
     ));
+
+    //Blue Power
+
+    /**
+     * The plant set for amethyst from the Blue Power mod.
+     */
+    public static final PlantSet BLUE_POWER_AMETHYST = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            BLUE_POWER, "amethyst", AMETHYST_PROPERTIES, "amethyst_ore"
+    ));
+
+    /**
+     * The plant set for ruby from the Blue Power mod.
+     */
+    public static final PlantSet BLUE_POWER_RUBY = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            BLUE_POWER, "ruby", RUBY_PROPERTIES, "ruby_ore"
+    ));
+
+    /**
+     * The plant set for sapphire from the Blue Power mod.
+     */
+    public static final PlantSet BLUE_POWER_SAPPHIRE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            BLUE_POWER, "sapphire", SAPPHIRE_PROPERTIES, "sapphire_ore"
+    ));
+
+    /**
+     * The plant set for malachite from the Blue Power mod.
+     */
+    public static final PlantSet BLUE_POWER_MALACHITE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            BLUE_POWER, "malachite", MALACHITE_PROPERTIES, "malachite_ore"
+    ));
+
+    /**
+     * The plant set for teslatite from the Blue Power mod.
+     */
+    public static final PlantSet BLUE_POWER_TESLATITE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            BLUE_POWER, "teslatite", TESLATITE_PROPERTIES, "teslatite_ore"
+    ));
+
+    /**
+     * The plant set for copper from the Blue Power mod.
+     */
+    public static final PlantSet BLUE_POWER_COPPER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BLUE_POWER, "copper", COPPER_PROPERTIES, "copper_ore"
+    ));
+
+    /**
+     * The plant set for silver from the Blue Power mod.
+     */
+    public static final PlantSet BLUE_POWER_SILVER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BLUE_POWER, "silver", SILVER_PROPERTIES, "silver_ore"
+    ));
+
+    /**
+     * The plant set for zinc from the Blue Power mod.
+     */
+    public static final PlantSet BLUE_POWER_ZINC = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BLUE_POWER, "zinc", ZINC_PROPERTIES, "zinc_ore"
+    ));
+
+    /**
+     * The plant set for tungsten from the Blue Power mod.
+     */
+    public static final PlantSet BLUE_POWER_TUNGSTEN = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BLUE_POWER, "tungsten", TUNGSTEN_PROPERTIES, "tungsten_ore"
+    ));
+
 
     /**Private constructor.*/
     private ResynthModdedPlants(){}

@@ -192,6 +192,42 @@
   "item.resynth.crystalline_seeds_ruby_opal":                           "Opal Seeds (Just Another Ruby Mod)",
   "item.resynth.crystalline_shard_ruby_opal":                           "Opal Shard (Just Another Ruby Mod)",
 
+  "block.resynth.crystalline_plant_bluepower_ruby":                 "Ruby Plant",
+  "item.resynth.crystalline_seeds_bluepower_ruby":                  "Ruby Seeds (Blue Power)",
+  "item.resynth.crystalline_shard_bluepower_ruby":                  "Ruby Shard (Blue Power)",
+
+  "block.resynth.crystalline_plant_bluepower_sapphire":             "Sapphire Plant",
+  "item.resynth.crystalline_seeds_bluepower_sapphire":              "Sapphire Seeds (Blue Power)",
+  "item.resynth.crystalline_shard_bluepower_sapphire":              "Sapphire Shard (Blue Power)",
+
+  "block.resynth.crystalline_plant_bluepower_amethyst":             "Amethyst Plant",
+  "item.resynth.crystalline_seeds_bluepower_amethyst":              "Amethyst Seeds (Blue Power)",
+  "item.resynth.crystalline_shard_bluepower_amethyst":              "Amethyst Shard (Blue Power)",
+
+  "block.resynth.crystalline_plant_bluepower_malachite":            "Malachite Plant",
+  "item.resynth.crystalline_seeds_bluepower_malachite":             "Malachite Seeds (Blue Power)",
+  "item.resynth.crystalline_shard_bluepower_malachite":             "Malachite Shard (Blue Power)",
+
+  "block.resynth.crystalline_plant_bluepower_teslatite":            "Teslatite Plant",
+  "item.resynth.crystalline_seeds_bluepower_teslatite":             "Teslatite Seeds (Blue Power)",
+  "item.resynth.crystalline_shard_bluepower_teslatite":             "Teslatite Shard (Blue Power)",
+
+  "block.resynth.metallic_plant_bluepower_copper":                  "Copper Plant",
+  "item.resynth.metallic_seeds_bluepower_copper":                   "Copper Seeds (Blue Power)",
+  "block.resynth.metallic_organic_ore_bluepower_copper":            "Organic Copper Ore (Blue Power)",
+
+  "block.resynth.metallic_plant_bluepower_silver":                  "Silver Plant",
+  "item.resynth.metallic_seeds_bluepower_silver":                   "Silver Seeds (Blue Power)",
+  "block.resynth.metallic_organic_ore_bluepower_silver":            "Organic Silver Ore (Blue Power)",
+
+  "block.resynth.metallic_plant_bluepower_zinc":                    "Zinc Plant",
+  "item.resynth.metallic_seeds_bluepower_zinc":                     "Zinc Seeds (Blue Power)",
+  "block.resynth.metallic_organic_ore_bluepower_zinc":              "Organic Zinc Ore (Blue Power)",
+
+  "block.resynth.metallic_plant_bluepower_tungsten":                "Tungsten Plant",
+  "item.resynth.metallic_seeds_bluepower_tungsten":                 "Tungsten Seeds (Blue Power)",
+  "block.resynth.metallic_organic_ore_bluepower_tungsten":          "Organic Tungsten Ore (Blue Power)",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_stone":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
