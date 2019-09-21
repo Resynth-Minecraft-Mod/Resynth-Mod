@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * The produce item for Crystalline plant types (e.g. diamond shard).
  */
-public class ItemShard extends ResynthItem {
+public class ItemShard extends ResynthItem<ItemShard> {
 
     /**
      * The prefix given to all shard produce items.

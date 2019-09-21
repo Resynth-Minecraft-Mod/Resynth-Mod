@@ -16,18 +16,18 @@
 package com.ki11erwolf.resynth.config.categories;
 
 /**
- * Configuration settings for Mineral Stone world gen.
+ * Configuration settings for Calvinite Infused Netherrack world gen.
  */
-public class MineralStoneGenConfig extends GenConfig {
+public class CalviniteGenConfig extends GenConfig {
 
     /**
      * Creates a new config grouping with ore gen settings
-     * for Mineral Stone.
+     * for Calvinite Infused Netherrack.
      */
-    public MineralStoneGenConfig(){
+    public CalviniteGenConfig() {
         super(
-                "mineral-stone",
-                true, 7, 20, 0, 10, 0
+                "calvinite",
+                true, 4, 20, 0, 126, 0
         );
     }
 }

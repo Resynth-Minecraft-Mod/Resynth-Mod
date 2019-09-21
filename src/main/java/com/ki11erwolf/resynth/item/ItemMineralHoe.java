@@ -77,8 +77,8 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      *
      * Sets the name and properties of the item.
      */
-    ItemMineralHoe() {
-        super(new Properties().maxStackSize(1), "mineral_hoe");
+    ItemMineralHoe(String name) {
+        super(new Properties().maxStackSize(1), name);
     }
 
     /**
@@ -302,7 +302,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                 //Replacement
                 world.setBlockState(pos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
 
-                if(CONFIG.showParticles())
+                if(CONFIG.showParticles() && world.isRemote)
                     spawnParticles(world, pos.up());
 
                 world.playSound(

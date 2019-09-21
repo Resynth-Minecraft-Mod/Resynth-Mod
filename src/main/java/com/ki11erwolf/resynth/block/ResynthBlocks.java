@@ -16,6 +16,8 @@
 package com.ki11erwolf.resynth.block;
 
 import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.EnhancersConfig;
 import com.ki11erwolf.resynth.integration.RHwylaIntegration;
 import com.ki11erwolf.resynth.util.QueueRegisterer;
 import net.minecraft.block.Block;
@@ -29,8 +31,23 @@ import net.minecraftforge.fml.common.Mod;
  *
  * This class also handles the registering of blocks(and their ItemBlock).
  */
+@SuppressWarnings("unused")//Block fields register themselves to the game.
 @Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ResynthBlocks extends QueueRegisterer<Block> {
+
+    // ***************
+    // Config Settings
+    // ***************
+
+    /**
+     * Configuration settings for the Enhancer blocks.
+     */
+    private static final EnhancersConfig ENHANCERS_CONFIG
+            = ResynthConfig.GENERAL_CONFIG.getCategory(EnhancersConfig.class);
+
+    // ********
+    // Instance
+    // ********
 
     /**
      * Singleton instance of this class. NOT EXPOSED.
@@ -44,17 +61,46 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
     /**
      * Mineral Rich Stone. The mods ore.
      */
-    public static final ResynthBlock BLOCK_MINERAL_STONE = new BlockMineralStone().queueRegistration();
+    public static final ResynthBlock BLOCK_MINERAL_STONE
+            = new BlockMineralStone("mineral_stone").queueRegistration();
 
     /**
      * Mineral Enriched Soil. The farmland block for the mod.
      */
-    public static final ResynthBlock BLOCK_MINERAL_SOIL = new BlockMineralSoil().queueRegistration();
+    public static final ResynthBlock BLOCK_MINERAL_SOIL
+            = new BlockMineralSoil("mineral_soil").queueRegistration();
 
     /**
-     * Mystical Seed Pos. The random biochemical seed dropper plant.
+     * Mystical Seed Pod. The random biochemical seed dropper plant.
      */
-    public static final ResynthBlock BLOCK_SEED_POD = new BlockSeedPod().queueRegistration();
+    public static final ResynthBlock BLOCK_SEED_POD
+            = new BlockSeedPod("seed_pod").queueRegistration();
+
+    /**
+     * Calaverite ore. Spawns in the nether.
+     */
+    public static final ResynthBlock BLOCK_CALVINITE_NETHERRACK
+            = new BlockOre("calvinite_netherrack").queueRegistration();
+
+    /**
+     * Sylvanite ore. Spawns in the end.
+     */
+    public static final ResynthBlock BLOCK_SYLVANITE_END_STONE
+            = new BlockOre("sylvanite_end_stone").queueRegistration();
+
+    /**
+     * Calvinite Enhancer. Allows creating tier 2 Mineral Soil.
+     */
+    public static final ResynthBlock BLOCK_CALVINITE_ENHANCER = new BlockEnhancer(
+            "calvinite", ENHANCERS_CONFIG.getCalviniteMineralConcentrationIncrease(), 1
+    ).queueRegistration();
+
+    /**
+     * Sylvanite Enhancer. Allows creating tier 3 Mineral Soil.
+     */
+    public static final ResynthBlock BLOCK_SYLVANITE_ENHANCER = new BlockEnhancer(
+            "sylvanite", ENHANCERS_CONFIG.getSylvaniteMineralConcentrationIncrease(), 2
+    ).queueRegistration();
 
     // *****
     // Logic

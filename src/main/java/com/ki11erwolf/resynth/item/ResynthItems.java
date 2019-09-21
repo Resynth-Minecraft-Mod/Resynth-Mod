@@ -48,22 +48,38 @@ public class ResynthItems extends QueueRegisterer<Item> {
     /**
      * Mineral Rock. The item dropped from Mineral Rich Rock.
      */
-    public static final ResynthItem ITEM_MINERAL_ROCK = new ItemMineralRock().queueRegistration();
+    public static final ResynthItem ITEM_MINERAL_ROCK
+            = new ResynthItem("mineral_rock").queueRegistration();
 
     /**
      * Dense Mineral Rock. x9 MineralRocks.
      */
-    public static final ResynthItem ITEM_DENSE_MINERAL_ROCK = new ItemDenseMineralRock().queueRegistration();
+    public static final ResynthItem ITEM_DENSE_MINERAL_ROCK
+            = new ResynthItem("dense_mineral_rock").queueRegistration();
 
     /**
      * Mineral Crystal. Recipe component for the Mineral Hoe.
      */
-    public static final ResynthItem ITEM_MINERAL_CRYSTAL = new ItemMineralCrystal().queueRegistration();
+    public static final ResynthItem ITEM_MINERAL_CRYSTAL
+            = new ResynthItem("mineral_crystal").queueRegistration();
 
     /**
      * Mineral Hoe. Tool used to turn dirt/grass into mineral soil.
      */
-    public static final ResynthItem ITEM_MINERAL_HOE = new ItemMineralHoe().queueRegistration();
+    public static final ResynthItem ITEM_MINERAL_HOE
+            = new ItemMineralHoe("mineral_hoe").queueRegistration();
+
+    /**
+     * Calvinite crystal. Dropped when Calvinite Infused Netherrack is mined.
+     */
+    public static final ResynthItem ITEM_CALVINITE
+            = new ResynthItem("calvinite_crystal").queueRegistration();
+
+    /**
+     * Sylvanite crystal. Dropped when Sylvanite Infused End Stone is mined.
+     */
+    public static final ResynthItem ITEM_SYLVANITE
+            = new ResynthItem("sylvanite_crystal").queueRegistration();
 
     // *****
     // Logic

@@ -15,10 +15,7 @@
  */
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.plant.set.CrystallineSetProperties;
-import com.ki11erwolf.resynth.plant.set.MetallicSetProperties;
-import com.ki11erwolf.resynth.plant.set.PlantSet;
-import com.ki11erwolf.resynth.plant.set.PlantSetFactory;
+import com.ki11erwolf.resynth.plant.set.*;
 
 /**
  * Holds the definitions and references to every Resynth

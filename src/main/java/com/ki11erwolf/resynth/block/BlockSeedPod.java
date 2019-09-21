@@ -26,7 +26,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
@@ -35,7 +34,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -43,8 +41,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
 
 /**
  * Mystic Seed Pod. Drops Biochemical seeds for players
@@ -70,8 +66,8 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
     /**
      * Default constructor.
      */
-    BlockSeedPod() {
-        super(Properties.create(Material.PLANTS).sound(SoundType.PLANT), "seed_pod");
+    BlockSeedPod(String name) {
+        super(Properties.create(Material.PLANTS).sound(SoundType.PLANT), name);
     }
 
     // **************
@@ -162,21 +158,6 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
             return getDefaultState();
 
         return state;
-    }
-
-    // *******
-    // Tooltip
-    // *******
-
-    /**
-     * {@inheritDoc}.
-     *
-     * Sets the tooltip on what this block does/how to use it.
-     */
-    @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
-                               ITooltipFlag flagIn) {
-        setDescriptiveTooltip(tooltip, this);
     }
 
     // *********

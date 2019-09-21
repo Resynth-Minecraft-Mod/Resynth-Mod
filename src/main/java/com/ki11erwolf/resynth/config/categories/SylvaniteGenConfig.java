@@ -16,18 +16,18 @@
 package com.ki11erwolf.resynth.config.categories;
 
 /**
- * Configuration settings for Mineral Stone world gen.
+ * Configuration settings for Sylvanite Infused End Stone world gen.
  */
-public class MineralStoneGenConfig extends GenConfig {
+public class SylvaniteGenConfig extends GenConfig {
 
     /**
      * Creates a new config grouping with ore gen settings
-     * for Mineral Stone.
+     * for Sylvanite Infused End Stone.
      */
-    public MineralStoneGenConfig(){
+    public SylvaniteGenConfig() {
         super(
-                "mineral-stone",
-                true, 7, 20, 0, 10, 0
+                "sylvanite",
+                true, 3, 30, 0, 126, 0
         );
     }
 }

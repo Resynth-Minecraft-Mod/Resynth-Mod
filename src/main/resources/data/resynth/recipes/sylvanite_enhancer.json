@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "resynth:sylvanite_crystal"
+    },
+    "Y": {
+      "item": "resynth:calvinite_enhancer"
+    }
+  },
+  "result": {
+    "item": "resynth:sylvanite_enhancer"
+  }
+}

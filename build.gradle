@@ -75,13 +75,13 @@ minecraft {
 }
 
 repositories {
-    maven {
+    maven { //Hwyla (Waila)
         url = "http://tehnut.info/maven/"
     }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.0.91'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.10'
 
     compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.5-B66_1.14.4')
 }

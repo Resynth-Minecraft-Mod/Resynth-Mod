@@ -19,12 +19,16 @@ import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -60,6 +64,7 @@ public class ResynthItem<T extends ResynthItem> extends Item {
      * item group set to the default Resynth
      * item group {@link ResynthTabs#TAB_RESYNTH}.
      */
+    @SuppressWarnings("WeakerAccess")
     public ResynthItem(String name){
         this(new Properties(), name);
     }
@@ -83,9 +88,21 @@ public class ResynthItem<T extends ResynthItem> extends Item {
      * @param prefix prefix to the name of the item.
      * @param properties item properties.
      */
+    @SuppressWarnings("unused")
     public ResynthItem(Properties properties, String name, String prefix){
         super(setItemGroup(properties));
         this.setRegistryName(prefix + name);
+    }
+
+    /**
+     * {@inheritDoc}.
+     *
+     * Sets the tooltip for this item from the lang files.
+     */
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip,
+                               ITooltipFlag flagIn) {
+        setDescriptiveTooltip(tooltip, this);
     }
 
     /**
@@ -131,6 +148,7 @@ public class ResynthItem<T extends ResynthItem> extends Item {
      * @param text the given string text.
      * @return a new TextComponentString containing the given string.
      */
+    @SuppressWarnings("WeakerAccess")
     protected static ITextComponent stringToTextComponent(String text){
         return new StringTextComponent(text);
     }

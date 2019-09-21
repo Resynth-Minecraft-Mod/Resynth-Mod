@@ -33,6 +33,16 @@ public class ResynthFeatures {
      */
     private static final MineralStoneFeature MINERAL_ROCK_FEATURE = new MineralStoneFeature();
 
+    /**
+     * Reference to the {@link CalviniteFeature}
+     */
+    private static final CalviniteFeature CALVINITE_FEATURE = new CalviniteFeature();
+
+    /**
+     * Reference to the {@link SylvaniteFeature}
+     */
+    private static final SylvaniteFeature SYLVANITE_FEATURE = new SylvaniteFeature();
+
     /**Private Constructor.*/
     private ResynthFeatures(){}
 

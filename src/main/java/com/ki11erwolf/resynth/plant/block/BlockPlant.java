@@ -15,12 +15,13 @@
  */
 package com.ki11erwolf.resynth.plant.block;
 
+import com.ki11erwolf.resynth.block.BlockEnhancer;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.item.ItemMineralHoe.InfoProvider;
-import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
+import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
 import com.ki11erwolf.resynth.util.MathUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import mcp.mobius.waila.api.IComponentProvider;
@@ -50,6 +51,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 import java.util.List;
 import java.util.Random;
@@ -269,6 +271,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * Used to get the Mineral Concentration of the Mineral
      * Soil block underneath the plant.
      *
+     * @param pos position of the soil block.
      * @return the Mineral Concentration of the Mineral Soil
      * block below the plant. Will be 0 if no soil block
      * is below the plant.
@@ -283,6 +286,25 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
             return 0;
 
         return te.getMineralPercentage();
+    }
+
+    /**
+     * Used to get the Mineral Concentration increase
+     * of the Mineral Soil block from any Enhancer
+     * blocks underneath the Mineral Soil.
+     *
+     * @param pos position of the soil block.
+     * @return the Mineral Percentage Increase from the soil
+     * blocks enhancer block.
+     */
+    private float getMineralPercentIncrease(World world, BlockPos pos){
+        BlockState enhancer = world.getBlockState(pos.down().down());
+
+        if(enhancer.getBlock() instanceof BlockEnhancer){
+            return ((BlockEnhancer)enhancer.getBlock()).getIncrease();
+        }
+
+        return 0;
     }
 
     /**
@@ -318,15 +340,38 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
         super.tick(state, worldIn, pos, random);
 
-        if (!worldIn.isAreaLoaded(pos, 1))
-            return;
-
-        if (!(worldIn.getLightSubtracted(pos.up(), 0) >= 9))
-            return;
-
-        if(MathUtil.chance(getMineralPercent(worldIn, pos)) && MathUtil.chance(getPlantGrowthChance())){
+        if(canGrow(worldIn, pos)){
             callGrowPlant(worldIn, state, pos, 1);
         }
+    }
+
+    // ************
+    // Growth Check
+    // ************
+
+    /**
+     * Used to check if conditions are right for the plant to grow
+     * (chunk load/light) as well as check to see if the plant can grow by
+     * random chance (based on plant growth chance, mineral content
+     * and any enhancer blocks).
+     *
+     * @param pos position of the soil block.
+     * @return {@code true} if the plant can grow.
+     */
+    private boolean canGrow(World world, BlockPos pos){
+        if (!world.isAreaLoaded(pos, 1))
+            return false;
+
+        if (!(world.getLightSubtracted(pos.up(), 0) >= 9))
+            return false;
+
+        float mineralPercentChance = getMineralPercent(world, pos);
+        float mineralPercentIncrease = getMineralPercentIncrease(world, pos);
+
+        //With percentage increase if mineral percent is above 49.9
+        float combined = mineralPercentChance + ((mineralPercentChance > 49.9) ? mineralPercentIncrease : 0);
+
+        return MathUtil.chance(combined) && MathUtil.chance(getPlantGrowthChance());
     }
 
     // **********
@@ -439,7 +484,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
             tooltip.add(new StringTextComponent(
                     getGrowthStageMessage(
                             getGrowthStage(accessor.getWorld().getBlockState(accessor.getPosition())),
-                            getMaxGrowthStage()
+                            getMaxGrowthStage(), true
                     )
             ));
     }
@@ -453,7 +498,9 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     public String getInfo(World world, BlockPos pos) {
-        return getGrowthStageMessage(getGrowthStage(world.getBlockState(pos)), getMaxGrowthStage());
+        return getGrowthStageMessage(
+                getGrowthStage(world.getBlockState(pos)), getMaxGrowthStage(), FMLEnvironment.dist.isClient()
+        );
     }
 
     /**
@@ -465,12 +512,15 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @param max the plants max number of growth stages.
      * @return the formatted localized message.
      */
-    private static String getGrowthStageMessage(int growthStage, int max){
-        return TextFormatting.GREEN +
-                I18n.format(
-                        "misc.resynth.growth_stage",
-                        TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
-                );
+    private static String getGrowthStageMessage(int growthStage, int max, boolean i18n){
+        if(i18n)
+            return TextFormatting.GREEN +
+                    I18n.format(
+                            "misc.resynth.growth_stage",
+                            TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
+                    );
+        else
+            return TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1));
     }
 
     // ****************

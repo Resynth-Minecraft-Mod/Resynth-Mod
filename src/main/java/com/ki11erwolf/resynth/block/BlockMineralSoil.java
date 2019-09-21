@@ -32,7 +32,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -51,8 +50,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -64,7 +63,7 @@ import java.util.List;
  */
 @SuppressWarnings("deprecation")
 public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements ItemMineralHoe.InfoProvider,
-        IComponentProvider, IServerDataProvider<TileEntity> {
+        IComponentProvider, IServerDataProvider<TileEntity>{
 
     /**
      * Configuration settings for this block class.
@@ -77,7 +76,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      * the texture of the block based on the Mineral Content.
      */
     private static final IntegerProperty STAGE
-            = IntegerProperty.create("stage", 0, 4);
+            = IntegerProperty.create("stage", 0, 4 + 2);
 
     /**
      * The shape of the block.
@@ -90,23 +89,12 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     /**
      * Default constructor.
      */
-    BlockMineralSoil(){
+    BlockMineralSoil(String name){
         super(
                 Properties.create(Material.EARTH).hardnessAndResistance(2.0F).sound(SoundType.GROUND),
-                "mineral_soil"
+                name
         );
         this.setDefaultState(this.stateContainer.getBaseState().with(STAGE, 0));
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p/>
-     * Sets the tooltip for the block.
-     */
-    @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
-                               ITooltipFlag flagIn){
-        ResynthBlock.setDescriptiveTooltip(tooltip, this);
     }
 
     // ***
@@ -136,7 +124,8 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
 
     /**
      * Handles updating the blocks texture based
-     * on the Mineral Content of the block.
+     * on the Mineral Content of the block and any
+     * Enhancer blocks underneath the Mineral Soil block.
      *
      * @param mineralContent the blocks/tile entities Mineral Content.
      * @param world the world the block is in.
@@ -145,7 +134,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      */
     private void updateState(float mineralContent, World world, BlockState state, BlockPos pos){
         if(mineralContent > 49.9){
-            world.setBlockState(pos, state.with(STAGE, 4));
+            world.setBlockState(pos, state.with(STAGE, 4 + getStageIncrease(world, pos)));
         } else if(mineralContent > 39.9){
             world.setBlockState(pos, state.with(STAGE, 3));
         } else if(mineralContent > 29.9){
@@ -177,8 +166,6 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
 
     /**
      * {@inheritDoc}
-     *
-     * Ensures the block drops dirt instead of itself.
      */
     @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
@@ -262,6 +249,10 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         return true;
     }
 
+    // *************
+    // The One Probe
+    // *************
+
     // *****
     // Hwyla
     // *****
@@ -275,7 +266,10 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     @Override
     public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
         tooltip.add(new StringTextComponent(
-                getMineralContentMessage(accessor.getServerData().getFloat(TileEntityMineralSoil.MINERAL_CONTENT_TAG))
+                getMineralContentMessage(
+                        accessor.getServerData().getFloat(TileEntityMineralSoil.MINERAL_CONTENT_TAG),
+                        accessor.getServerData().getFloat("mineralIncrease"), true
+                )
         ));
     }
 
@@ -294,6 +288,11 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         clientServerNBT.putFloat(
                 TileEntityMineralSoil.MINERAL_CONTENT_TAG,
                 ((TileEntityMineralSoil) tileEntity).getMineralPercentage()
+        );
+
+        clientServerNBT.putFloat(
+                "mineralIncrease",
+                getMineralContentIncrease(world, tileEntity.getPos())
         );
     }
 
@@ -363,7 +362,63 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         if(entity == null)
             return "Error";
 
-        return getMineralContentMessage(entity.getMineralPercentage());
+        return getMineralContentMessage(
+                entity.getMineralPercentage(), getMineralContentIncrease(world, pos), FMLEnvironment.dist.isClient()
+        );
+    }
+
+    // *********
+    // Enhancers
+    // *********
+
+    /**
+     * Handles what happens a neighboring block changes.
+     *
+     * Will make sure the block checks for any Enhancer
+     * blocks and update its state accordingly.
+     */
+    @Override
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn,
+                                BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
+        updateState(getTileEntity(worldIn, pos).getMineralPercentage(), worldIn, state, pos);
+    }
+
+    /**
+     * The amount of stages (beyond 4) to increase the soil blocks
+     * growth stage by based on the Enhancer (of lack of) block
+     * underneath the soil block.
+     *
+     * @param pos position of the soil block.
+     * @return the amount of stages to increase the soil blocks
+     * growth stage by (beyond 4).
+     */
+    private static int getStageIncrease(World world, BlockPos pos){
+        BlockState enhancer = world.getBlockState(pos.down());
+
+        if(enhancer.getBlock() instanceof BlockEnhancer){
+            return ((BlockEnhancer)enhancer.getBlock()).getStageIncrease();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Used to get the amount by which to increase the
+     * Mineral Concentration percentage by from the
+     * Enhancer block underneath the soil block.
+     *
+     * @return the amount to increase the Mineral Content by. {@code 0}
+     * if no Enhancer block is beneath the soil block.
+     */
+    private static float getMineralContentIncrease(World world, BlockPos pos){
+        BlockState enhancer = world.getBlockState(pos.down());
+
+        if(enhancer.getBlock() instanceof BlockEnhancer){
+            return ((BlockEnhancer)enhancer.getBlock()).getIncrease();
+        }
+
+        return 0;
     }
 
     /**
@@ -375,11 +430,14 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      *                          value.
      * @return the formatted localized message.
      */
-    private static String getMineralContentMessage(float mineralPercentage){
-        return TextFormatting.RED +
-                I18n.format(
-                        "misc.resynth.mineral_content",
-                        TextFormatting.GOLD + String.valueOf(mineralPercentage)
-                );
+    private static String getMineralContentMessage(float mineralPercentage, float increase, boolean i18n){
+        if(i18n)
+            return TextFormatting.RED +
+                    I18n.format(
+                            "misc.resynth.mineral_content",
+                            TextFormatting.GOLD + String.valueOf(mineralPercentage)
+                    ) + " + " + ((mineralPercentage > 49.9) ? increase : 0) + "%";
+        else return TextFormatting.GOLD + String.valueOf(mineralPercentage)
+                + "% + " + ((mineralPercentage > 49.9) ? increase : 0) + "%";
     }
 }

@@ -4,6 +4,8 @@
     "stage=1": { "model": "resynth:block/mineral_soil_2" },
     "stage=2": { "model": "resynth:block/mineral_soil_3" },
     "stage=3": { "model": "resynth:block/mineral_soil_4" },
-    "stage=4": { "model": "resynth:block/mineral_soil_5" }
+    "stage=4": { "model": "resynth:block/mineral_soil_5" },
+    "stage=5": { "model": "resynth:block/mineral_soil_6" },
+    "stage=6": { "model": "resynth:block/mineral_soil_7" }
   }
 }
