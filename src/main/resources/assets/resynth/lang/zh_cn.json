@@ -1,0 +1,280 @@
+{
+  "COMMENT": "----标签----",
+  "itemGroup.resynth":                                      "神农科技",
+  "itemGroup.resynth_seeds":                                "神农科技 种子",
+  "itemGroup.resynth_produce":                              "神农科技 产品",
+
+  "_COMMENT": "----物品----",
+  "item.resynth.mineral_hoe":                               "矿物质锄",
+  "item.resynth.mineral_crystal":                           "矿物质晶体",
+  "item.resynth.mineral_rock":                              "矿物质岩石",
+  "item.resynth.dense_mineral_rock":                        "密实的矿物质岩石",
+
+  "__COMMENT": "----方块----",
+  "block.resynth.mineral_stone":                            "被注入矿物质的石头",
+  "block.resynth.seed_pod":                                 "神秘的种荚",
+  "block.resynth.mineral_soil":                             "矿物质泥土",
+
+  "___COMMENT": "----作物----",
+  "block.resynth.crystalline_plant_mineral_rock":           "矿物质岩石作物",
+  "item.resynth.crystalline_seeds_mineral_rock":            "矿物质岩石种子",
+  "item.resynth.crystalline_shard_mineral_rock":            "矿物质岩石碎片",
+
+  "block.resynth.crystalline_plant_diamond":                "钻石作物",
+  "item.resynth.crystalline_seeds_diamond":                 "钻石种子",
+  "item.resynth.crystalline_shard_diamond":                 "钻石碎片",
+
+  "block.resynth.crystalline_plant_redstone":               "红石作物",
+  "item.resynth.crystalline_seeds_redstone":                "红石种子",
+  "item.resynth.crystalline_shard_redstone":                "红石碎片",
+
+  "block.resynth.crystalline_plant_lapis_lazuli":           "青金石作物",
+  "item.resynth.crystalline_seeds_lapis_lazuli":            "青金石种子",
+  "item.resynth.crystalline_shard_lapis_lazuli":            "青金石碎片",
+
+  "block.resynth.crystalline_plant_coal":                   "煤作物",
+  "item.resynth.crystalline_seeds_coal":                    "煤种子",
+  "item.resynth.crystalline_shard_coal":                    "煤碎片",
+
+  "block.resynth.crystalline_plant_emerald":                "绿宝石作物",
+  "item.resynth.crystalline_seeds_emerald":                 "绿宝石种子",
+  "item.resynth.crystalline_shard_emerald":                 "绿宝石碎片",
+
+  "block.resynth.crystalline_plant_glowstone":              "萤石作物",
+  "item.resynth.crystalline_seeds_glowstone":               "萤石种子",
+  "item.resynth.crystalline_shard_glowstone":               "萤石碎片",
+
+  "block.resynth.crystalline_plant_quartz":                 "下界石英作物",
+  "item.resynth.crystalline_seeds_quartz":                  "下界石英种子",
+  "item.resynth.crystalline_shard_quartz":                  "下界石英碎片",
+
+  "block.resynth.metallic_plant_iron":                      "铁作物",
+  "item.resynth.metallic_seeds_iron":                       "铁种子",
+  "block.resynth.metallic_organic_ore_iron":                "有机铁矿石",
+
+  "block.resynth.metallic_plant_gold":                      "金作物",
+  "item.resynth.metallic_seeds_gold":                       "金种子",
+  "block.resynth.metallic_organic_ore_gold":                "有机金矿石",
+
+  "block.resynth.metallic_plant_clay":                      "粘土作物",
+  "item.resynth.metallic_seeds_clay":                       "粘土种子",
+  "block.resynth.metallic_organic_ore_clay":                "有机粘土",
+
+  "block.resynth.metallic_plant_end_stone":                 "末地石作物",
+  "item.resynth.metallic_seeds_end_stone":                  "末地石种子",
+  "block.resynth.metallic_organic_ore_end_stone":           "有机末地石",
+
+  "block.resynth.metallic_plant_sand":                      "沙子作物",
+  "item.resynth.metallic_seeds_sand":                       "沙子种子",
+  "block.resynth.metallic_organic_ore_sand":                "有机沙子",
+
+  "block.resynth.biochemical_plant_ender_pearl":            "末影珍珠作物",
+  "item.resynth.biochemical_seeds_ender_pearl":             "末影珍珠种子",
+  "item.resynth.biochemical_bulb_ender_pearl":              "末影珍珠鳞茎",
+
+  "block.resynth.biochemical_plant_gunpowder":              "火药作物",
+  "item.resynth.biochemical_seeds_gunpowder":               "火药种子",
+  "item.resynth.biochemical_bulb_gunpowder":                "火药鳞茎",
+
+  "block.resynth.biochemical_plant_blaze_rod":              "烈焰棒作物",
+  "item.resynth.biochemical_seeds_blaze_rod":               "烈焰棒种子",
+  "item.resynth.biochemical_bulb_blaze_rod":                "烈焰棒鳞茎",
+
+  "block.resynth.biochemical_plant_bone":                   "骨头作物",
+  "item.resynth.biochemical_seeds_bone":                    "骨头种子",
+  "item.resynth.biochemical_bulb_bone":                     "骨头鳞茎",
+
+  "block.resynth.biochemical_plant_string":                 "线作物",
+  "item.resynth.biochemical_seeds_string":                  "线种子",
+  "item.resynth.biochemical_bulb_string":                   "线鳞茎",
+
+  "block.resynth.biochemical_plant_feather":                "羽毛作物",
+  "item.resynth.biochemical_seeds_feather":                 "羽毛种子",
+  "item.resynth.biochemical_bulb_feather":                  "羽毛鳞茎",
+
+  "block.resynth.biochemical_plant_ghast_tear":             "恶魂之泪作物",
+  "item.resynth.biochemical_seeds_ghast_tear":              "恶魂之泪种子",
+  "item.resynth.biochemical_bulb_ghast_tear":               "恶魂之泪鳞茎",
+
+  "block.resynth.biochemical_plant_nether_star":            "下界之星作物",
+  "item.resynth.biochemical_seeds_nether_star":             "下界之星种子",
+  "item.resynth.biochemical_bulb_nether_star":              "下界之星鳞茎",
+
+  "block.resynth.biochemical_plant_spider_eye":             "蜘蛛眼作物",
+  "item.resynth.biochemical_seeds_spider_eye":              "蜘蛛眼种子",
+  "item.resynth.biochemical_bulb_spider_eye":               "蜘蛛眼鳞茎",
+
+  "block.resynth.biochemical_plant_slime_ball":             "粘液球作物",
+  "item.resynth.biochemical_seeds_slime_ball":              "粘液球种子",
+  "item.resynth.biochemical_bulb_slime_ball":               "粘液球鳞茎",
+
+  "block.resynth.biochemical_plant_shulker_shell":          "潜影壳作物",
+  "item.resynth.biochemical_seeds_shulker_shell":           "潜影壳种子",
+  "item.resynth.biochemical_bulb_shulker_shell":            "潜影壳鳞茎",
+
+  "block.resynth.biochemical_plant_ink_sac":                "墨囊作物",
+  "item.resynth.biochemical_seeds_ink_sac":                 "墨囊种子",
+  "item.resynth.biochemical_bulb_ink_sac":                  "墨囊鳞茎",
+
+  "block.resynth.biochemical_plant_leather":                "皮革作物",
+  "item.resynth.biochemical_seeds_leather":                 "皮革种子",
+  "item.resynth.biochemical_bulb_leather":                  "皮革鳞茎",
+
+  "block.resynth.biochemical_plant_rotten_flesh":           "腐肉作物",
+  "item.resynth.biochemical_seeds_rotten_flesh":            "腐肉种子",
+  "item.resynth.biochemical_bulb_rotten_flesh":             "腐肉鳞茎",
+
+  "block.resynth.biochemical_plant_prismarine_crystal":     "海晶砂粒作物",
+  "item.resynth.biochemical_seeds_prismarine_crystal":      "海晶砂粒种子",
+  "item.resynth.biochemical_bulb_prismarine_crystal":       "海晶砂粒鳞茎",
+
+  "block.resynth.biochemical_plant_prismarine_shard":       "海晶碎片作物",
+  "item.resynth.biochemical_seeds_prismarine_shard":        "海晶碎片种子",
+  "item.resynth.biochemical_bulb_prismarine_shard":         "海晶碎片鳞茎",
+
+  "block.resynth.biochemical_plant_rabbit_foot":            "兔子脚作物",
+  "item.resynth.biochemical_seeds_rabbit_foot":             "兔子脚种子",
+  "item.resynth.biochemical_bulb_rabbit_foot":              "兔子脚鳞茎",
+
+  "block.resynth.biochemical_plant_dragons_breath":         "龙息作物",
+  "item.resynth.biochemical_seeds_dragons_breath":          "龙息种子",
+  "item.resynth.biochemical_bulb_dragons_breath":           "龙息鳞茎",
+
+  "block.resynth.biochemical_plant_experience_bottle":      "经验作物",
+  "item.resynth.biochemical_seeds_experience_bottle":       "经验种子",
+  "item.resynth.biochemical_bulb_experience_bottle":        "经验鳞茎",
+
+  "block.resynth.biochemical_plant_nautilus_shell":         "鹦鹉螺壳作物",
+  "item.resynth.biochemical_seeds_nautilus_shell":          "鹦鹉螺壳种子",
+  "item.resynth.biochemical_bulb_nautilus_shell":           "鹦鹉螺壳鳞茎",
+
+  "block.resynth.crystalline_plant_simpleores_onyx":                   "玛瑙作物",
+  "item.resynth.crystalline_seeds_simpleores_onyx":                    "玛瑙种子 (简单矿石)",
+  "item.resynth.crystalline_shard_simpleores_onyx":                    "玛瑙碎片 (简单矿石)",
+
+  "block.resynth.metallic_plant_simpleores_copper":                     "铜作物",
+  "item.resynth.metallic_seeds_simpleores_copper":                      "铜种子 (简单矿石)",
+  "block.resynth.metallic_organic_ore_simpleores_copper":               "有机铜矿石 (简单矿石)",
+
+  "block.resynth.metallic_plant_simpleores_tin":                        "锡作物",
+  "item.resynth.metallic_seeds_simpleores_tin":                         "锡种子 (简单矿石)",
+  "block.resynth.metallic_organic_ore_simpleores_tin":                  "有机锡矿石 (简单矿石)",
+
+  "block.resynth.metallic_plant_simpleores_mythril":                    "秘银作物",
+  "item.resynth.metallic_seeds_simpleores_mythril":                     "秘银种子 (简单矿石)",
+  "block.resynth.metallic_organic_ore_simpleores_mythril":              "有机秘银矿石 (简单矿石)",
+
+  "block.resynth.metallic_plant_simpleores_adamantium":                 "艾德曼合金作物",
+  "item.resynth.metallic_seeds_simpleores_adamantium":                  "艾德曼合金种子 (简单矿石)",
+  "block.resynth.metallic_organic_ore_simpleores_adamantium":           "有机艾德曼合金矿石 (简单矿石)",
+
+  "block.resynth.crystalline_plant_moreoresinone_ruby":             "红宝石作物",
+  "item.resynth.crystalline_seeds_moreoresinone_ruby":              "红宝石种子 (更多矿石)",
+  "item.resynth.crystalline_shard_moreoresinone_ruby":              "红宝石碎片 (更多矿石)",
+
+  "block.resynth.crystalline_plant_moreoresinone_topaz":            "托帕石作物",
+  "item.resynth.crystalline_seeds_moreoresinone_topaz":             "托帕石种子 (更多矿石)",
+  "item.resynth.crystalline_shard_moreoresinone_topaz":             "托帕石碎片 (更多矿石)",
+
+  "block.resynth.crystalline_plant_moreoresinone_sapphire":         "蓝宝石作物",
+  "item.resynth.crystalline_seeds_moreoresinone_sapphire":          "蓝宝石种子 (更多矿石)",
+  "item.resynth.crystalline_shard_moreoresinone_sapphire":          "蓝宝石碎片 (更多矿石)",
+
+  "block.resynth.crystalline_plant_moreoresinone_amethyst":         "紫水晶作物",
+  "item.resynth.crystalline_seeds_moreoresinone_amethyst":          "紫水晶种子 (更多矿石)",
+  "item.resynth.crystalline_shard_moreoresinone_amethyst":          "紫水晶碎片 (更多矿石)",
+
+  "block.resynth.crystalline_plant_ruby_ruby":                          "红宝石作物",
+  "item.resynth.crystalline_seeds_ruby_ruby":                           "红宝石种子 (红宝石)",
+  "item.resynth.crystalline_shard_ruby_ruby":                           "红宝石碎片 (红宝石)",
+
+  "block.resynth.crystalline_plant_ruby_opal":                          "猫眼石作物",
+  "item.resynth.crystalline_seeds_ruby_opal":                           "猫眼石种子 (红宝石)",
+  "item.resynth.crystalline_shard_ruby_opal":                           "猫眼石碎片 (红宝石)",
+
+  "block.resynth.crystalline_plant_bluepower_ruby":                 "红宝石作物",
+  "item.resynth.crystalline_seeds_bluepower_ruby":                  "红宝石种子 (蓝石力量)",
+  "item.resynth.crystalline_shard_bluepower_ruby":                  "红宝石碎片 (蓝石力量)",
+
+  "block.resynth.crystalline_plant_bluepower_sapphire":             "蓝宝石作物",
+  "item.resynth.crystalline_seeds_bluepower_sapphire":              "蓝宝石种子 (蓝石力量)",
+  "item.resynth.crystalline_shard_bluepower_sapphire":              "蓝宝石碎片 (蓝石力量)",
+
+  "block.resynth.crystalline_plant_bluepower_amethyst":             "紫水晶作物",
+  "item.resynth.crystalline_seeds_bluepower_amethyst":              "紫水晶种子 (蓝石力量)",
+  "item.resynth.crystalline_shard_bluepower_amethyst":              "紫水晶碎片 (蓝石力量)",
+
+  "block.resynth.crystalline_plant_bluepower_malachite":            "孔雀石作物",
+  "item.resynth.crystalline_seeds_bluepower_malachite":             "孔雀石种子 (蓝石力量)",
+  "item.resynth.crystalline_shard_bluepower_malachite":             "孔雀石碎片 (蓝石力量)",
+
+  "block.resynth.crystalline_plant_bluepower_teslatite":            "特斯拉作物",
+  "item.resynth.crystalline_seeds_bluepower_teslatite":             "特斯拉种子 (蓝石力量)",
+  "item.resynth.crystalline_shard_bluepower_teslatite":             "特斯拉碎片 (蓝石力量)",
+
+  "block.resynth.metallic_plant_bluepower_copper":                  "铜作物",
+  "item.resynth.metallic_seeds_bluepower_copper":                   "铜种子 (蓝石力量)",
+  "block.resynth.metallic_organic_ore_bluepower_copper":            "有机铜矿石 (蓝石力量)",
+
+  "block.resynth.metallic_plant_bluepower_silver":                  "银作物",
+  "item.resynth.metallic_seeds_bluepower_silver":                   "银种子 (蓝石力量)",
+  "block.resynth.metallic_organic_ore_bluepower_silver":            "有机银矿石 (蓝石力量)",
+
+  "block.resynth.metallic_plant_bluepower_zinc":                    "锌作物",
+  "item.resynth.metallic_seeds_bluepower_zinc":                     "锌种子 (蓝石力量)",
+  "block.resynth.metallic_organic_ore_bluepower_zinc":              "有机锌矿石 (蓝石力量)",
+
+  "block.resynth.metallic_plant_bluepower_tungsten":                "钨作物",
+  "item.resynth.metallic_seeds_bluepower_tungsten":                 "钨种子 (蓝石力量)",
+  "block.resynth.metallic_organic_ore_bluepower_tungsten":          "有机钨矿石 (蓝石力量)",
+
+  "____COMMENT": "---工具提示----",
+  "tooltip.block.resynth.mineral_stone":
+  "Resynth的矿石. 被开采后会获得矿物质岩石.\n默认情况下能在Y值较低的地下刷出.\n需要铁镐及以上等级的稿子才能开采.",
+  "tooltip.block.resynth.mineral_soil":
+  "Resynth的泥土. 只能种植 Resynth 作物.\n使用矿物质锄耕作泥土或草方块得到.\n在矿物质泥土添加矿物质岩石和密实的矿物质岩石可以增加作物的生长速度.\n矿物质锄可以用来检测矿物质泥土的矿物质含量.",
+  "tooltip.block.resynth.seed_pod":
+  "可以设置为从自然生成的花中掉落\n生物化学种子会在玩家杀死生物时概率调出\n和平模式是不会启用的.\n当它不启用时, 种荚将变成一个毫无作用的装饰品.",
+
+  "tooltip.item.resynth.mineral_hoe":
+  "Resynth的工具选择. 需要先试用特殊的锄头耕作泥土或草方块才可以种植神农科技作物.\n每次使用矿物质锄都会消耗矿物质.\n1 矿物质 = 1 矿物质晶体.\n矿物质可以通过矿物质锄对准空气右键单击获得,\n或者按住Shift右键单击一个方块, \n当然你需要手持矿物质锄并在背包放置矿物质晶体.\n可以使用它右击来检测作物生长情况, 或检测矿物质土壤的矿物质含量.\n你可以在创造模式下右键单击促进作物生长.",
+  "tooltip.item.resynth.mineral_hoe_charges": "矿物质: %s",
+  "tooltip.item.resynth.mineral_crystal":
+  "一个合成材料, 以及消耗品, 矿物质锄的 \"燃料\" .\n矿物质晶体可以从矿物质土壤中获得, 因此, 需要对该Mod有一些了解.",
+  "tooltip.item.resynth.dense_mineral_rock":
+  "是矿物质岩石(x9)的压缩品. 作为合成材料. 还可以添加到矿物质土壤中.\n警告: 在矿物质土壤中加入密实的矿物质岩石可以会导致矿物质岩石/密实的矿物质岩石丢失. 很复杂",
+  "tooltip.item.resynth.mineral_rock":
+  "Resynth的核心物品. 作为大多数 Resynth 方块和物品的合成材料.\n也可以作为消耗品使用, 用于制作被注入矿物质的石头或.\n用于矿物质土壤的肥料或生长剂.",
+
+  "_____COMMENT": "----作物工具提示----",
+  "tooltip.item.resynth.crystalline_seeds":
+  "可以通过开采矿石获得最终资源, 或者可以将它的产品（碎片）留在水中让它自然消失.\n任何作物都可以用矿物质锄 (右击) 查看生长情况.",
+  "tooltip.item.resynth.metallic_seeds":
+  "可以使用TNT爆破获得最终资源, 或者可以使用TNT爆破它的产品 (有机矿石) .\n任何作物都可以用矿物质锄 (右击) 查看生长情况.",
+  "tooltip.item.resynth.biochemical_seeds":
+  "可以通过杀死生物获得最终资源, 或者可以粉碎它的产品 (鳞茎).\n任何作物都可以用矿物质锄 (右击) 查看生长情况.",
+  "tooltip.item.resynth.shard":
+  "可以将它烧炼为最终资源, 或将它放在水中让它消失以获得更多种子.",
+  "tooltip.item.resynth.bulb":
+  "可以将它烧炼为最终资源, 或粉碎 (按住右键) 以获得更多种子.",
+  "tooltip.item.resynth.seeds.failure":
+  "该作物类型已禁用! 一个错误发生在作物的放置, 你不可以使用. 如果你看到这个, 请发送一个错误报告!",
+
+  "______COMMENT": "----作物方块提示----",
+  "tooltip.block.resynth.organic_ore":
+  "可以将它烧炼为最终资源矿石, 或通过爆破以获得更多种子. ",
+
+  "_______COMMENT": "----作物特征提示----",
+  "tooltip.property.resynth.growth_chance": "生长速度: %s%%",
+  "tooltip.property.resynth.plant_yield": "作物产量: %s 个掉落物.",
+  "tooltip.property.resynth.bonemeal_enabled": "是否允许使用骨粉: %s",
+  "tooltip.property.resynth.seed_spawn_chance_from_ore": "种子通过矿石获得的几率: %s%%",
+  "tooltip.property.resynth.seed_spawn_chance_from_shard": "种子通过碎片获得的几率: %s%%",
+  "tooltip.property.resynth.seed_spawn_chance_from_organic_ore": "种子通过有机矿石获得的几率: %s%%",
+  "tooltip.property.resynth.seed_spawn_chance_from_mob": "种子通过怪物获得的几率: %s%%",
+  "tooltip.property.resynth.seed_spawn_chance_from_bulb": "种子通过鳞茎获得的几率: %s%%",
+
+  "________COMMENT": "---其它---",
+  "misc.resynth.mineral_content": "矿物质含量: %s%%",
+  "misc.resynth.growth_stage": "作物长势: %s"
+}
