@@ -19,7 +19,11 @@ apply plugin: 'eclipse'
 //  Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 ////*******************************************************************************************************
 
-version = '3.0.0'
+//The three places to change this:
+//ResynthMod.java
+//mods.toml
+//Here
+version = '3.1.0'
 
 group = "com.ki11erwolf.resynth"
 archivesBaseName = "resynth"

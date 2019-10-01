@@ -9,11 +9,17 @@
   "item.resynth.mineral_crystal":                           "矿物质晶体",
   "item.resynth.mineral_rock":                              "矿物质岩石",
   "item.resynth.dense_mineral_rock":                        "密实的矿物质岩石",
+  "item.resynth.calvinite_crystal":                         "石青质晶体",
+  "item.resynth.sylvanite_crystal":                         "西尔万质晶体",
 
   "__COMMENT": "----方块----",
   "block.resynth.mineral_stone":                            "被注入矿物质的石头",
   "block.resynth.seed_pod":                                 "神秘的种荚",
   "block.resynth.mineral_soil":                             "矿物质泥土",
+  "block.resynth.calvinite_netherrack":                     "石青输注架子 (直接翻译)",
+  "block.resynth.sylvanite_end_stone":                      "西尔万输注端石 (直接翻译)",
+  "block.resynth.calvinite_enhancer":                       "石青增强 (直接翻译)",
+  "block.resynth.sylvanite_enhancer":                       "西尔万增强 (直接翻译)",
 
   "___COMMENT": "----作物----",
   "block.resynth.crystalline_plant_mineral_rock":           "矿物质岩石作物",
@@ -235,6 +241,14 @@
   "Resynth的泥土. 只能种植 Resynth 作物.\n使用矿物质锄耕作泥土或草方块得到.\n在矿物质泥土添加矿物质岩石和密实的矿物质岩石可以增加作物的生长速度.\n矿物质锄可以用来检测矿物质泥土的矿物质含量.",
   "tooltip.block.resynth.seed_pod":
   "可以设置为从自然生成的花中掉落\n生物化学种子会在玩家杀死生物时概率调出\n和平模式是不会启用的.\n当它不启用时, 种荚将变成一个毫无作用的装饰品.",
+  "tooltip.block.resynth.calvinite_netherrack":
+  "在整个地狱中很少见。滴加可以被制作为钙铁矿增强剂的钙铁矿晶体，以进一步增加矿质土壤中的矿物质含量. (直接翻译)",
+  "tooltip.block.resynth.sylvanite_end_stone":
+  "到头来都很少见。滴落可以合成为万能增强剂的万能晶体，以进一步增加矿质土壤的矿物质含量. (直接翻译)",
+  "tooltip.block.resynth.calvinite_enhancer":
+  "\n可以直接放在矿物含量为50%%的富含矿物质的土壤下面，以增加其矿物质含量 %s%%. (直接翻译)",
+  "tooltip.block.resynth.sylvanite_enhancer":
+  "可以直接放在矿物含量为50%%的富含矿物质的土壤下面，以增加其矿物质含量 %s%%. (直接翻译)",
 
   "tooltip.item.resynth.mineral_hoe":
   "Resynth的工具选择. 需要先试用特殊的锄头耕作泥土或草方块才可以种植神农科技作物.\n每次使用矿物质锄都会消耗矿物质.\n1 矿物质 = 1 矿物质晶体.\n矿物质可以通过矿物质锄对准空气右键单击获得,\n或者按住Shift右键单击一个方块, \n当然你需要手持矿物质锄并在背包放置矿物质晶体.\n可以使用它右击来检测作物生长情况, 或检测矿物质土壤的矿物质含量.\n你可以在创造模式下右键单击促进作物生长.",
@@ -245,6 +259,10 @@
   "是矿物质岩石(x9)的压缩品. 作为合成材料. 还可以添加到矿物质土壤中.\n警告: 在矿物质土壤中加入密实的矿物质岩石可以会导致矿物质岩石/密实的矿物质岩石丢失. 很复杂",
   "tooltip.item.resynth.mineral_rock":
   "Resynth的核心物品. 作为大多数 Resynth 方块和物品的合成材料.\n也可以作为消耗品使用, 用于制作被注入矿物质的石头或.\n用于矿物质土壤的肥料或生长剂.",
+  "tooltip.item.resynth.calvinite_crystal":
+  "开采石青输注架子时掉落。可以制成增强剂，使矿物土壤的矿物质含量增加到50％以上. (直接翻译)",
+  "tooltip.item.resynth.sylvanite_crystal":
+  "开采万寿菊注入的末石时掉落。可以制成增强剂，使矿物土壤的矿物质含量增加到50％以上. (直接翻译)",
 
   "_____COMMENT": "----作物工具提示----",
   "tooltip.item.resynth.crystalline_seeds":
