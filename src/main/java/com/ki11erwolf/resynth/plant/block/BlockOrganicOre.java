@@ -60,7 +60,7 @@ public class BlockOrganicOre extends ResynthBlock<BlockOrganicOre> {
      */
     public BlockOrganicOre(String setTypeName, String name, IMetallicSetProperties properties) {
         super(
-                Block.Properties.create(Material.ROCK).harvestTool(ToolType.AXE)
+                Block.Properties.create(Material.GOURD).harvestTool(ToolType.AXE)
                 .hardnessAndResistance(2),
                 new Item.Properties().group(ResynthTabs.TAB_RESYNTH_PRODUCE),
                 setTypeName + "_" + PREFIX + "_" + name

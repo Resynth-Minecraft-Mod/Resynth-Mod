@@ -61,6 +61,11 @@ public class ResynthModdedPlants {
      */
     private static final String BLUE_POWER = "bluepower";
 
+    /**
+     * The mod id for the Basic Nether Ores Mod.
+     */
+    private static final String BASIC_NETHER_ORES = "bno";
+
     // *******************
     // GENERAL DEFINITIONS
     // *******************
@@ -333,6 +338,8 @@ public class ResynthModdedPlants {
     public static final PlantSet BLUE_POWER_TUNGSTEN = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BLUE_POWER, "tungsten", TUNGSTEN_PROPERTIES, "tungsten_ore"
     ));
+
+    //Basic Nether Ores
 
 
     /**Private constructor.*/

@@ -55,6 +55,21 @@ public class ResynthPlants {
     ).register();
 
     /**
+     * The plant set for Resynth Calvinite Crystals
+     */
+    public static final PlantSet CALVINITE_CRYSTAL = PlantSetFactory.newVanillaCrystallineSet(
+            "calvinite_crystal",
+            new CrystallineSetProperties(
+                    false,
+                    3.5F,
+                    1,
+                    2.5F,
+                    1
+            ),
+            ResynthBlocks.BLOCK_CALVINITE_NETHERRACK
+    ).register();
+
+    /**
      * The plant set for Vanilla Diamonds.
      */
     public static final PlantSet DIAMOND = PlantSetFactory.newVanillaCrystallineSet(
