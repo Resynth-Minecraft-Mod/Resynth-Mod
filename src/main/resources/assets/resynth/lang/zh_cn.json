@@ -26,6 +26,10 @@
   "item.resynth.crystalline_seeds_mineral_rock":            "矿物质岩石种子",
   "item.resynth.crystalline_shard_mineral_rock":            "矿物质岩石碎片",
 
+  "block.resynth.crystalline_plant_calvinite_crystal":      "Calvinite Crystal Plant",
+  "item.resynth.crystalline_seeds_calvinite_crystal":       "Calvinite Crystal Seeds",
+  "item.resynth.crystalline_shard_calvinite_crystal":       "Calvinite Crystal Shard",
+
   "block.resynth.crystalline_plant_diamond":                "钻石作物",
   "item.resynth.crystalline_seeds_diamond":                 "钻石种子",
   "item.resynth.crystalline_shard_diamond":                 "钻石碎片",

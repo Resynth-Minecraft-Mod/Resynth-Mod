@@ -26,6 +26,10 @@
   "item.resynth.crystalline_seeds_mineral_rock":            "Mineral Rock Seeds",
   "item.resynth.crystalline_shard_mineral_rock":            "Mineral Rock Shard",
 
+  "block.resynth.crystalline_plant_calvinite_crystal":      "Calvinite Crystal Plant",
+  "item.resynth.crystalline_seeds_calvinite_crystal":       "Calvinite Crystal Seeds",
+  "item.resynth.crystalline_shard_calvinite_crystal":       "Calvinite Crystal Shard",
+
   "block.resynth.crystalline_plant_diamond":                "Diamond Plant",
   "item.resynth.crystalline_seeds_diamond":                 "Diamond Seeds",
   "item.resynth.crystalline_shard_diamond":                 "Diamond Shard",
