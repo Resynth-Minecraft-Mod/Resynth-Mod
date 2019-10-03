@@ -55,6 +55,7 @@ import java.util.Random;
  * It was put in place to replace the hold way of
  * obtaining mineral soil.
  */
+//TODO: This could be better written...
 public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
     /**

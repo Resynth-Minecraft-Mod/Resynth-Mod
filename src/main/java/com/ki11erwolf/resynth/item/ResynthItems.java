@@ -28,6 +28,7 @@ import net.minecraftforge.fml.common.Mod;
  *
  * This class also handles the registering of items.
  */
+@SuppressWarnings("unused")//Fields register themselves.
 @Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ResynthItems extends QueueRegisterer<Item> {
 
@@ -61,7 +62,7 @@ public class ResynthItems extends QueueRegisterer<Item> {
      * Mineral Crystal. Recipe component for the Mineral Hoe.
      */
     public static final ResynthItem ITEM_MINERAL_CRYSTAL
-            = new ResynthItem("mineral_crystal").queueRegistration();
+            = new ItemMineralCrystal("mineral_crystal").queueRegistration();
 
     /**
      * Mineral Hoe. Tool used to turn dirt/grass into mineral soil.
