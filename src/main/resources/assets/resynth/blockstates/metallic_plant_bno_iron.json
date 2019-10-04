@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "growth_stage=0": { "model": "resynth:block/plant/iron/plant_0" },
+    "growth_stage=1": { "model": "resynth:block/plant/iron/plant_1" },
+    "growth_stage=2": { "model": "resynth:block/plant/iron/plant_2" },
+    "growth_stage=3": { "model": "resynth:block/plant/iron/plant_3" },
+    "growth_stage=4": { "model": "resynth:block/plant/iron/plant_4" },
+    "growth_stage=5": { "model": "resynth:block/plant/iron/plant_5" },
+    "growth_stage=6": { "model": "resynth:block/plant/iron/plant_6" },
+    "growth_stage=7": { "model": "resynth:block/plant/iron/plant_7" },
+
+    "growth_stage=8,facing=west": { "model": "resynth:block/plant/iron/plant_8" },
+    "growth_stage=8,facing=east": { "model": "resynth:block/plant/iron/plant_8", "y": 180 },
+    "growth_stage=8,facing=north": { "model": "resynth:block/plant/iron/plant_8", "y": 90 },
+    "growth_stage=8,facing=south": { "model": "resynth:block/plant/iron/plant_8", "y": 270 }
+  }
+}

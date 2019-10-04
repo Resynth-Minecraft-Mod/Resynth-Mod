@@ -73,6 +73,46 @@ public class ResynthModdedPlants {
     // Crystalline
 
     /**
+     * The set properties for general Diamond and Diamond Ore.
+     */
+    static final CrystallineSetProperties DIAMOND_PROPERTIES = new CrystallineSetProperties(
+            false, 6.0F,1,
+            3.0F, 1.0F
+    );
+
+    /**
+     * The set properties for general Redstone and Redstone Ore.
+     */
+    static final CrystallineSetProperties REDSTONE_PROPERTIES = new CrystallineSetProperties(
+            false, 15.0F, 2,
+            1.0F, 3.5F
+    );
+
+    /**
+     * The set properties for general Lapis Lazuli and Lapis Lazuli Ore.
+     */
+    static final CrystallineSetProperties LAPIS_LAZULI_PROPERTIES = new CrystallineSetProperties(
+            false, 6, 2,
+            2, 3.5F
+    );
+
+    /**
+     * The set properties for general Coal and Coal Ore.
+     */
+    static final CrystallineSetProperties COAL_PROPERTIES = new CrystallineSetProperties(
+            false, 30, 2,
+            1.0F, 3.0F
+    );
+
+    /**
+     * The set properties for general Emerald and Emerald Ore.
+     */
+    static final CrystallineSetProperties EMERALD_PROPERTIES = new CrystallineSetProperties(
+            false, 2.0F, 1,
+            4.0F, 0.5F
+    );
+
+    /**
      * The set properties for general onyx gems and onyx ore.
      */
     private static final CrystallineSetProperties ONYX_PROPERTIES = new CrystallineSetProperties(
@@ -139,6 +179,17 @@ public class ResynthModdedPlants {
     // Metallic
 
     /**
+     * The set properties for general Iron and Iron Ore.
+     */
+    static final MetallicSetProperties IRON_PROPERTIES = new MetallicSetProperties(
+            false, 10, 6, 6
+    );
+
+    static final MetallicSetProperties GOLD_PROPERTIES = new MetallicSetProperties(
+            false, 8, 5, 5
+    );
+
+    /**
      * The set properties for general copper and copper ore.
      */
     private static final MetallicSetProperties COPPER_PROPERTIES = new MetallicSetProperties(
@@ -150,6 +201,34 @@ public class ResynthModdedPlants {
      */
     private static final MetallicSetProperties TIN_PROPERTIES = new MetallicSetProperties(
             false, 14, 7, 7
+    );
+
+    /**
+     * The set properties for general aluminium and aluminium ore.
+     */
+    private static final MetallicSetProperties ALUMINIUM_PROPERTIES = new MetallicSetProperties(
+            false, 18, 6, 6
+    );
+
+    /**
+     * The set properties for general lead and lead ore.
+     */
+    private static final MetallicSetProperties LEAD_PROPERTIES = new MetallicSetProperties(
+            false, 10, 8, 8
+    );
+
+    /**
+     * The set properties for general nickel and nickel ore.
+     */
+    private static final MetallicSetProperties NICKEL_PROPERTIES = new MetallicSetProperties(
+            false, 12, 8, 8
+    );
+
+    /**
+     * The set properties for general uranium and uranium ore.
+     */
+    private static final MetallicSetProperties URANIUM_PROPERTIES = new MetallicSetProperties(
+            false, 5, 4, 4
     );
 
     /**
@@ -341,6 +420,104 @@ public class ResynthModdedPlants {
 
     //Basic Nether Ores
 
+    /**
+     * The plant set for nether iron from Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_IRON = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BASIC_NETHER_ORES, "iron", IRON_PROPERTIES, "netheriron_ore"
+    ));
+
+    /**
+     * The plant set for nether gold from Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_GOLD = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BASIC_NETHER_ORES, "gold", GOLD_PROPERTIES, "nethergold_ore"
+    ));
+
+    /**
+     * The plant set for nether coal from Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_COAL = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            BASIC_NETHER_ORES, "coal", COAL_PROPERTIES, "nethercoal_ore"
+    ));
+
+    /**
+     * The plant set for nether lapis lazuli from Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_LAPIS_LAZULI
+            = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            BASIC_NETHER_ORES, "lapis_lazuli", LAPIS_LAZULI_PROPERTIES, "netherlapis_ore"
+    ));
+
+    /**
+     * The plant set for nether redstone from Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_REDSTONE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            BASIC_NETHER_ORES, "redstone", REDSTONE_PROPERTIES, "netherredstone_ore"
+    ));
+
+    /**
+     * The plant set for nether diamond from Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_DIAMOND = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            BASIC_NETHER_ORES, "diamond", DIAMOND_PROPERTIES, "netherdiamond_ore"
+    ));
+
+    /**
+     * The plant set for nether emerald from Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_EMERALD = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            BASIC_NETHER_ORES, "emerald", EMERALD_PROPERTIES, "netheremerald_ore"
+    ));
+
+    /**
+     * The plant set for nether uranium for Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_URANIUM = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BASIC_NETHER_ORES, "uranium", URANIUM_PROPERTIES, "netheruranium_ore"
+    ));
+
+    /**
+     * The plant set for nether tin for Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_TIN = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BASIC_NETHER_ORES, "tin", TIN_PROPERTIES, "nethertin_ore"
+    ));
+
+    /**
+     * The plant set for nether silver for Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_SILVER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BASIC_NETHER_ORES, "silver", SILVER_PROPERTIES, "nethersilver_ore"
+    ));
+
+    /**
+     * The plant set for nether nickel for Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_NICKEL = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BASIC_NETHER_ORES, "nickel", NICKEL_PROPERTIES, "nethernickel_ore"
+    ));
+
+    /**
+     * The plant set for nether lead for Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_LEAD = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BASIC_NETHER_ORES, "lead", LEAD_PROPERTIES, "netherlead_ore"
+    ));
+
+    /**
+     * The plant set for nether copper for Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_COPPER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BASIC_NETHER_ORES, "copper", COPPER_PROPERTIES, "nethercopper_ore"
+    ));
+
+    /**
+     * The plant set for nether aluminium for Basic Nether Ores.
+     */
+    public static final PlantSet BASIC_NETHER_ORES_ALUMINIUM = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            BASIC_NETHER_ORES, "aluminium", ALUMINIUM_PROPERTIES, "netheraluminum_ore"
+    ));
 
     /**Private constructor.*/
     private ResynthModdedPlants(){}

@@ -74,13 +74,7 @@ public class ResynthPlants {
      */
     public static final PlantSet DIAMOND = PlantSetFactory.newVanillaCrystallineSet(
             "diamond",
-            new CrystallineSetProperties(
-                    false,
-                    6.0F,
-                    1,
-                    3.0F,
-                    1.0F
-            ),
+            ResynthModdedPlants.DIAMOND_PROPERTIES,
             Blocks.DIAMOND_ORE
     ).register();
 
@@ -89,13 +83,7 @@ public class ResynthPlants {
      */
     public static final PlantSet REDSTONE = PlantSetFactory.newVanillaCrystallineSet(
             "redstone",
-            new CrystallineSetProperties(
-                    false,
-                    15.0F,
-                    2,
-                    1.0F,
-                    3.5F
-            ),
+            ResynthModdedPlants.REDSTONE_PROPERTIES,
             Blocks.REDSTONE_ORE
     ).register();
 
@@ -104,13 +92,7 @@ public class ResynthPlants {
      */
     public static final PlantSet LAPIS_LAZULI = PlantSetFactory.newVanillaCrystallineSet(
             "lapis_lazuli",
-            new CrystallineSetProperties(
-                    false,
-                    6,
-                    2,
-                    2,
-                    3.5F
-            ),
+            ResynthModdedPlants.LAPIS_LAZULI_PROPERTIES,
             Blocks.LAPIS_ORE
     ).register();
 
@@ -119,13 +101,7 @@ public class ResynthPlants {
      */
     public static final PlantSet COAL = PlantSetFactory.newVanillaCrystallineSet(
             "coal",
-            new CrystallineSetProperties(
-                    false,
-                    30,
-                    2,
-                    1.0F,
-                    3.0F
-            ),
+            ResynthModdedPlants.COAL_PROPERTIES,
             Blocks.COAL_ORE
     ).register();
 
@@ -134,13 +110,7 @@ public class ResynthPlants {
      */
     public static final PlantSet EMERALD = PlantSetFactory.newVanillaCrystallineSet(
             "emerald",
-            new CrystallineSetProperties(
-                    false,
-                    2.0F,
-                    1,
-                    4.0F,
-                    0.5F
-            ),
+            ResynthModdedPlants.EMERALD_PROPERTIES,
             Blocks.EMERALD_ORE
     ).register();
 
@@ -183,12 +153,7 @@ public class ResynthPlants {
      */
     public static final PlantSet IRON = PlantSetFactory.newVanillaMetallicPlantSet(
             "iron",
-            new MetallicSetProperties(
-                    false,
-                    10,
-                    6,
-                    6
-            ),
+            ResynthModdedPlants.IRON_PROPERTIES,
             Blocks.IRON_ORE
     ).register();
 
@@ -197,12 +162,7 @@ public class ResynthPlants {
      */
     public static final PlantSet GOLD = PlantSetFactory.newVanillaMetallicPlantSet(
             "gold",
-            new MetallicSetProperties(
-                    false,
-                    8,
-                    5,
-                    5
-            ),
+            ResynthModdedPlants.GOLD_PROPERTIES,
             Blocks.GOLD_ORE
     ).register();
 

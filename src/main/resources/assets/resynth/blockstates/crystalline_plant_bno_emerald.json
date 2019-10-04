@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "growth_stage=0": { "model": "resynth:block/plant/emerald/plant_0" },
+    "growth_stage=1": { "model": "resynth:block/plant/emerald/plant_1" },
+    "growth_stage=2": { "model": "resynth:block/plant/emerald/plant_2" },
+    "growth_stage=3": { "model": "resynth:block/plant/emerald/plant_3" },
+    "growth_stage=4": { "model": "resynth:block/plant/emerald/plant_4" },
+    "growth_stage=5": { "model": "resynth:block/plant/emerald/plant_5" },
+    "growth_stage=6": { "model": "resynth:block/plant/emerald/plant_6" },
+    "growth_stage=7": { "model": "resynth:block/plant/emerald/plant_7" }
+  }
+}

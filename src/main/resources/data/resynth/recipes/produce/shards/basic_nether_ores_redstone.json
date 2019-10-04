@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:crystalline_shard_bno_redstone"
+  },
+  "result": "minecraft:redstone",
+  "experience": 7.0,
+  "cookingtime": 200
+}

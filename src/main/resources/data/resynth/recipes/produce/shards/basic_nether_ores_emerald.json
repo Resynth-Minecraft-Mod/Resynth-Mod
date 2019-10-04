@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:crystalline_shard_bno_emerald"
+  },
+  "result": "minecraft:emerald",
+  "experience": 7.0,
+  "cookingtime": 200
+}
