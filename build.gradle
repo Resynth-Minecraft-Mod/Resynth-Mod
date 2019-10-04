@@ -85,8 +85,10 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.10'
+    //Forge version
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.36'
 
+    //Hwyla
     compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.5-B66_1.14.4')
 }
 
