@@ -132,7 +132,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
                             ),
                             world, pos
                     );
-                playPopSound(world, player);
+                else playPopSound(world, player);//Play sound on client only.
                 return true;
             }
         }
