@@ -161,7 +161,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     }
 
     // **********
-    // Drop Logic
+    // Pick Block
     // **********
 
     /**
@@ -169,8 +169,12 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      */
     @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return new ItemStack(Blocks.DIRT);
+        return new ItemStack(this);
     }
+
+    // **********
+    // Drop Logic
+    // **********
 
     /**
      * {@inheritDoc}
