@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralHoeConfig;
+import com.ki11erwolf.resynth.util.EffectsUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -306,10 +307,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                 if(CONFIG.showParticles() && world.isRemote)
                     spawnParticles(world, pos.up());
 
-                world.playSound(
-                        context.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL,
-                        SoundCategory.BLOCKS, 1.0F, 1.0F
-                );
+                EffectsUtil.playSound(world, context.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS);
 
                 return ActionResultType.SUCCESS;
             }

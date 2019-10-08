@@ -21,7 +21,8 @@ import java.util.function.Consumer;
 
 /**
  * Util class for quickly registering objects to
- * the game with a queue.
+ * the game with a queue. The queue is always
+ * emptied after iteration.
  *
  * @param <T> the object the queue holds.
  */

@@ -33,6 +33,7 @@ import net.minecraft.world.World;
  * of the Crystalline plant type. This class DOES NOT handle any logic
  * other the way in which the plant type grows.
  */
+//TODO: Add right-click harvest
 public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallinePlant> {
 
     /**
