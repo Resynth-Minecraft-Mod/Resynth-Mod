@@ -130,7 +130,9 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
                             world, pos
                     );
 
-                EffectsUtil.playSound(world, player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS);
+                EffectsUtil.playNormalSoundWithRandomPitch(
+                        world, player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS
+                );
 
                 return true;
             }

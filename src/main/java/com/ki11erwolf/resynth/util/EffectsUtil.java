@@ -33,7 +33,7 @@ import net.minecraft.world.World;
  * util methods that allow playing/displaying effects
  * that ALL take into account physical and logical sides.
  */
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+@SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue", "WeakerAccess"})
 public class EffectsUtil {
 
     /**Private constructor - utils.*/
@@ -64,12 +64,94 @@ public class EffectsUtil {
      * being determined safe, {@code false} if it was determined
      * unsafe.
      */
-    public static boolean playSound(World world, PlayerEntity player, BlockPos pos, SoundEvent soundEvent,
-                                    SoundCategory category){
+    public static boolean playNormalSound(World world, PlayerEntity player, BlockPos pos, SoundEvent soundEvent,
+                                          SoundCategory category){
         float volume = 1.0F;//Full
         float pitch = 1.0F;//None
 
-        return playSound(world, player, pos.getX(), pos.getY(), pos.getZ(), soundEvent, category, volume, pitch);
+        return playNormalSound(world, player, pos.getX(), pos.getY(), pos.getZ(), soundEvent, category, volume, pitch);
+    }
+
+    /**
+     * Will play a given sound effect in the world,
+     * at the given position, for the given player,
+     * at full volume with the given pitch modification.
+     * <b>Provided</b> it is safe
+     * ({@link #isUnsafe(World)} to do so.
+     *
+     * <p/>This method is not client or server bound,
+     * so calling it in any context is okay.
+     *
+     * @param world the world to play the sound in.
+     * @param player the player to play the sound for.
+     * @param pos the position in the world to play the sound.
+     * @param soundEvent the specific sound effect to play.
+     * @param category the sound category the effect falls under.
+     * @param pitch the amount of pitch modification to apply to the sound.
+     * @return {@code true} if the sound was played after
+     * being determined safe, {@code false} if it was determined
+     * unsafe.
+     */
+    private static boolean playNormalSoundWithPitch(World world, PlayerEntity player, BlockPos pos,
+                                                    SoundEvent soundEvent, SoundCategory category, float pitch){
+        float volume = 1.0F;//Full
+        return playNormalSound(world, player, pos.getX(), pos.getY(), pos.getZ(), soundEvent, category, volume, pitch);
+    }
+
+    /**
+     * Will play a given sound effect in the world,
+     * at the given position, for the given player,
+     * at full volume with random pitch in a given
+     * range. <b>Provided</b> it is safe
+     * ({@link #isUnsafe(World)} to do so.
+     *
+     * <p/>This method is not client or server bound,
+     * so calling it in any context is okay.
+     *
+     * @param world the world to play the sound in.
+     * @param player the player to play the sound for.
+     * @param pos the position in the world to play the sound.
+     * @param soundEvent the specific sound effect to play.
+     * @param category the sound category the effect falls under.
+     * @param basePitch the initial pitch modification.
+     * @param pitchMultiplier the random pitch number multiplier.
+     * @return {@code true} if the sound was played after
+     * being determined safe, {@code false} if it was determined
+     * unsafe.
+     */
+    public static boolean playNormalSoundWithPitchInRage(World world, PlayerEntity player, BlockPos pos,
+                                                    SoundEvent soundEvent, SoundCategory category,
+                                                    float basePitch, float pitchMultiplier){
+        //Full
+        float volume = 1.0F;
+        //Random pitch in range
+        float pitch = basePitch + world.getRandom().nextFloat() * pitchMultiplier;
+
+        return playNormalSound(world, player, pos.getX(), pos.getY(), pos.getZ(), soundEvent, category, volume, pitch);
+    }
+
+    /**
+     * Will play a given sound effect in the world,
+     * at the given position, for the given player,
+     * at full volume with a standard random pitch
+     * (base=0.8F, multiplier=0.3F). <b>Provided</b>
+     * it is safe ({@link #isUnsafe(World)} to do so.
+     *
+     * <p/>This method is not client or server bound,
+     * so calling it in any context is okay.
+     *
+     * @param world the world to play the sound in.
+     * @param player the player to play the sound for.
+     * @param pos the position in the world to play the sound.
+     * @param soundEvent the specific sound effect to play.
+     * @param category the sound category the effect falls under.
+     * @return {@code true} if the sound was played after
+     * being determined safe, {@code false} if it was determined
+     * unsafe.
+     */
+    public static boolean playNormalSoundWithRandomPitch(World world, PlayerEntity player, BlockPos pos,
+                                                    SoundEvent soundEvent, SoundCategory category){
+        return playNormalSoundWithPitchInRage(world, player, pos, soundEvent, category, 0.8F, 0.3F);
     }
 
     //Visual
@@ -103,8 +185,8 @@ public class EffectsUtil {
      * being determined safe, {@code false} if it was determined
      * unsafe.
      */
-    private static boolean playSound(World world, double x, double y, double z, SoundEvent soundEvent,
-                                  SoundCategory category, float volume, float pitch, boolean distanceDelay){
+    private static boolean playNormalSound(World world, double x, double y, double z, SoundEvent soundEvent,
+                                           SoundCategory category, float volume, float pitch, boolean distanceDelay){
         if(isUnsafe(world)) return false;//Safety check
 
         world.playSound(x, y, z, soundEvent, category, volume, pitch, distanceDelay);
@@ -133,8 +215,8 @@ public class EffectsUtil {
      * being determined safe, {@code false} if it was determined
      * unsafe.
      */
-    private static boolean playSound(World world, PlayerEntity player, double x, double y, double z,
-                                     SoundEvent soundEvent, SoundCategory category, float volume, float pitch){
+    private static boolean playNormalSound(World world, PlayerEntity player, double x, double y, double z,
+                                           SoundEvent soundEvent, SoundCategory category, float volume, float pitch){
         if(isUnsafe(world)) return false;//Safety check
 
         world.playSound(player, x, y, z, soundEvent, category, volume, pitch);

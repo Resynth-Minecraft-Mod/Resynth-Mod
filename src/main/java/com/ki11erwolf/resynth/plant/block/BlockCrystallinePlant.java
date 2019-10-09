@@ -41,7 +41,6 @@ import net.minecraft.world.World;
  * of the Crystalline plant type. This class DOES NOT handle any logic
  * other the way in which the plant type grows.
  */
-//TODO: Add right-click harvest
 public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallinePlant> {
 
     /**
@@ -79,14 +78,37 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
     @Override
     VoxelShape[] getShapeByAge() {
         return new VoxelShape[]{
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 2.0D, 10.0D), //1
-                Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 3.5D, 11.0D), //2
-                Block.makeCuboidShape(4.5D, 0.0D, 4.5D, 11.5D, 5.0D, 11.5D), //3
-                Block.makeCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 7.5D, 13.5D), //4
-                Block.makeCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 7.5D, 13.5D), //5
-                Block.makeCuboidShape(0.5D, 0.5D, 0.5D, 15.5D, 11.0D, 15.5D),//6
-                Block.makeCuboidShape(0.5D, 0.0D, 0.5D, 15.5D, 14.0D, 15.5D),//7
-                Block.makeCuboidShape(0.5D, 0.0D, 0.5D, 15.5D, 15.0D, 15.5D) //8
+                Block.makeCuboidShape(
+                        6.0D, 0.0D, 6.0D,
+                        10.0D, 2.0D, 10.0D
+                ), //1
+                Block.makeCuboidShape(
+                        5.0D, 0.0D, 5.0D,
+                        11.0D, 3.5D, 11.0D
+                ), //2
+                Block.makeCuboidShape(
+                        4.5D, 0.0D, 4.5D,
+                        11.5D, 5.0D, 11.5D
+                ), //3
+                Block.makeCuboidShape(
+                        2.5D, 0.0D, 2.5D,
+                        13.5D, 7.5D, 13.5D
+                ), //4
+                Block.makeCuboidShape(
+                        2.5D, 0.0D, 2.5D,
+                        13.5D, 7.5D, 13.5D
+                ), //5
+                Block.makeCuboidShape(0.5D, 0.5D, 0.5D,
+                        15.5D, 11.0D, 15.5D
+                ),//6
+                Block.makeCuboidShape(
+                        0.5D, 0.0D, 0.5D,
+                        15.5D, 14.0D, 15.5D
+                ),//7
+                Block.makeCuboidShape(
+                        0.5D, 0.0D, 0.5D,
+                        15.5D, 15.0D, 15.5D
+                ) //8
         };
     }
 
@@ -143,7 +165,9 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
                             world, pos
                     );
 
-                EffectsUtil.playSound(world, player, pos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS);
+                EffectsUtil.playNormalSoundWithRandomPitch(
+                        world, player, pos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS
+                );
 
                 return true;
             }

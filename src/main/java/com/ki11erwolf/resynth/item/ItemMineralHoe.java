@@ -146,7 +146,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         //Can charge
         if(player.isCreative() || takeCharge(player)){
             stack.getTag().putInt(NBT_TAG_CHARGES, charges + 1);
-            EffectsUtil.playSound(
+            EffectsUtil.playNormalSound(
                     world, player, player.getPosition(),
                     SoundEvents.BLOCK_NOTE_BLOCK_CHIME, SoundCategory.BLOCKS
             );
@@ -235,7 +235,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         int charges = context.getItem().getTag().getInt(NBT_TAG_CHARGES);
         if(charges < 1){
             if(CONFIG.playFailSound())
-                EffectsUtil.playSound(
+                EffectsUtil.playNormalSound(
                         context.getWorld(), context.getPlayer(), context.getPos(),
                         SoundEvents.BLOCK_NOTE_BLOCK_HAT, SoundCategory.BLOCKS
                 );
@@ -307,7 +307,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                 if(CONFIG.showParticles() && world.isRemote)
                     spawnParticles(world, pos.up());
 
-                EffectsUtil.playSound(world, context.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS);
+                EffectsUtil.playNormalSound(world, context.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS);
 
                 return ActionResultType.SUCCESS;
             }

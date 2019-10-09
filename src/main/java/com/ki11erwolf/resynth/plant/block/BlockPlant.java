@@ -64,7 +64,7 @@ import java.util.Random;
  * This class also handles random growth, taking into account
  * Mineral Soil Mineral Concentration and plant growth chances.
  *
- * @param <T> the inheriting class (e.i. plant block).
+ * @param <T> the inheriting class (i.e. plant block).
  */
 public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T>
         implements IPlantable, IGrowable, InfoProvider, IComponentProvider {
