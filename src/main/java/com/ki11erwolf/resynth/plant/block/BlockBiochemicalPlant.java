@@ -16,6 +16,7 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
+import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,10 +30,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Random;
 
 /**
  * The Biochemical set plant block - used to grow resources that
@@ -132,24 +129,14 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
                             ),
                             world, pos
                     );
-                else playPopSound(world, player);//Play sound on client only.
+
+                EffectsUtil.playSound(world, player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS);
+
                 return true;
             }
         }
 
         return false;
-    }
-
-    /**
-     * Plays the pop sound when a biochemical
-     * plant is harvested.
-     */
-    @OnlyIn(Dist.CLIENT)
-    private static void playPopSound(World world, PlayerEntity player){
-        world.playSound(null, player.posX, player.posY, player.posZ,
-                SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS,
-                0.5F, 0.4F / (new Random().nextFloat() * 0.4F + 0.8F)
-        );
     }
 
     // ************

@@ -16,10 +16,18 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
+import com.ki11erwolf.resynth.util.EffectsUtil;
+import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 
@@ -102,6 +110,46 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
     @Override
     boolean dropsProduceWhenGrown(){
         return true;
+    }
+
+    // *************
+    // Harvest Logic
+    // *************
+
+    /**
+     * {@inheritDoc}
+     *
+     * Handles what happens when the player tries
+     * to harvest the plant by right-clicking.
+     *
+     * @return {@code true} if the plant was harvested.
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
+                                    BlockRayTraceResult hit){
+        int growth = world.getBlockState(pos).get(getGrowthProperty());
+        int postHarvestGrowth = 0;
+
+        if(growth >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage()){
+            if(world.setBlockState(pos, world.getBlockState(pos)
+                    .with(getGrowthProperty(), postHarvestGrowth), 2)){
+                if(!world.isRemote)
+                    MinecraftUtil.spawnItemStackInWorld(
+                            new ItemStack(
+                                    getProduce().getItem(),
+                                    ((ICrystallineSetProperties) properties).numberOfProduceDrops()
+                            ),
+                            world, pos
+                    );
+
+                EffectsUtil.playSound(world, player, pos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS);
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // ************
