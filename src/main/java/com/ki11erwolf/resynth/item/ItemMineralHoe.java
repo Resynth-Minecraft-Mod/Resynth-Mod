@@ -57,6 +57,7 @@ import java.util.Random;
  * obtaining mineral soil.
  */
 //TODO: This could be better written...
+//TODO: While we're at it, more better features
 public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
     /**

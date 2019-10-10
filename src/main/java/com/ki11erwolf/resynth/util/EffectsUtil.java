@@ -50,7 +50,7 @@ public class EffectsUtil {
      * at the given position, for the given player,
      * at full volume with no pitch modification.
      * <b>Provided</b> it is safe
-     * ({@link #isUnsafe(World)} to do so.
+     * ({@link #isUnsafe(World)}) to do so.
      *
      * <p/>This method is not client or server bound,
      * so calling it in any context is okay.
@@ -77,7 +77,7 @@ public class EffectsUtil {
      * at the given position, for the given player,
      * at full volume with the given pitch modification.
      * <b>Provided</b> it is safe
-     * ({@link #isUnsafe(World)} to do so.
+     * ({@link #isUnsafe(World)}) to do so.
      *
      * <p/>This method is not client or server bound,
      * so calling it in any context is okay.
@@ -103,7 +103,7 @@ public class EffectsUtil {
      * at the given position, for the given player,
      * at full volume with random pitch in a given
      * range. <b>Provided</b> it is safe
-     * ({@link #isUnsafe(World)} to do so.
+     * ({@link #isUnsafe(World)}) to do so.
      *
      * <p/>This method is not client or server bound,
      * so calling it in any context is okay.
@@ -132,10 +132,42 @@ public class EffectsUtil {
 
     /**
      * Will play a given sound effect in the world,
+     * at the given players position, for the given player,
+     * at full volume with random pitch in a given
+     * range. <b>Provided</b> it is safe
+     * ({@link #isUnsafe(World)}) to do so.
+     *
+     * <p/>This method is not client or server bound,
+     * so calling it in any context is okay.
+     *
+     * @param world the world to play the sound in.
+     * @param player the player to play the sound for.
+     * @param soundEvent the specific sound effect to play.
+     * @param category the sound category the effect falls under.
+     * @param basePitch the initial pitch modification.
+     * @param pitchMultiplier the random pitch number multiplier.
+     * @return {@code true} if the sound was played after
+     * being determined safe, {@code false} if it was determined
+     * unsafe.
+     */
+    public static boolean playNormalSoundWithPitchInRage(World world, PlayerEntity player,
+                                                         SoundEvent soundEvent, SoundCategory category,
+                                                         float basePitch, float pitchMultiplier){
+        //Full
+        float volume = 1.0F;
+        //Random pitch in range
+        float pitch = basePitch + world.getRandom().nextFloat() * pitchMultiplier;
+        BlockPos pos = player.getPosition();
+
+        return playNormalSound(world, player, pos.getX(), pos.getY(), pos.getZ(), soundEvent, category, volume, pitch);
+    }
+
+    /**
+     * Will play a given sound effect in the world,
      * at the given position, for the given player,
      * at full volume with a standard random pitch
      * (base=0.8F, multiplier=0.3F). <b>Provided</b>
-     * it is safe ({@link #isUnsafe(World)} to do so.
+     * it is safe ({@link #isUnsafe(World)}) to do so.
      *
      * <p/>This method is not client or server bound,
      * so calling it in any context is okay.
@@ -151,7 +183,9 @@ public class EffectsUtil {
      */
     public static boolean playNormalSoundWithRandomPitch(World world, PlayerEntity player, BlockPos pos,
                                                     SoundEvent soundEvent, SoundCategory category){
-        return playNormalSoundWithPitchInRage(world, player, pos, soundEvent, category, 0.8F, 0.3F);
+        return playNormalSoundWithPitchInRage(
+                world, player, pos, soundEvent, category, 0.8F, 0.3F
+        );
     }
 
     //Visual
@@ -166,7 +200,7 @@ public class EffectsUtil {
      * Will play a given sound effect in the world,
      * at the given position, with the given volume
      * and pitch. <b>Provided</b> it is safe
-     * ({@link #isUnsafe(World)} to do so.
+     * ({@link #isUnsafe(World)}) to do so.
      *
      * <p/>This method is not client or server bound,
      * so calling it in any context is okay.
@@ -197,7 +231,7 @@ public class EffectsUtil {
      * Will play a given sound effect in the world,
      * at the given position, for the given player,
      * with the given volume and pitch. <b>Provided</b>
-     * it is safe ({@link #isUnsafe(World)} to do so.
+     * it is safe ({@link #isUnsafe(World)}) to do so.
      *
      * <p/>This method is not client or server bound,
      * so calling it in any context is okay.

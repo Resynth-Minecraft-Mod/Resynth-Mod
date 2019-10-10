@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
+import com.ki11erwolf.resynth.util.EffectsUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,13 +29,10 @@ import net.minecraft.item.UseAction;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
 
 /**
  * The produce item for Biochemical plants.
@@ -116,12 +114,12 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      * Plays the smashing sound when a bulb
      * is smashed in the world.
      */
-    @OnlyIn(Dist.CLIENT)
     private static void playSmashSound(World world, LivingEntity player){
-        world.playSound(null, player.posX, player.posY, player.posZ,
-                SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.PLAYERS,
-                0.4F, 0.4F / (new Random().nextFloat() * 0.4F + 0.8F)
-        );
+        if(player instanceof PlayerEntity)
+            EffectsUtil.playNormalSoundWithPitchInRage(
+                    world, (PlayerEntity)player, SoundEvents.BLOCK_GLASS_BREAK,
+                    SoundCategory.PLAYERS, 0.8F, 0.4F
+            );
     }
 
     /**
