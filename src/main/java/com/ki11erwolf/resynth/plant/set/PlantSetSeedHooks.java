@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.set;
 
+import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -124,10 +125,8 @@ class PlantSetSeedHooks {
         }
 
         //Sound
-        world.playSound(
-                pos.getX(), pos.getY(), pos.getZ(),
-                SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.NEUTRAL,
-                0.8F, 1.0F, false
+        EffectsUtil.playNormalSoundWithVolumeOnClient(
+                pos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.NEUTRAL, 8.0F
         );
     }
 }

@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.util;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -188,6 +189,34 @@ public class EffectsUtil {
         );
     }
 
+    /**
+     * Will play a given sound effect in the CLIENT
+     * SIDE world, at the given position, with the
+     * given volume and pitch. <b>Provided</b> it is safe
+     * ({@link #isUnsafe(World)}) to do so.
+     *
+     * <p/>This method is not client or server bound,
+     * so calling it in any context is okay. However,
+     * it will only take effect on client jars and
+     * not dedicated servers. This makes it possible
+     * to display effects from server side only code.
+     *
+     * @param pos the position in the world to play the sound.
+     * @param soundEvent the specific sound effect to play.
+     * @param category the sound category the effect falls under.
+     * @param volume the volume to play the sound at.
+     * @return {@code true} if the sound was played after
+     * being determined safe, {@code false} if it was determined
+     * unsafe.
+     */
+    public static boolean playNormalSoundWithVolumeOnClient(BlockPos pos, SoundEvent soundEvent, SoundCategory category,
+                                                            float volume){
+        return playNormalSoundOnClient(
+                pos.getX(), pos.getY(), pos.getZ(), soundEvent, category, volume,
+                1.0F, false
+        );
+    }
+
     //Visual
 
     // ************
@@ -257,11 +286,109 @@ public class EffectsUtil {
         return true;
     }
 
+    /**
+     * Will play a given sound effect in the CLIENT
+     * SIDE world, for the given player, at the given
+     * position, with the given volume and pitch.
+     * <b>Provided</b> it is safe
+     * ({@link #isUnsafe(World)}) to do so.
+     *
+     * <p/>This method is not client or server bound,
+     * so calling it in any context is okay. However,
+     * it will only take effect on client jars and
+     * not dedicated servers. This makes it possible
+     * to display effects from server side only code.
+     *
+     * @param player the player to play the sound for.
+     * @param x the x position in the world to play the sound.
+     * @param y the y position in the world to play the sound.
+     * @param z the z position in the world to play the sound.
+     * @param soundEvent the specific sound effect to play.
+     * @param category the sound category the effect falls under.
+     * @param volume the volume to play the sound at.
+     * @param pitch the pitch modification to the sound.
+     * @return {@code true} if the sound was played after
+     * being determined safe, {@code false} if it was determined
+     * unsafe.
+     */
+    private static boolean playNormalSoundOnClient(PlayerEntity player, double x, double y, double z,
+                                           SoundEvent soundEvent, SoundCategory category, float volume, float pitch){
+        World world = getClientWorld();
+        if(world == null) return false;//Safe check.
+
+        world.playSound(player, x, y, z, soundEvent, category, volume, pitch);
+        return true;
+    }
+
+    /**
+     * Will play a given sound effect in the CLIENT
+     * SIDE world, at the given position, with the
+     * given volume and pitch. <b>Provided</b> it is safe
+     * ({@link #isUnsafe(World)}) to do so.
+     *
+     * <p/>This method is not client or server bound,
+     * so calling it in any context is okay. However,
+     * it will only take effect on client jars and
+     * not dedicated servers. This makes it possible
+     * to display effects from server side only code.
+     *
+     * @param x the x position in the world to play the sound.
+     * @param y the y position in the world to play the sound.
+     * @param z the z position in the world to play the sound.
+     * @param soundEvent the specific sound effect to play.
+     * @param category the sound category the effect falls under.
+     * @param volume the volume to play the sound at.
+     * @param pitch the pitch modification to the sound.
+     * @param distanceDelay {@code true} if the sound
+     *                                  has to travel.
+     * @return {@code true} if the sound was played after
+     * being determined safe, {@code false} if it was determined
+     * unsafe.
+     */
+    private static boolean playNormalSoundOnClient(double x, double y, double z, SoundEvent soundEvent,
+                                                   SoundCategory category, float volume, float pitch,
+                                                   boolean distanceDelay){
+        World world = getClientWorld();
+        if(world == null) return false;//Safe check.
+
+        world.playSound(x, y, z, soundEvent, category, volume, pitch, distanceDelay);
+        return true;
+    }
+
     //Visual
 
     // **********
     // Safe Check
     // **********
+
+    /**
+     * Used to obtain the client side world reference.
+     * The reference will only be returned if we're
+     * not running on a dedicated server.
+     *
+     * @return the Minecraft client world instance,
+     * or {@code null} if we're on a dedicated server.
+     */
+    private static World getClientWorld(){
+        if(isClientUnsafe()) return null;//Safe check
+
+        World world = Minecraft.getInstance().world;
+        return (isUnsafe(world) ? null : world);//Second safe check
+    }
+
+    /**
+     * Used to check if executing client only code
+     * effects and sound would be unsafe (cause
+     * a crash). This method differs from the rest
+     * in that it doesn't do a logical side check
+     * (world.isRemote).
+     *
+     * @return {@code true} if executing the client only
+     * code would be unsafe.
+     */
+    private static boolean isClientUnsafe(){
+        return !SideUtil.isClientSafe();
+    }
 
     /**
      * Used to check if executing client only code

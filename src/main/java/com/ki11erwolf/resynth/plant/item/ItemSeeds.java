@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
+import com.ki11erwolf.resynth.util.EffectsUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,6 +30,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -123,6 +126,11 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
             }
 
             itemstack.shrink(1);
+
+            EffectsUtil.playNormalSound(
+                    world.getWorld(), playerEntity, blockpos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS
+            );
+
             return ActionResultType.SUCCESS;
         } else {
             return ActionResultType.FAIL;

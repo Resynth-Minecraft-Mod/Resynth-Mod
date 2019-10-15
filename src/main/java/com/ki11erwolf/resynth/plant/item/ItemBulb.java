@@ -31,7 +31,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -77,7 +76,7 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      * Constructs the tooltip for the item.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
+    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
         PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltip, properties);
         setDescriptiveTooltip(tooltip, PREFIX, setName);
