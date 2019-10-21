@@ -74,6 +74,30 @@
   "item.resynth.metallic_seeds_end_stone":                  "末地石种子",
   "block.resynth.metallic_organic_ore_end_stone":           "有机末地石",
 
+  "block.resynth.metallic_plant_granite":                   "Granite Plant",
+  "item.resynth.metallic_seeds_granite":                    "Granite Seeds",
+  "block.resynth.metallic_organic_ore_granite":             "Organic Granite",
+
+  "block.resynth.metallic_plant_diorite":                   "Diorite Plant",
+  "item.resynth.metallic_seeds_diorite":                    "Diorite Seeds",
+  "block.resynth.metallic_organic_ore_diorite":             "Organic Diorite",
+
+  "block.resynth.metallic_plant_andesite":                  "Andesite Plant",
+  "item.resynth.metallic_seeds_andesite":                   "Andesite Seeds",
+  "block.resynth.metallic_organic_ore_andesite":            "Organic Andesite",
+
+  "block.resynth.metallic_plant_stone":                     "Stone Plant",
+  "item.resynth.metallic_seeds_stone":                      "Stone Seeds",
+  "block.resynth.metallic_organic_ore_stone":               "Organic Stone",
+
+  "block.resynth.metallic_plant_cobblestone":               "Cobblestone Plant",
+  "item.resynth.metallic_seeds_cobblestone":                "Cobblestone Seeds",
+  "block.resynth.metallic_organic_ore_cobblestone":         "Organic Cobblestone",
+
+  "block.resynth.metallic_plant_dirt":                      "Dirt Plant",
+  "item.resynth.metallic_seeds_dirt":                       "Dirt Seeds",
+  "block.resynth.metallic_organic_ore_dirt":                "Organic Dirt",
+
   "block.resynth.metallic_plant_sand":                      "沙子作物",
   "item.resynth.metallic_seeds_sand":                       "沙子种子",
   "block.resynth.metallic_organic_ore_sand":                "有机沙子",

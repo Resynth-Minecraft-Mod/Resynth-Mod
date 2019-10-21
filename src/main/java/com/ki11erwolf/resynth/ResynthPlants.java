@@ -200,12 +200,96 @@ public class ResynthPlants {
     public static final PlantSet SAND = PlantSetFactory.newVanillaMetallicPlantSet(
             "sand",
             new MetallicSetProperties(
-                false,
+                    false,
                     50,
                     3,
                     3
             ),
             Blocks.SAND
+    ).register();
+
+    /**
+     * The plant set for Vanilla Stone blocks.
+     */
+    public static final PlantSet STONE = PlantSetFactory.newVanillaMetallicPlantSet(
+            "stone",
+            new MetallicSetProperties(
+                    false,
+                    60,
+                    4,
+                    4
+            ),
+            Blocks.STONE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Granite blocks.
+     */
+    public static final PlantSet GRANITE = PlantSetFactory.newVanillaMetallicPlantSet(
+            "granite",
+            new MetallicSetProperties(
+                    false,
+                    45,
+                    3,
+                    3
+            ),
+            Blocks.GRANITE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Diorite blocks.
+     */
+    public static final PlantSet DIORITE = PlantSetFactory.newVanillaMetallicPlantSet(
+            "diorite",
+            new MetallicSetProperties(
+                    false,
+                    45,
+                    3,
+                    3
+            ),
+            Blocks.DIORITE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Andesite blocks.
+     */
+    public static final PlantSet ANDESITE = PlantSetFactory.newVanillaMetallicPlantSet(
+            "andesite",
+            new MetallicSetProperties(
+                    false,
+                    45,
+                    3,
+                    3
+            ),
+            Blocks.ANDESITE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Dirt blocks.
+     */
+    public static final PlantSet DIRT = PlantSetFactory.newVanillaMetallicPlantSet(
+            "dirt",
+            new MetallicSetProperties(
+                    false,
+                    65,
+                    2,
+                    2
+            ),
+            Blocks.DIRT
+    ).register();
+
+    /**
+     * The plant set for Vanilla Cobblestone blocks.
+     */
+    public static final PlantSet COBBLESTONE = PlantSetFactory.newVanillaMetallicPlantSet(
+            "cobblestone",
+            new MetallicSetProperties(
+                    false,
+                    70,
+                    2,
+                    2
+            ),
+            Blocks.COBBLESTONE
     ).register();
 
     // ****************

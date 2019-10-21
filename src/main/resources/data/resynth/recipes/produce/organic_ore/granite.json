@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:metallic_organic_ore_granite"
+  },
+  "result": "minecraft:granite",
+  "experience": 7.0,
+  "cookingtime": 200
+}

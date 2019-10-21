@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:metallic_organic_ore_stone"
+  },
+  "result": "minecraft:stone",
+  "experience": 7.0,
+  "cookingtime": 200
+}
