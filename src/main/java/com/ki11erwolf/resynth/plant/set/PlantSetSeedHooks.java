@@ -17,20 +17,13 @@ package com.ki11erwolf.resynth.plant.set;
 
 import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
  * Allows implementing plant sets (e.g. {@link CrystallineSet})
@@ -75,11 +68,7 @@ class PlantSetSeedHooks {
      */
     static void spawnSeeds(Item seeds, World world, BlockPos pos){
         spawnSeedsStack(seeds, world, pos);
-
-        //Ensure we're on a client as we're calling client only code.
-        if(FMLEnvironment.dist.isClient()){
-            spawnEffects(pos);
-        }
+        effects(pos);
     }
 
     /**
@@ -90,41 +79,17 @@ class PlantSetSeedHooks {
     }
 
     /**
-     * ONLY CALL ON CLIENT!
+     * Plays a bell sound and displays flash particle
+     * effects at the given position to indicate that
+     * seeds have been spawned.
      *
-     * Spawns the seeds spawn effects (particles
-     * and sound) in the client world.
+     * <p/>This doesn't work on dedicated servers.
      *
-     * @param pos the position in the world to spawn the effects.
+     * @param pos the position to play/display the effects.
      */
-    @OnlyIn(Dist.CLIENT)
-    private static void spawnEffects(BlockPos pos){
-        World world = Minecraft.getInstance().world;
-        double d = world.rand.nextGaussian() * 0.02D;
-        int amount = 10;
+    private static void effects(BlockPos pos){
+        EffectsUtil.displayStandardEffectsOnClient(pos, 10, ParticleTypes.FLASH);
 
-        BlockState blockstate = world.getBlockState(pos);
-
-        //Effects
-        if (blockstate.getMaterial() != Material.AIR) {
-            for (int i = 0; i < amount; ++i){
-                world.addParticle(ParticleTypes.FLASH,
-                        (float)pos.getX() + world.rand.nextFloat(),
-                        (double)pos.getY() + (double)world.rand.nextFloat()
-                                * blockstate.getShape(world, pos).getEnd(Direction.Axis.Y),
-                        (float)pos.getZ() + world.rand.nextFloat(), d, d, d);
-            }
-        }
-        else {
-            for (int i1 = 0; i1 < amount; ++i1) {
-                world.addParticle(ParticleTypes.FLASH,
-                        (float)pos.getX() + world.rand.nextFloat(),
-                        (double)pos.getY() + (double)world.rand.nextFloat() * 1.0f,
-                        (float)pos.getZ() + world.rand.nextFloat(), d, d, d);
-            }
-        }
-
-        //Sound
         EffectsUtil.playNormalSoundWithVolumeOnClient(
                 pos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.NEUTRAL, 8.0F
         );

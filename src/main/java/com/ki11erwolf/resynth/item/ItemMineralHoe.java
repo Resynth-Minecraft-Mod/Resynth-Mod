@@ -24,7 +24,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -38,8 +37,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -305,48 +302,20 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                 //Replacement
                 world.setBlockState(pos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
 
-                if(CONFIG.showParticles() && world.isRemote)
-                    spawnParticles(world, pos.up());
+                //Particles
+                if(CONFIG.showParticles())
+                    EffectsUtil.displayStandardEffects(world, pos.up(), 5, ParticleTypes.FLAME);
 
-                EffectsUtil.playNormalSound(world, context.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS);
+                //Sound
+                EffectsUtil.playNormalSound(
+                        world, context.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS
+                );
 
                 return ActionResultType.SUCCESS;
             }
         }
 
         return ActionResultType.FAIL;
-    }
-
-    /**
-     * Spawns fire particles in the world.
-     *
-     * @param worldIn the world to spawn the particles in.
-     * @param pos the position in the world to spawn the particles in.
-     */
-    @OnlyIn(Dist.CLIENT)
-    private static void spawnParticles(World worldIn, BlockPos pos){
-        double d = random.nextGaussian() * 0.02D;
-        int amount = 5;
-
-        BlockState blockstate = worldIn.getBlockState(pos);
-
-        if (blockstate.getMaterial() != Material.AIR) {
-            for (int i = 0; i < amount; ++i){
-                worldIn.addParticle(ParticleTypes.FLAME,
-                        (float)pos.getX() + random.nextFloat(),
-                        (double)pos.getY() + (double)random.nextFloat()
-                                * blockstate.getShape(worldIn, pos).getEnd(Direction.Axis.Y),
-                        (float)pos.getZ() + random.nextFloat(), d, d, d);
-            }
-        }
-        else {
-            for (int i1 = 0; i1 < amount; ++i1) {
-                worldIn.addParticle(ParticleTypes.FLAME,
-                        (float)pos.getX() + random.nextFloat(),
-                        (double)pos.getY() + (double)random.nextFloat() * 1.0f,
-                        (float)pos.getZ() + random.nextFloat(), d, d, d);
-            }
-        }
     }
 
     /**

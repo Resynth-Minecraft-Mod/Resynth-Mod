@@ -22,6 +22,7 @@ import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.item.ItemMineralHoe.InfoProvider;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
+import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MathUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import mcp.mobius.waila.api.IComponentProvider;
@@ -47,8 +48,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -203,41 +202,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        if(MathUtil.chance(5))
-            spawnParticles(worldIn, pos);
-    }
-
-    /**
-     * Spawns end rod sparkle particles in the world.
-     *
-     * @param worldIn the world to spawn the particles in.
-     * @param pos the position in the world to spawn the particles in.
-     */
-    @OnlyIn(Dist.CLIENT)
-    private static void spawnParticles(World worldIn, BlockPos pos){
-        Random random = worldIn.rand;
-        double d = random.nextGaussian() * 0.02D;
-        int amount = 1;
-
-        BlockState blockstate = worldIn.getBlockState(pos);
-
-        if (blockstate.getMaterial() != Material.AIR) {
-            for (int i = 0; i < amount; ++i){
-                worldIn.addParticle(ParticleTypes.END_ROD,
-                        (float)pos.getX() + random.nextFloat(),
-                        (double)pos.getY() + (double)random.nextFloat()
-                                * blockstate.getShape(worldIn, pos).getEnd(Direction.Axis.Y),
-                        (float)pos.getZ() + random.nextFloat(), d, d, d);
-            }
-        }
-        else {
-            for (int i1 = 0; i1 < amount; ++i1) {
-                worldIn.addParticle(ParticleTypes.END_ROD,
-                        (float)pos.getX() + random.nextFloat(),
-                        (double)pos.getY() + (double)random.nextFloat() * 1.0f,
-                        (float)pos.getZ() + random.nextFloat(), d, d, d);
-            }
-        }
+        EffectsUtil.displayStandardEffectsWithChance(worldIn, pos, 1, 5, ParticleTypes.END_ROD);
     }
 
     // ************
@@ -246,7 +211,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
 
     /**
      * Used to check if the given plant is fully
-     * growth.
+     * grown.
      *
      * @param state the plant.
      * @return {@code true} if the given plant
