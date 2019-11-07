@@ -336,7 +336,7 @@
 
   "tooltip.item.resynth.mineral_hoe":
   "Resynth's tool of choice. Needed to till dirt or grass into a\nspecial farmland block needed for Resynth plants.\nEach use of the Mineral Hoe requires a charge.\n1 charge = 1 Mineral Crystal.\nCharges can be added to the Mineral Hoe by right-clicking air,\nor shift-right-clicking a block, with\nthe Hoe in hand and Mineral Crystals in your inventory.\nCan be used to check the growth stage of a plant by right-clicking it, or the Mineral Content of Mineral Soil by right clicking it.\nCan be used to grow any plant while in creative by shift-right-clicking the plant.",
-  "tooltip.item.resynth.mineral_hoe_charges": "Charges: %s",
+  "tooltip.item.resynth.mineral_hoe_charges": "Charges: ",
   "tooltip.item.resynth.mineral_crystal.ecm": "Can be used directly!",
   "tooltip.item.resynth.mineral_crystal":
   "A crafting component, and consumable \"fuel\" for the Mineral Hoe. Mineral Crystals are required to turn dirt or grass into Mineral Soil, and as such, are required to progress in the mod.\n\nCan be configured to allow turning dirt or grass into Mineral Soil directly without the use of a Mineral Hoe (if the Hoe ever breaks).",

@@ -87,7 +87,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * {@inheritDoc}
      */
     @Override
-    int getMaxGrowthStage() {
+    public int getMaxGrowthStage() {
         return 7;
     }
 

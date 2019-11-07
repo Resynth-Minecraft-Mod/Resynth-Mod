@@ -336,7 +336,7 @@
 
   "tooltip.item.resynth.mineral_hoe":
   "Resynth的工具选择. 需要先试用特殊的锄头耕作泥土或草方块才可以种植神农科技作物.\n每次使用矿物质锄都会消耗矿物质.\n1 矿物质 = 1 矿物质晶体.\n矿物质可以通过矿物质锄对准空气右键单击获得,\n或者按住Shift右键单击一个方块, \n当然你需要手持矿物质锄并在背包放置矿物质晶体.\n可以使用它右击来检测作物生长情况, 或检测矿物质土壤的矿物质含量.\n你可以在创造模式下右键单击促进作物生长.",
-  "tooltip.item.resynth.mineral_hoe_charges": "矿物质: %s",
+  "tooltip.item.resynth.mineral_hoe_charges": "矿物质: ",
   "tooltip.item.resynth.mineral_crystal.ecm": "Can be used directly!",
   "tooltip.item.resynth.mineral_crystal":
   "一个合成材料, 以及消耗品, 矿物质锄的 \"燃料\" .\n矿物质晶体可以从矿物质土壤中获得, 因此, 需要对该Mod有一些了解.",

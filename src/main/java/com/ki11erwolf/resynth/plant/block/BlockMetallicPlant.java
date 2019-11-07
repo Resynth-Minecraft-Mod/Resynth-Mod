@@ -94,7 +94,7 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * {@inheritDoc}
      */
     @Override
-    int getMaxGrowthStage() {
+    public int getMaxGrowthStage() {
         return 8;
     }
 

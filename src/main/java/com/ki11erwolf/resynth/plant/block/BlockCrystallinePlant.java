@@ -119,7 +119,7 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
      * every Crystalline plant set type has.
      */
     @Override
-    int getMaxGrowthStage() {
+    public int getMaxGrowthStage() {
         return 7;
     }
 

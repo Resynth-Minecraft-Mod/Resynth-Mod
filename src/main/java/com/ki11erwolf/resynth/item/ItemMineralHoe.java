@@ -19,12 +19,13 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralHoeConfig;
+import com.ki11erwolf.resynth.util.BlockInfoProvider;
 import com.ki11erwolf.resynth.util.EffectsUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -39,23 +40,18 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
- * Item Mineral Hoe.
+ * The Mineral Hoe - Resynth's tool of choice.
  *
- * The tool of Resynth. It's used to turn dirt
- * into mineral soil using mineral crystals as fuel.
- *
- * It was put in place to replace the hold way of
- * obtaining mineral soil.
+ * <p/>The Mineral Hoe has many uses, which include:
+ * tilling dirt or grass into Mineral Soil, .......
  */
-//TODO: This could be better written...
-//TODO: While we're at it, more better features
-public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
+class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
 
     /**
      * The configuration settings for this item.
@@ -73,30 +69,17 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     private static final String NBT_TAG_CHARGES = "charges";
 
     /**
-     * Default item constructor.
+     * Constructs the Mineral Hoe item class.
      *
-     * Sets the name and properties of the item.
+     * @param name registry name of the item.
      */
     ItemMineralHoe(String name) {
         super(new Properties().maxStackSize(1), name);
     }
 
-    /**
-     * Ensures that the NBT tag and required
-     * NBT values are set on the given ItemStack.
-     *
-     * @param stack the given ItemStack.
-     */
-    private void ensureNBT(ItemStack stack){
-        //NBT Initialization
-        CompoundNBT nbt = stack.getTag();
-
-        if(nbt == null){
-            nbt = new CompoundNBT();
-            nbt.putInt(NBT_TAG_CHARGES, (Math.min(CONFIG.getInitialCharges(), 2)));
-            stack.setTag(nbt);
-        }
-    }
+    // *******
+    // Tooltip
+    // *******
 
     /**
      * {@inheritDoc}.
@@ -107,62 +90,190 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn,
                                List<ITextComponent> tooltip, ITooltipFlag flagIn){
-        ensureNBT(stack);
+        ensureChargesNBT(stack);
 
-        if(stack.getTag() != null)
-            tooltip.add(getFormattedTooltip(
-                "mineral_hoe_charges", TextFormatting.GOLD, stack.getTag().getInt(NBT_TAG_CHARGES))
-            );
+        if(stack.getTag() != null) {
+            tooltip.add(new StringTextComponent(
+                    getTooltip("mineral_hoe_charges", TextFormatting.GOLD).getFormattedText()
+                            + TextFormatting.GREEN + getCharges(stack)
+            ));
+
+            tooltip.add(new StringTextComponent(""));
+        }
 
         setDescriptiveTooltip(tooltip, this);
+    }
+
+    // ***********
+    // Charges NBT
+    // ***********
+
+    /**
+     * Ensures that the charges NBT tag and
+     * value is set on the given ItemStack.
+     *
+     * <p/>This should ALWAYS be called before
+     * interacting with the charges NBT.
+     *
+     * @param stack the given ItemStack.
+     */
+    private static void ensureChargesNBT(ItemStack stack){
+        CompoundNBT nbt = stack.getTag();
+
+        if(nbt == null){
+            LOG.info("Setting NBT tag on a Mineral Hoe item stack...");
+            nbt = new CompoundNBT();
+            nbt.putInt(NBT_TAG_CHARGES, (Math.min(CONFIG.getInitialCharges(), 2)));
+            stack.setTag(nbt);
+        }
+    }
+
+    private static int getCharges(ItemStack stack){
+        ensureChargesNBT(stack);
+
+        CompoundNBT tag = stack.getTag();
+        return tag == null ? -1 : tag.getInt(NBT_TAG_CHARGES);
+    }
+
+    private static boolean setCharges(ItemStack stack, int charges){
+        ensureChargesNBT(stack);
+
+        CompoundNBT tag = stack.getTag();
+        if(tag == null)
+            return false;
+
+        tag.putInt(NBT_TAG_CHARGES, charges);
+        stack.setTag(tag);
+        return true;
+    }
+
+    private static boolean incrementCharges(ItemStack stack){
+        int charges = getCharges(stack);
+
+        if(charges >= CONFIG.getMaxCharges())
+            return false;
+
+        return setCharges(stack, charges + 1);
+    }
+
+    @SuppressWarnings("UnusedReturnValue")
+    private static boolean decrementCharges(ItemStack stack){
+        int charges = getCharges(stack);
+
+        if(charges <= 0)
+            return false;
+
+        return setCharges(stack, charges - 1);
+    }
+
+    // ****************
+    // MC Action Events
+    // ****************
+
+    @Override
+    public ActionResultType onItemUse(ItemUseContext context) {
+        boolean success;
+
+        if(context.getPlayer() == null) {
+            success = false;
+        } else if(context.getPlayer().isSneaking()) {
+            success = onBlockShiftClick(
+                    context.getWorld(), context.getPos(), context.getWorld().getBlockState(context.getPos()),
+                    context.getItem(), context.getPlayer(), context.getFace()
+            );
+        } else {
+            success = onBlockClick(
+                    context.getWorld(), context.getPos(), context.getWorld().getBlockState(context.getPos()),
+                    context.getItem(), context.getPlayer(), context.getFace()
+            );
+        }
+
+        return (success) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getHeldItem(hand);
+        boolean success;
+
+        if(player.isSneaking()){
+            success = onItemShiftClick(world, player, stack);
+        } else {
+            success = onItemClick(world, player, stack);
+        }
+
+        return ActionResult.newResult((success ? ActionResultType.SUCCESS : ActionResultType.FAIL), stack);
+    }
+
+    @Override
+    public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
+        return true;
+    }
+
+    // **********************
+    // Specific Action Events
+    // **********************
+
+    private boolean onBlockClick(World world, BlockPos pos, BlockState block, ItemStack item, PlayerEntity player,
+                                 Direction face){
+        boolean tilled = tryTillBlock(world, pos, block, item, player, face);
+
+        if(!tilled)
+            return tryGetInfo(world, pos, block, player);
+
+        return true;
+    }
+
+    @SuppressWarnings("unused")
+    private boolean onBlockShiftClick(World world, BlockPos pos, BlockState block, ItemStack item, PlayerEntity player,
+                                      Direction face){
+        if(player.isCreative())
+            if(tryGrowPlant(world, block, pos))
+                return true;
+
+        return tryCharge(world, player, item);
+    }
+
+    private boolean onItemClick(World world, PlayerEntity player, ItemStack item){
+        return tryCharge(world, player, item);
+    }
+
+    private boolean onItemShiftClick(World world, PlayerEntity player, ItemStack item){
+        boolean charged = tryCharge(world, player, item);
+
+        if(!charged)
+            displayCharges(world, player, item);
+
+        return true;
     }
 
     // ********
     // Charging
     // ********
 
-    /**
-     * {@inheritDoc}
-     *
-     * Handles charging the Mineral Hoe with Mineral Crystals.
-     *
-     * @return {@link ActionResultType#SUCCESS} if the Mineral Hoe
-     * was charged.
-     */
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-        ensureNBT(stack);
-        //noinspection ConstantConditions //Already taken care of.
-        int charges = stack.getTag().getInt(NBT_TAG_CHARGES);
+    private boolean tryCharge(World world, PlayerEntity player, ItemStack item){
+        int charges = getCharges(item);
 
-        //At capacity
         if(charges >= CONFIG.getMaxCharges()){
-            return ActionResult.newResult(ActionResultType.FAIL, stack);
+            return false;
         }
 
-        //Can charge
-        if(player.isCreative() || takeCharge(player)){
-            stack.getTag().putInt(NBT_TAG_CHARGES, charges + 1);
-            EffectsUtil.playNormalSound(
-                    world, player, player.getPosition(),
-                    SoundEvents.BLOCK_NOTE_BLOCK_CHIME, SoundCategory.BLOCKS
-            );
-            return ActionResult.newResult(ActionResultType.SUCCESS, stack);
+        if(player.isCreative() || tryTakeCrystal(player)){
+            if(incrementCharges(item)){
+                EffectsUtil.playNormalSound(
+                        world, player, player.getPosition(),
+                        SoundEvents.BLOCK_NOTE_BLOCK_CHIME, SoundCategory.BLOCKS
+                );
+
+                displayCharges(world, player, item);
+                return true;
+            }
         }
 
-        return ActionResult.newResult(ActionResultType.FAIL, stack);
+        return false;
     }
 
-    /**
-     * Attempts to take a charge (Mineral Crystal) from the
-     * players inventory.
-     *
-     * @param player the player who we want to take the charge from.
-     * @return {@code true} if a charge was taken from the players
-     * inventory.
-     */
-    private boolean takeCharge(PlayerEntity player){
+    private boolean tryTakeCrystal(PlayerEntity player){
         for(ItemStack itemStack : player.container.getInventory()){
             if(itemStack.getItem() == ResynthItems.ITEM_MINERAL_CRYSTAL){
                 itemStack.shrink(1);
@@ -173,81 +284,107 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         return false;
     }
 
+    private void displayCharges(World world, PlayerEntity player, ItemStack item){
+        if(!world.isRemote)
+            return;
+
+        player.sendMessage(new StringTextComponent(
+                getTooltip("mineral_hoe_charges", TextFormatting.GOLD).getFormattedText()
+                        + TextFormatting.GREEN + getCharges(item)
+        ));
+    }
+
     // *******
-    // Actions
+    // Tilling
     // *******
 
-    /**
-     * {@inheritDoc}
-     *
-     * Handles what happens when the hoe is used on a block.
-     * This can be many things, from charging the hoe,
-     * tilling soil, getting block info or growing a plant.
-     *
-     * @return {@link ActionResultType#SUCCESS} if the block
-     * the player is looking at was tilted or the hoe was charged.
-     */
-    @Nonnull
-    @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        //Pre Checks
-        if(!CONFIG.isEnabled()){
-            return ActionResultType.FAIL;
+    private boolean tryTillBlock(World world, BlockPos pos, BlockState state, ItemStack item,
+                                 PlayerEntity player, Direction face){
+
+        //Check for dirt and grass.
+        if(!(state.getBlock() == Blocks.DIRT || state.getBlock() == Blocks.GRASS_BLOCK))
+            return false;
+
+        if (!(face != Direction.DOWN && world.isAirBlock(pos.up()))) {
+            return false;
         }
 
-        ensureNBT(context.getItem());
-        if(context.getPlayer() == null){
-            LOG.warn("Invalid player using the Mineral Hoe...");
-            return ActionResultType.FAIL;
-        }
-
-        //Begin
-        Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
-
-        //Grow plant
-        if(context.getPlayer().isCreative() && context.getPlayer().isSneaking()){
-            if(tryGrowPlant(block, context))
-                return ActionResultType.SUCCESS;
-        }
-
-        //Info Provider
-        if(block instanceof InfoProvider){
-            getInfo(block, context);
-            return ActionResultType.SUCCESS;
-        }
-
-        //Charge
-        if(context.getPlayer().isSneaking()){
-            return onItemRightClick(context.getWorld(), context.getPlayer(), Hand.MAIN_HAND).getType();
-        }
-
-        //Tilling
-        //Creative mode
-        if(context.getPlayer().isCreative())
-            return replace(context);
-
-        //Not creative
-        if(context.getItem().getTag() == null)
-            return ActionResultType.FAIL;
-
-        int charges = context.getItem().getTag().getInt(NBT_TAG_CHARGES);
-        if(charges < 1){
+        //Check for creative and charges.
+        if(!(player.isCreative() || getCharges(item) > 0)){
             if(CONFIG.playFailSound())
                 EffectsUtil.playNormalSound(
-                        context.getWorld(), context.getPlayer(), context.getPos(),
-                        SoundEvents.BLOCK_NOTE_BLOCK_HAT, SoundCategory.BLOCKS
+                        world, player, pos, SoundEvents.BLOCK_NOTE_BLOCK_HAT, SoundCategory.BLOCKS
                 );
-
-            return ActionResultType.FAIL;
+            return false;
         }
 
-        //Remove a charge.
-        ActionResultType result = replace(context);
-        if(result == ActionResultType.SUCCESS)
-            context.getItem().getTag().putInt(NBT_TAG_CHARGES, charges - 1);
+        //If all checks pass
 
-        return result;
+        //Replace
+        boolean replaced = tillBlock(world, pos, player);
+
+        //Finally remove charge if replaced.
+        if(replaced && !player.isCreative()){
+            decrementCharges(item);
+        }
+
+        return replaced;
     }
+
+    private boolean tillBlock(World world, BlockPos pos, PlayerEntity player){
+        boolean replaced = world.setBlockState(pos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
+
+        if(replaced){
+            //Particles
+            if(CONFIG.showParticles())
+                EffectsUtil.displayStandardEffects(world, pos.up(), 5, ParticleTypes.FLAME);
+
+            //Sound
+            EffectsUtil.playNormalSound(
+                    world, player, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS
+            );
+        }
+
+        return replaced;
+    }
+
+    // ********************
+    // Information Provider
+    // ********************
+    //TODO: Locale for this
+
+    private boolean tryGetInfo(World world, BlockPos pos, BlockState block, PlayerEntity player){
+        if(!(block.getBlock() instanceof BlockInfoProvider))
+            return false;
+
+        //We want this done on the server side to get correct information.
+        if(world.isRemote)
+            return false;
+
+        BlockInfoProvider infoProvider = (BlockInfoProvider)block.getBlock();
+        player.sendMessage(new StringTextComponent(
+                getInfoFromProvider(infoProvider, world, pos, block)
+        ));
+
+        return true;
+    }
+
+    private String getInfoFromProvider(BlockInfoProvider provider, World world, BlockPos pos, BlockState block){
+        List<String> informationList = new ArrayList<>();
+        provider.appendBlockInformation(informationList, world, pos, block);
+
+        StringBuilder informationText = new StringBuilder();
+
+        for(String informationLine : informationList){
+            informationText.append(informationLine).append("\n");
+        }
+
+        return informationText.toString();
+    }
+
+    // ************
+    // Plant Growth
+    // ************
 
     /**
      * Attempts to grow a plant similar to bonemeal,
@@ -256,84 +393,13 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      *
      * @return {@code true} if the plant could be grown.
      */
-    private boolean tryGrowPlant(Block block, ItemUseContext context){
-        if(block instanceof IGrowable){
-            if(!context.getWorld().isRemote)
-                ((IGrowable)block).grow(
-                        context.getWorld(),
-                        random,
-                        context.getPos(),
-                        context.getWorld().getBlockState(context.getPos())
-                );
+    private boolean tryGrowPlant(World world, BlockState block, BlockPos pos){
+        if(block.getBlock() instanceof IGrowable){
+            if(!world.isRemote)
+                ((IGrowable)block.getBlock()).grow(world, random, pos, world.getBlockState(pos));
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * Shows the provided info from an info provider
-     * block in chat.
-     */
-    private void getInfo(Block block, ItemUseContext context){
-        if(!context.getWorld().isRemote)
-            if(context.getPlayer() != null)
-            context.getPlayer().sendMessage(
-                    new StringTextComponent(((InfoProvider)block).getInfo(context.getWorld(), context.getPos()))
-            );
-    }
-
-    /**
-     * Replaces the block the player is looking at
-     * to Mineral Soil if possible.
-     *
-     * @param context the ItemUseContext instance given by
-     *                {@link #onItemUse(ItemUseContext)}.
-     * @return {@link ActionResultType#SUCCESS} if the block
-     * was replaced.
-     */
-    private ActionResultType replace(ItemUseContext context){
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
-        BlockState source = world.getBlockState(pos);
-
-        if(source.getBlock() == Blocks.DIRT || source.getBlock() == Blocks.GRASS_BLOCK){
-            if (context.getFace() != Direction.DOWN && world.isAirBlock(pos.up())) {
-                //Replacement
-                world.setBlockState(pos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
-
-                //Particles
-                if(CONFIG.showParticles())
-                    EffectsUtil.displayStandardEffects(world, pos.up(), 5, ParticleTypes.FLAME);
-
-                //Sound
-                EffectsUtil.playNormalSound(
-                        world, context.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS
-                );
-
-                return ActionResultType.SUCCESS;
-            }
-        }
-
-        return ActionResultType.FAIL;
-    }
-
-    /**
-     * Allows blocks to provide information
-     * to the user in a chat message when
-     * they right-click the block with a
-     * Mineral Hoe.
-     */
-    public interface InfoProvider {
-
-        /**
-         * Called by the Mineral Hoe to obtain
-         * the message it should display to
-         * the player.
-         *
-         * @return the message that should
-         * be displayed to the player.
-         */
-        String getInfo(World world, BlockPos pos);
     }
 }

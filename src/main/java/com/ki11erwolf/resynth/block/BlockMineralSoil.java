@@ -19,8 +19,13 @@ import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
-import com.ki11erwolf.resynth.item.ItemMineralHoe;
+import com.ki11erwolf.resynth.item.ItemMineralHoeOld;
 import com.ki11erwolf.resynth.item.ResynthItems;
+import com.ki11erwolf.resynth.plant.block.BlockBiochemicalPlant;
+import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
+import com.ki11erwolf.resynth.plant.block.BlockMetallicPlant;
+import com.ki11erwolf.resynth.plant.block.BlockPlant;
+import com.ki11erwolf.resynth.util.BlockInfoProvider;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
@@ -62,8 +67,8 @@ import java.util.List;
  * determines plant growth.
  */
 @SuppressWarnings("deprecation")
-public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements ItemMineralHoe.InfoProvider,
-        IComponentProvider, IServerDataProvider<TileEntity>{
+public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements ItemMineralHoeOld.InfoProvider,
+        IComponentProvider, IServerDataProvider<TileEntity>, BlockInfoProvider {
 
     /**
      * Configuration settings for this block class.
@@ -436,12 +441,131 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      */
     private static String getMineralContentMessage(float mineralPercentage, float increase, boolean i18n){
         if(i18n)
-            return TextFormatting.RED +
+            return TextFormatting.AQUA +
                     I18n.format(
                             "misc.resynth.mineral_content",
                             TextFormatting.GOLD + String.valueOf(mineralPercentage)
                     ) + " + " + ((mineralPercentage > 49.9) ? increase : 0) + "%";
         else return TextFormatting.GOLD + String.valueOf(mineralPercentage)
                 + "% + " + ((mineralPercentage > 49.9) ? increase : 0) + "%";
+    }
+
+    // *************************
+    // Mineral Hoe Info Provider
+    // *************************
+
+    @Override
+    //TODO: Locale
+    public void appendBlockInformation(List<String> information, World world, BlockPos pos, BlockState block) {
+        appendMineralSoilInformation(information, world, pos);
+        appendPlantInformation(information, world, pos);
+    }
+
+    private void appendMineralSoilInformation(List<String> information, World world, BlockPos pos){
+        //Begin
+        information.add(
+                TextFormatting.GRAY + "---------- Mineral Soil Info -----------"
+        );
+
+        //Mineral Content
+        TileEntityMineralSoil entity = getTileEntity(world, pos);
+        information.add(
+                TextFormatting.GREEN + "Mineral Content: " + TextFormatting.GOLD + entity.getMineralPercentage() + "%"
+        );
+
+        //Enhancer & combined
+        BlockState enhancer = world.getBlockState(pos.down());
+        String enhancerIncrease;
+        float combined = entity.getMineralPercentage();
+        boolean hasEnhancer = false;
+
+        if(enhancer.getBlock() instanceof BlockEnhancer){
+            hasEnhancer = true;
+            //Make sure we take 50% concentration needed.
+            if(entity.getMineralPercentage() < 50.0F){
+                enhancerIncrease = TextFormatting.RED + "Not Enabled  (Need 50% concentration)!";
+                combined += 0;
+            } else {
+                BlockEnhancer enhancerBlock = (BlockEnhancer)enhancer.getBlock();
+                enhancerIncrease = enhancerBlock.getIncrease() + "%";
+                combined += enhancerBlock.getIncrease();
+            }
+        } else enhancerIncrease = "No Enhancer!";
+
+        if(hasEnhancer){
+            information.add(
+                    TextFormatting.LIGHT_PURPLE + "Enhancer Increase: " + TextFormatting.GOLD + enhancerIncrease
+            );
+
+            if(combined != entity.getMineralPercentage())
+                information.add(
+                        TextFormatting.AQUA + "Combined Growth Chance: " + TextFormatting.GOLD + combined + "%"
+                );
+        }
+    }
+
+    //TODO: move to plant block class.
+    private void appendPlantInformation(List<String> information, World world, BlockPos pos){
+        BlockState plantBlockState = world.getBlockState(pos.up());
+        Block plantBlock = plantBlockState.getBlock();
+
+        //Begin
+        information.add(
+                TextFormatting.GRAY + "------------- Plant Info -------------"
+        );
+
+        //No plant on soil.
+        if(!(plantBlock instanceof BlockPlant)){
+            information.add(
+                    TextFormatting.RED + "No Plant!"
+            );
+
+            //End
+            information.add(
+                    TextFormatting.GRAY + "------------------------------------"
+            );
+
+            return;
+        }
+
+        BlockPlant blockPlant = (BlockPlant) plantBlock;
+
+        //Exact plant
+        information.add(
+                TextFormatting.YELLOW + "Specific Plant: " + TextFormatting.GOLD + blockPlant.getRegistryName()
+        );
+
+        //Plant type
+        String plantType;
+
+        if(blockPlant instanceof BlockBiochemicalPlant) {
+            plantType = "Biochemical";
+        } else if (blockPlant instanceof BlockMetallicPlant) {
+            plantType = "Metallic";
+        } else if (blockPlant instanceof BlockCrystallinePlant) {
+            plantType = "Crystalline";
+        } else plantType = "Error!";
+
+        information.add(
+                TextFormatting.DARK_AQUA + "Plant Type: " + TextFormatting.GOLD + plantType
+        );
+
+        //Growth Stage
+        information.add(
+                TextFormatting.DARK_PURPLE + "Growth Stage: " +
+                        TextFormatting.GOLD + (blockPlant.getGrowthStage(plantBlockState) + 1) +
+                        TextFormatting.DARK_PURPLE + " of " + TextFormatting.GOLD + (blockPlant.getMaxGrowthStage() + 1)
+        );
+
+        //Growth chance
+        information.add(
+                TextFormatting.BLUE + "Growth Chance: " +
+                        TextFormatting.GOLD + ((BlockPlant) plantBlock).getProperties().chanceToGrow() + "%"
+        );
+
+        //End
+        information.add(
+                TextFormatting.GRAY + "------------------------------------"
+        );
     }
 }

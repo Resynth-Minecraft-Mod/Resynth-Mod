@@ -19,7 +19,7 @@ import com.ki11erwolf.resynth.block.BlockEnhancer;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
-import com.ki11erwolf.resynth.item.ItemMineralHoe.InfoProvider;
+import com.ki11erwolf.resynth.item.ItemMineralHoeOld.InfoProvider;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
 import com.ki11erwolf.resynth.util.EffectsUtil;
@@ -65,6 +65,7 @@ import java.util.Random;
  *
  * @param <T> the inheriting class (i.e. plant block).
  */
+//TODO: maxGrowthStage() and getGrowthStage()
 public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T>
         implements IPlantable, IGrowable, InfoProvider, IComponentProvider {
 
@@ -288,7 +289,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @return the integer growth stage
      * of the given plant block.
      */
-    int getGrowthStage(BlockState state){
+    public int getGrowthStage(BlockState state){
         return state.get(getGrowthProperty());
     }
 
@@ -468,6 +469,14 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         );
     }
 
+    // ************************
+    // Public Properties Getter
+    // ************************
+
+    public PlantSetProperties getProperties(){
+        return this.properties;
+    }
+
     /**
      * Gets the growth stage message from the
      * lang file formatted with the provided
@@ -521,7 +530,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * stages this specific plant set
      * type has.
      */
-    abstract int getMaxGrowthStage();
+    public abstract int getMaxGrowthStage();
 
     /**
      * Allows implementing classes to specify
