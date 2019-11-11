@@ -89,6 +89,7 @@ public abstract class BlockPlantMetallic extends BlockPlantBase implements Hwyla
                 this.blockState.getBaseState().withProperty(GROWTH_STAGE, 0)
                         .withProperty(FACING, EnumFacing.UP)
         );
+        this.setTickRandomly(true);
         this.setCreativeTab(null);
         this.produce = produce;
     }
