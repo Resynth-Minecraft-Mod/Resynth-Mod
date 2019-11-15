@@ -499,12 +499,11 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
 
             if(combined != entity.getMineralPercentage())
                 information.add(
-                        TextFormatting.AQUA + "Combined Growth Chance: " + TextFormatting.GOLD + combined + "%"
+                        TextFormatting.AQUA + "Combined Mineral Content: " + TextFormatting.GOLD + combined + "%"
                 );
         }
     }
 
-    //TODO: move to plant block class.
     private void appendPlantInformation(List<String> information, World world, BlockPos pos){
         BlockState plantBlockState = world.getBlockState(pos.up());
         Block plantBlock = plantBlockState.getBlock();
@@ -553,14 +552,37 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         //Growth Stage
         information.add(
                 TextFormatting.DARK_PURPLE + "Growth Stage: " +
-                        TextFormatting.GOLD + (blockPlant.getGrowthStage(plantBlockState) + 1) +
-                        TextFormatting.DARK_PURPLE + " of " + TextFormatting.GOLD + (blockPlant.getMaxGrowthStage() + 1)
+                TextFormatting.GOLD + (blockPlant.getGrowthStage(plantBlockState) + 1) +
+                TextFormatting.DARK_PURPLE + " of " + TextFormatting.GOLD + (blockPlant.getMaxGrowthStage() + 1)
         );
 
         //Growth chance
         information.add(
                 TextFormatting.BLUE + "Growth Chance: " +
-                        TextFormatting.GOLD + ((BlockPlant) plantBlock).getProperties().chanceToGrow() + "%"
+                TextFormatting.GOLD + ((BlockPlant) plantBlock).getProperties().chanceToGrow() + "%"
+        );
+
+        //Combined Growth Chance
+        float plantGrowthChance = ((BlockPlant) plantBlock).getProperties().chanceToGrow() / 100;
+
+        TileEntityMineralSoil entity = getTileEntity(world, pos);
+        float mineralSoilConcentration = entity.getMineralPercentage();
+
+        BlockState enhancer = world.getBlockState(pos.down());
+        float enhancerIncrease = 0;
+
+        if(enhancer.getBlock() instanceof BlockEnhancer){
+            enhancerIncrease = ((BlockEnhancer)enhancer.getBlock()).getIncrease();
+        }
+
+        float combinedChance = (enhancerIncrease + mineralSoilConcentration) / 100;
+
+        //Final Chance
+        float finalChance = (combinedChance * plantGrowthChance) * 100;
+        double roundedFinalChance = (double) Math.round(finalChance * 100) / 100;
+        information.add(
+                TextFormatting.DARK_GREEN + "Final Growth Chance: " +
+                TextFormatting.GOLD + roundedFinalChance + "%"
         );
 
         //End

@@ -16,12 +16,14 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.block.BlockEnhancer;
+import com.ki11erwolf.resynth.block.BlockMineralSoil;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.item.ItemMineralHoeOld.InfoProvider;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
+import com.ki11erwolf.resynth.util.BlockInfoProvider;
 import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MathUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
@@ -65,9 +67,8 @@ import java.util.Random;
  *
  * @param <T> the inheriting class (i.e. plant block).
  */
-//TODO: maxGrowthStage() and getGrowthStage()
 public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T>
-        implements IPlantable, IGrowable, InfoProvider, IComponentProvider {
+        implements IPlantable, IGrowable, InfoProvider, IComponentProvider, BlockInfoProvider {
 
     /**
      * The prefix for all plant blocks.
@@ -495,6 +496,20 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
                     );
         else
             return TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1));
+    }
+
+    // *************************
+    // Mineral Hoe Info Provider
+    // *************************
+
+    @Override
+    //TODO: Locale
+    public void appendBlockInformation(List<String> information, World world, BlockPos pos, BlockState block) {
+        BlockState soilBlock = world.getBlockState(pos.down());
+
+        if(soilBlock.getBlock() instanceof BlockMineralSoil){
+            ((BlockMineralSoil)soilBlock.getBlock()).appendBlockInformation(information, world, pos.down(), soilBlock);
+        }
     }
 
     // ****************
