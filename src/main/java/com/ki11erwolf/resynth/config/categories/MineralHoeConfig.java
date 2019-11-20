@@ -18,11 +18,11 @@ package com.ki11erwolf.resynth.config.categories;
 import com.ki11erwolf.resynth.config.BooleanConfigValue;
 import com.ki11erwolf.resynth.config.ConfigCategory;
 import com.ki11erwolf.resynth.config.IntegerConfigValue;
-import com.ki11erwolf.resynth.item.ItemMineralHoeOld;
+
 
 /**
  * Holds the configuration settings for the
- * {@link ItemMineralHoeOld}.
+ * com.ki11erwolf.resynth.item.ItemMineralHoe
  */
 public class MineralHoeConfig extends ConfigCategory {
 

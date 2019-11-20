@@ -25,7 +25,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -40,16 +39,21 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
- * The Mineral Hoe - Resynth's tool of choice.
+ * The Mineral Hoe - used as the main tool for the mod.
  *
  * <p/>The Mineral Hoe has many uses, which include:
- * tilling dirt or grass into Mineral Soil, .......
+ * tilling dirt or grass into Mineral Soil, growing
+ * plants in creative mode, getting information from
+ * blocks and the supporting features the allow
+ * completing these functions.
+ *
+ * <p/>Any block that has information to give to the
+ * Mineral Hoe must implement {@link BlockInfoProvider}.
  */
 class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
 
@@ -88,8 +92,7 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
      * and how to use the item.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn,
-                               List<ITextComponent> tooltip, ITooltipFlag flagIn){
+    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
         ensureChargesNBT(stack);
 
         if(stack.getTag() != null) {
@@ -128,6 +131,16 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         }
     }
 
+    /**
+     * Used to get the amount of charges available
+     * to the given Mineral Hoe item stack. Will
+     * ensure charges NBT is correct on the hoe
+     * as well.
+     *
+     * @param stack the Mineral Hoe item stack.
+     * @return the number of charges available
+     * to the hoe.
+     */
     private static int getCharges(ItemStack stack){
         ensureChargesNBT(stack);
 
@@ -135,6 +148,18 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         return tag == null ? -1 : tag.getInt(NBT_TAG_CHARGES);
     }
 
+    /**
+     * Sets the number of charges on the
+     * given Mineral Hoe item stack. Will
+     * ensure charges NBT is correct on
+     * the hoe as well.
+     *
+     * @param stack the Mineral Hoe item stack.
+     * @param charges the number of charges the
+     *                Mineral Hoe should have.
+     * @return {@code true} if the operation
+     * succeeded.
+     */
     private static boolean setCharges(ItemStack stack, int charges){
         ensureChargesNBT(stack);
 
@@ -147,6 +172,16 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         return true;
     }
 
+    /**
+     * Increments the number of charges on the
+     * given Mineral Hoe item stack by 1. Will
+     * ensure the charges NBT is correct on
+     * the hoe as well.
+     *
+     * @param stack the Mineral Hoe item stack.
+     * @return {@code true} if the operation
+     * succeeded.
+     */
     private static boolean incrementCharges(ItemStack stack){
         int charges = getCharges(stack);
 
@@ -156,6 +191,16 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         return setCharges(stack, charges + 1);
     }
 
+    /**
+     * Decrements the number of charges on the
+     * given Mineral Hoe item stack by 1. Will
+     * ensure the charges NBT is correct on
+     * the hoe as well.
+     *
+     * @param stack the Mineral Hoe item stack.
+     * @return {@code true} if the operation
+     * succeeded.
+     */
     @SuppressWarnings("UnusedReturnValue")
     private static boolean decrementCharges(ItemStack stack){
         int charges = getCharges(stack);
@@ -170,6 +215,19 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
     // MC Action Events
     // ****************
 
+    /**
+     * Called when this item type is used on a block in the
+     * world (excluding air). This method simply delegates
+     * the task to the more generalized
+     * {@link #onBlockClick(World, BlockPos, BlockState, ItemStack, PlayerEntity, Direction)}
+     * and {@link #onBlockShiftClick(World, BlockPos, BlockState, ItemStack, PlayerEntity, Direction)}
+     * methods which actually handle the task.
+     *
+     * @param context the context in which the item was used.
+     * @return {@link ActionResultType#SUCCESS} if the use action
+     * resulted in an action being performed, {@link ActionResultType#FAIL}
+     * if it did not.
+     */
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         boolean success;
@@ -191,6 +249,20 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         return (success) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
     }
 
+    /**
+     * Called when this item is used by itself (not targeting a block).
+     * This method simply delegates the task to the more generalized
+     * {@link #onItemClick(World, PlayerEntity, ItemStack)}
+     * and {@link #onItemShiftClick(World, PlayerEntity, ItemStack)}
+     * methods which actually handle the task.
+     *
+     * @param world the world the item was used in.
+     * @param player the player that used the item.
+     * @param hand the hand the item was in when used.
+     * @return {@link ActionResultType#SUCCESS} if the use action
+     * resulted in an action being performed, {@link ActionResultType#FAIL}
+     * if it did not.
+     */
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
@@ -205,15 +277,33 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         return ActionResult.newResult((success ? ActionResultType.SUCCESS : ActionResultType.FAIL), stack);
     }
 
-    @Override
-    public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
-        return true;
-    }
+      /*Until it has a use...*/
+//    @Override
+//    public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
+//        return true;
+//    }
 
     // **********************
     // Specific Action Events
     // **********************
 
+    /**
+     * Called when this item (in a stack) is used when targeting a
+     * block (excluding air). This method will not be called if
+     * the player is sneaking!
+     *
+     * <p/>Attempts to till the targeted block when called
+     * or get information from the block if it is not tillable.
+     *
+     * @param world the world the item was used in.
+     * @param pos the position of the targeted block.
+     * @param block the state of the targeted block.
+     * @param item the item stack used.
+     * @param player the player that used the item.
+     * @param face the direction the block was targeted from.
+     * @return {@code true} if the call resulted in an action,
+     * {@code false} otherwise.
+     */
     private boolean onBlockClick(World world, BlockPos pos, BlockState block, ItemStack item, PlayerEntity player,
                                  Direction face){
         boolean tilled = tryTillBlock(world, pos, block, item, player, face);
@@ -224,33 +314,86 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         return true;
     }
 
-    @SuppressWarnings("unused")
+    /**
+     * Called when this item (in a stack) is used when targeting a
+     * block (excluding air). This method will not be called if
+     * the player is NOT sneaking!
+     *
+     * <p/>Attempts to grow the targeted plant or
+     * charge the Mineral Hoe.
+     *
+     * @param world the world the item was used in.
+     * @param pos the position of the targeted block.
+     * @param block the state of the targeted block.
+     * @param item the item stack used.
+     * @param player the player that used the item.
+     * @param face the direction the block was targeted from.
+     * @return {@code true} if the call resulted in an action,
+     * {@code false} otherwise.
+     */
     private boolean onBlockShiftClick(World world, BlockPos pos, BlockState block, ItemStack item, PlayerEntity player,
-                                      Direction face){
-        if(player.isCreative())
-            if(tryGrowPlant(world, block, pos))
-                return true;
+                                      @SuppressWarnings("unused") Direction face){
+        if(tryGrowPlant(player, world, block, pos))
+            return true;
 
         return tryCharge(world, player, item);
     }
 
+    /**
+     * Called when this item (in a stack) is used when not targeting a
+     * block(i.e. air). This method will not be called if
+     * the player is sneaking!
+     *
+     * <p/>Attempts to charge the Mineral Hoe item stack.
+     *
+     * @param world the world the item was used in.
+     * @param item the item stack used.
+     * @param player the player that used the item.
+     * @return {@code true} if the call resulted in an action,
+     * {@code false} otherwise.
+     */
     private boolean onItemClick(World world, PlayerEntity player, ItemStack item){
         return tryCharge(world, player, item);
     }
 
+    /**
+     * Called when this item (in a stack) is used when not targeting a
+     * block(i.e. air). This method will not be called if
+     * the player NOT is sneaking!
+     *
+     * <p/>Attempts to charge the Mineral Hoe item stack
+     * or display the number of charges on the Hoe.
+     *
+     * @param world the world the item was used in.
+     * @param item the item stack used.
+     * @param player the player that used the item.
+     * @return {@code true} if the call resulted in an action,
+     * {@code false} otherwise.
+     */
     private boolean onItemShiftClick(World world, PlayerEntity player, ItemStack item){
         boolean charged = tryCharge(world, player, item);
 
         if(!charged)
             displayCharges(world, player, item);
 
-        return true;
+        return charged;
     }
 
     // ********
     // Charging
     // ********
 
+    /**
+     * Will try and charge the given Mineral Hoe item stack
+     * from a Mineral Crystal in the given players inventory.
+     * If no crystal can be found the Hoe won't be charged.
+     *
+     * @param world the world the player is in.
+     * @param player the player itself.
+     * @param item the Mineral Hoe item stack.
+     * @return {@code true} if a crystal was found
+     * and the Hoe was charged, {@code false} otherwise.
+     */
     private boolean tryCharge(World world, PlayerEntity player, ItemStack item){
         int charges = getCharges(item);
 
@@ -260,10 +403,11 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
 
         if(player.isCreative() || tryTakeCrystal(player)){
             if(incrementCharges(item)){
-                EffectsUtil.playNormalSound(
-                        world, player, player.getPosition(),
-                        SoundEvents.BLOCK_NOTE_BLOCK_CHIME, SoundCategory.BLOCKS
-                );
+                if(CONFIG.playChargeSound())
+                    EffectsUtil.playNormalSound(
+                            world, player, player.getPosition(),
+                            SoundEvents.BLOCK_NOTE_BLOCK_CHIME, SoundCategory.BLOCKS
+                    );
 
                 displayCharges(world, player, item);
                 return true;
@@ -273,6 +417,14 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         return false;
     }
 
+    /**
+     * Will try and take a charge (Mineral Crystal) from
+     * anywhere within the given players inventory.
+     *
+     * @param player the player to take the crystal from.
+     * @return {@code true} if a crystal was found and taken,
+     * {@code false} otherwise.
+     */
     private boolean tryTakeCrystal(PlayerEntity player){
         for(ItemStack itemStack : player.container.getInventory()){
             if(itemStack.getItem() == ResynthItems.ITEM_MINERAL_CRYSTAL){
@@ -284,6 +436,15 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         return false;
     }
 
+    /**
+     * Will send a message to the given player telling
+     * them how many charges are on the given Mineral
+     * Hoe item stack.
+     *
+     * @param world the world the player is in.
+     * @param player the player to send the message to.
+     * @param item the Mineral Hoe item stack.
+     */
     private void displayCharges(World world, PlayerEntity player, ItemStack item){
         if(!world.isRemote)
             return;
@@ -298,6 +459,21 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
     // Tilling
     // *******
 
+    /**
+     * Will attempt to till the given block into Mineral Soil.
+     * If all checks pass (input block, direction, charges, ect),
+     * the block will be tilled, effects will be played and a charge
+     * will be taken.
+     *
+     * @param world the world the block to till is in.
+     * @param pos the position of the block to till in the world.
+     * @param state the state of the block to till in the world.
+     * @param item the item used to till the block (Mineral Hoe stack).
+     * @param player the player tilling the block.
+     * @param face the direction the block is being tilled from.
+     * @return {@code true} if the given block was successfully
+     * tilled into Mineral Soil, {@code false} otherwise.
+     */
     private boolean tryTillBlock(World world, BlockPos pos, BlockState state, ItemStack item,
                                  PlayerEntity player, Direction face){
 
@@ -305,6 +481,7 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         if(!(state.getBlock() == Blocks.DIRT || state.getBlock() == Blocks.GRASS_BLOCK))
             return false;
 
+        //Check direction
         if (!(face != Direction.DOWN && world.isAirBlock(pos.up()))) {
             return false;
         }
@@ -331,6 +508,15 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         return replaced;
     }
 
+    /**
+     * Will till the given block into Mineral Soil regardless of block.
+     * Effects will also be played along with the tilling action.
+     *
+     * @param world the world the block to till is in.
+     * @param pos the position of the block in the world to till.
+     * @param player the player tilling the block.
+     * @return {@code true} if the block was successfully tilled/replaced.
+     */
     private boolean tillBlock(World world, BlockPos pos, PlayerEntity player){
         boolean replaced = world.setBlockState(pos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
 
@@ -351,8 +537,20 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
     // ********************
     // Information Provider
     // ********************
-    //TODO: Locale for this
 
+    /**
+     * Will attempt to get the provided information from
+     * the given block if it a {@link BlockInfoProvider},
+     * if it is not, the method will simply return.
+     *
+     * @param world the world the block is in.
+     * @param pos the position of the block in the world.
+     * @param block the state of the block in the world.
+     * @param player the player using the Mineral Hoe.
+     * @return {@code true} if the given block is a
+     * {@link BlockInfoProvider} and information could
+     * be obtained successfully, {@code false} otherwise.
+     */
     private boolean tryGetInfo(World world, BlockPos pos, BlockState block, PlayerEntity player){
         if(!(block.getBlock() instanceof BlockInfoProvider))
             return false;
@@ -369,6 +567,17 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         return true;
     }
 
+    /**
+     * Will get the information given from the given
+     * BlockInfoProvider Block.
+     *
+     * @param provider the specific info provider block.
+     * @param world the world the block is in.
+     * @param pos the position of the block in the world.
+     * @param block the state of the block in the world.
+     * @return the information from the provider as a
+     * complete string.
+     */
     private String getInfoFromProvider(BlockInfoProvider provider, World world, BlockPos pos, BlockState block){
         List<String> informationList = new ArrayList<>();
         provider.appendBlockInformation(informationList, world, pos, block);
@@ -389,11 +598,15 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
     /**
      * Attempts to grow a plant similar to bonemeal,
      * however it ignores {@link IGrowable#canGrow(IBlockReader, BlockPos, BlockState, boolean)}
-     * and {@link IGrowable#canUseBonemeal(World, Random, BlockPos, BlockState)}.
+     * and {@link IGrowable#canUseBonemeal(World, Random, BlockPos, BlockState)}. This method
+     * performs a creative check and only works for players in creative.
      *
      * @return {@code true} if the plant could be grown.
      */
-    private boolean tryGrowPlant(World world, BlockState block, BlockPos pos){
+    private boolean tryGrowPlant(PlayerEntity player, World world, BlockState block, BlockPos pos){
+        if(!player.isCreative())
+            return false;//Creative check.
+
         if(block.getBlock() instanceof IGrowable){
             if(!world.isRemote)
                 ((IGrowable)block.getBlock()).grow(world, random, pos, world.getBlockState(pos));

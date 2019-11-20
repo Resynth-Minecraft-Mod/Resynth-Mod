@@ -16,17 +16,12 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.block.BlockEnhancer;
-import com.ki11erwolf.resynth.block.BlockMineralSoil;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
-import com.ki11erwolf.resynth.item.ItemMineralHoeOld.InfoProvider;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
-import com.ki11erwolf.resynth.util.BlockInfoProvider;
-import com.ki11erwolf.resynth.util.EffectsUtil;
-import com.ki11erwolf.resynth.util.MathUtil;
-import com.ki11erwolf.resynth.util.MinecraftUtil;
+import com.ki11erwolf.resynth.util.*;
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
@@ -52,7 +47,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 import java.util.List;
 import java.util.Random;
@@ -68,7 +62,7 @@ import java.util.Random;
  * @param <T> the inheriting class (i.e. plant block).
  */
 public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T>
-        implements IPlantable, IGrowable, InfoProvider, IComponentProvider, BlockInfoProvider {
+        implements IPlantable, IGrowable, IComponentProvider, PlantPatchInfoProvider {
 
     /**
      * The prefix for all plant blocks.
@@ -451,23 +445,9 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
             tooltip.add(new StringTextComponent(
                     getGrowthStageMessage(
                             getGrowthStage(accessor.getWorld().getBlockState(accessor.getPosition())),
-                            getMaxGrowthStage(), true
+                            getMaxGrowthStage()
                     )
             ));
-    }
-
-    // *************
-    // Info Provider
-    // *************
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getInfo(World world, BlockPos pos) {
-        return getGrowthStageMessage(
-                getGrowthStage(world.getBlockState(pos)), getMaxGrowthStage(), FMLEnvironment.dist.isClient()
-        );
     }
 
     // ************************
@@ -487,29 +467,12 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @param max the plants max number of growth stages.
      * @return the formatted localized message.
      */
-    private static String getGrowthStageMessage(int growthStage, int max, boolean i18n){
-        if(i18n)
-            return TextFormatting.GREEN +
-                    I18n.format(
-                            "misc.resynth.growth_stage",
-                            TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
-                    );
-        else
-            return TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1));
-    }
-
-    // *************************
-    // Mineral Hoe Info Provider
-    // *************************
-
-    @Override
-    //TODO: Locale
-    public void appendBlockInformation(List<String> information, World world, BlockPos pos, BlockState block) {
-        BlockState soilBlock = world.getBlockState(pos.down());
-
-        if(soilBlock.getBlock() instanceof BlockMineralSoil){
-            ((BlockMineralSoil)soilBlock.getBlock()).appendBlockInformation(information, world, pos.down(), soilBlock);
-        }
+    private static String getGrowthStageMessage(int growthStage, int max){
+        return TextFormatting.GREEN +
+                I18n.format(
+                        "misc.resynth.growth_stage",
+                        TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
+                );
     }
 
     // ****************

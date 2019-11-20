@@ -36,6 +36,7 @@ import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
  * {@link CrystallineSetProperties} instance, rather than
  * defined in the class.
  */
+//A thought: toggle that enables/disables using the config categories... for future updates that change config values.
 public class CrystallinePlantSetConfig extends ConfigCategory implements ICrystallineSetProperties {
 
     /**

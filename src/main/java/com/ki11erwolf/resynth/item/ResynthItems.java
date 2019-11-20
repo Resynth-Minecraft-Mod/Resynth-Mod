@@ -65,12 +65,6 @@ public class ResynthItems extends QueueRegisterer<Item> {
             = new ItemMineralCrystal("mineral_crystal").queueRegistration();
 
     /**
-     * Mineral Hoe. Tool used to turn dirt/grass into mineral soil.
-     */
-    public static final ResynthItem ITEM_MINERAL_HOE_OLD
-            = new ItemMineralHoeOld("mineral_hoe");
-
-    /**
      * Mineral Hoe. Resynth's tool of choice.
      */
     public static final ResynthItem ITEM_MINERAL_HOE

@@ -21,9 +21,23 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-//TODO: Add locale for this...
+/**
+ * Allows implementing block classes to provide
+ * information about themselves to the Mineral
+ * Hoe when asked to do so.
+ */
 public interface BlockInfoProvider {
 
+    /**
+     * Called when the Mineral Hoe wants to get information
+     * from the block to display to the user. This method
+     * is called on the server side so localization is
+     * not recommended.
+     *
+     * @param information array that information text is written to.
+     * @param world the world the block is in.
+     * @param pos the position of the block in the world.
+     * @param block the state of the block in the world.
+     */
     void appendBlockInformation(List<String> information, World world, BlockPos pos, BlockState block);
-
 }

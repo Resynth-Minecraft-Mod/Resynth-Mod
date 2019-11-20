@@ -32,6 +32,7 @@ import static net.minecraft.entity.EntityType.*;
  *
  * All plant sets in this class are referred to as Vanilla plant sets.
  */
+//A thought: a json system that parses a json file containing the information in this class.
 @SuppressWarnings({"WeakerAccess", "unused"/*Fields register themselves.*/})
 public class ResynthPlants {
 
