@@ -125,7 +125,7 @@ public class PlantSetFactory {
                     LOG.error("Failed to get source ore: " + sourceOreRL.toString());
                     this.flagAsFailure();
                 } else {
-                    LOG.info("Found source ore: " + sourceOre.getNameTextComponent().getUnformattedComponentText());
+                    LOG.info("Found source ore: " + sourceOreRL.toString());
                     sourceOreStack = new ItemStack(sourceOre);
                 }
 
@@ -213,7 +213,7 @@ public class PlantSetFactory {
                     LOG.error("Failed to get source ore: " + sourceOreRL.toString());
                     this.flagAsFailure();
                 } else {
-                    LOG.info("Found source ore: " + sourceOre.getNameTextComponent().getUnformattedComponentText());
+                    LOG.info("Found source ore: " + sourceOreRL.toString());
                     sourceOreStack = new ItemStack(sourceOre);
                 }
 

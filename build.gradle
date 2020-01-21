@@ -23,7 +23,7 @@ apply plugin: 'eclipse'
 //ResynthMod.java
 //mods.toml
 //Here
-version = '3.1.2'
+version = '3.1.3'
 
 group = "com.ki11erwolf.resynth"
 archivesBaseName = "resynth"
