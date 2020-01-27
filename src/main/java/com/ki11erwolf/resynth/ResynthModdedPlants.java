@@ -15,7 +15,10 @@
  */
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.plant.set.*;
+import com.ki11erwolf.resynth.plant.set.CrystallineSetProperties;
+import com.ki11erwolf.resynth.plant.set.MetallicSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
+import com.ki11erwolf.resynth.plant.set.PlantSetFactory;
 
 /**
  * Holds the definitions and references to every Resynth
@@ -275,35 +278,35 @@ public class ResynthModdedPlants {
     /**
      * The plant set instance for onyx from Simple Ores.
      */
-    public static final PlantSet SIMPLE_ORES_ONYX = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> SIMPLE_ORES_ONYX = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             SIMPLE_ORES, "onyx", ONYX_PROPERTIES, "onyx_ore"
     ));
 
     /**
      * The plant set instance for copper ore from Simple Ores.
      */
-    public static final PlantSet SIMPLE_ORES_COPPER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> SIMPLE_ORES_COPPER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             SIMPLE_ORES, "copper", COPPER_PROPERTIES, "copper_ore"
     ));
 
     /**
      * The plant set instance for tin ore from Simple Ores.
      */
-    public static final PlantSet SIMPLE_ORES_TIN = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> SIMPLE_ORES_TIN = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             SIMPLE_ORES, "tin", TIN_PROPERTIES, "tin_ore"
     ));
 
     /**
      * The plant set instance for mythril ore from Simple Ores.
      */
-    public static final PlantSet SIMPLE_ORES_MYTHRIL = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> SIMPLE_ORES_MYTHRIL = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             SIMPLE_ORES, "mythril", MYTHRIL_PROPERTIES, "mythril_ore"
     ));
 
     /**
      * The plant set instance for adamantium ore from Simple Ores.
      */
-    public static final PlantSet SIMPLE_ORES_ADAMANTIUM = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> SIMPLE_ORES_ADAMANTIUM = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             SIMPLE_ORES, "adamantium", ADAMANTIUM_PROPERTIES, "adamantium_ore"
     ));
 
@@ -312,28 +315,28 @@ public class ResynthModdedPlants {
     /**
      * The plant set for ruby ore from More Ores in ONE.
      */
-    public static final PlantSet MORE_ORES_RUBY = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> MORE_ORES_RUBY = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             MORE_ORES_IN_ONE, "ruby", RUBY_PROPERTIES, "ruby_ore"
     ));
 
     /**
      * The plant set for sapphire ore from More Ores in ONE.
      */
-    public static final PlantSet MORE_ORES_SAPPHIRE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> MORE_ORES_SAPPHIRE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             MORE_ORES_IN_ONE, "sapphire", SAPPHIRE_PROPERTIES, "sapphire_ore"
     ));
 
     /**
      * The plant set for topaz ore from More Ores in ONE.
      */
-    public static final PlantSet MORE_ORES_TOPAZ = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> MORE_ORES_TOPAZ = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             MORE_ORES_IN_ONE, "topaz", TOPAZ_PROPERTIES, "topaz_ore"
     ));
 
     /**
      * The plant set for amethyst ore from More Ores in ONE.
      */
-    public static final PlantSet MORE_ORES_AMETHYST = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> MORE_ORES_AMETHYST = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             MORE_ORES_IN_ONE, "amethyst", AMETHYST_PROPERTIES, "amethyst_ore"
     ));
 
@@ -342,14 +345,16 @@ public class ResynthModdedPlants {
     /**
      * The plant set for ruby from the Just Another Ruby Mod.
      */
-    public static final PlantSet JUST_ANOTHER_RUBY_MOD_RUBY = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> JUST_ANOTHER_RUBY_MOD_RUBY
+            = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             JUST_ANOTHER_RUBY_MOD, "ruby", RUBY_PROPERTIES, "ruby_ore"
     ));
 
     /**
      * The plant set for opal from the Just Another Ruby Mod.
      */
-    public static final PlantSet JUST_ANOTHER_RUBY_MOD_OPAL = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> JUST_ANOTHER_RUBY_MOD_OPAL
+            = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             JUST_ANOTHER_RUBY_MOD, "opal", OPAL_PROPERTIES, "opal_ore"
     ));
 
@@ -358,63 +363,63 @@ public class ResynthModdedPlants {
     /**
      * The plant set for amethyst from the Blue Power mod.
      */
-    public static final PlantSet BLUE_POWER_AMETHYST = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> BLUE_POWER_AMETHYST = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             BLUE_POWER, "amethyst", AMETHYST_PROPERTIES, "amethyst_ore"
     ));
 
     /**
      * The plant set for ruby from the Blue Power mod.
      */
-    public static final PlantSet BLUE_POWER_RUBY = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> BLUE_POWER_RUBY = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             BLUE_POWER, "ruby", RUBY_PROPERTIES, "ruby_ore"
     ));
 
     /**
      * The plant set for sapphire from the Blue Power mod.
      */
-    public static final PlantSet BLUE_POWER_SAPPHIRE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> BLUE_POWER_SAPPHIRE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             BLUE_POWER, "sapphire", SAPPHIRE_PROPERTIES, "sapphire_ore"
     ));
 
     /**
      * The plant set for malachite from the Blue Power mod.
      */
-    public static final PlantSet BLUE_POWER_MALACHITE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> BLUE_POWER_MALACHITE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             BLUE_POWER, "malachite", MALACHITE_PROPERTIES, "malachite_ore"
     ));
 
     /**
      * The plant set for teslatite from the Blue Power mod.
      */
-    public static final PlantSet BLUE_POWER_TESLATITE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> BLUE_POWER_TESLATITE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             BLUE_POWER, "teslatite", TESLATITE_PROPERTIES, "teslatite_ore"
     ));
 
     /**
      * The plant set for copper from the Blue Power mod.
      */
-    public static final PlantSet BLUE_POWER_COPPER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BLUE_POWER_COPPER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BLUE_POWER, "copper", COPPER_PROPERTIES, "copper_ore"
     ));
 
     /**
      * The plant set for silver from the Blue Power mod.
      */
-    public static final PlantSet BLUE_POWER_SILVER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BLUE_POWER_SILVER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BLUE_POWER, "silver", SILVER_PROPERTIES, "silver_ore"
     ));
 
     /**
      * The plant set for zinc from the Blue Power mod.
      */
-    public static final PlantSet BLUE_POWER_ZINC = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BLUE_POWER_ZINC = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BLUE_POWER, "zinc", ZINC_PROPERTIES, "zinc_ore"
     ));
 
     /**
      * The plant set for tungsten from the Blue Power mod.
      */
-    public static final PlantSet BLUE_POWER_TUNGSTEN = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BLUE_POWER_TUNGSTEN = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BLUE_POWER, "tungsten", TUNGSTEN_PROPERTIES, "tungsten_ore"
     ));
 
@@ -423,28 +428,28 @@ public class ResynthModdedPlants {
     /**
      * The plant set for nether iron from Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_IRON = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_IRON = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "iron", IRON_PROPERTIES, "netheriron_ore"
     ));
 
     /**
      * The plant set for nether gold from Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_GOLD = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_GOLD = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "gold", GOLD_PROPERTIES, "nethergold_ore"
     ));
 
     /**
      * The plant set for nether coal from Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_COAL = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_COAL = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             BASIC_NETHER_ORES, "coal", COAL_PROPERTIES, "nethercoal_ore"
     ));
 
     /**
      * The plant set for nether lapis lazuli from Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_LAPIS_LAZULI
+    public static final PlantSet<?> BASIC_NETHER_ORES_LAPIS_LAZULI
             = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             BASIC_NETHER_ORES, "lapis_lazuli", LAPIS_LAZULI_PROPERTIES, "netherlapis_ore"
     ));
@@ -452,70 +457,74 @@ public class ResynthModdedPlants {
     /**
      * The plant set for nether redstone from Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_REDSTONE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_REDSTONE
+            = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             BASIC_NETHER_ORES, "redstone", REDSTONE_PROPERTIES, "netherredstone_ore"
     ));
 
     /**
      * The plant set for nether diamond from Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_DIAMOND = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_DIAMOND
+            = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             BASIC_NETHER_ORES, "diamond", DIAMOND_PROPERTIES, "netherdiamond_ore"
     ));
 
     /**
      * The plant set for nether emerald from Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_EMERALD = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_EMERALD
+            = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             BASIC_NETHER_ORES, "emerald", EMERALD_PROPERTIES, "netheremerald_ore"
     ));
 
     /**
      * The plant set for nether uranium for Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_URANIUM = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_URANIUM = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "uranium", URANIUM_PROPERTIES, "netheruranium_ore"
     ));
 
     /**
      * The plant set for nether tin for Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_TIN = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_TIN = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "tin", TIN_PROPERTIES, "nethertin_ore"
     ));
 
     /**
      * The plant set for nether silver for Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_SILVER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_SILVER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "silver", SILVER_PROPERTIES, "nethersilver_ore"
     ));
 
     /**
      * The plant set for nether nickel for Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_NICKEL = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_NICKEL = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "nickel", NICKEL_PROPERTIES, "nethernickel_ore"
     ));
 
     /**
      * The plant set for nether lead for Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_LEAD = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_LEAD = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "lead", LEAD_PROPERTIES, "netherlead_ore"
     ));
 
     /**
      * The plant set for nether copper for Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_COPPER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_COPPER = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "copper", COPPER_PROPERTIES, "nethercopper_ore"
     ));
 
     /**
      * The plant set for nether aluminium for Basic Nether Ores.
      */
-    public static final PlantSet BASIC_NETHER_ORES_ALUMINIUM = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+    public static final PlantSet<?> BASIC_NETHER_ORES_ALUMINIUM
+            = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "aluminium", ALUMINIUM_PROPERTIES, "netheraluminum_ore"
     ));
 
@@ -538,7 +547,7 @@ public class ResynthModdedPlants {
      * @return the registered plant set {@code set}
      * or {@code null} if the plant set was null;
      */
-    private static PlantSet registerIfNotNull(PlantSet set){
+    private static PlantSet<?> registerIfNotNull(PlantSet<?> set){
         if(set == null)
             return null;
 
