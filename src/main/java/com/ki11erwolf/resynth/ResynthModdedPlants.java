@@ -116,6 +116,13 @@ public class ResynthModdedPlants {
     );
 
     /**
+     * The set properties for general wool blocks.
+     */
+    static final MetallicSetProperties WOOL_PROPERTIES = new MetallicSetProperties(
+            false, 30, 1, 1
+    );
+
+    /**
      * The set properties for general onyx gems and onyx ore.
      */
     private static final CrystallineSetProperties ONYX_PROPERTIES = new CrystallineSetProperties(
