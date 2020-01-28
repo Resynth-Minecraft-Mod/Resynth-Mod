@@ -27,7 +27,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -67,7 +66,12 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      * Default constructor.
      */
     BlockSeedPod(String name) {
-        super(Properties.create(Material.PLANTS).sound(SoundType.PLANT), name);
+        super(
+                Properties.create(Material.PLANTS)
+                        .sound(SoundType.PLANT)
+                        .func_226896_b_(),//Not Solid
+                name
+        );
     }
 
     // **************
@@ -84,25 +88,25 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
         return Block.OffsetType.XZ;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return {@code false}.
-     */
-    @Override
-    public boolean isSolid(BlockState state) {
-        return false;
-    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @return {@code false}.
+//     */
+//    @Override
+//    public boolean isSolid(BlockState state) {
+//        return false;
+//    }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return {@link BlockRenderLayer#CUTOUT}.
-     */
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @return {@link BlockRenderLayer#CUTOUT}.
+//     */
+//    @Override
+//    public BlockRenderLayer getRenderLayer() {
+//        return BlockRenderLayer.CUTOUT;
+//    }
 
     /**
      * {@inheritDoc}.

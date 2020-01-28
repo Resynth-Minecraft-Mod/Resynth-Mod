@@ -1,5 +1,5 @@
 //////////////////////////////
-//          1.14.4          //
+//          1.15.2          //
 //////////////////////////////
 
 buildscript {
@@ -89,11 +89,12 @@ repositories {
 
 dependencies {
     //Forge version
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.116'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.0.1'
 
     //Hwyla
     //noinspection GroovyAssignabilityCheck
-    compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.5-B66_1.14.4')
+    //TODO: Fix
+    //compile fg.deobf('mcp.mobius.waila:Hwyla:1.15-pre4-1.9.19-70')
 }
 
 jar {
