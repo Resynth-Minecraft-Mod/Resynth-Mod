@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,44 +61,44 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
     /**
      * Mineral Rich Stone. The mods ore.
      */
-    public static final ResynthBlock BLOCK_MINERAL_STONE
+    public static final ResynthBlock<?> BLOCK_MINERAL_STONE
             = new BlockMineralStone("mineral_stone").queueRegistration();
 
     /**
      * Mineral Enriched Soil. The farmland block for the mod.
      */
-    public static final ResynthBlock BLOCK_MINERAL_SOIL
+    public static final ResynthBlock<?> BLOCK_MINERAL_SOIL
             = new BlockMineralSoil("mineral_soil").queueRegistration();
 
     /**
      * Mystical Seed Pod. The random biochemical seed dropper plant.
      */
-    public static final ResynthBlock BLOCK_SEED_POD
+    public static final ResynthBlock<?> BLOCK_SEED_POD
             = new BlockSeedPod("seed_pod").queueRegistration();
 
     /**
      * Calaverite ore. Spawns in the nether.
      */
-    public static final ResynthBlock BLOCK_CALVINITE_NETHERRACK
+    public static final ResynthBlock<?> BLOCK_CALVINITE_NETHERRACK
             = new BlockOre("calvinite_netherrack").queueRegistration();
 
     /**
      * Sylvanite ore. Spawns in the end.
      */
-    public static final ResynthBlock BLOCK_SYLVANITE_END_STONE
+    public static final ResynthBlock<?> BLOCK_SYLVANITE_END_STONE
             = new BlockOre("sylvanite_end_stone").queueRegistration();
 
     /**
      * Calvinite Enhancer. Allows creating tier 2 Mineral Soil.
      */
-    public static final ResynthBlock BLOCK_CALVINITE_ENHANCER = new BlockEnhancer(
+    public static final ResynthBlock<?> BLOCK_CALVINITE_ENHANCER = new BlockEnhancer(
             "calvinite", ENHANCERS_CONFIG.getCalviniteMineralConcentrationIncrease(), 1
     ).queueRegistration();
 
     /**
      * Sylvanite Enhancer. Allows creating tier 3 Mineral Soil.
      */
-    public static final ResynthBlock BLOCK_SYLVANITE_ENHANCER = new BlockEnhancer(
+    public static final ResynthBlock<?> BLOCK_SYLVANITE_ENHANCER = new BlockEnhancer(
             "sylvanite", ENHANCERS_CONFIG.getSylvaniteMineralConcentrationIncrease(), 2
     ).queueRegistration();
 

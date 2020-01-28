@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ class PlantSetRegistry {
      *
      * @param set the given plant set.
      */
-    static void registerPlantSet(PlantSet set){
+    static void registerPlantSet(PlantSet<?> set){
         if(PLANT_SETS.contains(Objects.requireNonNull(set))){
             LOG.warn("Attempt to register plant set: " + set.getSetName() + " more than once!");
             return;
@@ -69,7 +69,7 @@ class PlantSetRegistry {
      * @return an array of every created and registered
      * plant set (regardless of set type).
      */
-    static PlantSet[] getPlantSets(){
+    static PlantSet<?>[] getPlantSets(){
         return PLANT_SETS.toArray(new PlantSet[0]);
     }
 
@@ -128,7 +128,7 @@ class PlantSetRegistry {
         /**
          * Registers a given plant sets plant block to the game.
          */
-        private static void registerPlantBlock(PlantSet set, IForgeRegistry<Block> registry){
+        private static void registerPlantBlock(PlantSet<?> set, IForgeRegistry<Block> registry){
             LOG.debug("Registering plant block: " + set.getPlantBlock().getRegistryName());
             registry.register(set.getPlantBlock());
 
@@ -139,7 +139,7 @@ class PlantSetRegistry {
         /**
          * Registers a given plant sets plant blocks ItemBlock to the game.
          */
-        private static void registerPlantItemBlock(PlantSet set, IForgeRegistry<Item> registry){
+        private static void registerPlantItemBlock(PlantSet<?> set, IForgeRegistry<Item> registry){
             LOG.debug("Registering plant item block: " + set.getPlantBlock().getItemBlock().getRegistryName());
             registry.register(set.getPlantBlock().getItemBlock());
         }
@@ -147,7 +147,7 @@ class PlantSetRegistry {
         /**
          * Registers a given plant sets seeds item to the game.
          */
-        private static void registerSeedsItem(PlantSet set, IForgeRegistry<Item> registry){
+        private static void registerSeedsItem(PlantSet<?> set, IForgeRegistry<Item> registry){
             LOG.debug("Registering plant seeds item: " + set.getSeedsItem().getRegistryName());
             registry.register(set.getSeedsItem());
         }
@@ -156,7 +156,8 @@ class PlantSetRegistry {
          * Registers a given plant sets produce block(and itemblock)/item to the game.
          */
         @SuppressWarnings("unchecked")//It is checked
-        private static void registerProduceItemOrBlock(PlantSet set, IForgeRegistry registry, boolean item){
+        private static void registerProduceItemOrBlock(PlantSet<?> set, @SuppressWarnings("rawtypes")
+                                                            IForgeRegistry registry, boolean item){
             ItemOrBlock itemOrBlock = set.getProduceItemOrBlock();
 
             //Block
@@ -171,7 +172,7 @@ class PlantSetRegistry {
             //ItemBlock
             if(itemOrBlock.isBlock() && item){
                 LOG.debug("Registering plant produce ItemBlock: " + itemOrBlock.getBlock().getRegistryName());
-                registry.register(((ResynthBlock)itemOrBlock.getBlock()).getItemBlock());
+                registry.register(((ResynthBlock<?>)itemOrBlock.getBlock()).getItemBlock());
             }
 
             //Item

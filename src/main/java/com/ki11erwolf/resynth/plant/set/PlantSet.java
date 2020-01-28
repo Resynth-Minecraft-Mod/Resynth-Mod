@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import java.util.Objects;
  *
  * @param <P> The plant block for the set.
  */
-public class PlantSet<P extends BlockPlant> {
+public class PlantSet<P extends BlockPlant<?>> {
 
     /**
      * The name of the plant set instance (e.g. diamond).
@@ -61,6 +61,7 @@ public class PlantSet<P extends BlockPlant> {
      * {@code true} if this plant set has been
      * flagged as a failure.
      */
+    @SuppressWarnings("unused")
     private boolean isFailure;
 
     /**
@@ -163,6 +164,7 @@ public class PlantSet<P extends BlockPlant> {
      * @return the properties for this plant set. May be
      * any of the plant set properties types.
      */
+    @SuppressWarnings("unused")
     public PlantSetProperties getPlantSetProperties(){
         return this.basicPlantSetProperties;
     }

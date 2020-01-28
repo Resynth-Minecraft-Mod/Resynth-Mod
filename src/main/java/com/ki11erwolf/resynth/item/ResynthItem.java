@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @param <T> the subclass to this class (e.i. the inheriting class).
  */
-public class ResynthItem<T extends ResynthItem> extends Item {
+public class ResynthItem<T extends ResynthItem<?>> extends Item {
 
     /**
      * Flag to prevent queuing an item
@@ -190,7 +190,7 @@ public class ResynthItem<T extends ResynthItem> extends Item {
      * @return the text as an {@link ITextComponent} given by the
      * language file.
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "SameParameterValue"})
     static ITextComponent getTooltip(String key, TextFormatting color){
         return stringToTextComponent(color + I18n.format("tooltip.item.resynth." + key));
     }
@@ -204,7 +204,7 @@ public class ResynthItem<T extends ResynthItem> extends Item {
      * language file.
      */
     @SuppressWarnings("unused")
-    static ITextComponent getTooltip(ResynthItem item){
+    static ITextComponent getTooltip(@SuppressWarnings("rawtypes") ResynthItem item){
         if(item.getRegistryName() == null){
             return stringToTextComponent(TextFormatting.RED + "Error");
         }
@@ -219,7 +219,7 @@ public class ResynthItem<T extends ResynthItem> extends Item {
      * @param tooltip the tooltip array object.
      * @param item the items who's tooltip we want.
      */
-    static void setDescriptiveTooltip(List<ITextComponent> tooltip, ResynthItem item){
+    static void setDescriptiveTooltip(List<ITextComponent> tooltip, @SuppressWarnings("rawtypes") ResynthItem item){
         if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled())
             return;
 

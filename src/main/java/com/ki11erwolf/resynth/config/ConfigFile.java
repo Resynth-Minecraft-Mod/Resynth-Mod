@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ public class ConfigFile {
     /**
      * List of already parsed and loaded config categories.
      */
-    private final Map<Class, ? super ConfigCategory> loadedCategories = new HashMap<>();
+    private final Map<Class<?>, ? super ConfigCategory> loadedCategories = new HashMap<>();
 
     /**
      * The toml config file.

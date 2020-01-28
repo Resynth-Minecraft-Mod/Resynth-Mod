@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
      * @return the list of mobs this plant sets seeds
      * are obtainable from.
      */
-    abstract EntityType[] getSourceMobs();
+    abstract EntityType<?>[] getSourceMobs();
 
     // **********
     // Seed Hooks
@@ -113,14 +113,14 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
         @SuppressWarnings("unused")
         public void onEntityKilled(LivingDeathEvent event){
             //For each plant set
-            for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)){
+            for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)){
                 if(set.isFailure()) continue;
 
                 BiochemicalSet plantSet = (BiochemicalSet) set;
                 if(plantSet.getSourceMobs() == null) continue;
 
                 //For each mob type
-                for(EntityType entity : plantSet.getSourceMobs()){
+                for(EntityType<?> entity : plantSet.getSourceMobs()){
                     if(entity.getName().getUnformattedComponentText().equals(
                             event.getEntity().getName().getUnformattedComponentText())) {
                         if (MathUtil.chance(plantSet.setProperties.seedSpawnChanceFromMob())) {
@@ -150,7 +150,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
                 return;
 
             //For each plant set
-            for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)) {
+            for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)) {
                 if(set.isFailure()) continue;
 
                 BiochemicalSet plantSet = (BiochemicalSet) set;

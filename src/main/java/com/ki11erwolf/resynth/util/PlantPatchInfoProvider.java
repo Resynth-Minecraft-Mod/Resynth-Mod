@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -188,7 +188,7 @@ public interface PlantPatchInfoProvider extends BlockInfoProvider {
                 return;
             }
 
-            BlockPlant blockPlant = (BlockPlant) plantBlock;
+            BlockPlant<?> blockPlant = (BlockPlant<?>) plantBlock;
 
             //Exact plant
             information.add(
@@ -221,11 +221,11 @@ public interface PlantPatchInfoProvider extends BlockInfoProvider {
             //Growth chance
             information.add(
                     TextFormatting.BLUE + "Growth Chance: " +
-                            TextFormatting.GOLD + ((BlockPlant) plantBlock).getProperties().chanceToGrow() + "%"
+                            TextFormatting.GOLD + ((BlockPlant<?>) plantBlock).getProperties().chanceToGrow() + "%"
             );
 
             //Combined Growth Chance
-            float plantGrowthChance = ((BlockPlant) plantBlock).getProperties().chanceToGrow() / 100;
+            float plantGrowthChance = ((BlockPlant<?>) plantBlock).getProperties().chanceToGrow() / 100;
 
             TileEntityMineralSoil entity = getTileEntity(world, pos.down());
             float mineralSoilConcentration = entity.getMineralPercentage();

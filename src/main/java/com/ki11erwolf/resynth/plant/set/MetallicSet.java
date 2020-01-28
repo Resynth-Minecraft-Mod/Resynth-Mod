@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -118,7 +118,7 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
                 BlockState block = world.getBlockState(pos);
 
                 //For each set
-                for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.METALLIC)) {
+                for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.METALLIC)) {
                     if(set.isFailure() || ((MetallicSet)set).getSourceOre() == null)
                         continue;
 

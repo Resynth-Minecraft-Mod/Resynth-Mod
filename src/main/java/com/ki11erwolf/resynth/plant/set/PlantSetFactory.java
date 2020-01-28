@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ public class PlantSetFactory {
      * @param sourceOre the source ore (from which seeds are obtained) for the set.
      * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
      */
-    public static PlantSet newVanillaCrystallineSet(String setName, CrystallineSetProperties properties,
+    public static PlantSet<?> newVanillaCrystallineSet(String setName, CrystallineSetProperties properties,
                                                     Block sourceOre){
         CrystallinePlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
                 new CrystallinePlantSetConfig(setName, properties)
@@ -91,7 +91,7 @@ public class PlantSetFactory {
      *                           ore block.
      * @return the newly created plant set.
      */
-    public static PlantSet newModdedCrystallineSet(String modid, String setName, CrystallineSetProperties properties,
+    public static PlantSet<?> newModdedCrystallineSet(String modid, String setName, CrystallineSetProperties properties,
                                                    String sourceOreRegistryName){
         ResourceLocation sourceOreRL = new ResourceLocation(modid, sourceOreRegistryName);
         LOG.info("Attempting to create modded crystalline plant set: " + modid + ":" + setName);
@@ -142,7 +142,7 @@ public class PlantSetFactory {
      * @param sourceOre the source ore (from which seeds are obtained) for the set.
      * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
      */
-    public static PlantSet newVanillaMetallicPlantSet(String setName, MetallicSetProperties properties,
+    public static PlantSet<?> newVanillaMetallicPlantSet(String setName, MetallicSetProperties properties,
                                                       Block sourceOre){
         MetallicPlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
                 new MetallicPlantSetConfig(setName, properties)
@@ -179,7 +179,7 @@ public class PlantSetFactory {
      *                           ore block.
      * @return the newly created plant set.
      */
-    public static PlantSet newModdedMetallicSet(String modid, String setName, MetallicSetProperties properties,
+    public static PlantSet<?> newModdedMetallicSet(String modid, String setName, MetallicSetProperties properties,
                                                    String sourceOreRegistryName){
         ResourceLocation sourceOreRL = new ResourceLocation(modid, sourceOreRegistryName);
         LOG.info("Attempting to create modded Metallic plant set: " + modid + ":" + setName);
@@ -230,17 +230,17 @@ public class PlantSetFactory {
      * @param sourceMobs the list of mobs seeds can be obtained from.
      * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
      */
-    public static PlantSet newVanillaBiochemicalPlantSet(String setName, BiochemicalSetProperties properties,
-                                                         EntityType... sourceMobs){
+    public static PlantSet<?> newVanillaBiochemicalPlantSet(String setName, BiochemicalSetProperties properties,
+                                                         EntityType<?>... sourceMobs){
         BiochemicalPlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
                 new BiochemicalPlantSetConfig(setName, properties)
         );
 
         return new BiochemicalSet(setName, config) {
-            private EntityType[] sourceMobEntities = null;
+            private EntityType<?>[] sourceMobEntities = null;
 
             @Override
-            EntityType[] getSourceMobs() {
+            EntityType<?>[] getSourceMobs() {
                 if(sourceMobEntities == null)
                     sourceMobEntities = sourceMobs;
 
@@ -267,8 +267,9 @@ public class PlantSetFactory {
      *                           entities.
      * @return the newly created plant set.
      */
-    public static PlantSet newModdedBiochemicalSet(String modid, String setName, BiochemicalSetProperties properties,
-                                                String... sourceEntityRegistryNames){
+    @SuppressWarnings("unused")
+    public static PlantSet<?> newModdedBiochemicalSet(String modid, String setName, BiochemicalSetProperties properties,
+                                                      String... sourceEntityRegistryNames){
         LOG.info("Attempting to create modded Biochemical plant set: " + modid + ":" + setName);
 
         //Is mod loaded
@@ -286,10 +287,10 @@ public class PlantSetFactory {
 
         //Plant set
         return new BiochemicalSet(modid + "_" + setName, config) {
-            private List<EntityType> sourceEntities;
+            private List<EntityType<?>> sourceEntities;
 
             @Override
-            EntityType[] getSourceMobs() {
+            EntityType<?>[] getSourceMobs() {
                 if(sourceEntities != null)
                     return sourceEntities.toArray(new EntityType[0]);
 
@@ -299,7 +300,7 @@ public class PlantSetFactory {
                     ResourceLocation entityRL = new ResourceLocation(modid, registryName);
                     LOG.info("Looking for source entity: " + entityRL.toString());
 
-                    EntityType entity = ForgeRegistries.ENTITIES.getValue(entityRL);
+                    EntityType<?> entity = ForgeRegistries.ENTITIES.getValue(entityRL);
 
                     if(ForgeRegistries.ENTITIES.containsKey(entityRL) && entity != null){
                         LOG.info("Found source entity: " + entity.getName().getUnformattedComponentText());

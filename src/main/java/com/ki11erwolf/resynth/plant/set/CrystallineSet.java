@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,7 +122,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
             IWorld world = event.getWorld();
 
             //Sets
-            for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)){
+            for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)){
                 if(set.isFailure() || ((CrystallineSet)set).getSourceOre() == null)
                     continue;
 
@@ -162,7 +162,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
                 return;
 
             //Sets
-            for(PlantSet set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)) {
+            for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)) {
                 //Checks
                 if(set.isFailure() || ((CrystallineSet)set).getSourceOre() == null)
                     continue;

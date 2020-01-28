@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -232,8 +232,8 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
             return;
         }
 
-        PlantSet[] plantSets = PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL);
-        PlantSet randomSet = plantSets[MathUtil.getRandomIntegerInRange(0, plantSets.length - 1)];
+        PlantSet<?>[] plantSets = PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL);
+        PlantSet<?> randomSet = plantSets[MathUtil.getRandomIntegerInRange(0, plantSets.length - 1)];
         MinecraftUtil.spawnItemInWorld(randomSet.getSeedsItem(), world, pos);
     }
 

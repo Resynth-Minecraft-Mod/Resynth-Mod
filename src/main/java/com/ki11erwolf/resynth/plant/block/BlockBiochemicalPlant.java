@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -118,6 +118,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
         int growth = world.getBlockState(pos).get(getGrowthProperty());
         int postHarvestGrowth = growth - 4;
 
+        //noinspection rawtypes
         if(growth >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage()){
             if(world.setBlockState(pos, world.getBlockState(pos)
                     .with(getGrowthProperty(), postHarvestGrowth), 2)){

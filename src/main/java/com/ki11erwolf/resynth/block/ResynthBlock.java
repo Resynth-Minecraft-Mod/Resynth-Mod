@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ import java.util.List;
  *
  * @param <T> the subclass to this class (e.i. the inheriting class).
  */
-public class ResynthBlock<T extends ResynthBlock> extends Block {
+public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
 
     /**
      * Flag to prevent queuing a block
@@ -145,7 +145,7 @@ public class ResynthBlock<T extends ResynthBlock> extends Block {
      * @param block the block who's tooltip we want.
      */
     @SuppressWarnings("WeakerAccess")
-    static void setDescriptiveTooltip(List<ITextComponent> tooltip, ResynthBlock block){
+    static void setDescriptiveTooltip(List<ITextComponent> tooltip, ResynthBlock<?> block){
         if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled())
             return;
 

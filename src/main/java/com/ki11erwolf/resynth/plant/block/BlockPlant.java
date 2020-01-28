@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -546,6 +546,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     private void callGrowPlant(World world, BlockState state, BlockPos pos, int increase){
         //Don't grow if fully grown.
+        //noinspection rawtypes
         if(
                 ((BlockPlant)world.getBlockState(pos).getBlock()).getGrowthStage(world.getBlockState(pos))
                 >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage()

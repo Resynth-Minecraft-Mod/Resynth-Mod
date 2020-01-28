@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Ki11er_wolf
+ * Copyright 2018-2020 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.Mod;
  *
  * This class also handles the registering of items.
  */
-@SuppressWarnings("unused")//Fields register themselves.
+@SuppressWarnings({"unused", "rawtypes"})//Fields register themselves.
 @Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ResynthItems extends QueueRegisterer<Item> {
 
@@ -49,37 +49,37 @@ public class ResynthItems extends QueueRegisterer<Item> {
     /**
      * Mineral Rock. The item dropped from Mineral Rich Rock.
      */
-    public static final ResynthItem ITEM_MINERAL_ROCK
+    public static final ResynthItem<?> ITEM_MINERAL_ROCK
             = new ResynthItem("mineral_rock").queueRegistration();
 
     /**
      * Dense Mineral Rock. x9 MineralRocks.
      */
-    public static final ResynthItem ITEM_DENSE_MINERAL_ROCK
+    public static final ResynthItem<?> ITEM_DENSE_MINERAL_ROCK
             = new ResynthItem("dense_mineral_rock").queueRegistration();
 
     /**
      * Mineral Crystal. Recipe component for the Mineral Hoe.
      */
-    public static final ResynthItem ITEM_MINERAL_CRYSTAL
+    public static final ResynthItem<?> ITEM_MINERAL_CRYSTAL
             = new ItemMineralCrystal("mineral_crystal").queueRegistration();
 
     /**
      * Mineral Hoe. Resynth's tool of choice.
      */
-    public static final ResynthItem ITEM_MINERAL_HOE
+    public static final ResynthItem<?> ITEM_MINERAL_HOE
             = new ItemMineralHoe("mineral_hoe").queueRegistration();
 
     /**
      * Calvinite crystal. Dropped when Calvinite Infused Netherrack is mined.
      */
-    public static final ResynthItem ITEM_CALVINITE
+    public static final ResynthItem<?> ITEM_CALVINITE
             = new ResynthItem("calvinite_crystal").queueRegistration();
 
     /**
      * Sylvanite crystal. Dropped when Sylvanite Infused End Stone is mined.
      */
-    public static final ResynthItem ITEM_SYLVANITE
+    public static final ResynthItem<?> ITEM_SYLVANITE
             = new ResynthItem("sylvanite_crystal").queueRegistration();
 
     // *****
