@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth.integration;
 
 import com.ki11erwolf.resynth.ResynthMod;
-import mcp.mobius.waila.api.*;
+//import mcp.mobius.waila.api.*;
 import net.minecraft.block.Block;
 import org.apache.logging.log4j.Logger;
 
@@ -30,9 +30,9 @@ import java.util.List;
  * a Hwyla provider interface for Hwyla registration. This
  * class also handles registering the queued providers.
  */
-@WailaPlugin
+//@WailaPlugin
 @SuppressWarnings("unused")//Reflection
-public class RHwylaIntegration implements mcp.mobius.waila.api.IWailaPlugin{
+public class RHwylaIntegration /*implements mcp.mobius.waila.api.IWailaPlugin*/{
 
     /**
      * The logger for this class.
@@ -50,52 +50,52 @@ public class RHwylaIntegration implements mcp.mobius.waila.api.IWailaPlugin{
     //Generic object array as providers can be many things.
     private static final List<Block> PROVIDERS = new ArrayList<>(4);
 
-    /**
-     * Will queue the given block for registration as a Hwyla provider,
-     * provided they implement a Hwyla provider interface (IComponentProvider,
-     * IServerDataProvider). This check is done by the API so the calling
-     * method doesn't need to check for this.
-     *
-     * @param provider the block to register provided it's a Hwyla
-     *                 provider.
-     */
-    public static void addIfProvider(Block provider){
-        if(provider instanceof IComponentProvider || provider instanceof IServerDataProvider)
-            PROVIDERS.add(provider);
-    }
+//    /**
+//     * Will queue the given block for registration as a Hwyla provider,
+//     * provided they implement a Hwyla provider interface (IComponentProvider,
+//     * IServerDataProvider). This check is done by the API so the calling
+//     * method doesn't need to check for this.
+//     *
+//     * @param provider the block to register provided it's a Hwyla
+//     *                 provider.
+//     */
+//    public static void addIfProvider(Block provider){
+//        if(provider instanceof IComponentProvider || provider instanceof IServerDataProvider)
+//            PROVIDERS.add(provider);
+//    }
 
     // *********
     // Internals
     // *********
 
-    /**
-     * Handles registering all queued provider to Hwyla.
-     *
-     * @param registrar Hwyla provided provider registrar.
-     */
-    @Override
-    public void register(IRegistrar registrar) {
-        LOG.info("Setting up hwyla...");
-
-        for(Object provider : PROVIDERS){
-            LOG.info("Registering provider: " + provider.getClass());
-
-            if(provider instanceof IComponentProvider){
-                registrar.registerComponentProvider(
-                        (IComponentProvider)provider, TooltipPosition.HEAD, provider.getClass()
-                );
-                registrar.registerComponentProvider(
-                        (IComponentProvider)provider, TooltipPosition.BODY, provider.getClass()
-                );
-                registrar.registerComponentProvider(
-                        (IComponentProvider)provider, TooltipPosition.TAIL, provider.getClass()
-                );
-            }
-
-            if(provider instanceof IServerDataProvider){
-                //noinspection unchecked, rawtypes //Should be fine
-                registrar.registerBlockDataProvider((IServerDataProvider)provider, provider.getClass());
-            }
-        }
-    }
+//    /**
+//     * Handles registering all queued provider to Hwyla.
+//     *
+//     * @param registrar Hwyla provided provider registrar.
+//     */
+//    @Override
+//    public void register(IRegistrar registrar) {
+//        LOG.info("Setting up hwyla...");
+//
+//        for(Object provider : PROVIDERS){
+//            LOG.info("Registering provider: " + provider.getClass());
+//
+//            if(provider instanceof IComponentProvider){
+//                registrar.registerComponentProvider(
+//                        (IComponentProvider)provider, TooltipPosition.HEAD, provider.getClass()
+//                );
+//                registrar.registerComponentProvider(
+//                        (IComponentProvider)provider, TooltipPosition.BODY, provider.getClass()
+//                );
+//                registrar.registerComponentProvider(
+//                        (IComponentProvider)provider, TooltipPosition.TAIL, provider.getClass()
+//                );
+//            }
+//
+//            if(provider instanceof IServerDataProvider){
+//                //noinspection unchecked, rawtypes //Should be fine
+//                registrar.registerBlockDataProvider((IServerDataProvider)provider, provider.getClass());
+//            }
+//        }
+//    }
 }

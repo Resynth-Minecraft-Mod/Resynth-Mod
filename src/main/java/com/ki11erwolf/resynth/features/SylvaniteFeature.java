@@ -27,6 +27,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
@@ -77,19 +78,15 @@ class SylvaniteFeature extends OreFeature {
      * @param biome the biome to add this feature to.
      */
     private void add(@SuppressWarnings("SameParameterValue") Biome biome){
-        //noinspection ConstantConditions //We don't use the value
         biome.addFeature(
                 GenerationStage.Decoration.UNDERGROUND_ORES,
-                Biome.createDecoratedFeature(
-                        this,
+                Feature.ORE.func_225566_b_(
                         new OreFeatureConfig(
-                                null,//NOT USED. Use #filler
+                                OreFeatureConfig.FillerBlockType.NETHERRACK,//NOT USED. Use #filler
                                 ResynthBlocks.BLOCK_SYLVANITE_END_STONE.getDefaultState(),
                                 CONFIG.getSize()
-                        ),
-                        Placement.COUNT_RANGE,
-                        getRangeCount()
-                )
+                        )
+                ).func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(getRangeCount()))
         );
     }
 
@@ -121,7 +118,7 @@ class SylvaniteFeature extends OreFeature {
                                     int p_207803_17_, int p_207803_18_, int p_207803_19_, int p_207803_20_) {
         int i = 0;
         BitSet bitset = new BitSet(p_207803_19_ * p_207803_20_ * p_207803_19_);
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+        BlockPos.Mutable blockpos$mutableblockpos = new BlockPos.Mutable();
         double[] adouble = new double[config.size * 4];
 
         for(int j = 0; j < config.size; ++j) {

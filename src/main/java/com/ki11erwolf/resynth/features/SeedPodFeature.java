@@ -28,7 +28,8 @@ import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.placement.FrequencyConfig;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.gen.placement.CountRangeConfig;
 import net.minecraft.world.gen.placement.Placement;
 
 import java.util.Random;
@@ -60,12 +61,18 @@ class SeedPodFeature extends Feature<NoFeatureConfig> {
         Biome.BIOMES.forEach(
                 biome -> biome.addFeature(
                         GenerationStage.Decoration.VEGETAL_DECORATION,
-                        Biome.createDecoratedFeature(
-                                this,
-                                NoFeatureConfig.NO_FEATURE_CONFIG,
-                                Placement.COUNT_HEIGHTMAP_32,
-                                new FrequencyConfig(CONFIG.getGenerationFrequency())
-                        )
+                        Feature.ORE.func_225566_b_(new OreFeatureConfig(
+                                        OreFeatureConfig.FillerBlockType.NATURAL_STONE,
+                                        ResynthBlocks.BLOCK_SEED_POD.getDefaultState(),
+                                        CONFIG.getGenerationFrequency()
+                                )
+                        ).func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(
+                                new CountRangeConfig(
+                                        CONFIG.getGenerationFrequency(),
+                                        0,0,
+                                        255
+                                )
+                        ))
                 )
         );
     }
@@ -76,6 +83,7 @@ class SeedPodFeature extends Feature<NoFeatureConfig> {
      *
      * @return
      */
+    @Override
     public boolean place(IWorld worldIn, ChunkGenerator<? extends GenerationSettings> generator, Random rand,
                          BlockPos pos, NoFeatureConfig config) {
         BlockState blockstate = ResynthBlocks.BLOCK_SEED_POD.getDefaultState();

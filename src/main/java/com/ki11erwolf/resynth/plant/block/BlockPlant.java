@@ -21,35 +21,37 @@ import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
-import com.ki11erwolf.resynth.util.*;
-import mcp.mobius.waila.api.IComponentProvider;
-import mcp.mobius.waila.api.IDataAccessor;
-import mcp.mobius.waila.api.IPluginConfig;
+import com.ki11erwolf.resynth.util.EffectsUtil;
+import com.ki11erwolf.resynth.util.MathUtil;
+import com.ki11erwolf.resynth.util.MinecraftUtil;
+import com.ki11erwolf.resynth.util.PlantPatchInfoProvider;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 
-import java.util.List;
 import java.util.Random;
+
+//import mcp.mobius.waila.api.IComponentProvider;
+//import mcp.mobius.waila.api.IDataAccessor;
+//import mcp.mobius.waila.api.IPluginConfig;
+//import net.minecraft.util.BlockRenderLayer;
 
 /**
  * The base plant block class that all Resynth growable plants
@@ -62,7 +64,7 @@ import java.util.Random;
  * @param <T> the inheriting class (i.e. plant block).
  */
 public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T>
-        implements IPlantable, IGrowable, IComponentProvider, PlantPatchInfoProvider {
+        implements IPlantable, IGrowable/*, IComponentProvider*/, PlantPatchInfoProvider {
 
     /**
      * The prefix for all plant blocks.
@@ -88,7 +90,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
                 Properties.create(Material.PLANTS)
                 .sound(SoundType.PLANT)
                 .tickRandomly()
-                .hardnessAndResistance(0.0F),
+                .hardnessAndResistance(0.0F)
+                .doesNotBlockMovement(),
 
                 plantTypeName + "_" + PLANT_PREFIX + "_" + plantName
         );
@@ -125,7 +128,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     @Override
     @SuppressWarnings("deprecation")
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.canBlockSeeSky(pos))
+        return (worldIn.getNeighborAwareLightSubtracted(pos, 0) >= 8
+                || worldIn.canBlockSeeSky(pos))
                 && this.isValidGround(worldIn.getBlockState(pos.down()));
     }
 
@@ -149,11 +153,38 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     // *************
 
     /**
-     * @return {@link BlockRenderLayer#CUTOUT}.
+     * Sets the opacity of this block to full (1.0),
+     * which makes the block see-through.
+     *
+     * @return {@code 1.0F}.
      */
     @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
+    @OnlyIn(Dist.CLIENT)
+    @SuppressWarnings("deprecation")
+    public float func_220080_a(BlockState state, IBlockReader reader, BlockPos pos) {
+        return 1.0F;
+    }
+
+    /**
+     * Allows skylight to pass through this block.
+     *
+     * @return {@code true}
+     */
+    @Override
+    public boolean propagatesSkylightDown(BlockState p_200123_1_, IBlockReader p_200123_2_, BlockPos p_200123_3_) {
+        return true;
+    }
+
+    /**
+     * Tells Minecraft that this block is abnormal,
+     * which allows us to render it as transparent.
+     *
+     * @return {@code false}
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean isNormalCube(BlockState state, IBlockReader reader, BlockPos pos) {
+        return false;
     }
 
     /**
@@ -298,8 +329,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
-        super.tick(state, worldIn, pos, random);
+    public void func_225534_a_(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+        super.func_225534_a_(state, worldIn, pos, random);
 
         if(canGrow(worldIn, pos)){
             callGrowPlant(worldIn, state, pos, 1);
@@ -323,7 +354,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         if (!world.isAreaLoaded(pos, 1))
             return false;
 
-        if (!(world.getLightSubtracted(pos.up(), 0) >= 9))
+        if (!(world.getNeighborAwareLightSubtracted(pos.up(), 0) >= 9))
             return false;
 
         float mineralPercentChance = getMineralPercent(world, pos);
@@ -425,30 +456,30 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * Grows the plant.
      */
     @Override
-    public void grow(World worldIn, Random rand, BlockPos pos, BlockState state) {
+    public void func_225535_a_(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         callGrowPlant(worldIn, state, pos, getBonemealIncrease());
     }
 
-    // *****
-    // Hwyla
-    // *****
-
-    /**
-     * {@inheritDoc}
-     * <p/>
-     * Handles displaying the plants growth (in stages) in the
-     * Hwyla tooltip.
-     */
-    @Override
-    public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
-        if(tooltip.isEmpty())
-            tooltip.add(new StringTextComponent(
-                    getGrowthStageMessage(
-                            getGrowthStage(accessor.getWorld().getBlockState(accessor.getPosition())),
-                            getMaxGrowthStage()
-                    )
-            ));
-    }
+//    // *****
+//    // Hwyla
+//    // *****
+//
+//    /**
+//     * {@inheritDoc}
+//     * <p/>
+//     * Handles displaying the plants growth (in stages) in the
+//     * Hwyla tooltip.
+//     */
+//    @Override
+//    public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
+//        if(tooltip.isEmpty())
+//            tooltip.add(new StringTextComponent(
+//                    getGrowthStageMessage(
+//                            getGrowthStage(accessor.getWorld().getBlockState(accessor.getPosition())),
+//                            getMaxGrowthStage()
+//                    )
+//            ));
+//    }
 
     // ************************
     // Public Properties Getter
@@ -458,22 +489,22 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         return this.properties;
     }
 
-    /**
-     * Gets the growth stage message from the
-     * lang file formatted with the provided
-     * info.
-     *
-     * @param growthStage the plants current growth stage.
-     * @param max the plants max number of growth stages.
-     * @return the formatted localized message.
-     */
-    private static String getGrowthStageMessage(int growthStage, int max){
-        return TextFormatting.GREEN +
-                I18n.format(
-                        "misc.resynth.growth_stage",
-                        TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
-                );
-    }
+//    /**
+//     * Gets the growth stage message from the
+//     * lang file formatted with the provided
+//     * info.
+//     *
+//     * @param growthStage the plants current growth stage.
+//     * @param max the plants max number of growth stages.
+//     * @return the formatted localized message.
+//     */
+//    private static String getGrowthStageMessage(int growthStage, int max){
+//        return TextFormatting.GREEN +
+//                I18n.format(
+//                        "misc.resynth.growth_stage",
+//                        TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
+//                );
+//    }
 
     // ****************
     // Abstract Methods

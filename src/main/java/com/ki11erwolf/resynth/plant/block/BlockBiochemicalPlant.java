@@ -23,6 +23,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -113,8 +114,8 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      */
     @Override
     @SuppressWarnings("deprecation")
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
-                                    BlockRayTraceResult hit){
+    public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
+                                           BlockRayTraceResult hit){
         int growth = world.getBlockState(pos).get(getGrowthProperty());
         int postHarvestGrowth = growth - 4;
 
@@ -135,11 +136,11 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
                         world, player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS
                 );
 
-                return true;
+                return ActionResultType.SUCCESS;
             }
         }
 
-        return false;
+        return ActionResultType.FAIL;
     }
 
     // ************

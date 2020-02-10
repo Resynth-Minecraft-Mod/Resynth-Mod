@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth.block;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.EnhancersConfig;
-import com.ki11erwolf.resynth.integration.RHwylaIntegration;
 import com.ki11erwolf.resynth.util.QueueRegisterer;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
@@ -124,7 +123,7 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
             event.getRegistry().register(block);
 
             //Hwyla
-            RHwylaIntegration.addIfProvider(block);
+            //RHwylaIntegration.addIfProvider(block);
         });
     }
 }

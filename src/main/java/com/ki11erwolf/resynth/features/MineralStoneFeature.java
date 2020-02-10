@@ -21,6 +21,7 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralStoneGenConfig;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
@@ -60,16 +61,12 @@ class MineralStoneFeature extends OreFeature {
     private void add(Biome biome){
         biome.addFeature(
                 GenerationStage.Decoration.UNDERGROUND_ORES,
-                Biome.createDecoratedFeature(
-                        this,
-                        new OreFeatureConfig(
+                Feature.ORE.func_225566_b_(new OreFeatureConfig(
                                 OreFeatureConfig.FillerBlockType.NATURAL_STONE,
                                 ResynthBlocks.BLOCK_MINERAL_STONE.getDefaultState(),
                                 CONFIG.getSize()
-                        ),
-                        Placement.COUNT_RANGE,
-                        getRangeCount()
-                )
+                        )
+                ).func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(getRangeCount()))
         );
     }
 

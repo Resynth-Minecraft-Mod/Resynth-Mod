@@ -37,6 +37,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
@@ -234,7 +235,7 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
 
         if(context.getPlayer() == null) {
             success = false;
-        } else if(context.getPlayer().isSneaking()) {
+        } else if(context.getPlayer().isCrouching()) {
             success = onBlockShiftClick(
                     context.getWorld(), context.getPos(), context.getWorld().getBlockState(context.getPos()),
                     context.getItem(), context.getPlayer(), context.getFace()
@@ -268,13 +269,13 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
         ItemStack stack = player.getHeldItem(hand);
         boolean success;
 
-        if(player.isSneaking()){
+        if(player.isCrouching()){
             success = onItemShiftClick(world, player, stack);
         } else {
             success = onItemClick(world, player, stack);
         }
 
-        return ActionResult.newResult((success ? ActionResultType.SUCCESS : ActionResultType.FAIL), stack);
+        return (success ? ActionResult.func_226248_a_(stack) : ActionResult.func_226251_d_(stack));
     }
 
       /*Until it has a use...*/
@@ -609,7 +610,7 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
 
         if(block.getBlock() instanceof IGrowable){
             if(!world.isRemote)
-                ((IGrowable)block.getBlock()).grow(world, random, pos, world.getBlockState(pos));
+                ((IGrowable)block.getBlock()).func_225535_a_((ServerWorld)world, random, pos, world.getBlockState(pos));
             return true;
         }
 
