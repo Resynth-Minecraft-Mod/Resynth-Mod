@@ -25,8 +25,12 @@ import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MathUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import com.ki11erwolf.resynth.util.PlantPatchInfoProvider;
+import mcp.mobius.waila.api.IComponentProvider;
+import mcp.mobius.waila.api.IDataAccessor;
+import mcp.mobius.waila.api.IPluginConfig;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.IntegerProperty;
@@ -36,6 +40,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -46,12 +53,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 
+import java.util.List;
 import java.util.Random;
-
-//import mcp.mobius.waila.api.IComponentProvider;
-//import mcp.mobius.waila.api.IDataAccessor;
-//import mcp.mobius.waila.api.IPluginConfig;
-//import net.minecraft.util.BlockRenderLayer;
 
 /**
  * The base plant block class that all Resynth growable plants
@@ -64,7 +67,7 @@ import java.util.Random;
  * @param <T> the inheriting class (i.e. plant block).
  */
 public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T>
-        implements IPlantable, IGrowable/*, IComponentProvider*/, PlantPatchInfoProvider {
+        implements IPlantable, IGrowable, IComponentProvider, PlantPatchInfoProvider {
 
     /**
      * The prefix for all plant blocks.
@@ -460,26 +463,26 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         callGrowPlant(worldIn, state, pos, getBonemealIncrease());
     }
 
-//    // *****
-//    // Hwyla
-//    // *****
-//
-//    /**
-//     * {@inheritDoc}
-//     * <p/>
-//     * Handles displaying the plants growth (in stages) in the
-//     * Hwyla tooltip.
-//     */
-//    @Override
-//    public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
-//        if(tooltip.isEmpty())
-//            tooltip.add(new StringTextComponent(
-//                    getGrowthStageMessage(
-//                            getGrowthStage(accessor.getWorld().getBlockState(accessor.getPosition())),
-//                            getMaxGrowthStage()
-//                    )
-//            ));
-//    }
+    // *****
+    // Hwyla
+    // *****
+
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Handles displaying the plants growth (in stages) in the
+     * Hwyla tooltip.
+     */
+    @Override
+    public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
+        if(tooltip.isEmpty())
+            tooltip.add(new StringTextComponent(
+                    getGrowthStageMessage(
+                            getGrowthStage(accessor.getWorld().getBlockState(accessor.getPosition())),
+                            getMaxGrowthStage()
+                    )
+            ));
+    }
 
     // ************************
     // Public Properties Getter
@@ -489,22 +492,22 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         return this.properties;
     }
 
-//    /**
-//     * Gets the growth stage message from the
-//     * lang file formatted with the provided
-//     * info.
-//     *
-//     * @param growthStage the plants current growth stage.
-//     * @param max the plants max number of growth stages.
-//     * @return the formatted localized message.
-//     */
-//    private static String getGrowthStageMessage(int growthStage, int max){
-//        return TextFormatting.GREEN +
-//                I18n.format(
-//                        "misc.resynth.growth_stage",
-//                        TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
-//                );
-//    }
+    /**
+     * Gets the growth stage message from the
+     * lang file formatted with the provided
+     * info.
+     *
+     * @param growthStage the plants current growth stage.
+     * @param max the plants max number of growth stages.
+     * @return the formatted localized message.
+     */
+    private static String getGrowthStageMessage(int growthStage, int max){
+        return TextFormatting.GREEN +
+                I18n.format(
+                        "misc.resynth.growth_stage",
+                        TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
+                );
+    }
 
     // ****************
     // Abstract Methods

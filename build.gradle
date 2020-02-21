@@ -91,10 +91,8 @@ dependencies {
     //Forge version
     minecraft 'net.minecraftforge:forge:1.15.2-31.0.14'
 
-    //Hwyla
-    //noinspection GroovyAssignabilityCheck
-    //TODO: Fix
-    //compile fg.deobf('mcp.mobius.waila:Hwyla:1.15-pre4-1.9.19-70')
+    //Hwyla version
+    compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.7-B71_1.15.1')
 }
 
 jar {
