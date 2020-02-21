@@ -21,7 +21,6 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralStoneGenConfig;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
@@ -32,6 +31,7 @@ import net.minecraft.world.gen.placement.Placement;
  * generating {@link BlockMineralStone} in the world
  * as ore veins.
  */
+@SuppressWarnings("unused")
 class MineralStoneFeature extends OreFeature {
 
     /**
@@ -44,6 +44,7 @@ class MineralStoneFeature extends OreFeature {
      * Registers the Mineral Stone ore generation feature
      * to every biome provided the config allows it.
      */
+    @SuppressWarnings("unused")
     MineralStoneFeature(){
         super(OreFeatureConfig::deserialize);
 
@@ -61,7 +62,7 @@ class MineralStoneFeature extends OreFeature {
     private void add(Biome biome){
         biome.addFeature(
                 GenerationStage.Decoration.UNDERGROUND_ORES,
-                Feature.ORE.func_225566_b_(new OreFeatureConfig(
+                this.func_225566_b_(new OreFeatureConfig(
                                 OreFeatureConfig.FillerBlockType.NATURAL_STONE,
                                 ResynthBlocks.BLOCK_MINERAL_STONE.getDefaultState(),
                                 CONFIG.getSize()

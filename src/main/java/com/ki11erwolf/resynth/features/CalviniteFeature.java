@@ -21,7 +21,6 @@ import com.ki11erwolf.resynth.config.categories.CalviniteGenConfig;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
@@ -32,6 +31,7 @@ import net.minecraft.world.gen.placement.Placement;
  * {@link com.ki11erwolf.resynth.block.ResynthBlocks#BLOCK_CALVINITE_NETHERRACK}
  * in the world as ore veins.
  */
+@SuppressWarnings("unused")
 class CalviniteFeature extends OreFeature {
 
     /**
@@ -61,7 +61,7 @@ class CalviniteFeature extends OreFeature {
     private void add(@SuppressWarnings("SameParameterValue") Biome biome){
         biome.addFeature(
                 GenerationStage.Decoration.UNDERGROUND_ORES,
-                Feature.ORE.func_225566_b_(
+                this.func_225566_b_(
                         new OreFeatureConfig(
                                 OreFeatureConfig.FillerBlockType.NETHERRACK,
                                 ResynthBlocks.BLOCK_CALVINITE_NETHERRACK.getDefaultState(),

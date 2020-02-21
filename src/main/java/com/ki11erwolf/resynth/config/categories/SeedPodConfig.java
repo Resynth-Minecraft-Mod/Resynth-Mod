@@ -61,8 +61,8 @@ public class SeedPodConfig extends ConfigCategory {
             "frequency-of-generation",
             "The frequency (or the number of times) that Mystical Seed Pods will generate in the world." +
                       "\nSetting this to a higher value will generate more Mystical Seed Pods",
-            1,
-            1, 50,
+            5,
+            1, 70,
             this
     );
 
