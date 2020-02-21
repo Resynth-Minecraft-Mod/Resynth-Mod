@@ -9,26 +9,26 @@
   "item.resynth.mineral_crystal":                           "矿物质晶体",
   "item.resynth.mineral_rock":                              "矿物质岩石",
   "item.resynth.dense_mineral_rock":                        "密实的矿物质岩石",
-  "item.resynth.calvinite_crystal":                         "石青质晶体",
-  "item.resynth.sylvanite_crystal":                         "西尔万质晶体",
+  "item.resynth.calvinite_crystal":                         "加尔文矿晶体",
+  "item.resynth.sylvanite_crystal":                         "针碲金银矿晶体",
 
   "__COMMENT": "----方块----",
   "block.resynth.mineral_stone":                            "被注入矿物质的石头",
   "block.resynth.seed_pod":                                 "神秘的种荚",
   "block.resynth.mineral_soil":                             "矿物质泥土",
-  "block.resynth.calvinite_netherrack":                     "石青输注架子 (直接翻译)",
-  "block.resynth.sylvanite_end_stone":                      "西尔万输注端石 (直接翻译)",
-  "block.resynth.calvinite_enhancer":                       "石青增强 (直接翻译)",
-  "block.resynth.sylvanite_enhancer":                       "西尔万增强 (直接翻译)",
+  "block.resynth.calvinite_netherrack":                     "被注入加尔文矿的地狱岩",
+  "block.resynth.sylvanite_end_stone":                      "被注入针碲金银矿的末地石",
+  "block.resynth.calvinite_enhancer":                       "加尔文矿催化块",
+  "block.resynth.sylvanite_enhancer":                       "针碲金银矿催化块",
 
   "___COMMENT": "----作物----",
   "block.resynth.crystalline_plant_mineral_rock":           "矿物质岩石作物",
   "item.resynth.crystalline_seeds_mineral_rock":            "矿物质岩石种子",
   "item.resynth.crystalline_shard_mineral_rock":            "矿物质岩石碎片",
 
-  "block.resynth.crystalline_plant_calvinite_crystal":      "Calvinite Crystal Plant",
-  "item.resynth.crystalline_seeds_calvinite_crystal":       "Calvinite Crystal Seeds",
-  "item.resynth.crystalline_shard_calvinite_crystal":       "Calvinite Crystal Shard",
+  "block.resynth.crystalline_plant_calvinite_crystal":      "加尔文矿作物",
+  "item.resynth.crystalline_seeds_calvinite_crystal":       "加尔文矿种子",
+  "item.resynth.crystalline_shard_calvinite_crystal":       "加尔文矿碎片",
 
   "block.resynth.crystalline_plant_diamond":                "钻石作物",
   "item.resynth.crystalline_seeds_diamond":                 "钻石种子",
@@ -74,33 +74,37 @@
   "item.resynth.metallic_seeds_end_stone":                  "末地石种子",
   "block.resynth.metallic_organic_ore_end_stone":           "有机末地石",
 
-  "block.resynth.metallic_plant_granite":                   "Granite Plant",
-  "item.resynth.metallic_seeds_granite":                    "Granite Seeds",
-  "block.resynth.metallic_organic_ore_granite":             "Organic Granite",
+  "block.resynth.metallic_plant_granite":                   "花岗岩作物",
+  "item.resynth.metallic_seeds_granite":                    "花岗岩种子",
+  "block.resynth.metallic_organic_ore_granite":             "有机花岗岩",
 
-  "block.resynth.metallic_plant_diorite":                   "Diorite Plant",
-  "item.resynth.metallic_seeds_diorite":                    "Diorite Seeds",
-  "block.resynth.metallic_organic_ore_diorite":             "Organic Diorite",
+  "block.resynth.metallic_plant_diorite":                   "闪长岩作物",
+  "item.resynth.metallic_seeds_diorite":                    "闪长岩种子",
+  "block.resynth.metallic_organic_ore_diorite":             "有机闪长岩",
 
-  "block.resynth.metallic_plant_andesite":                  "Andesite Plant",
-  "item.resynth.metallic_seeds_andesite":                   "Andesite Seeds",
-  "block.resynth.metallic_organic_ore_andesite":            "Organic Andesite",
+  "block.resynth.metallic_plant_andesite":                  "安山岩作物",
+  "item.resynth.metallic_seeds_andesite":                   "安山岩种子",
+  "block.resynth.metallic_organic_ore_andesite":            "有机安山岩",
 
-  "block.resynth.metallic_plant_stone":                     "Stone Plant",
-  "item.resynth.metallic_seeds_stone":                      "Stone Seeds",
-  "block.resynth.metallic_organic_ore_stone":               "Organic Stone",
+  "block.resynth.metallic_plant_stone":                     "石头作物",
+  "item.resynth.metallic_seeds_stone":                      "石头种子",
+  "block.resynth.metallic_organic_ore_stone":               "有机石头",
 
-  "block.resynth.metallic_plant_cobblestone":               "Cobblestone Plant",
-  "item.resynth.metallic_seeds_cobblestone":                "Cobblestone Seeds",
-  "block.resynth.metallic_organic_ore_cobblestone":         "Organic Cobblestone",
+  "block.resynth.metallic_plant_cobblestone":               "圆石作物",
+  "item.resynth.metallic_seeds_cobblestone":                "圆石种子",
+  "block.resynth.metallic_organic_ore_cobblestone":         "有机圆石",
 
-  "block.resynth.metallic_plant_dirt":                      "Dirt Plant",
-  "item.resynth.metallic_seeds_dirt":                       "Dirt Seeds",
-  "block.resynth.metallic_organic_ore_dirt":                "Organic Dirt",
+  "block.resynth.metallic_plant_dirt":                      "泥土作物",
+  "item.resynth.metallic_seeds_dirt":                       "泥土种子",
+  "block.resynth.metallic_organic_ore_dirt":                "有机泥土",
 
   "block.resynth.metallic_plant_sand":                      "沙子作物",
   "item.resynth.metallic_seeds_sand":                       "沙子种子",
   "block.resynth.metallic_organic_ore_sand":                "有机沙子",
+
+  "block.resynth.metallic_plant_sponge":                    "海绵作物",
+  "item.resynth.metallic_seeds_sponge":                     "海绵种子",
+  "block.resynth.metallic_organic_ore_sponge":              "有机海绵",
 
   "block.resynth.biochemical_plant_ender_pearl":            "末影珍珠作物",
   "item.resynth.biochemical_seeds_ender_pearl":             "末影珍珠种子",
@@ -262,61 +266,61 @@
   "item.resynth.metallic_seeds_bluepower_tungsten":                 "钨种子 (蓝石力量)",
   "block.resynth.metallic_organic_ore_bluepower_tungsten":          "有机钨矿石 (蓝石力量)",
 
-  "block.resynth.crystalline_plant_bno_diamond":                        "Diamond Plant",
-  "item.resynth.crystalline_seeds_bno_diamond":                         "Diamond Seeds (Basic Nether Ores)",
-  "item.resynth.crystalline_shard_bno_diamond":                         "Diamond Shard (Basic Nether Ores)",
+  "block.resynth.crystalline_plant_bno_diamond":                        "钻石作物",
+  "item.resynth.crystalline_seeds_bno_diamond":                         "钻石种子 (基础下界矿石)",
+  "item.resynth.crystalline_shard_bno_diamond":                         "钻石碎片 (基础下界矿石)",
 
-  "block.resynth.crystalline_plant_bno_redstone":                       "Redstone Plant",
-  "item.resynth.crystalline_seeds_bno_redstone":                        "Redstone Seeds (Basic Nether Ores)",
-  "item.resynth.crystalline_shard_bno_redstone":                        "Redstone Shard (Basic Nether Ores)",
+  "block.resynth.crystalline_plant_bno_redstone":                       "红石作物",
+  "item.resynth.crystalline_seeds_bno_redstone":                        "红石种子 (基础下界矿石)",
+  "item.resynth.crystalline_shard_bno_redstone":                        "红石碎片 (基础下界矿石)",
 
-  "block.resynth.crystalline_plant_bno_coal":                           "Coal Plant",
-  "item.resynth.crystalline_seeds_bno_coal":                            "Coal Seeds (Basic Nether Ores)",
-  "item.resynth.crystalline_shard_bno_coal":                            "Coal Shard (Basic Nether Ores)",
+  "block.resynth.crystalline_plant_bno_coal":                           "煤作物",
+  "item.resynth.crystalline_seeds_bno_coal":                            "煤种子 (基础下界矿石)",
+  "item.resynth.crystalline_shard_bno_coal":                            "煤碎片 (基础下界矿石)",
 
-  "block.resynth.crystalline_plant_bno_emerald":                        "Emerald Plant",
-  "item.resynth.crystalline_seeds_bno_emerald":                         "Emerald Seeds (Basic Nether Ores)",
-  "item.resynth.crystalline_shard_bno_emerald":                         "Emerald Shard (Basic Nether Ores)",
+  "block.resynth.crystalline_plant_bno_emerald":                        "绿宝石作物",
+  "item.resynth.crystalline_seeds_bno_emerald":                         "绿宝石种子 (基础下界矿石)",
+  "item.resynth.crystalline_shard_bno_emerald":                         "绿宝石碎片 (基础下界矿石)",
 
-  "block.resynth.crystalline_plant_bno_lapis_lazuli":                   "Lapis Lazuli Plant",
-  "item.resynth.crystalline_seeds_bno_lapis_lazuli":                    "Lapis Lazuli Seeds (Basic Nether Ores)",
-  "item.resynth.crystalline_shard_bno_lapis_lazuli":                    "Lapis Lazuli Shard (Basic Nether Ores)",
+  "block.resynth.crystalline_plant_bno_lapis_lazuli":                   "青金石作物",
+  "item.resynth.crystalline_seeds_bno_lapis_lazuli":                    "青金石种子 (基础下界矿石)",
+  "item.resynth.crystalline_shard_bno_lapis_lazuli":                    "青金石碎片 (基础下界矿石)",
 
-  "block.resynth.metallic_plant_bno_iron":                              "Iron Plant",
-  "item.resynth.metallic_seeds_bno_iron":                               "Iron Seeds (Basic Nether Ores)",
-  "block.resynth.metallic_organic_ore_bno_iron":                        "Organic Iron Ore (Basic Nether Ores)",
+  "block.resynth.metallic_plant_bno_iron":                              "铁作物",
+  "item.resynth.metallic_seeds_bno_iron":                               "铁种子 (基础下界矿石)",
+  "block.resynth.metallic_organic_ore_bno_iron":                        "有机铁矿石 (基础下界矿石)",
 
-  "block.resynth.metallic_plant_bno_gold":                              "Gold Plant",
-  "item.resynth.metallic_seeds_bno_gold":                               "Gold Seeds (Basic Nether Ores)",
-  "block.resynth.metallic_organic_ore_bno_gold":                        "Organic Gold Ore (Basic Nether Ores)",
+  "block.resynth.metallic_plant_bno_gold":                              "金作物",
+  "item.resynth.metallic_seeds_bno_gold":                               "金种子 (基础下界矿石)",
+  "block.resynth.metallic_organic_ore_bno_gold":                        "有机金矿石 (基础下界矿石)",
 
-  "block.resynth.metallic_plant_bno_uranium":                           "Uranium Plant",
-  "item.resynth.metallic_seeds_bno_uranium":                            "Uranium Seeds (Basic Nether Ores)",
-  "block.resynth.metallic_organic_ore_bno_uranium":                     "Organic Uranium Ore (Basic Nether Ores)",
+  "block.resynth.metallic_plant_bno_uranium":                           "铀作物",
+  "item.resynth.metallic_seeds_bno_uranium":                            "铀种子 (基础下界矿石)",
+  "block.resynth.metallic_organic_ore_bno_uranium":                     "有机铀矿石 (基础下界矿石)",
 
-  "block.resynth.metallic_plant_bno_copper":                            "Copper Plant",
-  "item.resynth.metallic_seeds_bno_copper":                             "Copper Seeds (Basic Nether Ores)",
-  "block.resynth.metallic_organic_ore_bno_copper":                      "Organic Copper Ore (Basic Nether Ores)",
+  "block.resynth.metallic_plant_bno_copper":                            "铜作物",
+  "item.resynth.metallic_seeds_bno_copper":                             "铜种子 (基础下界矿石)",
+  "block.resynth.metallic_organic_ore_bno_copper":                      "有机铜矿石 (基础下界矿石)",
 
-  "block.resynth.metallic_plant_bno_tin":                               "Tin Plant",
-  "item.resynth.metallic_seeds_bno_tin":                                "Tin Seeds (Basic Nether Ores)",
-  "block.resynth.metallic_organic_ore_bno_tin":                         "Organic Tin Ore (Basic Nether Ores)",
+  "block.resynth.metallic_plant_bno_tin":                               "锡作物",
+  "item.resynth.metallic_seeds_bno_tin":                                "锡种子 (基础下界矿石)",
+  "block.resynth.metallic_organic_ore_bno_tin":                         "有机锡矿石 (基础下界矿石)",
 
-  "block.resynth.metallic_plant_bno_silver":                            "Silver Plant",
-  "item.resynth.metallic_seeds_bno_silver":                             "Silver Seeds (Basic Nether Ores)",
-  "block.resynth.metallic_organic_ore_bno_silver":                      "Organic Silver Ore (Basic Nether Ores)",
+  "block.resynth.metallic_plant_bno_silver":                            "银作物",
+  "item.resynth.metallic_seeds_bno_silver":                             "银种子 (基础下界矿石)",
+  "block.resynth.metallic_organic_ore_bno_silver":                      "有机银矿石 (基础下界矿石)",
 
-  "block.resynth.metallic_plant_bno_nickel":                            "Nickel Plant",
-  "item.resynth.metallic_seeds_bno_nickel":                             "Nickel Seeds (Basic Nether Ores)",
-  "block.resynth.metallic_organic_ore_bno_nickel":                      "Organic Nickel Ore (Basic Nether Ores)",
+  "block.resynth.metallic_plant_bno_nickel":                            "镍作物",
+  "item.resynth.metallic_seeds_bno_nickel":                             "镍种子 (基础下界矿石)",
+  "block.resynth.metallic_organic_ore_bno_nickel":                      "有机镍矿石 (基础下界矿石)",
 
-  "block.resynth.metallic_plant_bno_lead":                              "Lead Plant",
-  "item.resynth.metallic_seeds_bno_lead":                               "Lead Seeds (Basic Nether Ores)",
-  "block.resynth.metallic_organic_ore_bno_lead":                        "Organic Lead Ore (Basic Nether Ores)",
+  "block.resynth.metallic_plant_bno_lead":                              "铅作物",
+  "item.resynth.metallic_seeds_bno_lead":                               "铅种子 (基础下界矿石)",
+  "block.resynth.metallic_organic_ore_bno_lead":                        "有机铅矿石 (基础下界矿石)",
 
-  "block.resynth.metallic_plant_bno_aluminium":                         "Aluminium Plant",
-  "item.resynth.metallic_seeds_bno_aluminium":                          "Aluminium Seeds (Basic Nether Ores)",
-  "block.resynth.metallic_organic_ore_bno_aluminium":                   "Organic Aluminium Ore (Basic Nether Ores)",
+  "block.resynth.metallic_plant_bno_aluminium":                         "铝作物",
+  "item.resynth.metallic_seeds_bno_aluminium":                          "铝种子 (基础下界矿石)",
+  "block.resynth.metallic_organic_ore_bno_aluminium":                   "有机铝矿石 (基础下界矿石)",
 
   "____COMMENT": "---工具提示----",
   "tooltip.block.resynth.mineral_stone":
@@ -326,18 +330,18 @@
   "tooltip.block.resynth.seed_pod":
   "可以设置为从自然生成的花中掉落\n生物化学种子会在玩家杀死生物时概率调出\n和平模式是不会启用的.\n当它不启用时, 种荚将变成一个毫无作用的装饰品.",
   "tooltip.block.resynth.calvinite_netherrack":
-  "在整个地狱中很少见。滴加可以被制作为钙铁矿增强剂的钙铁矿晶体，以进一步增加矿质土壤中的矿物质含量. (直接翻译)",
+  "你可以在下界里找到它们,不过它们是很稀有的. 通过开采被注入加尔文矿的地狱岩可以获得加尔文矿晶体来制作加尔文矿催化块, 以进一步增加矿物质土壤的矿物质含量.",
   "tooltip.block.resynth.sylvanite_end_stone":
-  "到头来都很少见。滴落可以合成为万能增强剂的万能晶体，以进一步增加矿质土壤的矿物质含量. (直接翻译)",
+  "你可以在末地里找到它们,不过它们是很稀有的. 通过开采被注入针碲金银矿的地狱岩可以获得针碲金银矿晶体来制作针碲金银矿催化块, 以进一步增加矿物质土壤的矿物质含量.",
   "tooltip.block.resynth.calvinite_enhancer":
-  "\n可以直接放在矿物含量为50%%的富含矿物质的土壤下面，以增加其矿物质含量 %s%%. (直接翻译)",
+  "可以放置在矿物质含量为 50%% 的富有矿物质的土壤下方, 以增加额外的矿物质含量 %s%%",
   "tooltip.block.resynth.sylvanite_enhancer":
-  "可以直接放在矿物含量为50%%的富含矿物质的土壤下面，以增加其矿物质含量 %s%%. (直接翻译)",
+  "可以放置在矿物质含量为 50%% 的富有矿物质的土壤下方, 以增加额外的矿物质含量 %s%%",
 
   "tooltip.item.resynth.mineral_hoe":
   "Resynth的工具选择. 需要先试用特殊的锄头耕作泥土或草方块才可以种植神农科技作物.\n每次使用矿物质锄都会消耗矿物质.\n1 矿物质 = 1 矿物质晶体.\n矿物质可以通过矿物质锄对准空气右键单击获得,\n或者按住Shift右键单击一个方块, \n当然你需要手持矿物质锄并在背包放置矿物质晶体.\n可以使用它右击来检测作物生长情况, 或检测矿物质土壤的矿物质含量.\n你可以在创造模式下右键单击促进作物生长.",
   "tooltip.item.resynth.mineral_hoe_charges": "矿物质: ",
-  "tooltip.item.resynth.mineral_crystal.ecm": "Can be used directly!",
+  "tooltip.item.resynth.mineral_crystal.ecm": "可以直接使用!",
   "tooltip.item.resynth.mineral_crystal":
   "一个合成材料, 以及消耗品, 矿物质锄的 \"燃料\" .\n矿物质晶体可以从矿物质土壤中获得, 因此, 需要对该Mod有一些了解.",
   "tooltip.item.resynth.dense_mineral_rock":
@@ -345,9 +349,9 @@
   "tooltip.item.resynth.mineral_rock":
   "Resynth的核心物品. 作为大多数 Resynth 方块和物品的合成材料.\n也可以作为消耗品使用, 用于制作被注入矿物质的石头或.\n用于矿物质土壤的肥料或生长剂.",
   "tooltip.item.resynth.calvinite_crystal":
-  "开采石青输注架子时掉落。可以制成增强剂，使矿物土壤的矿物质含量增加到50％以上. (直接翻译)",
+  "开采被注入加尔文矿的地狱岩会掉落. 可以用于合成为加尔文矿催化块使矿物质土壤的矿物质含量提升至 50%% 以上",
   "tooltip.item.resynth.sylvanite_crystal":
-  "开采万寿菊注入的末石时掉落。可以制成增强剂，使矿物土壤的矿物质含量增加到50％以上. (直接翻译)",
+  "开采被注入针碲金银矿的地狱岩会掉落. 可以用于合成为针碲金银矿催化块使矿物质土壤的矿物质含量提升至 50%% 以上",
 
   "_____COMMENT": "----作物工具提示----",
   "tooltip.item.resynth.crystalline_seeds":
