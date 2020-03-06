@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "resynth:crystalline_seeds_moreoresinone_ruby"
+    }
+  ],
+  "result": {
+    "item": "moreoresinone:ruby",
+    "count": 2
+  }
+}

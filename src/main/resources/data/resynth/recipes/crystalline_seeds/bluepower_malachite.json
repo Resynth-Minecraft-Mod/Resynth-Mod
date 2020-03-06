@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "resynth:crystalline_seeds_bluepower_malachite"
+    }
+  ],
+  "result": {
+    "item": "bluepower:malachite_gem",
+    "count": 2
+  }
+}

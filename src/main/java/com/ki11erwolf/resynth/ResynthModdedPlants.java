@@ -80,7 +80,7 @@ public class ResynthModdedPlants {
      */
     static final CrystallineSetProperties DIAMOND_PROPERTIES = new CrystallineSetProperties(
             false, 6.0F,1,
-            3.0F, 1.0F
+            2.0F, 1.0F
     );
 
     /**

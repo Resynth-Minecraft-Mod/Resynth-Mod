@@ -47,10 +47,10 @@ public class ResynthPlants {
             "mineral_rock",
             new CrystallineSetProperties(
                     false,
-                    10,
+                    25,
                     3,
-                    6,
-                    15
+                    5,
+                    30
             ),
             ResynthBlocks.BLOCK_MINERAL_STONE
     ).register();
@@ -305,6 +305,20 @@ public class ResynthPlants {
                     5
             ),
             Blocks.SPONGE
+    ).register();
+	
+	/**
+     * The plant set for Vanilla Gravel.
+     */
+    public static final PlantSet<?> GRAVEL = PlantSetFactory.newVanillaMetallicPlantSet(
+            "gravel",
+            new MetallicSetProperties(
+                    false,
+                    40,
+                    3,
+                    3
+            ),
+            Blocks.GRAVEL
     ).register();
 
 //    /**

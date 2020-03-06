@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "resynth:crystalline_seeds_moreoresinone_sapphire"
+    }
+  ],
+  "result": {
+    "item": "moreoresinone:sapphire",
+    "count": 2
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "resynth:crystalline_seeds_mineral_rock"
+    }
+  ],
+  "result": {
+    "item": "resynth:mineral_rock",
+    "count": 2
+  }
+}

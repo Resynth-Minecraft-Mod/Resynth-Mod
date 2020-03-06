@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "resynth:crystalline_seeds_calvinite_crystal"
+    }
+  ],
+  "result": {
+    "item": "resynth:crystalline_shard_calvinite_crystal",
+    "count": 2
+  }
+}
