@@ -196,6 +196,30 @@ public class ResynthModdedPlants {
             3, 2
     );
 
+    /**
+     * The set properties for general Prosperity ore and gems/dusts.
+     */
+    private static final CrystallineSetProperties PROSPERITY_PROPERTIES = new CrystallineSetProperties(
+            false, 12, 2,
+            2, 4
+    );
+
+    /**
+     * The set properties for general Inferium ore and gems/dusts.
+     */
+    private static final CrystallineSetProperties INFERIUM_PROPERTIES = new CrystallineSetProperties(
+            false, 16, 2,
+            1.5F, 4.5F
+    );
+
+    /**
+     * The set properties for general Soulium ore and gems/dusts.
+     */
+    private static final CrystallineSetProperties SOULIUM_PROPERTIES = new CrystallineSetProperties(
+            false, 14, 2,
+            2F, 4F
+    );
+
     // Metallic
 
     /**
@@ -205,6 +229,9 @@ public class ResynthModdedPlants {
             false, 10, 6, 6
     );
 
+    /**
+     * The set properties for general Gold and Gold Ore.
+     */
     static final MetallicSetProperties GOLD_PROPERTIES = new MetallicSetProperties(
             false, 8, 5, 5
     );
@@ -284,6 +311,13 @@ public class ResynthModdedPlants {
      */
     private static final MetallicSetProperties ADAMANTIUM_PROPERTIES = new MetallicSetProperties(
             false, 7, 5, 5
+    );
+
+    /**
+     * The set properties for general Osmium and Osmium Ore.
+     */
+    static final MetallicSetProperties OSMIUM_PROPERTIES = new MetallicSetProperties(
+            false, 8.5F, 6, 6
     );
 
     // **********
@@ -545,17 +579,57 @@ public class ResynthModdedPlants {
             BASIC_NETHER_ORES, "aluminium", ALUMINIUM_PROPERTIES, "netheraluminum_ore"
     ));
 
-    //Mystical Agriculture
-
-    // Prosperity
-    // Inferium
-    // Soulium
-
     //Mekanism
 
-    //Osmium
-    //Copper
-    //Tin
+    /**
+     * The plant set for Osmium from Mekanism.
+     */
+    public static final PlantSet<?> MEKANISM_OSMIUM
+            = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            MEKANISM, "osmium", OSMIUM_PROPERTIES, "osmium_ore"
+    ));
+
+    /**
+     * The plant set for Copper from Mekanism.
+     */
+    public static final PlantSet<?> MEKANISM_COPPER
+            = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            MEKANISM, "copper", COPPER_PROPERTIES, "copper_ore"
+    ));
+
+    /**
+     * The plant set for Tin from Mekanism.
+     */
+    public static final PlantSet<?> MEKANISM_TIN
+            = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            MEKANISM, "tin", TIN_PROPERTIES, "tin_ore"
+    ));
+
+    //Mystical Agriculture
+
+    /**
+     * The plant set for Prosperity from Mystical Agriculture.
+     */
+    public static final PlantSet<?> MYSTICAL_AGRICULTURE_PROSPERITY
+            = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            MYSTICAL_AGRICULTURE, "prosperity", PROSPERITY_PROPERTIES, "prosperity_ore"
+    ));
+
+    /**
+     * The plant set for Inferium from Mystical Agriculture.
+     */
+    public static final PlantSet<?> MYSTICAL_AGRICULTURE_INFERIUM
+            = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            MYSTICAL_AGRICULTURE, "inferium", INFERIUM_PROPERTIES, "inferium_ore"
+    ));
+
+    /**
+     * The plant set for Soulium from Mystical Agriculture.
+     */
+    public static final PlantSet<?> MYSTICAL_AGRICULTURE_SOULIUM
+            = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            MYSTICAL_AGRICULTURE, "soulium", SOULIUM_PROPERTIES, "soulium_ore"
+    ));
 
     /**Private constructor.*/
     private ResynthModdedPlants(){}
