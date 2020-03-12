@@ -69,6 +69,16 @@ public class ResynthModdedPlants {
      */
     private static final String BASIC_NETHER_ORES = "bno";
 
+    /**
+     * The mod id for the Mystical Agriculture mod.
+     */
+    private static final String MYSTICAL_AGRICULTURE = "mysticalagriculture";
+
+    /**
+     * The mod id for the Mekanism Mod.
+     */
+    private static final String MEKANISM = "mekanism";
+
     // *******************
     // GENERAL DEFINITIONS
     // *******************
@@ -534,6 +544,18 @@ public class ResynthModdedPlants {
             = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "aluminium", ALUMINIUM_PROPERTIES, "netheraluminum_ore"
     ));
+
+    //Mystical Agriculture
+
+    // Prosperity
+    // Inferium
+    // Soulium
+
+    //Mekanism
+
+    //Osmium
+    //Copper
+    //Tin
 
     /**Private constructor.*/
     private ResynthModdedPlants(){}

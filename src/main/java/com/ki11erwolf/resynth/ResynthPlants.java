@@ -321,133 +321,19 @@ public class ResynthPlants {
             Blocks.GRAVEL
     ).register();
 
-//    /**
-//     * The plant set for Vanilla White Wool.
-//     */
-//    public static final PlantSet<?> WHITE_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "white_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.WHITE_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Black Wool.
-//     */
-//    public static final PlantSet<?> BLACK_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "black_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.BLACK_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Blue Wool.
-//     */
-//    public static final PlantSet<?> BLUE_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "blue_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.BLUE_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Brown Wool.
-//     */
-//    public static final PlantSet<?> BROWN_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "brown_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.BROWN_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Cyan Wool.
-//     */
-//    public static final PlantSet<?> CYAN_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "cyan_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.CYAN_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Gray Wool.
-//     */
-//    public static final PlantSet<?> GRAY_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "gray_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.GRAY_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Green Wool.
-//     */
-//    public static final PlantSet<?> GREEN_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "green_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.GREEN_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Light Blue Wool.
-//     */
-//    public static final PlantSet<?> LIGHT_BLUE_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "light_blue_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.LIGHT_BLUE_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Light Gray Wool.
-//     */
-//    public static final PlantSet<?> LIGHT_GRAY_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "light_gray_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.LIGHT_GRAY_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Lime Wool.
-//     */
-//    public static final PlantSet<?> LIME_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "lime_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.LIME_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Magenta Wool.
-//     */
-//    public static final PlantSet<?> MAGENTA_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "magenta_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.MAGENTA_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Orange Wool.
-//     */
-//    public static final PlantSet<?> ORANGE_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "orange_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.ORANGE_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Pink Wool.
-//     */
-//    public static final PlantSet<?> PINK_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "pink_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.PINK_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Yellow Wool.
-//     */
-//    public static final PlantSet<?> YELLOW_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "yellow_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.YELLOW_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Purple Wool.
-//     */
-//    public static final PlantSet<?> PURPLE_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "purple_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.PURPLE_WOOL
-//    ).register();
-//
-//    /**
-//     * The plant set for Vanilla Red Wool.
-//     */
-//    public static final PlantSet<?> RED_WOOL = PlantSetFactory.newVanillaMetallicPlantSet(
-//            "red_wool", ResynthModdedPlants.WOOL_PROPERTIES,
-//            Blocks.RED_WOOL
-//    ).register();
+    /**
+     * The plant set for Vanilla Netherrack.
+     */
+    public static final PlantSet<?> NETHERRACK = PlantSetFactory.newVanillaMetallicPlantSet(
+            "netherrack",
+            new MetallicSetProperties(
+                    false,
+                    35,
+                    4,
+                    3
+            ),
+            Blocks.NETHERRACK
+    ).register();
 
     // ****************
     // Biochemical Sets
