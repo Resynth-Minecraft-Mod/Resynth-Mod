@@ -135,8 +135,8 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
         if(blockIn == Block.getBlockFromItem(getProduce().getItem())){
             if(worldIn.getBlockState(pos).get(getGrowthProperty()) == this.getMaxGrowthStage())
                 //Reset the plant if the player breaks its produce.
-                worldIn.setBlockState(
-                        pos, this.getDefaultState().with(this.getGrowthProperty(), this.getMaxGrowthStage() - 1)
+                worldIn.setBlockState(pos,
+                        this.getDefaultState().with(this.getGrowthProperty(), this.getMaxGrowthStage() - 1)
                 );
         }
     }
@@ -155,17 +155,21 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
     void growPlant(World world, BlockState state, BlockPos pos, int increase) {
         int growth = increase + getGrowthStage(state);
 
-        if(growth >= getMaxGrowthStage()){
+        if(tryAutoFarmDump(growth, world, pos))
+            //Auto-farm check.
+            setGrowthStage(world, pos, growth - 1);
+        else if(growth >= getMaxGrowthStage()){
             //Produce
             growth = getMaxGrowthStage();
             Direction facing = placeProduce(world, pos);
             if(facing != null)
-                world.setBlockState(pos, this.getDefaultState()
-                        .with(this.getGrowthProperty(), growth)
-                        .with(HorizontalBlock.HORIZONTAL_FACING, facing), 2);
+                world.setBlockState(pos,
+                    this.getDefaultState().with(this.getGrowthProperty(), growth)
+                        .with(HorizontalBlock.HORIZONTAL_FACING, facing), 2
+                );
         } else {
             //Grow
-            world.setBlockState(pos, this.getDefaultState().with(this.getGrowthProperty(), growth), 2);
+            setGrowthStage(world, pos, growth);
         }
     }
 
@@ -228,5 +232,22 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
 
         //Could not place on any side.
         return null;
+    }
+
+    // *****
+    // Other
+    // *****
+
+    /**
+     * While this plant type does not allow right-click harvesting, this method is implemented to provide
+     * the base class with the growth stage this plant type is normally reset to.
+     *
+     * <p/>This is related to {@code BlockPlant#tryRightclickHarvest(World, BlockPos, PlayerEntity)}
+     *
+     * @return {@code 6} - the growth stage this plant is normally reset to.
+     */
+    @Override
+    protected int postHarvestGrowthStageReset(){
+        return 6;
     }
 }

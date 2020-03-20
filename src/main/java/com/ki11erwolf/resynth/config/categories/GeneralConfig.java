@@ -61,6 +61,17 @@ public class GeneralConfig extends ConfigCategory {
     );
 
     /**
+     * Config properties that allows enabling/disabling auto-farming using hoppers.
+     */
+    private final BooleanConfigValue enableHopperAutoFarming = new BooleanConfigValue(
+            "allow hopper auto-farming",
+            "Allows auto-farming using hoppers when true, where plants will drop their " +
+                      "produce in a hopper underneath the plant when fully grown, starting the " +
+                      "growth cycle over.",
+            true, this
+    );
+
+    /**
      * Constructor.
      */
     public GeneralConfig() {
@@ -94,5 +105,13 @@ public class GeneralConfig extends ConfigCategory {
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean areTooltipsEnabled(){
         return this.enableHelpTooltips.getValue();
+    }
+
+    /**
+     * @return the config defined value that specifies if auto-farming
+     * using hoppers is enabled or disabled.
+     */
+    public boolean isHopperAutofarmingEnabled(){
+        return enableHopperAutoFarming.getValue();
     }
 }

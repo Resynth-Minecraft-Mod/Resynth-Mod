@@ -19,6 +19,8 @@ import com.ki11erwolf.resynth.block.BlockEnhancer;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
 import com.ki11erwolf.resynth.util.EffectsUtil;
@@ -31,12 +33,17 @@ import mcp.mobius.waila.api.IPluginConfig;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
+import net.minecraft.tileentity.HopperTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -59,7 +66,7 @@ import java.util.Random;
 /**
  * The base plant block class that all Resynth growable plants
  * inherit. This class sets most of the ground work (Growth, look,
- * placement, ect.), which allows inheriting classes to simply
+ * placement, behaviour, ect.), which allows inheriting classes to simply
  * specify growth mechanics and unique properties of the plant.
  * This class also handles random growth, taking into account
  * Mineral Soil Mineral Concentration and plant growth chances.
@@ -235,6 +242,188 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         EffectsUtil.displayStandardEffectsWithChance(worldIn, pos, 1, 5, ParticleTypes.END_ROD);
     }
 
+    // *******************
+    // Hopper Auto Farming
+    // *******************
+
+    /**
+     * Auto-Farming check and attempt for all plants.
+     * <b>Should be called in every plant types {@link
+     * #growPlant(World, BlockState, BlockPos, int)}
+     * method, AFTER the growth has been calculated.</b>
+     *
+     * <p/><b>If - and only if the plant is fully grown and
+     * config allows,</b> will this method check for any
+     * hoppers below the plants soil block (1 and then 2
+     * blocks below), and if one is found, will try and
+     * dump the produce into the hopper tile entity.
+     *
+     * @param growth the final growth stage of the plant.
+     * @param world the world the plant is in.
+     * @param pos the position of the plant in the world.
+     * @return {@code true} if hopper auto-farming is enabled,
+     * the plant is fully grown, and the plants produce was
+     * dumped into a hopper below the plant.
+     *
+     * <p/>Will only return {@code true} if the produce was
+     * successfully placed in a hopper below the plant. If the
+     * produce could NOT be placed in a hopper below
+     * the plant, this will return {@code false}.
+     *
+     * <p/><b>The plants growth should be reset if this
+     * returns {@code true}!</b>
+     */
+    protected boolean tryAutoFarmDump(int growth, World world, BlockPos pos){
+        //IF enabled
+        if(ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).isHopperAutofarmingEnabled())
+            //AND       Plant is fully grown     AND      Produce was hoppered.
+            return growth >= getMaxGrowthStage() && tryHopperProduce(world, pos);
+        else return false;
+    }
+
+    /**
+     * Looks a hopper tile entity 2 and then 3 blocks below
+     * the given plants block position. The FIRST hopper found
+     * will be returned.
+     *
+     * @param world the world the plant block is in.
+     * @param pos the position of the plant in the world.
+     * @return the FIRST {@link HopperTileEntity} found either
+     * 2 or 3 blocks below the plant, or {@code null} if no
+     * hoppers were found.
+     */
+    private HopperTileEntity getHopper(World world, BlockPos pos){
+        BlockPos posA = pos.down(2), posB = posA.down(1);
+
+        TileEntity a;
+        if((a = world.getTileEntity(posA)) instanceof HopperTileEntity)
+                return (HopperTileEntity) a;
+
+        TileEntity b;
+        if((b = world.getTileEntity(posB)) instanceof HopperTileEntity)
+            return (HopperTileEntity) b;
+
+        return null;
+    }
+
+    /**
+     * Will try and dump this plant types produce into any hoppers
+     * (found with {@link #getHopper(World, BlockPos)}) below the
+     * plant.
+     *
+     * @param world the world the plant is in.
+     * @param pos the position of the plant in the world.
+     * @return {@code true} if and only if, both a hopper
+     * was found below the plant and the plants produce
+     * was successfully placed within the found hopper, {@code
+     * false} otherwise, such as if the hopper if full.
+     */
+    private boolean tryHopperProduce(World world, BlockPos pos){
+        HopperTileEntity hopper = getHopper(world, pos);
+        ItemStack produce = getProduce();
+
+        //No hopper
+        if(hopper == null) return false;
+
+        //For each hopper slot
+        for(int i = 0; i <= 4; i++){
+            ItemStack occupied = hopper.getStackInSlot(i);
+
+            //Combined deposit if produce already in hopper
+            if(occupied.getItem() == produce.getItem()){
+                int newCount = produce.getCount() + occupied.getCount();
+
+                //Check for stack count above 64
+                if(! (newCount > 64)){
+                    ItemStack combinedProduce = new ItemStack(
+                            produce.getItem(), newCount
+                    );
+                    hopper.setInventorySlotContents(i, combinedProduce);
+                    return true;
+                }
+            }
+
+            //Deposit if slot is empty
+            if(occupied == ItemStack.EMPTY || occupied.getItem() == Items.AIR
+                    || occupied.getCount() == 0){
+                hopper.setInventorySlotContents(i, produce);
+                return true;
+            }
+        }
+
+        //Could not deposit
+        return false;
+    }
+
+    // *************************
+    // Right-Click Harvest Logic
+    // *************************
+
+    /**
+     * {@inheritDoc}
+     *
+     * Called when a player right-clicks this plant.
+     * Used to implement right-click harvesting ({@link
+     * #tryRightclickHarvest(World, BlockPos, PlayerEntity)}).
+     *
+     * @return {@link ActionResultType#SUCCESS} if the plant was harvested,
+     * {@link ActionResultType#FAIL} if the plant could not be harvested.
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player,
+                                           Hand hand, BlockRayTraceResult hit){
+        return tryRightclickHarvest(world, pos, player) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
+    }
+
+    /**
+     * Will try and harvest the given plant in the given world if the plant
+     * is fully grown.
+     *
+     * <p/>A successful harvest will drop the plants produce in the world and
+     * reset the plants growth to its specific post harvest stage.
+     *
+     * <p/>Behaviour is dependent on: {@link #postHarvestGrowthStageReset()}, {@link
+     * #postHarvestNumberOfProduceDrops()}, and {@link #postHarvestSoundEvent()}.
+     *
+     * @param world the world the plant is in.
+     * @param pos the position of the plant in the world.
+     * @param player the player trying to harvest the plant.
+     * @return {@code true} if the harvest was successful,
+     * {@code false} otherwise.
+     */
+    private boolean tryRightclickHarvest(World world, BlockPos pos, PlayerEntity player){
+        //Check if harvestable.
+        if(postHarvestGrowthStageReset() == -1 || postHarvestNumberOfProduceDrops() == -1
+                || postHarvestSoundEvent() == null) return false;//Not harvestable!
+
+        int growth = world.getBlockState(pos).get(getGrowthProperty());
+        int postHarvestGrowth = postHarvestGrowthStageReset();
+
+        //noinspection rawtypes
+        if(growth >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage()){
+            if(setGrowthStage(world, pos, postHarvestGrowth)){
+
+                if(!world.isRemote) {
+                    MinecraftUtil.spawnItemStackInWorld(
+                            new ItemStack(
+                                    getProduce().getItem(),
+                                    postHarvestNumberOfProduceDrops()
+                            ), world, pos
+                    );
+                }
+
+                EffectsUtil.playNormalSoundWithRandomPitch(
+                        world, player, pos, postHarvestSoundEvent(), SoundCategory.BLOCKS
+                );
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // ************
     // Growth Logic
     // ************
@@ -318,8 +507,29 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @return the integer growth stage
      * of the given plant block.
      */
-    public int getGrowthStage(BlockState state){
+    public int getGrowthStage(BlockState state) {
         return state.get(getGrowthProperty());
+    }
+
+    /**
+     * Used to set the growth stage of a specific
+     * plant in the world.
+     *
+     * @param world the world the plant is in.
+     * @param pos the position of the plant
+     *            block in the world.
+     * @param growthStage the new growth stage
+     *                    of the plant.
+     * @return {@code true} if the plants state was
+     * changed, {@code false} otherwise.
+     */
+    @SuppressWarnings("UnusedReturnValue")
+    protected boolean setGrowthStage(World world, BlockPos pos, int growthStage) {
+        return world.setBlockState(
+                pos, world.getBlockState(pos).getBlock().getDefaultState().with(
+                        getGrowthProperty(), growthStage
+                ), 2
+        );
     }
 
     /**
@@ -338,6 +548,12 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         if(canGrow(worldIn, pos)){
             callGrowPlant(worldIn, state, pos, 1);
         }
+
+        //If not grown, try and perform auto-farm dump anyway.
+        //This prevents plants from getting stuck if a hopper is full.
+        if(tryAutoFarmDump(getGrowthStage(state), worldIn, pos))
+            //Set back to initial growth stage - worst case.
+            setGrowthStage(worldIn, pos, postHarvestGrowthStageReset() == -1 ? 0 : postHarvestGrowthStageReset());
     }
 
     // ************
@@ -492,6 +708,10 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         return this.properties;
     }
 
+    // *****
+    // Other
+    // *****
+
     /**
      * Gets the growth stage message from the
      * lang file formatted with the provided
@@ -563,10 +783,17 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * how the plant grows (all plants grow differently)
      * without having to worry about growth chances and all.
      * <p/>
+     * <b>This method SHOULD also do the auto-farm check
+     * ({@link #tryAutoFarmDump(int, World, BlockPos)})
+     * and reset the plants growth if it returns
+     * {@code true}.</b>
+     * <p/>
      * This method is only called after Mineral Soil Mineral
      * Concentration and plant growth chances are calculated.
      * <p/>
-     * When called, this method should ALWAYS grow the plant.
+     * When called, this method should ALWAYS grow the plant,
+     * UNLESS already fully grown. No logic or checks need to
+     * be performed here.
      *
      * @param increase the amount of growth stages to grow
      *                 the plant by.
@@ -612,4 +839,43 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @return the produce block/item for this specific plant type.
      */
     protected abstract ItemStack getProduce();
+
+    // *******************************************
+    // Optional Opt-in Propagated Abstract Methods
+    // *******************************************
+
+    /*
+        Optionally overridable methods that allow a plant
+        type to define its right-click harvest behaviour.
+     */
+
+    /**
+     * @return the growth stage the plant should be reset
+     * to after being harvested with a right-click.
+     * {@code -1} if the plant cannot be harvested with
+     * right-clicks.
+     */
+    protected int postHarvestGrowthStageReset() {
+        return -1;
+    }
+
+    /**
+     * @return the number of produce items to drop
+     * when the plant is being harvested with a right-click.
+     * {@code -1} if the plant cannot be harvested with
+     * right-clicks.
+     */
+    protected int postHarvestNumberOfProduceDrops(){
+        return -1;
+    }
+
+    /**
+     * @return the specific sound ({@link SoundEvents}
+     * made when the plant is harvested with a right-click.
+     * {@code null} if the plant cannot be harvested with
+     * right-clicks.
+     */
+    protected SoundEvent postHarvestSoundEvent(){
+        return null;
+    }
 }

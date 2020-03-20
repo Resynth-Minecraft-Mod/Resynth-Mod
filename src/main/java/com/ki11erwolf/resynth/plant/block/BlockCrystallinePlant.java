@@ -16,19 +16,12 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
-import com.ki11erwolf.resynth.util.EffectsUtil;
-import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 
@@ -42,6 +35,7 @@ import net.minecraft.world.World;
  * of the Crystalline plant type. This class DOES NOT handle any logic
  * other the way in which the plant type grows.
  */
+@SuppressWarnings("unused")//Intellij Idea lies to me...
 public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallinePlant> {
 
     /**
@@ -79,37 +73,14 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
     @Override
     VoxelShape[] getShapeByAge() {
         return new VoxelShape[]{
-                Block.makeCuboidShape(
-                        6.0D, 0.0D, 6.0D,
-                        10.0D, 2.0D, 10.0D
-                ), //1
-                Block.makeCuboidShape(
-                        5.0D, 0.0D, 5.0D,
-                        11.0D, 3.5D, 11.0D
-                ), //2
-                Block.makeCuboidShape(
-                        4.5D, 0.0D, 4.5D,
-                        11.5D, 5.0D, 11.5D
-                ), //3
-                Block.makeCuboidShape(
-                        2.5D, 0.0D, 2.5D,
-                        13.5D, 7.5D, 13.5D
-                ), //4
-                Block.makeCuboidShape(
-                        2.5D, 0.0D, 2.5D,
-                        13.5D, 7.5D, 13.5D
-                ), //5
-                Block.makeCuboidShape(0.5D, 0.5D, 0.5D,
-                        15.5D, 11.0D, 15.5D
-                ),//6
-                Block.makeCuboidShape(
-                        0.5D, 0.0D, 0.5D,
-                        15.5D, 14.0D, 15.5D
-                ),//7
-                Block.makeCuboidShape(
-                        0.5D, 0.0D, 0.5D,
-                        15.5D, 15.0D, 15.5D
-                ) //8
+                Block.makeCuboidShape(6.0D, 0.0D, 6.0D,10.0D, 2.0D, 10.0D), //1
+                Block.makeCuboidShape(5.0D, 0.0D, 5.0D,11.0D, 3.5D, 11.0D), //2
+                Block.makeCuboidShape(4.5D, 0.0D, 4.5D,11.5D, 5.0D, 11.5D), //3
+                Block.makeCuboidShape(2.5D, 0.0D, 2.5D,13.5D, 7.5D, 13.5),  //4
+                Block.makeCuboidShape(2.5D, 0.0D, 2.5D,13.5D, 7.5D, 13.5D), //5
+                Block.makeCuboidShape(0.5D, 0.5D, 0.5D,15.5D, 11.0D, 15.5D),//6
+                Block.makeCuboidShape(0.5D, 0.0D, 0.5D,15.5D, 14.0D, 15.5D),//7
+                Block.makeCuboidShape(0.5D, 0.0D, 0.5D,15.5D, 15.0D, 15.5D) //8
         };
     }
 
@@ -135,47 +106,40 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
         return true;
     }
 
-    // *************
-    // Harvest Logic
-    // *************
+    // *****************************
+    // Right-Click Harvest Behaviour
+    // *****************************
 
     /**
-     * {@inheritDoc}
+     * @return {@inheritDoc}
      *
-     * Handles what happens when the player tries
-     * to harvest the plant by right-clicking.
-     *
-     * @return {@code true} if the plant was harvested.
+     * <p/>Returns {@code 0} - the stage this
+     * plant type is reset to.
      */
     @Override
-    @SuppressWarnings("deprecation")
-    public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
-                                           BlockRayTraceResult hit){
-        int growth = world.getBlockState(pos).get(getGrowthProperty());
-        int postHarvestGrowth = 0;
+    protected int postHarvestGrowthStageReset() {
+        return 0;
+    }
 
-        //noinspection rawtypes
-        if(growth >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage()){
-            if(world.setBlockState(pos, world.getBlockState(pos)
-                    .with(getGrowthProperty(), postHarvestGrowth), 2)){
-                if(!world.isRemote)
-                    MinecraftUtil.spawnItemStackInWorld(
-                            new ItemStack(
-                                    getProduce().getItem(),
-                                    ((ICrystallineSetProperties) properties).numberOfProduceDrops()
-                            ),
-                            world, pos
-                    );
+    /**
+     * @return {@inheritDoc}
+     *
+     * <p/>Returns the config defined number of
+     * produce drops.
+     */
+    @Override
+    protected int postHarvestNumberOfProduceDrops(){
+        return ((ICrystallineSetProperties) properties).numberOfProduceDrops();
+    }
 
-                EffectsUtil.playNormalSoundWithRandomPitch(
-                        world, player, pos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS
-                );
-
-                return ActionResultType.SUCCESS;
-            }
-        }
-
-        return ActionResultType.FAIL;
+    /**
+     * @return {@inheritDoc}
+     *
+     * <p/>Returns {@link SoundEvents#ITEM_CROP_PLANT}.
+     */
+    @Override
+    protected SoundEvent postHarvestSoundEvent(){
+        return SoundEvents.ITEM_CROP_PLANT;
     }
 
     // ************
@@ -186,7 +150,11 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
      * {@inheritDoc}
      * <p/>
      * Grows the plant in the world. Specifically, increases
-     * the plant growth property by the given amount.
+     * the plant growth property by the given amount, unless
+     * the plant is already fully grown.
+     *
+     * <p>Also performs the auto-farm check, and sets growth
+     * stage accordingly.
      */
     @Override
     void growPlant(World world, BlockState state, BlockPos pos, int increase) {
@@ -195,6 +163,10 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
         if(growth > getMaxGrowthStage())
             growth = getMaxGrowthStage();
 
-        world.setBlockState(pos, this.getDefaultState().with(this.getGrowthProperty(), growth), 2);
+        //Do auto-farm check.
+        if(tryAutoFarmDump(growth, world, pos))
+            setGrowthStage(world, pos, 0);
+        //Grow plant if auto-farming failed.
+        else setGrowthStage(world, pos, growth);
     }
 }

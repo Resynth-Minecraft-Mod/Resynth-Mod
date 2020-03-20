@@ -16,19 +16,12 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
-import com.ki11erwolf.resynth.util.EffectsUtil;
-import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 
@@ -78,7 +71,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
                 Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 3.0D, 11.0D), //3
                 Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 5.0D, 11.0D), //4
                 Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 7.0D, 13.0D), //5
-                Block.makeCuboidShape(3.0D, 0.5D, 3.0D, 13.0D, 9.0D, 13.0D),//6
+                Block.makeCuboidShape(3.0D, 0.5D, 3.0D, 13.0D, 9.0D, 13.0D), //6
                 Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 11.0D, 13.0D),//7
                 Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D) //8
         };
@@ -100,47 +93,40 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
         return true;
     }
 
-    // *************
-    // Harvest Logic
-    // *************
+    // *****************************
+    // Right-Click Harvest Behaviour
+    // *****************************
 
     /**
-     * {@inheritDoc}
+     * @return {@inheritDoc}
      *
-     * Handles what happens when the player tries
-     * to harvest the plant by right-clicking.
-     *
-     * @return {@code true} if the plant was harvested.
+     * <p/>Returns {@code 3} - the stage this
+     * plant type is reset to.
      */
     @Override
-    @SuppressWarnings("deprecation")
-    public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
-                                           BlockRayTraceResult hit){
-        int growth = world.getBlockState(pos).get(getGrowthProperty());
-        int postHarvestGrowth = growth - 4;
+    protected int postHarvestGrowthStageReset() {
+        return 3;
+    }
 
-        //noinspection rawtypes
-        if(growth >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage()){
-            if(world.setBlockState(pos, world.getBlockState(pos)
-                    .with(getGrowthProperty(), postHarvestGrowth), 2)){
-                if(!world.isRemote)
-                    MinecraftUtil.spawnItemStackInWorld(
-                            new ItemStack(
-                                    getProduce().getItem(),
-                                    ((IBiochemicalSetProperties) properties).numberOfProduceDrops()
-                            ),
-                            world, pos
-                    );
+    /**
+     * @return {@inheritDoc}
+     *
+     * <p/>Returns the config defined number of
+     * produce drops.
+     */
+    @Override
+    protected int postHarvestNumberOfProduceDrops(){
+        return ((IBiochemicalSetProperties) properties).numberOfProduceDrops();
+    }
 
-                EffectsUtil.playNormalSoundWithRandomPitch(
-                        world, player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS
-                );
-
-                return ActionResultType.SUCCESS;
-            }
-        }
-
-        return ActionResultType.FAIL;
+    /**
+     * @return {@inheritDoc}
+     *
+     * <p/>Returns {@link SoundEvents#ENTITY_ITEM_PICKUP}.
+     */
+    @Override
+    protected SoundEvent postHarvestSoundEvent(){
+        return SoundEvents.ENTITY_ITEM_PICKUP;
     }
 
     // ************
@@ -152,6 +138,9 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * <p/>
      * Grows the plant in the world. Specifically, increases
      * the plant growth property by the given amount.
+     *
+     * <p>Also performs the auto-farm check, and sets growth
+     * stage accordingly.
      */
     @Override
     void growPlant(World world, BlockState state, BlockPos pos, int increase) {
@@ -160,6 +149,10 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
         if(growth > getMaxGrowthStage())
             growth = getMaxGrowthStage();
 
-        world.setBlockState(pos, this.getDefaultState().with(this.getGrowthProperty(), growth), 2);
+        //Do auto-farm check.
+        if(tryAutoFarmDump(growth, world, pos))
+            setGrowthStage(world, pos, growth - 4);
+            //Grow plant if auto-farming failed.
+        else setGrowthStage(world, pos, growth);
     }
 }
