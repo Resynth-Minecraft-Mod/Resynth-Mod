@@ -239,7 +239,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        EffectsUtil.displayStandardEffectsWithChance(worldIn, pos, 1, 5, ParticleTypes.END_ROD);
+        EffectsUtil.displayStandardEffectsWithChance(worldIn, pos, 1, 5, ParticleTypes.SMOKE);
     }
 
     // *******************
@@ -275,10 +275,18 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     protected boolean tryAutoFarmDump(int growth, World world, BlockPos pos){
         //IF enabled
-        if(ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).isHopperAutofarmingEnabled())
+        if(ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).isHopperAutofarmingEnabled()) {
             //AND       Plant is fully grown     AND      Produce was hoppered.
-            return growth >= getMaxGrowthStage() && tryHopperProduce(world, pos);
-        else return false;
+            if (growth >= getMaxGrowthStage() && tryHopperProduce(world, pos)) {
+                //Success - with particles!
+                com.ki11erwolf.resynth.util.EffectsUtil.displayStandardEffectsOnClient(
+                        pos, 3, ParticleTypes.POOF
+                );
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
