@@ -106,6 +106,14 @@
   "item.resynth.metallic_seeds_sponge":                     "Sponge Seeds",
   "block.resynth.metallic_organic_ore_sponge":              "Organic Sponge",
 
+  "block.resynth.metallic_plant_gravel":                    "Gravel Plant",
+  "item.resynth.metallic_seeds_gravel":                     "Gravel Seeds",
+  "block.resynth.metallic_organic_ore_gravel":              "Organic Gravel",
+
+  "block.resynth.metallic_plant_netherrack":                "Netherrack Plant",
+  "item.resynth.metallic_seeds_netherrack":                 "Netherrack Seeds",
+  "block.resynth.metallic_organic_ore_netherrack":          "Organic Netherrack",
+
   "block.resynth.biochemical_plant_ender_pearl":            "Ender Pearl Plant",
   "item.resynth.biochemical_seeds_ender_pearl":             "Ender Pearl Seeds",
   "item.resynth.biochemical_bulb_ender_pearl":              "Ender Pearl Bulb",
