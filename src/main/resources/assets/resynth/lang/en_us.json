@@ -330,6 +330,18 @@
   "item.resynth.metallic_seeds_bno_aluminium":                          "Aluminium Seeds (Basic Nether Ores)",
   "block.resynth.metallic_organic_ore_bno_aluminium":                   "Organic Aluminium Ore (Basic Nether Ores)",
 
+  "block.resynth.metallic_plant_mekanism_osmium":                   "Osmium Plant (Mekanism)",
+  "item.resynth.metallic_seeds_mekanism_osmium":                    "Osmium Seeds (Mekanism)",
+  "block.resynth.metallic_organic_ore_mekanism_osmium":             "Organic Osmium (Mekanism)",
+
+  "block.resynth.metallic_plant_mekanism_copper":                   "Copper Plant (Mekanism)",
+  "item.resynth.metallic_seeds_mekanism_copper":                    "Copper Seeds (Mekanism)",
+  "block.resynth.metallic_organic_ore_mekanism_copper":             "Organic Copper (Mekanism)",
+
+  "block.resynth.metallic_plant_mekanism_tin":                      "Tin Plant (Mekanism)",
+  "item.resynth.metallic_seeds_mekanism_tin":                       "Tin Seeds (Mekanism)",
+  "block.resynth.metallic_organic_ore_mekanism_tin":                "Organic Tin (Mekanism)",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_stone":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
