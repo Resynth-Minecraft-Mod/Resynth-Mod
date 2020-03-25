@@ -328,7 +328,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
 
         //Determined used item.
         if(usedItem.getItem() == ResynthItems.ITEM_MINERAL_ROCK){
-           increase = (float)CONFIG.getMineralRockWorth();
+             increase = (float)CONFIG.getMineralRockWorth();
         } else if(usedItem.getItem() == ResynthItems.ITEM_DENSE_MINERAL_ROCK){
             increase = (float)CONFIG.getMineralRockWorth() * 9;
         }  else return ActionResultType.FAIL;

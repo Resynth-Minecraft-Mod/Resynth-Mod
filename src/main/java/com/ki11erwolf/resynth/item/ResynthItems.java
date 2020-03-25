@@ -50,7 +50,7 @@ public class ResynthItems extends QueueRegisterer<Item> {
      * Mineral Rock. The item dropped from Mineral Rich Rock.
      */
     public static final ResynthItem<?> ITEM_MINERAL_ROCK
-            = new ResynthItem("mineral_rock").queueRegistration();
+            = new ItemMineralRock().queueRegistration();
 
     /**
      * Dense Mineral Rock. x9 MineralRocks.

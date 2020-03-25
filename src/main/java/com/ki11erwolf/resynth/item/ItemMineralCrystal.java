@@ -97,6 +97,7 @@ class ItemMineralCrystal extends ResynthItem<ItemMineralCrystal> {
      * @param context the context in which the item was used.
      * @return the result of using the item (pass/fail).
      */
+    @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         ActionResultType result;
 
