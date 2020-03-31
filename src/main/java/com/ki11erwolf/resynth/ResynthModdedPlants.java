@@ -89,47 +89,40 @@ public class ResynthModdedPlants {
      * The set properties for general Diamond and Diamond Ore.
      */
     static final CrystallineSetProperties DIAMOND_PROPERTIES = new CrystallineSetProperties(
-            false, 6.0F,1,
-            2.0F, 1.0F
+            false, 8.0F,1,
+            1.5F, 25.0F
     );
 
     /**
      * The set properties for general Redstone and Redstone Ore.
      */
     static final CrystallineSetProperties REDSTONE_PROPERTIES = new CrystallineSetProperties(
-            false, 15.0F, 2,
-            1.0F, 3.5F
+            false, 65.0F, 4,
+            1.0F, 75.0F
     );
 
     /**
      * The set properties for general Lapis Lazuli and Lapis Lazuli Ore.
      */
     static final CrystallineSetProperties LAPIS_LAZULI_PROPERTIES = new CrystallineSetProperties(
-            false, 6, 2,
-            2, 3.5F
+            false, 45, 3,
+            2, 50F
     );
 
     /**
      * The set properties for general Coal and Coal Ore.
      */
     static final CrystallineSetProperties COAL_PROPERTIES = new CrystallineSetProperties(
-            false, 30, 2,
-            1.0F, 3.0F
+            false, 75, 2,
+            0.5F, 50F
     );
 
     /**
      * The set properties for general Emerald and Emerald Ore.
      */
     static final CrystallineSetProperties EMERALD_PROPERTIES = new CrystallineSetProperties(
-            false, 2.0F, 1,
-            4.0F, 0.5F
-    );
-
-    /**
-     * The set properties for general wool blocks.
-     */
-    static final MetallicSetProperties WOOL_PROPERTIES = new MetallicSetProperties(
-            false, 30, 1, 1
+            false, 7.0F, 1,
+            1.5F, 25F
     );
 
     /**
@@ -144,80 +137,80 @@ public class ResynthModdedPlants {
      * The set properties for general ruby ore and gems.
      */
     private static final CrystallineSetProperties RUBY_PROPERTIES = new CrystallineSetProperties(
-            false, 5, 1,
-            3, 2
+            false, 14, 1,
+            1, 25
     );
 
     /**
      * The set properties for general sapphire ore and gems.
      */
     private static final CrystallineSetProperties SAPPHIRE_PROPERTIES = new CrystallineSetProperties(
-            false, 4, 1,
-            2, 2
+            false, 14, 1,
+            1, 25
     );
 
     /**
      * The set properties for general topaz ore and gems.
      */
     private static final CrystallineSetProperties TOPAZ_PROPERTIES = new CrystallineSetProperties(
-            false, 3, 1,
-            2, 1
+            false, 14, 1,
+            1, 25
     );
 
     /**
      * The set properties for general amethyst ore and gems.
      */
     private static final CrystallineSetProperties AMETHYST_PROPERTIES = new CrystallineSetProperties(
-            false, 2, 1,
-            2, 1
+            false, 14, 1,
+            1, 25
     );
 
     /**
      * The set properties for general opal ore and gems.
      */
     private static final CrystallineSetProperties OPAL_PROPERTIES = new CrystallineSetProperties(
-            false, 4, 1,
-            3, 2
+            false, 14, 1,
+            1, 25
     );
 
     /**
      * The set properties for general malachite ore and gems.
      */
     private static final CrystallineSetProperties MALACHITE_PROPERTIES = new CrystallineSetProperties(
-            false, 4, 1,
-            3, 2
+            false, 14, 1,
+            1, 25
     );
 
     /**
      * The set properties for general teslatite ore and gems.
      */
     private static final CrystallineSetProperties TESLATITE_PROPERTIES = new CrystallineSetProperties(
-            false, 3, 1,
-            3, 2
+            false, 13, 1,
+            1, 25
     );
 
     /**
      * The set properties for general Prosperity ore and gems/dusts.
      */
     private static final CrystallineSetProperties PROSPERITY_PROPERTIES = new CrystallineSetProperties(
-            false, 12, 2,
-            2, 4
+            false, 18, 2,
+            1, 10
     );
 
     /**
      * The set properties for general Inferium ore and gems/dusts.
      */
     private static final CrystallineSetProperties INFERIUM_PROPERTIES = new CrystallineSetProperties(
-            false, 16, 2,
-            1.5F, 4.5F
+            false, 20, 2,
+            1.5F, 10
     );
 
     /**
      * The set properties for general Soulium ore and gems/dusts.
      */
     private static final CrystallineSetProperties SOULIUM_PROPERTIES = new CrystallineSetProperties(
-            false, 14, 2,
-            2F, 4F
+            false, 18, 2,
+            1F, 10
     );
 
     // Metallic
@@ -226,98 +219,98 @@ public class ResynthModdedPlants {
      * The set properties for general Iron and Iron Ore.
      */
     static final MetallicSetProperties IRON_PROPERTIES = new MetallicSetProperties(
-            false, 10, 6, 6
+            false, 40, 6, 6
     );
 
     /**
      * The set properties for general Gold and Gold Ore.
      */
     static final MetallicSetProperties GOLD_PROPERTIES = new MetallicSetProperties(
-            false, 8, 5, 5
+            false, 25, 5, 5
     );
 
     /**
      * The set properties for general copper and copper ore.
      */
     private static final MetallicSetProperties COPPER_PROPERTIES = new MetallicSetProperties(
-            false, 14, 7, 7
+            false, 35, 7, 7
     );
 
     /**
      * The set properties for general tin and tin ore.
      */
     private static final MetallicSetProperties TIN_PROPERTIES = new MetallicSetProperties(
-            false, 14, 7, 7
+            false, 35, 7, 7
     );
 
     /**
      * The set properties for general aluminium and aluminium ore.
      */
     private static final MetallicSetProperties ALUMINIUM_PROPERTIES = new MetallicSetProperties(
-            false, 18, 6, 6
+            false, 30, 6, 6
     );
 
     /**
      * The set properties for general lead and lead ore.
      */
     private static final MetallicSetProperties LEAD_PROPERTIES = new MetallicSetProperties(
-            false, 10, 8, 8
+            false, 25, 8, 8
     );
 
     /**
      * The set properties for general nickel and nickel ore.
      */
     private static final MetallicSetProperties NICKEL_PROPERTIES = new MetallicSetProperties(
-            false, 12, 8, 8
+            false, 25, 8, 8
     );
 
     /**
      * The set properties for general uranium and uranium ore.
      */
     private static final MetallicSetProperties URANIUM_PROPERTIES = new MetallicSetProperties(
-            false, 5, 4, 4
+            false, 15, 4, 4
     );
 
     /**
      * The set properties for general silver and silver ore.
      */
     private static final MetallicSetProperties SILVER_PROPERTIES = new MetallicSetProperties(
-            false, 7, 8, 8
+            false, 20, 8, 8
     );
 
     /**
      * The set properties for general zinc and zinc ore.
      */
     private static final MetallicSetProperties ZINC_PROPERTIES = new MetallicSetProperties(
-            false, 10, 8, 8
+            false, 25, 8, 8
     );
 
     /**
      * The set properties for general tungsten and tungsten ore.
      */
     private static final MetallicSetProperties TUNGSTEN_PROPERTIES = new MetallicSetProperties(
-            false, 9, 8, 8
+            false, 25, 8, 8
     );
 
     /**
      * The set properties for general mythril and mythril ore.
      */
     private static final MetallicSetProperties MYTHRIL_PROPERTIES = new MetallicSetProperties(
-            false, 7, 5, 5
+            false, 25, 5, 5
     );
 
     /**
      * The set properties for general adamantium and adamantium ore.
      */
     private static final MetallicSetProperties ADAMANTIUM_PROPERTIES = new MetallicSetProperties(
-            false, 7, 5, 5
+            false, 20, 5, 5
     );
 
     /**
      * The set properties for general Osmium and Osmium Ore.
      */
     static final MetallicSetProperties OSMIUM_PROPERTIES = new MetallicSetProperties(
-            false, 8.5F, 6, 6
+            false, 30F, 6, 6
     );
 
     // **********

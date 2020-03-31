@@ -32,7 +32,7 @@ import static net.minecraft.entity.EntityType.*;
  *
  * All plant sets in this class are referred to as Vanilla plant sets.
  */
-//A thought: a json system that parses a json file containing the information in this class.
+//A thought: a json system that parses a json file containing the information in this class.z
 @SuppressWarnings({"WeakerAccess", "unused"/*Fields register themselves.*/})
 //TODO: Fix up values
 public class ResynthPlants {
@@ -63,10 +63,10 @@ public class ResynthPlants {
             "calvinite_crystal",
             new CrystallineSetProperties(
                     false,
-                    3.5F,
+                    10F,
                     1,
-                    2.5F,
-                    1
+                    2F,
+                    10
             ),
             ResynthBlocks.BLOCK_CALVINITE_NETHERRACK
     ).register();
@@ -123,10 +123,10 @@ public class ResynthPlants {
             "glowstone",
             new CrystallineSetProperties(
                     false,
-                    40,
-                    1,
+                    60,
+                    3,
                     3.0F,
-                    3.0F
+                    30.0F
             ),
             Blocks.GLOWSTONE
     ).register();
@@ -138,10 +138,10 @@ public class ResynthPlants {
             "quartz",
             new CrystallineSetProperties(
                     false,
-                    25,
+                    50,
                     2,
-                    5,
-                    2.5F
+                    3,
+                    25F
             ),
             Blocks.NETHER_QUARTZ_ORE
     ).register();
@@ -175,7 +175,7 @@ public class ResynthPlants {
             "clay",
             new MetallicSetProperties(
                     false,
-                    20,
+                    55,
                     10,
                     10
             ),
@@ -189,7 +189,7 @@ public class ResynthPlants {
             "end_stone",
             new MetallicSetProperties(
                     false,
-                    9,
+                    45,
                     4,
                     4
             ),
@@ -203,7 +203,7 @@ public class ResynthPlants {
             "sand",
             new MetallicSetProperties(
                     false,
-                    50,
+                    60,
                     3,
                     3
             ),
@@ -231,7 +231,7 @@ public class ResynthPlants {
             "granite",
             new MetallicSetProperties(
                     false,
-                    45,
+                    50,
                     3,
                     3
             ),
@@ -245,7 +245,7 @@ public class ResynthPlants {
             "diorite",
             new MetallicSetProperties(
                     false,
-                    45,
+                    50,
                     3,
                     3
             ),
@@ -259,7 +259,7 @@ public class ResynthPlants {
             "andesite",
             new MetallicSetProperties(
                     false,
-                    45,
+                    50,
                     3,
                     3
             ),
@@ -273,7 +273,7 @@ public class ResynthPlants {
             "dirt",
             new MetallicSetProperties(
                     false,
-                    65,
+                    70,
                     2,
                     2
             ),
@@ -287,7 +287,7 @@ public class ResynthPlants {
             "cobblestone",
             new MetallicSetProperties(
                     false,
-                    70,
+                    75,
                     2,
                     2
             ),
@@ -347,7 +347,7 @@ public class ResynthPlants {
             "ender_pearl",
             new BiochemicalSetProperties(
                     false,
-                    10,
+                    13,
                     1,
                     8,
                     6
@@ -377,7 +377,7 @@ public class ResynthPlants {
             "blaze_rod",
             new BiochemicalSetProperties(
                     false,
-                    12,
+                    16,
                     1,
                     8,
                     6
@@ -482,7 +482,7 @@ public class ResynthPlants {
             "slime_ball",
             new BiochemicalSetProperties(
                     false,
-                    15,
+                    20,
                     2,
                     5,
                     3
