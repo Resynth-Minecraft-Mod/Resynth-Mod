@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:crystalline_shard_mysticalagriculture_soulium"
+  },
+  "result": "mysticalagriculture:soulium_dust",
+  "experience": 7.0,
+  "cookingtime": 200
+}

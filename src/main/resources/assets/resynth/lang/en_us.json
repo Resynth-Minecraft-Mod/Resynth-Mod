@@ -342,6 +342,18 @@
   "item.resynth.metallic_seeds_mekanism_tin":                       "Tin Seeds (Mekanism)",
   "block.resynth.metallic_organic_ore_mekanism_tin":                "Organic Tin (Mekanism)",
 
+  "block.resynth.crystalline_plant_mysticalagriculture_inferium":       "Inferium Plant (Mystical Argriculture)",
+  "item.resynth.crystalline_seeds_mysticalagriculture_inferium":        "Inferium Seeds (Mystical Argriculture)",
+  "item.resynth.crystalline_shard_mysticalagriculture_inferium":       "Inferium Shard (Mystical Argriculture)",
+
+  "block.resynth.crystalline_plant_mysticalagriculture_prosperity":     "Prosperity Plant (Mystical Argriculture)",
+  "item.resynth.crystalline_seeds_mysticalagriculture_prosperity":      "Prosperity Seeds (Mystical Argriculture)",
+  "item.resynth.crystalline_shard_mysticalagriculture_prosperity":     "Prosperity Shard (Mystical Argriculture)",
+
+  "block.resynth.crystalline_plant_mysticalagriculture_soulium":        "Soulium Plant (Mystical Argriculture)",
+  "item.resynth.crystalline_seeds_mysticalagriculture_soulium":         "Soulium Seeds (Mystical Argriculture)",
+  "item.resynth.crystalline_shard_mysticalagriculture_soulium":        "Soulium Shard (Mystical Argriculture)",
+
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_stone":
   "Resynth's ore block. Will drop Mineral Rocks when mined.\nOnly found at very low Y levels by default.\nNeeds an iron pickaxe or better to be mined.",
