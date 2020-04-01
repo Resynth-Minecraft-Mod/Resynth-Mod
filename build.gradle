@@ -23,7 +23,7 @@ apply plugin: 'eclipse'
 //ResynthMod.java
 //mods.toml
 //Here
-version = '4.2.0'
+version = '4.1.0'
 
 group = "com.ki11erwolf.resynth"
 //noinspection GroovyUnusedAssignment
