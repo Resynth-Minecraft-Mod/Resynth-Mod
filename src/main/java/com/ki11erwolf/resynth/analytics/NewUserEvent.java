@@ -23,7 +23,7 @@ package com.ki11erwolf.resynth.analytics;
 public class NewUserEvent extends Event{
 
     /**
-     * @return {@inheritDoc}
+     * @return the event name/ID and Resynth version number.
      */
     @Override
     public String getAction() {

@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth.plant.item;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
-import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import com.ki11erwolf.resynth.util.EffectsUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -50,16 +49,10 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
     private static final String PREFIX = "bulb";
 
     /**
-     * The name of the set this produce item
-     * type is for (e.g. string).
-     */
-    private final String setName;
-
-    /**
      * The properties specific to the plant set
      * this produce item is registered to.
      */
-    private final IBiochemicalSetProperties properties;
+    private final IBiochemicalSetProperties setProperties;
 
     /**
      * @param setTypeName the name of the plant set type (e.g. crystalline).
@@ -68,18 +61,7 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      */
     public ItemBulb(String setTypeName, String setName, IBiochemicalSetProperties properties) {
         super(setTypeName + "_" + PREFIX + "_" + setName, ResynthTabs.TAB_RESYNTH_PRODUCE);
-        this.setName = setName;
-        this.properties = properties;
-    }
-
-    /**
-     * Constructs the tooltip for the item.
-     */
-    @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip,
-                               ITooltipFlag flagIn){
-        PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltip, properties);
-        setDescriptiveTooltip(tooltip, PREFIX, setName);
+        this.setProperties = properties;
     }
 
     // ************
@@ -145,5 +127,14 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         playerIn.setActiveHand(handIn);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+    }
+
+    /**
+     * Constructs the tooltip for the item.
+     */
+    @Override
+    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip,
+                               ITooltipFlag flagIn){
+        ItemSeeds.addPlantItemTooltips(tooltip, setProperties, PREFIX);
     }
 }

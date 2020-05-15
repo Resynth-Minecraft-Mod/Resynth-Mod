@@ -62,12 +62,6 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
     private final BlockState plant;
 
     /**
-     * The name of the set this seeds item
-     * type is for (e.g. diamond).
-     */
-    private final String setName;
-
-    /**
      * The name of the plant set type
      * this seeds item is for.
      */
@@ -93,9 +87,9 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      */
     public ItemSeeds(String setType, String setName, Block plant, PlantSetProperties setProperties){
         super(setType + "_" + PREFIX + "_" + setName, ResynthTabs.TAB_RESYNTH_SEEDS);
+
         this.setTypeName = setType;
         this.setProperties = setProperties;
-        this.setName = setName;
         this.plant = plant.getDefaultState();
     }
 
@@ -108,33 +102,38 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      */
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
+        //Don't plant broken plants
         if(isFailure)
             return ActionResultType.FAIL;
 
+        //Get vars
         IWorld world = context.getWorld();
         BlockPos blockpos = context.getPos().up();
 
+        //If valid position to plant
         if (context.getFace() == Direction.UP && world.isAirBlock(blockpos)
                 && this.plant.isValidPosition(world, blockpos)) {
 
+            //Set block in world
             world.setBlockState(blockpos, this.plant, 11);
             ItemStack itemstack = context.getItem();
             PlayerEntity playerEntity = context.getPlayer();
 
+            //Trigger block placed event
             if (playerEntity instanceof ServerPlayerEntity) {
                 CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) playerEntity, blockpos, itemstack);
             }
 
+            //Shrink seeds count
             itemstack.shrink(1);
 
+            //Play plant sound.
             EffectsUtil.playNormalSound(
                     world.getWorld(), playerEntity, blockpos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS
             );
 
             return ActionResultType.SUCCESS;
-        } else {
-            return ActionResultType.FAIL;
-        }
+        } else return ActionResultType.FAIL;
     }
 
     /**
@@ -143,11 +142,11 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltip, setProperties);
-        setDescriptiveTooltip(tooltip, setTypeName + "_" + PREFIX, setName);
+        //Failure to initialize warning
+        if(isFailure) addBlankLine(tooltip).add(getFormattedTooltip(PREFIX + ".failure", TextFormatting.RED));
 
-        if(isFailure)
-            tooltip.add(getFormattedTooltip(PREFIX + ".failure", TextFormatting.RED));
+        //Add plant stats and item description
+        addPlantItemTooltips(tooltip, setProperties, String.format("%s_%s", setTypeName, PREFIX));
     }
 
     /**
@@ -161,13 +160,33 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
     }
 
     /**
-     * Flags this seeds item instance as a failure.
-     * When declared as a failure, the seeds will
-     * no longer be able to plant a block and will
-     * will display the plant set failure message
+     * Flags this seeds item instance as a failure. When declared
+     * as a failure, the seeds will no longer be able to plant a
+     * block and will will display the plant set failure message
      * in the tooltip.
      */
     public void flagAsFailure(){
         isFailure = true;
+    }
+
+    protected static void addPlantItemTooltips(List<ITextComponent> tooltip, PlantSetProperties setProperties,
+                                               String itemName){
+        //Stats
+        new CollapseableTooltip().setShiftForStats().setExpandedTooltip(
+                tooltips -> {
+                    PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltips, setProperties);
+                    addBlankLine(tooltips);
+                }
+        ).write(addBlankLine(tooltip));
+
+        //Description
+        new CollapseableTooltip().setCtrlForDescription().setExpandedTooltip(
+                tooltips -> addBlankLine(tooltips).add(
+                        getDescriptiveTooltip(itemName)
+                )
+        ).write(tooltip);
+
+        //Spacing
+        addBlankLine(tooltip);
     }
 }

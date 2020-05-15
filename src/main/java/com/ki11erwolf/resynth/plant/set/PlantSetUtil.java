@@ -47,12 +47,18 @@ public class PlantSetUtil {
          */
         public static void setPropertiesTooltip(List<ITextComponent> tooltip, PlantSetProperties plantSetProperties){
             tooltip.add(getFormattedTooltip(
-                    "growth_chance", TextFormatting.GOLD, plantSetProperties.chanceToGrow())
-            );
+                    "growth_chance", TextFormatting.GOLD,
+                    TextFormatting.YELLOW, plantSetProperties.chanceToGrow(), TextFormatting.GOLD
+            ));
+
+            boolean bonemeal = plantSetProperties.canBonemeal();
 
             tooltip.add(getFormattedTooltip(
-                    "bonemeal_enabled", TextFormatting.AQUA, plantSetProperties.canBonemeal())
-            );
+                    bonemeal ? "bonemeal_enabled" : "bonemeal_disabled",
+                    bonemeal ? TextFormatting.GREEN : TextFormatting.RED,
+                    TextFormatting.YELLOW, plantSetProperties.canBonemeal(),
+                    bonemeal ? TextFormatting.GREEN : TextFormatting.RED
+            ));
 
             if(plantSetProperties instanceof ICrystallineSetProperties)
                 setPropertiesTooltip(tooltip, (ICrystallineSetProperties)plantSetProperties);
@@ -67,19 +73,19 @@ public class PlantSetUtil {
          */
         private static void setPropertiesTooltip(List<ITextComponent> tooltip, ICrystallineSetProperties properties){
             tooltip.add(getFormattedTooltip(
-                    "plant_yield", TextFormatting.DARK_PURPLE,
-                    properties.numberOfProduceDrops())
-            );
+                    "seed_spawn_chance_from_ore", TextFormatting.AQUA,
+                    TextFormatting.YELLOW, properties.seedSpawnChanceFromOre(), TextFormatting.AQUA
+            ));
 
             tooltip.add(getFormattedTooltip(
-                    "seed_spawn_chance_from_ore", TextFormatting.GREEN,
-                    properties.seedSpawnChanceFromOre())
-            );
+                    "seed_spawn_chance_from_shard", TextFormatting.DARK_BLUE,
+                    TextFormatting.YELLOW, properties.seedSpawnChanceFromShard(), TextFormatting.DARK_BLUE
+            ));
 
             tooltip.add(getFormattedTooltip(
-                    "seed_spawn_chance_from_shard", TextFormatting.RED,
-                    properties.seedSpawnChanceFromShard())
-            );
+                    properties.numberOfProduceDrops() > 1 ? "plant_yields" : "plant_yield", TextFormatting.DARK_PURPLE,
+                    TextFormatting.YELLOW, properties.numberOfProduceDrops(), TextFormatting.DARK_PURPLE
+            ));
         }
 
         /**
@@ -87,14 +93,14 @@ public class PlantSetUtil {
          */
         private static void setPropertiesTooltip(List<ITextComponent> tooltip, IMetallicSetProperties properties){
             tooltip.add(getFormattedTooltip(
-                    "seed_spawn_chance_from_ore", TextFormatting.GREEN,
-                    properties.seedSpawnChanceFromOre())
-            );
+                    "seed_spawn_chance_from_ore", TextFormatting.AQUA,
+                    TextFormatting.YELLOW, properties.seedSpawnChanceFromOre(), TextFormatting.AQUA
+            ));
 
             tooltip.add(getFormattedTooltip(
                     "seed_spawn_chance_from_organic_ore", TextFormatting.BLUE,
-                    properties.seedSpawnChanceFromOrganicOre())
-            );
+                    TextFormatting.YELLOW, properties.seedSpawnChanceFromOrganicOre(), TextFormatting.BLUE
+            ));
         }
 
         /**
@@ -102,19 +108,19 @@ public class PlantSetUtil {
          */
         private static void setPropertiesTooltip(List<ITextComponent> tooltip, IBiochemicalSetProperties properties){
             tooltip.add(getFormattedTooltip(
-                    "plant_yield", TextFormatting.DARK_PURPLE,
-                    properties.numberOfProduceDrops())
-            );
-
-            tooltip.add(getFormattedTooltip(
                     "seed_spawn_chance_from_mob", TextFormatting.DARK_GREEN,
-                    properties.seedSpawnChanceFromMob())
-            );
+                    TextFormatting.YELLOW, properties.seedSpawnChanceFromMob(), TextFormatting.DARK_GREEN
+            ));
 
             tooltip.add(getFormattedTooltip(
-                    "seed_spawn_chance_from_bulb", TextFormatting.YELLOW,
-                    properties.seedSpawnChanceFromBulb())
-            );
+                    "seed_spawn_chance_from_bulb", TextFormatting.DARK_RED,
+                    TextFormatting.YELLOW, properties.seedSpawnChanceFromBulb(), TextFormatting.DARK_RED
+            ));
+
+            tooltip.add(getFormattedTooltip(
+                    properties.numberOfProduceDrops() > 1 ? "plant_yields" : "plant_yield", TextFormatting.DARK_PURPLE,
+                    TextFormatting.YELLOW, properties.numberOfProduceDrops(), TextFormatting.DARK_PURPLE
+            ));
         }
     }
 

@@ -372,7 +372,7 @@
 
   "tooltip.item.resynth.mineral_hoe":
   "Resynth's tool of choice. Needed to till dirt or grass into a\nspecial farmland block needed for Resynth plants.\nEach use of the Mineral Hoe requires a charge.\n1 charge = 1 Mineral Crystal.\nCharges can be added to the Mineral Hoe by right-clicking air,\nor shift-right-clicking a block, with\nthe Hoe in hand and Mineral Crystals in your inventory.\nCan be used to check the growth stage of a plant by right-clicking it, or the Mineral Content of Mineral Soil by right clicking it.\nCan be used to grow any plant while in creative by shift-right-clicking the plant.",
-  "tooltip.item.resynth.mineral_hoe_charges": "Charges: ",
+  "tooltip.item.resynth.mineral_hoe_charges": "Charges: %s%s",
   "tooltip.item.resynth.mineral_crystal.ecm": "Can be used directly!",
   "tooltip.item.resynth.mineral_crystal":
   "A crafting component, and consumable \"fuel\" for the Mineral Hoe. Mineral Crystals are required to turn dirt or grass into Mineral Soil, and as such, are required to progress in the mod.\n\nCan be configured to allow turning dirt or grass into Mineral Soil directly without the use of a Mineral Hoe (if the Hoe ever breaks).",
@@ -385,7 +385,13 @@
   "tooltip.item.resynth.sylvanite_crystal":
   "Drops when mining Sylvanite Infused End Stone. Can be crafted into an Enhancer which can increase the Mineral Content of Mineral Soil beyond 50%%",
 
-  "_____COMMENT": "----Plant Item Tooltips----",
+  "_____COMMENT": "----General Purpose Tooltips----",
+  "tooltip.item.resynth.general.shift_for_stats":         "Hold %s<Shift>%s for plant performance",
+  "tooltip.item.resynth.general.ctrl_for_description":    "Hold %s<Ctrl>%s for item description",
+  "tooltip.item.resynth.general.alt_for_info":            "Hold %s<Alt>%s for additional info",
+  "tooltip.item.resynth.general.unspecified":             "Tooltip is missing...",
+
+  "______COMMENT": "----Plant Item Tooltips----",
   "tooltip.item.resynth.crystalline_seeds":
   "Obtained by mining the ore the final resource is obtained from, or by leaving the plant produce (Shards) to despawn in water.\nAny plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
   "tooltip.item.resynth.metallic_seeds":
@@ -397,23 +403,25 @@
   "tooltip.item.resynth.bulb":
   "Can be smelted into the final resource, or smashed (by holding right-click) for a chance at getting more seeds.",
   "tooltip.item.resynth.seeds.failure":
-  "THIS PLANT TYPE IS DISABLED! An error has occurred with this plant set and it cannot be used. Submit a bug report if you see this!",
+  "This plant is disabled :(\nUnfortunately an error has occurred with\nthis plant and it can no longer be used.\nSubmit a bug report if you see this!",
 
-  "______COMMENT": "----Plant Block Tooltips----",
+  "_______COMMENT": "----Plant Block Tooltips----",
   "tooltip.block.resynth.organic_ore":
   "Can be smelted into the final resource ore, or blown up for a chance at getting more seeds. ",
 
-  "_______COMMENT": "----Plant Property Tooltips----",
-  "tooltip.property.resynth.growth_chance": "Growth Chance: %s%%",
-  "tooltip.property.resynth.plant_yield": "Plant Yield: %s drop(s).",
-  "tooltip.property.resynth.bonemeal_enabled": "Allows Bonemeal: %s",
-  "tooltip.property.resynth.seed_spawn_chance_from_ore": "Seed Spawn Chance from Ore Block: %s%%",
-  "tooltip.property.resynth.seed_spawn_chance_from_shard": "Seed Spawn Chance from Shard Item: %s%%",
-  "tooltip.property.resynth.seed_spawn_chance_from_organic_ore": "Seed Spawn Chance from Organic Ore Block: %s%%",
-  "tooltip.property.resynth.seed_spawn_chance_from_mob": "Seed Spawn Chance from Mob: %s%%",
-  "tooltip.property.resynth.seed_spawn_chance_from_bulb": "Seed Spawn Chance from Bulb: %s%%",
+  "________COMMENT": "----Plant Property Tooltips----",
+  "tooltip.property.resynth.growth_chance":                       "Growth Rate: %s%s%%",
+  "tooltip.property.resynth.plant_yield":                         "Produce Yield: %s%s%s drop",
+  "tooltip.property.resynth.plant_yields":                        "Produce Yield: %s%s%s drops",
+  "tooltip.property.resynth.bonemeal_enabled":                    "Likes Bonemeal",
+  "tooltip.property.resynth.bonemeal_disabled":                   "Dislikes Bonemeal",
+  "tooltip.property.resynth.seed_spawn_chance_from_ore":          "Seed Drop Chance: %s%s%%%s with source block",
+  "tooltip.property.resynth.seed_spawn_chance_from_shard":        "Seed Drop Chance: %s%s%%%s with shard produce",
+  "tooltip.property.resynth.seed_spawn_chance_from_organic_ore":  "Seed Drop Chance: %s%s%%%s with organic ore produce",
+  "tooltip.property.resynth.seed_spawn_chance_from_mob":          "Seed Drop Chance: %s%s%%%s with mob creatures",
+  "tooltip.property.resynth.seed_spawn_chance_from_bulb":         "Seed Drop Chance: %s%s%%%s with bulb produce",
 
-  "________COMMENT": "---Miscellaneous---",
+  "_________COMMENT": "---Miscellaneous---",
   "misc.resynth.mineral_content": "Mineral Content: %s%%",
   "misc.resynth.growth_stage": "Growth Stage: %s"
 }

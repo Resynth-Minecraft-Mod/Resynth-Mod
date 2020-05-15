@@ -56,7 +56,7 @@ import java.util.Random;
  * <p/>Any block that has information to give to the
  * Mineral Hoe must implement {@link BlockInfoProvider}.
  */
-class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
+class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
     /**
      * The configuration settings for this item.
@@ -94,18 +94,25 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
      */
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
+
+        //Check stack
         ensureChargesNBT(stack);
-
-        if(stack.getTag() != null) {
-            tooltip.add(new StringTextComponent(
-                    getTooltip("mineral_hoe_charges", TextFormatting.GOLD).getFormattedText()
-                            + TextFormatting.GREEN + getCharges(stack)
-            ));
-
-            tooltip.add(new StringTextComponent(""));
+        if(stack.getTag() == null){
+            super.addInformation(stack, worldIn, tooltip, flagIn);
+            return;
         }
 
-        setDescriptiveTooltip(tooltip, this);
+        //Line spacing
+        new CollapseableTooltip().setConditionToControlDown().setExpandingSpacing().write(tooltip);
+
+        //Add charges tooltip
+        tooltip.add(getFormattedTooltip(
+                "mineral_hoe_charges", TextFormatting.GOLD,
+                getCharges(stack) > 0 ? TextFormatting.AQUA : TextFormatting.RED, getCharges(stack)
+        ));
+
+        //Add default information tooltip.
+        super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
     // ***********
@@ -277,12 +284,6 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe>{
 
         return (success ? ActionResult.func_226248_a_(stack) : ActionResult.func_226251_d_(stack));
     }
-
-      /*Until it has a use...*/
-//    @Override
-//    public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
-//        return true;
-//    }
 
     // **********************
     // Specific Action Events

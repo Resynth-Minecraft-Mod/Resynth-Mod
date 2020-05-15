@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth.plant.item;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
-import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -38,11 +37,6 @@ public class ItemShard extends ResynthItem<ItemShard> {
     private static final String PREFIX = "shard";
 
     /**
-     * The name of the plant set (e.g. diamond).
-     */
-    private final String setName;
-
-    /**
      * The plant set properties.
      */
     private final ICrystallineSetProperties setProperties;
@@ -54,7 +48,6 @@ public class ItemShard extends ResynthItem<ItemShard> {
      */
     public ItemShard(String setTypeName, String setName, ICrystallineSetProperties properties) {
         super(setTypeName + "_" + PREFIX + "_" + setName, ResynthTabs.TAB_RESYNTH_PRODUCE);
-        this.setName = setName;
         this.setProperties = properties;
     }
 
@@ -64,7 +57,6 @@ public class ItemShard extends ResynthItem<ItemShard> {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltip, setProperties);
-        setDescriptiveTooltip(tooltip, PREFIX, setName);
+        ItemSeeds.addPlantItemTooltips(tooltip, setProperties, PREFIX);
     }
 }

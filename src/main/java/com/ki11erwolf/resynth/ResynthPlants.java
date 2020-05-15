@@ -32,7 +32,7 @@ import static net.minecraft.entity.EntityType.*;
  *
  * All plant sets in this class are referred to as Vanilla plant sets.
  */
-//A thought: a json system that parses a json file containing the information in this class.z
+//A thought: a json system that parses a json file containing the information in this class.
 @SuppressWarnings({"WeakerAccess", "unused"/*Fields register themselves.*/})
 //TODO: Fix up values
 public class ResynthPlants {
@@ -144,6 +144,22 @@ public class ResynthPlants {
                     25F
             ),
             Blocks.NETHER_QUARTZ_ORE
+    ).register();
+
+    /**
+     * The plant set for Vanilla Cookies (food).
+     * Obtained from the cocoa crop.
+     */
+    public static final PlantSet<?> COOKIE = PlantSetFactory.newVanillaCrystallineSet(
+            "cookie",
+            new CrystallineSetProperties(
+                    false,
+                    65,
+                    3,
+                    2,
+                    4
+            ),
+            Blocks.COCOA
     ).register();
 
     // *************

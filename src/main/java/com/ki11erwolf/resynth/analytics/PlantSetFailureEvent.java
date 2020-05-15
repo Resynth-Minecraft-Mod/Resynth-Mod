@@ -35,7 +35,8 @@ public class PlantSetFailureEvent extends Event {
     }
 
     /**
-     * {@inheritDoc}
+     * @return the event name/ID, Resynth version number,
+     * and the plant set that failed.
      */
     @Override
     public String getAction() {

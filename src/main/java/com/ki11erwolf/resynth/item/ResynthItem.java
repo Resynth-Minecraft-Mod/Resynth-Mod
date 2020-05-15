@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth.item;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -27,8 +28,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -82,27 +84,17 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
     }
 
     /**
-     * Constructor that allows a custom prefix.
-     *
-     * @param name the name of the item.
-     * @param prefix prefix to the name of the item.
-     * @param properties item properties.
-     */
-    @SuppressWarnings("unused")
-    public ResynthItem(Properties properties, String name, String prefix){
-        super(setItemGroup(properties));
-        this.setRegistryName(prefix + name);
-    }
-
-    /**
      * {@inheritDoc}.
      *
      * Sets the tooltip for this item from the lang files.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip,
-                               ITooltipFlag flagIn) {
-        setDescriptiveTooltip(tooltip, this);
+    public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        new CollapseableTooltip().setCtrlForDescription().setExpandedTooltip(
+                tooltips -> addBlankLine(tooltips).add(getDescriptiveTooltip(this))
+        ).write(tooltip);
+
+        addBlankLine(tooltip);
     }
 
     /**
@@ -148,7 +140,6 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      * @param text the given string text.
      * @return a new TextComponentString containing the given string.
      */
-    @SuppressWarnings("WeakerAccess")
     protected static ITextComponent stringToTextComponent(String text){
         return new StringTextComponent(text);
     }
@@ -161,8 +152,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      * @return the text as an {@link ITextComponent} given by the
      * language file.
      */
-    @SuppressWarnings("WeakerAccess")
-    static ITextComponent getTooltip(String key){
+    protected static ITextComponent getTooltip(String key){
         return stringToTextComponent(TextFormatting.GRAY + I18n.format("tooltip.item.resynth." + key));
     }
 
@@ -191,7 +181,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      * language file.
      */
     @SuppressWarnings({"unused", "SameParameterValue"})
-    static ITextComponent getTooltip(String key, TextFormatting color){
+    protected static ITextComponent getTooltip(String key, TextFormatting color){
         return stringToTextComponent(color + I18n.format("tooltip.item.resynth." + key));
     }
 
@@ -204,7 +194,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      * language file.
      */
     @SuppressWarnings("unused")
-    static ITextComponent getTooltip(@SuppressWarnings("rawtypes") ResynthItem item){
+    protected static ITextComponent getTooltip(@SuppressWarnings("rawtypes") ResynthItem item){
         if(item.getRegistryName() == null){
             return stringToTextComponent(TextFormatting.RED + "Error");
         }
@@ -213,42 +203,172 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
     }
 
     /**
-     * Will add an items tooltip (from lang file) to the given
-     * tooltip array, provided the config allows it.
+     * Attempts to get the tooltip with the items decription
+     * from the user selected language file.
      *
-     * @param tooltip the tooltip array object.
-     * @param item the items who's tooltip we want.
+     * @param item the items who's description tooltip we want.
      */
-    static void setDescriptiveTooltip(List<ITextComponent> tooltip, @SuppressWarnings("rawtypes") ResynthItem item){
-        if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled())
-            return;
-
-        if(item.getRegistryName() == null){
-            tooltip.add(stringToTextComponent(TextFormatting.RED + "Error"));
+    protected static ITextComponent getDescriptiveTooltip(ResynthItem<?> item){
+        if(item == null || item.getRegistryName() == null){
+            return stringToTextComponent(TextFormatting.RED + "Error");
         }
 
-        tooltip.add(stringToTextComponent(TextFormatting.GRAY + I18n.format(
-                "tooltip.item." + item.getRegistryName().toString().replace(":", ".")
-        )));
+        return stringToTextComponent(TextFormatting.DARK_GRAY + I18n.format(
+                "tooltip.item." + item.getRegistryName().toString()
+                        .replace(":", ".")
+        ));
     }
 
     /**
-     * Will add an items tooltip (from lang file) to the given
-     * tooltip array, provided the config allows it.
+     * Attempts to get the tooltip with the items decription
+     * from the user selected language file. The returned tooltip
+     * will be formatted ({@link String#format(String, Object...)})
+     * using the given parameters.
      *
-     * @param tooltip the tooltip array object.
+     * @param params list of parameters for use in formatting.
      * @param item the name of the items who's tooltip we want and key appended.
      */
-    protected static void setDescriptiveTooltip(List<ITextComponent> tooltip, String item, Object... params){
-        if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled())
-            return;
-
+    protected static ITextComponent getDescriptiveTooltip(String item, Object... params){
         if(item == null){
-            tooltip.add(stringToTextComponent(TextFormatting.RED + "Error"));
+            return stringToTextComponent(TextFormatting.RED + "Error");
         }
 
-        tooltip.add(stringToTextComponent(TextFormatting.GRAY + I18n.format(
+        return stringToTextComponent(TextFormatting.DARK_GRAY + I18n.format(
                 "tooltip.item.resynth." + item, params
-        )));
+        ));
+    }
+
+    /**
+     * @return {@code true} if the config has enabled the displaying
+     * of hightly detailed descriptive toolips.
+     */
+    protected static boolean areTooltipsEnabled(){
+        return ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled();
+    }
+
+    /**
+     * Will effectively add a blank line tooltip at the
+     * end of the given tooltip list.
+     *
+     * @param tooltips the given list of tooltips.
+     * @return the given tooltips list with a blank
+     * line appended to the end.
+     */
+    protected static List<ITextComponent> addBlankLine(List<ITextComponent> tooltips){
+        tooltips.add(new StringTextComponent(""));
+        return tooltips;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SuppressWarnings("unused")//Additional util methods
+    public static class CollapseableTooltip {
+
+        private boolean conditionMet = false;
+
+        private TooltipWriter collapsed = GenericTooltips.UNSPECIFIED;
+
+        private TooltipWriter expanded = GenericTooltips.UNSPECIFIED;
+
+        public void write(List<ITextComponent> tooltip){
+            if(conditionMet)    expanded.write(tooltip);
+            else                collapsed.write(tooltip);
+        }
+
+        public CollapseableTooltip setCondition(boolean condition){
+            this.conditionMet = condition;
+            return this;
+        }
+
+        public CollapseableTooltip setConditionToShiftDown(){
+            this.conditionMet = Screen.hasShiftDown();
+            return this;
+        }
+
+        public CollapseableTooltip setConditionToControlDown(){
+            this.conditionMet = Screen.hasControlDown();
+            return this;
+        }
+
+        public CollapseableTooltip setConditionToAltDown(){
+            this.conditionMet = Screen.hasAltDown();
+            return this;
+        }
+
+        public CollapseableTooltip setCollapsedTooltip(TooltipWriter tooltip){
+            this.collapsed = tooltip;
+            return this;
+        }
+
+        public CollapseableTooltip setExpandedTooltip(TooltipWriter tooltip){
+            this.expanded = tooltip;
+            return this;
+        }
+
+        public CollapseableTooltip setShiftForStats(){
+            setConditionToShiftDown().setCollapsedTooltip(GenericTooltips.SHIFT_FOR_STATS);
+            return this;
+        }
+
+        public CollapseableTooltip setCtrlForDescription(){
+            setCondition(Screen.hasControlDown() && areTooltipsEnabled()).setCollapsedTooltip(
+                areTooltipsEnabled() ? GenericTooltips.CTRL_FOR_DESCRIPTION : GenericTooltips.NULL
+            );
+            return this;
+        }
+
+        public CollapseableTooltip setAltForAdditionalInfo(){
+            setConditionToAltDown().setCollapsedTooltip(GenericTooltips.ALT_FOR_ADDITIONAL_INFO);
+            return this;
+        }
+
+        public CollapseableTooltip setExpandingSpacing(){
+            this.setCollapsedTooltip(CollapseableTooltip.GenericTooltips.NULL)
+                    .setExpandedTooltip(ResynthItem::addBlankLine);
+            return this;
+        }
+
+        public interface TooltipWriter {
+            void write(List<ITextComponent> tooltip);
+        }
+
+        public enum GenericTooltips implements TooltipWriter {
+
+            SHIFT_FOR_STATS("shift_for_stats", TextFormatting.GOLD),
+
+            CTRL_FOR_DESCRIPTION("ctrl_for_description", TextFormatting.GREEN),
+
+            ALT_FOR_ADDITIONAL_INFO("alt_for_info", TextFormatting.DARK_PURPLE),
+
+            UNSPECIFIED("unspecified", TextFormatting.RED, TextFormatting.RED),
+
+            NULL(null, null, null) {
+                @Override public void write(List<ITextComponent> tooltip) { /* No operaton */ }
+            };
+
+            private static final String KEY_PREFIX = "general.";
+
+            private final String tooltipKey;
+
+            private final TextFormatting baseColor;
+
+            private final TextFormatting highlightColor;
+
+            GenericTooltips(String tooltipKey, TextFormatting highlightColor){
+                this(tooltipKey, TextFormatting.GRAY, highlightColor);
+            }
+
+            GenericTooltips(String tooltipKey, TextFormatting baseColor, TextFormatting highlightColor){
+                this.tooltipKey = tooltipKey;
+                this.baseColor = baseColor;
+                this.highlightColor = highlightColor;
+            }
+
+            @Override
+            public void write(List<ITextComponent> tooltip) {
+                tooltip.add(getFormattedTooltip(
+                        KEY_PREFIX + tooltipKey, baseColor, highlightColor, baseColor
+                ));
+            }
+        }
     }
 }

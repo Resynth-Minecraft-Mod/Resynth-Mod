@@ -39,7 +39,7 @@ public abstract class Event extends AnalyticsRequestData {
     }
 
     /**
-     * @return the event name/ID and version number.
+     * @return the event name/ID and Resynth version number.
      */
     public abstract String getAction();
 

@@ -40,6 +40,8 @@ import com.ki11erwolf.resynth.plant.set.PlantSetFactory;
 @SuppressWarnings("unused")//Fields register themselves.
 public class ResynthModdedPlants {
 
+    //TODO: Plants for "The Midnight" mod.
+
     // *******
     // MOD IDS
     // *******
@@ -75,9 +77,19 @@ public class ResynthModdedPlants {
     private static final String MYSTICAL_AGRICULTURE = "mysticalagriculture";
 
     /**
-     * The mod id for the Mekanism Mod.
+     * The mod id for the Mekanism mod.
      */
     private static final String MEKANISM = "mekanism";
+
+    /**
+     * The mod id for the Botania mod.
+     */
+    private static final String BOTANIA = "botania";
+
+    /**
+     * The mod id for "The Midnight" mod.
+     */
+    private static final String THE_MIDNIGHT = "midnight";
 
     // *******************
     // GENERAL DEFINITIONS
@@ -623,6 +635,46 @@ public class ResynthModdedPlants {
             = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
             MYSTICAL_AGRICULTURE, "soulium", SOULIUM_PROPERTIES, "soulium_ore"
     ));
+
+    // Botania
+
+    /**
+     * A short hand method used to register a crystalline
+     * plant set specifically for a type of Botania Flower
+     * Petal.
+     *
+     * @param setIdentifier the flower petal identifier
+     *                      (e.g. white).
+     * @return the already registered plant set for the
+     * requested Botania Flower Petal type.
+     */
+    private static PlantSet<?> newBotaniaPetalSet(String setIdentifier){
+        return registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+                BOTANIA, setIdentifier + "_petal", new CrystallineSetProperties(
+                        false, 100, 2,
+                        100, 100
+                ), setIdentifier + "_mystical_flower"
+        ));
+    }
+
+    /* All 16 plant sets for the 16 different Botania Flower Petals */
+
+    public static final PlantSet<?> BOTANIA_WHITE_PETAL         =       newBotaniaPetalSet("white");
+    public static final PlantSet<?> BOTANIA_RED_PETAL           =       newBotaniaPetalSet("red");
+    public static final PlantSet<?> BOTANIA_ORANGE_PETAL        =       newBotaniaPetalSet("orange");
+    public static final PlantSet<?> BOTANIA_PINK_PETAL          =       newBotaniaPetalSet("pink");
+    public static final PlantSet<?> BOTANIA_YELLOW_PETAL        =       newBotaniaPetalSet("yellow");
+    public static final PlantSet<?> BOTANIA_LIME_PETAL          =       newBotaniaPetalSet("lime");
+    public static final PlantSet<?> BOTANIA_GREEN_PETAL         =       newBotaniaPetalSet("green");
+    public static final PlantSet<?> BOTANIA_LIGHT_BLUE_PETAL    =       newBotaniaPetalSet("light_blue");
+    public static final PlantSet<?> BOTANIA_CYAN_PETAL          =       newBotaniaPetalSet("cyan");
+    public static final PlantSet<?> BOTANIA_BLUE_PETAL          =       newBotaniaPetalSet("blue");
+    public static final PlantSet<?> BOTANIA_MAGENTA_PETAL       =       newBotaniaPetalSet("magenta");
+    public static final PlantSet<?> BOTANIA_PURPLE_PETAL        =       newBotaniaPetalSet("purple");
+    public static final PlantSet<?> BOTANIA_BROWN_PETAL         =       newBotaniaPetalSet("brown");
+    public static final PlantSet<?> BOTANIA_GRAY_PETAL          =       newBotaniaPetalSet("gray");
+    public static final PlantSet<?> BOTANIA_LIGHT_GRAY_PETAL    =       newBotaniaPetalSet("light_gray");
+    public static final PlantSet<?> BOTANIA_BLACK_PETAL         =       newBotaniaPetalSet("black");
 
     /**Private constructor.*/
     private ResynthModdedPlants(){}
