@@ -18,6 +18,8 @@ package com.ki11erwolf.resynth.item;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralCrystalConfig;
+import com.ki11erwolf.resynth.util.CommonTooltips;
+import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.screen.Screen;
@@ -73,7 +75,7 @@ class ItemMineralCrystal extends ResynthItem<ItemMineralCrystal> {
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
-        new CollapseableTooltip().setExpandingSpacing()
+        new ExpandingTooltip().setCollapsedTooltip(null).setExpandedTooltip(CommonTooltips.NEW_LINE)
                 .setCondition(CONFIG.isECMEnabled() && Screen.hasControlDown()).write(tooltip);
 
         tooltip.add(getFormattedTooltip(name + ".ecm", TextFormatting.DARK_PURPLE));

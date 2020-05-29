@@ -20,7 +20,9 @@ import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralHoeConfig;
 import com.ki11erwolf.resynth.util.BlockInfoProvider;
+import com.ki11erwolf.resynth.util.CommonTooltips;
 import com.ki11erwolf.resynth.util.EffectsUtil;
+import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
@@ -103,7 +105,8 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         }
 
         //Line spacing
-        new CollapseableTooltip().setConditionToControlDown().setExpandingSpacing().write(tooltip);
+        new ExpandingTooltip().setConditionToControlDown().setExpandedTooltip(CommonTooltips.NEW_LINE)
+                .setCollapsedTooltip(null).write(tooltip);
 
         //Add charges tooltip
         tooltip.add(getFormattedTooltip(
@@ -452,7 +455,7 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             return;
 
         player.sendMessage(new StringTextComponent(
-                getTooltip("mineral_hoe_charges", TextFormatting.GOLD).getFormattedText()
+                TextFormatting.GOLD + getFormattedTooltip("mineral_hoe_charges", TextFormatting.GRAY).getFormattedText()
                         + TextFormatting.GREEN + getCharges(item)
         ));
     }

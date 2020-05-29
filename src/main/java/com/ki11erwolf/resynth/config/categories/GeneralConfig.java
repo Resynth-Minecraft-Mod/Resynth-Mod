@@ -17,6 +17,7 @@ package com.ki11erwolf.resynth.config.categories;
 
 import com.ki11erwolf.resynth.config.BooleanConfigValue;
 import com.ki11erwolf.resynth.config.ConfigCategory;
+import com.ki11erwolf.resynth.config.IntegerConfigValue;
 
 /**
  * General configuration settings used by Resynth.
@@ -72,6 +73,18 @@ public class GeneralConfig extends ConfigCategory {
     );
 
     /**
+     * Config value that allows setting the maximum number
+     * of characters that item/block descriptive tooltips
+     * can have on one line.
+     */
+    private final IntegerConfigValue tooltipCharacterLimit = new IntegerConfigValue(
+            "tooltip-character-limit",
+            "The maximum amount of characters allowed on a single line in an " +
+                    "item or block tooltip.",
+            40, 20, 70, this
+    );
+
+    /**
      * Constructor.
      */
     public GeneralConfig() {
@@ -113,4 +126,11 @@ public class GeneralConfig extends ConfigCategory {
     public boolean isHopperAutofarmingEnabled(){
         return enableHopperAutoFarming.getValue();
     }
+
+    /**
+     * @return the config defined value that specifies the maximum
+     * number of characters that item/block descriptive tooltips can
+     * have on one line.
+     */
+    public int getTooltipCharacterLimit() { return tooltipCharacterLimit.getValue(); }
 }

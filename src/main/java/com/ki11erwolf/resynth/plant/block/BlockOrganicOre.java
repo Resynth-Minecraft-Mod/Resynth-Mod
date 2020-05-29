@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth.plant.block;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.plant.set.IMetallicSetProperties;
-import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -32,7 +31,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -72,10 +70,8 @@ public class BlockOrganicOre extends ResynthBlock<BlockOrganicOre> {
      * Constructs the tooltip for the block.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
-                               ITooltipFlag flagIn){
-        PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltip, properties);
-        setDescriptiveTooltip(tooltip, PREFIX);
+    public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag){
+        BlockPlant.addPlantItemBlockTooltips(tooltip, properties, PREFIX);
     }
 
     /**

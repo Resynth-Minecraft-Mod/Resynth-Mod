@@ -15,6 +15,8 @@
  */
 package com.ki11erwolf.resynth.block;
 
+import com.ki11erwolf.resynth.util.ExpandingTooltip;
+import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -26,6 +28,8 @@ import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static com.ki11erwolf.resynth.util.Tooltip.newBlankLine;
 
 /**
  * An enhancer block that can be placed underneath Mineral
@@ -70,7 +74,11 @@ public class BlockEnhancer extends ResynthBlock<BlockEnhancer>{
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
-        setDescriptiveTooltip(tooltip, this, increase);
+        new ExpandingTooltip().setCtrlForDescription(
+                tooltips -> Tooltip.addBlankLine(tooltips).add(getDescriptiveTooltip(
+                        this.getRegistryName() == null ? "" : this.getRegistryName().getPath(), increase
+                ))
+        ).write(tooltip).add(newBlankLine());
     }
 
     /**

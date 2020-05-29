@@ -18,8 +18,8 @@ package com.ki11erwolf.resynth.plant.item;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
-import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import com.ki11erwolf.resynth.util.EffectsUtil;
+import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -143,15 +143,14 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
         //Failure to initialize warning
-        if(isFailure) addBlankLine(tooltip).add(getFormattedTooltip(PREFIX + ".failure", TextFormatting.RED));
+        if(isFailure) Tooltip.addBlankLine(tooltip)
+                .add(getFormattedTooltip(PREFIX + ".failure", TextFormatting.RED));
 
         //Add plant stats and item description
         addPlantItemTooltips(tooltip, setProperties, String.format("%s_%s", setTypeName, PREFIX));
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return the plant type (plant block) this seeds item type (instance) spawns.
      */
     @Override
@@ -169,24 +168,4 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
         isFailure = true;
     }
 
-    protected static void addPlantItemTooltips(List<ITextComponent> tooltip, PlantSetProperties setProperties,
-                                               String itemName){
-        //Stats
-        new CollapseableTooltip().setShiftForStats().setExpandedTooltip(
-                tooltips -> {
-                    PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltips, setProperties);
-                    addBlankLine(tooltips);
-                }
-        ).write(addBlankLine(tooltip));
-
-        //Description
-        new CollapseableTooltip().setCtrlForDescription().setExpandedTooltip(
-                tooltips -> addBlankLine(tooltips).add(
-                        getDescriptiveTooltip(itemName)
-                )
-        ).write(tooltip);
-
-        //Spacing
-        addBlankLine(tooltip);
-    }
 }

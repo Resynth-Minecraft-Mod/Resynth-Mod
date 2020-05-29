@@ -40,8 +40,6 @@ import com.ki11erwolf.resynth.plant.set.PlantSetFactory;
 @SuppressWarnings("unused")//Fields register themselves.
 public class ResynthModdedPlants {
 
-    //TODO: Plants for "The Midnight" mod.
-
     // *******
     // MOD IDS
     // *******
@@ -223,6 +221,28 @@ public class ResynthModdedPlants {
     private static final CrystallineSetProperties SOULIUM_PROPERTIES = new CrystallineSetProperties(
             false, 18, 2,
             1F, 10
+    );
+
+    /**
+     * The plant set properties for every botania flower petal plant.
+     */
+    private static final CrystallineSetProperties BOTANIA_PETAL_PROPERTIES = new CrystallineSetProperties(
+            false, 25, 2, 10, 20
+    );
+
+
+    /**
+     * The plant set properties for all items from The Midnight Mod grown with Crystalline plants.
+     */
+    private static final CrystallineSetProperties MIDNIGHT_CRYSTALLINE = new CrystallineSetProperties(
+            false, 35, 1, 3, 6
+    );
+
+    /**
+     * The plant set properties for all items from The Midnight Mod grown with Metallic plants.
+     */
+    private static final MetallicSetProperties MIDNIGHT_METALLIC = new MetallicSetProperties(
+            false, 35, 3, 6
     );
 
     // Metallic
@@ -636,6 +656,51 @@ public class ResynthModdedPlants {
             MYSTICAL_AGRICULTURE, "soulium", SOULIUM_PROPERTIES, "soulium_ore"
     ));
 
+    // The Midnight
+
+    static MetallicSetProperties TEST = new MetallicSetProperties(
+            true, 100, 100, 100
+    );
+
+    static CrystallineSetProperties TEST2 = new CrystallineSetProperties(
+            true, 100, 100, 100,100
+    );
+
+    /**
+     * The plant set for Tenebrum from The Midnight Mod.
+     */
+    public static final PlantSet<?> MIDNIGHT_TENEBRUM = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            THE_MIDNIGHT, "tenebrum", MIDNIGHT_METALLIC, "tenebrum_ore"
+    ));
+
+    /**
+     * The plant set for Nagrilite from The Midnight Mod.
+     */
+    public static final PlantSet<?> MIDNIGHT_NAGRILITE = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
+            THE_MIDNIGHT, "nagrilite", MIDNIGHT_METALLIC, "nagrilite_ore"
+    ));
+
+    /**
+     * The plant set for Dark Pearls from The Midnight Mod.
+     */
+    public static final PlantSet<?> MIDNIGHT_DARK_PEARL = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            THE_MIDNIGHT, "dark_pearl", MIDNIGHT_CRYSTALLINE, "dark_pearl_ore"
+    ));
+
+    /**
+     * The plant set for Ebonite from The Midnight Mod.
+     */
+    public static final PlantSet<?> MIDNIGHT_EBONITE = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            THE_MIDNIGHT, "ebonite", MIDNIGHT_CRYSTALLINE, "ebonite_ore"
+    ));
+
+    /**
+     * The plant set for Archaic from The Midnight Mod.
+     */
+    public static final PlantSet<?> MIDNIGHT_ARCHAIC = registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
+            THE_MIDNIGHT, "archaic", MIDNIGHT_CRYSTALLINE, "archaic_ore"
+    ));
+
     // Botania
 
     /**
@@ -650,10 +715,8 @@ public class ResynthModdedPlants {
      */
     private static PlantSet<?> newBotaniaPetalSet(String setIdentifier){
         return registerIfNotNull(PlantSetFactory.newModdedCrystallineSet(
-                BOTANIA, setIdentifier + "_petal", new CrystallineSetProperties(
-                        false, 100, 2,
-                        100, 100
-                ), setIdentifier + "_mystical_flower"
+                BOTANIA, setIdentifier + "_petal", BOTANIA_PETAL_PROPERTIES,
+                setIdentifier + "_mystical_flower"
         ));
     }
 

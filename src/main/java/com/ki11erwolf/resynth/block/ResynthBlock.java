@@ -19,18 +19,23 @@ import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.item.ResynthItemBlock;
+import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
+import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
+import org.apache.commons.lang3.text.WordUtils;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static com.ki11erwolf.resynth.util.Tooltip.*;
 
 /**
  * Base block class for all Resynth blocks.
@@ -94,7 +99,9 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
-        setDescriptiveTooltip(tooltip, this);
+        new ExpandingTooltip().setCtrlForDescription(
+                tooltips -> addBlankLine(tooltips).add(getDescriptiveTooltip(this))
+        ).write(tooltip).add(newBlankLine());
     }
 
     /**
@@ -113,9 +120,8 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
             );
 
         ResynthBlocks.INSTANCE.queueForRegistration(this);
-        isQueued = true;
-
         itemBlock.queueRegistration();
+        isQueued = true;
 
         //noinspection unchecked //Should NOT be possible.
         return (T) this;
@@ -126,75 +132,69 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
     // *******
 
     /**
-     * Turns a given string into a {@link StringTextComponent}
-     * containing the given string.
+     * A utility method specifically made for block produce
+     * from plants (e.g. organic ore).
      *
-     * @param text the given string text.
-     * @return a new TextComponentString containing the given string.
+     * This method is used to set the blocks tooltip to contain
+     * both the blocks description and statistics on the plant
+     * set passed in.
+     *
+     * @param tooltip the tooltip we're modifying with the new
+     *                new tooltips.
+     * @param setProperties the properties of the specific
+     *                      plant set we're using to get
+     *                      the plant statistics
+     * @param blockName the registry name (path only) of the
+     *                  block we're getting the tooltip of.
      */
-    @SuppressWarnings("WeakerAccess")
-    static ITextComponent stringToTextComponent(String text){
-        return new StringTextComponent(text);
+    protected static void addPlantItemBlockTooltips(List<ITextComponent> tooltip, PlantSetProperties setProperties,
+                                                    @SuppressWarnings("SameParameterValue") String blockName){
+        //Stats
+        new ExpandingTooltip().setShiftForStats(tooltips -> {
+            PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltips, setProperties);
+            addBlankLine(tooltips);
+        }).write(addBlankLine(tooltip));
+
+        //Description
+        new ExpandingTooltip().setCtrlForDescription(tooltips -> addBlankLine(tooltips).add(
+                getDescriptiveTooltip(blockName)
+        )).write(tooltip);
+
+        //Spacing
+        addBlankLine(tooltip);
     }
 
     /**
-     * Will add a blocks tooltip (from lang file) to the given
-     * tooltip array, provided the config allows it.
+     * Attempts to get the tooltip with the blocks decription
+     * from the user selected language file.
      *
-     * @param tooltip the tooltip array object.
-     * @param block the block who's tooltip we want.
+     * @param item the items who's description tooltip we want.
      */
-    @SuppressWarnings("WeakerAccess")
-    static void setDescriptiveTooltip(List<ITextComponent> tooltip, ResynthBlock<?> block){
-        if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled())
-            return;
-
-        if(block.getRegistryName() == null){
-            tooltip.add(stringToTextComponent(TextFormatting.RED + "Error"));
-        }
-
-        tooltip.add(stringToTextComponent(TextFormatting.GRAY + I18n.format(
-                "tooltip.block." + block.getRegistryName().toString().replace(":", ".")
-        )));
+    protected static ITextComponent getDescriptiveTooltip(ResynthBlock<?> item){
+        return item == null || item.getRegistryName() == null                                   //Null check
+                ? toTextComponent(TextFormatting.RED + "Error")                             //Is null
+                : getDescriptiveTooltip(item.getRegistryName().getPath());                      //Is not null
     }
 
     /**
-     * Will add a blocks tooltip (from lang file) to the given
-     * tooltip array, provided the config allows it.
+     * Attempts to get the tooltip with the given blocks decription
+     * from the user selected language file. The returned tooltip
+     * will be formatted ({@link String#format(String, Object...)})
+     * using the given parameters.
      *
-     * @param tooltip the tooltip array object.
-     * @param block the name of the block who's tooltip we want and key appended.
+     * @param params list of parameters for use in formatting.
+     * @param item the name of the blocks who's tooltip we want and key appended.
      */
-    protected static void setDescriptiveTooltip(List<ITextComponent> tooltip,
-                                                @SuppressWarnings("SameParameterValue") String block,
-                                                Object... params){
-        if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).areTooltipsEnabled())
-            return;
-
-        if(block == null){
-            tooltip.add(stringToTextComponent(TextFormatting.RED + "Error"));
+    protected static ITextComponent getDescriptiveTooltip(String item, Object... params){
+        if(item == null){
+            return toTextComponent(TextFormatting.RED + "Error");
         }
 
-        tooltip.add(stringToTextComponent(TextFormatting.GRAY + I18n.format(
-                "tooltip.block.resynth." + block, params
-        )));
-    }
-
-    /**
-     * Will add a blocks tooltip (from lang file) to the given
-     * tooltip array, provided the config allows it.
-     *
-     * @param tooltip the tooltip array object.
-     * @param block The block who's tooltip we want.
-     */
-    @SuppressWarnings("WeakerAccess")
-    protected void setDescriptiveTooltip(List<ITextComponent> tooltip,
-                                         @SuppressWarnings("SameParameterValue") T block,
-                                         Object... params){
-        if(block.getRegistryName() == null){
-            return;
-        }
-
-        setDescriptiveTooltip(tooltip, block.getRegistryName().getPath(), params);
+        //noinspection deprecation
+        return toTextComponent(WordUtils.wrap(
+                TextFormatting.DARK_GRAY + I18n.format("tooltip.block.resynth." + item, params),
+                ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).getTooltipCharacterLimit(),
+                "\n", true
+        ));
     }
 }
