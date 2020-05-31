@@ -45,6 +45,7 @@ import java.util.Random;
  * range of utility methods for particle effects and sounds.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue", "WeakerAccess"})
+//TODO: Maybe use packets to make effects play on client when seeds spawn on dedicated server.
 public class EffectsUtil {
 
     /**Private constructor - utils.*/

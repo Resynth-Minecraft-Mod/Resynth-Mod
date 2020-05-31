@@ -43,7 +43,7 @@ import java.util.List;
  * class. This interface simply serves as a way to "subscribe" to the
  * desired functionality.
  */
-//TODO: Server side localization, better implementation.
+//TODO: Server side localization, better implementation. Perhaps use packets.
 public interface PlantPatchInfoProvider extends BlockInfoProvider {
 
     /**

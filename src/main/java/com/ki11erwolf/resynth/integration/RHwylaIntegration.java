@@ -34,6 +34,8 @@ import java.util.List;
 @SuppressWarnings("unused")//Reflection
 public class RHwylaIntegration implements mcp.mobius.waila.api.IWailaPlugin{
 
+    //TODO: Better hwyla integration & The One Probe integration.
+
     /**
      * The logger for this class.
      */

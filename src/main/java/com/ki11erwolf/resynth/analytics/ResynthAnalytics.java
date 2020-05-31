@@ -27,6 +27,9 @@ import org.apache.logging.log4j.Logger;
  * Provides an API for more easily sending
  * Google Analytics events.
  */
+//TODO: Create analytics for more events (e.g. seed pod enabled).
+//TODO: fix plant set failure event not using constructor data
+//TODO: Consider rewriting the base event class (& derivatives) to allow for
 public final class ResynthAnalytics {
 
     /**
