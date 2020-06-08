@@ -19,8 +19,10 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.analytics.ConnectEvent;
 import com.ki11erwolf.resynth.analytics.NewUserEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
+import com.ki11erwolf.resynth.analytics.SeedPodEvent;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
+import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
 import com.ki11erwolf.resynth.features.ResynthFeatures;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -54,7 +56,7 @@ public class ServerProxy implements Proxy {
      */
     @Override
     public void setup(FMLCommonSetupEvent event) {
-        sendConnectEvent();
+        sendAnalyticsEvents();
         printItemAndBlockRegisters();
         ResynthFeatures.init();
     }
@@ -63,8 +65,11 @@ public class ServerProxy implements Proxy {
      * Sends the analytics connect event and
      * new user event if enabled and appropriate.
      */
-    private void sendConnectEvent(){
+    private void sendAnalyticsEvents(){
         ResynthAnalytics.send(new ConnectEvent());
+        ResynthAnalytics.send(
+                new SeedPodEvent(ResynthConfig.GENERAL_CONFIG.getCategory(SeedPodConfig.class).areDropsEnabled())
+        );
 
         File resynthFile
                 = new File(System.getProperty("user.home") + "/" + ResynthMod.RESYNTH_NU_FILE);

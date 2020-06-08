@@ -20,6 +20,7 @@ import com.ki11erwolf.resynth.ResynthSSL;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import dmurph.tracking.AnalyticsConfigData;
+import dmurph.tracking.AnalyticsRequestData;
 import dmurph.tracking.JGoogleAnalyticsTracker;
 import org.apache.logging.log4j.Logger;
 
@@ -27,9 +28,6 @@ import org.apache.logging.log4j.Logger;
  * Provides an API for more easily sending
  * Google Analytics events.
  */
-//TODO: Create analytics for more events (e.g. seed pod enabled).
-//TODO: fix plant set failure event not using constructor data
-//TODO: Consider rewriting the base event class (& derivatives) to allow for
 public final class ResynthAnalytics {
 
     /**
@@ -76,14 +74,20 @@ public final class ResynthAnalytics {
     /**
      * The Google analytics API.
      */
-    private static final JGoogleAnalyticsTracker ANALYTICS = new JGoogleAnalyticsTracker(
-            new AnalyticsConfigData(CODE),
-            JGoogleAnalyticsTracker.GoogleAnalyticsVersion.V_4_7_2
-    );
+    private static final JGoogleAnalyticsTracker ANALYTICS;
 
-    /**
-     * Static instance object.
+    /*
+        Only initializes the tracker if analytics is enabled.
      */
+    static {
+        if(ENABLED) {
+            LOG.info("Analytics has been disabled!");
+            ANALYTICS = new JGoogleAnalyticsTracker(
+                    new AnalyticsConfigData(CODE),
+                    JGoogleAnalyticsTracker.GoogleAnalyticsVersion.V_4_7_2
+            );
+        } else ANALYTICS = null;
+    }
 
     //Static class.
     private ResynthAnalytics(){}
@@ -95,16 +99,15 @@ public final class ResynthAnalytics {
      */
     public static void send(Event e){
         //Never send an event if analytics is disabled.
-        if(!ENABLED){
+        if(!ENABLED || ANALYTICS == null){
             LOG.info("Analytics disabled! Event prevented from sending.");
             return;
         }
 
-
         //Disable it again before sending the event.
         ResynthSSL.disableSSL();
-        LOG.info("Analytics enabled! Sending analytics event: " + e.getClass().getName());
-        ANALYTICS.makeCustomRequest(e);
+        LOG.info("Sending analytics event: " + e.toString());
+        ANALYTICS.makeCustomRequest(e.getEventData());
         //Re-enable it once we're done
         ResynthSSL.enableSSL();
     }
@@ -112,11 +115,11 @@ public final class ResynthAnalytics {
     /**
      * Sets the address (host name/page) of the event.
      *
-     * @param event the event
+     * @param eventData the event
      */
-    static void setEventHost(Event event){
-        event.setHostName(RESYNTH_DOMAIN);
-        event.setPageURL(IDENTIFIER_PAGE);
-        event.setPageTitle(TITLE);
+    static void setEventHost(AnalyticsRequestData eventData){
+        eventData.setHostName(RESYNTH_DOMAIN);
+        eventData.setPageURL(IDENTIFIER_PAGE);
+        eventData.setPageTitle(TITLE);
     }
 }

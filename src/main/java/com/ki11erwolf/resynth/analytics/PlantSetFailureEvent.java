@@ -15,6 +15,8 @@
  */
 package com.ki11erwolf.resynth.analytics;
 
+import java.util.Map;
+
 /**
  * Event fired when a plant set is flagged as a failure.
  * Provides info on the plant set that failed.
@@ -31,15 +33,24 @@ public class PlantSetFailureEvent extends Event {
      * @param plantSet The name of the plant set that failed.
      */
     public PlantSetFailureEvent(String plantSet){
-        this.plantSet = "[plantSet=" + plantSet + "]";
+        this.plantSet = plantSet;
     }
 
     /**
-     * @return the event name/ID, Resynth version number,
-     * and the plant set that failed.
+     * {@inheritDoc}
      */
     @Override
-    public String getAction() {
-        return "Plant-Set-Failure" + plantSet;
+    public String getName() {
+        return "Plant-Set-Failure";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<String, String> getProperties(){
+        Map<String, String> props = super.getProperties();
+        props.put("plant_set", plantSet);
+        return props;
     }
 }

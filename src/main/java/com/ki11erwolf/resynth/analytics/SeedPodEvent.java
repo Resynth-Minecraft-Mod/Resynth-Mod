@@ -15,19 +15,42 @@
  */
 package com.ki11erwolf.resynth.analytics;
 
+import java.util.Map;
+
 /**
- * Event fired when a new Resynth user
- * first plays the game/mod. Used to identify
- * how many new players resynth has.
+ * Seed pod event sent at startup that tells if the Seed Pod
+ * is enabled or not.
  */
-public class NewUserEvent extends Event{
+public class SeedPodEvent extends Event {
+
+    /**
+     * If the SeedPod is enabled or not.
+     */
+    private final boolean enabled;
+
+    /**
+     * @param isEnabled {@code true} if the SeedPod is enabled.
+     */
+    public SeedPodEvent(boolean isEnabled){
+        this.enabled = isEnabled;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getName() {
-        return "New-User";
+    protected String getName() {
+        return "Seed-Pod";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<String, String> getProperties(){
+        Map<String, String> props = super.getProperties();
+        props.put("enabled", String.valueOf(enabled));
+        return props;
     }
 
 }

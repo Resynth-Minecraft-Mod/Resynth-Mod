@@ -18,44 +18,133 @@ package com.ki11erwolf.resynth.analytics;
 import com.ki11erwolf.resynth.ResynthMod;
 import dmurph.tracking.AnalyticsRequestData;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Base class for analytic events.
  */
-public abstract class Event extends AnalyticsRequestData {
+public abstract class Event {
 
     /**
-     * Resynth version number.
+     * This Resynth builds version.
      */
-    private static final String VERSION = "[version=" + ResynthMod.MOD_VERSION + "]";
+    private static final String RESYNTH_VERSION = ResynthMod.MOD_VERSION;
+
+    /**
+     * The Minecraft version for this build.
+     */
+    private static final String MC_VERSION =
+            ResynthMod.MC_VERSION.replace("[", "").replace("]", "");
+
+    /**
+     * The analytics data object that will be used to send
+     * this event and its data.
+     */
+    private final AnalyticsRequestData backingEventData;
 
     /**
      * Constructs a new event.
      */
     Event(){
-        ResynthAnalytics.setEventHost(this);
-        this.setEventAction(getAction() + VERSION);
-        this.setEventCategory(getCategory());
-        this.setEventLabel(getLabel());
+        backingEventData = new AnalyticsRequestData();
+        ResynthAnalytics.setEventHost(backingEventData);
     }
 
     /**
-     * @return the event name/ID and Resynth version number.
+     * Will return the unique identifying name of this event.
+     * Should be overriden by inheriting classes to provide the name.
      */
-    public abstract String getAction();
+    protected abstract String getName();
 
     /**
-     * @return copy of event name/ID.
-     * Alternatively, extra information.
+     * Will return a map of event data mapped to the datas name.
+     * Inheriting classes should override this to provide additional
+     * information.
      */
-    private String getCategory(){
-        return getAction() + VERSION;
+    protected Map<String, String> getProperties(){
+        return new HashMap<>();
     }
 
     /**
-     * @return Minecraft version.
+     * The events primary title. Holds the events name
+     * and any data supplied using ({@link #getProperties()}).
+     *
+     * @return the event name and any additional data.
      */
-    private String getLabel(){
-        return "Minecraft - " + ResynthMod.MC_VERSION;
+    protected String getAction(){
+        return getName() + propertiesToString(getProperties());
     }
 
+    /**
+     * The events secondary title. Holds the events name,
+     * supplied data and the version number of Resynth
+     * and Minecraft.
+     *
+     * @return the event name, data/properties, and
+     * version numbers.
+     */
+    protected String getCategory(){
+        Map<String, String> properties = getProperties();
+        properties.put("version", RESYNTH_VERSION);
+        properties.put("minecraft_version", MC_VERSION);
+        return getName() + propertiesToString(properties);
+    }
+
+    /**
+     * The events tertiary title. Holds only the
+     * version number of Resynth and Minecraft.
+     *
+     * @return the version number of Resynth and Minecraft.
+     */
+    protected String getLabel(){
+        return String.format(
+                "Event[resynth=%s, minecraft=%s]",
+                RESYNTH_VERSION, MC_VERSION
+        );
+    }
+
+    /**
+     * Turns a map of names to data as human readable String.
+     *
+     * @param properties a map names to data.
+     * @return the human readable string representation of
+     * the {@code properties} map.
+     */
+    protected static String propertiesToString(Map<String, String> properties){
+        if(properties.size() == 0)
+            return "";
+
+        StringBuilder props = new StringBuilder("[");
+        for(Map.Entry<String, String> propEntry : properties.entrySet()){
+            props.append(propEntry.getKey()).append("=").append(propEntry.getValue()).append(",");
+        }
+
+        return props.substring(0, props.length() - 1) + "]";
+    }
+
+    /**
+     * @return a new {@link AnalyticsRequestData} object with the
+     * events data bundled within, that can be used to send
+     * the actual event.
+     */
+    protected AnalyticsRequestData getEventData(){
+        backingEventData.setEventAction(getAction());
+        backingEventData.setEventCategory(getCategory());
+        backingEventData.setEventLabel(getLabel());
+        return backingEventData;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return a valid String representation of this object
+     * containing all unique event data.
+     */
+    @Override
+    public String toString() {
+        return String.format("Resynth.Event[name=%s, properties=%s, action=%s, category=%s, label=%s]",
+                getName(), propertiesToString(getProperties()), getAction(), getCategory(), getLabel()
+        );
+    }
 }

@@ -23,10 +23,10 @@ package com.ki11erwolf.resynth.analytics;
 public class ConnectEvent extends Event {
 
     /**
-     * @return the event name/ID and Resynth version number.
+     * {@inheritDoc}
      */
     @Override
-    public String getAction() {
+    public String getName() {
         return "Connect";
     }
 
