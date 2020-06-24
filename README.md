@@ -1,6 +1,6 @@
 # Resynth Mod
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/35e65ea5f6c0426da2bf88d95822c8b1)](https://www.codacy.com/app/LMelaia/Resynth-Mod?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Resynth-Minecraft-Mod/Resynth-Mod&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/35e65ea5f6c0426da2bf88d95822c8b1)](https://www.codacy.com/manual/LMelaia/Resynth-Mod?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Resynth-Minecraft-Mod/Resynth-Mod&amp;utm_campaign=Badge_Grade)
 ![](http://cf.way2muchnoise.eu/full_303846_downloads.svg)
 ![](http://cf.way2muchnoise.eu/versions/303846.svg)
 
