@@ -1,0 +1,6 @@
+{
+  "parent": "resynth:block/plant/plant_crystalline",
+  "textures": {
+    "crop": "resynth:blocks/plants/light_gray_petal/plant_5"
+  }
+}

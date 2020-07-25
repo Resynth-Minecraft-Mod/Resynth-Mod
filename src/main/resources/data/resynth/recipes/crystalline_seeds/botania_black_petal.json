@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "resynth:crystalline_seeds_botania_black_petal"
+    }
+  ],
+  "result": {
+    "item": "botania:black_petal",
+    "count": 2
+  }
+}

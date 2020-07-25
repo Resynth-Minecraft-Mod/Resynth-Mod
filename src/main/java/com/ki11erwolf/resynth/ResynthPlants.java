@@ -34,6 +34,7 @@ import static net.minecraft.entity.EntityType.*;
  */
 //A thought: a json system that parses a json file containing the information in this class.
 @SuppressWarnings({"WeakerAccess", "unused"/*Fields register themselves.*/})
+//TODO: I should really write a script to automate asset creation for new plants
 //TODO: Fix up values
 public class ResynthPlants {
 

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "resynth:crystalline_seeds_botania_light_gray_petal"
+    }
+  ],
+  "result": {
+    "item": "botania:light_gray_petal",
+    "count": 2
+  }
+}

@@ -658,14 +658,6 @@ public class ResynthModdedPlants {
 
     // The Midnight
 
-    static MetallicSetProperties TEST = new MetallicSetProperties(
-            true, 100, 100, 100
-    );
-
-    static CrystallineSetProperties TEST2 = new CrystallineSetProperties(
-            true, 100, 100, 100,100
-    );
-
     /**
      * The plant set for Tenebrum from The Midnight Mod.
      */

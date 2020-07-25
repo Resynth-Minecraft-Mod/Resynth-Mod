@@ -58,6 +58,10 @@
   "item.resynth.crystalline_seeds_quartz":                  "Nether Quartz Seeds",
   "item.resynth.crystalline_shard_quartz":                  "Nether Quartz Shard",
 
+  "block.resynth.crystalline_plant_cookie":                 "Cookie Plant",
+  "item.resynth.crystalline_seeds_cookie":                  "Cookie Seeds",
+  "item.resynth.crystalline_shard_cookie":                  "Cookie Shard",
+
   "block.resynth.metallic_plant_iron":                      "Iron Plant",
   "item.resynth.metallic_seeds_iron":                       "Iron Seeds",
   "block.resynth.metallic_organic_ore_iron":                "Organic Iron Ore",
@@ -353,6 +357,90 @@
   "block.resynth.crystalline_plant_mysticalagriculture_soulium":        "Soulium Plant (Mystical Argriculture)",
   "item.resynth.crystalline_seeds_mysticalagriculture_soulium":         "Soulium Seeds (Mystical Argriculture)",
   "item.resynth.crystalline_shard_mysticalagriculture_soulium":        "Soulium Shard (Mystical Argriculture)",
+
+  "block.resynth.crystalline_plant_botania_white_petal":                "White Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_white_petal":                 "White Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_white_petal":                 "White Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_red_petal":                  "Red Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_red_petal":                   "Red Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_red_petal":                   "Red Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_orange_petal":               "Orange Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_orange_petal":                "Orange Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_orange_petal":                "Orange Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_pink_petal":                 "Pink Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_pink_petal":                  "Pink Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_pink_petal":                  "Pink Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_yellow_petal":               "Yellow Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_yellow_petal":                "Yellow Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_yellow_petal":                "Yellow Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_lime_petal":                 "Lime Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_lime_petal":                  "Lime Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_lime_petal":                  "Lime Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_green_petal":                "Green Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_green_petal":                 "Green Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_green_petal":                 "Green Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_light_blue_petal":           "Light Blue Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_light_blue_petal":            "Light Blue Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_light_blue_petal":            "Light Blue Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_cyan_petal":                 "Cyan Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_cyan_petal":                  "Cyan Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_cyan_petal":                  "Cyan Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_blue_petal":                 "Blue Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_blue_petal":                  "Blue Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_blue_petal":                  "Blue Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_magenta_petal":              "Magenta Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_magenta_petal":               "Magenta Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_magenta_petal":               "Magenta Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_purple_petal":               "Purple Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_purple_petal":                "Purple Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_purple_petal":                "Purple Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_brown_petal":                "Brown Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_brown_petal":                 "Brown Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_brown_petal":                 "Brown Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_gray_petal":                 "Gray Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_gray_petal":                  "Gray Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_gray_petal":                  "Gray Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_light_gray_petal":           "Light Gray Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_light_gray_petal":            "Light Gray Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_light_gray_petal":            "Light Gray Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_botania_black_petal":                "Black Petal Plant (Botania)",
+  "item.resynth.crystalline_seeds_botania_black_petal":                 "Black Petal Seeds (Botania)",
+  "item.resynth.crystalline_shard_botania_black_petal":                 "Black Petal Shard (Botania)",
+
+  "block.resynth.crystalline_plant_midnight_dark_pearl":                "Dark Pearl Plant (Midnight)",
+  "item.resynth.crystalline_seeds_midnight_dark_pearl":                 "Dark Pearl Seeds (Midnight)",
+  "item.resynth.crystalline_shard_midnight_dark_pearl":                 "Dark Pearl Shard (Midnight)",
+
+  "block.resynth.crystalline_plant_midnight_ebonite":                   "Ebonite Plant (Midnight)",
+  "item.resynth.crystalline_seeds_midnight_ebonite":                    "Ebonite Seeds (Midnight)",
+  "item.resynth.crystalline_shard_midnight_ebonite":                    "Ebonite Shard (Midnight)",
+
+  "block.resynth.crystalline_plant_midnight_archaic":                   "Archaic Plant (Midnight)",
+  "item.resynth.crystalline_seeds_midnight_archaic":                    "Archaic Seeds (Midnight)",
+  "item.resynth.crystalline_shard_midnight_archaic":                    "Archaic Shard (Midnight)",
+
+  "block.resynth.metallic_plant_midnight_tenebrum":                     "Tenebrum Plant (Midnight)",
+  "item.resynth.metallic_seeds_midnight_tenebrum":                      "Tenebrum Seeds (Midnight)",
+  "block.resynth.metallic_organic_ore_midnight_tenebrum":               "Organic Tenebrum (Midnight)",
+
+  "block.resynth.metallic_plant_midnight_nagrilite":                     "Nagrilite Plant (Midnight)",
+  "item.resynth.metallic_seeds_midnight_nagrilite":                      "Nagrilite Seeds (Midnight)",
+  "block.resynth.metallic_organic_ore_midnight_nagrilite":               "Organic Nagrilite (Midnight)",
 
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_stone":

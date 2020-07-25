@@ -1,0 +1,6 @@
+{
+  "parent": "resynth:block/plant/plant_metallic_4",
+  "textures": {
+    "stem": "resynth:blocks/plants/nagrilite/plant_growing"
+  }
+}

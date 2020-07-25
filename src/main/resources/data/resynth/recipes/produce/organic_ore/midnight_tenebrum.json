@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "resynth:metallic_organic_ore_midnight_tenebrum"
+  },
+  "result": "midnight:tenebrum_ore",
+  "experience": 7.0,
+  "cookingtime": 200
+}
