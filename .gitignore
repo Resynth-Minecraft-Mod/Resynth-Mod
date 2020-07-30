@@ -14,3 +14,7 @@ run
 #Eclipse
 eclipse
 /run-old/
+/fileTemplates/
+/gradle/
+/fileTemplates
+fileTemplates
