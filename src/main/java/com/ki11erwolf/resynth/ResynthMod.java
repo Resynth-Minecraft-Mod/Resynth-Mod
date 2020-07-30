@@ -32,12 +32,15 @@ import org.apache.logging.log4j.util.StackLocatorUtil;
 /**
  * Resynth mod class.
  */
-//In honor of Minecraft, for the countless hours of fun
-//and entertainment it has given me and millions of other
-//players, even today, as well as for helping me find
-//my passion for programming. Thank you!
 @Mod(ResynthMod.MOD_ID)
 public class ResynthMod {
+
+    //In honor of Minecraft, for the countless hours of fun
+    //and entertainment it has given me and millions of other
+    //players, even today, as well as for helping me find
+    //my passion for programming. Thank you!
+
+    //TODO: remove the `fileTemplates` & 'eclipse' folders from the Git repo and put some work into `README.md`.
 
     /**
      * The logger for this class.
@@ -79,9 +82,9 @@ public class ResynthMod {
      */
     private static final Proxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
-    // ****************
-    // Mod Construction
-    // ****************
+    // *****
+    //  Mod
+    // *****
 
     /**
      * Mod constructor.
@@ -89,11 +92,19 @@ public class ResynthMod {
      * Calls the construct method of the selected proxy class.
      */
     public ResynthMod(){
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onEnqueueModComs);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onProcessModComs);
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
+    }
+
+    /**
+     * @return a new apache log4j logging instance.
+     * Equivalent to {@link LogManager#getLogger()}.
+     */
+    public static Logger getNewLogger(){
+        return LogManager.getLogger(StackLocatorUtil.getCallerClass(2));
     }
 
     // ************
@@ -106,10 +117,9 @@ public class ResynthMod {
      *
      * @param event forge provided event.
      */
-    private void setup(final FMLCommonSetupEvent event){
-        LOG.info(String.format("Starting Resynth %s setup...", MOD_VERSION));
-        LOG.info("Good morning, Minecraft!");
-        proxy.setup(event);
+    private void onSetup(final FMLCommonSetupEvent event){
+        LOG.info(String.format("Resynth v%s setup has been initiated...", MOD_VERSION));
+        proxy.onSetup(event);
     }
 
     /**
@@ -117,9 +127,8 @@ public class ResynthMod {
      *
      * @param event forge provided event.
      */
-    private void doClientStuff(final FMLClientSetupEvent event) {
-        if(proxy instanceof ClientProxy)
-            proxy.doClientStuff(event);
+    private void onClientSetup(final FMLClientSetupEvent event) {
+        if(proxy instanceof ClientProxy) proxy.onClientSetup(event);
     }
 
     /**
@@ -127,8 +136,8 @@ public class ResynthMod {
      *
      * @param event forge provided event.
      */
-    private void enqueueIMC(final InterModEnqueueEvent event){
-        proxy.enqueueIMC(event);
+    private void onEnqueueModComs(final InterModEnqueueEvent event){
+        proxy.onEnqueueModComs(event);
     }
 
     /**
@@ -136,8 +145,8 @@ public class ResynthMod {
      *
      * @param event forge provided event.
      */
-    private void processIMC(final InterModProcessEvent event){
-        proxy.processIMC(event);
+    private void onProcessModComs(final InterModProcessEvent event){
+        proxy.onProcessModComs(event);
     }
 
     /**
@@ -159,19 +168,6 @@ public class ResynthMod {
     @SubscribeEvent
     @SuppressWarnings("unused")//Reflection
     public void onServerStopped(FMLServerStoppedEvent event){
-        if(!(proxy instanceof ClientProxy))
-            proxy.onServerStopped(event);
-    }
-
-    // ******
-    // Logger
-    // ******
-
-    /**
-     * @return a new apache log4j logging instance.
-     * Equivalent to {@link LogManager#getLogger()}.
-     */
-    public static Logger getNewLogger(){
-        return LogManager.getLogger(StackLocatorUtil.getCallerClass(2));
+        if(!(proxy instanceof ClientProxy)) proxy.onServerStopped(event);
     }
 }

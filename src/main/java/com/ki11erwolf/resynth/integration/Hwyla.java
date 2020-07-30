@@ -32,7 +32,7 @@ import java.util.List;
  */
 @WailaPlugin
 @SuppressWarnings("unused")//Reflection
-public class RHwylaIntegration implements mcp.mobius.waila.api.IWailaPlugin{
+public class Hwyla implements mcp.mobius.waila.api.IWailaPlugin{
 
     //TODO: Better hwyla integration & The One Probe integration.
 

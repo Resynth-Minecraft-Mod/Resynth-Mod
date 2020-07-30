@@ -25,6 +25,7 @@ import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 /**
  * Resynth mod proxy interface.
  */
+@SuppressWarnings("unused")
 public interface Proxy {
 
     /**
@@ -33,40 +34,42 @@ public interface Proxy {
      *
      * @param event forge provided event.
      */
-    void setup(final FMLCommonSetupEvent event);
+    void onSetup(final FMLCommonSetupEvent event);
+
+    // Optional
 
     /**
      * Client side mod registration event.
      *
      * @param event forge provided event.
      */
-    default void doClientStuff(final FMLClientSetupEvent event){}
+    default void onClientSetup(final FMLClientSetupEvent event){}
 
     /**
      * InterModCommunication message send event.
      *
      * @param event forge provided event.
      */
-    default void enqueueIMC(@SuppressWarnings("unused") final InterModEnqueueEvent event){}
+    default void onEnqueueModComs(final InterModEnqueueEvent event){}
 
     /**
      * InterModCommunication process event.
      *
      * @param event forge provided event.
      */
-    default void processIMC(@SuppressWarnings("unused") final InterModProcessEvent event){}
+    default void onProcessModComs(final InterModProcessEvent event){}
 
     /**
      * Server side registration event.
      *
      * @param event forge provided event.
      */
-    default void onServerStarting(@SuppressWarnings("unused") FMLServerStartingEvent event){}
+    default void onServerStarting(FMLServerStartingEvent event){}
 
     /**
      * Called when the game is stopping.
      *
      * @param event Forge event.
      */
-    default void onServerStopped(@SuppressWarnings("unused") FMLServerStoppedEvent event){}
+    default void onServerStopped(FMLServerStoppedEvent event){}
 }

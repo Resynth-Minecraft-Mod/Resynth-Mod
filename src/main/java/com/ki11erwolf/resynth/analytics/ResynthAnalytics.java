@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth.analytics;
 
 import com.ki11erwolf.resynth.ResynthMod;
-import com.ki11erwolf.resynth.ResynthSSL;
+import com.ki11erwolf.resynth.util.SSLHelper;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import dmurph.tracking.AnalyticsConfigData;
@@ -68,7 +68,7 @@ public final class ResynthAnalytics {
      * messages will be block by java for some reason.
      */
     static{
-        ResynthSSL.disableSSL();
+        SSLHelper.disableSSL();
     }
 
     /**
@@ -100,16 +100,17 @@ public final class ResynthAnalytics {
     public static void send(Event e){
         //Never send an event if analytics is disabled.
         if(!ENABLED || ANALYTICS == null){
-            LOG.info("Analytics disabled! Event prevented from sending.");
+            LOG.info(String.format("Analytics disabled! Event (%s) prevented from sending.", e.toString()));
+            SSLHelper.enableSSL();
             return;
         }
 
         //Disable it again before sending the event.
-        ResynthSSL.disableSSL();
+        SSLHelper.disableSSL();
         LOG.info("Sending analytics event: " + e.toString());
         ANALYTICS.makeCustomRequest(e.getEventData());
         //Re-enable it once we're done
-        ResynthSSL.enableSSL();
+        SSLHelper.enableSSL();
     }
 
     /**

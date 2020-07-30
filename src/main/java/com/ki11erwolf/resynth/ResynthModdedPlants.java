@@ -20,6 +20,9 @@ import com.ki11erwolf.resynth.plant.set.MetallicSetProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.plant.set.PlantSetFactory;
 
+import java.util.*;
+import java.util.function.Consumer;
+
 /**
  * Holds the definitions and references to every Resynth
  * plant (or plant set to be specific) for other mods
@@ -40,6 +43,151 @@ import com.ki11erwolf.resynth.plant.set.PlantSetFactory;
 @SuppressWarnings("unused")//Fields register themselves.
 public class ResynthModdedPlants {
 
+    // ********
+    //   Mods
+    // ********
+
+    /**
+     * A queryable type of mini registry that holds a list of all the mods
+     * (mod name and id) that Resynth adds plants for/supports.
+     */
+    public static class Mods {
+
+        /**
+         * The global map instance that stores the list of supported mods
+         * for the class. Every supported mod is stored as a Mod object,
+         * that holds the name & id of the mod, mapped to an interal
+         * numeric ID.
+         */
+        private static final Map<Integer, Mod> MOD_LIST
+                = new HashMap<Integer, Mod>(){
+            {
+                putMod(1, new Mod("Simple Ores", "simpleores"));
+                putMod(2, new Mod("More Ores in ONE", "moreoresinone"));
+                putMod(3, new Mod("Just Another Ruby Mod", "ruby"));
+                putMod(4, new Mod("Blue Power", "bluepower"));
+                putMod(5, new Mod("Basic Nether Ores", "bno"));
+                putMod(6, new Mod("Mystical Agriculture", "mysticalagriculture"));
+                putMod(7, new Mod("Mekanism", "mekanism"));
+                putMod(8, new Mod("Botania", "botania"));
+                putMod(9, new Mod("TheMidnight", "midnight"));
+            }
+
+            /**
+             * Adds a mod reference to the list of supported mods,
+             * mapped to the given numerical ID. Also sets the
+             * numerical ID in the mod reference object.
+             *
+             * @param id the unique numerical ID to store the mod
+             *           reference under.
+             * @param mod the mod representation object, containing
+             *            the name and modid of the mod.
+             */
+            public void putMod(Integer id, Mod mod){
+                this.put(id, mod);
+                mod.numericID = id;
+            }
+        };
+
+        /**
+         * Gets a reference to a representation of a supported mod using the
+         * internal numerical ID the mod representation was stored under.
+         * The ID's can be found in the {@link #MOD_LIST} map.
+         *
+         * @param id the internal numerical ID the mod representation
+         *           is stored under.
+         * @return the mod object, containing the mod name and modid, that
+         * represents the supported mod.
+         */
+        public static Mod getModByNumericID(int id){
+            return MOD_LIST.getOrDefault(id, null);
+        }
+
+        /**
+         * @return an array of all the mods Resynth adds support for,
+         * as an array of Mod objects that each represent a supported mod.
+         */
+        public static Mod[] getAllMods(){
+            List<Mod> mods = new ArrayList<>(MOD_LIST.size() + 1);
+            mods.addAll(MOD_LIST.values());
+            return mods.toArray(new Mod[0]);
+        }
+
+        /**
+         * Allows iterating over all the Mod objects that
+         * each represent a supported mod.
+         *
+         * @param action the action to execute for each Mod
+         *               representation object.
+         */
+        public static void iterateAllMods(Consumer<Mod> action){
+            MOD_LIST.values().iterator().forEachRemaining(action);
+        }
+
+        // Mod Instance
+
+        /**
+         * Represents an external mod Resynth adds plants/support for
+         * that can be installed alongside Resynth. A Mod object holds
+         * the display name, modID, and internal numeric id of the mod
+         * the Mod object represents.
+         */
+        public static class Mod {
+
+            /**
+             * The textual display name of the mod this
+             * object represents.
+             */
+            private final String name;
+
+            /**
+             * The unique ModID of the mod this object represents.
+             */
+            private final String id;
+
+            /**
+             * The internal numerical id this mod representation
+             * is mapped under within the {@link Mod#MOD_LIST}.
+             */
+            private int numericID;
+
+            /**
+             * Creates a new Mod object that will represent
+             * a supported mod.
+             *
+             * @param name the textual display name of the mod.
+             * @param id the unique ModID of the mod this object represents.
+             */
+            private Mod(String name, String id){
+                this.name = name;
+                this.id = id;
+            }
+
+            /**
+             * @return the textual display name of the mod this
+             * object represents.
+             */
+            public String getName() {
+                return name;
+            }
+
+            /**
+             * @return the unique ModID of the mod this object represents.
+             */
+            public String getID() {
+                return id;
+            }
+
+            /**
+             * @return the internal numerical id this mod representation is
+             * mapped under within the {@link Mod#MOD_LIST}.
+             */
+            public int getNumericID(){
+                return numericID;
+            }
+        }
+    }
+
     // *******
     // MOD IDS
     // *******
@@ -47,47 +195,47 @@ public class ResynthModdedPlants {
     /**
      * The mod id for the Simple Ores mod.
      */
-    private static final String SIMPLE_ORES = "simpleores";
+    private static final String SIMPLE_ORES = Mods.getModByNumericID(1).getID();
 
     /**
      * The mod id for the More Ores in ONE mod.
      */
-    private static final String MORE_ORES_IN_ONE = "moreoresinone";
+    private static final String MORE_ORES_IN_ONE = Mods.getModByNumericID(2).getID();
 
     /**
      * The mod id for the Just Another Ruby Mod.
      */
-    private static final String JUST_ANOTHER_RUBY_MOD = "ruby";
+    private static final String JUST_ANOTHER_RUBY_MOD = Mods.getModByNumericID(3).getID();
 
     /**
      * The mod id for the Blue Power mod.
      */
-    private static final String BLUE_POWER = "bluepower";
+    private static final String BLUE_POWER = Mods.getModByNumericID(4).getID();
 
     /**
      * The mod id for the Basic Nether Ores Mod.
      */
-    private static final String BASIC_NETHER_ORES = "bno";
+    private static final String BASIC_NETHER_ORES = Mods.getModByNumericID(5).getID();
 
     /**
      * The mod id for the Mystical Agriculture mod.
      */
-    private static final String MYSTICAL_AGRICULTURE = "mysticalagriculture";
+    private static final String MYSTICAL_AGRICULTURE = Mods.getModByNumericID(6).getID();
 
     /**
      * The mod id for the Mekanism mod.
      */
-    private static final String MEKANISM = "mekanism";
+    private static final String MEKANISM = Mods.getModByNumericID(7).getID();
 
     /**
      * The mod id for the Botania mod.
      */
-    private static final String BOTANIA = "botania";
+    private static final String BOTANIA = Mods.getModByNumericID(8).getID();
 
     /**
      * The mod id for "The Midnight" mod.
      */
-    private static final String THE_MIDNIGHT = "midnight";
+    private static final String THE_MIDNIGHT = Mods.getModByNumericID(9).getID();
 
     // *******************
     // GENERAL DEFINITIONS

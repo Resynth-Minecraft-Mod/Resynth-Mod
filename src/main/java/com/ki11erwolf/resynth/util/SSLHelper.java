@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth;
+package com.ki11erwolf.resynth.util;
 
+import com.ki11erwolf.resynth.ResynthMod;
 import org.apache.logging.log4j.Logger;
 
 import javax.net.ssl.*;
@@ -23,20 +24,21 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
 /**
- * Classes used to disable and re-enable native
+ * Used to disable and re-enable native
  * Java SSL verification.
  *
  * Native Java SSL verification can prevent some
- * website files being from being read (such as
- * the {@code versions.json} file. This provides
- * a patch to the problem.
+ * website files being from being read (such as the
+ * {@code versions.json} file). This class provides
+ * the solution to the problem by providing methods
+ * to disable and renable SSL verification.
  */
-public class ResynthSSL {
+public class SSLHelper {
 
     /**
      * Private constructor.
      */
-    private ResynthSSL(){}
+    private SSLHelper(){}
 
     /**
      * Logger for this class.
@@ -112,6 +114,10 @@ public class ResynthSSL {
             HttpsURLConnection.setDefaultSSLSocketFactory(defaultSocketFactory);
             HttpsURLConnection.setDefaultSSLSocketFactory(defaultSocketFactory);
             isSSLDisabled = false;
-        }
+        } else LOG.warn(String.format(
+                "Call to 'SSLHelper.enableSSL()' failed! Additional Information: " +
+                        "[SocketFactory=%s, HostnameVerifier=%s, isSSLDisabled=%s]",
+                defaultSocketFactory, defaultHostnameVerifier, isSSLDisabled
+        ));
     }
 }

@@ -31,16 +31,15 @@ public class ClientProxy extends ServerProxy {
      * {@inheritDoc}
      */
     @Override
-    public void setup(FMLCommonSetupEvent event) {
-        //Do registration for the server as well (dedicated server)
-        super.setup(event);
+    public void onSetup(FMLCommonSetupEvent event) {
+        super.onSetup(event); //Always setup (dedicated) server when on client side.
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void doClientStuff(FMLClientSetupEvent event) {
+    public void onClientSetup(FMLClientSetupEvent event) {
         RenderTypeLookup.setRenderLayer(ResynthBlocks.BLOCK_SEED_POD, RenderType.func_228641_d_());
 
         PublicPlantSetRegistry.foreach(PublicPlantSetRegistry.SetType.ALL, plantSet -> {
