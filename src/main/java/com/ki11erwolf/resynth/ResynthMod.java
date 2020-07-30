@@ -40,8 +40,6 @@ public class ResynthMod {
     //players, even today, as well as for helping me find
     //my passion for programming. Thank you!
 
-    //TODO: remove the `fileTemplates` & 'eclipse' folders from the Git repo and put some work into `README.md`.
-
     /**
      * The logger for this class.
      */
