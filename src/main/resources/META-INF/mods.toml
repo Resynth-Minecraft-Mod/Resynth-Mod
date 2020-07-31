@@ -21,7 +21,7 @@ displayURL="https://resynth-minecraft-mod.github.io/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="" #optional
 # A text field displayed in the mod UI
-credits="Ki11er_wolf, Aikini" #optional
+credits="Ki11er_wolf, Aikini (a.k.a. aikinitt), Daniel Murphy" #optional
 # A text field displayed in the mod UI
 authors="Ki11er_wolf" #optional
 # The description text for the mod (multi line!) (#mandatory)
