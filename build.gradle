@@ -1,6 +1,6 @@
-//////////////////////////////
+//###########################//
 //          1.15.2          //
-//////////////////////////////
+//#########################//
 
 buildscript {
     repositories {
@@ -19,11 +19,12 @@ apply plugin: 'eclipse'
 //  Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 ////*******************************************************************************************************
 
-//The three places to change this:
-//ResynthMod.java
-//mods.toml
-//Here
-version = '4.2.0-DevTest'
+//####################################//
+//           Mod Jar Version          //
+//####################################//
+
+//The three places to change this: ResynthMod.java | mods.toml | Here
+version = '4.2.0'
 
 group = "com.ki11erwolf.resynth"
 //noinspection GroovyUnusedAssignment
@@ -34,7 +35,6 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 minecraft {
     mappings channel: 'snapshot', version: '20190719-1.14.3'
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     runs {
         client {
@@ -44,9 +44,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
-                    source sourceSets.main
-                }
+                //None
             }
         }
 
@@ -57,9 +55,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
-                    source sourceSets.main
-                }
+                //None
             }
         }
 
@@ -73,9 +69,7 @@ minecraft {
             args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
 
             mods {
-                examplemod {
-                    source sourceSets.main
-                }
+                //None
             }
         }
     }
@@ -87,9 +81,13 @@ repositories {
     }
 }
 
+//##########################################//
+//      Forge Version & Dependencies        //
+//##########################################//
+
 dependencies {
     //Forge version
-    minecraft 'net.minecraftforge:forge:1.15.2-31.1.30'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.2.0'
 
     //Hwyla version
     compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.8-B72_1.15.2')
