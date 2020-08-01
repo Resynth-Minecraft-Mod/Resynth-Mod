@@ -70,7 +70,7 @@ public class ResynthModdedPlants {
                 putMod(6, new Mod("Mystical Agriculture", "mysticalagriculture"));
                 putMod(7, new Mod("Mekanism", "mekanism"));
                 putMod(8, new Mod("Botania", "botania"));
-                putMod(9, new Mod("TheMidnight", "midnight"));
+                putMod(9, new Mod("The Midnight", "midnight"));
             }
 
             /**

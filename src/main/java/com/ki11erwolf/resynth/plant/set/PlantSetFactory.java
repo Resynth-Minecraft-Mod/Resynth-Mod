@@ -110,6 +110,7 @@ public class PlantSetFactory {
         );
 
         //Plant set
+        //noinspection DuplicatedCode
         return new CrystallineSet(modid + "_" + setName, config) {
             private ItemStack sourceOreStack = null;
 
@@ -198,6 +199,7 @@ public class PlantSetFactory {
         );
 
         //Plant set
+        //noinspection DuplicatedCode
         return new MetallicSet(modid + "_" + setName, config) {
             private ItemStack sourceOreStack = null;
 
