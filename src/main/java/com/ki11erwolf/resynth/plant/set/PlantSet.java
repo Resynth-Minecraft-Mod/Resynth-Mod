@@ -42,9 +42,6 @@ import java.util.Objects;
  */
 public class PlantSet<P extends BlockPlant<?>> {
 
-    //TODO: PlantSetItem & PlantSetBlock base classes
-    //TODO: Double check server side plant set properties.
-
     /**
      * The name of the plant set instance (e.g. diamond).
      */
