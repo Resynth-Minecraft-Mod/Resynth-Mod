@@ -1,5 +1,5 @@
-//###########################//
-//          1.15.2          //
+//#########################//
+//         1.15.2          //
 //#########################//
 
 buildscript {
@@ -12,25 +12,51 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-////*******************************************************************************************************
-//  Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-////*******************************************************************************************************
-
 //####################################//
-//           Mod Jar Version          //
+//           Config Variables         //
 //####################################//
 
-//The three places to change this: ResynthMod.java | mods.toml | Here
-version = '4.2.0'
+/**
+ * The version number denoting the current Resynth build.
+ */
+def modversion = "4.2.0"
+//Also change in: ResynthMod.java | mods.toml | Here
 
-group = "com.ki11erwolf.resynth"
-//noinspection GroovyUnusedAssignment
+/**
+ * The specific Minecraft Forge version to use when building
+ * the mod. The Built mod jar will only run with this
+ * version of Forge or newer.
+ */
+def forgeversion = "31.2.0"
+
+/**
+ * The version of Minecraft this Resynth build is for.
+ */
+def mcversion = "1.15.2"
+
+/**
+ * The full name/title to give the mod jar when it's built.
+ */
+def jarTitle = "Resynth-${modversion}-[Minecraft-Forge-${mcversion}].jar"
+
+/**
+ * The directory to put the mod jar in when it's built.
+ */
+def jarOutputDir = project.file("jar")
+
+//####################################//
+//                 END                //
+//####################################//
+
+//Don't touch...
 archivesBaseName = "resynth"
+version = "${modversion}"
+group = "com.ki11erwolf.${archivesBaseName}"
 
-//noinspection GroovyUnusedAssignment
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
@@ -39,38 +65,20 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-
-            mods {
-                //None
-            }
         }
 
         server {
             workingDirectory project.file('run')
-
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-
-            mods {
-                //None
-            }
         }
 
         data {
             workingDirectory project.file('run')
-
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-
-            //noinspection GroovyAssignabilityCheck
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
-
-            mods {
-                //None
-            }
         }
     }
 }
@@ -87,10 +95,10 @@ repositories {
 
 dependencies {
     //Forge version
-    minecraft 'net.minecraftforge:forge:1.15.2-31.2.0'
+    minecraft "net.minecraftforge:forge:${mcversion}-${forgeversion}"
 
     //Hwyla version
-    compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.8-B72_1.15.2')
+    compile fg.deobf("mcp.mobius.waila:Hwyla:1.10.8-B72_${mcversion}")
 }
 
 jar {
@@ -98,11 +106,169 @@ jar {
         attributes([
                 "Specification-Title": "Resynth",
                 "Specification-Vendor": "Ki11er_wolf",
-                "Specification-Version": "1",
+                "Specification-Version": "${version}-${mcversion}",
                 "Implementation-Title": project.name,
                 "Implementation-Version": "${version}",
                 "Implementation-Vendor" :"Ki11er_wolf",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Implementation-Timestamp": new Date()
+                        .format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
+
+/**
+ * Always called after the build task has completed.
+ *
+ * Handles renaming the recently created mod jar, created by the most
+ * recent build task, to the more informative modtitle specified. It
+ * is also simultaneously moved to a specified directory, preferability
+ * one more visibilly accessable.
+ *
+ * Mod jar title and output directory is specified using `jarTitle`
+ * and `jarOutputDir` at top of this file.
+ */
+task finalizeBuild() {
+    //The directory where forge builds and saves the mod jar
+    def lookIn = new File("${project.file("build")}/libs/")
+
+    //Defines the specfic mod jar name to be looked for.
+    //Later reassigned the value of the mod jar path before move.
+    def modjar = "${archivesBaseName}-${modversion}.jar"
+
+    /**
+     * Called and executed last as part of the task,
+     * which itself is called after the build process
+     * is completed.
+     *
+     * The Closure that actually handles and coordinates
+     * the attempt made to Move & Rename the most recent
+     * mod jar build.
+     */
+    doLast {
+        def result = null
+        if(tryFindBuiltJar(lookIn, modjar)){
+            //If Jar Found
+            def finalModJarDest = new File("${jarOutputDir}/${jarTitle}")
+            cleanAndCreate(jarOutputDir)
+
+            //Store results from the attempted Rename & Move operation
+            result = tryRenameAndMove(modjar, finalModJarDest)
+            //Check results for success and verify results if successful .
+            if(result != true || !finalModJarDest.exists()) {
+                //Will default to FAILURE! Could not verify results as successful
+                println("[WARNING] Results '${result}' indicate a failure.")
+            } else {
+                //If Move & Rename results are successful and verified!
+                //Also ensure control returns from the task on success, before failing by default.
+                println("\n[SUCCESS] Move & Rename operation completed with no known errors!")
+                println("\n* * * * ${finalModJarDest} * * * *")
+                return //SUCCESS
+            }
+        }
+        //Always defaults to FAILURE unless task is
+        //cancelled on SUCCESS with a `return` statement.
+        failByDefault(result)
+    }
+
+    /// functions ///
+
+    /**
+     * Looks for the latest mod jar build in the given directory scope
+     * under the given mod jar name.
+     *
+     * Returns {@code true} if and only if the mod jar was found and the operation
+     * can proceed with certainty. Returns {@code false} in all other situations.
+     */
+    ext.tryFindBuiltJar = { scope, jar ->
+        //Begin search for existance of mod jar
+        println("\nMod jar build completed by Forge! Looking for mod to rename and move...")
+        println("Looking in: \"${scope}\" for \"${jar}\".")
+
+        //Check for mod jar existance, but first
+        //Assign full path of jar back into 'modjar' for use later
+        def found = (modjar = new File("${scope}/${jar}")).exists()
+
+        //Print and return the search results
+        if (!found) {
+            println("\n[WARNING] Missing expected mod jar from build! Skipping naming and placement.")
+            return false //FAIL
+        } else {
+            println("\nFound expected mod jar from build! Renaming & moving jar to...")
+            println("${jarOutputDir} as ${jarTitle}")
+            return true //PASS
+        }
+    }
+
+    /**
+     * Ensures that, the given output directory destination
+     * is cleaned of all files, and, that the directory
+     * actually exists on the filesystem, creating the
+     * directory if needed.
+     *
+     * Cleaning and Creating takes place at the beginning
+     * of the task, directly and only after the recently
+     * built mod jar is confirmed to exist.
+     */
+    ext.cleanAndCreate = { dest ->
+        println("Cleaning output first...")
+
+        //If final output destination exists, clean with delete
+        if(dest.exists())
+            dest.delete()
+        //before (re)creating destination
+        dest.mkdirs()
+    }
+
+    /**
+     * Called when ready to attempt the actual renaming and
+     * moving of the built mod jar.
+     *
+     * When called, the function delegates the job to
+     * 'java.nio.Files#move(src, dest)' and monitors
+     * the function call until it returns or an
+     * exception is thrown.
+     *
+     * Function returns {@code true} if and only if both
+     * the call returns without an exception, and if the
+     * path to the renamed and moved mod jar points to
+     * an existing file.
+     *
+     * If any exception is thrown during the call, it's
+     * returned so that it may be rethrown after the task
+     * fails gracefully and completely.
+     */
+    ext.tryRenameAndMove = { modStartDest, modEndDest ->
+        try{
+            //Attempt Move & Rename operation
+            //noinspection UnnecessaryQualifiedReference
+            def finalPath = java.nio.file.Files.move(
+                    modStartDest.toPath(), modEndDest.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING
+            )
+            //Verify mod jar exists at destination path
+            return finalPath.toFile().exists()
+        } catch (Exception e){
+            //Recovery impossible - just catch, log, and return all errors that needs to be dealt with.
+            print("\n[WARNING] Move & Rename operation failed with exception: ${e.getClass().getCanonicalName()}")
+            return e //Do not throw
+        }
+    }
+
+    /**
+     * Called as soon as, and never before the task is completely declared a failure,
+     * when unable to guarantee success - at which point the whole task comes to an
+     * end and deems itself a failure by default, prompting the call to this function.
+     * The task releases control back directly after this function returns.
+     *
+     * The result that probably lead to the failure is passed along with the
+     * call, typically to pass on any Exceptions and stacktraces
+     */
+    ext.failByDefault = { result ->
+        print("\n[FAILURE] Could not Move & Rename the built mod jar!")
+        //Lastly, rethrow the first exception if any only after failure is complete.
+        if(result instanceof Exception) { println(); throw result }
+        else println(" Result was determined to be '${result}' before failure.")
+    }
+}
+
+//Captain Obvious strikes again!
+build.finalizedBy(finalizeBuild)
