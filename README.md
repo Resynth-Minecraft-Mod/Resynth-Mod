@@ -17,10 +17,10 @@
     <i>Site Navigation:</i><br> |
     <a href="https://resynth-minecraft-mod.github.io">[Home Page]</a> |
     <a href="https://resynth-minecraft-mod.github.io/pages/wiki/home.html">[Wiki Home]</a> |
-    <a href="https://www.curseforge.com/minecraft/mc-mods/resynth/">[Resynth on CurseForge]</a> |
+    <a href="https://www.curseforge.com/minecraft/mc-mods/resynth/">[CurseForge]</a> |
     <a href="https://resynth-minecraft-mod.github.io/pages/download.html">[Download]</a> |
     <a href="https://resynth-minecraft-mod.github.io/pages/wiki/plant-requests.html">[Plant Requests]</a> |
-    <a href="https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/issues">[Bug Tracker]</a> |
+    <a href="https://resynth-minecraft-mod.github.io/pages/wiki/plants.html">[Plant List]</a> |
     <a href="https://resynth-minecraft-mod.github.io/pages/wiki/getting-started.html">[Beginners Guide]</a> |
     <a href="https://resynth-minecraft-mod.github.io/pages/faq/faq.html">[FAQ]</a> |
 </p>
