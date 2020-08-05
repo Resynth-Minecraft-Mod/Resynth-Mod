@@ -5,16 +5,24 @@
 ![](http://cf.way2muchnoise.eu/full_303846_downloads.svg)
 ![](http://cf.way2muchnoise.eu/versions/303846.svg)
 
-<!--suppress HtmlDeprecatedAttribute -->
-<p align="center" style="text-align: center">
-    <u><b>Resynth Development Environment and Source Code Only!</b></u><br>
-    <small>
-        <b>Top Pages:</b>
-        <a href="https://resynth-minecraft-mod.github.io">[Home Page]</a> |
-        <a href="https://www.curseforge.com/minecraft/mc-mods/resynth/">[Resynth on CurseForge]</a> |
-        <a href="https://resynth-minecraft-mod.github.io/pages/wiki/home.html">[Wiki]</a> |
-        <a href="https://resynth-minecraft-mod.github.io/pages/download.html">[Downloads]</a>
-    </small>
+<p align="center">
+    <b>[NB: Dev Environment]</b> <br> This repository is THE DEVELOPMENT ENVIRONMENT for the RESYNTH MOD PROJECT!</b>
+</p>
+
+---
+
+<h3 align="center"><b> Growable Ores, Mob Drops, and Resource for Modded & Vanilla Minecraft! </b></h3>
+
+<p align="center">
+    <i>Site Navigation:</i><br> |
+    <a href="https://resynth-minecraft-mod.github.io">[Home Page]</a> |
+    <a href="https://resynth-minecraft-mod.github.io/pages/wiki/home.html">[Wiki Home]</a> |
+    <a href="https://www.curseforge.com/minecraft/mc-mods/resynth/">[CurseForge]</a> |
+    <a href="https://resynth-minecraft-mod.github.io/pages/download.html">[Download]</a> |
+    <a href="https://resynth-minecraft-mod.github.io/pages/wiki/plant-requests.html">[Plant Requests]</a> |
+    <a href="https://resynth-minecraft-mod.github.io/pages/wiki/plants.html">[Plant List]</a> |
+    <a href="https://resynth-minecraft-mod.github.io/pages/wiki/getting-started.html">[Beginners Guide]</a> |
+    <a href="https://resynth-minecraft-mod.github.io/pages/faq/faq.html">[FAQ]</a> |
 </p>
 
 ![](https://resynth-minecraft-mod.github.io/images/resynth.png)
