@@ -579,7 +579,15 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     @Override
     public void onPlantGrow(BlockState state, IWorld iworld, BlockPos pos, BlockPos posSrc) {
         super.onPlantGrow(state, iworld, pos, posSrc);
-        World world = iworld.getWorld();
+        World world;
+
+        if(iworld instanceof World) world = (World) iworld;
+        else                        world = null;
+
+        if(world == null) {
+            LOGGER.error("***FAILURE*** IWorld not a World within `BlockPlant.onPlantGrow()`");
+            return;
+        }
 
         if(canGrow(world, pos)){
             callGrowPlant(world, state, pos, 1);
@@ -630,7 +638,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public void spawnAdditionalDrops(BlockState state, World worldIn, BlockPos pos, ItemStack stack) {
+    public void spawnAdditionalDrops(BlockState state, ServerWorld worldIn, BlockPos pos, ItemStack stack) {
         MinecraftUtil.spawnItemInWorld(getSeedsItem(), worldIn, pos);
 
         if(getGrowthStage(state) == getMaxGrowthStage() && dropsProduceWhenGrown() && getProduce() != null)

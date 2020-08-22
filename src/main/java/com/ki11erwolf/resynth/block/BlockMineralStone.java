@@ -23,7 +23,7 @@ import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 /**
  * Mineral Rich Stone. The mods ore block.
@@ -48,7 +48,7 @@ public class BlockMineralStone extends BlockOre{
      */
     @Override
     @SuppressWarnings("deprecation")
-    public void spawnAdditionalDrops(BlockState state, World worldIn, BlockPos pos, ItemStack stack) {
+    public void spawnAdditionalDrops(BlockState state, ServerWorld worldIn, BlockPos pos, ItemStack stack) {
         MinecraftUtil.spawnItemStackInWorld(
                 new ItemStack(
                         ResynthItems.ITEM_MINERAL_ROCK,

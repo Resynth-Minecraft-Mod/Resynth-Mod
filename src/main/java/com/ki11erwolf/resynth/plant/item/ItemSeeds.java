@@ -129,7 +129,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
 
             //Play plant sound.
             EffectsUtil.playNormalSound(
-                    world.getWorld(), playerEntity, blockpos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS
+                    (World) world, playerEntity, blockpos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS
             );
 
             return ActionResultType.SUCCESS;

@@ -133,7 +133,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
 
                 //Spawn
                 if(MathUtil.chance(spawnChance)){
-                    spawnSeeds(crystallineSet.seedsItem, world.getWorld(), event.getPos());
+                    spawnSeeds(crystallineSet.seedsItem, (World) world, event.getPos());
                     event.setCanceled(true);
                     world.setBlockState(event.getPos(), Blocks.AIR.getDefaultState(), 2);
                 }
