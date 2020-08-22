@@ -50,7 +50,7 @@ public class TileEntityTypeMineralSoil {
     /**
      * Registration class.
      */
-    @SuppressWarnings("unused")//Reflection
+    //Reflection
     @Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class Registration {
 
@@ -59,8 +59,7 @@ public class TileEntityTypeMineralSoil {
          *
          * @param e forge event.
          */
-        @SubscribeEvent
-        @SuppressWarnings("unused")//Reflection
+        @SubscribeEvent //Reflection
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> e) {
             registerTileEntityType(
                     e.getRegistry(), register(

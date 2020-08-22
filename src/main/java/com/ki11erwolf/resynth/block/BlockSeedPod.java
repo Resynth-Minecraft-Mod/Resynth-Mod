@@ -29,10 +29,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -40,6 +40,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nonnull;
+
+//import net.minecraft.util.math.Vec3d;
 
 /**
  * Mystic Seed Pod. Drops Biochemical seeds for players
@@ -51,7 +53,6 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
     /**
      * The configuration settings for this block.
      */
-    @SuppressWarnings("unused")
     private static final SeedPodConfig CONFIG = ResynthConfig.GENERAL_CONFIG.getCategory(SeedPodConfig.class);
 
     /**
@@ -67,9 +68,7 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      */
     BlockSeedPod(String name) {
         super(
-                Properties.create(Material.PLANTS)
-                        .sound(SoundType.PLANT)
-                        .func_226896_b_(),//Not Solid
+                Properties.create(Material.PLANTS).sound(SoundType.PLANT).notSolid(),//.func_226896_b_()/Not Solid
                 name
         );
     }
@@ -119,8 +118,8 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      */
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Vec3d vec3d = state.getOffset(worldIn, pos);
-        return SEED_POD_SHAPE.withOffset(vec3d.x, vec3d.y, vec3d.z);
+        Vector3d vector3d = state.getOffset(worldIn, pos);
+        return SEED_POD_SHAPE.withOffset(vector3d.x, vector3d.y, vector3d.z);
     }
 
     /**

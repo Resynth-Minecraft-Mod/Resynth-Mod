@@ -35,7 +35,7 @@ public class MinecraftUtil {
      *
      * @return {@code true} if the item was spawned.
      */
-    @SuppressWarnings({"UnusedReturnValue", "unused"})
+    @SuppressWarnings("UnusedReturnValue")
     public static boolean spawnItemInWorld(Item item, World world, BlockPos pos){
         return spawnItemStackInWorld(new ItemStack(item), world, pos);
     }

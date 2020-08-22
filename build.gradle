@@ -1,5 +1,5 @@
 //#########################//
-//         1.16.1          //
+//         1.16.2          //
 //#########################//
 
 buildscript {
@@ -31,12 +31,12 @@ def modversion = "5.0.0"
  * the mod. The Built mod jar will only run with this
  * version of Forge or newer.
  */
-def forgeversion = "32.0.98"
+def forgeversion = "33.0.20"
 
 /**
  * The version of Minecraft this Resynth build is for.
  */
-def mcversion = "1.16.1"
+def mcversion = "1.16.2"
 
 /**
  * The full name/title to give the mod jar when it's built.
@@ -106,7 +106,7 @@ jar {
         attributes([
                 "Specification-Title": "Resynth",
                 "Specification-Vendor": "Ki11er_wolf",
-                "Specification-Version": "${version}-${mcversion}",
+                "Specification-Version": "1",//"${version}-${mcversion}",
                 "Implementation-Title": project.name,
                 "Implementation-Version": "${version}",
                 "Implementation-Vendor" :"Ki11er_wolf",

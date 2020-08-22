@@ -76,7 +76,8 @@ class ItemMineralCrystal extends ResynthItem<ItemMineralCrystal> {
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
         new ExpandingTooltip().setCollapsedTooltip(null).setExpandedTooltip(CommonTooltips.NEW_LINE)
-                .setCondition(CONFIG.isECMEnabled() && Screen.hasControlDown()).write(tooltip);
+                //TODO: Might be a problem
+                .setCondition(CONFIG.isECMEnabled() && Screen.func_231174_t_() /*OR func_231173_s_()*/ ).write(tooltip);
 
         tooltip.add(getFormattedTooltip(name + ".ecm", TextFormatting.DARK_PURPLE));
 

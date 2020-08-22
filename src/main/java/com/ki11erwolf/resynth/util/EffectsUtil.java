@@ -44,7 +44,7 @@ import java.util.Random;
  * <p/>Besides the main function, this also also provides a
  * range of utility methods for particle effects and sounds.
  */
-@SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue", "WeakerAccess"})
+@SuppressWarnings({"UnusedReturnValue", "SameParameterValue", "WeakerAccess"})
 //TODO: Maybe use packets to make effects play on client when seeds spawn on dedicated server.
 public class EffectsUtil {
 
@@ -169,7 +169,7 @@ public class EffectsUtil {
         float volume = 1.0F;
         //Random pitch in range
         float pitch = basePitch + world.getRandom().nextFloat() * pitchMultiplier;
-        BlockPos pos = player.getPosition();
+        BlockPos pos = new BlockPos(player.getPosX(), player.getPosY(), player.getPosZ());
 
         return playNormalSound(world, player, pos.getX(), pos.getY(), pos.getZ(), soundEvent, category, volume, pitch);
     }

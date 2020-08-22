@@ -25,7 +25,6 @@ import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 /**
  * Resynth mod proxy interface.
  */
-@SuppressWarnings("unused")
 public interface Proxy {
 
     /**
@@ -50,6 +49,7 @@ public interface Proxy {
      *
      * @param event forge provided event.
      */
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     default void onEnqueueModComs(final InterModEnqueueEvent event){}
 
     /**
@@ -57,6 +57,7 @@ public interface Proxy {
      *
      * @param event forge provided event.
      */
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     default void onProcessModComs(final InterModProcessEvent event){}
 
     /**
@@ -64,6 +65,7 @@ public interface Proxy {
      *
      * @param event forge provided event.
      */
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     default void onServerStarting(FMLServerStartingEvent event){}
 
     /**
@@ -71,5 +73,6 @@ public interface Proxy {
      *
      * @param event Forge event.
      */
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     default void onServerStopped(FMLServerStoppedEvent event){}
 }

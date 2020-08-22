@@ -18,8 +18,7 @@ package com.ki11erwolf.resynth.features;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.CalviniteGenConfig;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.biome.*;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.OreFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
@@ -31,7 +30,6 @@ import net.minecraft.world.gen.placement.Placement;
  * {@link com.ki11erwolf.resynth.block.ResynthBlocks#BLOCK_CALVINITE_NETHERRACK}
  * in the world as ore veins.
  */
-@SuppressWarnings("unused")
 class CalviniteFeature extends OreFeature {
 
     /**
@@ -45,29 +43,40 @@ class CalviniteFeature extends OreFeature {
      * to the Nether biome provided the config allows it.
      */
     CalviniteFeature(){
-        super(OreFeatureConfig::deserialize);
+        super(OreFeatureConfig.field_236566_a_);
 
         if(!CONFIG.shouldGenerate())
             return;
 
-        add(Biomes.NETHER);
+        //Renaming nether biomes...
+        Biome waistland = Biomes.field_235254_j_;
+        Biome soulSandVally = Biomes.field_235252_ay_;
+        Biome crimsonForest = Biomes.field_235253_az_;
+        Biome warpedForest = Biomes.field_235250_aA_;
+        Biome basaltDelta = Biomes.field_235251_aB_;
+
+        add(waistland);
+        add(soulSandVally);
+        add(crimsonForest);
+        add(warpedForest);
+        add(basaltDelta);
     }
 
     /**
-     * Adds this feature to the given biome.
+     * Adds this feature to the given biome. As of 1.16,
+     * this now also spawns the ore in the different biomes
+     * of the nether.
      *
-     * @param biome the biome to add this feature to.
+     * @param biome the biome (nether type) to add this feature to.
      */
-    private void add(@SuppressWarnings("SameParameterValue") Biome biome){
-        biome.addFeature(
-                GenerationStage.Decoration.UNDERGROUND_ORES,
-                this.func_225566_b_(
-                        new OreFeatureConfig(
-                                OreFeatureConfig.FillerBlockType.NETHERRACK,
-                                ResynthBlocks.BLOCK_CALVINITE_NETHERRACK.getDefaultState(),
-                                CONFIG.getSize()
-                        )
-                ).func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(getRangeCount()))
+    private void add(Biome biome){
+        biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES,
+            this.withConfiguration(
+                new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK,
+                    ResynthBlocks.BLOCK_CALVINITE_NETHERRACK.getDefaultState(),
+                    CONFIG.getSize()
+                )
+            ).withPlacement(Placement.COUNT_RANGE.configure(getRangeCount()))
         );
     }
 
@@ -76,11 +85,8 @@ class CalviniteFeature extends OreFeature {
      * specified by the config.
      */
     private CountRangeConfig getRangeCount(){
-        return new CountRangeConfig(
-                CONFIG.getCount(),
-                CONFIG.getBottomOffset(),
-                CONFIG.getTopOffset(),
-                CONFIG.getMaxHeight()
+        return new CountRangeConfig(CONFIG.getCount(), CONFIG.getBottomOffset(),
+                CONFIG.getTopOffset(), CONFIG.getMaxHeight()
         );
     }
 }

@@ -64,18 +64,20 @@ public class ExpandingTooltip {
         return this;
     }
 
+    //TODO: Fix this mess
+
     public ExpandingTooltip setConditionToShiftDown(){
-        this.conditionMet = Screen.hasShiftDown();
+        this.conditionMet = Screen.func_231174_t_();//Screen.func_231173_s_();//Screen.func_231172_r_();//Screen.hasShiftDown();
         return this;
     }
 
     public ExpandingTooltip setConditionToControlDown(){
-        this.conditionMet = Screen.hasControlDown();
+        this.conditionMet = Screen.func_231174_t_();//Screen.func_231173_s_();//Screen.func_231172_r_();//Screen.hasControlDown();
         return this;
     }
 
     public ExpandingTooltip setConditionToAltDown(){
-        this.conditionMet = Screen.hasAltDown();
+        this.conditionMet = Screen.func_231174_t_();//Screen.func_231173_s_();//Screen.func_231172_r_();//Screen.hasAltDown();
         return this;
     }
 
@@ -96,12 +98,15 @@ public class ExpandingTooltip {
     }
 
     public ExpandingTooltip setCtrlForDescription(Tooltip expanded){
-        setCondition(Screen.hasControlDown() && Tooltip.areTooltipsEnabled()).setCollapsedTooltip(
+        setCondition(
+                Screen.func_231174_t_()/*Screen.func_231173_s_();//Screen.func_231172_r_();Screen.hasControlDown()*/
+                        && Tooltip.areTooltipsEnabled()).setCollapsedTooltip(
                 Tooltip.areTooltipsEnabled() ? CommonTooltips.CTRL_FOR_DESCRIPTION : CommonTooltips.NULL
         ).setExpandedTooltip(expanded);
         return this;
     }
 
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     public ExpandingTooltip setAltForAdditionalInfo(Tooltip expanded){
         setConditionToAltDown().setCollapsedTooltip(CommonTooltips.ALT_FOR_ADDITIONAL_INFO)
                 .setExpandedTooltip(expanded);

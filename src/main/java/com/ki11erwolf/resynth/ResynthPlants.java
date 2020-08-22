@@ -33,9 +33,9 @@ import static net.minecraft.entity.EntityType.*;
  * All plant sets in this class are referred to as Vanilla plant sets.
  */
 //A thought: a json system that parses a json file containing the information in this class.
-@SuppressWarnings({"WeakerAccess", "unused"/*Fields register themselves.*/})
 //TODO: I should really write a script to automate asset creation for new plants
 //TODO: Fix up values
+@SuppressWarnings({"WeakerAccess", "unused", "RedundantSuppression"})//Reflection, Trickery & maybe even a bug.
 public class ResynthPlants {
 
     // ****************
@@ -641,10 +641,9 @@ public class ResynthPlants {
             ),
             BAT, BLAZE, CAVE_SPIDER, CHICKEN, COD, COW, CREEPER, DONKEY, DOLPHIN, DROWNED, ELDER_GUARDIAN,
             ENDER_DRAGON, ENDERMAN, ENDERMITE, EVOKER, GHAST, GIANT, GUARDIAN, HORSE, HUSK, LLAMA, MAGMA_CUBE,
-            MULE, MOOSHROOM, OCELOT, PARROT, PIG, PUFFERFISH, ZOMBIE_PIGMAN, POLAR_BEAR, RABBIT, SALMON,
-            SHEEP, SHULKER, SILVERFISH, SKELETON, SKELETON_HORSE, SLIME, SPIDER, SQUID, TURTLE, TROPICAL_FISH,
-            VILLAGER, IRON_GOLEM, WITCH, WITHER, WITHER_SKELETON, WOLF, ZOMBIE, ZOMBIE_PIGMAN, ZOMBIE_VILLAGER,
-            ZOMBIE_HORSE, PHANTOM
+            MULE, MOOSHROOM, OCELOT, PARROT, PIG, PUFFERFISH, field_233592_ba_ /*zombie piglin*/, POLAR_BEAR, RABBIT,
+            SALMON, SHEEP, SHULKER, SILVERFISH, SKELETON, SKELETON_HORSE, SLIME, SPIDER, SQUID, TURTLE, TROPICAL_FISH,
+            VILLAGER, IRON_GOLEM, WITCH, WITHER, WITHER_SKELETON, WOLF, ZOMBIE, ZOMBIE_VILLAGER, ZOMBIE_HORSE, PHANTOM
     ).register();
 
     /**
@@ -669,6 +668,6 @@ public class ResynthPlants {
      * Ensures all Vanilla Resynth plant sets are
      * initialized and queued for registration.
      */
-    public static void initSets(){/*NO-OP*/}
+    public static void initSets(){/*NO-OP*/}//TODO: Also for annotations & reflection
 
 }

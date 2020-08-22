@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth.features;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.SylvaniteGenConfig;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.pattern.BlockMatcher;
@@ -41,22 +42,20 @@ import java.util.function.Predicate;
  * {@link ResynthBlocks#BLOCK_SYLVANITE_END_STONE}
  * in the world as ore veins.
  */
-@SuppressWarnings("unused")
+//TODO: I worry about the class... CHECK ORE GEN!11
 class SylvaniteFeature extends OreFeature {
 
     /**
      * Configuration settings for Sylvanite ore generation.
      */
-    private static final SylvaniteGenConfig CONFIG
-            = ResynthConfig.GENERAL_CONFIG.getCategory(SylvaniteGenConfig.class);
+    private static final SylvaniteGenConfig CONFIG = ResynthConfig.GENERAL_CONFIG.getCategory(SylvaniteGenConfig.class);
 
     /**
      * Registers the Sylvanite ore generation feature
      * to the End biomes provided the config allows it.
      */
-    @SuppressWarnings("unused")
     SylvaniteFeature(){
-        super(OreFeatureConfig::deserialize);
+        super(OreFeatureConfig.field_236566_a_);
 
         if(!CONFIG.shouldGenerate())
             return;
@@ -76,13 +75,13 @@ class SylvaniteFeature extends OreFeature {
     private void add(@SuppressWarnings("SameParameterValue") Biome biome){
         biome.addFeature(
                 GenerationStage.Decoration.UNDERGROUND_ORES,
-                this.func_225566_b_(
+                this.withConfiguration(
                         new OreFeatureConfig(
                                 OreFeatureConfig.FillerBlockType.NETHERRACK,//NOT USED. Use #filler
                                 ResynthBlocks.BLOCK_SYLVANITE_END_STONE.getDefaultState(),
                                 CONFIG.getSize()
                         )
-                ).func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(getRangeCount()))
+                ).withPlacement(Placement.COUNT_RANGE.configure(getRangeCount()))
         );
     }
 
@@ -106,50 +105,49 @@ class SylvaniteFeature extends OreFeature {
     /**
      * Modified to use the provided filler block (block to replace) instead of the config
      * provided one as the config provided one does not allow End Stone.
+     *
+     * <b>In 1.16 port,</b> refractored variable names to be shorter and restrucred code.
+     * Functionality was intentionally kept identical as before.
      */
     @Override
-    protected boolean func_207803_a(IWorld p_207803_1_, Random p_207803_2_, OreFeatureConfig p_207803_3_,
-                                    double p_207803_4_, double p_207803_6_, double p_207803_8_,
-                                    double p_207803_10_, double p_207803_12_, double p_207803_14_,
-                                    int p_207803_16_, int p_207803_17_, int p_207803_18_,
-                                    int p_207803_19_, int p_207803_20_) {
-        int lvt_21_1_ = 0;
-        BitSet lvt_22_1_ = new BitSet(p_207803_19_ * p_207803_20_ * p_207803_19_);
-        BlockPos.Mutable lvt_23_1_ = new BlockPos.Mutable();
-        double[] lvt_24_1_ = new double[p_207803_3_.size * 4];
+    protected boolean func_207803_a(IWorld wrld, Random rand, OreFeatureConfig cfg, double d01, double d02, double d03,
+                                    double d04, double d05, double d06, int i01, int i02, int i03, int i04, int i05) {
+        BitSet bitSet = new BitSet(i04 * i05 * i04);
+        BlockPos.Mutable pm = new BlockPos.Mutable();
+        double[] d0001 = new double[cfg.size * 4];
         Predicate<BlockState> filler = new BlockMatcher(Blocks.END_STONE);
+        int i1; double d1; double d2; double d3; double d4; int i0 = 0;
 
-        int lvt_25_2_;
-        double lvt_27_2_;
-        double lvt_29_2_;
-        double lvt_31_2_;
-        double lvt_33_2_;
-        for(lvt_25_2_ = 0; lvt_25_2_ < p_207803_3_.size; ++lvt_25_2_) {
-            float lvt_26_1_ = (float)lvt_25_2_ / (float)p_207803_3_.size;
-            lvt_27_2_ = MathHelper.lerp(lvt_26_1_, p_207803_4_, p_207803_6_);
-            lvt_29_2_ = MathHelper.lerp(lvt_26_1_, p_207803_12_, p_207803_14_);
-            lvt_31_2_ = MathHelper.lerp(lvt_26_1_, p_207803_8_, p_207803_10_);
-            lvt_33_2_ = p_207803_2_.nextDouble() * (double)p_207803_3_.size / 16.0D;
-            double lvt_35_1_ = ((double)(MathHelper.sin(3.1415927F * lvt_26_1_) + 1.0F) * lvt_33_2_ + 1.0D) / 2.0D;
-            lvt_24_1_[lvt_25_2_ * 4] = lvt_27_2_;
-            lvt_24_1_[lvt_25_2_ * 4 + 1] = lvt_29_2_;
-            lvt_24_1_[lvt_25_2_ * 4 + 2] = lvt_31_2_;
-            lvt_24_1_[lvt_25_2_ * 4 + 3] = lvt_35_1_;
+        //For 0
+        for(i1 = 0; i1 < cfg.size; ++i1) {
+            float lvt_26_1_ = (float)i1 / (float)cfg.size;
+            d1 = MathHelper.lerp(lvt_26_1_, d01, d02);
+            d2 = MathHelper.lerp(lvt_26_1_, d05, d06);
+            d3 = MathHelper.lerp(lvt_26_1_, d03, d04);
+            d4 = rand.nextDouble() * (double)cfg.size / 16.0D;
+            double lvt_35_1_
+                    = ((double)(MathHelper.sin(3.1415927F * lvt_26_1_) + 1.0F) * d4 + 1.0D) / 2.0D;
+            d0001[i1 * 4] = d1;
+            d0001[i1 * 4 + 1] = d2;
+            d0001[i1 * 4 + 2] = d3;
+            d0001[i1 * 4 + 3] = lvt_35_1_;
         }
 
-        for(lvt_25_2_ = 0; lvt_25_2_ < p_207803_3_.size - 1; ++lvt_25_2_) {
-            if (lvt_24_1_[lvt_25_2_ * 4 + 3] > 0.0D) {
-                for(int lvt_26_2_ = lvt_25_2_ + 1; lvt_26_2_ < p_207803_3_.size; ++lvt_26_2_) {
-                    if (lvt_24_1_[lvt_26_2_ * 4 + 3] > 0.0D) {
-                        lvt_27_2_ = lvt_24_1_[lvt_25_2_ * 4] - lvt_24_1_[lvt_26_2_ * 4];
-                        lvt_29_2_ = lvt_24_1_[lvt_25_2_ * 4 + 1] - lvt_24_1_[lvt_26_2_ * 4 + 1];
-                        lvt_31_2_ = lvt_24_1_[lvt_25_2_ * 4 + 2] - lvt_24_1_[lvt_26_2_ * 4 + 2];
-                        lvt_33_2_ = lvt_24_1_[lvt_25_2_ * 4 + 3] - lvt_24_1_[lvt_26_2_ * 4 + 3];
-                        if (lvt_33_2_ * lvt_33_2_ > lvt_27_2_ * lvt_27_2_ + lvt_29_2_ * lvt_29_2_ + lvt_31_2_ * lvt_31_2_) {
-                            if (lvt_33_2_ > 0.0D) {
-                                lvt_24_1_[lvt_26_2_ * 4 + 3] = -1.0D;
+        //For 1
+        for(i1 = 0; i1 < cfg.size - 1; ++i1) {
+            if (d0001[i1 * 4 + 3] > 0.0D) {
+                for(int lvt_26_2_ = i1 + 1; lvt_26_2_ < cfg.size; ++lvt_26_2_) {
+                    if (d0001[lvt_26_2_ * 4 + 3] > 0.0D) {
+                        d1 = d0001[i1 * 4] - d0001[lvt_26_2_ * 4];
+                        d2 = d0001[i1 * 4 + 1] - d0001[lvt_26_2_ * 4 + 1];
+                        d3 = d0001[i1 * 4 + 2] - d0001[lvt_26_2_ * 4 + 2];
+                        d4 = d0001[i1 * 4 + 3] - d0001[lvt_26_2_ * 4 + 3];
+                        if (d4 * d4 > d1 * d1 + d2
+                                * d2 + d3 * d3) {
+                            if (d4 > 0.0D) {
+                                d0001[lvt_26_2_ * 4 + 3] = -1.0D;
                             } else {
-                                lvt_24_1_[lvt_25_2_ * 4 + 3] = -1.0D;
+                                d0001[i1 * 4 + 3] = -1.0D;
                             }
                         }
                     }
@@ -157,39 +155,40 @@ class SylvaniteFeature extends OreFeature {
             }
         }
 
-        for(lvt_25_2_ = 0; lvt_25_2_ < p_207803_3_.size; ++lvt_25_2_) {
-            double lvt_26_3_ = lvt_24_1_[lvt_25_2_ * 4 + 3];
+        //For 2
+        for(i1 = 0; i1 < cfg.size; ++i1) {
+            double lvt_26_3_ = d0001[i1 * 4 + 3];
             if (lvt_26_3_ >= 0.0D) {
-                double lvt_28_1_ = lvt_24_1_[lvt_25_2_ * 4];
-                double lvt_30_1_ = lvt_24_1_[lvt_25_2_ * 4 + 1];
-                double lvt_32_1_ = lvt_24_1_[lvt_25_2_ * 4 + 2];
-                int lvt_34_1_ = Math.max(MathHelper.floor(lvt_28_1_ - lvt_26_3_), p_207803_16_);
-                int lvt_35_2_ = Math.max(MathHelper.floor(lvt_30_1_ - lvt_26_3_), p_207803_17_);
-                int lvt_36_1_ = Math.max(MathHelper.floor(lvt_32_1_ - lvt_26_3_), p_207803_18_);
-                int lvt_37_1_ = Math.max(MathHelper.floor(lvt_28_1_ + lvt_26_3_), lvt_34_1_);
-                int lvt_38_1_ = Math.max(MathHelper.floor(lvt_30_1_ + lvt_26_3_), lvt_35_2_);
-                int lvt_39_1_ = Math.max(MathHelper.floor(lvt_32_1_ + lvt_26_3_), lvt_36_1_);
+                double dd1 = d0001[i1 * 4];
+                double dd2 = d0001[i1 * 4 + 1];
+                double dd3 = d0001[i1 * 4 + 2];
+                int lvt_34_1_ = Math.max(MathHelper.floor(dd1 - lvt_26_3_), i01);
+                int lvt_35_2_ = Math.max(MathHelper.floor(dd2 - lvt_26_3_), i02);
+                int lvt_36_1_ = Math.max(MathHelper.floor(dd3 - lvt_26_3_), i03);
+                int lvt_37_1_ = Math.max(MathHelper.floor(dd1 + lvt_26_3_), lvt_34_1_);
+                int lvt_38_1_ = Math.max(MathHelper.floor(dd2 + lvt_26_3_), lvt_35_2_);
+                int lvt_39_1_ = Math.max(MathHelper.floor(dd3 + lvt_26_3_), lvt_36_1_);
 
+                //For 2 -> For 1
                 for(int lvt_40_1_ = lvt_34_1_; lvt_40_1_ <= lvt_37_1_; ++lvt_40_1_) {
-                    double lvt_41_1_ = ((double)lvt_40_1_ + 0.5D - lvt_28_1_) / lvt_26_3_;
-                    if (lvt_41_1_ * lvt_41_1_ < 1.0D) {
+                    double d001 = ((double)lvt_40_1_ + 0.5D - dd1) / lvt_26_3_;
+                    if (d001 * d001 < 1.0D) {
                         for(int lvt_43_1_ = lvt_35_2_; lvt_43_1_ <= lvt_38_1_; ++lvt_43_1_) {
-                            double lvt_44_1_ = ((double)lvt_43_1_ + 0.5D - lvt_30_1_) / lvt_26_3_;
-                            if (lvt_41_1_ * lvt_41_1_ + lvt_44_1_ * lvt_44_1_ < 1.0D) {
+                            double d002 = ((double)lvt_43_1_ + 0.5D - dd2) / lvt_26_3_;
+                            if (d001 * d001 + d002 * d002 < 1.0D) {
                                 for(int lvt_46_1_ = lvt_36_1_; lvt_46_1_ <= lvt_39_1_; ++lvt_46_1_) {
-                                    double lvt_47_1_ = ((double)lvt_46_1_ + 0.5D - lvt_32_1_) / lvt_26_3_;
-                                    if (lvt_41_1_ * lvt_41_1_ + lvt_44_1_ * lvt_44_1_ + lvt_47_1_ * lvt_47_1_ < 1.0D) {
-                                        int lvt_49_1_ = lvt_40_1_ - p_207803_16_ + (lvt_43_1_ - p_207803_17_) * p_207803_19_ + (lvt_46_1_ - p_207803_18_) * p_207803_19_ * p_207803_20_;
-                                        if (!lvt_22_1_.get(lvt_49_1_)) {
-                                            lvt_22_1_.set(lvt_49_1_);
-                                            lvt_23_1_.setPos(lvt_40_1_, lvt_43_1_, lvt_46_1_);
-                                            if (filler.test(p_207803_1_.getBlockState(lvt_23_1_))) {
-                                                p_207803_1_.setBlockState(
-                                                        lvt_23_1_,
-                                                        ResynthBlocks.BLOCK_SYLVANITE_END_STONE.getDefaultState(),
-                                                        2
-                                                );
-                                                ++lvt_21_1_;
+                                    double d003 = ((double)lvt_46_1_ + 0.5D - dd3) / lvt_26_3_;
+                                    if (d001 * d001 + d002 * d002 + d003 * d003 < 1.0D) {
+                                        int lvt_49_1_ = lvt_40_1_ - i01 + (lvt_43_1_ - i02)
+                                                * i04 + (lvt_46_1_ - i03) * i04 * i05;
+                                        if (!bitSet.get(lvt_49_1_)) {
+                                            bitSet.set(lvt_49_1_);
+                                            pm.setPos(lvt_40_1_, lvt_43_1_, lvt_46_1_);
+                                            if (filler.test(wrld.getBlockState(pm))) {
+                                                Block bses = ResynthBlocks.BLOCK_SYLVANITE_END_STONE;
+                                                BlockState bsses = bses.getDefaultState();
+                                                wrld.setBlockState(pm, bsses,2);
+                                                ++i0;
                                             }
                                         }
                                     }
@@ -201,6 +200,6 @@ class SylvaniteFeature extends OreFeature {
             }
         }
 
-        return lvt_21_1_ > 0;
+        return i0 > 0;
     }
 }

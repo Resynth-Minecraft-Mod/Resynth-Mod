@@ -31,7 +31,6 @@ import net.minecraft.world.gen.placement.Placement;
  * generating {@link BlockMineralStone} in the world
  * as ore veins.
  */
-@SuppressWarnings("unused")
 class MineralStoneFeature extends OreFeature {
 
     /**
@@ -44,9 +43,8 @@ class MineralStoneFeature extends OreFeature {
      * Registers the Mineral Stone ore generation feature
      * to every biome provided the config allows it.
      */
-    @SuppressWarnings("unused")
     MineralStoneFeature(){
-        super(OreFeatureConfig::deserialize);
+        super(OreFeatureConfig.field_236566_a_);
 
         if(!CONFIG.shouldGenerate())
             return;
@@ -60,14 +58,11 @@ class MineralStoneFeature extends OreFeature {
      * @param biome the biome to add this feature to.
      */
     private void add(Biome biome){
-        biome.addFeature(
-                GenerationStage.Decoration.UNDERGROUND_ORES,
-                this.func_225566_b_(new OreFeatureConfig(
-                                OreFeatureConfig.FillerBlockType.NATURAL_STONE,
-                                ResynthBlocks.BLOCK_MINERAL_STONE.getDefaultState(),
-                                CONFIG.getSize()
-                        )
-                ).func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(getRangeCount()))
+        biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES,
+            this.withConfiguration(new OreFeatureConfig(
+                OreFeatureConfig.FillerBlockType.NATURAL_STONE,
+                ResynthBlocks.BLOCK_MINERAL_STONE.getDefaultState(),CONFIG.getSize())
+            ).withPlacement(Placement.COUNT_RANGE.configure(getRangeCount()))
         );
     }
 

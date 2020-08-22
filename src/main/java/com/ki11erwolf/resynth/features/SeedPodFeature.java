@@ -22,14 +22,15 @@ import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.ISeedReader;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.feature.structure.StructureManager;
 import net.minecraft.world.gen.placement.CountRangeConfig;
 import net.minecraft.world.gen.placement.Placement;
 
@@ -41,7 +42,6 @@ import java.util.Random;
  * in the world as a flower. The Seed Pod will generate
  * in every biome.
  */
-@SuppressWarnings("unused")
 class SeedPodFeature extends Feature<NoFeatureConfig> {
 
     /**
@@ -53,59 +53,83 @@ class SeedPodFeature extends Feature<NoFeatureConfig> {
      * Adds this feature to every biome provided
      * the config allows the plant to spawn.
      */
-    @SuppressWarnings("unused")
     SeedPodFeature(){
-        super(NoFeatureConfig::deserialize);
+        super(NoFeatureConfig.field_236558_a_);
 
         //Skip generation
         if(!CONFIG.generate())
             return;
 
-        Biome.BIOMES.forEach(
-                biome -> biome.addFeature(
-                        GenerationStage.Decoration.UNDERGROUND_ORES,
-                        this.func_225566_b_(IFeatureConfig.NO_FEATURE_CONFIG)
-                                .func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(
-                                new CountRangeConfig(
-                                        CONFIG.getGenerationFrequency(),
-                                        0,0,
-                                        255
+        Biome.BIOMES.forEach(biome -> biome.addFeature(
+                GenerationStage.Decoration.UNDERGROUND_ORES,
+                this.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(
+                        Placement.COUNT_RANGE.configure(
+                                new CountRangeConfig(CONFIG.getGenerationFrequency(),
+                                        0,0,255
                                 )
-                        ))
+                        )
                 )
-        );
+        ));
     }
 
     /**
      * {@inheritDoc}
-     * Handles placing the Mystical Seed Pod in the world.
+     * Called from {@link #func_230362_a_(ISeedReader, StructureManager,
+     * ChunkGenerator, Random, BlockPos, NoFeatureConfig)}. Use this method
+     * instead of the obfuscated one Minecraft provided.
      *
-     * @return
+     * Handles placing the Mystical Seed Pod block in the world, as flowers atop dirt, grass,
+     * corse dirt, and podzol. Only places flowers within air blocks.
+     *
+     * @param seedReader object that provides a reference to the world object instance.
+     * @param random Minecrafts global Random object instance.
+     * @param pos placement block position.
+     * @return {@code true} if an ore/block/resource was actually placed (I think).
      */
-    @Override
-    public boolean place(IWorld worldIn, ChunkGenerator<? extends GenerationSettings> generator, Random rand,
-                         BlockPos pos, NoFeatureConfig config) {
+    private boolean place(ISeedReader seedReader, Random random, BlockPos pos/*, ChunkGenerator gen,
+                          StructureManager structureManager, NoFeatureConfig nfc*/) {
         BlockState blockstate = ResynthBlocks.BLOCK_SEED_POD.getDefaultState();
+        World world = seedReader.getWorld();
         int tries = CONFIG.getGenerationFrequency();
         int i = 0;
 
         for(int j = 0; j < tries; ++j) {
             BlockPos blockpos = pos.add(
-                    rand.nextInt(8) - rand.nextInt(8),
-                    rand.nextInt(4) - rand.nextInt(4),
-                    rand.nextInt(8) - rand.nextInt(8)
+                    random.nextInt(8) - random.nextInt(8),
+                    random.nextInt(4) - random.nextInt(4),
+                    random.nextInt(8) - random.nextInt(8)
             );
 
-            if (worldIn.isAirBlock(blockpos) && blockpos.getY() < 255
-                    && (worldIn.getBlockState(blockpos.down()).getBlock() == Blocks.GRASS_BLOCK
-                        || worldIn.getBlockState(blockpos.down()).getBlock() == Blocks.DIRT
-                        || worldIn.getBlockState(blockpos.down()).getBlock() == Blocks.COARSE_DIRT
-                        || worldIn.getBlockState(blockpos.down()).getBlock() == Blocks.PODZOL)) {
-                worldIn.setBlockState(blockpos, blockstate, 2);
+            if (world.isAirBlock(blockpos) && blockpos.getY() < 255
+                    && (world.getBlockState(blockpos.down()).getBlock() == Blocks.GRASS_BLOCK
+                    || world.getBlockState(blockpos.down()).getBlock() == Blocks.DIRT
+                    || world.getBlockState(blockpos.down()).getBlock() == Blocks.COARSE_DIRT
+                    || world.getBlockState(blockpos.down()).getBlock() == Blocks.PODZOL)) {
+                world.setBlockState(blockpos, blockstate, 2);
                 ++i;
             }
         }
 
         return i > 0;
+    }
+
+    /**
+     * Minecraft Feature <code>place()</code> method. The name is obfuscated, so, we just call the method
+     * {@link #place(ISeedReader, Random, BlockPos)} and return its value; pretending
+     * this method doesn't exist.
+     *
+     *
+     * @param seedReader object that provides a reference to the world object instance.
+     * @param structureManager structure generation. Unused.
+     * @param gen chunk generation object. Unused.
+     * @param random Minecrafts global Random object instance.
+     * @param pos placement block position.
+     * @param nfc config object representing a feature with no config. Similar to <code>void</code>. Unused.
+     * @return {@code true} if an ore/block/resource was actually placed (I think).
+     */
+    @Override
+    public boolean func_230362_a_(ISeedReader seedReader, StructureManager structureManager, ChunkGenerator gen,
+                                  Random random, BlockPos pos, NoFeatureConfig nfc) {
+        return place(seedReader, random, pos/*, gen, structureManager, nfc*/);
     }
 }

@@ -19,7 +19,7 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthModdedPlants;
 import com.ki11erwolf.resynth.ResynthPlants;
 import com.ki11erwolf.resynth.block.ResynthBlock;
-import com.ki11erwolf.resynth.integration.Hwyla;
+//import com.ki11erwolf.resynth.integration.Hwyla;
 import com.ki11erwolf.resynth.util.ItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -80,7 +80,8 @@ class PlantSetRegistry {
     /**
      * Helper class used to actually register blocks and items.
      */
-    @SuppressWarnings("unused")//Reflection
+    //Reflection
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     @Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
     private static class Registerer {
 
@@ -133,7 +134,8 @@ class PlantSetRegistry {
             registry.register(set.getPlantBlock());
 
             //Hwyla
-            Hwyla.addIfProvider(set.getPlantBlock());
+            //TODO: Uncomment
+            //Hwyla.addIfProvider(set.getPlantBlock());
         }
 
         /**
@@ -166,7 +168,8 @@ class PlantSetRegistry {
                 registry.register(itemOrBlock.getBlock());
 
                 //Hwyla
-                Hwyla.addIfProvider(itemOrBlock.getBlock());
+                //TODO: Uncomment
+                //Hwyla.addIfProvider(itemOrBlock.getBlock());
             }
 
             //ItemBlock

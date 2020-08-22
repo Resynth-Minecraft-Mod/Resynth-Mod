@@ -231,7 +231,7 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * world (excluding air). This method simply delegates
      * the task to the more generalized
      * {@link #onBlockClick(World, BlockPos, BlockState, ItemStack, PlayerEntity, Direction)}
-     * and {@link #onBlockShiftClick(World, BlockPos, BlockState, ItemStack, PlayerEntity, Direction)}
+     * and {@link #onBlockShiftClick(World, BlockPos, BlockState, ItemStack, PlayerEntity)}
      * methods which actually handle the task.
      *
      * @param context the context in which the item was used.
@@ -246,9 +246,8 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         if(context.getPlayer() == null) {
             success = false;
         } else if(context.getPlayer().isCrouching()) {
-            success = onBlockShiftClick(
-                    context.getWorld(), context.getPos(), context.getWorld().getBlockState(context.getPos()),
-                    context.getItem(), context.getPlayer(), context.getFace()
+            success = onBlockShiftClick(context.getWorld(), context.getPos(),
+                context.getWorld().getBlockState(context.getPos()), context.getItem(), context.getPlayer()
             );
         } else {
             success = onBlockClick(
@@ -279,13 +278,10 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         ItemStack stack = player.getHeldItem(hand);
         boolean success;
 
-        if(player.isCrouching()){
-            success = onItemShiftClick(world, player, stack);
-        } else {
-            success = onItemClick(world, player, stack);
-        }
+        if(player.isCrouching())    success = onItemShiftClick(world, player, stack);
+        else                        success = onItemClick(world, player, stack);
 
-        return (success ? ActionResult.func_226248_a_(stack) : ActionResult.func_226251_d_(stack));
+        return (success ? ActionResult.resultSuccess(stack) : ActionResult.resultFail(stack));
     }
 
     // **********************
@@ -321,7 +317,10 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
     /**
      * Called when this item (in a stack) is used when targeting a
-     * block (excluding air). This method will not be called if
+     * block (excluding air).
+     *
+     * <br>
+     * This method will not be called if
      * the player is NOT sneaking!
      *
      * <p/>Attempts to grow the targeted plant or
@@ -332,12 +331,11 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * @param block the state of the targeted block.
      * @param item the item stack used.
      * @param player the player that used the item.
-     * @param face the direction the block was targeted from.
      * @return {@code true} if the call resulted in an action,
      * {@code false} otherwise.
      */
-    private boolean onBlockShiftClick(World world, BlockPos pos, BlockState block, ItemStack item, PlayerEntity player,
-                                      @SuppressWarnings("unused") Direction face){
+    private boolean onBlockShiftClick(World world, BlockPos pos, BlockState block,
+                                      ItemStack item, PlayerEntity player){
         if(tryGrowPlant(player, world, block, pos))
             return true;
 
@@ -410,7 +408,7 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             if(incrementCharges(item)){
                 if(CONFIG.playChargeSound())
                     EffectsUtil.playNormalSound(
-                            world, player, player.getPosition(),
+                            world, player, new BlockPos(player.getPositionVec()),
                             SoundEvents.BLOCK_NOTE_BLOCK_CHIME, SoundCategory.BLOCKS
                     );
 
@@ -454,10 +452,12 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         if(!world.isRemote)
             return;
 
-        player.sendMessage(new StringTextComponent(
-                TextFormatting.GOLD + getFormattedTooltip("mineral_hoe_charges", TextFormatting.GRAY).getFormattedText()
-                        + TextFormatting.GREEN + getCharges(item)
-        ));
+        player.sendMessage(
+            new StringTextComponent(
+                    TextFormatting.GOLD + getFormattedTooltip("mineral_hoe_charges", TextFormatting.GRAY)
+                            .getString() + TextFormatting.GREEN + getCharges(item)
+            ), player.getUniqueID()
+        );
     }
 
     // *******
@@ -567,7 +567,7 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         BlockInfoProvider infoProvider = (BlockInfoProvider)block.getBlock();
         player.sendMessage(new StringTextComponent(
                 getInfoFromProvider(infoProvider, world, pos, block)
-        ));
+        ), player.getUniqueID());
 
         return true;
     }
@@ -614,7 +614,7 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
         if(block.getBlock() instanceof IGrowable){
             if(!world.isRemote)
-                ((IGrowable)block.getBlock()).func_225535_a_((ServerWorld)world, random, pos, world.getBlockState(pos));
+                ((IGrowable)block.getBlock()).grow((ServerWorld)world, random, pos, world.getBlockState(pos));
             return true;
         }
 

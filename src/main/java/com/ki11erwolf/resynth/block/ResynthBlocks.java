@@ -18,7 +18,7 @@ package com.ki11erwolf.resynth.block;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.EnhancersConfig;
-import com.ki11erwolf.resynth.integration.Hwyla;
+//import com.ki11erwolf.resynth.integration.Hwyla;
 import com.ki11erwolf.resynth.util.QueueRegisterer;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
@@ -31,7 +31,7 @@ import net.minecraftforge.fml.common.Mod;
  *
  * This class also handles the registering of blocks(and their ItemBlock).
  */
-@SuppressWarnings("unused")//Block fields register themselves to the game.
+//Block fields register themselves to the game.
 @Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ResynthBlocks extends QueueRegisterer<Block> {
 
@@ -91,6 +91,7 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
     /**
      * Calvinite Enhancer. Allows creating tier 2 Mineral Soil.
      */
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     public static final ResynthBlock<?> BLOCK_CALVINITE_ENHANCER = new BlockEnhancer(
             "calvinite", ENHANCERS_CONFIG.getCalviniteMineralConcentrationIncrease(), 1
     ).queueRegistration();
@@ -98,6 +99,7 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
     /**
      * Sylvanite Enhancer. Allows creating tier 3 Mineral Soil.
      */
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     public static final ResynthBlock<?> BLOCK_SYLVANITE_ENHANCER = new BlockEnhancer(
             "sylvanite", ENHANCERS_CONFIG.getSylvaniteMineralConcentrationIncrease(), 2
     ).queueRegistration();
@@ -117,14 +119,15 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
      * @param event forge event.
      */
     @SubscribeEvent
-    @SuppressWarnings("unused")//Reflection
+    //Reflection
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         INSTANCE.iterateQueue(block -> {
             ResynthMod.getNewLogger().debug("Registering Resynth Block: " + block);
             event.getRegistry().register(block);
 
             //Hwyla
-            Hwyla.addIfProvider(block);
+            //TODO: Uncomment
+            //Hwyla.addIfProvider(block);
         });
     }
 }

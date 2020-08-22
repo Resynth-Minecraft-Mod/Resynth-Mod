@@ -40,10 +40,12 @@ public class ClientProxy extends ServerProxy {
      */
     @Override
     public void onClientSetup(FMLClientSetupEvent event) {
-        RenderTypeLookup.setRenderLayer(ResynthBlocks.BLOCK_SEED_POD, RenderType.func_228641_d_());
+        //TODO: Might need changing
+        RenderType plantRenderType = RenderType.getTranslucent();//RenderType.getCutoutMipped();//RenderType.func_239269_g_();
 
+        RenderTypeLookup.setRenderLayer(ResynthBlocks.BLOCK_SEED_POD, plantRenderType);
         PublicPlantSetRegistry.foreach(PublicPlantSetRegistry.SetType.ALL, plantSet -> {
-            RenderTypeLookup.setRenderLayer(plantSet.getPlantBlock(), RenderType.func_228641_d_());
+            RenderTypeLookup.setRenderLayer(plantSet.getPlantBlock(), plantRenderType);
             return null;
         });
     }

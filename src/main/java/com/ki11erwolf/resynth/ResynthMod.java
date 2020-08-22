@@ -18,10 +18,12 @@ package com.ki11erwolf.resynth;
 import com.ki11erwolf.resynth.proxy.ClientProxy;
 import com.ki11erwolf.resynth.proxy.Proxy;
 import com.ki11erwolf.resynth.proxy.ServerProxy;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.*;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -57,12 +59,12 @@ public class ResynthMod {
     /**
      * Resynth version.
      */
-    public static final String MOD_VERSION = "4.2.0";
+    public static final String MOD_VERSION = "5.0.0";
 
     /**
      * Minecraft version.
      */
-    public static final String MC_VERSION = "[1.15.2]";
+    public static final String MC_VERSION = "[1.16.2]";
 
     /**
      * Resynth's new/returning user identification file.
@@ -78,7 +80,7 @@ public class ResynthMod {
     /**
      * FML initialized proxy. Will be ServerProxy on dedicated server, ClientProxy otherwise.
      */
-    private static final Proxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
+    private static final Proxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
     // *****
     //  Mod
@@ -152,8 +154,7 @@ public class ResynthMod {
      *
      * @param event forge provided event.
      */
-    @SubscribeEvent
-    @SuppressWarnings("unused")//Reflection
+    //@SubscribeEvent //Reflection
     public void onServerStarting(FMLServerStartingEvent event) {
         proxy.onServerStarting(event);
     }
@@ -163,8 +164,7 @@ public class ResynthMod {
      *
      * @param event Forge event.
      */
-    @SubscribeEvent
-    @SuppressWarnings("unused")//Reflection
+    //@SubscribeEvent //Reflection
     public void onServerStopped(FMLServerStoppedEvent event){
         if(!(proxy instanceof ClientProxy)) proxy.onServerStopped(event);
     }

@@ -78,8 +78,8 @@ public class TileEntityMineralSoil extends TileEntity {
      * @param compound the nbt tag compound we will read the variable from.
      */
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void deserializeNBT(CompoundNBT compound) {
+        super.deserializeNBT(compound); //super.read(compound);
         mineralPercentage = compound.getFloat(MINERAL_CONTENT_TAG);
     }
 
@@ -120,7 +120,6 @@ public class TileEntityMineralSoil extends TileEntity {
      * @param percentage the percentage to increase the
      * blocks mineral percentage by.
      */
-    @SuppressWarnings("unused")
     public void increaseMineralPercentage(float percentage) {
         setMineralPercentage(getMineralPercentage() + percentage);
     }
@@ -133,7 +132,7 @@ public class TileEntityMineralSoil extends TileEntity {
      * @param percentage the percentage to decrease the
      * blocks mineral percentage by.
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     public void decreaseMineralPercentage(float percentage) {
         setMineralPercentage(getMineralPercentage() - percentage);
     }

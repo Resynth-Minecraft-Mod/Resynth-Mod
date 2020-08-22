@@ -111,8 +111,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
          *
          * @param event forge event.
          */
-        @SubscribeEvent
-        @SuppressWarnings("unused")//Reflection
+        @SubscribeEvent //Reflection
         public void onBlockBroken(BlockEvent.BreakEvent event){
             //Checks and declarations
             if(event.getPlayer() == null || event.getPlayer().isCreative())
@@ -148,13 +147,12 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
          *
          * @param event forge event.
          */
-        @SubscribeEvent
-        @SuppressWarnings("unused")//Reflection
+        @SubscribeEvent //Reflection
         public void onItemExpire(ItemExpireEvent event){
             //Checks and declarations
             Item i = event.getEntityItem().getItem().getItem();
             World world = event.getEntityItem().world;
-            BlockPos pos = event.getEntityItem().getPosition();
+            BlockPos pos = new BlockPos(event.getEntityItem().getPositionVec());
             int count = event.getEntityItem().getItem().getCount();
             Block b = world.getBlockState(pos).getBlock();
 

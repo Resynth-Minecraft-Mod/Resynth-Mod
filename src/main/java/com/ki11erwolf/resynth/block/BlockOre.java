@@ -56,10 +56,9 @@ public class BlockOre extends ResynthBlock<BlockOre> {
      * @param maxXP the maximum amount of experience orbs to drop.
      */
     BlockOre(String oreName, int minXP, int maxXP) {
-        super(Properties.create(Material.ROCK)
-                        .hardnessAndResistance(3.0F, 3.0F)
-                        .lightValue(1),
-                oreName
+        super(
+            setLightValue(Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F), 1),
+            oreName
         );
 
         if(minXP > maxXP)
@@ -100,5 +99,20 @@ public class BlockOre extends ResynthBlock<BlockOre> {
     @Override
     public int getHarvestLevel(BlockState state) {
         return 2;
+    }
+
+    /**
+     * Used to set the light/luminance a block emits, using
+     * its {@link net.minecraft.block.AbstractBlock.Properties}
+     * object.
+     *
+     * @param propertiesIn the block properties we want to
+     *                     give a luminance value.
+     * @param lum luminance - the amount of light the block gives off.
+     * @return the blocks properties (<code>propertiesIn</code>)
+     * with a new light value set to <code>luminance</code>.
+     */
+    private static Properties setLightValue(Properties propertiesIn, @SuppressWarnings("SameParameterValue") int lum){
+        return propertiesIn.func_235838_a_(value -> lum);
     }
 }

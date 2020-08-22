@@ -20,8 +20,9 @@ package com.ki11erwolf.resynth.features;
  * created Resynth {@link net.minecraft.world.gen.feature.Feature}.
  * Also provides a base class for registering the created features.
  */
-@SuppressWarnings("unused")
 public class ResynthFeatures {
+
+    //TODO: Array initialization?
 
     /**
      * Reference to the {@link SeedPodFeature}.
@@ -52,6 +53,7 @@ public class ResynthFeatures {
      * to the game.
      */
     public static void init(){
+        //TODO: A wild thought appears... Annotations & Reflection as alternative to this.
         /*NO-OP - just serves to initialize the static references.*/
     }
 }

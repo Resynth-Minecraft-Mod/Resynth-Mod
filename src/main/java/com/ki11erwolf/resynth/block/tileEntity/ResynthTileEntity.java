@@ -61,8 +61,7 @@ public abstract class ResynthTileEntity <T extends TileEntity> extends ResynthBl
      * @return {@code true}
      */
     @Override
-    @SuppressWarnings("deprecation")
-    public boolean hasTileEntity() {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
@@ -73,7 +72,7 @@ public abstract class ResynthTileEntity <T extends TileEntity> extends ResynthBl
     /**
      * @return this blocks tile entity class.
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     public abstract Class<T> getTileEntityClass();
 
     /**

@@ -22,6 +22,7 @@ import com.ki11erwolf.resynth.util.ItemOrBlock;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -110,7 +111,6 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
          * @param event forge event.
          */
         @SubscribeEvent
-        @SuppressWarnings("unused")
         public void onEntityKilled(LivingDeathEvent event){
             //For each plant set
             for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)){
@@ -128,7 +128,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
                             if(!event.getEntity().getEntityWorld().isRemote)
                                 spawnSeeds(
                                         set.getSeedsItem(), event.getEntity().getEntityWorld(),
-                                        event.getEntity().getPosition()
+                                        new BlockPos(event.getEntity().getPositionVec())
                                 );
                         }
                     }
@@ -143,7 +143,6 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
          * @param event forge event.
          */
         @SubscribeEvent
-        @SuppressWarnings("unused")
         public void onItemDestroyed(PlayerDestroyItemEvent event){
             //noinspection ConstantConditions // Apparently not
             if(event.getOriginal() == null)
@@ -161,7 +160,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
                             //Spawn seeds if lucky
                             spawnSeeds(
                                     plantSet.getSeedsItem(), event.getEntity().getEntityWorld(),
-                                    event.getEntity().getPosition()
+                                    new BlockPos(event.getEntity().getPositionVec())
                             );
                     }
                 }
