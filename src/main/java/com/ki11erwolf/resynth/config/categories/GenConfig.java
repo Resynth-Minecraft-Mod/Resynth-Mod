@@ -124,7 +124,6 @@ public class GenConfig extends ConfigCategory {
      * @return {@code true} if the config
      * allows generating the ore veins.
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean shouldGenerate(){
         return this.generate.getValue();
     }

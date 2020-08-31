@@ -85,7 +85,6 @@ public class DoubleConfigValue implements ConfigValue {
      * @param defaultValue the default value of the config value.
      * @param category the config category this value belongs to.
      */
-    @SuppressWarnings("unused")
     public DoubleConfigValue(String uniqueName, String comment, double defaultValue, ConfigCategory category){
         this(uniqueName, comment, defaultValue, 0, 0, category);
     }

@@ -34,7 +34,6 @@ public class PublicPlantSetRegistry {
      * @param setType the type of plant sets to iterate over.
      * @param action the action to perform for each plant set.
      */
-    @SuppressWarnings("unused")
     public static void foreach(SetType setType, Function<PlantSet<?>, Void> action){
         for(PlantSet<?> plantSet : PlantSetRegistry.getPlantSets()){
             if(setType.matches(plantSet))

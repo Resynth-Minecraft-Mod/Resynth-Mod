@@ -85,7 +85,6 @@ public class IntegerConfigValue implements ConfigValue {
      * @param defaultValue the default value of the config value.
      * @param category the config category this value belongs to.
      */
-    @SuppressWarnings("unused")
     public IntegerConfigValue(String uniqueName, String comment, int defaultValue, ConfigCategory category){
         this(uniqueName, comment, defaultValue, 0, 0, category);
     }

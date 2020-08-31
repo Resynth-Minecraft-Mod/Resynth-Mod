@@ -22,7 +22,6 @@ import java.util.Objects;
  * ConfigCategory} with an identifiable name, comment and
  * default value.
  */
-@SuppressWarnings("unused")
 public class StringConfigValue implements ConfigValue {
 
     /**

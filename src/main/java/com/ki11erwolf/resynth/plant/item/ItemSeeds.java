@@ -36,7 +36,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
@@ -107,7 +106,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
             return ActionResultType.FAIL;
 
         //Get vars
-        IWorld world = context.getWorld();
+        World world = context.getWorld();
         BlockPos blockpos = context.getPos().up();
 
         //If valid position to plant
@@ -129,7 +128,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
 
             //Play plant sound.
             EffectsUtil.playNormalSound(
-                    (World) world, playerEntity, blockpos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS
+                    world, playerEntity, blockpos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS
             );
 
             return ActionResultType.SUCCESS;
