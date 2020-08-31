@@ -15,7 +15,6 @@
  */
 package com.ki11erwolf.resynth.util;
 
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.ITextComponent;
 
 import java.util.List;
@@ -53,63 +52,132 @@ public class ExpandingTooltip {
      */
     private Tooltip expanded = CommonTooltips.UNSPECIFIED;
 
-    public List<ITextComponent> write(List<ITextComponent> tooltip){
-        if(conditionMet)    expanded.write(tooltip);
-        else                collapsed.write(tooltip);
+    /**
+     * Handles writing the tooltip, either collapsed
+     * or extended, to the given {@code tooltip} List.
+     *
+     * @param tooltip a given tooltip list to write the tooltips to.
+     * @return {@code tooltip}. Useful for daisy chaining.
+     */
+    public List<ITextComponent> write(List<ITextComponent> tooltip) {
+        if(conditionMet) expanded.write(tooltip);
+        else collapsed.write(tooltip);
         return tooltip;
     }
 
+    /**
+     * Sets the tooltips condition, which is needed to be
+     * {@code true}, before it can expand.
+     *
+     * @param condition the boolean condition determining
+     *                  if the tooltip expands or not.
+     * @return {@code this;}
+     */
     public ExpandingTooltip setCondition(boolean condition){
         this.conditionMet = condition;
         return this;
     }
 
-    //TODO: Fix this mess
-
+    /**
+     * Shortcut method that makes setting the condition
+     * {@link #setCondition(boolean)} to be true when
+     * a SHIFT key is held down.
+     *
+     * @return {@code this;}
+     */
     public ExpandingTooltip setConditionToShiftDown(){
-        this.conditionMet = Screen.func_231174_t_();//Screen.func_231173_s_();//Screen.func_231172_r_();//Screen.hasShiftDown();
+        this.conditionMet = CommonRKeys.SHIFT.rKey.query();
         return this;
     }
 
+    /**
+     * Shortcut method that makes setting the condition
+     * {@link #setCondition(boolean)} to be true when
+     * a CTRL key is held down.
+     *
+     * @return {@code this;}
+     */
     public ExpandingTooltip setConditionToControlDown(){
-        this.conditionMet = Screen.func_231174_t_();//Screen.func_231173_s_();//Screen.func_231172_r_();//Screen.hasControlDown();
+        this.conditionMet = CommonRKeys.CONTROL.rKey.query();
         return this;
     }
 
+    /**
+     * Shortcut method that makes setting the condition
+     * {@link #setCondition(boolean)} to be true when
+     * an ALT key is held down.
+     *
+     * @return {@code this;}
+     */
     public ExpandingTooltip setConditionToAltDown(){
-        this.conditionMet = Screen.func_231174_t_();//Screen.func_231173_s_();//Screen.func_231172_r_();//Screen.hasAltDown();
+        this.conditionMet = CommonRKeys.ALT.rKey.query();
         return this;
     }
 
+    /**
+     * Sets what the tooltip will display in its collapsed form.
+     *
+     * @param tooltip the tooltip text in collapsed form.
+     * @return {@code this;}
+     */
     public ExpandingTooltip setCollapsedTooltip(Tooltip tooltip){
         this.collapsed = tooltip == null ? CommonTooltips.NULL : tooltip;
         return this;
     }
 
+    /**
+     * Sets what the tooltip will display in its expanded form.
+     *
+     * @param tooltip the tooltip text in expanded form.
+     * @return {@code this;}
+     */
     public ExpandingTooltip setExpandedTooltip(Tooltip tooltip){
         this.expanded = tooltip == null ? CommonTooltips.NULL : tooltip;
         return this;
     }
 
+    /**
+     * A shortcut method that makes setting this tooltip up as
+     * a "press shift for stats" tooltip type quick and easy.
+     *
+     * @param expanded the tooltip to be displayed when expanded.
+     * @return {@code this;}
+     */
     public ExpandingTooltip setShiftForStats(Tooltip expanded){
         setConditionToShiftDown().setCollapsedTooltip(CommonTooltips.SHIFT_FOR_STATS)
                 .setExpandedTooltip(expanded);
         return this;
     }
 
+    /**
+     * A shortcut method that makes setting this tooltip up as
+     * a "press ctrl for description" tooltip type quick and easy.
+     *
+     * @param expanded the tooltip to be displayed when expanded.
+     * @return {@code this;}
+     */
     public ExpandingTooltip setCtrlForDescription(Tooltip expanded){
-        setCondition(
-                Screen.func_231174_t_()/*Screen.func_231173_s_();//Screen.func_231172_r_();Screen.hasControlDown()*/
-                        && Tooltip.areTooltipsEnabled()).setCollapsedTooltip(
-                Tooltip.areTooltipsEnabled() ? CommonTooltips.CTRL_FOR_DESCRIPTION : CommonTooltips.NULL
-        ).setExpandedTooltip(expanded);
+        boolean isFiring = CommonRKeys.CONTROL.rKey.query();
+
+        setCondition(isFiring && Tooltip.areTooltipsEnabled())
+                .setCollapsedTooltip(Tooltip.areTooltipsEnabled() ? CommonTooltips.CTRL_FOR_DESCRIPTION : CommonTooltips.NULL)
+                .setExpandedTooltip(expanded);
+
         return this;
     }
 
+    /**
+     * A shortcut method that makes setting this tooltip up as
+     * a "press alt for more" tooltip type quick and easy.
+     *
+     * @param expanded the tooltip to be displayed when expanded.
+     * @return {@code this;}
+     */
     @SuppressWarnings({"unused", "RedundantSuppression"})
     public ExpandingTooltip setAltForAdditionalInfo(Tooltip expanded){
-        setConditionToAltDown().setCollapsedTooltip(CommonTooltips.ALT_FOR_ADDITIONAL_INFO)
-                .setExpandedTooltip(expanded);
+        setConditionToAltDown().setCollapsedTooltip(
+                CommonTooltips.ALT_FOR_ADDITIONAL_INFO
+        ).setExpandedTooltip(expanded);
         return this;
     }
     

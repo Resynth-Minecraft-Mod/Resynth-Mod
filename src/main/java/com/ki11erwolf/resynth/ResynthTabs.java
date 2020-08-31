@@ -34,29 +34,20 @@ public final class ResynthTabs {
      * The mods main creative tab. Used for general blocks/items.
      */
     public static final ItemGroup TAB_RESYNTH = new ItemGroup("resynth") {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(ResynthItems.ITEM_MINERAL_HOE);
-        }
+        @Override public ItemStack createIcon() { return new ItemStack(ResynthItems.ITEM_MINERAL_HOE); }
     };
 
     /**
      * The mods seeds tab. Holds the seed items for all plants.
      */
     public static final ItemGroup TAB_RESYNTH_SEEDS = new ItemGroup("resynth_seeds") {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(ResynthPlants.DIAMOND.getSeedsItem());
-        }
+        @Override public ItemStack createIcon() { return new ItemStack(ResynthPlants.DIAMOND.getSeedsItem().getItem()); }
     };
 
     /**
      * The mods produce tab. Holds the produce items for all plants.
      */
     public static final ItemGroup TAB_RESYNTH_PRODUCE = new ItemGroup("resynth_produce") {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(ResynthPlants.DIAMOND.getProduceItemOrBlock().getItem());
-        }
+        @Override public ItemStack createIcon() { return new ItemStack(ResynthPlants.ENDER_PEARL.getProduceItemOrBlock().getItem()); }
     };
 }

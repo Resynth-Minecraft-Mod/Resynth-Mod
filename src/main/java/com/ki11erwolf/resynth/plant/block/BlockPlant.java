@@ -29,6 +29,8 @@ import com.ki11erwolf.resynth.util.MinecraftUtil;
 import com.ki11erwolf.resynth.util.PlantPatchInfoProvider;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -43,6 +45,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -92,15 +95,9 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      *                   be specified by config.
      */
     BlockPlant(String plantTypeName, String plantName, PlantSetProperties properties) {
-        super(
-                Properties.create(Material.PLANTS)
-                .sound(SoundType.PLANT)
-                .tickRandomly()
-                .hardnessAndResistance(0.0F)
-                .doesNotBlockMovement(),
-
-                plantTypeName + "_" + PLANT_PREFIX + "_" + plantName
-        );
+        super(Properties.create(Material.PLANTS).sound(SoundType.PLANT).tickRandomly()
+                        .hardnessAndResistance(0.0F).doesNotBlockMovement(),
+                plantTypeName + "_" + PLANT_PREFIX + "_" + plantName);
 
         this.properties = properties;
         this.setDefaultState(this.stateContainer.getBaseState().with(this.getGrowthProperty(), 0));
@@ -149,8 +146,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     @SuppressWarnings("deprecation")
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState,
                                            IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return !stateIn.isValidPosition(worldIn, currentPos) ?
-                Blocks.AIR.getDefaultState() :
+        return !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() :
                 super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
@@ -158,31 +154,13 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     // Look and Feel
     // *************
 
-//    /**
-//     * Sets the opacity of this block to full (1.0),
-//     * which makes the block see-through.
-//     *
-//     * @return {@code 1.0F}.
-//     */
-//    @Override
-//    @OnlyIn(Dist.CLIENT)
-//    public float func_220080_a(BlockState state, IBlockReader reader, BlockPos pos) {
-//        return 1.0F;
-//    }
-
-//    @Override
-//    @OnlyIn(Dist.CLIENT)
-//    public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
-//        return 1;
-//    }
-
     /**
      * Allows skylight to pass through this block.
      *
      * @return {@code true}
      */
     @Override
-    public boolean propagatesSkylightDown(BlockState p_200123_1_, IBlockReader p_200123_2_, BlockPos p_200123_3_) {
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
         return true;
     }
 
@@ -197,17 +175,6 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     public boolean isTransparent(BlockState state) {
         return false;
     }
-
-//    /**
-//     * Tells Minecraft that this block is abnormal,
-//     * which allows us to render it as transparent.
-//     *
-//     * @return {@code false}
-//     */
-//    @Override
-//    public boolean isNormalCube(BlockState state, IBlockReader reader, BlockPos pos) {
-//        return false;
-//    }
 
     /**
      * @return {@code 0}.
@@ -225,8 +192,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
-                                        ISelectionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return VoxelShapes.empty();
     }
 
@@ -240,6 +206,14 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return getShapeByAge()[state.get(this.getGrowthProperty())];
+    }
+
+    /**
+     * @return the specific way of rendering the layers of Resynth plants.
+     * Affects {@link com.ki11erwolf.resynth.block.BlockSeedPod} as well.
+     */
+    public static RenderType getResynthPlantRenderType() {
+        return RenderType.getCutoutMipped();
     }
 
     // *********
@@ -395,22 +369,6 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
                                              Hand hand, BlockRayTraceResult hit) {
         return tryRightclickHarvest(world, pos, player) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
     }
-
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * Called when a player right-clicks this plant.
-//     * Used to implement right-click harvesting ({@link
-//     * #tryRightclickHarvest(World, BlockPos, PlayerEntity)}).
-//     *
-//     * @return {@link ActionResultType#SUCCESS} if the plant was harvested,
-//     * {@link ActionResultType#FAIL} if the plant could not be harvested.
-//     */
-//    @Override
-//    public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player,
-//                                           Hand hand, BlockRayTraceResult hit){
-//        return tryRightclickHarvest(world, pos, player) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
-//    }
 
     /**
      * Will try and harvest the given plant in the given world if the plant
@@ -744,34 +702,34 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
 //            ));
 //    }
 
-    // ************************
-    // Public Properties Getter
-    // ************************
-
-    public PlantSetProperties getProperties(){
-        return this.properties;
-    }
 
     // *****
     // Other
     // *****
 
-//    /**
-//     * Gets the growth stage message from the
-//     * lang file formatted with the provided
-//     * info.
-//     *
-//     * @param growthStage the plants current growth stage.
-//     * @param max the plants max number of growth stages.
-//     * @return the formatted localized message.
-//     */
-//    private static String getGrowthStageMessage(int growthStage, int max){
-//        return TextFormatting.GREEN +
-//                I18n.format(
-//                        "misc.resynth.growth_stage",
-//                        TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
-//                );
-//    }
+    /**
+     * @return the properties object for the plant
+     * that specifies the values the plant uses,
+     * like growth rate and seed drop chances.
+     */
+    public PlantSetProperties getProperties(){
+        return this.properties;
+    }
+
+    /**
+     * Gets the growth stage message from the
+     * lang file formatted with the provided
+     * info.
+     *
+     * @param growthStage the plants current growth stage.
+     * @param max the plants max number of growth stages.
+     * @return the formatted localized message.
+     */
+    private static String getGrowthStageMessage(int growthStage, int max){
+        return TextFormatting.GREEN + I18n.format("misc.resynth.growth_stage",
+                TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
+        );
+    }
 
     // ****************
     // Abstract Methods
@@ -852,10 +810,9 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     private void callGrowPlant(World world, BlockState state, BlockPos pos, int increase){
         //Don't grow if fully grown.
         //noinspection rawtypes
-        if(
-                ((BlockPlant)world.getBlockState(pos).getBlock()).getGrowthStage(world.getBlockState(pos))
-                >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage()
-        ) return;
+        if(((BlockPlant)world.getBlockState(pos).getBlock()).getGrowthStage(world.getBlockState(pos))
+                >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage())
+            return;
 
         ForgeHooks.onCropsGrowPre(world, pos, state, false);
         growPlant(world, state, pos, increase);

@@ -44,8 +44,8 @@ import javax.annotation.Nonnull;
 //import net.minecraft.util.math.Vec3d;
 
 /**
- * Mystic Seed Pod. Drops Biochemical seeds for players
- * in peaceful mode.
+ * Mystical Seed Pod. Can be configured to drops Biochemical seeds when broken.
+ * Useful for players in peaceful mode and skyblock.
  */
 @SuppressWarnings("deprecation")
 public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantable {
@@ -67,10 +67,7 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      * Default constructor.
      */
     BlockSeedPod(String name) {
-        super(
-                Properties.create(Material.PLANTS).sound(SoundType.PLANT).notSolid(),//.func_226896_b_()/Not Solid
-                name
-        );
+        super(Properties.create(Material.PLANTS).sound(SoundType.PLANT).notSolid(), name);
     }
 
     // **************
@@ -87,29 +84,7 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
         return Block.OffsetType.XZ;
     }
 
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @return {@code false}.
-//     */
-//    @Override
-//    public boolean isSolid(BlockState state) {
-//        return false;
-//    }
-
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @return {@link BlockRenderLayer#CUTOUT}.
-//     */
-//    @Override
-//    public BlockRenderLayer getRenderLayer() {
-//        return BlockRenderLayer.CUTOUT;
-//    }
-
     /**
-     * {@inheritDoc}.
-     *
      * This does not affect the collision box of the plant as it's
      * set by {@link #getCollisionShape(BlockState, IBlockReader, BlockPos, ISelectionContext)}
      *
@@ -123,8 +98,6 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return {@code 0}.
      */
     @Override
@@ -133,13 +106,10 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return {@link VoxelShapes#empty()}.
      */
     @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
-                                        ISelectionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return VoxelShapes.empty();
     }
 
@@ -148,8 +118,6 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
     // ***************
 
     /**
-     * {@inheritDoc}
-     *
      * @return the default state of this block or it's
      * state in the world at the given position.
      */
@@ -177,10 +145,8 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      */
     private boolean isValidGround(BlockState state) {
         Block block = state.getBlock();
-        return  block == Blocks.GRASS_BLOCK
-                || block == Blocks.DIRT
-                || block == Blocks.COARSE_DIRT
-                || block == Blocks.PODZOL;
+        return  block == Blocks.GRASS_BLOCK || block == Blocks.DIRT
+                || block == Blocks.COARSE_DIRT || block == Blocks.PODZOL;
     }
 
     /**
@@ -212,8 +178,7 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState,
                                            IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return !stateIn.isValidPosition(worldIn, currentPos)
-                ? Blocks.AIR.getDefaultState()
+        return !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState()
                 : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 

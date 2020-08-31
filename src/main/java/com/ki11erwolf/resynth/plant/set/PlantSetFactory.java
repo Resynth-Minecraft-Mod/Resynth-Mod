@@ -269,7 +269,6 @@ public class PlantSetFactory {
      *                           entities.
      * @return the newly created plant set.
      */
-    @SuppressWarnings("unused")
     public static PlantSet<?> newModdedBiochemicalSet(String modid, String setName, BiochemicalSetProperties properties,
                                                       String... sourceEntityRegistryNames){
         LOG.info("Attempting to create modded Biochemical plant set: " + modid + ":" + setName);

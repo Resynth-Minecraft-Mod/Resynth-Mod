@@ -33,10 +33,33 @@ import java.util.List;
  */
 public interface Tooltip {
 
+    /**
+     * The complete parameters write method called by the tooltip handler
+     * for tooltip text when it wants to write the tooltip.
+     *
+     * <p/>Normally, this method just calls the shortened {@link #write(List)}
+     * method, which is most often used. Only use this write method when the
+     * additional parameters are needed.
+     *
+     * @param tooltip the tooltips text to be written. Modified by implementation.
+     * @param world the world the player looking at the tooltip is in.
+     * @param stack the item stack the tooltip is attached to.
+     */
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     default void write(List<ITextComponent> tooltip, World world, ItemStack stack) {
         write(tooltip);
     }
 
+    /**
+     * The shortened write method called by the tooltip handler
+     * for tooltip text when it wants to write the tooltip.
+     *
+     * Prefer this write method as opposed to
+     * {@link #write(List, World, ItemStack)}
+     * unless the extra parameters are needed.
+     *
+     * @param tooltip the tooltips text to be written. Modified by implementation.
+     */
     void write(List<ITextComponent> tooltip);
 
     //Static util

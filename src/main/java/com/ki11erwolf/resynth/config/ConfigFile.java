@@ -80,7 +80,6 @@ public class ConfigFile {
      * @param <T> the config category class type.
      * @return the constructed and loaded config category.
      */
-    @SuppressWarnings("unused")
     public <T extends ConfigCategory> T getCategory(Class<T> catClass){
         //Already loaded.
         if(loadedCategories.containsKey(catClass))

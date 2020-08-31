@@ -18,11 +18,11 @@ package com.ki11erwolf.resynth.item;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralCrystalConfig;
+import com.ki11erwolf.resynth.util.CommonRKeys;
 import com.ki11erwolf.resynth.util.CommonTooltips;
 import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -68,16 +68,16 @@ class ItemMineralCrystal extends ResynthItem<ItemMineralCrystal> {
     /**
      * {@inheritDoc}.
      *
-     * Sets the tooltip for this item from the lang files.
+     * <br>Sets the tooltip for this item from the lang files.
      * Will also display a message if emergency conversion
      * mode is enabled from the config.
      */
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
-        new ExpandingTooltip().setCollapsedTooltip(null).setExpandedTooltip(CommonTooltips.NEW_LINE)
-                //TODO: Might be a problem
-                .setCondition(CONFIG.isECMEnabled() && Screen.func_231174_t_() /*OR func_231173_s_()*/ ).write(tooltip);
+        new ExpandingTooltip().setCollapsedTooltip(null).setExpandedTooltip(CommonTooltips.NEW_LINE).setCondition(
+                CONFIG.isECMEnabled() && CommonRKeys.SHIFT.rKey.query()
+        ).write(tooltip);
 
         tooltip.add(getFormattedTooltip(name + ".ecm", TextFormatting.DARK_PURPLE));
 

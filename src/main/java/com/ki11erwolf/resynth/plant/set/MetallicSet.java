@@ -109,7 +109,6 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
          * @param detonateEvent forge event.
          */
         @SubscribeEvent
-        @SuppressWarnings("unused")//Reflection
         public void onExplosion(ExplosionEvent.Detonate detonateEvent){
             World world = detonateEvent.getWorld();
 

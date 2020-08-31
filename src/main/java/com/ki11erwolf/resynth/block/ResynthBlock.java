@@ -112,7 +112,7 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
      * @return {@code this}.
      */
     @SuppressWarnings("WeakerAccess")//Lies
-    protected T queueRegistration() {
+    protected ResynthBlock<T> queueRegistration() {
         if (isQueued)
             throw new IllegalStateException(
                     String.format("Block: %s already queued for registration.",
@@ -123,8 +123,7 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
         itemBlock.queueRegistration();
         isQueued = true;
 
-        //noinspection unchecked //Should NOT be possible.
-        return (T) this;
+        return this;
     }
 
     // *******

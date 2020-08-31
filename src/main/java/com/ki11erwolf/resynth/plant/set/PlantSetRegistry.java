@@ -19,7 +19,6 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthModdedPlants;
 import com.ki11erwolf.resynth.ResynthPlants;
 import com.ki11erwolf.resynth.block.ResynthBlock;
-//import com.ki11erwolf.resynth.integration.Hwyla;
 import com.ki11erwolf.resynth.util.ItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -32,6 +31,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+//import com.ki11erwolf.resynth.integration.Hwyla;
 
 /**
  * Handles registering plant set items and blocks
@@ -106,7 +107,7 @@ class PlantSetRegistry {
         public static void registerBlocks(RegistryEvent.Register<Block> event) {
             PLANT_SETS.forEach(set -> {
                 registerPlantBlock(set, event.getRegistry());
-                registerProduceItemOrBlock(set, event.getRegistry(), false);
+                registerProduceItemOrBlock(set, event.getRegistry(), null, false);
             });
         }
 
@@ -120,9 +121,8 @@ class PlantSetRegistry {
         @SuppressWarnings("unused")//Reflection
         public static void registerItems(RegistryEvent.Register<Item> event) {
             PLANT_SETS.forEach(set -> {
-                //registerPlantItemBlock(set, event.getRegistry());
                 registerSeedsItem(set, event.getRegistry());
-                registerProduceItemOrBlock(set, event.getRegistry(), true);
+                registerProduceItemOrBlock(set, null, event.getRegistry(), true);
             });
         }
 
@@ -139,14 +139,6 @@ class PlantSetRegistry {
         }
 
         /**
-         * Registers a given plant sets plant blocks ItemBlock to the game.
-         */
-        private static void registerPlantItemBlock(PlantSet<?> set, IForgeRegistry<Item> registry){
-            LOG.debug("Registering plant item block: " + set.getPlantBlock().getItemBlock().getRegistryName());
-            registry.register(set.getPlantBlock().getItemBlock());
-        }
-
-        /**
          * Registers a given plant sets seeds item to the game.
          */
         private static void registerSeedsItem(PlantSet<?> set, IForgeRegistry<Item> registry){
@@ -157,15 +149,14 @@ class PlantSetRegistry {
         /**
          * Registers a given plant sets produce block(and itemblock)/item to the game.
          */
-        @SuppressWarnings("unchecked")//It is checked
-        private static void registerProduceItemOrBlock(PlantSet<?> set, @SuppressWarnings("rawtypes")
-                                                            IForgeRegistry registry, boolean item){
+        private static void registerProduceItemOrBlock(PlantSet<?> set, IForgeRegistry<Block> blockRegistry,
+                                                       IForgeRegistry<Item> itemRegistry, boolean item){
             ItemOrBlock itemOrBlock = set.getProduceItemOrBlock();
 
             //Block
             if(itemOrBlock.isBlock() && !item){
                 LOG.debug("Registering plant produce block: " + itemOrBlock.getBlock().getRegistryName());
-                registry.register(itemOrBlock.getBlock());
+                blockRegistry.register(itemOrBlock.getBlock());
 
                 //Hwyla
                 //TODO: Uncomment
@@ -175,13 +166,13 @@ class PlantSetRegistry {
             //ItemBlock
             if(itemOrBlock.isBlock() && item){
                 LOG.debug("Registering plant produce ItemBlock: " + itemOrBlock.getBlock().getRegistryName());
-                registry.register(((ResynthBlock<?>)itemOrBlock.getBlock()).getItemBlock());
+                itemRegistry.register(((ResynthBlock<?>)itemOrBlock.getBlock()).getItemBlock());
             }
 
             //Item
             if(itemOrBlock.isItem() && item){
                 LOG.debug("Registering plant produce item: " + itemOrBlock.getItem().getRegistryName());
-                registry.register(itemOrBlock.getItem());
+                itemRegistry.register(itemOrBlock.getItem());
             }
         }
     }

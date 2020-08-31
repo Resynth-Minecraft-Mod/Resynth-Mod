@@ -24,7 +24,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  * the logical and physical side we're executing
  * code on, as well as safety checks.
  */
-@SuppressWarnings({"WeakerAccess", "unused"})
+@SuppressWarnings({"WeakerAccess"})
 public class SideUtil {
 
     /**Private constructor - utils.*/

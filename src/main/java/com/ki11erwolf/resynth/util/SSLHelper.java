@@ -106,7 +106,7 @@ public class SSLHelper {
     /**
      * Re-enables ssl verification. Disabled by above method.
      */
-    //To fix the above fix
+    //To fix by undoing the above fix
     public static void enableSSL(){
         if(defaultSocketFactory != null && defaultHostnameVerifier != null){
             LOG.debug("Enabling SSL...");

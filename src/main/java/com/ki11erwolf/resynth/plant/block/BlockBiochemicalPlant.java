@@ -43,7 +43,6 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * @param properties the properties (e.g. growth chances) of the
      *                   plant type.
      */
-    @SuppressWarnings("WeakerAccess")//Lies
     public BlockBiochemicalPlant(String plantTypeName, String plantName, IBiochemicalSetProperties properties) {
         super(plantTypeName, plantName, properties);
     }
@@ -109,10 +108,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
     }
 
     /**
-     * @return {@inheritDoc}
-     *
-     * <p/>Returns the config defined number of
-     * produce drops.
+     * @return the config defined number of produce drops.
      */
     @Override
     protected int postHarvestNumberOfProduceDrops(){
@@ -120,9 +116,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
     }
 
     /**
-     * @return {@inheritDoc}
-     *
-     * <p/>Returns {@link SoundEvents#ENTITY_ITEM_PICKUP}.
+     * @return {@link SoundEvents#ENTITY_ITEM_PICKUP}
      */
     @Override
     protected SoundEvent postHarvestSoundEvent(){

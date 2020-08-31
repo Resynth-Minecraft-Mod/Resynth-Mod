@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.Mod;
  *
  * This class also handles the registering of items.
  */
-@SuppressWarnings({"unused", "rawtypes"})//Fields register themselves.
+
 @Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ResynthItems extends QueueRegisterer<Item> {
 
@@ -56,7 +56,7 @@ public class ResynthItems extends QueueRegisterer<Item> {
      * Dense Mineral Rock. x9 MineralRocks.
      */
     public static final ResynthItem<?> ITEM_DENSE_MINERAL_ROCK
-            = new ResynthItem("dense_mineral_rock").queueRegistration();
+            = new ResynthItem<>("dense_mineral_rock").queueRegistration();
 
     /**
      * Mineral Crystal. Recipe component for the Mineral Hoe.
@@ -74,13 +74,13 @@ public class ResynthItems extends QueueRegisterer<Item> {
      * Calvinite crystal. Dropped when Calvinite Infused Netherrack is mined.
      */
     public static final ResynthItem<?> ITEM_CALVINITE
-            = new ResynthItem("calvinite_crystal").queueRegistration();
+            = new ResynthItem<>("calvinite_crystal").queueRegistration();
 
     /**
      * Sylvanite crystal. Dropped when Sylvanite Infused End Stone is mined.
      */
     public static final ResynthItem<?> ITEM_SYLVANITE
-            = new ResynthItem("sylvanite_crystal").queueRegistration();
+            = new ResynthItem<>("sylvanite_crystal").queueRegistration();
 
     // *****
     // Logic
@@ -92,7 +92,6 @@ public class ResynthItems extends QueueRegisterer<Item> {
      * @param event forge event.
      */
     @SubscribeEvent
-    @SuppressWarnings("unused")//Reflection
     public static void registerItems(RegistryEvent.Register<Item> event) {
         INSTANCE.iterateQueue(item -> {
             ResynthMod.getNewLogger().debug("Registering Resynth Item: " + item.getClass().getName());

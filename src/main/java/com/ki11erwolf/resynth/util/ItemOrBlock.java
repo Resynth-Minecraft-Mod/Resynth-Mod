@@ -46,7 +46,6 @@ public class ItemOrBlock {
      *
      * @param block the block this instance represents.
      */
-    @SuppressWarnings("unused")
     public ItemOrBlock(Block block){
         this.itemOrBlock = block;
     }

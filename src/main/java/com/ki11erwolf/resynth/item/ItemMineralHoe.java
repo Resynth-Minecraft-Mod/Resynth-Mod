@@ -109,10 +109,13 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                 .setCollapsedTooltip(null).write(tooltip);
 
         //Add charges tooltip
-        tooltip.add(getFormattedTooltip(
-                "mineral_hoe_charges", TextFormatting.GOLD,
-                getCharges(stack) > 0 ? TextFormatting.AQUA : TextFormatting.RED, getCharges(stack)
-        ));
+        tooltip.add(
+                getFormattedTooltip(
+                        "mineral_hoe_charges", TextFormatting.GOLD,
+                        getCharges(stack) > 1 ? TextFormatting.AQUA : TextFormatting.RED,
+                        getCharges(stack)
+                )
+        );
 
         //Add default information tooltip.
         super.addInformation(stack, worldIn, tooltip, flagIn);
@@ -453,9 +456,10 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             return;
 
         player.sendMessage(
-            new StringTextComponent(
-                    TextFormatting.GOLD + getFormattedTooltip("mineral_hoe_charges", TextFormatting.GRAY)
-                            .getString() + TextFormatting.GREEN + getCharges(item)
+            new StringTextComponent(TextFormatting.GOLD + getFormattedTooltip(
+                    "mineral_hoe_charges", TextFormatting.GOLD,
+                    getCharges(item) > 1 ? TextFormatting.AQUA : TextFormatting.RED,
+                    getCharges(item)).getString()
             ), player.getUniqueID()
         );
     }

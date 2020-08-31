@@ -40,8 +40,7 @@ import java.util.function.Consumer;
  *
  * All plant sets in this class are referred to as Modded plant sets.
  */
-@SuppressWarnings("unused")//Fields register themselves.
-public class ResynthModdedPlants {
+public class ResynthModdedPlants { //Fields register themselves.
 
     // ********
     //   Mods
@@ -60,8 +59,7 @@ public class ResynthModdedPlants {
          * numeric ID.
          */
         private static final Map<Integer, Mod> MOD_LIST
-                = new HashMap<Integer, Mod>(){
-            {
+                = new HashMap<Integer, Mod>() {{
                 putMod(1, new Mod("Simple Ores", "simpleores"));
                 putMod(2, new Mod("More Ores in ONE", "moreoresinone"));
                 putMod(3, new Mod("Just Another Ruby Mod", "ruby"));
@@ -71,6 +69,8 @@ public class ResynthModdedPlants {
                 putMod(7, new Mod("Mekanism", "mekanism"));
                 putMod(8, new Mod("Botania", "botania"));
                 putMod(9, new Mod("The Midnight", "midnight"));
+                putMod(10, new Mod("Hwyla", "hwyla"));
+                putMod(11, new Mod("Hwyla (Waila)", "waila"));
             }
 
             /**
@@ -248,7 +248,15 @@ public class ResynthModdedPlants {
      */
     static final CrystallineSetProperties DIAMOND_PROPERTIES = new CrystallineSetProperties(
             false, 8.0F,1,
-            1.5F, 25.0F
+            1.3F, 25.0F
+    );
+
+    /**
+     * The set properties for general Netherite scrap and Ancient Debris Ore.
+     */
+    static final CrystallineSetProperties NETHERITE_SCRAP_PROPERTIES = new CrystallineSetProperties(
+            false, 5.5F,2,
+            2.3F, 20.0F
     );
 
     /**

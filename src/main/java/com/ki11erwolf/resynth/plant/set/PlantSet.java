@@ -58,10 +58,9 @@ public class PlantSet<P extends BlockPlant<?>> {
     private final PlantSetProperties basicPlantSetProperties;
 
     /**
-     * {@code true} if this plant set has been
+     * Will be {@code true} if this plant set has been
      * flagged as a failure.
      */
-    @SuppressWarnings("unused")
     private boolean isFailure;
 
     /**
@@ -122,7 +121,6 @@ public class PlantSet<P extends BlockPlant<?>> {
     /**
      * @return The name of the plant set type (e.g. crystalline).
      */
-    @SuppressWarnings("unused")
     public String getSetTypeName(){
         return this.setTypeName;
     }
@@ -130,7 +128,6 @@ public class PlantSet<P extends BlockPlant<?>> {
     /**
      * @return The name of the plant set instance (e.g. diamond).
      */
-    @SuppressWarnings("WeakerAccess")
     public String getSetName(){
         return this.setName;
     }
@@ -164,7 +161,6 @@ public class PlantSet<P extends BlockPlant<?>> {
      * @return the properties for this plant set. May be
      * any of the plant set properties types.
      */
-    @SuppressWarnings("unused")
     public PlantSetProperties getPlantSetProperties(){
         return this.basicPlantSetProperties;
     }

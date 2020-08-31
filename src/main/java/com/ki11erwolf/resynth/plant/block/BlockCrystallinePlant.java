@@ -35,7 +35,6 @@ import net.minecraft.world.World;
  * of the Crystalline plant type. This class DOES NOT handle any logic
  * other the way in which the plant type grows.
  */
-@SuppressWarnings("unused")//Intellij Idea lies to me...
 public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallinePlant> {
 
     /**

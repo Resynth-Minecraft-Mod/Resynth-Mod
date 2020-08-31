@@ -110,13 +110,13 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
          *
          * @param event forge event.
          */
-        @SubscribeEvent
+        @SubscribeEvent //TODO: Fix what ever is going on here...
         public void onEntityKilled(LivingDeathEvent event){
             //For each plant set
             for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)){
-                if(set.isFailure()) continue;
-
                 BiochemicalSet plantSet = (BiochemicalSet) set;
+
+                if(set.isFailure()) continue;
                 if(plantSet.getSourceMobs() == null) continue;
 
                 //For each mob type
@@ -125,11 +125,12 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
                             event.getEntity().getName().getUnformattedComponentText())) {
                         if (MathUtil.chance(plantSet.setProperties.seedSpawnChanceFromMob())) {
                             //Spawn seeds if lucky
-                            if(!event.getEntity().getEntityWorld().isRemote)
+                            if(!event.getEntity().getEntityWorld().isRemote) {
                                 spawnSeeds(
                                         set.getSeedsItem(), event.getEntity().getEntityWorld(),
                                         new BlockPos(event.getEntity().getPositionVec())
                                 );
+                            }
                         }
                     }
                 }
@@ -144,9 +145,8 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
          */
         @SubscribeEvent
         public void onItemDestroyed(PlayerDestroyItemEvent event){
-            //noinspection ConstantConditions // Apparently not
-            if(event.getOriginal() == null)
-                return;
+            //noinspection ConstantConditions // Apparently it's not, and it can
+            if(event.getOriginal() == null) return;
 
             //For each plant set
             for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)) {

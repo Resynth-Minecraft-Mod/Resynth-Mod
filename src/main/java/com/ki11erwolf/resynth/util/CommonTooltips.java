@@ -111,8 +111,6 @@ public enum CommonTooltips implements Tooltip {
      */
     @Override
     public void write(List<ITextComponent> tooltip) {
-        tooltip.add(toTextComponent(
-                 baseColor + localize(KEY_PREFIX + tooltipKey, highlightColor, baseColor)
-        ));
+        tooltip.add(toTextComponent(baseColor + localize(KEY_PREFIX + tooltipKey, highlightColor, baseColor)));
     }
 }

@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth;
 import com.ki11erwolf.resynth.proxy.ClientProxy;
 import com.ki11erwolf.resynth.proxy.Proxy;
 import com.ki11erwolf.resynth.proxy.ServerProxy;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -73,18 +74,10 @@ public class ResynthMod {
      */
     public static final String RESYNTH_NU_FILE = "/resynth.id";
 
-    // *****
-    // Proxy
-    // *****
-
     /**
      * FML initialized proxy. Will be ServerProxy on dedicated server, ClientProxy otherwise.
      */
     private static final Proxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
-
-    // *****
-    //  Mod
-    // *****
 
     /**
      * Mod constructor.
@@ -154,8 +147,8 @@ public class ResynthMod {
      *
      * @param event forge provided event.
      */
-    //@SubscribeEvent //Reflection
-    public void onServerStarting(FMLServerStartingEvent event) {
+    @SubscribeEvent
+    public static void onServerStarting(FMLServerStartingEvent event) {
         proxy.onServerStarting(event);
     }
 
@@ -164,8 +157,8 @@ public class ResynthMod {
      *
      * @param event Forge event.
      */
-    //@SubscribeEvent //Reflection
-    public void onServerStopped(FMLServerStoppedEvent event){
+    @SubscribeEvent
+    public static void onServerStopped(FMLServerStoppedEvent event){
         if(!(proxy instanceof ClientProxy)) proxy.onServerStopped(event);
     }
 }

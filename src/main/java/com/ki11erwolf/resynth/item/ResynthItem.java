@@ -105,7 +105,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      *
      * @return {@code this}.
      */
-    T queueRegistration(){
+    ResynthItem<T> queueRegistration(){
         if(isQueued)
             throw new IllegalStateException(
                     String.format("Item: %s already queued for registration.",
@@ -115,8 +115,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
         ResynthItems.INSTANCE.queueForRegistration(this);
         isQueued = true;
 
-        //noinspection unchecked //Should NOT be possible.
-        return (T)this;
+        return this;
     }
 
     // ***************

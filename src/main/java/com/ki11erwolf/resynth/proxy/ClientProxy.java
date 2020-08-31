@@ -16,6 +16,7 @@
 package com.ki11erwolf.resynth.proxy;
 
 import com.ki11erwolf.resynth.block.ResynthBlocks;
+import com.ki11erwolf.resynth.plant.block.BlockPlant;
 import com.ki11erwolf.resynth.plant.set.PublicPlantSetRegistry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -40,8 +41,7 @@ public class ClientProxy extends ServerProxy {
      */
     @Override
     public void onClientSetup(FMLClientSetupEvent event) {
-        //TODO: Might need changing
-        RenderType plantRenderType = RenderType.getTranslucent();//RenderType.getCutoutMipped();//RenderType.func_239269_g_();
+        RenderType plantRenderType = BlockPlant.getResynthPlantRenderType();
 
         RenderTypeLookup.setRenderLayer(ResynthBlocks.BLOCK_SEED_POD, plantRenderType);
         PublicPlantSetRegistry.foreach(PublicPlantSetRegistry.SetType.ALL, plantSet -> {

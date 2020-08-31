@@ -28,14 +28,13 @@ import net.minecraft.world.World;
 public class MinecraftUtil {
 
     /**Private Constructor.*/
-    private MinecraftUtil(){}
+    private MinecraftUtil() { }
 
     /**
      * Spawns an item in the world as an entity.
      *
      * @return {@code true} if the item was spawned.
      */
-    @SuppressWarnings("UnusedReturnValue")
     public static boolean spawnItemInWorld(Item item, World world, BlockPos pos){
         return spawnItemStackInWorld(new ItemStack(item), world, pos);
     }
@@ -46,10 +45,6 @@ public class MinecraftUtil {
      * @return {@code true} if the ItemStack was spawned.
      */
     public static boolean spawnItemStackInWorld(ItemStack stack, World world, BlockPos pos){
-        return world.addEntity(new ItemEntity(
-                world,
-                pos.getX(), pos.getY(), pos.getZ(),
-                stack
-        ));
+        return world.addEntity(new ItemEntity(world,pos.getX(), pos.getY(), pos.getZ(), stack));
     }
 }

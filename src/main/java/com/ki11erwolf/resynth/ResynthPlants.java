@@ -33,6 +33,7 @@ import static net.minecraft.entity.EntityType.*;
  * All plant sets in this class are referred to as Vanilla plant sets.
  */
 //A thought: a json system that parses a json file containing the information in this class.
+//TODO: Add Netherite plant
 //TODO: I should really write a script to automate asset creation for new plants
 //TODO: Fix up values
 @SuppressWarnings({"WeakerAccess", "unused", "RedundantSuppression"})//Reflection, Trickery & maybe even a bug.
@@ -73,48 +74,45 @@ public class ResynthPlants {
     ).register();
 
     /**
+     * The plant set for Minecraft Netherite Scrap.
+     */
+    public static final PlantSet<?> NETHERITE_SCRAP = PlantSetFactory.newVanillaCrystallineSet(
+            "netherite_scrap", ResynthModdedPlants.NETHERITE_SCRAP_PROPERTIES, Blocks.field_235398_nh_
+    ).register();
+
+    /**
      * The plant set for Vanilla Diamonds.
      */
     public static final PlantSet<?> DIAMOND = PlantSetFactory.newVanillaCrystallineSet(
-            "diamond",
-            ResynthModdedPlants.DIAMOND_PROPERTIES,
-            Blocks.DIAMOND_ORE
+            "diamond", ResynthModdedPlants.DIAMOND_PROPERTIES, Blocks.DIAMOND_ORE
     ).register();
 
     /**
      * The plant set for Vanilla Redstone.
      */
     public static final PlantSet<?> REDSTONE = PlantSetFactory.newVanillaCrystallineSet(
-            "redstone",
-            ResynthModdedPlants.REDSTONE_PROPERTIES,
-            Blocks.REDSTONE_ORE
+            "redstone", ResynthModdedPlants.REDSTONE_PROPERTIES, Blocks.REDSTONE_ORE
     ).register();
 
     /**
      * The plant set for Vanilla Lapis Lazuli.
      */
     public static final PlantSet<?> LAPIS_LAZULI = PlantSetFactory.newVanillaCrystallineSet(
-            "lapis_lazuli",
-            ResynthModdedPlants.LAPIS_LAZULI_PROPERTIES,
-            Blocks.LAPIS_ORE
+            "lapis_lazuli", ResynthModdedPlants.LAPIS_LAZULI_PROPERTIES, Blocks.LAPIS_ORE
     ).register();
 
     /**
      * The plant set for Vanilla Coal.
      */
     public static final PlantSet<?> COAL = PlantSetFactory.newVanillaCrystallineSet(
-            "coal",
-            ResynthModdedPlants.COAL_PROPERTIES,
-            Blocks.COAL_ORE
+            "coal", ResynthModdedPlants.COAL_PROPERTIES, Blocks.COAL_ORE
     ).register();
 
     /**
      * The plant set for Vanilla Emeralds.
      */
     public static final PlantSet<?> EMERALD = PlantSetFactory.newVanillaCrystallineSet(
-            "emerald",
-            ResynthModdedPlants.EMERALD_PROPERTIES,
-            Blocks.EMERALD_ORE
+            "emerald", ResynthModdedPlants.EMERALD_PROPERTIES, Blocks.EMERALD_ORE
     ).register();
 
     /**
