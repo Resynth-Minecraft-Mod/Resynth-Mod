@@ -22,14 +22,14 @@ package com.ki11erwolf.resynth.plant.set;
 public interface IMetallicSetProperties extends PlantSetProperties {
 
     /**
-     * @return the percentage (0.0 - 100.0) chance that seeds
+     * Returns the percentage (0.0 - 100.0) chance that seeds
      * will spawn when the final product ore is blown up. May be
      * specified by config.
      */
     float seedSpawnChanceFromOre();
 
     /**
-     * @return the percentage (0.0 - 100.0) chance that seeds
+     * Returns the percentage (0.0 - 100.0) chance that seeds
      * will spawn when the plant set produce (Organic Ore) is
      * blown up. May be specified by config.
      */

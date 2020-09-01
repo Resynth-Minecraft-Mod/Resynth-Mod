@@ -69,6 +69,22 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
     private final DoubleConfigValue seedSpawnChanceFromOrganicOre;
 
     /**
+     * Config value that determines if the growth chance config
+     * value is used or not - true when being used. Allows
+     * updating plant properties without the config file overriding
+     * them.
+     */
+    private final BooleanConfigValue useConfigGrowthChanceValue;
+
+    /**
+     * Config value that determines if the seed spawn chance config
+     * values are used or not - true when being used. Allows
+     * updating plant properties without the config file overriding
+     * them.
+     */
+    private final BooleanConfigValue useConfigSeedChanceValues;
+
+    /**
      * Creates a new Metallic plant set config category for the
      * given plant set with the given default values.
      *
@@ -90,7 +106,8 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
                 "chance-to-grow",
                 "The chance (percentage) this plant type will grow on a random tick." +
                         "\nIncrease this number to increase the growth rate of the plant," +
-                        "\ndecrease it to decrease the growth rate of the plant.",
+                        "\ndecrease it to decrease the growth rate of the plant." +
+                        "\nYOU MUST SET 'use-configuration-values-for-growth' TO 'true' TO USE THIS.",
                 defaultProperties.chanceToGrow(),
                 0.0, 100.0,
                 this
@@ -100,7 +117,8 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
                 "seed-spawn-chance-from-ore",
                 "The chance (percentage) that this plant types seed will spawn" +
                         "\nwhen the final products ore block is blown up with TNT." +
-                        "\nSet this to 0 to prevent the seeds from spawning when blowing up the ore blocks.",
+                        "\nSet this to 0 to prevent the seeds from spawning when blowing up the ore blocks." +
+                        "\nYOU MUST SET 'use-configuration-values-for-seed-drops' TO 'true' TO USE THIS.",
                 defaultProperties.seedSpawnChanceFromOre(),
                 0.0, 100.0,
                 this
@@ -111,10 +129,27 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
                 "The chance (percentage) that this plant types seed will spawn" +
                         "\nwhen the plant produce block is blown up with TNT." +
                         "\nSet this to 0 to prevent the seeds from spawning when blowing" +
-                        "\nup the plant produce blocks.",
+                        "\nup the plant produce blocks." +
+                        "\nYOU MUST SET 'use-configuration-values-for-seed-drops' TO 'true' TO USE THIS.",
                 defaultProperties.seedSpawnChanceFromOrganicOre(),
                 0.0, 100.0,
                 this
+        );
+
+        this.useConfigGrowthChanceValue = new BooleanConfigValue(
+                "use-configuration-values-for-growth",
+                "Prevents the configuration value for 'chance-to-grow' from being used" +
+                        "\nforcing the default value to be used instead, when this is 'false'." +
+                        "\nYou must set this to 'true' before the 'chance-to-grow' config value will work!",
+                false, this
+        );
+
+        this.useConfigSeedChanceValues = new BooleanConfigValue(
+                "use-configuration-values-for-seed-drops",
+                "Prevents the configuration values for 'seed-spawn-chance-*' from being used" +
+                        "\nforcing the default value to be used instead, when this is 'false'." +
+                        "\nYou must set this to 'true' before the 'seed-spawn-chance-*' config values will work!",
+                false, this
         );
     }
 
@@ -131,6 +166,8 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
      */
     @Override
     public float chanceToGrow() {
+        if(!this.useConfigGrowthChanceValue.getValue())
+            return Float.parseFloat(chanceToGrow.getDefaultValue().toString());
         return (float) chanceToGrow.getValue();
     }
 
@@ -139,6 +176,8 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
      */
     @Override
     public float seedSpawnChanceFromOre() {
+        if(!this.useConfigSeedChanceValues.getValue())
+            return Float.parseFloat(seedSpawnChanceFromOre.getDefaultValue().toString());
         return (float) seedSpawnChanceFromOre.getValue();
     }
 
@@ -147,6 +186,8 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
      */
     @Override
     public float seedSpawnChanceFromOrganicOre() {
+        if(!this.useConfigSeedChanceValues.getValue())
+            return Float.parseFloat(seedSpawnChanceFromOrganicOre.getDefaultValue().toString());
         return (float) seedSpawnChanceFromOrganicOre.getValue();
     }
 }

@@ -28,8 +28,6 @@ import java.io.File;
  */
 public class ResynthConfig {
 
-    //TODO: Consider making plant set config opt-in to allow future value changes.
-
     /**
      * The folder (within the run directory) where the configuration
      * files are kept.

@@ -74,6 +74,22 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
     private final DoubleConfigValue seedSpawnChanceFromBulb;
 
     /**
+     * Config value that determines if the growth chance config
+     * value is used or not - true when being used. Allows
+     * updating plant properties without the config file overriding
+     * them.
+     */
+    private final BooleanConfigValue useConfigGrowthChanceValue;
+
+    /**
+     * Config value that determines if the seed spawn chance config
+     * values are used or not - true when being used. Allows
+     * updating plant properties without the config file overriding
+     * them.
+     */
+    private final BooleanConfigValue useConfigSeedChanceValues;
+
+    /**
      * @param plantSetName the name of the plant set this
      *                     instance if for (e.g. ender pearl)
      * @param defaultProperties default config values.
@@ -85,7 +101,8 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
                 "chance-to-grow",
                 "The chance (percentage) this plant type will grow on a random tick." +
                         "\nIncrease this number to increase the growth rate of the plant," +
-                        "\ndecrease it to decrease the growth rate of the plant.",
+                        "\ndecrease it to decrease the growth rate of the plant." +
+                        "\nYOU MUST SET 'use-configuration-values-for-growth' TO 'true' TO USE THIS.",
                 defaultProperties.chanceToGrow(),
                 0.0, 100.0,
                 this
@@ -111,7 +128,8 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
                 "seed-spawn-chance-from-mob",
                 "The chance (percentage) that this plant types seed will spawn" +
                         "\nwhen the mob that normally drops the final resource is killed." +
-                        "\nSet this to 0 to prevent the seeds from spawning when the mob is killed.",
+                        "\nSet this to 0 to prevent the seeds from spawning when the mob is killed." +
+                        "\nYOU MUST SET 'use-configuration-values-for-seed-drops' TO 'true' TO USE THIS.",
                 defaultProperties.seedSpawnChanceFromMob(),
                 0.0, 100.0,
                 this
@@ -121,10 +139,27 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
                 "seed-spawn-chance-from-bulb",
                 "The chance (percentage) that this plant types seed will spawn" +
                         "\nwhen the plants produce (bulb) is smashed." +
-                        "\nSet this to 0 to prevent the seeds from spawning when the bulb is smashed.",
+                        "\nSet this to 0 to prevent the seeds from spawning when the bulb is smashed." +
+                        "\nYOU MUST SET 'use-configuration-values-for-seed-drops' TO 'true' TO USE THIS.",
                 defaultProperties.seedSpawnChanceFromBulb(),
                 0.0, 100.0,
                 this
+        );
+
+        this.useConfigGrowthChanceValue = new BooleanConfigValue(
+                "use-configuration-values-for-growth",
+                "Prevents the configuration value for 'chance-to-grow' from being used" +
+                        "\nforcing the default value to be used instead, when this is 'false'." +
+                        "\nYou must set this to 'true' before the 'chance-to-grow' config value will work!",
+                false, this
+        );
+
+        this.useConfigSeedChanceValues = new BooleanConfigValue(
+                "use-configuration-values-for-seed-drops",
+                "Prevents the configuration values for 'seed-spawn-chance-*' from being used" +
+                        "\nforcing the default value to be used instead, when this is 'false'." +
+                        "\nYou must set this to 'true' before the 'seed-spawn-chance-*' config values will work!",
+                false, this
         );
     }
 
@@ -141,6 +176,8 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
      */
     @Override
     public float seedSpawnChanceFromMob() {
+        if(!this.useConfigSeedChanceValues.getValue())
+            return Float.parseFloat(seedSpawnChanceFromMob.getDefaultValue().toString());
         return (float) seedSpawnChanceFromMob.getValue();
     }
 
@@ -149,6 +186,8 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
      */
     @Override
     public float seedSpawnChanceFromBulb() {
+        if(!this.useConfigSeedChanceValues.getValue())
+            return Float.parseFloat(seedSpawnChanceFromBulb.getDefaultValue().toString());
         return (float) seedSpawnChanceFromBulb.getValue();
     }
 
@@ -165,6 +204,8 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
      */
     @Override
     public float chanceToGrow() {
+        if(!this.useConfigGrowthChanceValue.getValue())
+            return Float.parseFloat(chanceToGrow.getDefaultValue().toString());
         return (float) this.chanceToGrow.getValue();
     }
 }

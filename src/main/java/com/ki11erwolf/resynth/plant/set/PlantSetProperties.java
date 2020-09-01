@@ -22,13 +22,13 @@ package com.ki11erwolf.resynth.plant.set;
 public interface PlantSetProperties {
 
     /**
-     * @return {@code true} if the plant block
+     * Returns {@code true} if the plant block
      * in the plant set can be grown with bonemeal.
      */
     boolean canBonemeal();
 
     /**
-     * @return the percentage chance the plant
+     * Returns the percentage chance the plant
      * in the plant set will grow on a random tick.
      */
     float chanceToGrow();

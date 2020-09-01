@@ -76,6 +76,22 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
     private final DoubleConfigValue seedSpawnChanceFromShard;
 
     /**
+     * Config value that determines if the growth chance config
+     * value is used or not - true when being used. Allows
+     * updating plant properties without the config file overriding
+     * them.
+     */
+    private final BooleanConfigValue useConfigGrowthChanceValue;
+
+    /**
+     * Config value that determines if the seed spawn chance config
+     * values are used or not - true when being used. Allows
+     * updating plant properties without the config file overriding
+     * them.
+     */
+    private final BooleanConfigValue useConfigSeedChanceValues;
+
+    /**
      * Creates a new Crystalline plant set config category for the
      * given plant set with the given default values.
      *
@@ -97,7 +113,8 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
                 "chance-to-grow",
                 "The chance (percentage) this plant type will grow on a random tick." +
                           "\nIncrease this number to increase the growth rate of the plant," +
-                          "\ndecrease it to decrease the growth rate of the plant.",
+                          "\ndecrease it to decrease the growth rate of the plant." +
+                          "\nYOU MUST SET 'use-configuration-values-for-growth' TO 'true' TO USE THIS.",
                 defaultProperties.chanceToGrow(),
                 0.0, 100.0,
                 this
@@ -116,7 +133,8 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
                 "seed-spawn-chance-from-ore",
                 "The chance (percentage) that this plant types seed will spawn" +
                         "\nwhen mining the growable resources ore block. Set this to 0 to" +
-                        "\nprevent the seeds from spawning when mining the ore blocks.",
+                        "\nprevent the seeds from spawning when mining the ore blocks." +
+                        "\nYOU MUST SET 'use-configuration-values-for-seed-drops' TO 'true' TO USE THIS.",
                 defaultProperties.seedSpawnChanceFromOre(),
                 0.0, 100.0,
                 this
@@ -126,10 +144,27 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
                 "seed-spawn-chance-from-shard",
                 "The chance (percentage) that this plant types seed will spawn" +
                         "\nwhen the plants produce (shard) is left in water to despawn." +
-                        "\nSet this to 0 to prevent seed spawning from shards.",
+                        "\nSet this to 0 to prevent seed spawning from shards." +
+                        "\nYOU MUST SET 'use-configuration-values-for-seed-drops' TO 'true' TO USE THIS.",
                 defaultProperties.seedSpawnChanceFromShard(),
                 0.0, 100.0,
                 this
+        );
+
+        this.useConfigGrowthChanceValue = new BooleanConfigValue(
+                "use-configuration-values-for-growth",
+                "Prevents the configuration value for 'chance-to-grow' from being used" +
+                        "\nforcing the default value to be used instead, when this is 'false'." +
+                        "\nYou must set this to 'true' before the 'chance-to-grow' config value will work!",
+                false, this
+        );
+
+        this.useConfigSeedChanceValues = new BooleanConfigValue(
+                "use-configuration-values-for-seed-drops",
+                "Prevents the configuration values for 'seed-spawn-chance-*' from being used" +
+                        "\nforcing the default value to be used instead, when this is 'false'." +
+                        "\nYou must set this to 'true' before the 'seed-spawn-chance-*' config values will work!",
+                false, this
         );
     }
 
@@ -148,6 +183,8 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
      */
     @Override
     public float chanceToGrow() {
+        if(!this.useConfigGrowthChanceValue.getValue())
+            return Float.parseFloat(chanceToGrow.getDefaultValue().toString());
         return (float) this.chanceToGrow.getValue();
     }
 
@@ -166,6 +203,8 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
      */
     @Override
     public float seedSpawnChanceFromOre() {
+        if(!this.useConfigSeedChanceValues.getValue())
+            return Float.parseFloat(seedSpawnChanceFromOre.getDefaultValue().toString());
         return (float) this.seedSpawnChanceFromOre.getValue();
     }
 
@@ -175,6 +214,8 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
      */
     @Override
     public float seedSpawnChanceFromShard() {
+        if(!this.useConfigSeedChanceValues.getValue())
+            return Float.parseFloat(seedSpawnChanceFromShard.getDefaultValue().toString());
         return (float) this.seedSpawnChanceFromShard.getValue();
     }
 }
