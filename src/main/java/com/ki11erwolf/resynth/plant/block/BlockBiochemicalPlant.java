@@ -103,7 +103,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * plant type is reset to.
      */
     @Override
-    protected int postHarvestGrowthStageReset() {
+    protected int getGrowthPostHarvest() {
         return 3;
     }
 
@@ -132,9 +132,6 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * <p/>
      * Grows the plant in the world. Specifically, increases
      * the plant growth property by the given amount.
-     *
-     * <p>Also performs the auto-farm check, and sets growth
-     * stage accordingly.
      */
     @Override
     void growPlant(World world, BlockState state, BlockPos pos, int increase) {
@@ -143,10 +140,6 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
         if(growth > getMaxGrowthStage())
             growth = getMaxGrowthStage();
 
-        //Do auto-farm check.
-        if(tryAutoFarmDump(growth, world, pos))
-            setGrowthStage(world, pos, growth - 4);
-            //Grow plant if auto-farming failed.
-        else setGrowthStage(world, pos, growth);
+        setGrowthStage(world, pos, growth);
     }
 }

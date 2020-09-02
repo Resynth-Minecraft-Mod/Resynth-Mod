@@ -224,6 +224,13 @@ public interface PlantPatchInfoProvider extends BlockInfoProvider {
                             TextFormatting.GOLD + ((BlockPlant<?>) plantBlock).getProperties().chanceToGrow() + "%"
             );
 
+            //Light penalty
+            int lightPenalty = ((BlockPlant<?>) plantBlock).getLightPenalty(world, pos);
+            String lPenalty = lightPenalty == -1 ? " Too Low to Grow" : lightPenalty + " points";
+            information.add(
+                    TextFormatting.DARK_RED + "Low Light Penalty: " + TextFormatting.GOLD + lPenalty
+            );
+
             //Combined Growth Chance
             float plantGrowthChance = ((BlockPlant<?>) plantBlock).getProperties().chanceToGrow() / 100;
 
@@ -237,14 +244,16 @@ public interface PlantPatchInfoProvider extends BlockInfoProvider {
                 enhancerIncrease = ((BlockEnhancer)enhancer.getBlock()).getIncrease();
             }
 
-            float combinedChance = (enhancerIncrease + mineralSoilConcentration) / 100;
+            float combinedChance = ((BlockPlant<?>) plantBlock).applyLightPenalty(
+                    world, pos, ((enhancerIncrease + mineralSoilConcentration))
+            ) / 100;
 
             //Final Chance
             float finalChance = (combinedChance * plantGrowthChance) * 100;
             double roundedFinalChance = (double) Math.round(finalChance * 100) / 100;
             information.add(
                     TextFormatting.DARK_GREEN + "Final Growth Chance: " +
-                            TextFormatting.GOLD + roundedFinalChance + "%"
+                    TextFormatting.GOLD + roundedFinalChance + "%"
             );
 
             //End

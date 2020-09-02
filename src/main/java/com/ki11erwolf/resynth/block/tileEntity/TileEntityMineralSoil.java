@@ -17,6 +17,7 @@ package com.ki11erwolf.resynth.block.tileEntity;
 
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 
@@ -77,9 +78,9 @@ public class TileEntityMineralSoil extends TileEntity {
      *
      * @param compound the nbt tag compound we will read the variable from.
      */
-    @Override
-    public void deserializeNBT(CompoundNBT compound) {
-        super.deserializeNBT(compound); //super.read(compound);
+    @Override //used to be read()
+    public void func_230337_a_(BlockState state, CompoundNBT compound) {
+        super.func_230337_a_(state, compound);
         mineralPercentage = compound.getFloat(MINERAL_CONTENT_TAG);
     }
 

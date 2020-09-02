@@ -22,6 +22,7 @@ import com.ki11erwolf.resynth.util.ItemOrBlock;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
@@ -110,29 +111,30 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
          *
          * @param event forge event.
          */
-        @SubscribeEvent //TODO: Fix what ever is going on here...
+        @SubscribeEvent
         public void onEntityKilled(LivingDeathEvent event){
             //For each plant set
             for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)){
+                ResourceLocation deadEntity = event.getEntity().getType().getRegistryName();
                 BiochemicalSet plantSet = (BiochemicalSet) set;
 
                 if(set.isFailure()) continue;
                 if(plantSet.getSourceMobs() == null) continue;
 
-                //For each mob type
+                //and each seed type
                 for(EntityType<?> entity : plantSet.getSourceMobs()){
-                    if(entity.getName().getUnformattedComponentText().equals(
-                            event.getEntity().getName().getUnformattedComponentText())) {
-                        if (MathUtil.chance(plantSet.setProperties.seedSpawnChanceFromMob())) {
-                            //Spawn seeds if lucky
-                            if(!event.getEntity().getEntityWorld().isRemote) {
-                                spawnSeeds(
-                                        set.getSeedsItem(), event.getEntity().getEntityWorld(),
-                                        new BlockPos(event.getEntity().getPositionVec())
-                                );
-                            }
-                        }
-                    }
+                    ResourceLocation loopedEntity = entity.getRegistryName();
+
+                    //Do a lot of checks
+                    if(loopedEntity == null) continue;
+                    if(!loopedEntity.equals(deadEntity)) continue;
+                    if(event.getEntity().getEntityWorld().isRemote) continue;
+                    if(!MathUtil.chance(plantSet.setProperties.seedSpawnChanceFromMob())) continue;
+
+                    //and spawn seeds if lucky
+                    spawnSeeds(set.getSeedsItem(), event.getEntity().getEntityWorld(),
+                            new BlockPos(event.getEntity().getPositionVec())
+                    );
                 }
             }
         }
@@ -156,15 +158,17 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
 
                 if(event.getOriginal().getItem() == plantSet.getProduceItemOrBlock().getItem()){
                     if(MathUtil.chance(plantSet.setProperties.seedSpawnChanceFromBulb())) {
-                        if (!event.getEntity().getEntityWorld().isRemote)
+                        if (!event.getEntity().getEntityWorld().isRemote) {
                             //Spawn seeds if lucky
                             spawnSeeds(
                                     plantSet.getSeedsItem(), event.getEntity().getEntityWorld(),
                                     new BlockPos(event.getEntity().getPositionVec())
                             );
+                        }
                     }
                 }
             }
         }
+
     }
 }

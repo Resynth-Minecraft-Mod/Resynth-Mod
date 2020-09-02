@@ -146,34 +146,6 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
     // ************
 
     /**
-     * {@inheritDoc}
-     * <p/>
-     * Handles growing the plant growth property and placing
-     * its produce when it's already fully grown.
-     */
-    @Override
-    void growPlant(World world, BlockState state, BlockPos pos, int increase) {
-        int growth = increase + getGrowthStage(state);
-
-        if(tryAutoFarmDump(growth, world, pos))
-            //Auto-farm check.
-            setGrowthStage(world, pos, growth - 1);
-        else if(growth >= getMaxGrowthStage()){
-            //Produce
-            growth = getMaxGrowthStage();
-            Direction facing = placeProduce(world, pos);
-            if(facing != null)
-                world.setBlockState(pos,
-                    this.getDefaultState().with(this.getGrowthProperty(), growth)
-                        .with(HorizontalBlock.HORIZONTAL_FACING, facing), 2
-                );
-        } else {
-            //Grow
-            setGrowthStage(world, pos, growth);
-        }
-    }
-
-    /**
      * Attempts to place the plants produce in the world
      * on either of the 4 sides.
      *
@@ -182,46 +154,33 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      */
     @Nullable
     private Direction placeProduce(World world, BlockPos pos){
-        //Random direction.
-        int random = MathUtil.getRandomIntegerInRange(0, 4);
+        int random = MathUtil.getRandomIntegerInRange(0, 4);//Random direction.
 
-        for(int i = 0; i < 4; i++){
-            //For each side
+        for(int i = 0; i < 4; i++){ //For each side
             BlockPos pos1 = null;
             BlockState block = null;
             Direction facing = null;
 
-            if(random > 3)
-                random = 0;
+            if(random > 3) random = 0;
 
             switch (random){
                 case 0:
-                    pos1 = pos.north();
-                    facing = Direction.NORTH;
-                    block = world.getBlockState(pos1);
+                    pos1 = pos.north(); facing = Direction.NORTH; block = world.getBlockState(pos1);
                     break;
                 case 1:
-                    pos1 = pos.south();
-                    facing = Direction.SOUTH;
-                    block = world.getBlockState(pos1);
+                    pos1 = pos.south(); facing = Direction.SOUTH; block = world.getBlockState(pos1);
                     break;
                 case 2:
-                    pos1 = pos.east();
-                    facing = Direction.EAST;
-                    block = world.getBlockState(pos1);
+                    pos1 = pos.east(); facing = Direction.EAST; block = world.getBlockState(pos1);
                     break;
                 case 3:
-                    pos1 = pos.west();
-                    facing = Direction.WEST;
-                    block = world.getBlockState(pos1);
+                    pos1 = pos.west(); facing = Direction.WEST; block = world.getBlockState(pos1);
                     break;
             }
 
-            if(block == null)
-                return null;
+            if(block == null) return null;
 
-            //Place produce block.
-            if(block.getBlock() == Blocks.AIR && world.getBlockState(pos1.down()).isSolid()){
+            if(block.getBlock() == Blocks.AIR && world.getBlockState(pos1.down()).isSolid()){ //Place produce block.
                 if(world.setBlockState(pos1, Block.getBlockFromItem(getProduce().getItem()).getDefaultState()))
                     return facing;
                 else return null;
@@ -232,6 +191,35 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
 
         //Could not place on any side.
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Handles growing the plant growth property and placing
+     * its produce when it's already fully grown.
+     */
+    @Override
+    void growPlant(World world, BlockState state, BlockPos pos, int increase) {
+        int growth = increase + getGrowthStage(state);
+
+        if(growth >= getMaxGrowthStage()){
+            //Plance Produce
+            if(attemptAutoHarvest(growth, world, pos)){
+                setGrowthStage(world, pos, getGrowthPostHarvest());
+                return;
+            }
+
+            growth = getMaxGrowthStage();
+            Direction facing = placeProduce(world, pos);
+
+            if(facing == null) return;
+
+            world.setBlockState(pos, this.getDefaultState().with(this.getGrowthProperty(), growth)
+                    .with(HorizontalBlock.HORIZONTAL_FACING, facing), 2);
+        } else {//Grow Stem
+            setGrowthStage(world, pos, growth);
+        }
     }
 
     // *****
@@ -247,7 +235,7 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * @return {@code 6} - the growth stage this plant is normally reset to.
      */
     @Override
-    protected int postHarvestGrowthStageReset(){
-        return 6;
+    protected int getGrowthPostHarvest(){
+        return 5;
     }
 }

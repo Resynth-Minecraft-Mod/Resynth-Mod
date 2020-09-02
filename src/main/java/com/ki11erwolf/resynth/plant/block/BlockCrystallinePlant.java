@@ -116,7 +116,7 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
      * plant type is reset to.
      */
     @Override
-    protected int postHarvestGrowthStageReset() {
+    protected int getGrowthPostHarvest() {
         return 0;
     }
 
@@ -162,10 +162,6 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
         if(growth > getMaxGrowthStage())
             growth = getMaxGrowthStage();
 
-        //Do auto-farm check.
-        if(tryAutoFarmDump(growth, world, pos))
-            setGrowthStage(world, pos, 0);
-        //Grow plant if auto-farming failed.
-        else setGrowthStage(world, pos, growth);
+        setGrowthStage(world, pos, growth);
     }
 }
