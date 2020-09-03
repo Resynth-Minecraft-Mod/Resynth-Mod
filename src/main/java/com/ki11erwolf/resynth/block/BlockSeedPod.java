@@ -36,7 +36,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nonnull;
@@ -194,7 +194,7 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      * of a random biochemical plant set depending on config.
      */
     @Override
-    public void spawnAdditionalDrops(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
+    public void spawnAdditionalDrops(BlockState state, World world, BlockPos pos, ItemStack stack) {
         if (!CONFIG.areDropsEnabled()) {
             MinecraftUtil.spawnItemStackInWorld(new ItemStack(this), world, pos);
             return;

@@ -35,7 +35,6 @@ import static net.minecraft.entity.EntityType.*;
 //A thought: a json system that parses a json file containing the information in this class.
 //TODO: Add Netherite plant
 //TODO: I should really write a script to automate asset creation for new plants
-//TODO: Fix up values
 @SuppressWarnings({"WeakerAccess", "unused", "RedundantSuppression"})//Reflection, Trickery & maybe even a bug.
 public class ResynthPlants {
 
@@ -666,6 +665,6 @@ public class ResynthPlants {
      * Ensures all Vanilla Resynth plant sets are
      * initialized and queued for registration.
      */
-    public static void initSets(){/*NO-OP*/}//TODO: Also for annotations & reflection
+    public static void initSets(){/*NO-OP*/}
 
 }

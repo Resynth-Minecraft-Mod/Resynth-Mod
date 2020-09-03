@@ -43,7 +43,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
 //import mcp.mobius.waila.api.IComponentProvider;
 //import mcp.mobius.waila.api.IDataAccessor;
@@ -175,7 +174,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      * Handles dropping the extra drops - Mineral Crystal & Mineral Rocks.
      */
     @Override
-    public void spawnAdditionalDrops(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
+    public void spawnAdditionalDrops(BlockState state, World world, BlockPos pos, ItemStack stack) {
         if(world.isRemote)
             return;
 

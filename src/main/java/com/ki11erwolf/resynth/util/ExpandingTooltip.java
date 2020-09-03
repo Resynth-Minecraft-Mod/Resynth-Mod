@@ -26,7 +26,6 @@ import java.util.List;
  * such as shift or ctrl). ExpandingTooltips can be chained
  * together and mixed with traditional tooltips.
  */
-//TODO: Create "Additional Info" tooltips for plant items.
 public class ExpandingTooltip {
 
     /**

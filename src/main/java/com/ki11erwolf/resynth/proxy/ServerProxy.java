@@ -23,7 +23,7 @@ import com.ki11erwolf.resynth.analytics.SeedPodEvent;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
-//import com.ki11erwolf.resynth.features.ResynthFeatures;
+import com.ki11erwolf.resynth.features.ResynthFeatures;
 import com.ki11erwolf.resynth.integration.SupportedMods;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -59,7 +59,7 @@ public class ServerProxy implements Proxy {
     public void onSetup(FMLCommonSetupEvent event) {
         sendAnalyticsEvents();
         printItemAndBlockRegisters();
-        //ResynthFeatures.init();
+        ResynthFeatures.init();
     }
 
     /**
