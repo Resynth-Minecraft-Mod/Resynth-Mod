@@ -1,5 +1,5 @@
 //#########################//
-//         1.16.2          //
+//         1.16.1          //
 //#########################//
 
 buildscript {
@@ -57,6 +57,7 @@ archivesBaseName = "resynth"
 version = "${modversion}"
 group = "com.ki11erwolf.${archivesBaseName}"
 
+//noinspection GroovyUnusedAssignment
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
@@ -84,9 +85,9 @@ minecraft {
 }
 
 repositories {
-//    maven { //Hwyla (Waila)
-//        url = "http://maven.tehnut.info/"
-//    }
+    maven { //Hwyla (Waila)
+        url = "http://maven.tehnut.info/"
+    }
 }
 
 //##########################################//
@@ -98,7 +99,8 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mcversion}-${forgeversion}"
 
     //Hwyla version
-    //compile fg.deobf("mcp.mobius.waila:Hwyla:1.10.8-B72_${mcversion}")
+    compileOnly fg.deobf('mcp.mobius.waila:Hwyla:1.10.10-B77_1.16.1:api')
+    runtimeOnly fg.deobf('mcp.mobius.waila:Hwyla:1.10.10-B77_1.16.1')
 }
 
 jar {
@@ -106,7 +108,7 @@ jar {
         attributes([
                 "Specification-Title": "Resynth",
                 "Specification-Vendor": "Ki11er_wolf",
-                "Specification-Version": "1",//"${version}-${mcversion}",
+                "Specification-Version": "${version}-${mcversion}",
                 "Implementation-Title": project.name,
                 "Implementation-Version": "${version}",
                 "Implementation-Vendor" :"Ki11er_wolf",

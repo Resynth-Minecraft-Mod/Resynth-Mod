@@ -27,6 +27,9 @@ import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MathUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import com.ki11erwolf.resynth.util.PlantPatchInfoProvider;
+import mcp.mobius.waila.api.IComponentProvider;
+import mcp.mobius.waila.api.IDataAccessor;
+import mcp.mobius.waila.api.IPluginConfig;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
@@ -45,6 +48,8 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
@@ -55,6 +60,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
+import java.util.List;
 import java.util.Random;
 
 //import mcp.mobius.waila.api.IComponentProvider;
@@ -74,7 +80,7 @@ import java.util.Random;
  * @param <T> the inheriting class (i.e. plant block).
  */
 public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T>
-        implements IPlantable, IGrowable, PlantPatchInfoProvider/*, IComponentProvider*/ {
+        implements IPlantable, IGrowable, PlantPatchInfoProvider, IComponentProvider {
 
     /**
      * The prefix for all plant blocks.
@@ -909,22 +915,22 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     // Hwyla
     // *****
 
-//    /**
-//     * {@inheritDoc}
-//     * <p/>
-//     * Handles displaying the plants growth (in stages) in the
-//     * Hwyla tooltip.
-//     */
-//    @Override
-//    public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
-//        if(tooltip.isEmpty())
-//            tooltip.add(new StringTextComponent(
-//                    getGrowthStageMessage(
-//                            getGrowthStage(accessor.getWorld().getBlockState(accessor.getPosition())),
-//                            getMaxGrowthStage()
-//                    )
-//            ));
-//    }
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Handles displaying the plants growth (in stages) in the
+     * Hwyla tooltip.
+     */
+    @Override
+    public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
+        if(tooltip.isEmpty())
+            tooltip.add(new StringTextComponent(
+                    getGrowthStageMessage(
+                            getGrowthStage(accessor.getWorld().getBlockState(accessor.getPosition())),
+                            getMaxGrowthStage()
+                    )
+            ));
+    }
 
 
     // *****

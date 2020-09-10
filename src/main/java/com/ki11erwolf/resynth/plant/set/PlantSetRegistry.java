@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthModdedPlants;
 import com.ki11erwolf.resynth.ResynthPlants;
 import com.ki11erwolf.resynth.block.ResynthBlock;
+import com.ki11erwolf.resynth.integration.Hwyla;
 import com.ki11erwolf.resynth.util.ItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -134,8 +135,7 @@ class PlantSetRegistry {
             registry.register(set.getPlantBlock());
 
             //Hwyla
-            //TODO: Uncomment
-            //Hwyla.addIfProvider(set.getPlantBlock());
+            Hwyla.addIfProvider(set.getPlantBlock());
         }
 
         /**
@@ -159,8 +159,7 @@ class PlantSetRegistry {
                 blockRegistry.register(itemOrBlock.getBlock());
 
                 //Hwyla
-                //TODO: Uncomment
-                //Hwyla.addIfProvider(itemOrBlock.getBlock());
+                Hwyla.addIfProvider(itemOrBlock.getBlock());
             }
 
             //ItemBlock
