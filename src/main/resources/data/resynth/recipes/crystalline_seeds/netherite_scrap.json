@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "resynth:crystalline_seeds_netherite_scrap"
+    }
+  ],
+  "result": {
+    "item": "minecraft:netherite_scrap",
+    "count": 2
+  }
+}

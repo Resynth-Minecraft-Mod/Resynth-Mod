@@ -33,7 +33,6 @@ import static net.minecraft.entity.EntityType.*;
  * All plant sets in this class are referred to as Vanilla plant sets.
  */
 //A thought: a json system that parses a json file containing the information in this class.
-//TODO: Add Netherite plant
 //TODO: I should really write a script to automate asset creation for new plants
 @SuppressWarnings({"WeakerAccess", "unused", "RedundantSuppression"})//Reflection, Trickery & maybe even a bug.
 public class ResynthPlants {
