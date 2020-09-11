@@ -1,5 +1,5 @@
 //#########################//
-//         1.16.2          //
+//         1.16.3          //
 //#########################//
 
 buildscript {
@@ -23,7 +23,7 @@ apply plugin: 'eclipse'
 /**
  * The version number denoting the current Resynth build.
  */
-def modversion = "5.1.0"
+def modversion = "5.2.0"
 //Also change in: ResynthMod.java | mods.toml | Here
 
 /**
@@ -31,12 +31,12 @@ def modversion = "5.1.0"
  * the mod. The Built mod jar will only run with this
  * version of Forge or newer.
  */
-def forgeversion = "33.0.61"
+def forgeversion = "34.0.0"
 
 /**
  * The version of Minecraft this Resynth build is for.
  */
-def mcversion = "1.16.2"
+def mcversion = "1.16.3"
 
 /**
  * The full name/title to give the mod jar when it's built.
