@@ -517,5 +517,6 @@
   "block.resynth.crystalline_plant_dnetherite_scrap":       "Netherite Scrap Plant",
   "item.resynth.crystalline_seeds_netherite_scrap":         "Netherite Scrap Seeds",
   "item.resynth.crystalline_shard_netherite_scrap":         "Netherite Scrap Shard",
-  "misc.resynth.growth_stage":                              "Growth: stage %s"
+  "misc.resynth.growth_stage":                              "Growth: stage %s",
+  "tooltip.property.resynth.stats_disabled":                "Only available in singleplayer."
 }

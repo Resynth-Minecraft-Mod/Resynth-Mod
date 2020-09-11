@@ -35,7 +35,6 @@ import org.apache.commons.lang3.text.WordUtils;
 import java.util.List;
 
 import static com.ki11erwolf.resynth.util.Tooltip.*;
-import static com.ki11erwolf.resynth.util.Tooltip.addBlankLine;
 
 /**
  * Base class for all Resynth items.

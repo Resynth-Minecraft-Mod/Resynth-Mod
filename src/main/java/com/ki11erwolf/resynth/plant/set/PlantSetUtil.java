@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.set;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -46,6 +47,11 @@ public class PlantSetUtil {
          * @param plantSetProperties the properties object.
          */
         public static void setPropertiesTooltip(List<ITextComponent> tooltip, PlantSetProperties plantSetProperties){
+            if(!Minecraft.getInstance().isSingleplayer()) {
+                tooltip.add(getFormattedTooltip("stats_disabled", TextFormatting.RED));
+                return;
+            }
+
             tooltip.add(getFormattedTooltip(
                     "growth_chance", TextFormatting.GOLD,
                     TextFormatting.YELLOW, plantSetProperties.chanceToGrow(), TextFormatting.GOLD
