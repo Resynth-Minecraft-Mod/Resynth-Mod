@@ -85,6 +85,16 @@ public class GeneralConfig extends ConfigCategory {
     );
 
     /**
+     * Config value that allows enabling or disabling light penalties in plant growth.
+     */
+    private final BooleanConfigValue enableLightPenalty = new BooleanConfigValue(
+            "enable-light-penalty",
+            "Allows turning on or off light penalties in plant growth." +
+                     "\nWhen set to 'true', plants will grow slightly slower with less light.",
+            true, this
+    );
+
+    /**
      * Constructor.
      */
     public GeneralConfig() {
@@ -133,4 +143,10 @@ public class GeneralConfig extends ConfigCategory {
      * have on one line.
      */
     public int getTooltipCharacterLimit() { return tooltipCharacterLimit.getValue(); }
+
+    /**
+     * @return the config defined value that specifies if light penalties to plant
+     * growth is enabled or disabled.
+     */
+    public boolean enableLightPenalty() { return enableLightPenalty.getValue(); }
 }

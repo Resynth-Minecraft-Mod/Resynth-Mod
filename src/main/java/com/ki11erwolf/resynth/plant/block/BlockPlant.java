@@ -765,6 +765,9 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * low to grow crops.
      */
     public int getLightPenalty(World world, BlockPos pos){
+        if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).enableLightPenalty())
+            return 0;
+
         int lightPenalty = world.getMaxLightLevel() - world.getLight(pos.up());
 
         if(lightPenalty >= 1){
@@ -774,13 +777,24 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         } else return 0;
     }
 
+    /**
+     * Gives a growth chance for a plant in the world that takes
+     * the light level near the plant into account.
+     *
+     * @param world the world the plant is in.
+     * @param pos the position of the plant in the world.
+     * @param in the input growth chance of the plant.
+     * @return the growth chance of the plant with the light penalty
+     * applied.
+     */
     public float applyLightPenalty(World world, BlockPos pos, float in){
-        if(in >= 25){
-            int penalty = getLightPenalty(world, pos);
+        if(ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).enableLightPenalty())
+            if(in >= 25){
+                int penalty = getLightPenalty(world, pos);
 
-            if(penalty != -1)
-                return in - penalty;
-        }
+                if(penalty != -1)
+                    return in - penalty;
+            }
 
         return in;
     }
