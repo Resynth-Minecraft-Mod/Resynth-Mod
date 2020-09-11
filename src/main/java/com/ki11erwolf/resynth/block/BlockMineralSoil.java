@@ -51,6 +51,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 
@@ -184,7 +185,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      * Handles dropping the extra drops - Mineral Crystal & Mineral Rocks.
      */
     @Override
-    public void spawnAdditionalDrops(BlockState state, World world, BlockPos pos, ItemStack stack) {
+    public void spawnAdditionalDrops(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
         if(world.isRemote)
             return;
 

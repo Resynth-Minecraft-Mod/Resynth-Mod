@@ -27,7 +27,7 @@ import com.ki11erwolf.resynth.features.ResynthFeatures;
 import com.ki11erwolf.resynth.integration.SupportedMods;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.RegistryKey;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Logger;
@@ -100,15 +100,15 @@ public class ServerProxy implements Proxy {
      */
     private void printItemAndBlockRegisters(){
         if(ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).isDevHelpEnabled()){
-            for(Map.Entry<ResourceLocation, Item> entry : ForgeRegistries.ITEMS.getEntries()){
+            for(Map.Entry<RegistryKey<Item>, Item> entry : ForgeRegistries.ITEMS.getEntries()){
                 LOG.info("<Resynth-Development-Help> | Found item: "
-                        + entry.getKey().getNamespace()+ ":"
+                        + entry.getKey().getRegistryName().getNamespace()+ ":"
                         + entry.getKey().toString());
             }
 
-            for(Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
+            for(Map.Entry<RegistryKey<Block>, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
                 LOG.info("<Resynth-Development-Help> | Found block: "
-                        + entry.getKey().getNamespace() + ":"
+                        + entry.getKey().getRegistryName().getNamespace() + ":"
                         + entry.getKey().toString());
             }
         }

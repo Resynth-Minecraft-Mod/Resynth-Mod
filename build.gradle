@@ -1,5 +1,5 @@
 //#########################//
-//         1.16.1          //
+//         1.16.2          //
 //#########################//
 
 buildscript {
@@ -23,7 +23,7 @@ apply plugin: 'eclipse'
 /**
  * The version number denoting the current Resynth build.
  */
-def modversion = "5.0.0"
+def modversion = "5.1.0"
 //Also change in: ResynthMod.java | mods.toml | Here
 
 /**
@@ -31,12 +31,12 @@ def modversion = "5.0.0"
  * the mod. The Built mod jar will only run with this
  * version of Forge or newer.
  */
-def forgeversion = "32.0.108"
+def forgeversion = "33.0.61"
 
 /**
  * The version of Minecraft this Resynth build is for.
  */
-def mcversion = "1.16.1"
+def mcversion = "1.16.2"
 
 /**
  * The full name/title to give the mod jar when it's built.
@@ -99,8 +99,8 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mcversion}-${forgeversion}"
 
     //Hwyla version
-    compileOnly fg.deobf('mcp.mobius.waila:Hwyla:1.10.10-B77_1.16.1:api')
-    runtimeOnly fg.deobf('mcp.mobius.waila:Hwyla:1.10.10-B77_1.16.1')
+    compileOnly fg.deobf('mcp.mobius.waila:Hwyla:1.10.11-B78_1.16.2:api')
+    runtimeOnly fg.deobf('mcp.mobius.waila:Hwyla:1.10.11-B78_1.16.2')
 }
 
 jar {
