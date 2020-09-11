@@ -511,11 +511,11 @@
 
   "_________COMMENT": "---Miscellaneous---",
   "misc.resynth.mineral_content": "Mineral Content: %s%%",
-  "misc.resynth.growth_stage": "Growth Stage: %s",
 
   "__________COMMENT": "--- FOR TRANSLATION: new entries that have not been translated. ---",
 
   "block.resynth.crystalline_plant_dnetherite_scrap":       "Netherite Scrap Plant",
   "item.resynth.crystalline_seeds_netherite_scrap":         "Netherite Scrap Seeds",
-  "item.resynth.crystalline_shard_netherite_scrap":         "Netherite Scrap Shard"
+  "item.resynth.crystalline_shard_netherite_scrap":         "Netherite Scrap Shard",
+  "misc.resynth.growth_stage":                              "Growth: stage %s"
 }

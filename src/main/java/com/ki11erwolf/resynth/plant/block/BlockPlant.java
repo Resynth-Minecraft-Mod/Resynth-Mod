@@ -923,27 +923,18 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
-        if(tooltip.isEmpty())
+        if(tooltip.isEmpty()){
+            int stage = getGrowthStage(accessor.getWorld().getBlockState(accessor.getPosition()));
+            int max = getMaxGrowthStage();
+
+            tooltip.add(new StringTextComponent(""));
             tooltip.add(new StringTextComponent(
-                    getGrowthStageMessage(
-                            getGrowthStage(accessor.getWorld().getBlockState(accessor.getPosition())),
-                            getMaxGrowthStage()
-                    )
+                    getGrowthStageMessage(stage, max)
+                            + String.format("  (%s%%)", (int)(((float) stage / max) * 100))
             ));
-    }
+            tooltip.add(new StringTextComponent(""));
+        }
 
-
-    // *****
-    // Other
-    // *****
-
-    /**
-     * @return the properties object for the plant
-     * that specifies the values the plant uses,
-     * like growth rate and seed drop chances.
-     */
-    public PlantSetProperties getProperties(){
-        return this.properties;
     }
 
     /**
@@ -959,6 +950,19 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         return TextFormatting.GREEN + I18n.format("misc.resynth.growth_stage",
                 TextFormatting.GOLD + ((growthStage) + 1  + "/" + (max + 1))
         );
+    }
+
+    // *****
+    // Other
+    // *****
+
+    /**
+     * @return the properties object for the plant
+     * that specifies the values the plant uses,
+     * like growth rate and seed drop chances.
+     */
+    public PlantSetProperties getProperties(){
+        return this.properties;
     }
 
     // ****************

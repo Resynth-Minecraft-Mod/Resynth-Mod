@@ -267,12 +267,14 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      */
     @Override
     public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
+        tooltip.add(new StringTextComponent(""));
         tooltip.add(new StringTextComponent(
                 getMineralContentMessage(
                         accessor.getServerData().getFloat(TileEntityMineralSoil.MINERAL_CONTENT_TAG),
                         accessor.getServerData().getFloat("mineralIncrease")
                 )
         ));
+        tooltip.add(new StringTextComponent(""));
     }
 
     /**
@@ -418,10 +420,9 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      * @return the formatted localized message.
      */
     private static String getMineralContentMessage(float mineralPercentage, float increase){
-        return TextFormatting.AQUA +
-                I18n.format(
-                        "misc.resynth.mineral_content",
-                        TextFormatting.GOLD + String.valueOf(mineralPercentage)
-                ) + " + " + ((mineralPercentage > 49.9) ? increase : 0) + "%";
+        return TextFormatting.AQUA + I18n.format(
+                "misc.resynth.mineral_content",
+                TextFormatting.GOLD + String.valueOf(mineralPercentage + increase)
+        );
     }
 }
