@@ -23,7 +23,7 @@ apply plugin: 'eclipse'
 /**
  * The version number denoting the current Resynth build.
  */
-def modversion = "5.2.0"
+def modversion = "5.2.1"
 //Also change in: ResynthMod.java | mods.toml | Here
 
 /**

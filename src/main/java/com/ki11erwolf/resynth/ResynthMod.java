@@ -37,8 +37,6 @@ import org.apache.logging.log4j.util.StackLocatorUtil;
  */
 @Mod(ResynthMod.MOD_ID)
 public class ResynthMod {
-    //TODO: For 1.16.2 & 1.16.3: Make temp crafting recipe for:
-    // \Mineral Stone, Calvinite & Sylvanite
 
     //In honor of Minecraft, for the countless hours of fun
     //and entertainment it has given me and millions of other
@@ -62,7 +60,7 @@ public class ResynthMod {
     /**
      * Resynth version.
      */
-    public static final String MOD_VERSION = "5.2.0";
+    public static final String MOD_VERSION = "5.2.1";
 
     /**
      * Minecraft version.
