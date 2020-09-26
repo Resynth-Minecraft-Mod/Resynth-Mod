@@ -17,12 +17,16 @@ package com.ki11erwolf.resynth.util;
 
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
+import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -135,4 +139,61 @@ public interface Tooltip {
         return new StringTextComponent("");
     }
 
+    /**
+     * Handles transforming a StringTextComponent that contains line feeds
+     * ({@code "\n"}) into an array where each item in the array is a line
+     * of text from the original input, wrapped in a StringTextComponent.
+     * StringTextComponent.
+     *
+     * TL;DR: transforms StringTextComponenets with new lines into something
+     * Minecraft can display correctly.
+     *
+     * @param input the given StringTextComponent to split into an array of
+     *              StringTextComponents, each of which is a line of text.
+     * @param lineFormatting the formatting code(s) to format each line with.
+     *                       Allows coloring the text.
+     * @return the input StringTextComponent as an Array of
+     * StringTextComponents where each item is a line of text from the input.
+     */
+    static ITextComponent[] formatLineFeeds(ITextComponent input, TextFormatting lineFormatting){
+        String[] splitInput = input.getString().split("\n");
+        StringTextComponent[] output = new StringTextComponent[splitInput.length];
+
+        for(int i = 0; i < splitInput.length; i++){
+            output[i] = new StringTextComponent(lineFormatting.toString() + splitInput[i]);
+        }
+
+        return output;
+    }
+
+    /**
+     * A utility method specifically made for items related to plants
+     * (e.g. organic ore / produce).
+     *
+     * This method is used to set the item/block tooltip to contain
+     * both the description and statistics on the plant set passed in.
+     *
+     * @param tooltip the tooltip we're modifying with the new tooltips.
+     * @param setProperties the properties of the specific plant set
+     *                      we're using to get the plant statistics.
+     * @param descriptiveTooltip the localized tooltip for the
+     *                           block/item. Line Feeds will be taken
+     *                           care of.
+     */
+    static void addPlantItemOrBlockTooltips(List<ITextComponent> tooltip, PlantSetProperties setProperties,
+                                          ITextComponent descriptiveTooltip){
+        //Stats
+        new ExpandingTooltip().setShiftForStats(tooltips -> {
+            PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltips, setProperties);
+            addBlankLine(tooltips);
+        }).write(addBlankLine(tooltip));
+
+        //Description
+        new ExpandingTooltip().setCtrlForDescription(tooltips -> addBlankLine(tooltips).addAll(
+                Arrays.asList(Tooltip.formatLineFeeds(descriptiveTooltip, TextFormatting.DARK_GRAY))
+        )).write(tooltip);
+
+        //Spacing
+        addBlankLine(tooltip);
+    }
 }

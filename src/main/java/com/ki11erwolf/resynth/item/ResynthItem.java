@@ -19,7 +19,6 @@ import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
-import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.client.resources.I18n;
@@ -32,9 +31,11 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.text.WordUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
-import static com.ki11erwolf.resynth.util.Tooltip.*;
+import static com.ki11erwolf.resynth.util.Tooltip.newBlankLine;
+import static com.ki11erwolf.resynth.util.Tooltip.toTextComponent;
 
 /**
  * Base class for all Resynth items.
@@ -94,7 +95,9 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         new ExpandingTooltip().setCtrlForDescription(
-                tooltips -> Tooltip.addBlankLine(tooltips).add(getDescriptiveTooltip(this))
+                tooltips -> Tooltip.addBlankLine(tooltips).addAll(
+                        Arrays.asList(Tooltip.formatLineFeeds(getDescriptiveTooltip(this), TextFormatting.DARK_GRAY))
+                )
         ).write(tooltip).add(newBlankLine());
     }
 
@@ -139,19 +142,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      */
     protected static void addPlantItemTooltips(List<ITextComponent> tooltip, PlantSetProperties setProperties,
                                                String itemName){
-        //Stats
-        new ExpandingTooltip().setShiftForStats(tooltips -> {
-            PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltips, setProperties);
-            addBlankLine(tooltips);
-        }).write(addBlankLine(tooltip));
-
-        //Description
-        new ExpandingTooltip().setCtrlForDescription(tooltips -> addBlankLine(tooltips).add(
-                getDescriptiveTooltip(itemName)
-        )).write(tooltip);
-
-        //Spacing
-        addBlankLine(tooltip);
+        Tooltip.addPlantItemOrBlockTooltips(tooltip, setProperties, getDescriptiveTooltip(itemName));
     }
 
     /**

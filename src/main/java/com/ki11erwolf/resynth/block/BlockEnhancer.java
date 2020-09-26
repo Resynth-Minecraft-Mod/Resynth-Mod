@@ -23,10 +23,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.ki11erwolf.resynth.util.Tooltip.newBlankLine;
@@ -75,9 +77,11 @@ public class BlockEnhancer extends ResynthBlock<BlockEnhancer>{
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
         new ExpandingTooltip().setCtrlForDescription(
-                tooltips -> Tooltip.addBlankLine(tooltips).add(getDescriptiveTooltip(
-                        this.getRegistryName() == null ? "" : this.getRegistryName().getPath(), increase
-                ))
+                tooltips -> Tooltip.addBlankLine(tooltips).addAll(
+                        Arrays.asList(Tooltip.formatLineFeeds(getDescriptiveTooltip(
+                                this.getRegistryName() == null ? "" : this.getRegistryName().getPath(), increase
+                        ), TextFormatting.DARK_GRAY))
+                )
         ).write(tooltip).add(newBlankLine());
     }
 

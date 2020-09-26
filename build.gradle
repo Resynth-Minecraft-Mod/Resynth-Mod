@@ -31,7 +31,7 @@ def modversion = "5.2.0"
  * the mod. The Built mod jar will only run with this
  * version of Forge or newer.
  */
-def forgeversion = "34.0.0"
+def forgeversion = "34.1.0"
 
 /**
  * The version of Minecraft this Resynth build is for.
@@ -85,8 +85,12 @@ minecraft {
 }
 
 repositories {
+    maven { url = 'https://files.minecraftforge.net/maven' }
+    jcenter()
+    mavenCentral()
+
     maven { //Hwyla (Waila)
-        url = "http://maven.tehnut.info/"
+        url = "https://maven.tehnut.info/"
     }
 }
 
