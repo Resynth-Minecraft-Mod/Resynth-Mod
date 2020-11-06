@@ -38,6 +38,8 @@ import org.apache.logging.log4j.util.StackLocatorUtil;
 @Mod(ResynthMod.MOD_ID)
 public class ResynthMod {
 
+    //TODO: Packets
+
     //In honor of Minecraft, for the countless hours of fun
     //and entertainment it has given me and millions of other
     //players, even today, as well as for helping me find

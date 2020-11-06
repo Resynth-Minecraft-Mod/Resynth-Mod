@@ -42,6 +42,8 @@ import java.util.function.Consumer;
  */
 public class ResynthModdedPlants { //Fields register themselves.
 
+    //TODO: Updated mods: AE2, Thermal Foundation, Immersive Engineering
+
     // ********
     //   Mods
     // ********
