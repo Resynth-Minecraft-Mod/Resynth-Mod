@@ -62,6 +62,10 @@
   "item.resynth.crystalline_seeds_cookie":                  "Cookie Seeds",
   "item.resynth.crystalline_shard_cookie":                  "Cookie Shard",
 
+  "block.resynth.crystalline_plant_dnetherite_scrap":       "Netherite Scrap Plant",
+  "item.resynth.crystalline_seeds_netherite_scrap":         "Netherite Scrap Seeds",
+  "item.resynth.crystalline_shard_netherite_scrap":         "Netherite Scrap Shard",
+
   "block.resynth.metallic_plant_iron":                      "Iron Plant",
   "item.resynth.metallic_seeds_iron":                       "Iron Seeds",
   "block.resynth.metallic_organic_ore_iron":                "Organic Iron Ore",
@@ -438,9 +442,9 @@
   "item.resynth.metallic_seeds_midnight_tenebrum":                      "Tenebrum Seeds (Midnight)",
   "block.resynth.metallic_organic_ore_midnight_tenebrum":               "Organic Tenebrum (Midnight)",
 
-  "block.resynth.metallic_plant_midnight_nagrilite":                     "Nagrilite Plant (Midnight)",
-  "item.resynth.metallic_seeds_midnight_nagrilite":                      "Nagrilite Seeds (Midnight)",
-  "block.resynth.metallic_organic_ore_midnight_nagrilite":               "Organic Nagrilite (Midnight)",
+  "block.resynth.metallic_plant_midnight_nagrilite":                    "Nagrilite Plant (Midnight)",
+  "item.resynth.metallic_seeds_midnight_nagrilite":                     "Nagrilite Seeds (Midnight)",
+  "block.resynth.metallic_organic_ore_midnight_nagrilite":              "Organic Nagrilite (Midnight)",
 
   "____COMMENT": "---Tooltips----",
   "tooltip.block.resynth.mineral_stone":
@@ -498,6 +502,7 @@
   "Can be smelted into the final resource ore, or blown up for a chance at getting more seeds. ",
 
   "________COMMENT": "----Plant Property Tooltips----",
+  "tooltip.property.resynth.stats_disabled":                      "Only available in singleplayer.",
   "tooltip.property.resynth.growth_chance":                       "Growth Rate: %s%s%%",
   "tooltip.property.resynth.plant_yield":                         "Produce Yield: %s%s%s drop",
   "tooltip.property.resynth.plant_yields":                        "Produce Yield: %s%s%s drops",
@@ -511,12 +516,8 @@
 
   "_________COMMENT": "---Miscellaneous---",
   "misc.resynth.mineral_content": "Mineral Content: %s%%",
+  "misc.resynth.growth_stage": "Growth: stage %s",
 
-  "__________COMMENT": "--- FOR TRANSLATION: new entries that have not been translated. ---",
+  "__________COMMENT": "--- FOR TRANSLATION: new entries that have not been translated. ---"
 
-  "block.resynth.crystalline_plant_dnetherite_scrap":       "Netherite Scrap Plant",
-  "item.resynth.crystalline_seeds_netherite_scrap":         "Netherite Scrap Seeds",
-  "item.resynth.crystalline_shard_netherite_scrap":         "Netherite Scrap Shard",
-  "misc.resynth.growth_stage":                              "Growth: stage %s",
-  "tooltip.property.resynth.stats_disabled":                "Only available in singleplayer."
 }

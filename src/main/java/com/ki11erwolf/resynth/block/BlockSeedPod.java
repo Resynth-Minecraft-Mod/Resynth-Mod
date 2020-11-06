@@ -41,8 +41,6 @@ import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nonnull;
 
-//import net.minecraft.util.math.Vec3d;
-
 /**
  * Mystical Seed Pod. Can be configured to drops Biochemical seeds when broken.
  * Useful for players in peaceful mode and skyblock.
