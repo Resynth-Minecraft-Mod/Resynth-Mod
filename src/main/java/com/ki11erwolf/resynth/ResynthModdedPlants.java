@@ -69,8 +69,8 @@ public class ResynthModdedPlants { //Fields register themselves.
                 putMod(7, new Mod("Mekanism", "mekanism"));
                 putMod(8, new Mod("Botania", "botania"));
                 putMod(9, new Mod("The Midnight", "midnight"));
-                putMod(10, new Mod("Hwyla", "hwyla"));
-                putMod(11, new Mod("Hwyla (Waila)", "waila"));
+                putMod(10, new Mod("Hwyla", "waila"));
+                putMod(11, new Mod("The One Probe", "theoneprobe"));
             }
 
             /**
