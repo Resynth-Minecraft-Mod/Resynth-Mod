@@ -302,10 +302,6 @@
   "item.resynth.metallic_seeds_bno_iron":                               "铁种子 (基础下界矿石)",
   "block.resynth.metallic_organic_ore_bno_iron":                        "有机铁矿石 (基础下界矿石)",
 
-  "block.resynth.metallic_plant_bno_gold":                              "金作物",
-  "item.resynth.metallic_seeds_bno_gold":                               "金种子 (基础下界矿石)",
-  "block.resynth.metallic_organic_ore_bno_gold":                        "有机金矿石 (基础下界矿石)",
-
   "block.resynth.metallic_plant_bno_uranium":                           "铀作物",
   "item.resynth.metallic_seeds_bno_uranium":                            "铀种子 (基础下界矿石)",
   "block.resynth.metallic_organic_ore_bno_uranium":                     "有机铀矿石 (基础下界矿石)",
@@ -479,7 +475,7 @@
   "tooltip.resynth.common.alt_for_info":            "按住 %s<Alt>%s 查看附加信息",
   "tooltip.resynth.common.unspecified":             "工具提示缺失...",
 
-  "_____COMMENT": "----作物工具提示----",
+  "______COMMENT": "----作物工具提示----",
   "tooltip.item.resynth.crystalline_seeds":
   "可以通过开采矿石获得最终资源, 或者可以将它的产品（碎片）留在水中让它自然消失.\n任何作物都可以用矿物质锄 (右击) 查看生长情况.",
   "tooltip.item.resynth.metallic_seeds":
@@ -493,11 +489,11 @@
   "tooltip.item.resynth.seeds.failure":
   "该作物类型已禁用! 作物放置时发生错误, 你不可以使用它. 如果你看到这个, 请发送一个错误报告!",
 
-  "______COMMENT": "----作物方块提示----",
+  "_______COMMENT": "----作物方块提示----",
   "tooltip.block.resynth.organic_ore":
   "可以将它烧炼为最终资源矿石, 或通过爆破以获得更多种子. ",
 
-  "_______COMMENT": "----作物特征提示----",
+  "________COMMENT": "----作物特征提示----",
   "tooltip.property.resynth.growth_chance": "生长速度: %s%s%%",
   "tooltip.property.resynth.plant_yield": "作物产量: %s%s%s 个掉落物.",
   "tooltip.property.resynth.plant_yields": "作物产量: %s%s%s 个掉落物",
@@ -509,7 +505,7 @@
   "tooltip.property.resynth.seed_spawn_chance_from_mob": "种子通过怪物获得的几率: %s%s%%%s",
   "tooltip.property.resynth.seed_spawn_chance_from_bulb": "种子通过鳞茎获得的几率: %s%s%%%s",
 
-  "________COMMENT": "---其它---",
+  "_________COMMENT": "---其它---",
   "misc.resynth.mineral_content": "矿物质含量: %s%%",
 
   "__________COMMENT": "--- 至各位翻译官: 尚未翻译的新词条. ---",

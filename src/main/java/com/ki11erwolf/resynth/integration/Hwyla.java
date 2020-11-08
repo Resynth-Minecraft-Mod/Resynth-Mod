@@ -48,7 +48,7 @@ public class Hwyla implements mcp.mobius.waila.api.IWailaPlugin{
      * A list of all registered blocks that implement a Hwyla data provider
      * interface that are queued for registration.
      */
-    //Generic object array as providers can be many things.
+    //Generic object array as proaviders can be many things.
     private static final List<Block> PROVIDERS = new ArrayList<>(4);
 
     /**

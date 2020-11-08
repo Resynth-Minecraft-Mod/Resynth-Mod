@@ -42,6 +42,8 @@ import java.util.Objects;
  */
 public class PlantSet<P extends BlockPlant<?>> {
 
+    //TODO: attempt to implement recipes related to plants in code.
+
     /**
      * The name of the plant set instance (e.g. diamond).
      */

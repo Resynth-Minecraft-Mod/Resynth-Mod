@@ -20,7 +20,10 @@ import com.ki11erwolf.resynth.plant.set.MetallicSetProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.plant.set.PlantSetFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -43,6 +46,7 @@ import java.util.function.Consumer;
 public class ResynthModdedPlants { //Fields register themselves.
 
     //TODO: Updated mods: AE2, Thermal Foundation, Immersive Engineering
+    //TODO: Look at Basic Nether Ores - Gold
 
     // ********
     //   Mods
@@ -62,6 +66,9 @@ public class ResynthModdedPlants { //Fields register themselves.
          */
         private static final Map<Integer, Mod> MOD_LIST
                 = new HashMap<Integer, Mod>() {{
+                putMod(-2, new Mod("The One Probe", "theoneprobe"));
+                putMod(-1, new Mod("Hwyla", "waila"));
+                //Integer based Map allows negative indexing, used for weird mods
                 putMod(1, new Mod("Simple Ores", "simpleores"));
                 putMod(2, new Mod("More Ores in ONE", "moreoresinone"));
                 putMod(3, new Mod("Just Another Ruby Mod", "ruby"));
@@ -71,8 +78,6 @@ public class ResynthModdedPlants { //Fields register themselves.
                 putMod(7, new Mod("Mekanism", "mekanism"));
                 putMod(8, new Mod("Botania", "botania"));
                 putMod(9, new Mod("The Midnight", "midnight"));
-                putMod(10, new Mod("Hwyla", "waila"));
-                putMod(11, new Mod("The One Probe", "theoneprobe"));
             }
 
             /**
@@ -664,13 +669,6 @@ public class ResynthModdedPlants { //Fields register themselves.
      */
     public static final PlantSet<?> BASIC_NETHER_ORES_IRON = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
             BASIC_NETHER_ORES, "iron", IRON_PROPERTIES, "netheriron_ore"
-    ));
-
-    /**
-     * The plant set for nether gold from Basic Nether Ores.
-     */
-    public static final PlantSet<?> BASIC_NETHER_ORES_GOLD = registerIfNotNull(PlantSetFactory.newModdedMetallicSet(
-            BASIC_NETHER_ORES, "gold", GOLD_PROPERTIES, "nethergold_ore"
     ));
 
     /**

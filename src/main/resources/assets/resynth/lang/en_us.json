@@ -306,10 +306,6 @@
   "item.resynth.metallic_seeds_bno_iron":                               "Iron Seeds (Basic Nether Ores)",
   "block.resynth.metallic_organic_ore_bno_iron":                        "Organic Iron Ore (Basic Nether Ores)",
 
-  "block.resynth.metallic_plant_bno_gold":                              "Gold Plant",
-  "item.resynth.metallic_seeds_bno_gold":                               "Gold Seeds (Basic Nether Ores)",
-  "block.resynth.metallic_organic_ore_bno_gold":                        "Organic Gold Ore (Basic Nether Ores)",
-
   "block.resynth.metallic_plant_bno_uranium":                           "Uranium Plant",
   "item.resynth.metallic_seeds_bno_uranium":                            "Uranium Seeds (Basic Nether Ores)",
   "block.resynth.metallic_organic_ore_bno_uranium":                     "Organic Uranium Ore (Basic Nether Ores)",
