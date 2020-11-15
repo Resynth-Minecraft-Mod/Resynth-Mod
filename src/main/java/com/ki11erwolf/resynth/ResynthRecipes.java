@@ -94,6 +94,26 @@ public enum ResynthRecipes implements ISelectiveResourceReloadListener {
                 Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE
         );
 
+        /**
+         * The {@link IRecipe Recipe} instance that will craft Mineral Rocks
+         * Seeds using a standard alternative recipe.
+         */
+        private static final IRecipe<?> MINERAL_ROCK_SEEDS_ALT_RECIPE = INSTANCE.newShapelessRecipe(
+                "special_mineral_rock_seeds", "Resynth's Resources",
+                new ItemStack(ResynthPlants.MINERAL_ROCKS.getSeedsItem(), 1), Items.IRON_INGOT, Items.IRON_INGOT,
+                Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.EMERALD, Items.WHEAT_SEEDS
+        );
+
+        /**
+         * The {@link IRecipe Recipe} instance that will craft Calvinite Crystals
+         * Seeds using a standard alternative recipe.
+         */
+        private static final IRecipe<?> CALVINITE_CRYSTAL_SEEDS_ALT_RECIPE = INSTANCE.newShapelessRecipe(
+                "special_calvinite_crystal_seeds", "Resynth's Resources",
+                new ItemStack(ResynthPlants.CALVINITE_CRYSTAL.getSeedsItem(), 1), Items.QUARTZ, Items.QUARTZ,
+                Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.EMERALD, Items.MELON_SEEDS
+        );
+
         // Config
 
         /**
@@ -124,7 +144,9 @@ public enum ResynthRecipes implements ISelectiveResourceReloadListener {
             }
 
             recipeContainer.add(MINERAL_ROCK_ALT_RECIPE);
+            recipeContainer.add(MINERAL_ROCK_SEEDS_ALT_RECIPE);
             recipeContainer.add(CALVINITE_CRYSTAL_ALT_RECIPE);
+            recipeContainer.add(CALVINITE_CRYSTAL_SEEDS_ALT_RECIPE);
             recipeContainer.add(SYLVANITE_CRYSTAL_ALT_RECIPE);
         }
 
