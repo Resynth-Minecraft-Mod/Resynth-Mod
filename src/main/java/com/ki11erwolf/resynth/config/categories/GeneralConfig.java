@@ -95,6 +95,19 @@ public class GeneralConfig extends ConfigCategory {
     );
 
     /**
+     * Config value that allows enabling or disabling crafting recipes for resources.
+     */
+    private final BooleanConfigValue enableResourceRecipes = new BooleanConfigValue(
+            "enable-core-resource-recipes",
+            "Allows enabling (or disabling) the addition of various crafting " +
+                    "recipes that can be used to craft Resynth's core resources:\nMineral Rocks, " +
+                    "Calvinite Crystals, Sylvanite Crystals, ect. These resources are NOT normally " +
+                    "craftable, instead, they need\nto mined or otherwise obtained from the world." +
+                    "\nEnable this config option if the ores/resources are not generating naturally, " +
+                    "or if the resources cannot otherwise be obtained.", false, this
+    );
+
+    /**
      * Constructor.
      */
     public GeneralConfig() {
@@ -149,4 +162,10 @@ public class GeneralConfig extends ConfigCategory {
      * growth is enabled or disabled.
      */
     public boolean enableLightPenalty() { return enableLightPenalty.getValue(); }
+
+    /**
+     * @return the config defined value that specifies if crafting recipes for
+     * resources are enabled or disabled.
+     */
+    public boolean enableResourceRecipes() { return enableResourceRecipes.getValue(); }
 }

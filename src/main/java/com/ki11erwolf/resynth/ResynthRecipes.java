@@ -1,9 +1,13 @@
 package com.ki11erwolf.resynth;
 
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.GeneralConfig;
+import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.plant.set.PublicPlantSetRegistry;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.*;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.IItemProvider;
@@ -48,9 +52,93 @@ public enum ResynthRecipes implements ISelectiveResourceReloadListener {
      * core recipes for Resynth.
      */
     private enum CoreRecipes implements RecipeProvider {
+        /** Singleton instance */ INSTANCE;
 
-        /** Singleton instance */
-        INSTANCE;
+        // Configurable Flags
+
+        /**
+         * <b>WARNING: Hard-coded flag allowing the forced registration of {@link
+         * #addResourceRecipes(List) recipes for uncraftable resource}.</b>
+         */
+        private static final boolean ENSURE_RESOURCE_RECIPES = true;
+
+        // Configurable Recipe Definitions
+
+        /**
+         * The {@link IRecipe Recipe} instance that will craft Mineral Rocks
+         * using a standard alternative recipe.
+         */
+        private static final IRecipe<?> MINERAL_ROCK_ALT_RECIPE = INSTANCE.newShapelessRecipe(
+                "special_mineral_rock", "Resynth's Resources",
+                new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, 6), Items.IRON_INGOT, Items.IRON_INGOT,
+                Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE
+        );
+
+        /**
+         * The {@link IRecipe Recipe} instance that will craft Calvinite Crystals
+         * using a standard alternative recipe.
+         */
+        private static final IRecipe<?> CALVINITE_CRYSTAL_ALT_RECIPE = INSTANCE.newShapelessRecipe(
+                "special_calvinite_crystal", "Resynth's Resources",
+                new ItemStack(ResynthItems.ITEM_CALVINITE, 2), Items.QUARTZ, Items.QUARTZ,
+                Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE
+        );
+
+        /**
+         * The {@link IRecipe Recipe} instance that will craft Sylvanite Crystals
+         * using a standard alternative recipe.
+         */
+        private static final IRecipe<?> SYLVANITE_CRYSTAL_ALT_RECIPE = INSTANCE.newShapelessRecipe(
+                "special_sylvanite_crystal", "Resynth's Resources",
+                new ItemStack(ResynthItems.ITEM_SYLVANITE, 6), Items.DIAMOND, Items.END_STONE,
+                Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE
+        );
+
+        // Config
+
+        /**
+         * Convenient reference to the {@link GeneralConfig#enableResourceRecipes()}
+         * config option.
+         */
+        private static final boolean ENABLE_RESOURCE_RECIPES = ResynthConfig.
+                GENERAL_CONFIG.getCategory(GeneralConfig.class).enableResourceRecipes();
+
+        // Class Impl
+
+        /**
+         * Holds, as a cache, the list of recipes to give {@link #get()}, once
+         * generated.
+         */
+        private IRecipe<?>[] recipes;
+
+        /**
+         * If either {@link #ENABLE_RESOURCE_RECIPES} or {@link #ENSURE_RESOURCE_RECIPES}
+         * flag is {@code true}, the special crafting recipes for Resynth's (normally
+         * un-craftable) core resources will be added for registration.
+         *
+         * @param recipeContainer the list to add the Recipes object instances to.
+         */
+        private void addResourceRecipes(List<IRecipe<?>> recipeContainer) {
+            if(!(ENABLE_RESOURCE_RECIPES || ENSURE_RESOURCE_RECIPES)) {
+                return;
+            }
+
+            recipeContainer.add(MINERAL_ROCK_ALT_RECIPE);
+            recipeContainer.add(CALVINITE_CRYSTAL_ALT_RECIPE);
+            recipeContainer.add(SYLVANITE_CRYSTAL_ALT_RECIPE);
+        }
+
+        /**
+         * Builds the {@link #recipes Recipes List} and makes sure it's cached.
+         *
+         * @return the built Recipes List.
+         */
+        private IRecipe<?>[] build() {
+            List<IRecipe<?>> tempRecipes = new ArrayList<>();
+            addResourceRecipes(tempRecipes);
+
+            return (recipes = tempRecipes.toArray(new IRecipe<?>[0]));
+        }
 
         /**
          * {@inheritDoc}
@@ -60,7 +148,11 @@ public enum ResynthRecipes implements ISelectiveResourceReloadListener {
          */
         @Override
         public IRecipe<?>[] get() {
-            return new IRecipe[0];
+            if(recipes == null){
+                return build();
+            }
+
+            return recipes;
         }
     }
 
@@ -167,7 +259,11 @@ public enum ResynthRecipes implements ISelectiveResourceReloadListener {
     @Override
     public void onResourceManagerReload(IResourceManager resourceManager, Predicate<IResourceType> resourcePredicate) {
         ResynthMod.getNewLogger().info("Injecting Resynth's custom recipes for plants & plant sets...");
-        getRecipeManager().func_223389_a(getRecipes());
+
+        List<IRecipe<?>> combined = new ArrayList<>(getRecipes());
+        // IMPORTANT: Include recipes already in the manager
+        combined.addAll(getRecipeManager().getRecipes());
+        getRecipeManager().func_223389_a(combined);
     }
 
     /**
