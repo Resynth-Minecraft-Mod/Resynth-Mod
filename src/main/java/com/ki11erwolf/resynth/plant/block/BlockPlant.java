@@ -944,11 +944,12 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
                              World world, BlockState blockState, IProbeHitData data) {
         int stage = getGrowthStage(blockState);
         int max = getMaxGrowthStage();
+        int percent = (int)(((float) stage / max) * 100);
 
         probeInfo.text(new StringTextComponent(""));
-        probeInfo.text(new StringTextComponent(getGrowthStageMessage(stage, max)
-                + String.format("  (%s%%)", (int)(((float) stage / max) * 100))
-        ));
+        probeInfo.text(new StringTextComponent(String.format(TextFormatting.GREEN.toString()
+                        + "G: %s / %s %s", stage, max, TextFormatting.DARK_GREEN + "(" + percent + "%)"
+        )));
     }
 
     // *****

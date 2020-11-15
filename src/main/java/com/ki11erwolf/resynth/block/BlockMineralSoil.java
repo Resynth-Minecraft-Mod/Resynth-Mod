@@ -279,13 +279,17 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         float totalMineralContent = mineralContent + (mineralContent >= max ? contentIncrease : 0);
 
         probeInfo.text(new StringTextComponent(""));
-        probeInfo.text(new StringTextComponent(getMineralContentMessage(totalMineralContent, 0)));
-        probeInfo.progress((int) mineralContent, (int) max);
+        IProbeInfo child = probeInfo.horizontal();
 
+        child.progress((int) mineralContent, (int) max);
         if(contentIncrease > 0)
-            probeInfo.text(new StringTextComponent(TextFormatting.RED.toString()
+            child.text(new StringTextComponent(TextFormatting.RED.toString()
                     + (mineralContent >= max ? "" : TextFormatting.STRIKETHROUGH) + "+" + contentIncrease + "%")
             );
+
+        probeInfo.text(new StringTextComponent(
+                TextFormatting.BOLD.toString() + TextFormatting.BLUE.toString() + "T: " + totalMineralContent + "%")
+        );
     }
 
     // *****
