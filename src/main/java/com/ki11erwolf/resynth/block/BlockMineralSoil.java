@@ -288,7 +288,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
             );
 
         probeInfo.text(new StringTextComponent(
-                TextFormatting.BOLD.toString() + TextFormatting.BLUE.toString() + "T: " + totalMineralContent + "%")
+                TextFormatting.BOLD.toString() + TextFormatting.BLUE.toString() + "C: " + totalMineralContent + "%")
         );
     }
 
