@@ -85,7 +85,16 @@ minecraft {
 }
 
 repositories {
-    maven { url = 'https://files.minecraftforge.net/maven' }
+    maven {
+        name 'Waila'
+        url = 'https://files.minecraftforge.net/maven'
+    }
+
+    maven {
+        name 'TOP'
+        url "https://maven.tterrag.com/"
+    }
+
     jcenter()
     mavenCentral()
 
@@ -101,6 +110,10 @@ repositories {
 dependencies {
     //Forge version
     minecraft "net.minecraftforge:forge:${mcversion}-${forgeversion}"
+
+    //The One Probe version
+    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.4-beta-7:api")
+    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.4-beta-7")
 
     //Hwyla version
     compileOnly fg.deobf('mcp.mobius.waila:Hwyla:1.10.11-B78_1.16.2:api')

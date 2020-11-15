@@ -22,6 +22,10 @@ import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import com.ki11erwolf.resynth.util.PlantPatchInfoProvider;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.IProbeInfoAccessor;
+import mcjty.theoneprobe.api.ProbeMode;
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
@@ -69,7 +73,7 @@ import java.util.List;
  */
 @SuppressWarnings("deprecation")
 public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements PlantPatchInfoProvider,
-        IComponentProvider, IServerDataProvider<TileEntity> {
+        IComponentProvider, IServerDataProvider<TileEntity>, IProbeInfoAccessor {
 
     /**
      * Configuration settings for this block class.
@@ -425,5 +429,10 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
                 "misc.resynth.mineral_content",
                 TextFormatting.GOLD + String.valueOf(mineralPercentage + increase)
         );
+    }
+
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data) {
+        probeInfo.text(new StringTextComponent("Hello!"));
     }
 }
