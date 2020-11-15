@@ -40,7 +40,7 @@ public class TileEntityTypeMineralSoil {
     /**
      * Reference to the tile entity type.
      */
-    @ObjectHolder(ResynthMod.MOD_ID + ":" + TileEntityMineralSoil.TE_ID)
+    @ObjectHolder(ResynthMod.MODID + ":" + TileEntityMineralSoil.TE_ID)
     static TileEntityType<?> TE_MINERAL_SOIL;
 
     //The below was copied from:
@@ -51,7 +51,7 @@ public class TileEntityTypeMineralSoil {
      * Registration class.
      */
     //Reflection
-    @Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @Mod.EventBusSubscriber(modid = ResynthMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class Registration {
 
         /**
@@ -65,7 +65,7 @@ public class TileEntityTypeMineralSoil {
                     e.getRegistry(), register(
                             TileEntityMineralSoil.TE_ID, TileEntityType.Builder.create(TileEntityMineralSoil::new)
                     ),
-                    ResynthMod.MOD_ID + ":" + TileEntityMineralSoil.TE_ID
+                    ResynthMod.MODID + ":" + TileEntityMineralSoil.TE_ID
             );
         }
     }

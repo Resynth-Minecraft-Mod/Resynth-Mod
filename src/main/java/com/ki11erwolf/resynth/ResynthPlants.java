@@ -75,42 +75,42 @@ public class ResynthPlants {
      * The plant set for Minecraft Netherite Scrap.
      */
     public static final PlantSet<?> NETHERITE_SCRAP = PlantSetFactory.newVanillaCrystallineSet(
-            "netherite_scrap", ResynthModdedPlants.NETHERITE_SCRAP_PROPERTIES, Blocks.field_235398_nh_
+            "netherite_scrap", ResynthModPlants.NETHERITE_SCRAP_PROPERTIES, Blocks.field_235398_nh_
     ).register();
 
     /**
      * The plant set for Vanilla Diamonds.
      */
     public static final PlantSet<?> DIAMOND = PlantSetFactory.newVanillaCrystallineSet(
-            "diamond", ResynthModdedPlants.DIAMOND_PROPERTIES, Blocks.DIAMOND_ORE
+            "diamond", ResynthModPlants.DIAMOND_PROPERTIES, Blocks.DIAMOND_ORE
     ).register();
 
     /**
      * The plant set for Vanilla Redstone.
      */
     public static final PlantSet<?> REDSTONE = PlantSetFactory.newVanillaCrystallineSet(
-            "redstone", ResynthModdedPlants.REDSTONE_PROPERTIES, Blocks.REDSTONE_ORE
+            "redstone", ResynthModPlants.REDSTONE_PROPERTIES, Blocks.REDSTONE_ORE
     ).register();
 
     /**
      * The plant set for Vanilla Lapis Lazuli.
      */
     public static final PlantSet<?> LAPIS_LAZULI = PlantSetFactory.newVanillaCrystallineSet(
-            "lapis_lazuli", ResynthModdedPlants.LAPIS_LAZULI_PROPERTIES, Blocks.LAPIS_ORE
+            "lapis_lazuli", ResynthModPlants.LAPIS_LAZULI_PROPERTIES, Blocks.LAPIS_ORE
     ).register();
 
     /**
      * The plant set for Vanilla Coal.
      */
     public static final PlantSet<?> COAL = PlantSetFactory.newVanillaCrystallineSet(
-            "coal", ResynthModdedPlants.COAL_PROPERTIES, Blocks.COAL_ORE
+            "coal", ResynthModPlants.COAL_PROPERTIES, Blocks.COAL_ORE
     ).register();
 
     /**
      * The plant set for Vanilla Emeralds.
      */
     public static final PlantSet<?> EMERALD = PlantSetFactory.newVanillaCrystallineSet(
-            "emerald", ResynthModdedPlants.EMERALD_PROPERTIES, Blocks.EMERALD_ORE
+            "emerald", ResynthModPlants.EMERALD_PROPERTIES, Blocks.EMERALD_ORE
     ).register();
 
     /**
@@ -168,7 +168,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?> IRON = PlantSetFactory.newVanillaMetallicPlantSet(
             "iron",
-            ResynthModdedPlants.IRON_PROPERTIES,
+            ResynthModPlants.IRON_PROPERTIES,
             Blocks.IRON_ORE
     ).register();
 
@@ -177,7 +177,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?> GOLD = PlantSetFactory.newVanillaMetallicPlantSet(
             "gold",
-            ResynthModdedPlants.GOLD_PROPERTIES,
+            ResynthModPlants.GOLD_PROPERTIES,
             Blocks.GOLD_ORE
     ).register();
 

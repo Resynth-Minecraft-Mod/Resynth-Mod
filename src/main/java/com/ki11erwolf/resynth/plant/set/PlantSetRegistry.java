@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth.plant.set;
 
 import com.ki11erwolf.resynth.ResynthMod;
-import com.ki11erwolf.resynth.ResynthModdedPlants;
+import com.ki11erwolf.resynth.ResynthModPlants;
 import com.ki11erwolf.resynth.ResynthPlants;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.integration.Hwyla;
@@ -84,7 +84,7 @@ class PlantSetRegistry {
      */
     //Reflection
     @SuppressWarnings({"unused", "RedundantSuppression"})
-    @Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
+    @Mod.EventBusSubscriber(modid = ResynthMod.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
     private static class Registerer {
 
         /*
@@ -94,7 +94,7 @@ class PlantSetRegistry {
         static {
             LOG.info("Queuing plant set registration...");
             ResynthPlants.initSets();
-            ResynthModdedPlants.initSets();
+            ResynthModPlants.initSets();
         }
 
         /**

@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth.integration;
 
 import com.ki11erwolf.resynth.ResynthMod;
-import com.ki11erwolf.resynth.ResynthModdedPlants;
+import com.ki11erwolf.resynth.ResynthModPlants;
 import com.ki11erwolf.resynth.analytics.ModIntegrationEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
 import net.minecraftforge.fml.ModList;
@@ -75,7 +75,7 @@ public class SupportedMods {
     private static void iterateModsAndSendEvents(){
         LOG.info("Sending mod integration events...");
 
-        ResynthModdedPlants.Mods.iterateAllMods((mod -> {
+        ResynthModPlants.Mods.iterateAllMods((mod -> {
             if(ModList.get().isLoaded(mod.getID())){
                 ResynthAnalytics.send(
                         new ModIntegrationEvent(mod.getID(), mod.getName())

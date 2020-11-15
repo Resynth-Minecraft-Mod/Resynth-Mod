@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.Mod;
  * This class also handles the registering of items.
  */
 
-@Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = ResynthMod.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ResynthItems extends QueueRegisterer<Item> {
 
     /**

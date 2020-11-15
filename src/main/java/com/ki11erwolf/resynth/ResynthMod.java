@@ -18,13 +18,12 @@ package com.ki11erwolf.resynth;
 import com.ki11erwolf.resynth.proxy.ClientProxy;
 import com.ki11erwolf.resynth.proxy.Proxy;
 import com.ki11erwolf.resynth.proxy.ServerProxy;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -35,7 +34,7 @@ import org.apache.logging.log4j.util.StackLocatorUtil;
 /**
  * Resynth mod class.
  */
-@Mod(ResynthMod.MOD_ID)
+@Mod(ResynthMod.MODID)
 public class ResynthMod {
 
     //TODO: Packets
@@ -57,7 +56,7 @@ public class ResynthMod {
     /**
      * Resynth mod ID.
      */
-    public static final String MOD_ID = "resynth";
+    public static final String MODID = "resynth";
 
     /**
      * Resynth version.
@@ -70,13 +69,6 @@ public class ResynthMod {
     public static final String MC_VERSION = "[1.16.3]";
 
     /**
-     * Resynth's new/returning user identification file.
-     * This servers to separate new Resynth users
-     * from existing ones.
-     */
-    public static final String RESYNTH_NU_FILE = "/resynth.id";
-
-    /**
      * FML initialized proxy. Will be ServerProxy on dedicated server, ClientProxy otherwise.
      */
     private static final Proxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
@@ -87,18 +79,24 @@ public class ResynthMod {
      * Calls the construct method of the selected proxy class.
      */
     public ResynthMod(){
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onEnqueueModComs);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onProcessModComs);
-        FMLJavaModLoadingContext.get().getModEventBus().register(this);
+        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        forgeBus.register(ResynthRecipes.INSTANCE);
+
+        modBus.register(this);
+
+        modBus.addListener(this::onSetup);
+        modBus.addListener(this::onClientSetup);
+        modBus.addListener(this::onEnqueueModComs);
+        modBus.addListener(this::onProcessModComs);
     }
 
     /**
      * @return a new apache log4j logging instance.
      * Equivalent to {@link LogManager#getLogger()}.
      */
-    public static Logger getNewLogger(){
+    public static Logger getNewLogger() {
         return LogManager.getLogger(StackLocatorUtil.getCallerClass(2));
     }
 
@@ -112,8 +110,8 @@ public class ResynthMod {
      *
      * @param event forge provided event.
      */
-    private void onSetup(final FMLCommonSetupEvent event){
-        LOG.info(String.format("Resynth v%s setup has been initiated...", MOD_VERSION));
+    private void onSetup(final FMLCommonSetupEvent event) {
+        LOG.info(String.format("Beginning setup for Resynth, version '%s'...", MOD_VERSION));
         proxy.onSetup(event);
     }
 
@@ -131,7 +129,7 @@ public class ResynthMod {
      *
      * @param event forge provided event.
      */
-    private void onEnqueueModComs(final InterModEnqueueEvent event){
+    private void onEnqueueModComs(final InterModEnqueueEvent event) {
         proxy.onEnqueueModComs(event);
     }
 
@@ -140,7 +138,7 @@ public class ResynthMod {
      *
      * @param event forge provided event.
      */
-    private void onProcessModComs(final InterModProcessEvent event){
+    private void onProcessModComs(final InterModProcessEvent event) {
         proxy.onProcessModComs(event);
     }
 
@@ -160,7 +158,7 @@ public class ResynthMod {
      * @param event Forge event.
      */
     @SubscribeEvent
-    public static void onServerStopped(FMLServerStoppedEvent event){
+    public static void onServerStopped(FMLServerStoppedEvent event) {
         if(!(proxy instanceof ClientProxy)) proxy.onServerStopped(event);
     }
 }

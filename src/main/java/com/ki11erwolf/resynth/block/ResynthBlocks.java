@@ -32,7 +32,7 @@ import net.minecraftforge.fml.common.Mod;
  * This class also handles the registering of blocks(and their ItemBlock).
  */
 //Block fields register themselves to the game.
-@Mod.EventBusSubscriber(modid = ResynthMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = ResynthMod.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ResynthBlocks extends QueueRegisterer<Block> {
 
     // ***************

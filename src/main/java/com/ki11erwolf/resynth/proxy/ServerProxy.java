@@ -16,15 +16,11 @@
 package com.ki11erwolf.resynth.proxy;
 
 import com.ki11erwolf.resynth.ResynthMod;
-import com.ki11erwolf.resynth.analytics.ConnectEvent;
-import com.ki11erwolf.resynth.analytics.NewUserEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
-import com.ki11erwolf.resynth.analytics.SeedPodEvent;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
-import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
 import com.ki11erwolf.resynth.features.ResynthFeatures;
-import com.ki11erwolf.resynth.integration.SupportedMods;
+import com.ki11erwolf.resynth.packet.Packet;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.RegistryKey;
@@ -32,8 +28,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -49,48 +43,15 @@ public class ServerProxy implements Proxy {
     /**
      * {@inheritDoc}
      *
-     * <p/>
-     *
-     * Handles the bulk of the mod initialization.
-     *
-     * @param event forge provided event.
+     * <p/> Handles the bulk of the mod initialization.
      */
     @Override
     public void onSetup(FMLCommonSetupEvent event) {
-        sendAnalyticsEvents();
-        printItemAndBlockRegisters();
+        ResynthAnalytics.init();
+        Packet.init();
         ResynthFeatures.init();
-    }
 
-    /**
-     * Sends the analytics connect event and
-     * new user event if enabled and appropriate.
-     */
-    private void sendAnalyticsEvents(){
-        //Connect Event - send first
-        ResynthAnalytics.send(new ConnectEvent());
-
-        // Miscellaneous Events
-
-        ResynthAnalytics.send(
-                new SeedPodEvent(ResynthConfig.GENERAL_CONFIG.getCategory(SeedPodConfig.class).areDropsEnabled())
-        );
-
-        SupportedMods.sendModIntegrationEvents();
-
-        // New User Event
-        File resynthFile = new File(System.getProperty("user.home") + "/" + ResynthMod.RESYNTH_NU_FILE);
-
-        if(!resynthFile.exists()){
-            ResynthAnalytics.send(new NewUserEvent());
-            try {
-                boolean create = resynthFile.createNewFile();
-                if(!create)
-                    LOG.error("Failed to create Resynth NU file");
-            } catch (IOException e) {
-                LOG.error("Failed to create Resynth NU file", e);
-            }
-        }
+        printItemAndBlockRegisters();
     }
 
     /**

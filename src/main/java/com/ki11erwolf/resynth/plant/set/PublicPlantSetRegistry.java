@@ -15,6 +15,8 @@
  */
 package com.ki11erwolf.resynth.plant.set;
 
+import com.ki11erwolf.resynth.ResynthRecipes;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -56,6 +58,15 @@ public class PublicPlantSetRegistry {
         }
 
         return plantSets.toArray(new PlantSet[0]);
+    }
+
+    /**
+     * @return the {@link ResynthRecipes.RecipeProvider} instance
+     * for PlantSets. <b>Only provided so that it can be registered
+     * in {@link ResynthRecipes}.</b>
+     */
+    public static ResynthRecipes.RecipeProvider getPlantSetRecipes(){
+        return PlantSetRecipes.INSTANCE;
     }
 
     /**
