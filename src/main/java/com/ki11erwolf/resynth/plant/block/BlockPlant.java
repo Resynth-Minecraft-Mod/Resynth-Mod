@@ -67,12 +67,6 @@ import net.minecraftforge.common.PlantType;
 import java.util.List;
 import java.util.Random;
 
-//import mcp.mobius.waila.api.IComponentProvider;
-//import mcp.mobius.waila.api.IDataAccessor;
-//import mcp.mobius.waila.api.IPluginConfig;
-//import net.minecraftforge.api.distmarker.Dist;
-//import net.minecraftforge.api.distmarker.OnlyIn;
-
 /**
  * The base plant block class that all Resynth growable plants
  * inherit. This class sets most of the ground work (Growth, look,

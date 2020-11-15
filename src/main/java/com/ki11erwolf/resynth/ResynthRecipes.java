@@ -1,5 +1,7 @@
 package com.ki11erwolf.resynth;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
@@ -10,21 +12,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.*;
 import net.minecraft.resources.IResourceManager;
+import net.minecraft.resources.IResourceManagerReloadListener;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.resource.IResourceType;
-import net.minecraftforge.resource.ISelectiveResourceReloadListener;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Predicate;
+import java.lang.reflect.Field;
+import java.util.*;
 
 /**
  * The global manager and handler for all custom {@link IRecipe Recipes}
@@ -32,7 +31,8 @@ import java.util.function.Predicate;
  * through assets. Allows registering {@link RecipeProvider RecipeProviders}
  * that are queried for lists of Recipes to register to the game.
  */
-public enum ResynthRecipes implements ISelectiveResourceReloadListener {
+@SuppressWarnings("deprecation") // We have to use this specific listener, even if deprecated.
+public enum ResynthRecipes implements IResourceManagerReloadListener {
 
     /**
      * The singleton instance of the recipe manager
@@ -59,8 +59,8 @@ public enum ResynthRecipes implements ISelectiveResourceReloadListener {
         /**
          * <b>WARNING: Hard-coded flag allowing the forced registration of {@link
          * #addResourceRecipes(List) recipes for uncraftable resource}.</b>
-         */
-        private static final boolean ENSURE_RESOURCE_RECIPES = true;
+         */ //TODO: Disable when features are back.
+        private static final boolean ENSURE_RESOURCE_RECIPES = false;
 
         // Configurable Recipe Definitions
 
@@ -240,13 +240,12 @@ public enum ResynthRecipes implements ISelectiveResourceReloadListener {
                     continue;
                 }
 
-                // Add recipe
+                // Add recipe & log
                 recipes.add(recipe);
-                LOG.info(String.format(
-                        "Registered Resynth recipe: '%s' -> %s",
-                        recipe.getId().toString(), (recipe.getRecipeOutput().getItem().getRegistryName() != null ?
-                                recipe.getRecipeOutput().getItem().getRegistryName().toString() : "<NO REG NAME>")
-                                + recipe.getRecipeOutput().getCount()
+                LOG.info(String.format("Registered Resynth recipe: '%s' -> %s",
+                    recipe.getId().toString(), (recipe.getRecipeOutput().getItem().getRegistryName() != null ?
+                            recipe.getRecipeOutput().getItem().getRegistryName().toString() : "<NO REG NAME>")
+                            + recipe.getRecipeOutput().getCount()
                 ));
             }
         }
@@ -276,16 +275,119 @@ public enum ResynthRecipes implements ISelectiveResourceReloadListener {
      * if needed, or a cached version of an already built list.
      *
      * @param resourceManager the {@link sun.net.ResourceManager} provided by Minecraft.
-     * @param resourcePredicate the {@link IResourceType} if applicable.
      */
     @Override
-    public void onResourceManagerReload(IResourceManager resourceManager, Predicate<IResourceType> resourcePredicate) {
+    public void onResourceManagerReload(IResourceManager resourceManager) {
         ResynthMod.getNewLogger().info("Injecting Resynth's custom recipes for plants & plant sets...");
+        register(getRecipes());
+    }
 
-        List<IRecipe<?>> combined = new ArrayList<>(getRecipes());
-        // IMPORTANT: Include recipes already in the manager
-        combined.addAll(getRecipeManager().getRecipes());
-        getRecipeManager().func_223389_a(combined);
+    /**
+     * Registers the given {@link List} of {@link IRecipe Recipes} to the game, using
+     * the {@link #recipeManager} object. All old Recipes already defined and registered
+     * in the RecipeManager are kept and reregistered. Input list of Recipes is copied
+     * before use, so input list is safe from modification.
+     *
+     * @throws IllegalStateException if any exception is thrown while reflectively
+     * accessing or modifying Minecraft's internal recipes. Cause Exception is wrapped.
+     * @param recipes a list of newly created {@link IRecipe Recipe} instances to be
+     *                registered to the game. Don't copy existing recipes into the list.
+     */
+    private void register(List<IRecipe<?>> recipes) {
+        Field recipesField = getRecipesField(); // Get recipes
+        recipes = new ArrayList<>(recipes); // Make copy of input
+        recipes.addAll(getRecipeManager().getRecipes()); // Copy over old recipes
+        setRecipesField(recipesField, recipesToMap(recipes)); // Set game recipes
+    }
+
+    /**
+     * Attempts to get the {@link #recipeManager}'s private internal {@link IRecipe
+     * Recipe list} that holds the games Recipes.
+     *
+     * @throws IllegalStateException if any exception is thrown while reflectively
+     * accessing or obtaining Minecraft's internal recipes. Cause Exception is wrapped.
+     * @return {@code RecipeManager.recipes} as a {@link Field}.
+     */
+    private Field getRecipesField() {
+        Field recipesField;
+
+        // Get RecipeManager.recipes reference
+        try {
+            recipesField = RecipeManager.class.getDeclaredField("recipes");
+            recipesField.setAccessible(true);
+            Object fieldObjectRef = recipesField.get(getRecipeManager());
+
+            if(!(fieldObjectRef instanceof Map)){
+                LOG.fatal("Obtained 'RecipeManager.recipes' object not instance of Map! Cannot continue");
+                throw new IllegalStateException("'RecipeManager.recipes' is not a valid Map implementation");
+            }
+        } catch (NoSuchFieldException e) {
+            LOG.fatal("Failed to obtain 'RecipeManager.recipes' field reference! Cannot continue", e);
+            throw new IllegalStateException("'RecipeManager.recipes' is not a valid, obtainable field", e);
+        } catch (IllegalAccessException e) {
+            LOG.fatal("Failed to obtain 'RecipeManager.recipes' object reference! Cannot continue", e);
+            throw new IllegalStateException("'RecipeManager.recipes' is not obtainable", e);
+        }
+
+        return recipesField;
+    }
+
+    /**
+     * Converts a given {@link List} of {@link IRecipe Recipes}, that are wanted
+     * registered to the game, into a '{@code Map<IRecipeType<?>, Map<ResourceLocation,
+     * IRecipe<?>>>}' object instance, containing all the Recipes provided, which can
+     * be used by Minecraft's internal {@link RecipeManager}.
+     *
+     * @param recipes the list of {@link IRecipe Recipes} for registration.
+     * @return the given list of {@link IRecipe Recipes}, contained in and converted to
+     * an object type usable by Minecraft's internal {@link RecipeManager}.
+     */
+    private Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> recipesToMap(List<IRecipe<?>> recipes) {
+        // Create copy
+        Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> newRecipes = Maps.newHashMap();
+
+        // Setup copy & Populate with recipes
+        recipes.forEach((recipe) -> {
+            Map<ResourceLocation, IRecipe<?>> map1 = newRecipes.computeIfAbsent(recipe.getType(), (type) -> Maps.newHashMap());
+            IRecipe<?> irecipe = map1.put(recipe.getId(), recipe);
+
+            if (irecipe != null) {
+                throw new IllegalStateException("Duplicate recipe ignored with ID " + recipe.getId());
+            }
+        });
+
+        return newRecipes;
+    }
+
+    /**
+     * Attempts to set/change the {@link #recipeManager}'s private internal {@link IRecipe
+     * Recipe list} that holds the games Recipes, to a new list of Recipes provided
+     * - effectively registering the Recipes to the game. <b>Caution: it's possible
+     * to completely remove pre-registered Recipes using this method.</b>
+     *
+     * @param recipesField the {@link Field} object instance pointing to the {@link
+     * #recipeManager}'s internal Recipes list.
+     * @param recipes the new set of all Recipes to be registered to the game.
+     * @throws IllegalStateException if any exception is thrown while reflectively
+     * accessing or modifying Minecraft's internal recipes. Cause Exception is wrapped.
+     */
+    private void setRecipesField(Field recipesField, Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> recipes) {
+        // Set - put copy in object reference
+        try {
+            recipesField.set(getRecipeManager(), ImmutableMap.copyOf(recipes));
+        } catch (IllegalAccessException e) {
+            LOG.fatal("Failed to modify 'RecipeManager.recipes' object reference! Cannot continue", e);
+            throw new IllegalStateException("Could not modify 'RecipeManager.recipes' object reference", e);
+        }
+
+        // Attempt to reset the 'someRecipesErrored' flag. Failure not fatal.
+        try {
+            Field erroredField = RecipeManager.class.getDeclaredField("someRecipesErrored");
+            erroredField.setAccessible(true);
+            erroredField.set(getRecipeManager(), false);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            LOG.error("Failed to reset 'RecipeManager.someRecipesErrored'! Continuing anyway...");
+        }
     }
 
     /**

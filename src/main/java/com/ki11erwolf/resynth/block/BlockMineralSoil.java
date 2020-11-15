@@ -56,11 +56,6 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 
-//import mcp.mobius.waila.api.IComponentProvider;
-//import mcp.mobius.waila.api.IDataAccessor;
-//import mcp.mobius.waila.api.IPluginConfig;
-//import mcp.mobius.waila.api.IServerDataProvider;
-
 /**
  * Mineral Enriched Soil.
  * <p/>

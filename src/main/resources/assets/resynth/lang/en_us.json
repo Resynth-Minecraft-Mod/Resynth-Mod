@@ -512,8 +512,7 @@
 
   "_________COMMENT": "---Miscellaneous---",
   "misc.resynth.mineral_content": "Mineral Content: %s%%",
-  "misc.resynth.growth_stage": "Growth Stage: %s",
 
-  "__________COMMENT": "--- FOR TRANSLATION: new entries that have not been translated. ---"
-
+  "__________COMMENT": "--- FOR TRANSLATION: new entries that have not been translated. ---",
+  "misc.resynth.growth_stage": "Growth Stage: %s"
 }
