@@ -27,6 +27,10 @@ import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MathUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import com.ki11erwolf.resynth.util.PlantPatchInfoProvider;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.IProbeInfoAccessor;
+import mcjty.theoneprobe.api.ProbeMode;
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
@@ -79,8 +83,8 @@ import java.util.Random;
  *
  * @param <T> the inheriting class (i.e. plant block).
  */
-public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T>
-        implements IPlantable, IGrowable, PlantPatchInfoProvider, IComponentProvider {
+public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T> implements
+        IPlantable, IGrowable, PlantPatchInfoProvider, IComponentProvider, IProbeInfoAccessor {
 
     /**
      * The prefix for all plant blocks.
@@ -925,6 +929,34 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         grow(world, state, pos, getBonemealIncrease(random));
     }
 
+    // *************
+    // The One Probe
+    // *************
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p/> Handles adding and displaying the additional data related to
+     * Plant Blocks, specificlly growth, on The One Probe tooltips.
+     *
+     * @param probeInfo - used to modify the tooltip displayed for this block.
+     * @param player - the player looking at the tooltip.
+     * @param world - the world the player and block are in.
+     * @param blockState - the state of the block in the world.
+     * @param data - additional data, such as block positions.
+     */
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player,
+                             World world, BlockState blockState, IProbeHitData data) {
+        int stage = getGrowthStage(blockState);
+        int max = getMaxGrowthStage();
+
+        probeInfo.text(new StringTextComponent(""));
+        probeInfo.text(new StringTextComponent(getGrowthStageMessage(stage, max)
+                + String.format("  (%s%%)", (int)(((float) stage / max) * 100))
+        ));
+    }
+
     // *****
     // Hwyla
     // *****
@@ -942,9 +974,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
             int max = getMaxGrowthStage();
 
             tooltip.add(new StringTextComponent(""));
-            tooltip.add(new StringTextComponent(
-                    getGrowthStageMessage(stage, max)
-                            + String.format("  (%s%%)", (int)(((float) stage / max) * 100))
+            tooltip.add(new StringTextComponent(getGrowthStageMessage(stage, max)
+                    + String.format("  (%s%%)", (int)(((float) stage / max) * 100))
             ));
             tooltip.add(new StringTextComponent(""));
         }

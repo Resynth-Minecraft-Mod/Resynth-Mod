@@ -22,10 +22,7 @@ import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import com.ki11erwolf.resynth.util.PlantPatchInfoProvider;
-import mcjty.theoneprobe.api.IProbeHitData;
-import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.IProbeInfoAccessor;
-import mcjty.theoneprobe.api.ProbeMode;
+import mcjty.theoneprobe.api.*;
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
@@ -260,6 +257,42 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         return true;
     }
 
+    // *************
+    // The One Probe
+    // *************
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p/> Handles adding and displaying the additional data related to
+     * MineralSoil Blocks, such as Mineral Content & Enhancer buffs, on
+     * The One Probe tooltips.
+     *
+     * @param probeInfo - used to modify the tooltip displayed for this block.
+     * @param player - the player looking at the tooltip.
+     * @param world - the world the player and block are in.
+     * @param blockState - the state of the block in the world.
+     * @param data - additional data, such as block positions.
+     */
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player,
+                             World world, BlockState blockState, IProbeHitData data) {
+        TileEntityMineralSoil tile = getTileEntity(world, data.getPos());
+        float mineralContent = tile.getMineralPercentage();
+        float contentIncrease = getMineralContentIncrease(world, data.getPos());
+        float max = 50.0F;
+        float totalMineralContent = mineralContent + (mineralContent >= max ? contentIncrease : 0);
+
+        probeInfo.text(new StringTextComponent(""));
+        probeInfo.text(new StringTextComponent(getMineralContentMessage(totalMineralContent, 0)));
+        probeInfo.progress((int) mineralContent, (int) max);
+
+        if(contentIncrease > 0)
+            probeInfo.text(new StringTextComponent(TextFormatting.RED.toString()
+                    + (mineralContent >= max ? "" : TextFormatting.STRIKETHROUGH) + "+" + contentIncrease + "%")
+            );
+    }
+
     // *****
     // Hwyla
     // *****
@@ -294,15 +327,13 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         if(!(tileEntity instanceof TileEntityMineralSoil))
             return;
 
-        clientServerNBT.putFloat(
-                TileEntityMineralSoil.MINERAL_CONTENT_TAG,
-                ((TileEntityMineralSoil) tileEntity).getMineralPercentage()
+        float mineralContent;
+        clientServerNBT.putFloat(TileEntityMineralSoil.MINERAL_CONTENT_TAG,
+                (mineralContent = ((TileEntityMineralSoil) tileEntity).getMineralPercentage())
         );
 
-        clientServerNBT.putFloat(
-                "mineralIncrease",
-                getMineralContentIncrease(world, tileEntity.getPos())
-        );
+        if(mineralContent >= 50.0)
+            clientServerNBT.putFloat("mineralIncrease", getMineralContentIncrease(world, tileEntity.getPos()));
     }
 
     // *****
@@ -429,10 +460,5 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
                 "misc.resynth.mineral_content",
                 TextFormatting.GOLD + String.valueOf(mineralPercentage + increase)
         );
-    }
-
-    @Override
-    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data) {
-        probeInfo.text(new StringTextComponent("Hello!"));
     }
 }

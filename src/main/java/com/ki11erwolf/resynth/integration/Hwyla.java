@@ -33,8 +33,6 @@ import java.util.List;
 @WailaPlugin
 public class Hwyla implements mcp.mobius.waila.api.IWailaPlugin{
 
-    //TODO: Add 'The One Probe' integration at some point.
-
     /**
      * The logger for this class.
      */
