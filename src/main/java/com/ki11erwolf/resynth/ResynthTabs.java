@@ -48,6 +48,6 @@ public final class ResynthTabs {
      * The mods produce tab. Holds the produce items for all plants.
      */
     public static final ItemGroup TAB_RESYNTH_PRODUCE = new ItemGroup("resynth_produce") {
-        @Override public ItemStack createIcon() { return new ItemStack(ResynthPlants.ENDER_PEARL.getProduceItemOrBlock().getItem()); }
+        @Override public ItemStack createIcon() { return new ItemStack(ResynthPlants.ENDER_PEARL.getProduceItem().asItem()); }
     };
 }

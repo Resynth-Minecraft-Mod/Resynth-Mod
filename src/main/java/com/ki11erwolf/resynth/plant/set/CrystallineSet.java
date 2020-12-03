@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.plant.item.ItemShard;
-import com.ki11erwolf.resynth.util.ItemOrBlock;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -65,7 +64,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
         this.setProperties = properties;
 
         //Plant
-        this.produceItemOrBlock = new ItemOrBlock(new ItemShard(SET_TYPE_NAME, setName, properties));
+        this.produceItem = new ItemShard(SET_TYPE_NAME, setName, properties);
         this.plantBlock = new BlockCrystallinePlant(SET_TYPE_NAME, setName, properties){
             @Override
             protected ItemSeeds getSeedsItem(){
@@ -74,7 +73,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
 
             @Override
             protected ItemStack getProduce(){
-                return new ItemStack(produceItemOrBlock.getItem(), properties.numberOfProduceDrops());
+                return new ItemStack(produceItem.asItem(), properties.numberOfProduceDrops());
             }
         };
         this.seedsItem = new ItemSeeds(SET_TYPE_NAME, setName, plantBlock, properties);
@@ -165,7 +164,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
                 if(set.isFailure() || ((CrystallineSet)set).getSourceOre() == null)
                     continue;
 
-                if (i != set.getProduceItemOrBlock().getItem()) {
+                if (i != set.getProduceItem().asItem()) {
                     continue;
                 }
 

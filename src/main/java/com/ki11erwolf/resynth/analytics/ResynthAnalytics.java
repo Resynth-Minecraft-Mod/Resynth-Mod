@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth.analytics;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
 import com.ki11erwolf.resynth.integration.SupportedMods;
-import com.ki11erwolf.resynth.util.SSLHelper;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import dmurph.tracking.AnalyticsConfigData;

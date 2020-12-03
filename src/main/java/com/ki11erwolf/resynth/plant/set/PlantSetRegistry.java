@@ -20,9 +20,10 @@ import com.ki11erwolf.resynth.ResynthModPlants;
 import com.ki11erwolf.resynth.ResynthPlants;
 import com.ki11erwolf.resynth.block.ResynthBlock;
 import com.ki11erwolf.resynth.integration.Hwyla;
-import com.ki11erwolf.resynth.util.ItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -150,28 +151,45 @@ class PlantSetRegistry {
          * Registers a given plant sets produce block(and itemblock)/item to the game.
          */
         private static void registerProduceItemOrBlock(PlantSet<?> set, IForgeRegistry<Block> blockRegistry,
-                                                       IForgeRegistry<Item> itemRegistry, boolean item){
-            ItemOrBlock itemOrBlock = set.getProduceItemOrBlock();
+                                                       IForgeRegistry<Item> itemRegistry, boolean forItems){
+            IItemProvider itemProvider = set.getProduceItem();
+
+            boolean isItem = itemProvider instanceof Item;
+            boolean isBlock = itemProvider instanceof Block;
+
+            Block block = isBlock ? (Block) itemProvider : null;
+            Item item = (!isBlock && isItem) ? (Item) itemProvider : null;
+
+            ResourceLocation registryName;
+
+            if(block != null)
+                registryName = block.getRegistryName();
+            else if (item != null)
+                registryName = item.getRegistryName();
+            else registryName = new ResourceLocation(ResynthMod.MODID, "registery error");
 
             //Block
-            if(itemOrBlock.isBlock() && !item){
-                LOG.debug("Registering plant produce block: " + itemOrBlock.getBlock().getRegistryName());
-                blockRegistry.register(itemOrBlock.getBlock());
+            if(isBlock && !forItems){
+                LOG.debug("Registering plant produce block: " + registryName);
+                blockRegistry.register(block);
 
                 //Hwyla
-                Hwyla.addIfProvider(itemOrBlock.getBlock());
+                Hwyla.addIfProvider(block);
             }
 
             //ItemBlock
-            if(itemOrBlock.isBlock() && item){
-                LOG.debug("Registering plant produce ItemBlock: " + itemOrBlock.getBlock().getRegistryName());
-                itemRegistry.register(((ResynthBlock<?>)itemOrBlock.getBlock()).getItemBlock());
+            if(isBlock && forItems){
+                LOG.debug("Registering plant produce ItemBlock: " + registryName);
+
+                if(!(block instanceof ResynthBlock<?>))
+                    LOG.warn("Cannot register an ItemBlock as it doesn't inherit from ResynthBlock: " + registryName);
+                else itemRegistry.register(((ResynthBlock<?>) block).getItemBlock());
             }
 
             //Item
-            if(itemOrBlock.isItem() && item){
-                LOG.debug("Registering plant produce item: " + itemOrBlock.getItem().getRegistryName());
-                itemRegistry.register(itemOrBlock.getItem());
+            if(isItem && forItems){
+                LOG.debug("Registering plant produce item: " + registryName);
+                itemRegistry.register((Item) itemProvider);
             }
         }
     }

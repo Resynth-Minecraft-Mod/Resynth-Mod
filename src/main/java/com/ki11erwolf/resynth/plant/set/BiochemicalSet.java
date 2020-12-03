@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.plant.block.BlockBiochemicalPlant;
 import com.ki11erwolf.resynth.plant.item.ItemBulb;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
-import com.ki11erwolf.resynth.util.ItemOrBlock;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
@@ -62,7 +61,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
         this.setProperties = properties;
 
         //Plant
-        this.produceItemOrBlock = new ItemOrBlock(new ItemBulb(SET_TYPE_NAME, setName, properties));
+        this.produceItem = new ItemBulb(SET_TYPE_NAME, setName, properties);
         this.plantBlock = new BlockBiochemicalPlant(SET_TYPE_NAME, setName, setProperties) {
             @Override
             protected ItemSeeds getSeedsItem() {
@@ -71,7 +70,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
 
             @Override
             protected ItemStack getProduce() {
-                return new ItemStack(produceItemOrBlock.getItem(), properties.numberOfProduceDrops());
+                return new ItemStack(produceItem.asItem(), properties.numberOfProduceDrops());
             }
         };
         this.seedsItem = new ItemSeeds(SET_TYPE_NAME, setName, plantBlock, properties);
@@ -156,7 +155,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
 
                 BiochemicalSet plantSet = (BiochemicalSet) set;
 
-                if(event.getOriginal().getItem() == plantSet.getProduceItemOrBlock().getItem()){
+                if(event.getOriginal().getItem() == plantSet.getProduceItem().asItem()){
                     if(MathUtil.chance(plantSet.setProperties.seedSpawnChanceFromBulb())) {
                         if (!event.getEntity().getEntityWorld().isRemote) {
                             //Spawn seeds if lucky

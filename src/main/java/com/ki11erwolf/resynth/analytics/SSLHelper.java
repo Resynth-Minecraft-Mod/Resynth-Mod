@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.util;
+package com.ki11erwolf.resynth.analytics;
 
 import com.ki11erwolf.resynth.ResynthMod;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +33,7 @@ import java.security.cert.X509Certificate;
  * the solution to the problem by providing methods
  * to disable and renable SSL verification.
  */
-public class SSLHelper {
+class SSLHelper {
 
     /**
      * Private constructor.

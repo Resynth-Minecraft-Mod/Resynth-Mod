@@ -19,7 +19,7 @@ import com.ki11erwolf.resynth.analytics.PlantSetFailureEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
 import com.ki11erwolf.resynth.plant.block.BlockPlant;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
-import com.ki11erwolf.resynth.util.ItemOrBlock;
+import net.minecraft.util.IItemProvider;
 
 import java.util.Objects;
 
@@ -77,9 +77,9 @@ public class PlantSet<P extends BlockPlant<?>> {
     ItemSeeds seedsItem;
 
     /**
-     * The produce item/block in the set.
+     * The produce item or block in the set.
      */
-    ItemOrBlock produceItemOrBlock;
+    IItemProvider produceItem;
 
     /**
      * @param setTypeName The name of the plant set type (e.g. crystalline).
@@ -148,8 +148,8 @@ public class PlantSet<P extends BlockPlant<?>> {
      * @return the specific produce item/block
      * in the set.
      */
-    public ItemOrBlock getProduceItemOrBlock(){
-        return this.produceItemOrBlock;
+    public IItemProvider getProduceItem(){
+        return this.produceItem;
     }
 
     /**

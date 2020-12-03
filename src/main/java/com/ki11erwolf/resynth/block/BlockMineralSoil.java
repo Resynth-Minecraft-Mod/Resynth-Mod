@@ -19,6 +19,7 @@ import com.ki11erwolf.resynth.block.tileEntity.ResynthTileEntity;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
+import com.ki11erwolf.resynth.item.ItemMineralHoe;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import com.ki11erwolf.resynth.util.PlantPatchInfoProvider;
@@ -55,17 +56,24 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
+import java.util.Map;
 
 /**
- * Mineral Enriched Soil.
- * <p/>
- * Resynth's farmland block. Used to plant Resynth Plants.
- * Has a Mineral Content value associated with it that
- * determines plant growth.
+ * The Mineral Enriched Soil block - the custom farmland block provided
+ * for Resynth plants to grow on, as they cannot grow on normal Minecraft
+ * Soil.
+ *
+ * <p/> In addition to being a simple block for Resynth plant to grow on,
+ * Mineral Soil adds quite a few additional features and mechanics that
+ * have an effect on plant growth. Such as being a container for {@link
+ * ResynthItems#ITEM_MINERAL_ROCK Mineral Rocks} which increase plant
+ * growth. Mineral Soil also changes appearance based upon the amount
+ * of MineralRocks added. Finally, MineralSoil also integrates with
+ * Hwyla & The One Probe, as well as with {@link ItemMineralHoe.MineralHoeInfo}.
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings("deprecation") // So many overriden deprecated methods...
 public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements PlantPatchInfoProvider,
-        IComponentProvider, IServerDataProvider<TileEntity>, IProbeInfoAccessor {
+        IComponentProvider, IServerDataProvider<TileEntity>, IProbeInfoAccessor, ItemMineralHoe.MineralHoeInfo {
 
     /**
      * Configuration settings for this block class.
@@ -81,7 +89,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
             = IntegerProperty.create("stage", 0, 4 + 2);
 
     /**
-     * The shape of the block.
+     * The shape and dimentions of the block.
      */
     private static final VoxelShape MINERAL_SOIL_SHAPE = Block.makeCuboidShape(
             0.0D, 0.0D, 0.0D,
@@ -111,15 +119,6 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return MINERAL_SOIL_SHAPE;
     }
-
-//    /**
-//     * {@inheritDoc}
-//     * @return {@code false}.
-//     */
-//    @Override
-//    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos){
-//        return false;
-//    }
 
     /**
      * Handles updating the blocks texture based
@@ -342,9 +341,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     /**
      * {@inheritDoc}
      *
-     * <p/>
-     *
-     * Handles adding Mineral Rocks/Dense Mineral Rocks to the Mineral Soil
+     * <p/> Handles adding Mineral Rocks/Dense Mineral Rocks to the Mineral Soil
      * block when a player uses the item on the block. Also handles the changing
      * the texture of the block and displaying the Mineral Content when the block is
      * hit with a stick.
@@ -446,12 +443,11 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     }
 
     /**
-     * Gets the mineral content message from the
-     * lang file formatted with the provided
-     * info.
+     * Gets the mineral content message from the lang file
+     * formatted with the provided info.
      *
      * @param mineralPercentage the soil blocks mineral content
-     *                          value.
+     * value.
      * @return the formatted localized message.
      */
     private static String getMineralContentMessage(float mineralPercentage, float increase){
@@ -459,5 +455,14 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
                 "misc.resynth.mineral_content",
                 TextFormatting.GOLD + String.valueOf(mineralPercentage + increase)
         );
+    }
+
+    @Override
+    public boolean provideHoeInformation(Map<String, String[]> information, BlockState state, World world, BlockPos pos) {
+        information.put("A", new String[]{"1", "2", "3"});
+        information.put("B", new String[]{"4", "5", "6", "7"});
+        information.put("Z", new String[]{"P", "Q", "R", "S", "T"});
+
+        return true;
     }
 }

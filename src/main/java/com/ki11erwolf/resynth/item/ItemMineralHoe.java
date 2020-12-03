@@ -15,14 +15,14 @@
  */
 package com.ki11erwolf.resynth.item;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralHoeConfig;
-import com.ki11erwolf.resynth.util.BlockInfoProvider;
-import com.ki11erwolf.resynth.util.CommonTooltips;
-import com.ki11erwolf.resynth.util.EffectsUtil;
-import com.ki11erwolf.resynth.util.ExpandingTooltip;
+import com.ki11erwolf.resynth.util.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
@@ -42,9 +42,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import javax.annotation.Nullable;
+import java.util.*;
 
 /**
  * The Mineral Hoe - used as the main tool for the mod.
@@ -58,7 +57,7 @@ import java.util.Random;
  * <p/>Any block that has information to give to the
  * Mineral Hoe must implement {@link BlockInfoProvider}.
  */
-class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
+public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
     /**
      * The configuration settings for this item.
@@ -312,8 +311,8 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                                  Direction face){
         boolean tilled = tryTillBlock(world, pos, block, item, player, face);
 
-        if(!tilled)
-            return tryGetInfo(world, pos, block, player);
+        if(!tilled) //return tryGetInfo(world, pos, block, player);
+            return getBlockInformation(world, pos, block, player);
 
         return true;
     }
@@ -623,5 +622,190 @@ class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         }
 
         return false;
+    }
+
+    // ********************
+    // Information Provider
+    // ********************
+
+    private boolean getBlockInformation(World world, BlockPos pos, BlockState block, PlayerEntity player) {
+        MineralHoeInfo provider;
+        Map<String, String[]> information;
+
+        // Check if block is provider and has provided
+        if((provider = asProvider(block)) != null){
+            if((information = callProvider(provider, block, world, pos)) == null) {
+                return false;
+            }
+        } else return false;
+
+        // Information obtained! Convert to serializable HoeInformation
+        HoeInformation hoeInformation = new HoeInformation(information);
+        JSerializer.JSerialData serializedHoeInformation = JSerializer.serialize(hoeInformation);
+
+//        if(player instanceof ServerPlayerEntity)
+//            Packet.send(PacketDistributor.PLAYER.with(
+//                    () -> (ServerPlayerEntity) player), null
+//            );
+
+        return true;
+    }
+
+    @Nullable
+    private MineralHoeInfo asProvider(BlockState blockState) {
+        if(blockState.getBlock() instanceof MineralHoeInfo){
+            return (MineralHoeInfo) blockState.getBlock();
+        }
+
+        return null;
+    }
+
+    @Nullable
+    private static Map<String, String[]> callProvider(MineralHoeInfo provider, BlockState state, World world, BlockPos pos) {
+        Map<String, String[]> cleanMap = new HashMap<>();
+        boolean passed;
+
+        if(world.isRemote)
+            return null;
+
+        try{
+            passed = provider.provideHoeInformation(cleanMap, state, world, pos);
+        } catch (Exception e){
+            LOG.warn("Information provider '" + provider.getClass().getCanonicalName() + "' threw exception when queried", e);
+            return null;
+        }
+
+        if(!passed || cleanMap.isEmpty())
+            return null;
+
+        return cleanMap;
+    }
+
+    // *************************
+    // Information Serialization
+    // *************************
+
+    public static class HoeInformation implements JSerializer.JSerializable<HoeInformation> {
+
+        public static final Serializer INFORMATION_SERIALIZER_INSTANCE = new Serializer();
+
+        private static final String SERIALIZER_IDENTIFICATION = "mineral-hoe-information";
+
+        private static final String INFORMATION_MAP_KEY = "information-map";
+
+        private final Map<String, String[]> information;
+
+        private HoeInformation() {
+            this(new HashMap<>());
+        }
+
+        private HoeInformation(Map<String, String[]> information) {
+            this.information = Objects.requireNonNull(information);
+        }
+
+        @Override
+        public JSerializer<HoeInformation> getSerializer() {
+            return INFORMATION_SERIALIZER_INSTANCE;
+        }
+
+        public Map<String, String[]> getInformation() {
+            return this.information;
+        }
+
+        // Serializer implementation
+
+        private static final class Serializer extends JSerializer<HoeInformation> {
+
+            private Serializer() {
+                super(SERIALIZER_IDENTIFICATION);
+            }
+
+            @Override
+            protected void objectToData(HoeInformation object, JSerialDataIO dataIO) {
+                Map<String, String[]> information = object.getInformation();
+
+                if(information.isEmpty())
+                    throw new IllegalArgumentException("HoeInformation object contains empty information map.");
+
+                JsonObject jsonInformationMap = new JsonObject();
+                for(Map.Entry<String, String[]> info : information.entrySet()) {
+                    JsonArray array = new JsonArray(); String key = info.getKey();
+
+                    for(String element : info.getValue()){
+                        array.add(element);
+                    }
+
+                    jsonInformationMap.add(key, array);
+                }
+
+                dataIO.add(INFORMATION_MAP_KEY, jsonInformationMap);
+            }
+
+            @Override
+            protected HoeInformation dataToObject(HoeInformation newObject, JSerialDataIO dataIO) {
+                JsonObject jsonInformation = dataIO.getObject(INFORMATION_MAP_KEY, null);
+                Map<String, String[]> information = new HashMap<>();
+
+                if(jsonInformation == null || jsonInformation.size() == 0)
+                    throw new IllegalArgumentException("HoeInformation object data gave an empty map.");
+
+                for(Map.Entry<String, JsonElement> info : jsonInformation.entrySet()) {
+                    String key = info.getKey(); JsonArray jValues = info.getValue().getAsJsonArray();
+                    List<String> values = new ArrayList<>();
+
+                    for(JsonElement jElement : jValues) {
+                        values.add(jElement.getAsString());
+                    }
+
+                    information.put(key, values.toArray(new String[0]));
+                }
+
+                return new HoeInformation(information);
+            }
+
+            @Override
+            protected HoeInformation createInstance() {
+                return new HoeInformation();
+            }
+        }
+    }
+
+    // *************************
+    // Information Provder Impl
+    // *************************
+
+    /**
+     * An interface provided by the {@link ItemMineralHoe} that allows any clickable {@link net.minecraft.block.Block}
+     * to provide any information or data, to the MineralHoe when requested as part of its information feature.
+     *
+     * <p/> The {@link MineralHoeInfo} is designed to be client-side safe while still providing server-side information
+     * and data. This means the information provided to the MineralHoe is not plant text, but rather as a map of
+     * language translation keys mapped to a list data used to format the translation text referenced by key.
+     */
+    public interface MineralHoeInfo {
+
+        /**
+         * Called when an {@link ItemMineralHoe} is used on this block with a right-click,
+         * signaling a request for the this Block implmentation to provide the data it would
+         * normally.
+         *
+         * <p/> Given the client-side language translation safe nature of the MineralHoeInfo
+         * provider interface, text cannot be sent directly through this interface, nor can
+         * client-side classes be used. Instead, a list of language translation keys are
+         * added to the {@code information} map for each line of text, which is then formatted
+         * using the array of data mapped to the key.
+         *
+         * @param information the map of language translation keys along the data used when
+         * formatting the language translation text.
+         * @param state the state of this specific block in the world as it exists currently.
+         * @param world the world the block and player are in.
+         * @param pos the position of the specific block clicked in the world provided.
+         *
+         * @return {@code true} if the information providing feature should continue as normal,
+         * and provide the information to the player. Returning {@code false} will signal to the
+         * MineralHoe to instead not provide the information to the player.
+         */
+        boolean provideHoeInformation(Map<String, String[]> information, BlockState state, World world, BlockPos pos);
+
     }
 }

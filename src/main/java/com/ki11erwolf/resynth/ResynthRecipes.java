@@ -60,7 +60,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * <b>WARNING: Hard-coded flag allowing the forced registration of {@link
          * #addResourceRecipes(List) recipes for uncraftable resource}.</b>
          */ //TODO: Disable when features are back.
-        private static final boolean ENSURE_RESOURCE_RECIPES = false;
+        private static final boolean ENSURE_RESOURCE_RECIPES = true;
 
         // Configurable Recipe Definitions
 

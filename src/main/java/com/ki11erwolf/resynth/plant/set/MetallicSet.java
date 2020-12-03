@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.plant.block.BlockMetallicPlant;
 import com.ki11erwolf.resynth.plant.block.BlockOrganicOre;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
-import com.ki11erwolf.resynth.util.ItemOrBlock;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -61,7 +60,7 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
         super(SET_TYPE_NAME, setName, SEED_HOOKS, properties);
         this.properties = properties;
 
-        this.produceItemOrBlock = new ItemOrBlock(new BlockOrganicOre(SET_TYPE_NAME, setName, properties));
+        this.produceItem = new BlockOrganicOre(SET_TYPE_NAME, setName, properties);
         this.plantBlock = new BlockMetallicPlant(SET_TYPE_NAME, setName, properties) {
             @Override
             protected ItemSeeds getSeedsItem() {
@@ -70,7 +69,7 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
 
             @Override
             protected ItemStack getProduce() {
-                return new ItemStack(produceItemOrBlock.getBlock(), 1);
+                return new ItemStack(produceItem.asItem(), 1);
             }
         };
         this.seedsItem = new ItemSeeds(SET_TYPE_NAME, setName, plantBlock, properties);
@@ -125,8 +124,11 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
                     float chance = 0.0F;
                     if(block.getBlock() == Block.getBlockFromItem(((MetallicSet) set).getSourceOre().getItem())){
                         chance = ((MetallicSet) set).properties.seedSpawnChanceFromOre();
-                    } else if(block.getBlock() == set.getProduceItemOrBlock().getBlock()){
-                        chance = ((MetallicSet) set).properties.seedSpawnChanceFromOrganicOre();
+                    } else if (!(block.getBlock().getRegistryName() == null
+                            && set.getProduceItem().asItem().getRegistryName() == null)){
+                        if(block.getBlock().getRegistryName().equals(set.getProduceItem().asItem().getRegistryName())){
+                            chance = ((MetallicSet) set).properties.seedSpawnChanceFromOrganicOre();
+                        }
                     }
 
                     //Spawn item.
