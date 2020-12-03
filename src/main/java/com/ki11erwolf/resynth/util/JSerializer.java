@@ -524,45 +524,191 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
     // Helping classes
     // ###############
 
+    /**
+     * The {@link JSerializable} interface inherited by all objects that are
+     * serializable and deserialize using a specific {@link JSerializer}
+     * implementation.
+     *
+     * <p/> A {@link JSerializable} is any object that holds data using
+     * instance variables, which can be saved to plain Json - serialized,
+     * using the specific {@link JSerializer} implementation designed for
+     * this {@link JSerializable} implementation. The created Json -
+     * serialized object data, can then be saved to file or sent over a
+     * network as plain text, where it can then be read and used to create
+     * a new copy of the object - deserialized, using the same specific
+     * {@link JSerializer}.
+     *
+     * <p/> A {@link JSerializable} implementation need only hold and allow
+     * access to data stored in variables, as well provide a reference to
+     * the {@link JSerializer} which serializes and deserializes this {@link
+     * JSerializable} implementation. The {@link JSerializer} handles the
+     * serialization and deserialization of the object.
+     *
+     * @param <T> the specific {@link JSerializable} implementation,
+     * which inherits from this interface.
+     * @see JSerializer JSerializer for serialization and deserialization.
+     */
     public interface JSerializable<T extends JSerializable<T>> {
 
+        /**
+         * Provides an object reference, which should be a global singleton
+         * instance, to the specific {@link JSerializer} implementation that
+         * serializes and deserializes instances of this specific {@link
+         * JSerializable} implementation.
+         *
+         * @return a reference to a singleton instance of the specific {@link
+         * JSerializer} implementation responsible for serializing and
+         * deserializing object instances of this {@link JSerializable} type.
+         */
         JSerializer<T> getSerializer();
 
     }
 
+    /**
+     * A list of Strings used as the Json keys for the core data stored
+     * in every {@link JSerialData} object.
+     */
     private enum SerialDataKeys {
 
-        METADATA, DATA, IDENTIFICATION, VERSION;
+        /**
+         * The key under which the metadata is stored. Contains
+         * the {@link JSerializer#identification} and {@link
+         * JSerializer#version} of the {@link JSerializer} that
+         * created the data.
+         */
+        METADATA("metadata"),
 
+        /**
+         * The key under which the {@link JSerializer#identification}
+         * of the {@link JSerializer} that created this data is stored.
+         * This key stores data within the Json object stored under
+         * {@link #METADATA}.
+         */
+        IDENTIFICATION("identification"),
+
+        /**
+         * The key under which the {@link JSerializer#version} of the
+         * {@link JSerializer} that created this data is stored. This
+         * key stores data within the Json object stored under {@link
+         * #METADATA}.
+         */
+        VERSION("version"),
+
+        /**
+         * The key under which the serialized object data is stored.
+         * Contains the specific data in the specific format used to
+         * serialize and deserialize an object.
+         */
+        DATA("data");
+
+        /**
+         * The actual String value which is used as the Json key which
+         * stores specific data.
+         */
+        public final String key;
+
+        /**
+         * @param key The actual String value which is used as the Json key which
+         * stores specific data. <b>This value should <i>never be changed</i> as
+         * any data created prior to the change will not be readable.</b>
+         */
+        SerialDataKeys(String key){
+            this.key = key;
+        }
+
+        /**
+         * @return the String {@link #key key value} containing the actual String
+         * used as the Json key to store the data.
+         */
         @Override
         public String toString(){
-            return this.name().toLowerCase();
+            return this.key;
         }
     }
 
+    /**
+     * Holds the serialized data of a specific {@link JSerializable} object instance
+     * in Json format, which is effectively a copy of the object instance. Additionally,
+     * the {@link JSerializer#identification} and {@link JSerializer#version} of the
+     * {@link JSerializer} which created the data is stored as well.
+     *
+     * <p/> {@link JSerialData} data objects are created by serializing a {@link
+     * JSerializable} object with the {@link JSerializer} implementation designed to
+     * serialize the object. Once created, the serialized objects data can be passed
+     * around, saved to file, sent over a network, or more, as plain text Json using
+     * this object instance. Then, when the time comes to recreate the object, a new
+     * {@link JSerialData} object can be created with the Json data of the serialized
+     * object, which can then be deserialized with the same {@link JSerializer}
+     * implementation - creating a new instance of the object with the same data as
+     * the original serialized object.
+     *
+     * <p/> Every {@link JSerialData} object instance created is linked to the specific
+     * {@link JSerializer} implementation that created it. Using the {@link
+     * JSerializer}s {@link JSerializer#identification} and {@link JSerializer#version}.
+     * This serves to both identify the serial Json data, well as to prevent {@link
+     * JSerialData} objects from being deserialized by the wrong {@link JSerializer} or
+     * {@link JSerializer} version. See {@link DataMissmatchException} for more detailed
+     * information.
+     *
+     * <p/> {@link JSerialData} objects cannot be modified directly once created. They
+     * only allow obtaining the complete serial data. This means {@link JSerialData}
+     * objects are incapable of having their data tampered with under normal circumstances.
+     * All direct access to the data, either to modify it or to obtain certain data, is done
+     * through the {@link JSerialDataIO} object instance that is linked to this {@link
+     * JSerialData} object: {@link #io}.
+     */
     public static class JSerialData {
 
+        /**
+         * The internal {@link Gson} instance that is used to convert
+         * {@link JsonObject}s to and from Strings.
+         */
         private static final Gson INTERNAL_GSON_INSTANCE
                 = new GsonBuilder().setLenient().create();
 
+        /**
+         * The {@link JSerialDataIO} object instance that is linked to
+         * this JSerialData object, which allows reading and modifying
+         * the {@link #data json data} stored in this JSerialData object.
+         */
         private final JSerialDataIO io;
 
+        /**
+         * The {@link JsonObject} that stores the metadata of the serialized
+         * object data, which contains the {@link JSerializer#identification}
+         * and {@link JSerializer#version} of the {@link JSerializer} that
+         * created this {@link JSerialData} objects data. Stored under the
+         * key {@code "metadata"} within the root Json object.
+         */
         private final JsonObject metadata;
 
+        /**
+         * The {@link JsonObject} that stores the actual serialized data of
+         * the object in a format understood by the {@link JSerializer}.
+         * Stored under the key {@code "data"} within the root Json object.
+         */
         private final JsonObject data;
 
         // Constructors
 
-        private JSerialData() {
-            this(new JsonObject(), new JsonObject());
-        }
-
+        /**
+         * Creates a new {@link JSerialData} object to hold the given
+         * {@link #metadata} and {@link #data} Json objects.
+         */
         private JSerialData(JsonObject metadata, JsonObject data) {
             this.metadata = Objects.requireNonNull(metadata);
             this.data = Objects.requireNonNull(data);
             this.io = new JSerialDataIO(this);
         }
 
+        /**
+         * Creates a new {@link JSerialData} object that is linked to
+         * the given {@link JSerializer} implementation. Serial object
+         * data is blank.
+         *
+         * @param serializer the {@link JSerializer} implementation
+         *                   that created this object.
+         */
         private JSerialData(JSerializer<?> serializer) {
             this(new JsonObject(), new JsonObject());
             this.io.setMetadata(serializer.identification, serializer.getVersion());
@@ -570,99 +716,240 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
 
         // API
 
+        /**
+         * @return a {@link JsonObject} with the {@link #data} and
+         * {@link #metadata} Json objects added to it.
+         */
         protected JsonObject getDataJsonObject() {
             JsonObject serialDataContainer = new JsonObject();
-            serialDataContainer.add(SerialDataKeys.METADATA.toString(), metadata);
-            serialDataContainer.add(SerialDataKeys.DATA.toString(), data);
+            serialDataContainer.add(SerialDataKeys.METADATA.key, metadata);
+            serialDataContainer.add(SerialDataKeys.DATA.key, data);
 
             return serialDataContainer;
         }
 
+        /**
+         * @return a Json String representation of this object, containing
+         * the serialized object data and metadata.
+         */
         public String getDataAsJsonString() {
             return getDataAsJsonString(INTERNAL_GSON_INSTANCE);
         }
 
-        public String getDataAsJsonString(Gson gsonBuilder) {
-            return Objects.requireNonNull(gsonBuilder).toJson(getDataJsonObject());
+        /**
+         * @param gson a gson instance that should be used to format
+         *             the output Json String.
+         * @return a Json String representation of this object, containing
+         * the serialized object data and metadata. The Json String will
+         * be created using the given {@link Gson} instance, allowing
+         * special options.
+         */
+        public String getDataAsJsonString(Gson gson) {
+            return Objects.requireNonNull(gson).toJson(getDataJsonObject());
         }
 
+        /**
+         * @return a simple plain text String containing the specific class
+         * implementation of this {@link JSerialData}, as well as the {@link
+         * JSerializer#identification} and {@link JSerializer#version} of the
+         * of the {@link JSerializer} that created the serialized data.
+         */
         @Override
         public String toString() {
-            return String.format("JSerialData[identification=%s, version=%s]", io.getIdentification(), io.getVersion());
+            return String.format("JSerialData[implementation=%s, identification=%s, version=%s]",
+                    this.getClass().getCanonicalName(), io.getIdentification(), io.getVersion());
         }
     }
 
+    /**
+     * A simple object that allows the direct access to the serial object data
+     * stored in a {@link JSerialData} object linked to an object instance of
+     * this class, providing the ability to read, process, and modify the data
+     * directly. {@link JSerialDataIO} objects are given to {@link JSerializer}
+     * implementations so that they may handle how objects are serialized and
+     * deserialized.
+     */
     protected static final class JSerialDataIO {
 
+        /**
+         * The {@link JSerialData} instance this {@link JSerialDataIO}
+         * object allows modifying and accessing the data of. Both are
+         * linked to one another.
+         */
         private final JSerialData dataObject;
 
+        /**
+         * Creates a new {@link JSerialDataIO} object that allows
+         * access to given {@link JSerialData}s internal Json
+         * data.
+         *
+         * @param dataObject the {@link JSerialData} object linked
+         *                   to this object instance.
+         */
         protected JSerialDataIO(JSerialData dataObject){
             this.dataObject = dataObject;
         }
 
         // Internal
 
+        /**
+         * Shorthand for {@link SerialDataKeys#key}.
+         */
         private static String key(SerialDataKeys key){
             return key.toString();
         }
 
+        /**
+         * @return the {@link JSerialData#metadata} Json object reference
+         * of the linked JSerialData {@link #dataObject}.
+         */
         private JsonObject getMetadata() {
             return dataObject.metadata;
         }
 
+        /**
+         * @return the {@link JSerialData#data} Json object reference
+         * of the linked JSerialData {@link #dataObject}.
+         */
         private JsonObject getData() {
             return dataObject.data;
         }
 
         // Internal IO
 
+        /**
+         * Sets the {@link JSerialData#metadata} of the linked {@link JSerialData},
+         * {@link #dataObject}, to contain the given identification and version.
+         *
+         * @param identification {@link JSerializer} identification name.
+         * @param version {@link JSerializer} version number.
+         */
         private void setMetadata(String identification, int version) {
             getMetadata().add(key(SerialDataKeys.IDENTIFICATION), new JsonPrimitive(identification));
             getMetadata().add(key(SerialDataKeys.VERSION), new JsonPrimitive(version));
         }
 
+        /**
+         * @return the {@link JSerializer#identification} name of the {@link JSerializer}
+         * implementation which created the serialized object data.
+         */
         private String getIdentification() {
             return getMetadata().get(key(SerialDataKeys.IDENTIFICATION)).getAsString();
         }
 
+        /**
+         * @return the {@link JSerializer#version} number of the {@link JSerializer}
+         * implementation which created the serialized object data.
+         */
         private int getVersion() {
             return getMetadata().get(key(SerialDataKeys.VERSION)).getAsInt();
         }
 
         // API
 
+        /**
+         * @return {@link #dataObject} - the JSerialData object
+         * linked to this {@link JSerialDataIO} instance.
+         */
         public JSerialData getJSerialData() {
             return dataObject;
         }
 
+        /**
+         * Adds the given {@link JsonElement Json data object} to the map
+         * of serialized object data, under the given String key used to
+         * identify the data.
+         *
+         * @param key the String value that identifies the data within the
+         *            map of serialized object data.
+         * @param value the data to add to the map.
+         */
         public void add(String key, JsonElement value) {
             getData().add(key, value);
         }
 
+        /**
+         * Adds the given String value to the map  of serialized object
+         * data, under the given String key used to identify the data.
+         *
+         * @param key the String value that identifies the data within the
+         *            map of serialized object data.
+         * @param value the String data to add to the map.
+         */
         public void add(String key, String value) {
             getData().add(key, new JsonPrimitive(value));
         }
 
+        /**
+         * Adds the given Boolean value to the map  of serialized object
+         * data, under the given String key used to identify the data.
+         *
+         * @param key the String value that identifies the data within the
+         *            map of serialized object data.
+         * @param value the Boolean data to add to the map.
+         */
         public void add(String key, boolean value) {
             getData().add(key, new JsonPrimitive(value));
         }
 
+        /**
+         * Adds the given Number value to the map  of serialized object
+         * data, under the given String key used to identify the data.
+         *
+         * @param key the String value that identifies the data within the
+         *            map of serialized object data.
+         * @param value the Number data to add to the map.
+         */
         public void add(String key, Number value) {
             getData().add(key, new JsonPrimitive(value));
         }
 
+        /**
+         * Adds the given Character value to the map  of serialized object
+         * data, under the given String key used to identify the data.
+         *
+         * @param key the String value that identifies the data within the
+         *            map of serialized object data.
+         * @param value the Character data to add to the map.
+         */
         public void add(String key, Character value) {
             getData().add(key, new JsonPrimitive(value));
         }
 
+        /**
+         * Performs a check to see if the map of serialized object data
+         * contains any data values stored under the given key.
+         *
+         * @param key the key to look for data under.
+         * @return {@code true} if and only if the given key has valid
+         * data associated with it.
+         */
         public boolean has(String key) {
             return getData().has(key);
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map.
+         *
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key if it
+         * exists, otherwise {@code null} if no such data exists.
+         */
         public JsonElement get(String key) {
             return getData().get(key);
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map, and
+         * attempts to cast it as a {@link JsonObject}.
+         *
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key.
+         * @throws IllegalStateException if no data value is associated
+         * with the given key, or if the data value cannot be cast.
+         */
         public JsonObject getObject(String key) {
             JsonElement value;
 
@@ -671,6 +958,18 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             return value.getAsJsonObject();
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map, and
+         * attempts to cast it as a {@link JsonObject}.
+         *
+         * @param defaultValue the object to return if no data value
+         *                     could be found or cast.
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key, or
+         * the object passed to {@code defaultValue} if the data value
+         * cannot be found or cast.
+         */
         public JsonObject getObject(String key, JsonObject defaultValue) {
             JsonElement value = get(key);
 
@@ -681,6 +980,16 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             return defaultValue;
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map, and
+         * attempts to cast it as a {@link String}.
+         *
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key.
+         * @throws IllegalStateException if no data value is associated
+         * with the given key, or if the data value cannot be cast.
+         */
         public String getString(String key) {
             JsonElement value;
 
@@ -689,6 +998,18 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             return value.getAsString();
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map, and
+         * attempts to cast it as a {@link String}.
+         *
+         * @param defaultValue the object to return if no data value
+         *                     could be found or cast.
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key, or
+         * the object passed to {@code defaultValue} if the data value
+         * cannot be found or cast.
+         */
         public String getString(String key, String defaultValue) {
             JsonElement value = get(key);
 
@@ -699,6 +1020,16 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             return defaultValue;
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map, and
+         * attempts to cast it as an {@link Integer}.
+         *
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key.
+         * @throws IllegalStateException if no data value is associated
+         * with the given key, or if the data value cannot be cast.
+         */
         public int getInteger(String key) {
             JsonElement value;
 
@@ -707,6 +1038,18 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             return value.getAsInt();
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map, and
+         * attempts to cast it as an {@link Integer}.
+         *
+         * @param defaultValue the object to return if no data value
+         *                     could be found or cast.
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key, or
+         * the object passed to {@code defaultValue} if the data value
+         * cannot be found or cast.
+         */
         public int getInteger(String key, int defaultValue) {
             JsonElement value = get(key);
 
@@ -717,6 +1060,16 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             return defaultValue;
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map, and
+         * attempts to cast it as a {@link Boolean}.
+         *
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key.
+         * @throws IllegalStateException if no data value is associated
+         * with the given key, or if the data value cannot be cast.
+         */
         public boolean getBoolean(String key) {
             JsonElement value;
 
@@ -725,6 +1078,18 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             return value.getAsBoolean();
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map, and
+         * attempts to cast it as a {@link Boolean}.
+         *
+         * @param defaultValue the object to return if no data value
+         *                     could be found or cast.
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key, or
+         * the object passed to {@code defaultValue} if the data value
+         * cannot be found or cast.
+         */
         public boolean getBoolean(String key, boolean defaultValue) {
             JsonElement value = get(key);
 
@@ -735,6 +1100,16 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             return defaultValue;
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map, and
+         * attempts to cast it as a {@link Long}.
+         *
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key.
+         * @throws IllegalStateException if no data value is associated
+         * with the given key, or if the data value cannot be cast.
+         */
         public long getLong(String key) {
             JsonElement value;
 
@@ -743,6 +1118,18 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             return value.getAsLong();
         }
 
+        /**
+         * Makes an attempt at obtaining the data value associated with
+         * the given key stored in the serialized object data map, and
+         * attempts to cast it as a {@link Long}.
+         *
+         * @param defaultValue the object to return if no data value
+         *                     could be found or cast.
+         * @param key the String key associated with the data.
+         * @return the data value associated with the given key, or
+         * the object passed to {@code defaultValue} if the data value
+         * cannot be found or cast.
+         */
         public long getLong(String key, long defaultValue) {
             JsonElement value = get(key);
 
@@ -841,16 +1228,66 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
     // Static Methods
     // ##############
 
+    /**
+     * Allows {@link #serializeObject(JSerializable) serializing} a {@link
+     * JSerializable} object instance using the {@link JSerializer} instance
+     * associated with the object.
+     *
+     * @param object the {@link JSerializable} object instance to {@link
+     * #serializeObject(JSerializable) serialize}.
+     * @return a new {@link JSerialData} object instance containing the
+     * given objects serialized data in Json format.
+     * @throws SerializeException if the given {@link JSerializable} object
+     * could not serialized for any reason.
+     */
     public static <T extends JSerializable<T>> JSerialData serialize(T object) {
         JSerializer<T> serializer = object.getSerializer();
         return serializer.serializeObject(object);
     }
 
+    /**
+     * Allows {@link #deserializeData(JSerialData) deserializing} a {@link JSerializable}
+     * object instance from the given {@link JSerialData}, with the specific {@link
+     * JSerializer} implementation provided.
+     *
+     * @param serializedData the {@link JSerialData} object holding the data of a previously
+     * serialized object instance, which is to be reconstructed into a new object instance,
+     * replicating the old object.
+     * @param serializer the specific {@link JSerializer} implementation to use when
+     * deserializing the object instance.
+     * @return the {@link JSerialData} object reconstructed into a new {@link JSerializable}
+     * object instance that matches the implementation that was serialized.
+     * @throws DataMissmatchException if the given {@link JSerialData} serialized data does
+     * not match the serialized data created by this JSerializer. This happens when the {@link
+     * #identification} of the JSerializer and the {@link JSerialData} serialized data do not
+     * match.
+     * @throws SerializeException if the given {@link JSerializable} object could not
+     * deserialized for any reason.
+     */
     public static <T extends JSerializable<T>> T deserialize(JSerialData serializedData, JSerializer<T> serializer)
             throws DataMissmatchException {
         return serializer.deserializeData(serializedData);
     }
 
+    /**
+     * Allows {@link #deserializeData(JSerialData) deserializing} a {@link JSerializable}
+     * object instance from the given {@link JSerialData}, using the {@link JSerializer}
+     * provided by the given {@link JSerializable} implementation class.
+     *
+     * @param serializedData the {@link JSerialData} object holding the data of a previously
+     * serialized object instance, which is to be reconstructed into a new object instance,
+     * replicating the old object.
+     * @param object the class of the specific {@link JSerializable} implementation to
+     * deserialize the given {@link JSerialData} to.
+     * @return the {@link JSerialData} object reconstructed into a new {@link JSerializable}
+     * object instance that matches the implementation that was serialized.
+     * @throws DataMissmatchException if the given {@link JSerialData} serialized data does
+     * not match the serialized data created by this JSerializer. This happens when the {@link
+     * #identification} of the JSerializer and the {@link JSerialData} serialized data do not
+     * match.
+     * @throws SerializeException if the given {@link JSerializable} object could not
+     * deserialized for any reason.
+     */
     public static <T extends JSerializable<T>> T deserialize(JSerialData serializedData, Class<? extends T> object)
             throws DataMissmatchException {
         T newInstance = constructSerializableObject(object);
@@ -858,6 +1295,13 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
         return serializer.deserializeData(serializedData, newInstance);
     }
 
+    /**
+     * Attempts to create a new instance of a specific {@link JSerializable} implementation,
+     * from the implementations {@link Class}. Requires the implementation to have a default
+     * constructor available.
+     *
+     * @throws IllegalArgumentException if the object instance could not be created.
+     */
     private static <T extends JSerializable<T>> T constructSerializableObject(Class<? extends T> object) {
         //Get the default (probably private) constructor, or throw IllegalArgumentException
         Constructor<?> objectConstructor = Arrays.stream(object.getDeclaredConstructors())

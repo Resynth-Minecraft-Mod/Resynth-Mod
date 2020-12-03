@@ -643,6 +643,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         HoeInformation hoeInformation = new HoeInformation(information);
         JSerializer.JSerialData serializedHoeInformation = JSerializer.serialize(hoeInformation);
 
+
 //        if(player instanceof ServerPlayerEntity)
 //            Packet.send(PacketDistributor.PLAYER.with(
 //                    () -> (ServerPlayerEntity) player), null
