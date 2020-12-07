@@ -16,7 +16,7 @@
 package com.ki11erwolf.resynth.plant.set;
 
 /**
- * Defines the required "settings" (properties) needed for all
+ * Defines the required properties (changable settings) needed by all
  * plant sets.
  */
 public interface IPlantSetProperties {

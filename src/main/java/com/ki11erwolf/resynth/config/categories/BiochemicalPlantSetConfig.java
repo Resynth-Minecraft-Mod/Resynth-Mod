@@ -22,9 +22,11 @@ import com.ki11erwolf.resynth.config.IntegerConfigValue;
 import com.ki11erwolf.resynth.plant.set.BiochemicalSetProperties;
 import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
 
+import java.util.Objects;
+
 /**
  * Defines the configuration settings used by Biochemical plant sets.
- * Each Biochemical plant set contains a reference their own instance
+ * Each Biochemical plant set contains a reference to their own instance
  * of {@link BiochemicalPlantSetConfig}.
  * <p/>
  * Unlike normal configuration classes, this one simply lays out the
@@ -94,8 +96,8 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
      *                     instance if for (e.g. ender pearl)
      * @param defaultProperties default config values.
      */
-    public BiochemicalPlantSetConfig(String plantSetName, BiochemicalSetProperties defaultProperties){
-        super(PREFIX + plantSetName);
+    public BiochemicalPlantSetConfig(String plantSetName, IBiochemicalSetProperties defaultProperties){
+        super(PREFIX + Objects.requireNonNull(plantSetName));
 
         this.chanceToGrow = new DoubleConfigValue(
                 "chance-to-grow",

@@ -66,8 +66,8 @@ public class GeneralConfig extends ConfigCategory {
      */
     private final BooleanConfigValue enableHopperAutoFarming = new BooleanConfigValue(
             "allow hopper auto-farming",
-            "Allows auto-farming using hoppers when true, where plants will drop their " +
-                      "produce in a hopper underneath the plant when fully grown, starting the " +
+            "Allows auto-farming using hoppers when true, where plants will drop their\n" +
+                      "produce in a hopper underneath the plant when fully grown, starting the\n" +
                       "growth cycle over.",
             true, this
     );

@@ -44,11 +44,23 @@ public class ResynthPlants {
     // Crystalline Sets
     // ****************
 
+    public static final PlantSet<?> TEST_SET = PlantSetFactory.makeCrystallineSet(
+            minecraftResource("test"),
+            new CrystallineSetProperties(
+                    true, 50, 2, 50, 50
+            ),
+            Blocks.SAND,
+            new PlantSetProduceProperties(
+                    5, 200, 7.5
+            ),
+            Blocks.DIRT
+    ).register();
+
     /**
      * The plant set for Resynth Mineral Rocks
      */
     public static final PlantSet<?> MINERAL_ROCKS = PlantSetFactory.makeCrystallineSet(
-            resynthSet("mineral_rock"),
+            resynthResource("mineral_rock"),
             new CrystallineSetProperties(
                     false,
                     25,
@@ -63,7 +75,7 @@ public class ResynthPlants {
      * The plant set for Resynth Calvinite Crystals
      */
     public static final PlantSet<?> CALVINITE_CRYSTAL = PlantSetFactory.makeCrystallineSet(
-            resynthSet("calvinite_crystal"),
+            resynthResource("calvinite_crystal"),
             new CrystallineSetProperties(
                     false,
                     10F,
@@ -85,7 +97,7 @@ public class ResynthPlants {
      * The plant set for Vanilla Diamonds.
      */
     public static final PlantSet<?> DIAMOND = PlantSetFactory.makeCrystallineSet(
-            minecraftSet("diamond"), ResynthModPlants.DIAMOND_PROPERTIES, Blocks.DIAMOND_ORE
+            minecraftResource("diamond"), ResynthModPlants.DIAMOND_PROPERTIES, Blocks.DIAMOND_ORE
     ).register();
 
     /**
@@ -170,7 +182,7 @@ public class ResynthPlants {
      * The plant set for Vanilla Iron.
      */
     public static final PlantSet<?> IRON = PlantSetFactory.makeMetallicSet(
-            minecraftSet("iron"),
+            minecraftResource("iron"),
             ResynthModPlants.IRON_PROPERTIES,
             Blocks.IRON_ORE
     ).register();
@@ -480,7 +492,7 @@ public class ResynthPlants {
      * The plant set for Vanilla Spider Eyes.
      */
     public static final PlantSet<?> SPIDER_EYE = PlantSetFactory.makeBiochemicalSet(
-            minecraftSet("spider_eye"),
+            minecraftResource("spider_eye"),
             new BiochemicalSetProperties(
                     false,
                     20,
@@ -540,7 +552,7 @@ public class ResynthPlants {
      * The plant set for Vanilla Leather.
      */
     public static final PlantSet<?> LEATHER = PlantSetFactory.makeBiochemicalSet(
-            minecraftSet("leather"),
+            minecraftResource("leather"),
             new BiochemicalSetProperties(
                     false,
                     13,
@@ -630,7 +642,7 @@ public class ResynthPlants {
      * The plant set for Vanilla Experience Bottles.
      */
     public static final PlantSet<?> EXPERIENCE_BOTTLE = PlantSetFactory.makeBiochemicalSet(
-            minecraftSet("experience_bottle"),
+            minecraftResource("experience_bottle"),
             new BiochemicalSetProperties(
                     false,
                     4,
@@ -680,7 +692,7 @@ public class ResynthPlants {
      * name of a PlantSet as well as designating Resynth as the mod the plant
      * set exists for.
      */
-    private static ResourceLocation resynthSet(String setName) {
+    private static ResourceLocation resynthResource(String setName) {
         if(Objects.requireNonNull(setName).isEmpty())
             throw new IllegalArgumentException("The sets name cannot be empty");
 
@@ -696,7 +708,7 @@ public class ResynthPlants {
      * name of a PlantSet as well as designating Minecraft as the mod the plant
      * set exists for.
      */
-    private static ResourceLocation minecraftSet(String setName) {
+    private static ResourceLocation minecraftResource(String setName) {
         if(Objects.requireNonNull(setName).isEmpty())
             throw new IllegalArgumentException("The sets name cannot be empty");
 

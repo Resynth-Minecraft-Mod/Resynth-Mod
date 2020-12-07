@@ -17,6 +17,8 @@ import java.util.*;
 
 enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
 
+    //TODO: Crystalline seeds recipes
+
     /**
      * The singleton instance of this class.
      */
@@ -41,6 +43,10 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         );
 
         recipeDefinitions.add(Objects.requireNonNull(recipe));
+    }
+
+    void addProduceRecipe(PlantSet<?> set, ResourceLocation outputItemID, IPlantSetProduceProperties properties) {
+        addProduceRecipe(set, outputItemID, properties.resourceCount(), properties.smeltingTime(), properties.experienceWorth());
     }
 
     void addProduceRecipe(PlantSet<?> set, ResourceLocation outputItemID, int count, int time, double experience) {

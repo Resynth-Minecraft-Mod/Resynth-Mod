@@ -24,17 +24,16 @@ import net.minecraft.util.IItemProvider;
 import java.util.Objects;
 
 /**
- * Defines and prepares the basics needed to
- * create a Resynth plant set.
- * <p/>
- * A Resynth plant set is a set of items and blocks
- * that make up the minimum requirements to grow
- * a particular resource. This includes a PlantBlock,
- * a produce block/item and a seeds item. This class
- * also allows easily registering plant sets
- * ({@link #register()}).
- * <p/>
- * <b>WARNING: Plant Sets do NOT handle the smelting of
+ * Defines and prepares the basics needed to create
+ * a Resynth plant set.
+ *
+ * <p/> A Resynth plant set is a set of items and blocks
+ * that make up the minimum requirements to grow a
+ * particular resource. This includes a PlantBlock, a
+ * produce block/item and a seeds item. This class also
+ * allows easily registering plant sets ({@link #register()}).
+ *
+ * <p/> <b>WARNING: Plant Sets do NOT handle the smelting of
  * produce items into the final resource. This must be done
  * with json furnace (smelting) recipes.</b>
  *
@@ -44,6 +43,7 @@ public class PlantSet<P extends BlockPlant<?>> {
 
     //TODO: attempt to implement recipes related to plants in code.
     //TODO: look into programmaticly generating plant set assets.
+    //TODO: base class handling of seed spawner(s)?
 
     /**
      * The name of the plant set instance (e.g. diamond).
