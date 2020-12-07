@@ -58,7 +58,7 @@ public class PlantSet<P extends BlockPlant<?>> {
     /**
      * The properties for this plant set.
      */
-    private final PlantSetProperties basicPlantSetProperties;
+    private final IPlantSetProperties basicPlantSetProperties;
 
     /**
      * Will be {@code true} if this plant set has been
@@ -86,10 +86,10 @@ public class PlantSet<P extends BlockPlant<?>> {
      * @param setName The name of the plant set instance (e.g. diamond).
      * @param seedHooks the specific plant sets {@code static} SeedHooks instance.
      */
-    PlantSet(String setTypeName, String setName, PlantSetSeedHooks seedHooks, PlantSetProperties properties){
+    PlantSet(String setTypeName, String setName, PlantSetSeedHooks seedHooks, IPlantSetProperties properties){
         this.setTypeName = Objects.requireNonNull(setTypeName);
         this.setName = Objects.requireNonNull(setName);
-        this.basicPlantSetProperties = properties;
+        this.basicPlantSetProperties = Objects.requireNonNull(properties);
         seedHooks.register();
     }
 
@@ -164,8 +164,20 @@ public class PlantSet<P extends BlockPlant<?>> {
      * @return the properties for this plant set. May be
      * any of the plant set properties types.
      */
-    public PlantSetProperties getPlantSetProperties(){
+    public IPlantSetProperties getPlantSetProperties(){
         return this.basicPlantSetProperties;
+    }
+
+    /**
+     * @return a simple plain text String containing the {@link
+     * #getSetName() name} and {@link #getSetTypeName() type}
+     * of the specific plant set.
+     */
+    @Override
+    public String toString() {
+        return String.format("PlantSet[type=%s, name=%s]",
+                this.getSetTypeName(), this.getSetName()
+        );
     }
 
     /**

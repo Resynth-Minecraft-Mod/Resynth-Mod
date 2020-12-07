@@ -22,7 +22,7 @@ import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
-import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
 import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MathUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
@@ -89,7 +89,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * The unique properties of this specific plant type instance. Should
      * be config specified.
      */
-    final PlantSetProperties properties;
+    final IPlantSetProperties properties;
 
     /**
      * Resynth plant block constructor.
@@ -99,7 +99,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @param properties the unique properties of the plant type. Should
      *                   be specified by config.
      */
-    BlockPlant(String plantTypeName, String plantName, PlantSetProperties properties) {
+    BlockPlant(String plantTypeName, String plantName, IPlantSetProperties properties) {
         super(Properties.create(Material.PLANTS).sound(SoundType.PLANT).tickRandomly()
                         .hardnessAndResistance(0.0F).doesNotBlockMovement(),
                 plantTypeName + "_" + PLANT_PREFIX + "_" + plantName);
@@ -1001,7 +1001,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * that specifies the values the plant uses,
      * like growth rate and seed drop chances.
      */
-    public PlantSetProperties getProperties(){
+    public IPlantSetProperties getProperties(){
         return this.properties;
     }
 

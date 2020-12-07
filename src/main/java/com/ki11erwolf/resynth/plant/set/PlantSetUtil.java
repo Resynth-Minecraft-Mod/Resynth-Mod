@@ -46,7 +46,7 @@ public class PlantSetUtil {
          * @param tooltip the tooltip array to append the tooltip to.
          * @param plantSetProperties the properties object.
          */
-        public static void setPropertiesTooltip(List<ITextComponent> tooltip, PlantSetProperties plantSetProperties){
+        public static void setPropertiesTooltip(List<ITextComponent> tooltip, IPlantSetProperties plantSetProperties){
             if(!Minecraft.getInstance().isSingleplayer()) {
                 tooltip.add(getFormattedTooltip("stats_disabled", TextFormatting.RED));
                 return;

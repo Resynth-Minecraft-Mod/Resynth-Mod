@@ -18,6 +18,9 @@ package com.ki11erwolf.resynth;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.plant.set.*;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.ResourceLocation;
+
+import java.util.Objects;
 
 import static net.minecraft.entity.EntityType.*;
 
@@ -44,8 +47,8 @@ public class ResynthPlants {
     /**
      * The plant set for Resynth Mineral Rocks
      */
-    public static final PlantSet<?> MINERAL_ROCKS = PlantSetFactory.newVanillaCrystallineSet(
-            "mineral_rock",
+    public static final PlantSet<?> MINERAL_ROCKS = PlantSetFactory.makeCrystallineSet(
+            resynthSet("mineral_rock"),
             new CrystallineSetProperties(
                     false,
                     25,
@@ -59,8 +62,8 @@ public class ResynthPlants {
     /**
      * The plant set for Resynth Calvinite Crystals
      */
-    public static final PlantSet<?> CALVINITE_CRYSTAL = PlantSetFactory.newVanillaCrystallineSet(
-            "calvinite_crystal",
+    public static final PlantSet<?> CALVINITE_CRYSTAL = PlantSetFactory.makeCrystallineSet(
+            resynthSet("calvinite_crystal"),
             new CrystallineSetProperties(
                     false,
                     10F,
@@ -81,8 +84,8 @@ public class ResynthPlants {
     /**
      * The plant set for Vanilla Diamonds.
      */
-    public static final PlantSet<?> DIAMOND = PlantSetFactory.newVanillaCrystallineSet(
-            "diamond", ResynthModPlants.DIAMOND_PROPERTIES, Blocks.DIAMOND_ORE
+    public static final PlantSet<?> DIAMOND = PlantSetFactory.makeCrystallineSet(
+            minecraftSet("diamond"), ResynthModPlants.DIAMOND_PROPERTIES, Blocks.DIAMOND_ORE
     ).register();
 
     /**
@@ -166,8 +169,8 @@ public class ResynthPlants {
     /**
      * The plant set for Vanilla Iron.
      */
-    public static final PlantSet<?> IRON = PlantSetFactory.newVanillaMetallicPlantSet(
-            "iron",
+    public static final PlantSet<?> IRON = PlantSetFactory.makeMetallicSet(
+            minecraftSet("iron"),
             ResynthModPlants.IRON_PROPERTIES,
             Blocks.IRON_ORE
     ).register();
@@ -476,8 +479,8 @@ public class ResynthPlants {
     /**
      * The plant set for Vanilla Spider Eyes.
      */
-    public static final PlantSet<?> SPIDER_EYE = PlantSetFactory.newVanillaBiochemicalPlantSet(
-            "spider_eye",
+    public static final PlantSet<?> SPIDER_EYE = PlantSetFactory.makeBiochemicalSet(
+            minecraftSet("spider_eye"),
             new BiochemicalSetProperties(
                     false,
                     20,
@@ -536,8 +539,8 @@ public class ResynthPlants {
     /**
      * The plant set for Vanilla Leather.
      */
-    public static final PlantSet<?> LEATHER = PlantSetFactory.newVanillaBiochemicalPlantSet(
-            "leather",
+    public static final PlantSet<?> LEATHER = PlantSetFactory.makeBiochemicalSet(
+            minecraftSet("leather"),
             new BiochemicalSetProperties(
                     false,
                     13,
@@ -626,8 +629,8 @@ public class ResynthPlants {
     /**
      * The plant set for Vanilla Experience Bottles.
      */
-    public static final PlantSet<?> EXPERIENCE_BOTTLE = PlantSetFactory.newVanillaBiochemicalPlantSet(
-            "experience_bottle",
+    public static final PlantSet<?> EXPERIENCE_BOTTLE = PlantSetFactory.makeBiochemicalSet(
+            minecraftSet("experience_bottle"),
             new BiochemicalSetProperties(
                     false,
                     4,
@@ -637,9 +640,9 @@ public class ResynthPlants {
             ),
             BAT, BLAZE, CAVE_SPIDER, CHICKEN, COD, COW, CREEPER, DONKEY, DOLPHIN, DROWNED, ELDER_GUARDIAN,
             ENDER_DRAGON, ENDERMAN, ENDERMITE, EVOKER, GHAST, GIANT, GUARDIAN, HORSE, HUSK, LLAMA, MAGMA_CUBE,
-            MULE, MOOSHROOM, OCELOT, PARROT, PIG, PUFFERFISH, field_233592_ba_ /*zombie piglin*/, POLAR_BEAR, RABBIT,
+            MULE, MOOSHROOM, OCELOT, PARROT, PIG, PUFFERFISH, field_233592_ba_, POLAR_BEAR, RABBIT,
             SALMON, SHEEP, SHULKER, SILVERFISH, SKELETON, SKELETON_HORSE, SLIME, SPIDER, SQUID, TURTLE, TROPICAL_FISH,
-            VILLAGER, IRON_GOLEM, WITCH, WITHER, WITHER_SKELETON, WOLF, ZOMBIE, ZOMBIE_VILLAGER, ZOMBIE_HORSE, PHANTOM
+            WITCH, WITHER, WITHER_SKELETON, WOLF, ZOMBIE, ZOMBIE_VILLAGER, ZOMBIE_HORSE, PHANTOM
     ).register();
 
     /**
@@ -666,4 +669,37 @@ public class ResynthPlants {
      */
     public static void initSets(){/*NO-OP*/}
 
+    // Helpers
+
+    /**
+     * A utility method to obtain a {@link ResourceLocation} for use as a
+     * PlantSet ID, specifically for PlantSets that grow Resynth resources.
+     *
+     * @param setName the identifying name of the plant set.
+     * @return a new {@link ResourceLocation} that specifies the identifying
+     * name of a PlantSet as well as designating Resynth as the mod the plant
+     * set exists for.
+     */
+    private static ResourceLocation resynthSet(String setName) {
+        if(Objects.requireNonNull(setName).isEmpty())
+            throw new IllegalArgumentException("The sets name cannot be empty");
+
+        return new ResourceLocation(ResynthMod.MODID, setName);
+    }
+
+    /**
+     * A utility method to obtain a {@link ResourceLocation} for use as a
+     * PlantSet ID, specifically for PlantSets that grow Minecraft resources.
+     *
+     * @param setName the identifying name of the plant set.
+     * @return a new {@link ResourceLocation} that specifies the identifying
+     * name of a PlantSet as well as designating Minecraft as the mod the plant
+     * set exists for.
+     */
+    private static ResourceLocation minecraftSet(String setName) {
+        if(Objects.requireNonNull(setName).isEmpty())
+            throw new IllegalArgumentException("The sets name cannot be empty");
+
+        return new ResourceLocation("minecraft", setName);
+    }
 }

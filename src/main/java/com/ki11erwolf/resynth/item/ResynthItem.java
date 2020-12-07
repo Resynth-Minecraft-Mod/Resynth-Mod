@@ -18,7 +18,7 @@ package com.ki11erwolf.resynth.item;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
-import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
 import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.client.resources.I18n;
@@ -140,7 +140,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      * @param itemName the registry name (path only) of the
      *                 item we're getting the tooltip of.
      */
-    protected static void addPlantItemTooltips(List<ITextComponent> tooltip, PlantSetProperties setProperties,
+    protected static void addPlantItemTooltips(List<ITextComponent> tooltip, IPlantSetProperties setProperties,
                                                String itemName){
         Tooltip.addPlantItemOrBlockTooltips(tooltip, setProperties, getDescriptiveTooltip(itemName));
     }

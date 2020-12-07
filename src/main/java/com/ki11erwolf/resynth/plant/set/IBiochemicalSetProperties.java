@@ -15,7 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.set;
 
-public interface IBiochemicalSetProperties extends PlantSetProperties {
+public interface IBiochemicalSetProperties extends IPlantSetProperties {
 
     /**
      * Returns the number of produce item the plant type

@@ -19,7 +19,7 @@ package com.ki11erwolf.resynth.plant.set;
  * Defines the required "settings" (properties) needed for Crystalline
  * plant sets specifically.
  */
-public interface ICrystallineSetProperties extends PlantSetProperties {
+public interface ICrystallineSetProperties extends IPlantSetProperties {
 
     /**
      * Returns the number of produce item the plant type

@@ -6,8 +6,6 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.plant.set.PublicPlantSetRegistry;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.*;
@@ -23,7 +21,10 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * The global manager and handler for all custom {@link IRecipe Recipes}
@@ -68,7 +69,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * The {@link IRecipe Recipe} instance that will craft Mineral Rocks
          * using a standard alternative recipe.
          */
-        private static final IRecipe<?> MINERAL_ROCK_ALT_RECIPE = INSTANCE.newShapelessRecipe(
+        private static final IRecipe<?> MINERAL_ROCK_ALT_RECIPE = ResynthRecipes.RecipeProvider.newShapelessRecipe(
                 "special_mineral_rock", "Resynth's Resources",
                 new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, 6), Items.IRON_INGOT, Items.IRON_INGOT,
                 Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE
@@ -78,7 +79,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * The {@link IRecipe Recipe} instance that will craft Calvinite Crystals
          * using a standard alternative recipe.
          */
-        private static final IRecipe<?> CALVINITE_CRYSTAL_ALT_RECIPE = INSTANCE.newShapelessRecipe(
+        private static final IRecipe<?> CALVINITE_CRYSTAL_ALT_RECIPE = ResynthRecipes.RecipeProvider.newShapelessRecipe(
                 "special_calvinite_crystal", "Resynth's Resources",
                 new ItemStack(ResynthItems.ITEM_CALVINITE, 2), Items.QUARTZ, Items.QUARTZ,
                 Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE
@@ -88,7 +89,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * The {@link IRecipe Recipe} instance that will craft Sylvanite Crystals
          * using a standard alternative recipe.
          */
-        private static final IRecipe<?> SYLVANITE_CRYSTAL_ALT_RECIPE = INSTANCE.newShapelessRecipe(
+        private static final IRecipe<?> SYLVANITE_CRYSTAL_ALT_RECIPE = ResynthRecipes.RecipeProvider.newShapelessRecipe(
                 "special_sylvanite_crystal", "Resynth's Resources",
                 new ItemStack(ResynthItems.ITEM_SYLVANITE, 6), Items.DIAMOND, Items.END_STONE,
                 Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE
@@ -98,7 +99,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * The {@link IRecipe Recipe} instance that will craft Mineral Rocks
          * Seeds using a standard alternative recipe.
          */
-        private static final IRecipe<?> MINERAL_ROCK_SEEDS_ALT_RECIPE = INSTANCE.newShapelessRecipe(
+        private static final IRecipe<?> MINERAL_ROCK_SEEDS_ALT_RECIPE = ResynthRecipes.RecipeProvider.newShapelessRecipe(
                 "special_mineral_rock_seeds", "Resynth's Resources",
                 new ItemStack(ResynthPlants.MINERAL_ROCKS.getSeedsItem(), 1), Items.IRON_INGOT, Items.IRON_INGOT,
                 Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.EMERALD, Items.WHEAT_SEEDS
@@ -108,7 +109,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * The {@link IRecipe Recipe} instance that will craft Calvinite Crystals
          * Seeds using a standard alternative recipe.
          */
-        private static final IRecipe<?> CALVINITE_CRYSTAL_SEEDS_ALT_RECIPE = INSTANCE.newShapelessRecipe(
+        private static final IRecipe<?> CALVINITE_CRYSTAL_SEEDS_ALT_RECIPE = ResynthRecipes.RecipeProvider.newShapelessRecipe(
                 "special_calvinite_crystal_seeds", "Resynth's Resources",
                 new ItemStack(ResynthPlants.CALVINITE_CRYSTAL.getSeedsItem(), 1), Items.QUARTZ, Items.QUARTZ,
                 Items.INK_SAC, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.EMERALD, Items.MELON_SEEDS
@@ -242,7 +243,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
 
                 // Add recipe & log
                 recipes.add(recipe);
-                LOG.info(String.format("Registered Resynth recipe: '%s' -> %s",
+                LOG.debug(String.format("Registered Resynth recipe: '%s' -> %s",
                     recipe.getId().toString(), (recipe.getRecipeOutput().getItem().getRegistryName() != null ?
                             recipe.getRecipeOutput().getItem().getRegistryName().toString() : "<NO REG NAME>")
                             + recipe.getRecipeOutput().getCount()
@@ -461,7 +462,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * @param time the amount of time it takes to complete the smelting Recipe.
          * @return the created {@link FurnaceRecipe}.
          */
-        default IRecipe<IInventory> newFurnaceRecipe(ResourceLocation resource, String group, double experience, int time,
+        static FurnaceRecipe newFurnaceRecipe(ResourceLocation resource, String group, double experience, int time,
                                                      ItemStack output, IItemProvider input) {
             return new FurnaceRecipe(resource, group, Ingredient.fromItems(input), output, (float) experience, time);
         }
@@ -479,7 +480,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * @param time the amount of time it takes to complete the smelting Recipe.
          * @return the created {@link FurnaceRecipe}.
          */
-        default IRecipe<IInventory> newFurnaceRecipe(String resourcePath, String group, double experience, int time,
+        static FurnaceRecipe newFurnaceRecipe(String resourcePath, String group, double experience, int time,
                                                      ItemStack output, IItemProvider input) {
             return newFurnaceRecipe(rrl(resourcePath), group, experience, time, output, input);
         }
@@ -495,7 +496,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * @param input the list of Items and/or Blocks to be used as ingredients needed to craft.
          * @return the created {@link ShapelessRecipe}.
          */
-        default IRecipe<CraftingInventory> newShapelessRecipe(ResourceLocation resource, String group,
+        static ShapelessRecipe newShapelessRecipe(ResourceLocation resource, String group,
                                                               ItemStack output, IItemProvider... input) {
             NonNullList<Ingredient> ingredients = NonNullList.create();
             for(IItemProvider in : input){
@@ -516,7 +517,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * @param input the list of Items and/or Blocks to be used as ingredients needed to craft.
          * @return the created {@link ShapelessRecipe}.
          */
-        default IRecipe<CraftingInventory> newShapelessRecipe(String resourcePath, String group,
+        static ShapelessRecipe newShapelessRecipe(String resourcePath, String group,
                                                               ItemStack output, IItemProvider... input) {
             return newShapelessRecipe(rrl(resourcePath), group, output, input);
         }
@@ -528,7 +529,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          * @param path the String value to set as the {@link ResourceLocation#getPath()}
          * @return the new ResourceLocation, for Resynth, with the given path.
          */
-        default ResourceLocation rrl(String path) {
+        static ResourceLocation rrl(String path) {
             return new ResourceLocation(ResynthMod.MODID, path);
         }
     }

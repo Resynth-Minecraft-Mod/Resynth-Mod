@@ -63,8 +63,10 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
         super(SET_TYPE_NAME, setName, SEED_HOOKS, properties);
         this.setProperties = properties;
 
-        //Plant
+        //Produce
         this.produceItem = new ItemShard(SET_TYPE_NAME, setName, properties);
+
+        //Plant
         this.plantBlock = new BlockCrystallinePlant(SET_TYPE_NAME, setName, properties){
             @Override
             protected ItemSeeds getSeedsItem(){
@@ -76,6 +78,8 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
                 return new ItemStack(produceItem.asItem(), properties.numberOfProduceDrops());
             }
         };
+
+        //Seeds
         this.seedsItem = new ItemSeeds(SET_TYPE_NAME, setName, plantBlock, properties);
     }
 
@@ -89,6 +93,9 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
      * allows providing source ore blocks that are not yet registered
      * to the game. This in turn allows adding source ore blocks from
      * Resynth and other mods.
+     *
+     * <p/>Returning {@code null} is allowed, however the PlantSet
+     * will never be fully usable or normally obtainable if so.
      *
      * @return the ore block seeds from this set are obtained from.
      */
@@ -105,8 +112,8 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
     private static class SeedHooks extends PlantSetSeedHooks {
 
         /**
-         * Handles spawning seeds in the world when the player
-         * breaks a specific ore block.
+         * Handles spawning seeds in the world when the player breaks
+         * a specific ore block.
          *
          * @param event forge event.
          */
@@ -140,9 +147,8 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
         }
 
         /**
-         * Handles spawning seeds in the world
-         * when shard produce items are left
-         * to despawn in water.
+         * Handles spawning seeds in the world when shard produce items
+         * are left to despawn in water.
          *
          * @param event forge event.
          */

@@ -19,7 +19,7 @@ package com.ki11erwolf.resynth.plant.set;
  * Defines the required "settings" (properties) needed for all
  * plant sets.
  */
-public interface PlantSetProperties {
+public interface IPlantSetProperties {
 
     /**
      * Returns {@code true} if the plant block

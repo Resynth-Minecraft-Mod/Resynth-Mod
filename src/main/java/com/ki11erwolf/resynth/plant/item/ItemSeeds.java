@@ -17,7 +17,7 @@ package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
-import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
 import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -70,7 +70,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      * The properties specific to the plant set
      * this seeds item type is registered to.
      */
-    private final PlantSetProperties setProperties;
+    private final IPlantSetProperties setProperties;
 
     /**
      * {@code true} if the plant set this seeds
@@ -84,7 +84,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      * @param plant the specific plant type (plant block instance) to place.
      * @param setProperties the properties specific to the plant set.
      */
-    public ItemSeeds(String setType, String setName, Block plant, PlantSetProperties setProperties){
+    public ItemSeeds(String setType, String setName, Block plant, IPlantSetProperties setProperties){
         super(setType + "_" + PREFIX + "_" + setName, ResynthTabs.TAB_RESYNTH_SEEDS);
 
         this.setTypeName = setType;

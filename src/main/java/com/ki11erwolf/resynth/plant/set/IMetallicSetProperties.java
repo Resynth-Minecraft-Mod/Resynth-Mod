@@ -19,7 +19,7 @@ package com.ki11erwolf.resynth.plant.set;
  * Defines the required "settings" (properties) needed for Metallic
  * plant sets specifically.
  */
-public interface IMetallicSetProperties extends PlantSetProperties {
+public interface IMetallicSetProperties extends IPlantSetProperties {
 
     /**
      * Returns the percentage (0.0 - 100.0) chance that seeds

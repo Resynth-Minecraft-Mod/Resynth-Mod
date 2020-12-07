@@ -15,7 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.block;
 
-import com.ki11erwolf.resynth.plant.set.PlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -56,7 +56,7 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      *                   plant type.
      */
     @SuppressWarnings("WeakerAccess")//Lies
-    public BlockMetallicPlant(String plantTypeName, String plantName, PlantSetProperties properties) {
+    public BlockMetallicPlant(String plantTypeName, String plantName, IPlantSetProperties properties) {
         super(plantTypeName, plantName, properties);
     }
 

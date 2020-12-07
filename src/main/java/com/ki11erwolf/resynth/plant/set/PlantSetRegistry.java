@@ -166,7 +166,7 @@ class PlantSetRegistry {
                 registryName = block.getRegistryName();
             else if (item != null)
                 registryName = item.getRegistryName();
-            else registryName = new ResourceLocation(ResynthMod.MODID, "registery error");
+            else registryName = new ResourceLocation(ResynthMod.MODID, "registery-error");
 
             //Block
             if(isBlock && !forItems){
