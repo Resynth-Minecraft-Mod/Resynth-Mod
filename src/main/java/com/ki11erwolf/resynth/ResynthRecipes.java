@@ -246,7 +246,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
                 LOG.debug(String.format("Registered Resynth recipe: '%s' -> %s",
                     recipe.getId().toString(), (recipe.getRecipeOutput().getItem().getRegistryName() != null ?
                             recipe.getRecipeOutput().getItem().getRegistryName().toString() : "<NO REG NAME>")
-                            + recipe.getRecipeOutput().getCount()
+                            + "(" + recipe.getRecipeOutput().getCount() + ")"
                 ));
             }
         }

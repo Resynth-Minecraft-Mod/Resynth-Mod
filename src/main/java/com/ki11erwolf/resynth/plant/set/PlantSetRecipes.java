@@ -2,11 +2,13 @@ package com.ki11erwolf.resynth.plant.set;
 
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthRecipes;
+import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapelessRecipe;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -14,10 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
-
 enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
-
-    //TODO: Crystalline seeds recipes
 
     /**
      * The singleton instance of this class.
@@ -29,7 +28,7 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
      */
     private static final Logger LOG = ResynthMod.getNewLogger();
 
-    private Queue<LazyRecipe<?>> recipeDefinitions = new ArrayDeque<>();
+    private Queue<RecipeDefinition<?>> recipeDefinitions = new ArrayDeque<>();
 
     private IRecipe<?>[] finalRecipes;
 
@@ -37,7 +36,7 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
     // Package private API
     // ###################
 
-    private void addRecipe(LazyRecipe<?> recipe) {
+    private void addRecipe(RecipeDefinition<?> recipe) {
         if(recipeDefinitions == null) throw new IllegalStateException(
                 "Cannot add any more plant set recipes! The recipes have already been finalized"
         );
@@ -45,15 +44,22 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         recipeDefinitions.add(Objects.requireNonNull(recipe));
     }
 
+    void addCrystallineSeedsRecipe(PlantSet<? extends BlockCrystallinePlant> set, ResourceLocation outputItemID, int count) {
+        String recipeType = set.getSetTypeName() + "-plant-set-seeds-to-resource";
+        ResourceLocation recipeID = new ResourceLocation(ResynthMod.MODID, set.getSetName() + "-" + recipeType);
+
+        addRecipe(new ShapelessRecipeDefinition(recipeID, recipeType, outputItemID, 2, set.getSeedsItem().getRegistryName()));
+    }
+
     void addProduceRecipe(PlantSet<?> set, ResourceLocation outputItemID, IPlantSetProduceProperties properties) {
         addProduceRecipe(set, outputItemID, properties.resourceCount(), properties.smeltingTime(), properties.experienceWorth());
     }
 
     void addProduceRecipe(PlantSet<?> set, ResourceLocation outputItemID, int count, int time, double experience) {
-        String recipeType = set.getSetTypeName() + "-plant-set-produce-recipe";
-        ResourceLocation recipeID = new ResourceLocation(ResynthMod.MODID, recipeType + "-" + set.getSetName());
+        String recipeType = set.getSetTypeName() + "-plant-set-produce-smelting";
+        ResourceLocation recipeID = new ResourceLocation(ResynthMod.MODID, set.getSetName() + "-" + recipeType);
 
-        recipeDefinitions.add(new LazyFurnaceRecipe(
+        addRecipe(new FurnaceRecipeDefinition(
                 recipeID, recipeType, set.getProduceItem().asItem().getRegistryName(), outputItemID, count, experience, time
         ));
     }
@@ -75,10 +81,29 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
     }
 
     private IRecipe<?>[] finalizeRecipes() {
-        //Check for recipes
+        //Create recipes from definitions
+        IRecipe<?>[] recipes = initializeRecipes();
+
+        //Null out after use - signals finalization
+        recipeDefinitions = null;
+
+        //Check for issues
+        if(recipes == null) {
+            LOG.warn("No defined plant set recipes have been added...");
+        } else if(recipes.length == 0){
+            LOG.error("Zero recipes were initialized sucessfully...");
+            return finalRecipes = null;
+        }
+
+        //Set created recipes as final and return
+        return finalRecipes = recipes;
+    }
+    
+    private IRecipe<?>[] initializeRecipes() {
         List<IRecipe<?>> recipeList = new ArrayList<>();
+
         if(recipeDefinitions.size() != 0){
-            LazyRecipe<?> nextRecipe;
+            RecipeDefinition<?> nextRecipe;
 
             //Create and store recipes
             while((nextRecipe = recipeDefinitions.poll()) != null) {
@@ -88,28 +113,61 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
                     LOG.error("Failed to create recipe during finalization", e);
                 }
             }
-        } else {
-            LOG.warn("No plant set recipes have been defined...");
+            
+            return recipeList.toArray(new IRecipe<?>[0]);
         }
 
-        //Always null out the recipe definitions queue
-        recipeDefinitions = null;
-
-        //Check for created recipes
-        if(recipeList.size() == 0){
-            LOG.error("No plant set recipes could be created...");
-            return finalRecipes = null;
-        }
-
-        //Set and return final recipes from created recipes
-        return finalRecipes = recipeList.toArray(new IRecipe<?>[0]);
+        return null;
     }
 
     // ############
     // Lazy Recipes
     // ############
 
-    private static class LazyFurnaceRecipe implements LazyRecipe<FurnaceRecipe> {
+    private static class ShapelessRecipeDefinition implements RecipeDefinition<ShapelessRecipe> {
+
+        private final ResourceLocation id;
+
+        private final String group;
+
+        private final ResourceLocation[] inputItemIDs;
+
+        private final ResourceLocation outputItemID;
+
+        private final int count;
+
+        protected ShapelessRecipeDefinition(ResourceLocation id, String group, ResourceLocation outputItemID,
+                                            int count, ResourceLocation... inputItemIDs) {
+            this.id = Objects.requireNonNull(id);
+            this.group = Objects.requireNonNull(group);
+            this.inputItemIDs = Objects.requireNonNull(inputItemIDs);
+            this.outputItemID = Objects.requireNonNull(outputItemID);
+            this.count = count < 0 ? 1 : Math.min(count, 64); // Don't allow more than 64
+        }
+
+        @Override
+        public ShapelessRecipe getRecipe() throws MissingResourceException {
+            IItemProvider output = RecipeDefinition.getItem(outputItemID);
+            if(output == null)
+                RecipeDefinition.errorWithMissingResource(id, outputItemID);
+
+            List<IItemProvider> inputItems = new ArrayList<>();
+
+            for(ResourceLocation inputItemID : inputItemIDs) {
+                IItemProvider input;
+                if((input = RecipeDefinition.getItem(inputItemID)) == null)
+                    RecipeDefinition.errorWithMissingResource(id, inputItemID);
+
+                inputItems.add(input);
+            }
+
+            return ResynthRecipes.RecipeProvider.newShapelessRecipe(
+                    id, group, new ItemStack(output, count), inputItems.toArray(new IItemProvider[0])
+            );
+        }
+    }
+
+    private static class FurnaceRecipeDefinition implements RecipeDefinition<FurnaceRecipe> {
 
         private final ResourceLocation id;
 
@@ -125,27 +183,27 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
 
         private final int time;
 
-        protected LazyFurnaceRecipe(ResourceLocation id, String group, ResourceLocation inputItemID,
-                                    ResourceLocation outputItemID, int count, double experience, int time) {
+        protected FurnaceRecipeDefinition(ResourceLocation id, String group, ResourceLocation inputItemID,
+                                          ResourceLocation outputItemID, int count, double experience, int time) {
             this.id = Objects.requireNonNull(id);
             this.group = Objects.requireNonNull(group);
             this.inputItemID = Objects.requireNonNull(inputItemID);
             this.outputItemID = Objects.requireNonNull(outputItemID);
-            this.count = count > 0 ? count : 1;
+            this.count = count < 0 ? 1 : Math.min(count, 64); // Don't allow more than 64
             this.experience = experience > 0 ? experience : 0.8;
             this.time = time > 0 ? time : 50;
         }
 
         @Override
         public FurnaceRecipe getRecipe() throws MissingResourceException {
-            IItemProvider inputItem = LazyRecipe.getItem(inputItemID);
-            IItemProvider outputItem = LazyRecipe.getItem(outputItemID);
+            IItemProvider inputItem = RecipeDefinition.getItem(inputItemID);
+            IItemProvider outputItem = RecipeDefinition.getItem(outputItemID);
 
             if(inputItem == null)
-                LazyRecipe.missingResource(id, inputItemID);
+                RecipeDefinition.errorWithMissingResource(id, inputItemID);
 
             if(outputItem == null)
-                LazyRecipe. missingResource(id, outputItemID);
+                RecipeDefinition.errorWithMissingResource(id, outputItemID);
 
             return ResynthRecipes.RecipeProvider.newFurnaceRecipe(
                     id, group, experience, time, new ItemStack(outputItem, count), inputItem
@@ -153,7 +211,7 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         }
     }
 
-    private interface LazyRecipe<T extends IRecipe<?>> {
+    private interface RecipeDefinition<T extends IRecipe<?>> {
 
         T getRecipe() throws MissingResourceException;
 
@@ -175,7 +233,7 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
             return null;
         }
 
-        static void missingResource(ResourceLocation recipeID, ResourceLocation resourceID) {
+        static void errorWithMissingResource(ResourceLocation recipeID, ResourceLocation resourceID) {
             throw new MissingResourceException(
                     String.format(
                             "Cannot create recipe: '%s'! Required item: '%s' is not registered",

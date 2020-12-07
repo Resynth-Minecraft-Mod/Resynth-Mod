@@ -40,4 +40,18 @@ public interface ICrystallineSetProperties extends IPlantSetProperties {
      * in water to despawn. May be specified by config.
      */
     float seedSpawnChanceFromShard();
+
+    /**
+     * Specifies the amount of resource items to give the player
+     * when they craft a single item of seeds from this plant set.
+     * Allows fine control over the ability to turn seeds into
+     * resources directly through crafting. Can be disabled with
+     * a value of {@code 0} or less.
+     *
+     * @return the specific amount of the plant sets output
+     * resource item to give the player for crafting the plant sets
+     * seed item. The value may also be {@code 0} (zero) or negative,
+     * in which case this functionality is disabled.
+     */
+    int resourcesPerSeeds();
 }

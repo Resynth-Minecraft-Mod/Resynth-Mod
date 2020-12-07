@@ -108,6 +108,19 @@ public class GeneralConfig extends ConfigCategory {
     );
 
     /**
+     * The config value that stores the value enabling or disabling crafting Crystalline seeds into resources.
+     */
+    private final BooleanConfigValue enableCraftingCrystallineSeeds = new BooleanConfigValue(
+            "enable-crafting-crystalline-seeds",
+            "All Crystalline type plants and plant sets offer the ability to directly craft\n" +
+                     "the resource grown by this plant by placing the plants seeds in a crafting table.\n" +
+                     "This option is available if you wish to be able turn seeds mined from ores into the\n" +
+                     "resource that would normally drop, without having to grow it, or for any other reason.\n" +
+                     "Set this option to 'true' to enable the functionality.",
+            false, this
+    );
+
+    /**
      * Constructor.
      */
     public GeneralConfig() {

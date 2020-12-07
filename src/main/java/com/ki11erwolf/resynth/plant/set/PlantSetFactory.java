@@ -55,258 +55,6 @@ public class PlantSetFactory {
     /**Private constructor.*/
     private PlantSetFactory(){}
 
-    // Vanilla factory methods
-
-    /**
-     * Creates a new Crystalline plant set for a Vanilla Minecraft resource.
-     *
-     * @param setName the name of the plant set (e.g. diamond).
-     * @param properties the properties (e.g. growth chance) of the plant set.
-     * @param sourceOre the source ore (from which seeds are obtained) for the set.
-     * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
-     */
-    public static PlantSet<?> newVanillaCrystallineSet(String setName, CrystallineSetProperties properties,
-                                                    Block sourceOre){
-        CrystallinePlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
-                new CrystallinePlantSetConfig(setName, properties)
-        );
-
-        return new CrystallineSet(setName, config){
-            private ItemStack sourceOreStack = null;
-
-            @Override
-            ItemStack getSourceOre() {
-                if(sourceOreStack == null)
-                    sourceOreStack = new ItemStack(sourceOre);
-
-                return sourceOreStack;
-            }
-        };
-    }
-
-    /**
-     * Creates a new Metallic plant set for a Vanilla Minecraft resource.
-     *
-     * @param setName the name of the plant set (e.g. iron).
-     * @param properties the properties (e.g. growth chance) of the plant set.
-     * @param sourceOre the source ore (from which seeds are obtained) for the set.
-     * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
-     */
-    public static PlantSet<?> newVanillaMetallicPlantSet(String setName, MetallicSetProperties properties,
-                                                         Block sourceOre){
-        MetallicPlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
-                new MetallicPlantSetConfig(setName, properties)
-        );
-
-        return new MetallicSet(setName, config) {
-            private ItemStack sourceOreStack = null;
-
-            @Override
-            ItemStack getSourceOre() {
-                if(sourceOreStack == null)
-                    sourceOreStack = new ItemStack(sourceOre);
-
-                return sourceOreStack;
-            }
-        };
-    }
-
-    /**
-     * Creates a new Biochemical plant set for a Vanilla Minecraft resource.
-     *
-     * @param setName the name of the plant set (e.g. string).
-     * @param properties the properties (e.g. growth chance) of the plant set.
-     * @param sourceMobs the list of mobs seeds can be obtained from.
-     * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
-     */
-    public static PlantSet<?> newVanillaBiochemicalPlantSet(String setName, BiochemicalSetProperties properties,
-                                                            EntityType<?>... sourceMobs){
-        BiochemicalPlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
-                new BiochemicalPlantSetConfig(setName, properties)
-        );
-
-        return new BiochemicalSet(setName, config) {
-            private EntityType<?>[] sourceMobEntities = null;
-
-            @Override
-            EntityType<?>[] getSourceMobs() {
-                if(sourceMobEntities == null)
-                    sourceMobEntities = sourceMobs;
-
-                return sourceMobEntities;
-            }
-        };
-    }
-
-    // Modded factory methods
-
-    /**
-     * Handles creating a Crystalline plant set for an ore
-     * block that isn't from Vanilla Minecraft - that is,
-     * a block that we don't have a reference to.
-     * <p/>
-     * This method of registration allows us to check for
-     * the presence of the mod before creating the plant
-     * set and allows us to provide a block name instead
-     * of a block reference.
-     *
-     * @param modid the modid of the mod the ore block is from.
-     * @param setName the name of the plant set (actual name will
-     *                have mod-id prepended).
-     * @param properties the plant set properties.
-     * @param sourceOreRegistryName the registry name of the source
-     *                           ore block.
-     * @return the newly created plant set.
-     */
-    public static PlantSet<?> newModdedCrystallineSet(String modid, String setName, CrystallineSetProperties properties,
-                                                      String sourceOreRegistryName){
-        //Check for mod presence
-        if(!ensureModLoaded(modid, setName)) return null;
-
-        ResourceLocation sourceOreRL = new ResourceLocation(modid, sourceOreRegistryName);
-        LOG.info("Attempting to create modded crystalline plant set: " + modid + ":" + setName);
-
-        //Config
-        CrystallinePlantSetConfig config = ResynthConfig.MODDED_PLANTS_CONFIG.loadCategory(
-                new CrystallinePlantSetConfig(modid + "-" + setName, properties)
-        );
-
-        //Plant set
-        return new CrystallineSet(modid + "_" + setName, config) {
-            private ItemStack sourceOre;
-
-            @Override
-            ItemStack getSourceOre() {
-                if(sourceOre != null)
-                    return sourceOre;
-
-                if((sourceOre = getRegistryBlock(sourceOreRL)) == null) {
-                    LOG.error("Failed to get Mod Ore Block: " + sourceOreRL.toString());
-                    this.flagAsFailure();
-                }
-
-                return sourceOre;
-            }
-        };
-    }
-
-    /**
-     * Handles creating a Metallic plant set for an ore
-     * block that isn't from Vanilla Minecraft - that is,
-     * a block that we don't have a reference to.
-     * <p/>
-     * This method of registration allows us to check for
-     * the presence of the mod before creating the plant
-     * set and allows us to provide a block name instead
-     * of a block reference.
-     *
-     * @param modid the modid of the mod the ore block is from.
-     * @param setName the name of the plant set (actual name will
-     *                have mod-id prepended).
-     * @param properties the plant set properties.
-     * @param sourceOreRegistryName the registry name of the source
-     *                           ore block.
-     * @return the newly created plant set.
-     */
-    public static PlantSet<?> newModdedMetallicSet(String modid, String setName, MetallicSetProperties properties,
-                                                   String sourceOreRegistryName) {
-        //Check for mod presence
-        if(!ensureModLoaded(modid, setName)) return null;
-
-        ResourceLocation sourceOreRL = new ResourceLocation(modid, sourceOreRegistryName);
-        LOG.info("Attempting to create modded Metallic plant set: " + modid + ":" + setName);
-
-        //Config
-        MetallicPlantSetConfig config = ResynthConfig.MODDED_PLANTS_CONFIG.loadCategory(
-                new MetallicPlantSetConfig(modid + "-" + setName, properties)
-        );
-
-        //Plant set
-        return new MetallicSet(modid + "_" + setName, config) {
-            private ItemStack sourceOreStack = null;
-
-            @Override
-            ItemStack getSourceOre() {
-                if(sourceOreStack != null)
-                    return sourceOreStack;
-
-                if((sourceOreStack = getRegistryBlock(sourceOreRL)) == null) {
-                    LOG.error("Failed to get Mod Ore Block: " + sourceOreRL.toString());
-                    this.flagAsFailure();
-                }
-
-                return sourceOreStack;
-            }
-        };
-    }
-
-    /**
-     * Handles creating a Biochemical plant set for an entity
-     * that isn't from Vanilla Minecraft - that is,
-     * an entity that we don't have a reference to.
-     * <p/>
-     * This method of registration allows us to check for
-     * the presence of the mod before creating the plant
-     * set and allows us to provide an entity name instead
-     * of an entity reference.
-     *
-     * @param modid the modid of the mod the ore block is from.
-     * @param setName the name of the plant set (actual name will
-     *                have mod-id prepended).
-     * @param properties the plant set properties.
-     * @param sourceEntityRegistryNames the registry names of the source
-     *                           entities.
-     * @return the newly created plant set.
-     */
-    public static PlantSet<?> newModdedBiochemicalSet(String modid, String setName, BiochemicalSetProperties properties,
-                                                      String... sourceEntityRegistryNames) {
-        //Check for mod presence
-        if(!ensureModLoaded(modid, setName))
-            return null;
-
-        LOG.info("Attempting to create modded Biochemical plant set: " + modid + ":" + setName);
-
-        //Config
-        BiochemicalPlantSetConfig config = ResynthConfig.MODDED_PLANTS_CONFIG.loadCategory(
-                new BiochemicalPlantSetConfig(modid + "-" + setName, properties)
-        );
-
-        //Plant set
-        return new BiochemicalSet(modid + "_" + setName, config) {
-            private List<EntityType<?>> sourceEntities;
-
-            @Override
-            EntityType<?>[] getSourceMobs() {
-                if(sourceEntities != null)
-                    return sourceEntities.toArray(new EntityType[0]);
-
-                //Look for entities.
-                LOG.info("Looking for source entities for plant set: " + this.getSetName());
-                for(String registryName : sourceEntityRegistryNames){
-                    ResourceLocation entityRL = new ResourceLocation(modid, registryName);
-                    LOG.info("Looking for source entity: " + entityRL.toString());
-
-                    EntityType<?> entity = ForgeRegistries.ENTITIES.getValue(entityRL);
-
-                    if(ForgeRegistries.ENTITIES.containsKey(entityRL) && entity != null){
-                        LOG.info("Found source entity: " + entity.getName().getUnformattedComponentText());
-                        if(sourceEntities == null) sourceEntities = new ArrayList<>();
-                        sourceEntities.add(entity);
-                    } else {
-                        LOG.error("Failed to find source entity: " + entityRL);
-                    }
-                }
-
-                if(sourceEntities == null){
-                    LOG.error("Failed to find any source entities for plant set:" + this.getSetName());
-                    flagAsFailure();
-                }
-
-                return null;
-            }
-        };
-    }
-
     // ###################
     // Public Set Creators
     // ###################
@@ -314,28 +62,28 @@ public class PlantSetFactory {
     //Crystalline
 
     public static PlantSet<? extends BlockCrystallinePlant> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties config, ResourceLocation outputItemID,
-            PlantSetProduceProperties produceConfig, ResourceLocation oreBlockID) {
+            ResourceLocation id, CrystallineSetProperties defaultConfig, PlantSetProduceProperties defaultProduceConfig,
+            ResourceLocation oreBlockID, ResourceLocation outputItemID) {
         return createCrystallineSet(
-                validate(id), Objects.requireNonNull(config), validate(outputItemID),
-                Objects.requireNonNull(produceConfig), validate(oreBlockID)
+                validate(id), Objects.requireNonNull(defaultConfig), validate(outputItemID),
+                Objects.requireNonNull(defaultProduceConfig), validate(oreBlockID)
         );
     }
 
     public static PlantSet<? extends BlockCrystallinePlant> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties config, IItemProvider outputItem,
-            PlantSetProduceProperties produceConfig, Block oreBlock) {
+            ResourceLocation id, CrystallineSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            Block oreBlock, IItemProvider outputItem) {
         return createCrystallineSet(
-                validate(id), Objects.requireNonNull(config), Objects.requireNonNull(outputItem).asItem().getRegistryName(),
+                validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(outputItem).asItem().getRegistryName(),
                 Objects.requireNonNull(produceConfig), Objects.requireNonNull(oreBlock).getRegistryName()
         );
     }
 
     public static PlantSet<? extends BlockCrystallinePlant> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties config, String outputItemName,
-            PlantSetProduceProperties produceConfig, String oreBlockName) {
+            ResourceLocation id, CrystallineSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            String oreBlockName, String outputItemName) {
         return createCrystallineSet(
-                validate(id), Objects.requireNonNull(config), new ResourceLocation(
+                validate(id), Objects.requireNonNull(defaultConfig), new ResourceLocation(
                         id.getNamespace(), Objects.requireNonNull(outputItemName)
                 ), Objects.requireNonNull(produceConfig), new ResourceLocation(
                         id.getNamespace(), Objects.requireNonNull(oreBlockName)
@@ -344,50 +92,50 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockCrystallinePlant> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties config, String oreBlockName) {
+            ResourceLocation id, CrystallineSetProperties defaultConfig, String oreBlockName) {
         return createCrystallineSet(
-                validate(id), Objects.requireNonNull(config),
+                validate(id), Objects.requireNonNull(defaultConfig),
                 new ResourceLocation(id.getNamespace(), Objects.requireNonNull(oreBlockName))
         );
     }
 
     public static PlantSet<? extends BlockCrystallinePlant> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties config, Block oreBlock) {
+            ResourceLocation id, CrystallineSetProperties defaultConfig, Block oreBlock) {
         return createCrystallineSet(
-                validate(id), Objects.requireNonNull(config), Objects.requireNonNull(oreBlock).getRegistryName()
+                validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(oreBlock).getRegistryName()
         );
     }
 
     public static PlantSet<? extends BlockCrystallinePlant> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties config, ResourceLocation oreBlockID) {
-        return createCrystallineSet(validate(id), Objects.requireNonNull(config), validate(oreBlockID));
+            ResourceLocation id, CrystallineSetProperties defaultConfig, ResourceLocation oreBlockID) {
+        return createCrystallineSet(validate(id), Objects.requireNonNull(defaultConfig), validate(oreBlockID));
     }
 
     // Metallic
 
     public static PlantSet<? extends BlockMetallicPlant> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties config, ResourceLocation outputItemID,
-            PlantSetProduceProperties produceConfig, ResourceLocation oreBlockID) {
+            ResourceLocation id, MetallicSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            ResourceLocation oreBlockID, ResourceLocation outputItemID) {
         return createMetallicSet(
-                validate(id), Objects.requireNonNull(config), validate(outputItemID),
+                validate(id), Objects.requireNonNull(defaultConfig), validate(outputItemID),
                 Objects.requireNonNull(produceConfig), validate(oreBlockID)
         );
     }
 
     public static PlantSet<? extends BlockMetallicPlant> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties config, IItemProvider outputItem,
-            PlantSetProduceProperties produceConfig, Block oreBlock) {
+            ResourceLocation id, MetallicSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            Block oreBlock, IItemProvider outputItem) {
         return createMetallicSet(
-                validate(id), Objects.requireNonNull(config), Objects.requireNonNull(outputItem).asItem().getRegistryName(),
+                validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(outputItem).asItem().getRegistryName(),
                 Objects.requireNonNull(produceConfig), Objects.requireNonNull(oreBlock).getRegistryName()
         );
     }
 
     public static PlantSet<? extends BlockMetallicPlant> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties config, String outputItemName,
-            PlantSetProduceProperties produceConfig, String oreBlockName) {
+            ResourceLocation id, MetallicSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            String oreBlockName, String outputItemName) {
         return createMetallicSet(
-                validate(id), Objects.requireNonNull(config), new ResourceLocation(
+                validate(id), Objects.requireNonNull(defaultConfig), new ResourceLocation(
                         id.getNamespace(), Objects.requireNonNull(outputItemName)
                 ), Objects.requireNonNull(produceConfig), new ResourceLocation(
                         id.getNamespace(), Objects.requireNonNull(oreBlockName)
@@ -396,39 +144,39 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockMetallicPlant> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties config, String oreBlockName) {
+            ResourceLocation id, MetallicSetProperties defaultConfig, String oreBlockName) {
         return createMetallicSet(
-                validate(id), Objects.requireNonNull(config),
+                validate(id), Objects.requireNonNull(defaultConfig),
                 new ResourceLocation(id.getNamespace(), Objects.requireNonNull(oreBlockName))
         );
     }
 
     public static PlantSet<? extends BlockMetallicPlant> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties config, Block oreBlock) {
+            ResourceLocation id, MetallicSetProperties defaultConfig, Block oreBlock) {
         return createMetallicSet(
-                validate(id), Objects.requireNonNull(config), Objects.requireNonNull(oreBlock).getRegistryName()
+                validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(oreBlock).getRegistryName()
         );
     }
 
     public static PlantSet<? extends BlockMetallicPlant> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties config, ResourceLocation oreBlockID) {
-        return createMetallicSet(validate(id), Objects.requireNonNull(config), validate(oreBlockID));
+            ResourceLocation id, MetallicSetProperties defaultConfig, ResourceLocation oreBlockID) {
+        return createMetallicSet(validate(id), Objects.requireNonNull(defaultConfig), validate(oreBlockID));
     }
 
     // Biochemical
 
     public static PlantSet<? extends BlockBiochemicalPlant> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties config, ResourceLocation outputItemID,
+            ResourceLocation id, BiochemicalSetProperties defaultConfig, ResourceLocation outputItemID,
             PlantSetProduceProperties produceConfig, ResourceLocation... entityIDs) {
         return createBiochemicalSet(
-                validate(id), Objects.requireNonNull(config), validate(outputItemID),
+                validate(id), Objects.requireNonNull(defaultConfig), validate(outputItemID),
                 Objects.requireNonNull(produceConfig), Objects.requireNonNull(entityIDs)
         );
     }
 
     public static PlantSet<? extends BlockBiochemicalPlant> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties config, IItemProvider outputItem,
-            PlantSetProduceProperties produceConfig, EntityType<?>... entities) {
+            ResourceLocation id, BiochemicalSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            IItemProvider outputItem, EntityType<?>... entities) {
         //Convert to ResourceLocations
         List<ResourceLocation> entityIDs = new ArrayList<>();
         for(EntityType<?> entity : Objects.requireNonNull(entities)) {
@@ -436,25 +184,14 @@ public class PlantSetFactory {
         }
 
         return createBiochemicalSet(
-                validate(id), Objects.requireNonNull(config), Objects.requireNonNull(outputItem).asItem().getRegistryName(),
+                validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(outputItem).asItem().getRegistryName(),
                 Objects.requireNonNull(produceConfig), entityIDs.toArray(new ResourceLocation[0])
         );
     }
 
     public static PlantSet<? extends BlockBiochemicalPlant> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties config, String outputItemName,
-            PlantSetProduceProperties produceConfig, String oreBlockName) {
-        return createBiochemicalSet(
-                validate(id), Objects.requireNonNull(config), new ResourceLocation(
-                        id.getNamespace(), Objects.requireNonNull(outputItemName)
-                ), Objects.requireNonNull(produceConfig), new ResourceLocation(
-                        id.getNamespace(), Objects.requireNonNull(oreBlockName)
-                )
-        );
-    }
-
-    public static PlantSet<? extends BlockBiochemicalPlant> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties config, String... entityNames) {
+            ResourceLocation id, BiochemicalSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            String outputItemName, String... entityNames) {
         //Convert to ResourceLocations
         List<ResourceLocation> entityIDs = new ArrayList<>();
         for(String entityName : Objects.requireNonNull(entityNames)) {
@@ -462,12 +199,27 @@ public class PlantSetFactory {
         }
 
         return createBiochemicalSet(
-                validate(id), Objects.requireNonNull(config), entityIDs.isEmpty() ? null : entityIDs.toArray(new ResourceLocation[0])
+                validate(id), Objects.requireNonNull(defaultConfig),
+                new ResourceLocation(id.getNamespace(), Objects.requireNonNull(outputItemName)),
+                Objects.requireNonNull(produceConfig), entityIDs.toArray(new ResourceLocation[0])
         );
     }
 
     public static PlantSet<? extends BlockBiochemicalPlant> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties config, EntityType<?>... entities) {
+            ResourceLocation id, BiochemicalSetProperties defaultConfig, String... entityNames) {
+        //Convert to ResourceLocations
+        List<ResourceLocation> entityIDs = new ArrayList<>();
+        for(String entityName : Objects.requireNonNull(entityNames)) {
+            entityIDs.add(new ResourceLocation(id.getNamespace(), Objects.requireNonNull(entityName)));
+        }
+
+        return createBiochemicalSet(
+                validate(id), Objects.requireNonNull(defaultConfig), entityIDs.isEmpty() ? null : entityIDs.toArray(new ResourceLocation[0])
+        );
+    }
+
+    public static PlantSet<? extends BlockBiochemicalPlant> makeBiochemicalSet(
+            ResourceLocation id, BiochemicalSetProperties defaultConfig, EntityType<?>... entities) {
         //Convert to ResourceLocations
         List<ResourceLocation> entityIDs = new ArrayList<>();
         for(EntityType<?> entity : Objects.requireNonNull(entities)) {
@@ -475,17 +227,17 @@ public class PlantSetFactory {
         }
 
         return createBiochemicalSet(
-                validate(id), Objects.requireNonNull(config), entityIDs.isEmpty() ? null : entityIDs.toArray(new ResourceLocation[0])
+                validate(id), Objects.requireNonNull(defaultConfig), entityIDs.isEmpty() ? null : entityIDs.toArray(new ResourceLocation[0])
         );
     }
 
     public static PlantSet<? extends BlockBiochemicalPlant> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties config, ResourceLocation... entityIDs) {
+            ResourceLocation id, BiochemicalSetProperties defaultConfig, ResourceLocation... entityIDs) {
         //Simply validate
         for(ResourceLocation entityID : Objects.requireNonNull(entityIDs))
             validate(entityID);
 
-        return createBiochemicalSet(validate(id), Objects.requireNonNull(config), entityIDs);
+        return createBiochemicalSet(validate(id), Objects.requireNonNull(defaultConfig), entityIDs);
     }
 
     // #####################
@@ -513,10 +265,20 @@ public class PlantSetFactory {
         //Produce config...
         PlantSetProduceConfig produceProperties = getSetProduceConfig(id, produceConfig);
 
-        //Registry recipe
+        //Create & add produce recipe
         PlantSetRecipes.INSTANCE.addProduceRecipe(
                 plantSet, outputItemID, produceProperties
         );
+
+        //Create & add seeds recipe if count not 0
+        int seedsRecipeCount = ((CrystallinePlantSetConfig) plantSet.getPlantSetProperties()).resourcesPerSeeds();
+        if(seedsRecipeCount > 0) {
+            seedsRecipeCount = Math.min(seedsRecipeCount, 64);
+
+            PlantSetRecipes.INSTANCE.addCrystallineSeedsRecipe(
+                    plantSet, outputItemID, seedsRecipeCount
+            );
+        }
 
         return plantSet;
     }
@@ -838,4 +600,257 @@ public class PlantSetFactory {
         LOG.info("Mod: " + modid + " is not present! Skipping plant set: " + plantSetName);
         return false;
     }
+
+    // Vanilla factory methods
+
+    /**
+     * Creates a new Crystalline plant set for a Vanilla Minecraft resource.
+     *
+     * @param setName the name of the plant set (e.g. diamond).
+     * @param properties the properties (e.g. growth chance) of the plant set.
+     * @param sourceOre the source ore (from which seeds are obtained) for the set.
+     * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
+     */
+    public static PlantSet<?> newVanillaCrystallineSet(String setName, CrystallineSetProperties properties,
+                                                       Block sourceOre){
+        CrystallinePlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
+                new CrystallinePlantSetConfig(setName, properties)
+        );
+
+        return new CrystallineSet(setName, config){
+            private ItemStack sourceOreStack = null;
+
+            @Override
+            ItemStack getSourceOre() {
+                if(sourceOreStack == null)
+                    sourceOreStack = new ItemStack(sourceOre);
+
+                return sourceOreStack;
+            }
+        };
+    }
+
+    /**
+     * Creates a new Metallic plant set for a Vanilla Minecraft resource.
+     *
+     * @param setName the name of the plant set (e.g. iron).
+     * @param properties the properties (e.g. growth chance) of the plant set.
+     * @param sourceOre the source ore (from which seeds are obtained) for the set.
+     * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
+     */
+    public static PlantSet<?> newVanillaMetallicPlantSet(String setName, MetallicSetProperties properties,
+                                                         Block sourceOre){
+        MetallicPlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
+                new MetallicPlantSetConfig(setName, properties)
+        );
+
+        return new MetallicSet(setName, config) {
+            private ItemStack sourceOreStack = null;
+
+            @Override
+            ItemStack getSourceOre() {
+                if(sourceOreStack == null)
+                    sourceOreStack = new ItemStack(sourceOre);
+
+                return sourceOreStack;
+            }
+        };
+    }
+
+    /**
+     * Creates a new Biochemical plant set for a Vanilla Minecraft resource.
+     *
+     * @param setName the name of the plant set (e.g. string).
+     * @param properties the properties (e.g. growth chance) of the plant set.
+     * @param sourceMobs the list of mobs seeds can be obtained from.
+     * @return the newly created set. Must still be registered using ({@link PlantSet#register()})!
+     */
+    public static PlantSet<?> newVanillaBiochemicalPlantSet(String setName, BiochemicalSetProperties properties,
+                                                            EntityType<?>... sourceMobs){
+        BiochemicalPlantSetConfig config = ResynthConfig.VANILLA_PLANTS_CONFIG.loadCategory(
+                new BiochemicalPlantSetConfig(setName, properties)
+        );
+
+        return new BiochemicalSet(setName, config) {
+            private EntityType<?>[] sourceMobEntities = null;
+
+            @Override
+            EntityType<?>[] getSourceMobs() {
+                if(sourceMobEntities == null)
+                    sourceMobEntities = sourceMobs;
+
+                return sourceMobEntities;
+            }
+        };
+    }
+
+    // Modded factory methods
+
+    /**
+     * Handles creating a Crystalline plant set for an ore
+     * block that isn't from Vanilla Minecraft - that is,
+     * a block that we don't have a reference to.
+     * <p/>
+     * This method of registration allows us to check for
+     * the presence of the mod before creating the plant
+     * set and allows us to provide a block name instead
+     * of a block reference.
+     *
+     * @param modid the modid of the mod the ore block is from.
+     * @param setName the name of the plant set (actual name will
+     *                have mod-id prepended).
+     * @param properties the plant set properties.
+     * @param sourceOreRegistryName the registry name of the source
+     *                           ore block.
+     * @return the newly created plant set.
+     */
+    public static PlantSet<?> newModdedCrystallineSet(String modid, String setName, CrystallineSetProperties properties,
+                                                      String sourceOreRegistryName){
+        //Check for mod presence
+        if(!ensureModLoaded(modid, setName)) return null;
+
+        ResourceLocation sourceOreRL = new ResourceLocation(modid, sourceOreRegistryName);
+        LOG.info("Attempting to create modded crystalline plant set: " + modid + ":" + setName);
+
+        //Config
+        CrystallinePlantSetConfig config = ResynthConfig.MODDED_PLANTS_CONFIG.loadCategory(
+                new CrystallinePlantSetConfig(modid + "-" + setName, properties)
+        );
+
+        //Plant set
+        return new CrystallineSet(modid + "_" + setName, config) {
+            private ItemStack sourceOre;
+
+            @Override
+            ItemStack getSourceOre() {
+                if(sourceOre != null)
+                    return sourceOre;
+
+                if((sourceOre = getRegistryBlock(sourceOreRL)) == null) {
+                    LOG.error("Failed to get Mod Ore Block: " + sourceOreRL.toString());
+                    this.flagAsFailure();
+                }
+
+                return sourceOre;
+            }
+        };
+    }
+
+    /**
+     * Handles creating a Metallic plant set for an ore
+     * block that isn't from Vanilla Minecraft - that is,
+     * a block that we don't have a reference to.
+     * <p/>
+     * This method of registration allows us to check for
+     * the presence of the mod before creating the plant
+     * set and allows us to provide a block name instead
+     * of a block reference.
+     *
+     * @param modid the modid of the mod the ore block is from.
+     * @param setName the name of the plant set (actual name will
+     *                have mod-id prepended).
+     * @param properties the plant set properties.
+     * @param sourceOreRegistryName the registry name of the source
+     *                           ore block.
+     * @return the newly created plant set.
+     */
+    public static PlantSet<?> newModdedMetallicSet(String modid, String setName, MetallicSetProperties properties,
+                                                   String sourceOreRegistryName) {
+        //Check for mod presence
+        if(!ensureModLoaded(modid, setName)) return null;
+
+        ResourceLocation sourceOreRL = new ResourceLocation(modid, sourceOreRegistryName);
+        LOG.info("Attempting to create modded Metallic plant set: " + modid + ":" + setName);
+
+        //Config
+        MetallicPlantSetConfig config = ResynthConfig.MODDED_PLANTS_CONFIG.loadCategory(
+                new MetallicPlantSetConfig(modid + "-" + setName, properties)
+        );
+
+        //Plant set
+        return new MetallicSet(modid + "_" + setName, config) {
+            private ItemStack sourceOreStack = null;
+
+            @Override
+            ItemStack getSourceOre() {
+                if(sourceOreStack != null)
+                    return sourceOreStack;
+
+                if((sourceOreStack = getRegistryBlock(sourceOreRL)) == null) {
+                    LOG.error("Failed to get Mod Ore Block: " + sourceOreRL.toString());
+                    this.flagAsFailure();
+                }
+
+                return sourceOreStack;
+            }
+        };
+    }
+
+    /**
+     * Handles creating a Biochemical plant set for an entity
+     * that isn't from Vanilla Minecraft - that is,
+     * an entity that we don't have a reference to.
+     * <p/>
+     * This method of registration allows us to check for
+     * the presence of the mod before creating the plant
+     * set and allows us to provide an entity name instead
+     * of an entity reference.
+     *
+     * @param modid the modid of the mod the ore block is from.
+     * @param setName the name of the plant set (actual name will
+     *                have mod-id prepended).
+     * @param properties the plant set properties.
+     * @param sourceEntityRegistryNames the registry names of the source
+     *                           entities.
+     * @return the newly created plant set.
+     */
+    public static PlantSet<?> newModdedBiochemicalSet(String modid, String setName, BiochemicalSetProperties properties,
+                                                      String... sourceEntityRegistryNames) {
+        //Check for mod presence
+        if(!ensureModLoaded(modid, setName))
+            return null;
+
+        LOG.info("Attempting to create modded Biochemical plant set: " + modid + ":" + setName);
+
+        //Config
+        BiochemicalPlantSetConfig config = ResynthConfig.MODDED_PLANTS_CONFIG.loadCategory(
+                new BiochemicalPlantSetConfig(modid + "-" + setName, properties)
+        );
+
+        //Plant set
+        return new BiochemicalSet(modid + "_" + setName, config) {
+            private List<EntityType<?>> sourceEntities;
+
+            @Override
+            EntityType<?>[] getSourceMobs() {
+                if(sourceEntities != null)
+                    return sourceEntities.toArray(new EntityType[0]);
+
+                //Look for entities.
+                LOG.info("Looking for source entities for plant set: " + this.getSetName());
+                for(String registryName : sourceEntityRegistryNames){
+                    ResourceLocation entityRL = new ResourceLocation(modid, registryName);
+                    LOG.info("Looking for source entity: " + entityRL.toString());
+
+                    EntityType<?> entity = ForgeRegistries.ENTITIES.getValue(entityRL);
+
+                    if(ForgeRegistries.ENTITIES.containsKey(entityRL) && entity != null){
+                        LOG.info("Found source entity: " + entity.getName().getUnformattedComponentText());
+                        if(sourceEntities == null) sourceEntities = new ArrayList<>();
+                        sourceEntities.add(entity);
+                    } else {
+                        LOG.error("Failed to find source entity: " + entityRL);
+                    }
+                }
+
+                if(sourceEntities == null){
+                    LOG.error("Failed to find any source entities for plant set:" + this.getSetName());
+                    flagAsFailure();
+                }
+
+                return null;
+            }
+        };
+    }
 }
+

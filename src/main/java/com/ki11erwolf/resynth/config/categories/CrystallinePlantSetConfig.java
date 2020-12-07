@@ -92,6 +92,12 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
     private final BooleanConfigValue useConfigSeedChanceValues;
 
     /**
+     * Config value that stores the amount of resource items to
+     * be crafted when placing seeds in a crafting table.
+     */
+    private final IntegerConfigValue resourcesPerSeedsConfig;
+
+    /**
      * Creates a new Crystalline plant set config category for the
      * given plant set with the given default values.
      *
@@ -99,7 +105,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
      *                     category instance if for.
      * @param defaultProperties default config values.
      */
-    public CrystallinePlantSetConfig(String plantSetName, CrystallineSetProperties defaultProperties) {
+    public CrystallinePlantSetConfig(String plantSetName, ICrystallineSetProperties defaultProperties) {
         super(PREFIX + plantSetName);
 
         this.canUseBonemeal = new BooleanConfigValue(
@@ -166,6 +172,15 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
                         "\nYou must set this to 'true' before the 'seed-spawn-chance-*' config values will work!",
                 false, this
         );
+
+        this.resourcesPerSeedsConfig = new IntegerConfigValue(
+                "number-of-resources-crafted-from-seeds",
+                "The amount of resource items, that this plant set grows, that will be crafted when\n" +
+                         "placing this plants seeds in a crafting table. A value of 0 (zero) will disable this\n" +
+                         "feature for the particular plant and plant set. ",
+                defaultProperties.resourcesPerSeeds(), 0, 64,
+                this
+        );
     }
 
     /**
@@ -217,5 +232,16 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
         if(!this.useConfigSeedChanceValues.getValue())
             return Float.parseFloat(seedSpawnChanceFromShard.getDefaultValue().toString());
         return (float) this.seedSpawnChanceFromShard.getValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return the value given to this configuration option through
+     * the players configuration file.
+     */
+    @Override
+    public int resourcesPerSeeds() {
+        return resourcesPerSeedsConfig.getValue();
     }
 }

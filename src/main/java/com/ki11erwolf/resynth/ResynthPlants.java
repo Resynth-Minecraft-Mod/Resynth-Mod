@@ -48,12 +48,9 @@ public class ResynthPlants {
             minecraftResource("test"),
             new CrystallineSetProperties(
                     true, 50, 2, 50, 50
-            ),
-            Blocks.SAND,
-            new PlantSetProduceProperties(
+            ), new PlantSetProduceProperties(
                     5, 200, 7.5
-            ),
-            Blocks.DIRT
+            ), Blocks.SAND, Blocks.DIRT
     ).register();
 
     /**

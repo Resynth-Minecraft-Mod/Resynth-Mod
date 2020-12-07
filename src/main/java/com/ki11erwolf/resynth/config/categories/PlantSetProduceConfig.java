@@ -112,7 +112,7 @@ public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetPr
      *
      * @return the exact value stored in the players configuration
      * file for this property. The value will be the default value
-     * if the player hasn't modified it.
+     * if the player hasn't enabled or modified it.
      */
     @Override
     public int resourceCount() {
@@ -126,7 +126,7 @@ public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetPr
      *
      * @return the exact value stored in the players configuration
      * file for this property. The value will be the default value
-     * if the player hasn't modified it.
+     * if the player hasn't enabled or modified it.
      */
     @Override
     public int smeltingTime() {
@@ -140,7 +140,7 @@ public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetPr
      *
      * @return the exact value stored in the players configuration
      * file for this property. The value will be the default value
-     * if the player hasn't modified it.
+     * if the player hasn't enabled or modified it.
      */
     @Override
     public double experienceWorth() {

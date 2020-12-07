@@ -55,6 +55,12 @@ public class CrystallineSetProperties implements ICrystallineSetProperties {
     private final float seedSpawnChanceFromShard;
 
     /**
+     * The amount of the plant sets output resource item to
+     * give the player for crafting the plant sets seed item.
+     */
+    private final int resourcesPerSeeds;
+
+    /**
      * @param canBonemeal {@code true} if the plant set instance can be grown with bonemeal by default.
      * @param chanceToGrow the default growth chance of the plant set instance.
      * @param numberOfProduceDrops the default number of produce item the plant block drops
@@ -66,12 +72,31 @@ public class CrystallineSetProperties implements ICrystallineSetProperties {
      */
     public CrystallineSetProperties(boolean canBonemeal, float chanceToGrow, int numberOfProduceDrops,
                                     float seedSpawnChanceFromOre, float seedSpawnChanceFromShard){
+        this(canBonemeal, chanceToGrow, numberOfProduceDrops, seedSpawnChanceFromOre, seedSpawnChanceFromShard, 2);
+    }
+
+    /**
+     * @param canBonemeal {@code true} if the plant set instance can be grown with bonemeal by default.
+     * @param chanceToGrow the default growth chance of the plant set instance.
+     * @param numberOfProduceDrops the default number of produce item the plant block drops
+     *                             when fully grown and broken.
+     * @param seedSpawnChanceFromOre the default chance seeds will spawn when the sets
+     *                               ore block is mined.
+     * @param seedSpawnChanceFromShard the default chance seeds will spawn when the sets
+     *                                 produce item is left to despawn in water.
+     * @param resourcesPerSeeds The amount of the plant sets output resource item to give
+     *                          the player for crafting the plant sets seed item.
+     */
+    public CrystallineSetProperties(boolean canBonemeal, float chanceToGrow, int numberOfProduceDrops, float seedSpawnChanceFromOre,
+                                    float seedSpawnChanceFromShard, int resourcesPerSeeds){
         this.canBonemeal = canBonemeal;
         this.chanceToGrow = chanceToGrow;
         this.numberOfProduceDrops = numberOfProduceDrops;
         this.seedSpawnChanceFromOre = seedSpawnChanceFromOre;
         this.seedSpawnChanceFromShard = seedSpawnChanceFromShard;
+        this.resourcesPerSeeds = Math.min(resourcesPerSeeds, 64);
     }
+
 
     /**
      * @return {@code true} if plant set instance
@@ -118,5 +143,16 @@ public class CrystallineSetProperties implements ICrystallineSetProperties {
     @Override
     public float seedSpawnChanceFromShard() {
         return seedSpawnChanceFromShard;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return the {@code resourcesPerSeeds} value given to this
+     * objects constructor.
+     */
+    @Override
+    public int resourcesPerSeeds() {
+        return resourcesPerSeeds;
     }
 }
