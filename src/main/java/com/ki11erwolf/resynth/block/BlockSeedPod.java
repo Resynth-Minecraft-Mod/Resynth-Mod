@@ -198,8 +198,8 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
             return;
         }
 
-        PlantSet<?>[] plantSets = PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL);
-        PlantSet<?> randomSet = plantSets[MathUtil.getRandomIntegerInRange(0, plantSets.length - 1)];
+        PlantSet<?, ?>[] plantSets = PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL);
+        PlantSet<?, ?> randomSet = plantSets[MathUtil.getRandomIntegerInRange(0, plantSets.length - 1)];
         MinecraftUtil.spawnItemInWorld(randomSet.getSeedsItem(), world, pos);
     }
 

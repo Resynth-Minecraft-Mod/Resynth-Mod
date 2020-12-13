@@ -76,9 +76,9 @@ public class SupportedMods {
         LOG.info("Sending mod integration events...");
 
         ResynthModPlants.Mods.iterateAllMods((mod -> {
-            if(ModList.get().isLoaded(mod.getID())){
+            if(ModList.get().isLoaded(mod.getModID())){
                 ResynthAnalytics.send(
-                        new ModIntegrationEvent(mod.getID(), mod.getName())
+                        new ModIntegrationEvent(mod.getModID(), mod.getName())
                 );
             }
         }));

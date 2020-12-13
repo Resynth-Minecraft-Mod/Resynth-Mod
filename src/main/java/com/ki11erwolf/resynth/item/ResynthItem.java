@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth.item;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
+import com.ki11erwolf.resynth.plant.set.IPlantSetProduceProperties;
 import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
 import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import com.ki11erwolf.resynth.util.Tooltip;
@@ -141,8 +142,8 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      *                 item we're getting the tooltip of.
      */
     protected static void addPlantItemTooltips(List<ITextComponent> tooltip, IPlantSetProperties setProperties,
-                                               String itemName){
-        Tooltip.addPlantItemOrBlockTooltips(tooltip, setProperties, getDescriptiveTooltip(itemName));
+                                               IPlantSetProduceProperties produceProperties, String itemName){
+        Tooltip.addPlantItemOrBlockTooltips(tooltip, setProperties, produceProperties, getDescriptiveTooltip(itemName));
     }
 
     /**

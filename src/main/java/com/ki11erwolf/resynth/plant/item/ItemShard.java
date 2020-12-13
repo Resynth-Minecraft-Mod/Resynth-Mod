@@ -57,6 +57,6 @@ public class ItemShard extends ResynthItem<ItemShard> {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        addPlantItemTooltips(tooltip, setProperties, PREFIX);
+        addPlantItemTooltips(tooltip, setProperties, null, PREFIX);
     }
 }

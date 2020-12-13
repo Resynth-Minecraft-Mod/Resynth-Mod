@@ -46,7 +46,8 @@ public class PlantSetUtil {
          * @param tooltip the tooltip array to append the tooltip to.
          * @param plantSetProperties the properties object.
          */
-        public static void setPropertiesTooltip(List<ITextComponent> tooltip, IPlantSetProperties plantSetProperties){
+        public static void setPropertiesTooltip(List<ITextComponent> tooltip, IPlantSetProperties plantSetProperties,
+                                                IPlantSetProduceProperties produceProperties){
             if(!Minecraft.getInstance().isSingleplayer()) {
                 tooltip.add(getFormattedTooltip("stats_disabled", TextFormatting.RED));
                 return;
@@ -72,6 +73,12 @@ public class PlantSetUtil {
                 setPropertiesTooltip(tooltip, (IMetallicSetProperties)plantSetProperties);
             else if (plantSetProperties instanceof IBiochemicalSetProperties)
                 setPropertiesTooltip(tooltip, (IBiochemicalSetProperties)plantSetProperties);
+
+            if(produceProperties == null)
+                return;
+
+            tooltip.add(getFormattedTooltip("produce_yield",
+                    TextFormatting.DARK_AQUA, TextFormatting.YELLOW, produceProperties.resourceCount(), TextFormatting.DARK_AQUA));
         }
 
         /**

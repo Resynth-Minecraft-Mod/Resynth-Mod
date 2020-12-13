@@ -71,7 +71,7 @@ public class BlockOrganicOre extends ResynthBlock<BlockOrganicOre> {
      */
     @Override
     public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag){
-        BlockPlant.addPlantItemBlockTooltips(tooltip, properties, PREFIX);
+        BlockPlant.addPlantItemBlockTooltips(tooltip, properties, null, PREFIX);
     }
 
     /**

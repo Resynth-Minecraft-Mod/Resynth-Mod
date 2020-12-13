@@ -24,9 +24,11 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.logging.log4j.Logger;
 
@@ -51,14 +53,14 @@ class PlantSetRegistry {
     /**
      * List of all created and registered plant sets.
      */
-    private static final List<PlantSet<?>> PLANT_SETS = new ArrayList<>(45);
+    private static final List<PlantSet<?, ?>> PLANT_SETS = new ArrayList<>(45);
 
     /**
      * Queues the given plant set for registration.
      *
      * @param set the given plant set.
      */
-    static void registerPlantSet(PlantSet<?> set){
+    static void registerPlantSet(PlantSet<?, ?> set){
         if(PLANT_SETS.contains(Objects.requireNonNull(set))){
             LOG.warn("Attempt to register plant set: " + set.getSetName() + " more than once!");
             return;
@@ -72,7 +74,7 @@ class PlantSetRegistry {
      * @return an array of every created and registered
      * plant set (regardless of set type).
      */
-    static PlantSet<?>[] getPlantSets(){
+    static PlantSet<?, ?>[] getPlantSets(){
         return PLANT_SETS.toArray(new PlantSet[0]);
     }
 
@@ -94,8 +96,11 @@ class PlantSetRegistry {
          */
         static {
             LOG.info("Queuing plant set registration...");
+
             ResynthPlants.initSets();
             ResynthModPlants.initSets();
+
+            MinecraftForge.EVENT_BUS.addListener(Registerer::initializeRegistryReferences);
         }
 
         /**
@@ -128,10 +133,14 @@ class PlantSetRegistry {
             });
         }
 
+        public static void initializeRegistryReferences(FMLServerAboutToStartEvent event) {
+            PLANT_SETS.forEach(PlantSet::initSeedResources);
+        }
+
         /**
          * Registers a given plant sets plant block to the game.
          */
-        private static void registerPlantBlock(PlantSet<?> set, IForgeRegistry<Block> registry){
+        private static void registerPlantBlock(PlantSet<?, ?> set, IForgeRegistry<Block> registry){
             LOG.debug("Registering plant block: " + set.getPlantBlock().getRegistryName());
             registry.register(set.getPlantBlock());
 
@@ -142,7 +151,7 @@ class PlantSetRegistry {
         /**
          * Registers a given plant sets seeds item to the game.
          */
-        private static void registerSeedsItem(PlantSet<?> set, IForgeRegistry<Item> registry){
+        private static void registerSeedsItem(PlantSet<?, ?> set, IForgeRegistry<Item> registry){
             LOG.debug("Registering plant seeds item: " + set.getSeedsItem().getRegistryName());
             registry.register(set.getSeedsItem());
         }
@@ -150,7 +159,7 @@ class PlantSetRegistry {
         /**
          * Registers a given plant sets produce block(and itemblock)/item to the game.
          */
-        private static void registerProduceItemOrBlock(PlantSet<?> set, IForgeRegistry<Block> blockRegistry,
+        private static void registerProduceItemOrBlock(PlantSet<?, ?> set, IForgeRegistry<Block> blockRegistry,
                                                        IForgeRegistry<Item> itemRegistry, boolean forItems){
             IItemProvider itemProvider = set.getProduceItem();
 

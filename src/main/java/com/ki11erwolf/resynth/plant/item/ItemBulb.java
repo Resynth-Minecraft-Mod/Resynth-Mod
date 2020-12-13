@@ -135,6 +135,6 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        addPlantItemTooltips(tooltip, setProperties, PREFIX);
+        addPlantItemTooltips(tooltip, setProperties, null, PREFIX);
     }
 }

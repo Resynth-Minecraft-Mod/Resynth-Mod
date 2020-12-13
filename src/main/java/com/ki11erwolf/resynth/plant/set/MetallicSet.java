@@ -35,7 +35,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
  * into a set and how they interact, as well as handling
  * how seeds are obtained (through events).
  */
-abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
+abstract class MetallicSet extends PlantSet<BlockMetallicPlant, Block> {
 
     /**
      * The name of the plant set type.
@@ -72,23 +72,8 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
                 return new ItemStack(produceItem.asItem(), 1);
             }
         };
-        this.seedsItem = new ItemSeeds(SET_TYPE_NAME, setName, plantBlock, properties);
+        this.seedsItem = new ItemSeeds(this);
     }
-
-    // ****************
-    // Abstract Getters
-    // ****************
-
-    /**
-     * Allows the plant set factory to provide the source ore block
-     * only when it's needed (when a block is blown up in game). This
-     * allows providing source ore blocks that are not yet registered
-     * to the game. This in turn allows adding source ore blocks from
-     * Resynth and other mods.
-     *
-     * @return the ore block seeds from this set are obtained from.
-     */
-    abstract ItemStack getSourceOre();
 
     // **********
     // Seed Hooks
@@ -116,13 +101,13 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
                 BlockState block = world.getBlockState(pos);
 
                 //For each set
-                for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.METALLIC)) {
-                    if(set.isFailure() || ((MetallicSet)set).getSourceOre() == null)
+                for(PlantSet<?, ?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.METALLIC)) {
+                    if(set.isBroken() || set.getSeedSources(Block[].class).length == 0)
                         continue;
 
                     //Chance of spawning item.
                     float chance = 0.0F;
-                    if(block.getBlock() == Block.getBlockFromItem(((MetallicSet) set).getSourceOre().getItem())){
+                    if(block.getBlock() == Block.getBlockFromItem(set.getSeedSources(Block[].class)[0].asItem())){
                         chance = ((MetallicSet) set).properties.seedSpawnChanceFromOre();
                     } else if (!(block.getBlock().getRegistryName() == null
                             && set.getProduceItem().asItem().getRegistryName() == null)){
@@ -138,6 +123,5 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant> {
                 }
             }
         }
-
     }
 }

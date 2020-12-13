@@ -43,15 +43,17 @@ class PlantSetSeedHooks {
     private boolean registered = false;
 
     /**
-     * Registers this SeedHooks instance if it
-     * has not yet been registered.
+     * Registers this SeedHooks instance to the Forge
+     * event bus if it has not yet been registered,
+     * allowing subscribing and responding to Minecraft
+     * events.
      */
     void register(){
         if(registered)
             return;
 
-        MinecraftForge.EVENT_BUS.register(this);
         registered = true;
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     // ***************

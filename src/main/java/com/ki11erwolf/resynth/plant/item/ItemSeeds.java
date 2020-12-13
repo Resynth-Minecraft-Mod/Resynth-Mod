@@ -17,11 +17,10 @@ package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
-import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -54,42 +53,11 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      */
     private static final String PREFIX = "seeds";
 
-    /**
-     * The specific plant type (plant block)
-     * this seeds item type will spawn.
-     */
-    private final BlockState plant;
+    private final PlantSet<?, ?> parentSet;
 
-    /**
-     * The name of the plant set type
-     * this seeds item is for.
-     */
-    private final String setTypeName;
-
-    /**
-     * The properties specific to the plant set
-     * this seeds item type is registered to.
-     */
-    private final IPlantSetProperties setProperties;
-
-    /**
-     * {@code true} if the plant set this seeds
-     * item belongs to was flagged as a failure.
-     */
-    private boolean isFailure = false;
-
-    /**
-     * @param setType the name of the plant set type (e.g. crystalline).
-     * @param setName the name of the plant set (e.g. diamond).
-     * @param plant the specific plant type (plant block instance) to place.
-     * @param setProperties the properties specific to the plant set.
-     */
-    public ItemSeeds(String setType, String setName, Block plant, IPlantSetProperties setProperties){
-        super(setType + "_" + PREFIX + "_" + setName, ResynthTabs.TAB_RESYNTH_SEEDS);
-
-        this.setTypeName = setType;
-        this.setProperties = setProperties;
-        this.plant = plant.getDefaultState();
+    public ItemSeeds(PlantSet<?, ?> plantSet){
+        super(plantSet.getSetTypeName() + "_" + PREFIX + "_" + plantSet.getSetName(), ResynthTabs.TAB_RESYNTH_SEEDS);
+        this.parentSet = plantSet;
     }
 
     /**
@@ -102,7 +70,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         //Don't plant broken plants
-        if(isFailure)
+        if(parentSet.isBroken())
             return ActionResultType.FAIL;
 
         //Get vars
@@ -111,10 +79,10 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
 
         //If valid position to plant
         if (context.getFace() == Direction.UP && world.isAirBlock(blockpos)
-                && this.plant.isValidPosition(world, blockpos)) {
+                && this.parentSet.getPlantBlock().getDefaultState().isValidPosition(world, blockpos)) {
 
             //Set block in world
-            world.setBlockState(blockpos, this.plant, 11);
+            world.setBlockState(blockpos, this.parentSet.getPlantBlock().getDefaultState(), 11);
             ItemStack itemstack = context.getItem();
             PlayerEntity playerEntity = context.getPlayer();
 
@@ -142,11 +110,14 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
         //Failure to initialize warning
-        if(isFailure) Tooltip.addBlankLine(tooltip)
+        if(parentSet.isBroken()) Tooltip.addBlankLine(tooltip)
                 .add(getFormattedTooltip(PREFIX + ".failure", TextFormatting.RED));
 
         //Add plant stats and item description
-        addPlantItemTooltips(tooltip, setProperties, String.format("%s_%s", setTypeName, PREFIX));
+        addPlantItemTooltips(
+                tooltip, parentSet.getPlantSetProperties(), parentSet.getProduceProperties(),
+                String.format("%s_%s", parentSet.getSetTypeName(), PREFIX)
+        );
     }
 
     /**
@@ -154,17 +125,6 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      */
     @Override
     public BlockState getPlant(IBlockReader world, BlockPos pos) {
-        return plant;
+        return parentSet.getPlantBlock().getDefaultState();
     }
-
-    /**
-     * Flags this seeds item instance as a failure. When declared
-     * as a failure, the seeds will no longer be able to plant a
-     * block and will will display the plant set failure message
-     * in the tooltip.
-     */
-    public void flagAsFailure(){
-        isFailure = true;
-    }
-
 }

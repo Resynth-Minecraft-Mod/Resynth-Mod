@@ -36,8 +36,8 @@ public class PublicPlantSetRegistry {
      * @param setType the type of plant sets to iterate over.
      * @param action the action to perform for each plant set.
      */
-    public static void foreach(SetType setType, Function<PlantSet<?>, Void> action){
-        for(PlantSet<?> plantSet : PlantSetRegistry.getPlantSets()){
+    public static void foreach(SetType setType, Function<PlantSet<?, ?>, Void> action){
+        for(PlantSet<?, ?> plantSet : PlantSetRegistry.getPlantSets()){
             if(setType.matches(plantSet))
                 action.apply(plantSet);
         }
@@ -49,10 +49,10 @@ public class PublicPlantSetRegistry {
      * @param setType the type of plant sets to obtain.
      * @return a modifiable list of the obtained plant sets.
      */
-    public static PlantSet<?>[] getSets(SetType setType){
-        List<PlantSet<?>> plantSets = new ArrayList<>();
+    public static PlantSet<?, ?>[] getSets(SetType setType){
+        List<PlantSet<?, ?>> plantSets = new ArrayList<>();
 
-        for(PlantSet<?> plantSet : PlantSetRegistry.getPlantSets()){
+        for(PlantSet<?, ?> plantSet : PlantSetRegistry.getPlantSets()){
             if(setType.matches(plantSet))
                 plantSets.add(plantSet);
         }
@@ -83,7 +83,7 @@ public class PublicPlantSetRegistry {
          */
         BIOCHEMICAL{
             @Override
-            public boolean matches(PlantSet<?> set){
+            public boolean matches(PlantSet<?, ?> set){
                 return set instanceof BiochemicalSet;
             }
         },
@@ -93,7 +93,7 @@ public class PublicPlantSetRegistry {
          */
         CRYSTALLINE{
             @Override
-            public boolean matches(PlantSet<?> set){
+            public boolean matches(PlantSet<?, ?> set){
                 return set instanceof CrystallineSet;
             }
         },
@@ -103,7 +103,7 @@ public class PublicPlantSetRegistry {
          */
         METALLIC{
             @Override
-            public boolean matches(PlantSet<?> set){
+            public boolean matches(PlantSet<?, ?> set){
                 return set instanceof MetallicSet;
             }
         },
@@ -114,7 +114,7 @@ public class PublicPlantSetRegistry {
          */
         ALL{
             @Override
-            public boolean matches(PlantSet<?> set){
+            public boolean matches(PlantSet<?, ?> set){
                 return set != null;
             }
         };
@@ -127,6 +127,6 @@ public class PublicPlantSetRegistry {
          * @return {@code true} if and only if the given
          * plant set matches this enum representation.
          */
-        public abstract boolean matches(PlantSet<?> set);
+        public abstract boolean matches(PlantSet<?, ?> set);
     }
 }

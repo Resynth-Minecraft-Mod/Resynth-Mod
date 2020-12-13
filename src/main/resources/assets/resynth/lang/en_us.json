@@ -514,5 +514,6 @@
   "misc.resynth.mineral_content": "Mineral Content: %s%%",
 
   "__________COMMENT": "--- FOR TRANSLATION: new entries that have not been translated. ---",
-  "misc.resynth.growth_stage": "Growth Stage: %s"
+  "misc.resynth.growth_stage":                      "Growth Stage: %s",
+  "tooltip.property.resynth.produce_yield":         "Produce Output: %s%s%s Items"
 }

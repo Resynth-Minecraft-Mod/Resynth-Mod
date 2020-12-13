@@ -38,7 +38,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
  * into a set and how they interact, as well as handling
  * how seeds are obtained (through events).
  */
-abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
+abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
 
     /**
      * The name of this plant set type.
@@ -80,26 +80,8 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
         };
 
         //Seeds
-        this.seedsItem = new ItemSeeds(SET_TYPE_NAME, setName, plantBlock, properties);
+        this.seedsItem = new ItemSeeds(this);
     }
-
-    // ****************
-    // Abstract Getters
-    // ****************
-
-    /**
-     * Allows the plant set factory to provide the source ore block
-     * only when it's needed (when a block is broken in game). This
-     * allows providing source ore blocks that are not yet registered
-     * to the game. This in turn allows adding source ore blocks from
-     * Resynth and other mods.
-     *
-     * <p/>Returning {@code null} is allowed, however the PlantSet
-     * will never be fully usable or normally obtainable if so.
-     *
-     * @return the ore block seeds from this set are obtained from.
-     */
-    abstract ItemStack getSourceOre();
 
     // **********
     // Seed Hooks
@@ -127,14 +109,14 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
             IWorld world = event.getWorld();
 
             //Sets
-            for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)){
-                if(set.isFailure() || ((CrystallineSet)set).getSourceOre() == null)
+            for(PlantSet<?, ?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)){
+                if(set.isBroken() || set.getSeedSources(Block[].class).length == 0)
                     continue;
 
                 CrystallineSet crystallineSet = (CrystallineSet) set;
                 float spawnChance = crystallineSet.setProperties.seedSpawnChanceFromOre();
 
-                if(spawnChance < 0 || !(block == Block.getBlockFromItem(crystallineSet.getSourceOre().getItem())))
+                if(spawnChance < 0 || !(block == Block.getBlockFromItem(crystallineSet.getSeedSources(Block[].class)[0].asItem())))
                     continue;
 
                 //Spawn
@@ -165,9 +147,9 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant> {
                 return;
 
             //Sets
-            for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)) {
+            for(PlantSet<?, ?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)) {
                 //Checks
-                if(set.isFailure() || ((CrystallineSet)set).getSourceOre() == null)
+                if(set.isBroken() || set.getSeedSources(Block[].class).length == 0)
                     continue;
 
                 if (i != set.getProduceItem().asItem()) {

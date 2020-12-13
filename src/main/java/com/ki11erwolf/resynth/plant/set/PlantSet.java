@@ -15,35 +15,36 @@
  */
 package com.ki11erwolf.resynth.plant.set;
 
+import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.analytics.PlantSetFailureEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
 import com.ki11erwolf.resynth.plant.block.BlockPlant;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import net.minecraft.util.IItemProvider;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Defines and prepares the basics needed to create
- * a Resynth plant set.
  *
- * <p/> A Resynth plant set is a set of items and blocks
- * that make up the minimum requirements to grow a
- * particular resource. This includes a PlantBlock, a
- * produce block/item and a seeds item. This class also
- * allows easily registering plant sets ({@link #register()}).
- *
- * <p/> <b>WARNING: Plant Sets do NOT handle the smelting of
- * produce items into the final resource. This must be done
- * with json furnace (smelting) recipes.</b>
- *
- * @param <P> The plant block for the set.
+ * @param <P> Plant block class used by the set.
+ * @param <S> Source of Seeds. The game entity/object that
+ *           this plant sets seeds will drop from, such as
+ *           Block or Entity.
  */
-public class PlantSet<P extends BlockPlant<?>> {
+public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistryEntry<?>> {
 
     //TODO: attempt to implement recipes related to plants in code.
-    //TODO: look into programmaticly generating plant set assets.
+    //TODO: look into programmatically generating plant set assets.
     //TODO: base class handling of seed spawner(s)?
+
+    /**
+     * The logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
 
     /**
      * The name of the plant set instance (e.g. diamond).
@@ -60,11 +61,15 @@ public class PlantSet<P extends BlockPlant<?>> {
      */
     private final IPlantSetProperties basicPlantSetProperties;
 
+    private IPlantSetProduceProperties produceProperties;
+
     /**
      * Will be {@code true} if this plant set has been
      * flagged as a failure.
      */
     private boolean isFailure;
+
+    private S[] cachedSeedSources;
 
     /**
      * The plant block instance in the set.
@@ -93,31 +98,123 @@ public class PlantSet<P extends BlockPlant<?>> {
         seedHooks.register();
     }
 
+    // ############
+    // Seed Sources
+    // ############
+
+    abstract S[] onSeedSourcesRequest() throws Exception;
+
+    void initSeedResources() throws IllegalStateException {
+        cacheSeedSources();
+    }
+
+    // Accessors
+
+    S[] getSeedSources() {
+        if(isBroken())
+            return null;
+
+        return cachedSeedSources;
+    }
+
+    <T extends IForgeRegistryEntry<?>> T[] getSeedSources(Class<T[]> t) {
+        S[] seedSources;
+        if((seedSources = getSeedSources()) == null)
+            return t.cast(Array.newInstance(t.getComponentType(), 0));
+        else return t.cast(seedSources);
+    }
+
+    // Internal Logic
+
+    private void cacheSeedSources() throws IllegalStateException {
+        // Check if cache already created
+        if(cachedSeedSources != null) throw new IllegalStateException(
+                "Cannot load seed sources because the cache has already been created."
+        );
+
+        // Check if already flagged as broken
+        if(isBroken()) throw new IllegalStateException(
+                "Cannot load seed sources for the PlantSet '"
+                        + getSetName() + "' which has been flagged as broken."
+            );
+
+        // Store inside own variable for caching
+        cachedSeedSources = loadSeedSources();
+    }
+
+    private S[] loadSeedSources() {
+        S[] givenSeedSources = null;
+
+        // Get from set implementation
+        try {
+            givenSeedSources = onSeedSourcesRequest();
+        } catch (Exception e) {
+            LOG.error(String.format("PlantSet '%s' throw exception when getting seed resources", this.getSetName()), e);
+        }
+
+        // Return for caching if okay
+        if(checkSeedSources(givenSeedSources))
+            return givenSeedSources;
+
+        //Otherwise flag as broken
+        this.flagAsBroken();
+        return null;
+    }
+
+    private boolean checkSeedSources(S[] seedSources) {
+        // Check if null or empty array, or null objects in array
+        if(seedSources == null || seedSources.length == 0) {
+            LOG.error("Got null or empty list of seed resources from PlantSet '" + getSetName() + "'.");
+            return false;
+        } else if(Arrays.stream(seedSources).anyMatch(Objects::isNull)) {
+            LOG.error(String.format("PlantSet '%s' provided list of one or more null seed sources.", getSetName()));
+            return false;
+        }
+
+        return true;
+    }
+
+
     /**
-     * Allows flagging this plant set as a failure -
-     * that is, a plant set that will not work
-     * for some or other reason.
-     * This is useful when failure can only
-     * be determined after the set has been
-     * created and registered to the game.
-     * This action cannot be undone.
-     * <p/>
-     * Will prevent seeds from planting as
-     * well as notifies the user of a problem.
+     * Permanently flags this plant set as broken beyond repair - that is,
+     * to declare it as unusable and problematic both to the player as
+     * well as in software. Effectively disabling all use and functionality
+     * of the plant, as well prominently displaying to the player the fact
+     * that the PlantSet is broken.
+     *
+     * <p/> Any cause that would prevent the plant set from functioning
+     * correctly should flag it with this method. The usual cause would
+     * be a missing Block or Item expected to be found in the forge
+     * registries, which this plant set uses directly and cannot function
+     * without. Likely queried from the forge registries using its {@link
+     * net.minecraft.util.ResourceLocation} ID, rather than an object
+     * reference. Scenarios like this are bound to occur with additional
+     * independent external mods, as items and objects are eventually
+     * going to be renamed or removed.
+     *
+     * <p/> If {@link ResynthAnalytics} is not disabled, an anonymous
+     * event will be sent that logs a PlantSet failure with the name
+     * of this set. This makes handling broken plant sets a lot easier
+     * on the developer side without reliance on bug reports as well.
      */
-    void flagAsFailure(){
+    void flagAsBroken() {
         if(isFailure)
             return;
 
-        this.getSeedsItem().flagAsFailure();
         ResynthAnalytics.send(new PlantSetFailureEvent(setName));
     }
 
+    void setProduceProperties(IPlantSetProduceProperties properties){
+        this.produceProperties = Objects.requireNonNull(properties);
+    }
+
     /**
-     * @return {@code true} if this plant set
-     * has been flagged as a failure.
+     * @return {@code true} if this plant set has been
+     * {@link #flagAsBroken() flagged} as broken, meaning
+     * it will not work or function correctly and should
+     * be disabled and avoided.
      */
-    boolean isFailure(){
+    public boolean isBroken() {
         return this.isFailure;
     }
 
@@ -139,7 +236,6 @@ public class PlantSet<P extends BlockPlant<?>> {
      * @return the specific plant block instance
      * in the set.
      */
-    @SuppressWarnings("WeakerAccess")
     public P getPlantBlock(){
         return this.plantBlock;
     }
@@ -168,6 +264,10 @@ public class PlantSet<P extends BlockPlant<?>> {
         return this.basicPlantSetProperties;
     }
 
+    public IPlantSetProduceProperties getProduceProperties() {
+        return this.produceProperties;
+    }
+
     /**
      * @return a simple plain text String containing the {@link
      * #getSetName() name} and {@link #getSetTypeName() type}
@@ -175,8 +275,8 @@ public class PlantSet<P extends BlockPlant<?>> {
      */
     @Override
     public String toString() {
-        return String.format("PlantSet[type=%s, name=%s]",
-                this.getSetTypeName(), this.getSetName()
+        return String.format("PlantSet[type=%s, name=%s, failure=%s]",
+                this.getSetTypeName(), this.getSetName(), isBroken()
         );
     }
 
@@ -187,7 +287,7 @@ public class PlantSet<P extends BlockPlant<?>> {
      *
      * @return {@code this} - this plant set.
      */
-    public PlantSet<P> register(){
+    public PlantSet<P, S> register(){
         PlantSetRegistry.registerPlantSet(this);
         return this;
     }

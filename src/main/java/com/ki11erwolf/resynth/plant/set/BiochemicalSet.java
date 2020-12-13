@@ -35,7 +35,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
  * into a set and how they interact, as well as handling
  * how seeds are obtained (through events).
  */
-abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
+abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType<?>> {
 
     /**
      * The name of the plant set type.
@@ -73,25 +73,8 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
                 return new ItemStack(produceItem.asItem(), properties.numberOfProduceDrops());
             }
         };
-        this.seedsItem = new ItemSeeds(SET_TYPE_NAME, setName, plantBlock, properties);
+        this.seedsItem = new ItemSeeds(this);
     }
-
-    // ****************
-    // Abstract Getters
-    // ****************
-
-    /**
-     * Allows the PlantSetFactory to provide the
-     * source mobs that seeds are obtained from
-     * only when they're needed. This allows
-     * providing mobs that are not yet registered
-     * to the game. This in turn allows adding mobs
-     * from Resynth and other mods.
-     *
-     * @return the list of mobs this plant sets seeds
-     * are obtainable from.
-     */
-    abstract EntityType<?>[] getSourceMobs();
 
     // **********
     // Seed Hooks
@@ -113,15 +96,15 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
         @SubscribeEvent
         public void onEntityKilled(LivingDeathEvent event){
             //For each plant set
-            for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)){
+            for(PlantSet<?, ?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)){
                 ResourceLocation deadEntity = event.getEntity().getType().getRegistryName();
                 BiochemicalSet plantSet = (BiochemicalSet) set;
 
-                if(set.isFailure()) continue;
-                if(plantSet.getSourceMobs() == null) continue;
+                if(set.isBroken() || set.getSeedSources(EntityType[].class).length == 0)
+                    continue;
 
                 //and each seed type
-                for(EntityType<?> entity : plantSet.getSourceMobs()){
+                for(EntityType<?> entity : plantSet.getSeedSources(EntityType[].class)){
                     ResourceLocation loopedEntity = entity.getRegistryName();
 
                     //Do a lot of checks
@@ -146,12 +129,12 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant> {
          */
         @SubscribeEvent
         public void onItemDestroyed(PlayerDestroyItemEvent event){
-            //noinspection ConstantConditions // Apparently it's not, and it can
+            //noinspection ConstantConditions //Apparently not... it can still return null
             if(event.getOriginal() == null) return;
 
             //For each plant set
-            for(PlantSet<?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)) {
-                if(set.isFailure()) continue;
+            for(PlantSet<?, ?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)) {
+                if(set.isBroken()) continue;
 
                 BiochemicalSet plantSet = (BiochemicalSet) set;
 

@@ -17,7 +17,9 @@ package com.ki11erwolf.resynth.util;
 
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
+import com.ki11erwolf.resynth.plant.set.IPlantSetProduceProperties;
 import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -181,10 +183,27 @@ public interface Tooltip {
      *                           care of.
      */
     static void addPlantItemOrBlockTooltips(List<ITextComponent> tooltip, IPlantSetProperties setProperties,
-                                          ITextComponent descriptiveTooltip){
+                                            IPlantSetProduceProperties produceProperties, ITextComponent descriptiveTooltip){
         //Stats
         new ExpandingTooltip().setShiftForStats(tooltips -> {
-            PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltips, setProperties);
+            PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltips, setProperties, produceProperties);
+            addBlankLine(tooltips);
+        }).write(addBlankLine(tooltip));
+
+        //Description
+        new ExpandingTooltip().setCtrlForDescription(tooltips -> addBlankLine(tooltips).addAll(
+                Arrays.asList(Tooltip.formatLineFeeds(descriptiveTooltip, TextFormatting.DARK_GRAY))
+        )).write(tooltip);
+
+        //Spacing
+        addBlankLine(tooltip);
+    }
+
+    static void addPlantItemOrBlockTooltips(List<ITextComponent> tooltip, PlantSet<?, ?> set,
+                                            ITextComponent descriptiveTooltip){
+        //Stats
+        new ExpandingTooltip().setShiftForStats(tooltips -> {
+            PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltips, set.getPlantSetProperties(), set.getProduceProperties());
             addBlankLine(tooltips);
         }).write(addBlankLine(tooltip));
 

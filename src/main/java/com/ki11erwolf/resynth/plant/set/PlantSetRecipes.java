@@ -3,7 +3,9 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthRecipes;
 import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.FurnaceRecipe;
@@ -44,23 +46,33 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         recipeDefinitions.add(Objects.requireNonNull(recipe));
     }
 
-    void addCrystallineSeedsRecipe(PlantSet<? extends BlockCrystallinePlant> set, ResourceLocation outputItemID, int count) {
+    void addCrystallineSeedsRecipe(PlantSet<? extends BlockCrystallinePlant, Block> set, ResourceLocation outputItemID, int count) {
         String recipeType = set.getSetTypeName() + "-plant-set-seeds-to-resource";
         ResourceLocation recipeID = new ResourceLocation(ResynthMod.MODID, set.getSetName() + "-" + recipeType);
 
-        addRecipe(new ShapelessRecipeDefinition(recipeID, recipeType, outputItemID, 2, set.getSeedsItem().getRegistryName()));
+        addRecipe(new ShapelessRecipeDefinition(
+                set, recipeID, recipeType, outputItemID, 2, set.getSeedsItem().getRegistryName()
+        ));
     }
 
-    void addProduceRecipe(PlantSet<?> set, ResourceLocation outputItemID, IPlantSetProduceProperties properties) {
+    void addProduceRecipe(PlantSet<?, ?> set, ResourceLocation outputItemID, IPlantSetProduceProperties properties) {
         addProduceRecipe(set, outputItemID, properties.resourceCount(), properties.smeltingTime(), properties.experienceWorth());
     }
 
-    void addProduceRecipe(PlantSet<?> set, ResourceLocation outputItemID, int count, int time, double experience) {
+    void addProduceRecipe(PlantSet<?, ?> set, ResourceLocation outputItemID, int count, int time, double experience) {
         String recipeType = set.getSetTypeName() + "-plant-set-produce-smelting";
         ResourceLocation recipeID = new ResourceLocation(ResynthMod.MODID, set.getSetName() + "-" + recipeType);
 
+        ResourceLocation setProduce;
+
+        if(set.getProduceItem() instanceof Block)
+            setProduce = ((Block)set.getProduceItem()).getRegistryName();
+        else if (set.getProduceItem() instanceof Item) {
+            setProduce = ((Item)set.getProduceItem()).getRegistryName();
+        } else throw new IllegalArgumentException("The PlantSet '" + set.getSetName() + "' provided an invalid produce item!");
+
         addRecipe(new FurnaceRecipeDefinition(
-                recipeID, recipeType, set.getProduceItem().asItem().getRegistryName(), outputItemID, count, experience, time
+                set, recipeID, recipeType, setProduce, outputItemID, count, experience, time
         ));
     }
 
@@ -91,7 +103,7 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         if(recipes == null) {
             LOG.warn("No defined plant set recipes have been added...");
         } else if(recipes.length == 0){
-            LOG.error("Zero recipes were initialized sucessfully...");
+            LOG.error("Zero recipes were initialized successfully...");
             return finalRecipes = null;
         }
 
@@ -111,6 +123,7 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
                     recipeList.add(nextRecipe.getRecipe());
                 } catch (MissingResourceException e) {
                     LOG.error("Failed to create recipe during finalization", e);
+                    nextRecipe.getPlantSet().flagAsBroken();
                 }
             }
             
@@ -126,6 +139,8 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
 
     private static class ShapelessRecipeDefinition implements RecipeDefinition<ShapelessRecipe> {
 
+        private final PlantSet<?, ?> plantSet;
+
         private final ResourceLocation id;
 
         private final String group;
@@ -136,8 +151,9 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
 
         private final int count;
 
-        protected ShapelessRecipeDefinition(ResourceLocation id, String group, ResourceLocation outputItemID,
+        protected ShapelessRecipeDefinition(PlantSet<?, ?> plantSet, ResourceLocation id, String group, ResourceLocation outputItemID,
                                             int count, ResourceLocation... inputItemIDs) {
+            this.plantSet = Objects.requireNonNull(plantSet);
             this.id = Objects.requireNonNull(id);
             this.group = Objects.requireNonNull(group);
             this.inputItemIDs = Objects.requireNonNull(inputItemIDs);
@@ -165,9 +181,16 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
                     id, group, new ItemStack(output, count), inputItems.toArray(new IItemProvider[0])
             );
         }
+
+        @Override
+        public PlantSet<?, ?> getPlantSet() {
+            return this.plantSet;
+        }
     }
 
     private static class FurnaceRecipeDefinition implements RecipeDefinition<FurnaceRecipe> {
+
+        private final PlantSet<?, ?> plantSet;
 
         private final ResourceLocation id;
 
@@ -183,8 +206,9 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
 
         private final int time;
 
-        protected FurnaceRecipeDefinition(ResourceLocation id, String group, ResourceLocation inputItemID,
+        protected FurnaceRecipeDefinition(PlantSet<?, ?> plantSet, ResourceLocation id, String group, ResourceLocation inputItemID,
                                           ResourceLocation outputItemID, int count, double experience, int time) {
+            this.plantSet = Objects.requireNonNull(plantSet);
             this.id = Objects.requireNonNull(id);
             this.group = Objects.requireNonNull(group);
             this.inputItemID = Objects.requireNonNull(inputItemID);
@@ -209,11 +233,18 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
                     id, group, experience, time, new ItemStack(outputItem, count), inputItem
             );
         }
+
+        @Override
+        public PlantSet<?, ?> getPlantSet() {
+            return this.plantSet;
+        }
     }
 
     private interface RecipeDefinition<T extends IRecipe<?>> {
 
         T getRecipe() throws MissingResourceException;
+
+        PlantSet<?, ?> getPlantSet();
 
         static IItemProvider getItem(ResourceLocation itemID) {
             IItemProvider provider;

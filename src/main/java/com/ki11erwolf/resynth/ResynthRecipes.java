@@ -40,7 +40,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
      * for the whole of the Resynth mod.
      *
      * <p/> Provided in the constructor is the list
-     * of Resynth's recipe providers.
+     * of Resynths recipe providers.
      */
     INSTANCE(// List of custom RecipeProviders
         PublicPlantSetRegistry.getPlantSetRecipes(), CoreRecipes.INSTANCE
