@@ -105,7 +105,7 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
                         "\nIncrease this number to increase the growth rate of the plant," +
                         "\ndecrease it to decrease the growth rate of the plant." +
                         "\nYOU MUST SET 'use-configuration-values-for-growth' TO 'true' TO USE THIS.",
-                defaultProperties.chanceToGrow(),
+                defaultProperties.growthProbability(),
                 0.0, 100.0,
                 this
         );
@@ -113,7 +113,7 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
         this.canUseBonemeal = new BooleanConfigValue(
                 "enable-bonemeal",
                 "Set this to true to allow using bonemeal on this specific plant type.",
-                defaultProperties.canBonemeal(),
+                defaultProperties.bonemealGrowth(),
                 this
         );
 
@@ -121,7 +121,7 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
                 "number-of-produce-drops",
                 "The number of produce item drops this plant type will drop when harvested/fully grown" +
                         "and broken.",
-                defaultProperties.numberOfProduceDrops(),
+                defaultProperties.plantYield(),
                 1, 64,
                 this
         );
@@ -169,7 +169,7 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
      * {@inheritDoc}
      */
     @Override
-    public int numberOfProduceDrops() {
+    public int plantYield() {
         return numberOfProduceDrops.getValue();
     }
 
@@ -197,7 +197,7 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
      * {@inheritDoc}
      */
     @Override
-    public boolean canBonemeal() {
+    public boolean bonemealGrowth() {
         return canUseBonemeal.getValue();
     }
 
@@ -205,7 +205,7 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
      * {@inheritDoc}
      */
     @Override
-    public float chanceToGrow() {
+    public float growthProbability() {
         if(!this.useConfigGrowthChanceValue.getValue())
             return Float.parseFloat(chanceToGrow.getDefaultValue().toString());
         return (float) this.chanceToGrow.getValue();

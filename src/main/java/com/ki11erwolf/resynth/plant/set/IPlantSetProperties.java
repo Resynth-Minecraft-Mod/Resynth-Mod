@@ -16,20 +16,23 @@
 package com.ki11erwolf.resynth.plant.set;
 
 /**
- * Defines the required properties (changable settings) needed by all
- * plant sets.
+ * Defines the required properties (configurable settings) common
+ * to all plants and PlantSets.
  */
 public interface IPlantSetProperties {
 
     /**
-     * Returns {@code true} if the plant block
-     * in the plant set can be grown with bonemeal.
+     * Defines and returns if the plant block from the set can be
+     * grown using bonemeal.
      */
-    boolean canBonemeal();
+    boolean bonemealGrowth();
 
     /**
-     * Returns the percentage chance the plant
-     * in the plant set will grow on a random tick.
+     * Defines and returns the probability, as a percentage ranging
+     * from 0% ({@code 0.0F}) to 100% ({@code 100.0F}) - inclusive,
+     * that the plant block from the set will grow or yield produce
+     * on any given update tick. Determines how fast the plants will
+     * grow naturally.
      */
-    float chanceToGrow();
+    float growthProbability();
 }

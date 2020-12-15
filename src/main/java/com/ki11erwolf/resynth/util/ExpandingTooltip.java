@@ -33,20 +33,20 @@ public class ExpandingTooltip {
      * or expanded tooltip is shown. The flag is set to
      * {@code true} when the expanded tooltip should be
      * shown and set to false {@code false} when the
-     * collpased tooltip shoud be shown.
+     * collapsed tooltip should be shown.
      */
     private boolean conditionMet = false;
 
     /**
      * The {@link Tooltip} written to the item/block
-     * toolip when this ExpandingTooltip is in the
+     * tooltip when this ExpandingTooltip is in the
      * collapsed state.
      */
     private Tooltip collapsed = CommonTooltips.UNSPECIFIED;
 
     /**
      * The {@link Tooltip} written to the item/block
-     * toolip when this ExpandingTooltip is in the
+     * tooltip when this ExpandingTooltip is in the
      * expanded state.
      */
     private Tooltip expanded = CommonTooltips.UNSPECIFIED;

@@ -23,6 +23,7 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MathUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
@@ -91,20 +92,12 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     final IPlantSetProperties properties;
 
-    /**
-     * Resynth plant block constructor.
-     *
-     * @param plantTypeName the name of the plant set type (e.g. crystalline).
-     * @param plantName the name of the plant (e.g. diamond).
-     * @param properties the unique properties of the plant type. Should
-     *                   be specified by config.
-     */
-    BlockPlant(String plantTypeName, String plantName, IPlantSetProperties properties) {
+    BlockPlant(PlantSet<?, ?> parentSet) {
         super(Properties.create(Material.PLANTS).sound(SoundType.PLANT).tickRandomly()
                         .hardnessAndResistance(0.0F).doesNotBlockMovement(),
-                plantTypeName + "_" + PLANT_PREFIX + "_" + plantName);
+                parentSet.getSetTypeName() + "_" + PLANT_PREFIX + "_" + parentSet.getSetName());
 
-        this.properties = properties;
+        this.properties = parentSet.getPlantSetProperties();
         this.setDefaultState(this.stateContainer.getBaseState().with(this.getGrowthProperty(), 0));
     }
 
@@ -611,7 +604,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * specific plant type/instance.
      */
     private float getPlantGrowthChance(){
-        return properties.chanceToGrow();
+        return properties.growthProbability();
     }
 
     /**
@@ -890,7 +883,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     public boolean canGrow(IBlockReader world, BlockPos pos, BlockState state, boolean isClient) {
-        return properties.canBonemeal() && !isFullyGrown(state);
+        return properties.bonemealGrowth() && !isFullyGrown(state);
     }
 
     /**
@@ -904,7 +897,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     public boolean canUseBonemeal(World world, Random rand, BlockPos pos, BlockState state) {
-        return properties.canBonemeal();
+        return properties.bonemealGrowth();
     }
 
     /**

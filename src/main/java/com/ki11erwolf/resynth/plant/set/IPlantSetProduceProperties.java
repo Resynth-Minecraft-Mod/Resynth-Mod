@@ -18,18 +18,19 @@ public interface IPlantSetProduceProperties {
      * @return the amount of resources a that a single item of {@link
      * PlantSet#getProduceItem() produce} will make when smelted.
      */
-    int resourceCount();
+    int produceYield();
 
     /**
-     * Explicitly declares the amount time that it will take single item of {@link
-     * PlantSet#getProduceItem() plant produce} to be smelted in a furnace. The
-     * time is measured in Minecraft ticks, where one tick is one twentieth of
-     * a second (0.05 seconds). The time given should always be a positive integer.
+     * Explicitly declares the amount time that it will take single item of
+     * {@link PlantSet#getProduceItem() plant produce} to be completely smelted
+     * in a furnace to yield the desired final resource and amount. The time is
+     * measured in Minecraft ticks, where one tick is one twentieth of a second
+     * (0.05 seconds). The time given should always be a positive integer.
      *
      * @return the amount of time, in ticks, that a single item of {@link
      * PlantSet#getProduceItem() produce} takes to smelt in a furnace.
      */
-    int smeltingTime();
+    int timePerYield();
 
     /**
      * Explicitly declares the amount of experience (xp) points a single item of
@@ -39,6 +40,6 @@ public interface IPlantSetProduceProperties {
      * @return the amount of experience points that a single item of {@link
      * PlantSet#getProduceItem() produce} will give the player when smelted.
      */
-    double experienceWorth();
+    double experiencePoints();
 
 }

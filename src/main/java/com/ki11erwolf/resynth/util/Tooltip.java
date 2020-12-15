@@ -17,15 +17,11 @@ package com.ki11erwolf.resynth.util;
 
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
-import com.ki11erwolf.resynth.plant.set.IPlantSetProduceProperties;
-import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSet;
-import com.ki11erwolf.resynth.plant.set.PlantSetUtil;
+import com.ki11erwolf.resynth.plant.set.PlantSetTooltips;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
@@ -168,42 +164,29 @@ public interface Tooltip {
         return output;
     }
 
-    /**
-     * A utility method specifically made for items related to plants
-     * (e.g. organic ore / produce).
-     *
-     * This method is used to set the item/block tooltip to contain
-     * both the description and statistics on the plant set passed in.
-     *
-     * @param tooltip the tooltip we're modifying with the new tooltips.
-     * @param setProperties the properties of the specific plant set
-     *                      we're using to get the plant statistics.
-     * @param descriptiveTooltip the localized tooltip for the
-     *                           block/item. Line Feeds will be taken
-     *                           care of.
-     */
-    static void addPlantItemOrBlockTooltips(List<ITextComponent> tooltip, IPlantSetProperties setProperties,
-                                            IPlantSetProduceProperties produceProperties, ITextComponent descriptiveTooltip){
-        //Stats
-        new ExpandingTooltip().setShiftForStats(tooltips -> {
-            PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltips, setProperties, produceProperties);
-            addBlankLine(tooltips);
-        }).write(addBlankLine(tooltip));
+    static ITextComponent[] formatLineFeeds(ITextComponent input){
+        String[] splitInput = input.getString().split("\n");
+        ITextComponent[] output = new StringTextComponent[splitInput.length];
 
-        //Description
-        new ExpandingTooltip().setCtrlForDescription(tooltips -> addBlankLine(tooltips).addAll(
-                Arrays.asList(Tooltip.formatLineFeeds(descriptiveTooltip, TextFormatting.DARK_GRAY))
-        )).write(tooltip);
+        Style previousLine = null;
+        for(int i = 0; i < splitInput.length; i++){
+            previousLine = (
+                    output[i] = new StringTextComponent(splitInput[i]).func_230530_a_(
+                            previousLine == null ? input.getStyle() : previousLine
+                    )
+            ).getStyle();
+        }
 
-        //Spacing
-        addBlankLine(tooltip);
+        return output;
     }
 
-    static void addPlantItemOrBlockTooltips(List<ITextComponent> tooltip, PlantSet<?, ?> set,
-                                            ITextComponent descriptiveTooltip){
+    static void addPlantItemOrBlockTooltips(List<ITextComponent> tooltip, PlantSet<?, ?> set, ITextComponent descriptiveTooltip){
+        //PlantSet Broken Warning
+        PlantSetTooltips.addWarningIfBroken(tooltip, set);
+
         //Stats
         new ExpandingTooltip().setShiftForStats(tooltips -> {
-            PlantSetUtil.PlantSetTooltipUtil.setPropertiesTooltip(tooltips, set.getPlantSetProperties(), set.getProduceProperties());
+            PlantSetTooltips.setPropertiesTooltip(tooltips, set);
             addBlankLine(tooltips);
         }).write(addBlankLine(tooltip));
 

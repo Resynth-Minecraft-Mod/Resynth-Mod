@@ -103,7 +103,7 @@ public class CrystallineSetProperties implements ICrystallineSetProperties {
      * can have bonemeal applied to it by default.
      */
     @Override
-    public boolean canBonemeal() {
+    public boolean bonemealGrowth() {
         return canBonemeal;
     }
 
@@ -112,7 +112,7 @@ public class CrystallineSetProperties implements ICrystallineSetProperties {
      * set instance.
      */
     @Override
-    public float chanceToGrow() {
+    public float growthProbability() {
         return chanceToGrow;
     }
 
@@ -122,7 +122,7 @@ public class CrystallineSetProperties implements ICrystallineSetProperties {
      * fully grown and broken.
      */
     @Override
-    public int numberOfProduceDrops() {
+    public int plantYield() {
         return numberOfProduceDrops;
     }
 
@@ -152,7 +152,7 @@ public class CrystallineSetProperties implements ICrystallineSetProperties {
      * objects constructor.
      */
     @Override
-    public int resourcesPerSeeds() {
+    public int seedCraftingYield() {
         return resourcesPerSeeds;
     }
 }

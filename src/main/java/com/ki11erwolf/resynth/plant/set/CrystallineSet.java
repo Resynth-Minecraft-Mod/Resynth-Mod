@@ -63,11 +63,8 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
         super(SET_TYPE_NAME, setName, SEED_HOOKS, properties);
         this.setProperties = properties;
 
-        //Produce
-        this.produceItem = new ItemShard(SET_TYPE_NAME, setName, properties);
-
-        //Plant
-        this.plantBlock = new BlockCrystallinePlant(SET_TYPE_NAME, setName, properties){
+        this.produceItem = new ItemShard(this);
+        this.plantBlock = new BlockCrystallinePlant(this){
             @Override
             protected ItemSeeds getSeedsItem(){
                 return seedsItem;
@@ -75,11 +72,9 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
 
             @Override
             protected ItemStack getProduce(){
-                return new ItemStack(produceItem.asItem(), properties.numberOfProduceDrops());
+                return new ItemStack(produceItem.asItem(), properties.plantYield());
             }
         };
-
-        //Seeds
         this.seedsItem = new ItemSeeds(this);
     }
 

@@ -51,7 +51,7 @@ public class PlantSetProduceProperties implements IPlantSetProduceProperties {
      * constructor. Value is always in range.
      */
     @Override
-    public final int resourceCount() {
+    public final int produceYield() {
         return resourceCount;
     }
 
@@ -62,7 +62,7 @@ public class PlantSetProduceProperties implements IPlantSetProduceProperties {
      * constructor. Value is always in range.
      */
     @Override
-    public final int smeltingTime() {
+    public final int timePerYield() {
         return smeltingTime;
     }
 
@@ -73,7 +73,7 @@ public class PlantSetProduceProperties implements IPlantSetProduceProperties {
      * constructor. Value is always in range.
      */
     @Override
-    public final double experienceWorth() {
+    public final double experiencePoints() {
         return experienceWorth;
     }
 }

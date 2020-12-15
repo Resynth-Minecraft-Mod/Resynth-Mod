@@ -56,7 +56,7 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
     }
 
     void addProduceRecipe(PlantSet<?, ?> set, ResourceLocation outputItemID, IPlantSetProduceProperties properties) {
-        addProduceRecipe(set, outputItemID, properties.resourceCount(), properties.smeltingTime(), properties.experienceWorth());
+        addProduceRecipe(set, outputItemID, properties.produceYield(), properties.timePerYield(), properties.experiencePoints());
     }
 
     void addProduceRecipe(PlantSet<?, ?> set, ResourceLocation outputItemID, int count, int time, double experience) {
@@ -117,8 +117,16 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         if(recipeDefinitions.size() != 0){
             RecipeDefinition<?> nextRecipe;
 
-            //Create and store recipes
+            //Create and store all recipes
             while((nextRecipe = recipeDefinitions.poll()) != null) {
+                //Check if PlantSet is broken
+                if(nextRecipe.getPlantSet().isBroken()){
+                    LOG.warn("Skipping recipe '" + nextRecipe.getRecipeID()
+                            + "' because the PlantSet is flagged as broken!");
+                    continue;
+                }
+
+                //Attempt to get actual recipe
                 try {
                     recipeList.add(nextRecipe.getRecipe());
                 } catch (MissingResourceException e) {
@@ -186,6 +194,11 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         public PlantSet<?, ?> getPlantSet() {
             return this.plantSet;
         }
+
+        @Override
+        public ResourceLocation getRecipeID() {
+            return this.id;
+        }
     }
 
     private static class FurnaceRecipeDefinition implements RecipeDefinition<FurnaceRecipe> {
@@ -238,6 +251,11 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         public PlantSet<?, ?> getPlantSet() {
             return this.plantSet;
         }
+
+        @Override
+        public ResourceLocation getRecipeID() {
+            return this.id;
+        }
     }
 
     private interface RecipeDefinition<T extends IRecipe<?>> {
@@ -245,6 +263,8 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         T getRecipe() throws MissingResourceException;
 
         PlantSet<?, ?> getPlantSet();
+
+        ResourceLocation getRecipeID();
 
         static IItemProvider getItem(ResourceLocation itemID) {
             IItemProvider provider;

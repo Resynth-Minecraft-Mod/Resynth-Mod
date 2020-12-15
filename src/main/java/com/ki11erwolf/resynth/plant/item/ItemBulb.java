@@ -17,9 +17,11 @@ package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
-import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
+import com.ki11erwolf.resynth.plant.block.BlockBiochemicalPlant;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.util.EffectsUtil;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -48,20 +50,11 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      */
     private static final String PREFIX = "bulb";
 
-    /**
-     * The properties specific to the plant set
-     * this produce item is registered to.
-     */
-    private final IBiochemicalSetProperties setProperties;
+    private final PlantSet<BlockBiochemicalPlant, EntityType<?>> parentSet;
 
-    /**
-     * @param setTypeName the name of the plant set type (e.g. crystalline).
-     * @param setName the name of the plant set (e.g. diamond).
-     * @param properties the properties specific to the plant set.
-     */
-    public ItemBulb(String setTypeName, String setName, IBiochemicalSetProperties properties) {
-        super(setTypeName + "_" + PREFIX + "_" + setName, ResynthTabs.TAB_RESYNTH_PRODUCE);
-        this.setProperties = properties;
+    public ItemBulb(PlantSet<BlockBiochemicalPlant, EntityType<?>> parentSet) {
+        super(parentSet.getSetTypeName() + "_" + PREFIX + "_" + parentSet.getSetName(), ResynthTabs.TAB_RESYNTH_PRODUCE);
+        this.parentSet = parentSet;
     }
 
     // ************
@@ -135,6 +128,6 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        addPlantItemTooltips(tooltip, setProperties, null, PREFIX);
+        addPlantItemTooltips(tooltip, PREFIX, parentSet);
     }
 }

@@ -221,7 +221,7 @@ public interface PlantPatchInfoProvider extends BlockInfoProvider {
             //Growth chance
             information.add(
                     TextFormatting.BLUE + "Growth Chance: " +
-                            TextFormatting.GOLD + ((BlockPlant<?>) plantBlock).getProperties().chanceToGrow() + "%"
+                            TextFormatting.GOLD + ((BlockPlant<?>) plantBlock).getProperties().growthProbability() + "%"
             );
 
             //Light penalty
@@ -232,7 +232,7 @@ public interface PlantPatchInfoProvider extends BlockInfoProvider {
             );
 
             //Combined Growth Chance
-            float plantGrowthChance = ((BlockPlant<?>) plantBlock).getProperties().chanceToGrow() / 100;
+            float plantGrowthChance = ((BlockPlant<?>) plantBlock).getProperties().growthProbability() / 100;
 
             TileEntityMineralSoil entity = getTileEntity(world, pos.down());
             float mineralSoilConcentration = entity.getMineralPercentage();

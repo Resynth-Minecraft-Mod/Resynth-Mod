@@ -16,6 +16,7 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.IntegerProperty;
@@ -37,15 +38,8 @@ import net.minecraft.world.World;
  */
 public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallinePlant> {
 
-    /**
-     * @param plantTypeName the name of the plant set type (e.g. crystalline).
-     * @param plantName the name of the plant type (e.g. diamond).
-     * @param properties the properties (e.g. growth chances) of the
-     *                   plant type.
-     */
-    @SuppressWarnings("WeakerAccess")//Lies
-    public BlockCrystallinePlant(String plantTypeName, String plantName, ICrystallineSetProperties properties) {
-        super(plantTypeName, plantName, properties);
+    public BlockCrystallinePlant(PlantSet<BlockCrystallinePlant, Block> parentSet) {
+        super(parentSet);
     }
 
     // *************************
@@ -128,7 +122,7 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
      */
     @Override
     protected int postHarvestNumberOfProduceDrops(){
-        return ((ICrystallineSetProperties) properties).numberOfProduceDrops();
+        return ((ICrystallineSetProperties) properties).plantYield();
     }
 
     /**

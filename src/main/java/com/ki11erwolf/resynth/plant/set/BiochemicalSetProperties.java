@@ -76,7 +76,7 @@ public class BiochemicalSetProperties implements IBiochemicalSetProperties {
      * {@inheritDoc}
      */
     @Override
-    public boolean canBonemeal() {
+    public boolean bonemealGrowth() {
         return canBonemeal;
     }
 
@@ -84,7 +84,7 @@ public class BiochemicalSetProperties implements IBiochemicalSetProperties {
      * {@inheritDoc}
      */
     @Override
-    public float chanceToGrow() {
+    public float growthProbability() {
         return chanceToGrow;
     }
 
@@ -92,7 +92,7 @@ public class BiochemicalSetProperties implements IBiochemicalSetProperties {
      * {@inheritDoc}
      */
     @Override
-    public int numberOfProduceDrops() {
+    public int plantYield() {
         return numberOfProduceDrops;
     }
 

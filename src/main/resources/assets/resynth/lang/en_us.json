@@ -62,10 +62,6 @@
   "item.resynth.crystalline_seeds_cookie":                  "Cookie Seeds",
   "item.resynth.crystalline_shard_cookie":                  "Cookie Shard",
 
-  "block.resynth.crystalline_plant_dnetherite_scrap":       "Netherite Scrap Plant",
-  "item.resynth.crystalline_seeds_netherite_scrap":         "Netherite Scrap Seeds",
-  "item.resynth.crystalline_shard_netherite_scrap":         "Netherite Scrap Shard",
-
   "block.resynth.metallic_plant_iron":                      "Iron Plant",
   "item.resynth.metallic_seeds_iron":                       "Iron Seeds",
   "block.resynth.metallic_organic_ore_iron":                "Organic Iron Ore",
@@ -346,17 +342,17 @@
   "item.resynth.metallic_seeds_mekanism_tin":                       "Tin Seeds (Mekanism)",
   "block.resynth.metallic_organic_ore_mekanism_tin":                "Organic Tin (Mekanism)",
 
-  "block.resynth.crystalline_plant_mysticalagriculture_inferium":       "Inferium Plant (Mystical Argriculture)",
-  "item.resynth.crystalline_seeds_mysticalagriculture_inferium":        "Inferium Seeds (Mystical Argriculture)",
-  "item.resynth.crystalline_shard_mysticalagriculture_inferium":       "Inferium Shard (Mystical Argriculture)",
+  "block.resynth.crystalline_plant_mysticalagriculture_inferium":       "Inferium Plant (Mystical Agriculture)",
+  "item.resynth.crystalline_seeds_mysticalagriculture_inferium":        "Inferium Seeds (Mystical Agriculture)",
+  "item.resynth.crystalline_shard_mysticalagriculture_inferium":       "Inferium Shard (Mystical Agriculture)",
 
-  "block.resynth.crystalline_plant_mysticalagriculture_prosperity":     "Prosperity Plant (Mystical Argriculture)",
-  "item.resynth.crystalline_seeds_mysticalagriculture_prosperity":      "Prosperity Seeds (Mystical Argriculture)",
-  "item.resynth.crystalline_shard_mysticalagriculture_prosperity":     "Prosperity Shard (Mystical Argriculture)",
+  "block.resynth.crystalline_plant_mysticalagriculture_prosperity":     "Prosperity Plant (Mystical Agriculture)",
+  "item.resynth.crystalline_seeds_mysticalagriculture_prosperity":      "Prosperity Seeds (Mystical Agriculture)",
+  "item.resynth.crystalline_shard_mysticalagriculture_prosperity":     "Prosperity Shard (Mystical Agriculture)",
 
-  "block.resynth.crystalline_plant_mysticalagriculture_soulium":        "Soulium Plant (Mystical Argriculture)",
-  "item.resynth.crystalline_seeds_mysticalagriculture_soulium":         "Soulium Seeds (Mystical Argriculture)",
-  "item.resynth.crystalline_shard_mysticalagriculture_soulium":        "Soulium Shard (Mystical Argriculture)",
+  "block.resynth.crystalline_plant_mysticalagriculture_soulium":        "Soulium Plant (Mystical Agriculture)",
+  "item.resynth.crystalline_seeds_mysticalagriculture_soulium":         "Soulium Seeds (Mystical Agriculture)",
+  "item.resynth.crystalline_shard_mysticalagriculture_soulium":        "Soulium Shard (Mystical Agriculture)",
 
   "block.resynth.crystalline_plant_botania_white_petal":                "White Petal Plant (Botania)",
   "item.resynth.crystalline_seeds_botania_white_petal":                 "White Petal Seeds (Botania)",
@@ -490,30 +486,41 @@
   "Can be smelted into the final resource or left in water to despawn for a chance at getting more seeds.",
   "tooltip.item.resynth.bulb":
   "Can be smelted into the final resource, or smashed (by holding right-click) for a chance at getting more seeds.",
-  "tooltip.item.resynth.seeds.failure":
-  "This plant is disabled :(\nUnfortunately an error has occurred with this plant and it can no longer be used. Submit a bug report if you see this!",
 
   "_______COMMENT": "----Plant Block Tooltips----",
   "tooltip.block.resynth.organic_ore":
   "Can be smelted into the final resource ore, or blown up for a chance at getting more seeds. ",
 
-  "________COMMENT": "----Plant Property Tooltips----",
-  "tooltip.property.resynth.stats_disabled":                      "Only available in singleplayer.",
-  "tooltip.property.resynth.growth_chance":                       "Growth Rate: %s%s%%",
-  "tooltip.property.resynth.plant_yield":                         "Produce Yield: %s%s%s drop",
-  "tooltip.property.resynth.plant_yields":                        "Produce Yield: %s%s%s drops",
-  "tooltip.property.resynth.bonemeal_enabled":                    "Likes Bonemeal",
-  "tooltip.property.resynth.bonemeal_disabled":                   "Dislikes Bonemeal",
-  "tooltip.property.resynth.seed_spawn_chance_from_ore":          "Seed Drop Chance: %s%s%%%s with source block",
-  "tooltip.property.resynth.seed_spawn_chance_from_shard":        "Seed Drop Chance: %s%s%%%s with shard produce",
-  "tooltip.property.resynth.seed_spawn_chance_from_organic_ore":  "Seed Drop Chance: %s%s%%%s with organic ore produce",
-  "tooltip.property.resynth.seed_spawn_chance_from_mob":          "Seed Drop Chance: %s%s%%%s with mob creatures",
-  "tooltip.property.resynth.seed_spawn_chance_from_bulb":         "Seed Drop Chance: %s%s%%%s with bulb produce",
-
   "_________COMMENT": "---Miscellaneous---",
   "misc.resynth.mineral_content": "Mineral Content: %s%%",
 
-  "__________COMMENT": "--- FOR TRANSLATION: new entries that have not been translated. ---",
-  "misc.resynth.growth_stage":                      "Growth Stage: %s",
-  "tooltip.property.resynth.produce_yield":         "Produce Output: %s%s%s Items"
+  "__________COMMENT": "--- FOR TRANSLATION: new entries that have either been changed or not yet translated. ---",
+  "misc.resynth.growth_stage":                        "Growth Stage: %s",
+
+  "block.resynth.crystalline_plant_netherite_scrap":  "Netherite Scrap Plant",
+  "item.resynth.crystalline_seeds_netherite_scrap":   "Netherite Scrap Seeds",
+  "item.resynth.crystalline_shard_netherite_scrap":   "Netherite Scrap Shard",
+
+  "________COMMENT": "----PlantSet Property Tooltips----",
+  "tooltip.resynth.plantset.property.bonemeal_effective":      "Bonemeal: %seffective",
+  "tooltip.resynth.plantset.property.bonemeal_ineffective":    "Bonemeal: %sineffective",
+  "tooltip.resynth.plantset.property.growth_rate":             "Growth Rate Multiplier: %s%s",
+  "tooltip.resynth.plantset.property.seed_sources":            "Seeds Dropped by %s: %s%s",
+  "tooltip.resynth.plantset.property.ore_seed_drop_rate":      "Ore Blocks Drop Seeds: %s%s%s of the time.",
+  "tooltip.resynth.plantset.property.mob_seed_drop_rate":      "Mobs Drop Seeds: %s%s%s of the time.",
+  "tooltip.resynth.plantset.property.produce_seed_drop_rate":  "Produce Drops Seeds: %s%s%s of the time.",
+  "tooltip.resynth.plantset.property.plant_yield":             "Plant Yield: %s%s%s produce items ",
+  "tooltip.resynth.plantset.property.plant_yield_singular":    "Plant Yield: %s%s%s produce item",
+  "tooltip.resynth.plantset.property.produce_yield":           "Produce Yield: %s%s%s items",
+  "tooltip.resynth.plantset.property.produce_yield_singular":  "Produce Yield: %s%s%s item",
+  "tooltip.resynth.plantset.property.unavailable":             "Only available in singleplayer.",
+
+  "tooltip.resynth.plantset.property.seed_sources.crystalline":   "Mining",
+  "tooltip.resynth.plantset.property.seed_sources.metallic":      "Blowing Up",
+  "tooltip.resynth.plantset.property.seed_sources.biochemical":   "Slaying",
+
+  "tooltip.resynth.plantset.property.broken":
+  "This plant and its items are broken!",
+  "tooltip.resynth.plantset.property.broken.information":
+  "A severe error has occurred while attempting to build and setup the plant, seeds, and produce of this set, which was registered to the game but is now fundamentally broken and unusable. The error was immediately handled by Resynth to avoid crashing, by logging the error, stopping the setup and flagging the set as broken - preventing it and its items from being obtained, used, planted, or otherwise interacting with the game, and with error message tooltips on the sets items. It may still however, be possible to smelt any left over produce. These types of errors are almost always caused by an Item, Block, Mob, or other game resource used and required by the plant set, which was expected to be registered to the game but could not be found. Such as when another mod deletes, renames, or changes a resource - that Resynth has a plant and set for, and expects to exist with a specific name. Submit a bug report at https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/issues to get this problem sorted."
 }

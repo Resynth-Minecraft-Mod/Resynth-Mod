@@ -71,7 +71,7 @@ public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetPr
                          "a single item of this plants produce. Change this number to\n" +
                          "increase or decrease the amount of resources a single item of\n" +
                          "produce gives when smelted in a furnace.",
-                defaultProperties.resourceCount(), 1, 64,
+                defaultProperties.produceYield(), 1, 64,
                 this
         );
 
@@ -81,7 +81,7 @@ public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetPr
                          "of this plants produce. The time is measured in ticks, where\n" +
                          "1 second is 20 ticks, so 1 ticks is 50 milliseconds. Most\n" +
                          "items take 200 ticks (10 seconds) to smelt.",
-                defaultProperties.smeltingTime(), 1, 200 * 10,
+                defaultProperties.timePerYield(), 1, 200 * 10,
                 this
         );
 
@@ -91,7 +91,7 @@ public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetPr
                          "after smelting a single item of this plants produce. It takes\n" +
                          "exactly 7.5 points to go from level 0 to level 1. Going from\n" +
                          "level 1 to level 2 will take slightly more than 7.5 points.",
-                defaultProperties.experienceWorth(), 1, 1000,
+                defaultProperties.experiencePoints(), 1, 1000,
                 this
         );
 
@@ -115,7 +115,7 @@ public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetPr
      * if the player hasn't enabled or modified it.
      */
     @Override
-    public int resourceCount() {
+    public int produceYield() {
         if(useConfigValues.getValue())
             return resourceCountConfig.getValue();
         else return Integer.parseInt(resourceCountConfig.getDefaultValue().toString());
@@ -129,7 +129,7 @@ public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetPr
      * if the player hasn't enabled or modified it.
      */
     @Override
-    public int smeltingTime() {
+    public int timePerYield() {
         if(useConfigValues.getValue())
             return smeltingTimeConfig.getValue();
         else return Integer.parseInt(smeltingTimeConfig.getDefaultValue().toString());
@@ -143,7 +143,7 @@ public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetPr
      * if the player hasn't enabled or modified it.
      */
     @Override
-    public double experienceWorth() {
+    public double experiencePoints() {
         if(useConfigValues.getValue())
             return experienceWorthConfig.getValue();
         else return Double.parseDouble(experienceWorthConfig.getDefaultValue().toString());

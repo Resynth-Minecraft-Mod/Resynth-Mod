@@ -133,10 +133,11 @@ public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistry
         );
 
         // Check if already flagged as broken
-        if(isBroken()) throw new IllegalStateException(
-                "Cannot load seed sources for the PlantSet '"
-                        + getSetName() + "' which has been flagged as broken."
-            );
+        if(isBroken()) {
+            LOG.error("Cannot load seed sources for the PlantSet '" + getSetName() + "' which has been flagged as broken!");
+            cachedSeedSources = null;
+            return;
+        }
 
         // Store inside own variable for caching
         cachedSeedSources = loadSeedSources();
@@ -200,6 +201,7 @@ public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistry
     void flagAsBroken() {
         if(isFailure)
             return;
+        else isFailure = true;
 
         ResynthAnalytics.send(new PlantSetFailureEvent(setName));
     }

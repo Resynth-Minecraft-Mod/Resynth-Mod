@@ -22,10 +22,16 @@ package com.ki11erwolf.resynth.plant.set;
 public interface ICrystallineSetProperties extends IPlantSetProperties {
 
     /**
-     * Returns the number of produce item the plant type
-     * will drop when harvested. May be specified by config.
+     * Explicitly declares the amount of {@link PlantSet#getProduceItem() plant
+     * produce} Items the plant block from the set will yield when harvested.
+     * The amount given should be between one and sixty-four, inclusive. Values
+     * outside of this range should be rounded to the closest acceptable value
+     * without errors.
+     *
+     * @return the amount of {@link PlantSet#getProduceItem() produce} Items
+     * dropped by the plant block when harvested.
      */
-    int numberOfProduceDrops();
+    int plantYield();
 
     /**
      * Returns the percentage (0.0 - 100.0) chance that seeds
@@ -53,5 +59,5 @@ public interface ICrystallineSetProperties extends IPlantSetProperties {
      * seed item. The value may also be {@code 0} (zero) or negative,
      * in which case this functionality is disabled.
      */
-    int resourcesPerSeeds();
+    int seedCraftingYield();
 }

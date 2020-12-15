@@ -305,7 +305,7 @@ public class PlantSetFactory {
         );
 
         //Create & add seeds recipe if count not 0
-        int seedsRecipeCount = ((CrystallinePlantSetConfig) plantSet.getPlantSetProperties()).resourcesPerSeeds();
+        int seedsRecipeCount = ((CrystallinePlantSetConfig) plantSet.getPlantSetProperties()).seedCraftingYield();
         if(seedsRecipeCount > 0) {
             seedsRecipeCount = Math.min(seedsRecipeCount, 64);
 

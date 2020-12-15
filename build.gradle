@@ -14,47 +14,77 @@ buildscript {
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'java'
 apply plugin: 'eclipse'
 
 //####################################//
 //           Config Variables         //
 //####################################//
 
-/**
- * The version number denoting the current Resynth build.
- */
-def modversion = "5.2.1"
-//Also change in: ResynthMod.java | mods.toml | Here
+def mod_version = ext.mod_version
 
 /**
  * The specific Minecraft Forge version to use when building
  * the mod. The Built mod jar will only run with this
  * version of Forge or newer.
  */
-def forgeversion = "34.1.0"
+def forge_version = ext.forge_version
 
 /**
  * The version of Minecraft this Resynth build is for.
  */
-def mcversion = "1.16.3"
+def minecraft_version = ext.minecraft_version
+
+def the_one_probe = ext.the_one_probe
+
+def hwyla = ext.hwyla
+
+def enable_the_one_probe = ext.enable_the_one_probe
+
+def enable_hwyla = ext.enable_hwyla
+
+def enable_hwyla_http = ext.enable_hwyla_http
+
+def mod_title = ext.mod_title
+
+def mod_id = ext.mod_id
+
+def mod_author = ext.mod_author
+
+def mod_url = ext.mod_url
+
+/* Additional */
+
+def minecraft_forge_version = "${minecraft_version}-${forge_version}"
+
+def full_title_version = "Resynth-${mod_version}-[Minecraft-Forge-${minecraft_version}]"
+
+def complete_title_version = "Resynth-${mod_version}-[Minecraft-Forge-${minecraft_forge_version}]"
+
+def full_version = "${mod_version}-[${minecraft_version}]"
+
+def complete_version = "${mod_version}-[${minecraft_forge_version}]"
+
+def java_info = (System.getProperty("java.vendor") == "Oracle Corporation" ? "Java(TM)" : "Java-OpenJDK") +
+        "-${System.getProperty("java.version")}" + " (${System.getProperty("java.vendor")})"
 
 /**
  * The full name/title to give the mod jar when it's built.
  */
-def jarTitle = "Resynth-${modversion}-[Minecraft-Forge-${mcversion}].jar"
+def mod_jar_title = "${full_title_version}.jar"
 
 /**
  * The directory to put the mod jar in when it's built.
  */
-def jarOutputDir = project.file("jar")
+def mod_output_folder = project.file("jar")
 
 //####################################//
 //                 END                //
 //####################################//
 
 //Don't touch...
-archivesBaseName = "resynth"
-version = "${modversion}"
+archivesBaseName = mod_id
+version = mod_version
 group = "com.ki11erwolf.${archivesBaseName}"
 
 //noinspection GroovyUnusedAssignment
@@ -85,23 +115,44 @@ minecraft {
 }
 
 repositories {
+    jcenter()
+    mavenCentral()
+
     maven {
-        name 'Waila'
+        name 'Forge'
         url = 'https://files.minecraftforge.net/maven'
     }
 
-    maven {
+    if (the_one_probe) maven {
         name 'TOP'
         url "https://maven.tterrag.com/"
     }
 
-    jcenter()
-    mavenCentral()
+    if (enable_hwyla) {
+        maven {
+            name 'Waila'
+            url = "https://maven.tehnut.info/"
+        }
 
-    maven { //Hwyla (Waila)
-        url = "https://maven.tehnut.info/"
+        if (enable_hwyla_http) maven {
+            name 'Waila-Unsecure-HTTP-Protocol'
+            url = "http://maven.tehnut.info/"
+        }
     }
 }
+
+/** Someday... */
+
+//processResources {
+//    inputs.property "mod_version", mod_version
+//    inputs.property "minecraft_version", minecraft_version
+//
+//    from(sourceSets.main.resources.srcDirs) {
+//        include 'mods.toml'
+//        expand 'mod_version': mod_version, 'minecraft_version': minecraft_version
+//    }
+//    rename '(.+_at.cfg)', 'META-INF/$1'
+//}
 
 //##########################################//
 //      Forge Version & Dependencies        //
@@ -109,28 +160,40 @@ repositories {
 
 dependencies {
     //Forge version
-    minecraft "net.minecraftforge:forge:${mcversion}-${forgeversion}"
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     //The One Probe version
-    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.4-beta-7:api")
-    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.4-beta-7")
+    if (enable_the_one_probe) {
+        compileOnly fg.deobf("mcjty.theoneprobe:${the_one_probe}:api")
+        runtimeOnly fg.deobf("mcjty.theoneprobe:${the_one_probe}")
+    }
 
     //Hwyla version
-    compileOnly fg.deobf('mcp.mobius.waila:Hwyla:1.10.11-B78_1.16.2:api')
-    runtimeOnly fg.deobf('mcp.mobius.waila:Hwyla:1.10.11-B78_1.16.2')
+    if (enable_hwyla) {
+        compileOnly fg.deobf("mcp.mobius.waila:${hwyla}:api")
+        runtimeOnly fg.deobf("mcp.mobius.waila:${hwyla}")
+    }
 }
 
 jar {
     manifest {
         attributes([
-                "Specification-Title": "Resynth",
-                "Specification-Vendor": "Ki11er_wolf",
-                "Specification-Version": "${version}-${mcversion}",
-                "Implementation-Title": project.name,
-                "Implementation-Version": "${version}",
-                "Implementation-Vendor" :"Ki11er_wolf",
-                "Implementation-Timestamp": new Date()
-                        .format("yyyy-MM-dd'T'HH:mm:ssZ")
+                // Generic - for resynth in general
+                "Specification-Title":      mod_id,
+                "Specification-Vendor":     mod_author,
+                "Specification-Version":    full_version,
+                // Specific - for single resynth release
+                "Implementation-Title":     mod_title,
+                "Implementation-Version":   complete_title_version,
+                "Implementation-Vendor":    mod_author,
+                "Implementation-Vendor-Id": "${mod_title} (by ${mod_author})",
+                "Implementation-Timestamp": new Date().format("dd-MM-yyyy'_'HH:mm:ssZ"),
+                "Implementation-URL":       new URL(mod_url),
+                // Java
+                "Signature-Version":        mod_version,
+                "Created-By":               java_info,
+                // Custom (Resynth/Forge/Minecraft)
+                "Mod-License":              "Apache License, Version 2.0",
         ])
     }
 }
@@ -152,7 +215,7 @@ task finalizeBuild() {
 
     //Defines the specfic mod jar name to be looked for.
     //Later reassigned the value of the mod jar path before move.
-    def modjar = "${archivesBaseName}-${modversion}.jar"
+    def modjar = "${archivesBaseName}-${mod_version}.jar"
 
     /**
      * Called and executed last as part of the task,
@@ -167,8 +230,8 @@ task finalizeBuild() {
         def result = null
         if(tryFindBuiltJar(lookIn, modjar)){
             //If Jar Found
-            def finalModJarDest = new File("${jarOutputDir}/${jarTitle}")
-            cleanAndCreate(jarOutputDir)
+            def finalModJarDest = new File("${mod_output_folder}/${mod_jar_title}")
+            cleanAndCreate(mod_output_folder)
 
             //Store results from the attempted Rename & Move operation
             result = tryRenameAndMove(modjar, finalModJarDest)
@@ -213,7 +276,7 @@ task finalizeBuild() {
             return false //FAIL
         } else {
             println("\nFound expected mod jar from build! Renaming & moving jar to...")
-            println("${jarOutputDir} as ${jarTitle}")
+            println("${mod_output_folder} as ${mod_jar_title}")
             return true //PASS
         }
     }

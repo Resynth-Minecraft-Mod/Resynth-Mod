@@ -18,8 +18,7 @@ package com.ki11erwolf.resynth.item;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
-import com.ki11erwolf.resynth.plant.set.IPlantSetProduceProperties;
-import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.client.resources.I18n;
@@ -109,11 +108,9 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      * @return {@code this}.
      */
     ResynthItem<T> queueRegistration(){
-        if(isQueued)
-            throw new IllegalStateException(
-                    String.format("Item: %s already queued for registration.",
-                            this.getClass().getCanonicalName())
-            );
+        if(isQueued) throw new IllegalStateException(
+                String.format("Item: %s already queued for registration.", this.getClass().getCanonicalName())
+        );
 
         ResynthItems.INSTANCE.queueForRegistration(this);
         isQueued = true;
@@ -135,15 +132,11 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      *
      * @param tooltip the tooltip we're modifying with the new
      *                new tooltips.
-     * @param setProperties the properties of the specific
-     *                      plant set we're using to get
-     *                      the plant statistics
      * @param itemName the registry name (path only) of the
      *                 item we're getting the tooltip of.
      */
-    protected static void addPlantItemTooltips(List<ITextComponent> tooltip, IPlantSetProperties setProperties,
-                                               IPlantSetProduceProperties produceProperties, String itemName){
-        Tooltip.addPlantItemOrBlockTooltips(tooltip, setProperties, produceProperties, getDescriptiveTooltip(itemName));
+    protected static void addPlantItemTooltips(List<ITextComponent> tooltip, String itemName, PlantSet<?, ?> parentSet){
+        Tooltip.addPlantItemOrBlockTooltips(tooltip, parentSet, getDescriptiveTooltip(itemName));
     }
 
     /**

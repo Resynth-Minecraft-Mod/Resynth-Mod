@@ -15,13 +15,16 @@
  */
 package com.ki11erwolf.resynth.plant.set;
 
+/**
+ * Defines the required configurable settings used by Biochemical plant sets.
+ */
 public interface IBiochemicalSetProperties extends IPlantSetProperties {
 
     /**
      * Returns the number of produce item the plant type
-     * will drop when harvested. May be specified by config.
+     * will drop when harvested.
      */
-    int numberOfProduceDrops();
+    int plantYield();
 
     /**
      * Returns the percentage (0.0 - 100.0) chance that seeds

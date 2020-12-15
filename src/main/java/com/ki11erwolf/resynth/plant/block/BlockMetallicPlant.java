@@ -15,7 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.block;
 
-import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -49,15 +49,9 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      */
     private static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-    /**
-     * @param plantTypeName the name of the plant set type (e.g. crystalline).
-     * @param plantName the name of the plant type (e.g. diamond).
-     * @param properties the properties (e.g. growth chances) of the
-     *                   plant type.
-     */
     @SuppressWarnings("WeakerAccess")//Lies
-    public BlockMetallicPlant(String plantTypeName, String plantName, IPlantSetProperties properties) {
-        super(plantTypeName, plantName, properties);
+    public BlockMetallicPlant(PlantSet<BlockMetallicPlant, Block> parentSet) {
+        super(parentSet);
     }
 
     // *************************

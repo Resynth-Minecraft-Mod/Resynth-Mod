@@ -65,7 +65,7 @@ public class MetallicSetProperties implements IMetallicSetProperties {
      * {@inheritDoc}
      */
     @Override
-    public boolean canBonemeal() {
+    public boolean bonemealGrowth() {
         return canBonemeal;
     }
 
@@ -73,7 +73,7 @@ public class MetallicSetProperties implements IMetallicSetProperties {
      * {@inheritDoc}
      */
     @Override
-    public float chanceToGrow() {
+    public float growthProbability() {
         return chanceToGrow;
     }
 

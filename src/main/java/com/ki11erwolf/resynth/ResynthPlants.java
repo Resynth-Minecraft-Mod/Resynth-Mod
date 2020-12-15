@@ -125,7 +125,7 @@ public class ResynthPlants {
                     true, 50, 2, 50, 50
             ), new PlantSetProduceProperties(
                     5, 200, 7.5
-            ), new ResourceLocation("minecraft", "sand"), new ResourceLocation("minecraft", "dirt")
+            ), new ResourceLocation("minecraft", "sand"), new ResourceLocation("minecraft", "dirtt")
     ).register();
 
     /**

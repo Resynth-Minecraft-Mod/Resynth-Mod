@@ -17,7 +17,7 @@ package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.block.ResynthBlock;
-import com.ki11erwolf.resynth.plant.set.IMetallicSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -45,25 +45,16 @@ public class BlockOrganicOre extends ResynthBlock<BlockOrganicOre> {
      */
     private static final String PREFIX = "organic_ore";
 
-    /**
-     * The properties of the plant set this block
-     * belongs to.
-     */
-    private final IMetallicSetProperties properties;
+    private final PlantSet<BlockMetallicPlant, Block> parentSet;
 
-    /**
-     * @param setTypeName the name of the plant set type.
-     * @param name the name of the plant set.
-     * @param properties the plant set properties.
-     */
-    public BlockOrganicOre(String setTypeName, String name, IMetallicSetProperties properties) {
+    public BlockOrganicOre(PlantSet<BlockMetallicPlant, Block> parentSet) {
         super(
                 Block.Properties.create(Material.GOURD).harvestTool(ToolType.AXE)
                 .hardnessAndResistance(2),
                 new Item.Properties().group(ResynthTabs.TAB_RESYNTH_PRODUCE),
-                setTypeName + "_" + PREFIX + "_" + name
+                parentSet.getSetTypeName() + "_" + PREFIX + "_" + parentSet.getSetName()
         );
-        this.properties = properties;
+        this.parentSet = parentSet;
     }
 
     /**
@@ -71,7 +62,7 @@ public class BlockOrganicOre extends ResynthBlock<BlockOrganicOre> {
      */
     @Override
     public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag){
-        BlockPlant.addPlantItemBlockTooltips(tooltip, properties, null, PREFIX);
+        BlockPlant.addPlantItemBlockTooltips(tooltip, PREFIX, parentSet);
     }
 
     /**

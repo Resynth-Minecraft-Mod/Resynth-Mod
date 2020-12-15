@@ -98,7 +98,7 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
         this.canUseBonemeal = new BooleanConfigValue(
                 "enable-bonemeal",
                 "Set this to true to allow using bonemeal on this specific plant type.",
-                defaultProperties.canBonemeal(),
+                defaultProperties.bonemealGrowth(),
                 this
         );
 
@@ -108,7 +108,7 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
                         "\nIncrease this number to increase the growth rate of the plant," +
                         "\ndecrease it to decrease the growth rate of the plant." +
                         "\nYOU MUST SET 'use-configuration-values-for-growth' TO 'true' TO USE THIS.",
-                defaultProperties.chanceToGrow(),
+                defaultProperties.growthProbability(),
                 0.0, 100.0,
                 this
         );
@@ -157,7 +157,7 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
      * {@inheritDoc}
      */
     @Override
-    public boolean canBonemeal() {
+    public boolean bonemealGrowth() {
         return canUseBonemeal.getValue();
     }
 
@@ -165,7 +165,7 @@ public class MetallicPlantSetConfig extends ConfigCategory implements IMetallicS
      * {@inheritDoc}
      */
     @Override
-    public float chanceToGrow() {
+    public float growthProbability() {
         if(!this.useConfigGrowthChanceValue.getValue())
             return Float.parseFloat(chanceToGrow.getDefaultValue().toString());
         return (float) chanceToGrow.getValue();

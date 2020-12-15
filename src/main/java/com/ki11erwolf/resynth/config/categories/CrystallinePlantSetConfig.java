@@ -111,7 +111,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
         this.canUseBonemeal = new BooleanConfigValue(
                 "enable-bonemeal",
                 "Set this to true to allow using bonemeal on this specific plant type.",
-                defaultProperties.canBonemeal(),
+                defaultProperties.bonemealGrowth(),
                 this
         );
 
@@ -121,7 +121,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
                           "\nIncrease this number to increase the growth rate of the plant," +
                           "\ndecrease it to decrease the growth rate of the plant." +
                           "\nYOU MUST SET 'use-configuration-values-for-growth' TO 'true' TO USE THIS.",
-                defaultProperties.chanceToGrow(),
+                defaultProperties.growthProbability(),
                 0.0, 100.0,
                 this
         );
@@ -130,7 +130,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
                 "number-of-produce-drops",
                 "The number of produce item drops this plant type will drop when fully grown" +
                           "\nand broken.",
-                defaultProperties.numberOfProduceDrops(),
+                defaultProperties.plantYield(),
                 1, 64,
                 this
         );
@@ -178,7 +178,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
                 "The amount of resource items, that this plant set grows, that will be crafted when\n" +
                          "placing this plants seeds in a crafting table. A value of 0 (zero) will disable this\n" +
                          "feature for the particular plant and plant set. ",
-                defaultProperties.resourcesPerSeeds(), 0, 64,
+                defaultProperties.seedCraftingYield(), 0, 64,
                 this
         );
     }
@@ -188,7 +188,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
      * @return the value specified by config.
      */
     @Override
-    public boolean canBonemeal() {
+    public boolean bonemealGrowth() {
         return this.canUseBonemeal.getValue();
     }
 
@@ -197,7 +197,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
      * Specified by config.
      */
     @Override
-    public float chanceToGrow() {
+    public float growthProbability() {
         if(!this.useConfigGrowthChanceValue.getValue())
             return Float.parseFloat(chanceToGrow.getDefaultValue().toString());
         return (float) this.chanceToGrow.getValue();
@@ -208,7 +208,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
      * Specified by config.
      */
     @Override
-    public int numberOfProduceDrops() {
+    public int plantYield() {
         return this.numberOfProduceDrops.getValue();
     }
 
@@ -241,7 +241,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
      * the players configuration file.
      */
     @Override
-    public int resourcesPerSeeds() {
+    public int seedCraftingYield() {
         return resourcesPerSeedsConfig.getValue();
     }
 }

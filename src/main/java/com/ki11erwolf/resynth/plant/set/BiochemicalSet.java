@@ -61,8 +61,8 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
         this.setProperties = properties;
 
         //Plant
-        this.produceItem = new ItemBulb(SET_TYPE_NAME, setName, properties);
-        this.plantBlock = new BlockBiochemicalPlant(SET_TYPE_NAME, setName, setProperties) {
+        this.produceItem = new ItemBulb(this);
+        this.plantBlock = new BlockBiochemicalPlant(this) {
             @Override
             protected ItemSeeds getSeedsItem() {
                 return seedsItem;
@@ -70,7 +70,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
 
             @Override
             protected ItemStack getProduce() {
-                return new ItemStack(produceItem.asItem(), properties.numberOfProduceDrops());
+                return new ItemStack(produceItem.asItem(), properties.plantYield());
             }
         };
         this.seedsItem = new ItemSeeds(this);

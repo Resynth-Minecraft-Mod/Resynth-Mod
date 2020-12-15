@@ -19,7 +19,6 @@ import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
 import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.util.EffectsUtil;
-import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -33,7 +32,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
@@ -107,17 +105,8 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      * Constructs the tooltip for the item.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
-                               ITooltipFlag flagIn){
-        //Failure to initialize warning
-        if(parentSet.isBroken()) Tooltip.addBlankLine(tooltip)
-                .add(getFormattedTooltip(PREFIX + ".failure", TextFormatting.RED));
-
-        //Add plant stats and item description
-        addPlantItemTooltips(
-                tooltip, parentSet.getPlantSetProperties(), parentSet.getProduceProperties(),
-                String.format("%s_%s", parentSet.getSetTypeName(), PREFIX)
-        );
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
+        addPlantItemTooltips(tooltip, String.format("%s_%s", parentSet.getSetTypeName(), PREFIX), parentSet);
     }
 
     /**

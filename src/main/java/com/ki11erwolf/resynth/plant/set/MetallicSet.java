@@ -60,8 +60,8 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant, Block> {
         super(SET_TYPE_NAME, setName, SEED_HOOKS, properties);
         this.properties = properties;
 
-        this.produceItem = new BlockOrganicOre(SET_TYPE_NAME, setName, properties);
-        this.plantBlock = new BlockMetallicPlant(SET_TYPE_NAME, setName, properties) {
+        this.produceItem = new BlockOrganicOre(this);
+        this.plantBlock = new BlockMetallicPlant(this) {
             @Override
             protected ItemSeeds getSeedsItem() {
                 return seedsItem;

@@ -79,7 +79,8 @@ class ItemMineralCrystal extends ResynthItem<ItemMineralCrystal> {
                 CONFIG.isECMEnabled() && CommonRKeys.SHIFT.rKey.query()
         ).write(tooltip);
 
-        tooltip.add(getFormattedTooltip(name + ".ecm", TextFormatting.DARK_PURPLE));
+        if(CONFIG.isECMEnabled())
+            tooltip.add(getFormattedTooltip(name + ".ecm", TextFormatting.DARK_PURPLE));
 
         super.addInformation(stack, world, tooltip, flagIn);
     }

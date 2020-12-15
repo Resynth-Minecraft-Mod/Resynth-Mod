@@ -81,7 +81,7 @@ public class GeneralConfig extends ConfigCategory {
             "tooltip-character-limit",
             "The maximum amount of characters allowed on a single line in an " +
                     "item or block tooltip.",
-            40, 20, 70, this
+            60, 20, 100, this
     );
 
     /**

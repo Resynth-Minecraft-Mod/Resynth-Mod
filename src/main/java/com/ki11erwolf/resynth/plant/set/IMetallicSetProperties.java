@@ -16,8 +16,7 @@
 package com.ki11erwolf.resynth.plant.set;
 
 /**
- * Defines the required "settings" (properties) needed for Metallic
- * plant sets specifically.
+ * Defines the required configurable settings used by Metallic plant sets.
  */
 public interface IMetallicSetProperties extends IPlantSetProperties {
 

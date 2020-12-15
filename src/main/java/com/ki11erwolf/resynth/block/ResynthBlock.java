@@ -19,8 +19,7 @@ import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.item.ResynthItemBlock;
-import com.ki11erwolf.resynth.plant.set.IPlantSetProduceProperties;
-import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.block.Block;
@@ -143,16 +142,13 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
      *
      * @param tooltip the tooltip we're modifying with the new
      *                new tooltips.
-     * @param setProperties the properties of the specific
-     *                      plant set we're using to get
-     *                      the plant statistics
      * @param blockName the registry name (path only) of the
      *                  block we're getting the tooltip of.
      */
     @SuppressWarnings("DuplicatedCode")
-    protected static void addPlantItemBlockTooltips(List<ITextComponent> tooltip, IPlantSetProperties setProperties,
-                                                    IPlantSetProduceProperties produceProperties, String blockName){
-        Tooltip.addPlantItemOrBlockTooltips(tooltip, setProperties, produceProperties, getDescriptiveTooltip(blockName));
+    protected static void addPlantItemBlockTooltips(
+            List<ITextComponent> tooltip,@SuppressWarnings("SameParameterValue") String blockName, PlantSet<?, ?> parentSet){
+        Tooltip.addPlantItemOrBlockTooltips(tooltip, parentSet, getDescriptiveTooltip(blockName));
     }
 
     /**
@@ -176,12 +172,12 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
      * @param params list of parameters for use in formatting.
      * @param item the name of the blocks who's tooltip we want and key appended.
      */
+    @SuppressWarnings("deprecation")
     protected static ITextComponent getDescriptiveTooltip(String item, Object... params){
         if(item == null){
             return toTextComponent(TextFormatting.RED + "Error");
         }
 
-        //noinspection deprecation
         return toTextComponent(WordUtils.wrap(
                 TextFormatting.DARK_GRAY + I18n.format("tooltip.block.resynth." + item, params),
                 ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).getTooltipCharacterLimit(),

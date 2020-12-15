@@ -17,7 +17,9 @@ package com.ki11erwolf.resynth.plant.item;
 
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.item.ResynthItem;
-import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
+import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
+import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -36,19 +38,11 @@ public class ItemShard extends ResynthItem<ItemShard> {
      */
     private static final String PREFIX = "shard";
 
-    /**
-     * The plant set properties.
-     */
-    private final ICrystallineSetProperties setProperties;
+    private final PlantSet<BlockCrystallinePlant, Block> parentSet;
 
-    /**
-     * @param setTypeName the name of the plant set type (e.g. crystalline).
-     * @param setName the name of the plant set (e.g. diamond).
-     * @param properties the properties for the specific plant set.
-     */
-    public ItemShard(String setTypeName, String setName, ICrystallineSetProperties properties) {
-        super(setTypeName + "_" + PREFIX + "_" + setName, ResynthTabs.TAB_RESYNTH_PRODUCE);
-        this.setProperties = properties;
+    public ItemShard(PlantSet<BlockCrystallinePlant, Block> parentSet) {
+        super(parentSet.getSetTypeName() + "_" + PREFIX + "_" + parentSet.getSetName(), ResynthTabs.TAB_RESYNTH_PRODUCE);
+        this.parentSet = parentSet;
     }
 
     /**
@@ -57,6 +51,6 @@ public class ItemShard extends ResynthItem<ItemShard> {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
-        addPlantItemTooltips(tooltip, setProperties, null, PREFIX);
+        addPlantItemTooltips(tooltip, PREFIX, parentSet);
     }
 }

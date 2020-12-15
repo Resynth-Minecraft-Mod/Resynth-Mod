@@ -1,30 +1,29 @@
-# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
-modLoader="javafml" #mandatory
-# A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[25,)" #mandatory (24 is current forge version)
-# Required now, as of 1.16.2.
-license="Apache 2.0"
+# The name of the mod loader type to load (javafml) #mandatory
+modLoader="javafml"
+# A version range to match for said mod loader (34) #mandatory
+loaderVersion="[34,)"
+# A URL to refer people to when problems occur with this mod (GitHub Issues) #optional
+issueTrackerURL="https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/issues"
+# The name of the license that this mod is released under (Apache 2.0) #mandatory
+license="Apache License, Version 2.0"
 
-
-# A URL to refer people to when problems occur with this mod
-issueTrackerURL="https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/issues" #optional
-# A list of mods - how many allowed here is determined by the individual mod loader
-[[mods]] #mandatory
-# The modid of the mod
-modId="resynth" #mandatory
-# The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="5.2.1" #mandatory
- # A display name for the mod
-displayName="Resynth" #mandatory
-# A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://resynth-minecraft-mod.github.io/versions.json" #optional
-# A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="https://resynth-minecraft-mod.github.io/" #optional
-# A file name (in the root of the mod JAR) containing a logo for display
-logoFile="" #optional
-# A text field displayed in the mod UI
-credits="Ki11er_wolf (Author), Aikini (Chinese Translations)" #optional
-# A text field displayed in the mod UI
-authors="Ki11er_wolf" #optional
-# The description text for the mod (multi line!) (#mandatory)
-description='''Growable ores, mob drops, and resources for vanilla Minecraft and tons of other mods.'''
+[[mods]]
+    # A display name for the mod #mandatory
+    displayName="Resynth - Growable Ores & Resources"
+    # The modid of the mod #mandatory
+    modId="resynth"
+    # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it #mandatory
+    version="5.2.1"
+    # The description text for the mod #mandatory
+    description='''
+    Lots of vanilla/mod: ore, mob, & resource growing crops & items, as simple, configurable itemsets.'''
+    # A URL for the "homepage" for this mod #optional
+    displayURL="https://resynth-minecraft-mod.github.io/"
+    # A URL to query for updates for this mod. #optional
+    updateJSONURL="https://resynth-minecraft-mod.github.io/versions.json"
+    # A text field displayed in the mod UI #optional
+    authors="Ki11er_wolf"
+    # A text field displayed in the mod UI #optional
+    credits="Ki11er_wolf, Aikini"
+    # A file name (in the root of the mod JAR) containing a logo for display #optional
+    logoFile="logo.png"

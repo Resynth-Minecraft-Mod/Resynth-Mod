@@ -16,8 +16,10 @@
 package com.ki11erwolf.resynth.plant.block;
 
 import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
+import com.ki11erwolf.resynth.plant.set.PlantSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityType;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -37,14 +39,8 @@ import net.minecraft.world.World;
  */
 public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalPlant> {
 
-    /**
-     * @param plantTypeName the name of the plant set type (e.g. crystalline).
-     * @param plantName the name of the plant type (e.g. diamond).
-     * @param properties the properties (e.g. growth chances) of the
-     *                   plant type.
-     */
-    public BlockBiochemicalPlant(String plantTypeName, String plantName, IBiochemicalSetProperties properties) {
-        super(plantTypeName, plantName, properties);
+    public BlockBiochemicalPlant(PlantSet<BlockBiochemicalPlant, EntityType<?>> parentSet) {
+        super(parentSet);
     }
 
     // *************************
@@ -112,7 +108,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      */
     @Override
     protected int postHarvestNumberOfProduceDrops(){
-        return ((IBiochemicalSetProperties) properties).numberOfProduceDrops();
+        return ((IBiochemicalSetProperties) properties).plantYield();
     }
 
     /**
