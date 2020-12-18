@@ -29,5 +29,4 @@ public class ConnectEvent extends Event {
     public String getName() {
         return "Connect";
     }
-
 }
