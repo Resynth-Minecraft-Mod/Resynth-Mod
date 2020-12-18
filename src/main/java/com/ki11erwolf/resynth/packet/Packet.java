@@ -190,6 +190,6 @@ public abstract class Packet<S extends Packet<S>> {
         & registration.
      */
     static {
-        //MANAGER.register(new Packet(null));
+        MANAGER.register(new DisplayHoeInfoPacket(null));
     }
 }

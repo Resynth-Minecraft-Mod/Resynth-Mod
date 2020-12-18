@@ -69,11 +69,11 @@ import java.util.Map;
  * ResynthItems#ITEM_MINERAL_ROCK Mineral Rocks} which increase plant
  * growth. Mineral Soil also changes appearance based upon the amount
  * of MineralRocks added. Finally, MineralSoil also integrates with
- * Hwyla & The One Probe, as well as with {@link ItemMineralHoe.MineralHoeInfo}.
+ * Hwyla & The One Probe, as well as with {@link ItemMineralHoe.MineralHoeInfoProvider}.
  */
 @SuppressWarnings("deprecation") // So many overriden deprecated methods...
 public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements PlantPatchInfoProvider,
-        IComponentProvider, IServerDataProvider<TileEntity>, IProbeInfoAccessor, ItemMineralHoe.MineralHoeInfo {
+        IComponentProvider, IServerDataProvider<TileEntity>, IProbeInfoAccessor, ItemMineralHoe.MineralHoeInfoProvider {
 
     /**
      * Configuration settings for this block class.
@@ -459,9 +459,9 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
 
     @Override
     public boolean provideHoeInformation(Map<String, String[]> information, BlockState state, World world, BlockPos pos) {
-        information.put("A", new String[]{"1", "2", "3"});
-        information.put("B", new String[]{"4", "5", "6", "7"});
-        information.put("Z", new String[]{"P", "Q", "R", "S", "T"});
+        information.put("soil_info_header", new String[]{
+                TextFormatting.GOLD.toString(), TextFormatting.AQUA.toString(), TextFormatting.GOLD.toString()
+        });
 
         return true;
     }

@@ -187,13 +187,13 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * @return the {@link JSerialData} serialized data reconstructed into an object instance. This
      * object instance could either be a new object instance or it may the {@code suggestedInstance}
      * provided.
-     * @throws DataMissmatchException if the given {@link JSerialData} serialized data does not match
+     * @throws DataMismatchException if the given {@link JSerialData} serialized data does not match
      * the serialized data created by this JSerializer. This happens when the {@link #identification}
      * of the JSerializer and the {@link JSerialData} serialized data do not match.
      * @throws SerializeException if for any reason the given object cannot be  deserialized. If an
      * exception is the cause, it will be included in the JSerializeException.
      */
-    public T deserializeData(JSerialData data, T suggestedInstance) throws DataMissmatchException, SerializeException {
+    public T deserializeData(JSerialData data, T suggestedInstance) throws DataMismatchException, SerializeException {
         return ideserialize(data, suggestedInstance);
     }
 
@@ -216,13 +216,13 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * the old object.
      * @return the {@link JSerialData} serialized data reconstructed into a newly constructed
      * object instance.
-     * @throws DataMissmatchException if the given {@link JSerialData} serialized data does not match
+     * @throws DataMismatchException if the given {@link JSerialData} serialized data does not match
      * the serialized data created by this JSerializer. This happens when the {@link #identification}
      * of the JSerializer and the {@link JSerialData} serialized data do not match.
      * @throws SerializeException if for any reason the given object cannot be deserialized. If an
      * exception is the cause, it will be included in the JSerializeException.
      */
-    public T deserializeData(JSerialData data) throws DataMissmatchException, SerializeException {
+    public T deserializeData(JSerialData data) throws DataMismatchException, SerializeException {
         T newObject;
 
         try {
@@ -384,7 +384,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             objectToData(object, dataIO);
         } catch (Exception cause) {
             SerializeException toThrow = new SerializeException(
-                    "JSerializer " + getIdentification() + "' failed to covert JSerializable object to data", cause
+                    "JSerializer '" + getIdentification() + "' failed to covert JSerializable object to data", cause
             );
             LOG.error(toThrow.getMessage(), cause);
             throw toThrow;
@@ -426,13 +426,13 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * @return the {@link JSerialData} serialized data reconstructed into an object instance. This
      * object instance could either be a new object instance or it may the {@code suggestedInstance}
      * provided.
-     * @throws DataMissmatchException if the given {@link JSerialData} serialized data does not match
+     * @throws DataMismatchException if the given {@link JSerialData} serialized data does not match
      * the serialized data created by this JSerializer. This happens when the {@link #identification}
      * of the JSerializer and the {@link JSerialData} serialized data do not match.
      * @throws SerializeException if for any reason the given object cannot be  deserialized. If an
      * exception is the cause, it will be included in the JSerializeException.
      */
-    private T ideserialize(JSerialData data, T newObject) throws DataMissmatchException {
+    private T ideserialize(JSerialData data, T newObject) throws DataMismatchException {
         matchData(data);
         T providedObject;
 
@@ -494,13 +494,13 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * in an attempt to fix it.
      *
      * @param data the {@link JSerialData} object to check.
-     * @throws DataMissmatchException if the {@link JSerialData#identification}
+     * @throws DataMismatchException if the {@link JSerialData#identification}
      * doesn't match this {@link JSerializer}s {@link #identification}, or, if
      * the {@link JSerialData#version} doesn't oesn't match this {@link
      * JSerializer}s {@link #version} and it cannot be fixed using {@link
      * #fixVersionMissmatch(JSerialDataIO, int, int)}.
      */
-    private void matchData(JSerialData data) throws DataMissmatchException {
+    private void matchData(JSerialData data) throws DataMismatchException {
         boolean missmatch = false;
 
         if(!doesDataIdentificationMatch(data))
@@ -514,7 +514,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
             }
 
         if(missmatch) {
-            throw new DataMissmatchException(
+            throw new DataMismatchException(
                     "Cannot deserialize " + data.toString() + " with " + this.toString()
             );
         }
@@ -647,7 +647,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * JSerializer}s {@link JSerializer#identification} and {@link JSerializer#version}.
      * This serves to both identify the serial Json data, well as to prevent {@link
      * JSerialData} objects from being deserialized by the wrong {@link JSerializer} or
-     * {@link JSerializer} version. See {@link DataMissmatchException} for more detailed
+     * {@link JSerializer} version. See {@link DataMismatchException} for more detailed
      * information.
      *
      * <p/> {@link JSerialData} objects cannot be modified directly once created. They
@@ -688,6 +688,42 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
          * Stored under the key {@code "data"} within the root Json object.
          */
         private final JsonObject data;
+
+        // Factory
+
+        /**
+         * Creates a new copy of the {@link JSerialData} object from a json string of
+         * the raw {@link #validateJSerialDataJson(JsonObject) valid} json data. Used
+         * to create a {@link JSerialData} object from {@link #serialize(JSerializable)
+         * serialized} object data, which can then be {@link
+         * #deserialize(JSerialData, JSerializer) deserialized}.
+         *
+         * @param jsonString the serialized objects {@link JSerialData} as a json string,
+         * @return the {@link JSerialData} created from the given json string.
+         * @throws IllegalArgumentException if the given json string is not valid json
+         * created from, and used by {@link JSerialData}.
+         * @throws JsonSyntaxException if the json string is invalid json.
+         */
+        public static JSerialData fromJsonString(String jsonString) throws IllegalArgumentException, JsonSyntaxException{
+            return fromJson(INTERNAL_GSON_INSTANCE.fromJson(jsonString, JsonObject.class));
+        }
+
+        /**
+         * Creates a new copy of the {@link JSerialData} object from the raw
+         * {@link #validateJSerialDataJson(JsonObject) valid} json object data.
+         * Used to create a {@link JSerialData} object from {@link
+         * #serialize(JSerializable) serialized} object data, which can then
+         * be {@link #deserialize(JSerialData, JSerializer) deserialized}.
+         *
+         * @param json serialized objects {@link JSerialData} as a json object,
+         * @return the {@link JSerialData} created from the given json object.
+         * @throws IllegalArgumentException if the given json object is not
+         * valid json created from, and used by {@link JSerialData}.
+         */
+        public static JSerialData fromJson(JsonObject json) throws IllegalArgumentException {
+            validateJSerialDataJson(json);
+            return new JSerialData(json.getAsJsonObject(SerialDataKeys.METADATA.key), json.getAsJsonObject(SerialDataKeys.DATA.key));
+        }
 
         // Constructors
 
@@ -758,6 +794,61 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
         public String toString() {
             return String.format("JSerialData[implementation=%s, identification=%s, version=%s]",
                     this.getClass().getCanonicalName(), io.getIdentification(), io.getVersion());
+        }
+
+        // Util
+
+        /**
+         * Checks if the given JsonObject, {@code jSerialDataJson}, is valid json data
+         * created from, and usable by a {@link JSerialData} object. Used to validate
+         * raw Json data before using it to construct a new {@link JSerialData} object.
+         *
+         * <p/> The raw json data is valid if:
+         * <ul>
+         *     <li> The json data is a root Json Object. </li>
+         *     <li>
+         *         The root object contains the following two Json Objects:
+         *         <ul>
+         *             <li> {@link SerialDataKeys#METADATA} </li>
+         *             <li> {@link SerialDataKeys#DATA} </li>
+         *         </ul>
+         *     </li>
+         *     <li>
+         *         The object {@link SerialDataKeys#METADATA} contains the following two strings:
+         *         <li> {@link SerialDataKeys#IDENTIFICATION} </li>
+         *         <li> {@link SerialDataKeys#VERSION} </li>
+         *     </li>
+         * </ul>
+         *
+         * @param jSerialDataJson the raw json data to validate for use in creating
+         *                        new {@link JSerialData} objects.
+         * @throws IllegalArgumentException if the raw json data is invalid. The exception
+         * provides a message with details on why the json data is invalid.
+         */
+        private static void validateJSerialDataJson(JsonObject jSerialDataJson) throws IllegalArgumentException {
+            JsonObject metadata = Objects.requireNonNull(jSerialDataJson).getAsJsonObject(SerialDataKeys.METADATA.key);
+            JsonObject data = jSerialDataJson.getAsJsonObject(SerialDataKeys.DATA.key);
+
+            if(metadata == null) throw new IllegalArgumentException("Invalid JSerialData json! The 'metadata' member is missing.");
+            if(data == null) throw new IllegalArgumentException("Invalid JSerialData json! The 'data' member is missing.");
+
+            JsonPrimitive identification = metadata.getAsJsonPrimitive(SerialDataKeys.IDENTIFICATION.key);
+            JsonPrimitive version = metadata.getAsJsonPrimitive(SerialDataKeys.VERSION.key);
+
+            if(identification == null)
+                throw new IllegalArgumentException("Invalid JSerialData metadata! The 'identification' member is missing.");
+
+            if(version == null)
+                throw new IllegalArgumentException("Invalid JSerialData metadata! The 'version' member is missing.");
+
+            String identificationStr = identification.getAsString();
+            String versionStr = version.getAsString();
+
+            if(identificationStr.isEmpty())
+                throw new IllegalArgumentException("Invalid JSerialData metadata! The 'identification' string is empty.");
+
+            if(versionStr.isEmpty())
+                throw new IllegalArgumentException("Invalid JSerialData metadata! The 'version' string is empty.");
         }
     }
 
@@ -1157,7 +1248,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * identification name of the JSerializer doesn't match the one from the
      * JSerialData.
      */
-    public static final class DataMissmatchException extends SerializeException {
+    public static final class DataMismatchException extends SerializeException {
 
         /**
          * Creates a new UnsupportedDataException exception with the given
@@ -1165,7 +1256,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
          *
          * @param message the details of the exception.
          */
-        private DataMissmatchException(String message) {
+        private DataMismatchException(String message) {
             super(message);
         }
 
@@ -1176,7 +1267,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
          * @param message the details of the exception.
          * @param cause the exception that caused this one to be thrown.
          */
-        private DataMissmatchException(String message, Exception cause) {
+        private DataMismatchException(String message, Exception cause) {
             super(message, cause);
         }
 
@@ -1193,8 +1284,8 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * on the failure will be provided, as well as the exception that caused the
      * failure, if any.
      *
-     * <p/> This exception is different from {@link DataMissmatchException} in
-     * that - a {@link DataMissmatchException} is thrown instead of a {@link
+     * <p/> This exception is different from {@link DataMismatchException} in
+     * that - a {@link DataMismatchException} is thrown instead of a {@link
      * SerializeException} only when deserializing a {@link JSerializable} with
      * the wrong {@link JSerialData}. Any other cause of failure is represented
      * with this exception.
@@ -1257,7 +1348,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * deserializing the object instance.
      * @return the {@link JSerialData} object reconstructed into a new {@link JSerializable}
      * object instance that matches the implementation that was serialized.
-     * @throws DataMissmatchException if the given {@link JSerialData} serialized data does
+     * @throws DataMismatchException if the given {@link JSerialData} serialized data does
      * not match the serialized data created by this JSerializer. This happens when the {@link
      * #identification} of the JSerializer and the {@link JSerialData} serialized data do not
      * match.
@@ -1265,7 +1356,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * deserialized for any reason.
      */
     public static <T extends JSerializable<T>> T deserialize(JSerialData serializedData, JSerializer<T> serializer)
-            throws DataMissmatchException {
+            throws DataMismatchException {
         return serializer.deserializeData(serializedData);
     }
 
@@ -1281,7 +1372,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * deserialize the given {@link JSerialData} to.
      * @return the {@link JSerialData} object reconstructed into a new {@link JSerializable}
      * object instance that matches the implementation that was serialized.
-     * @throws DataMissmatchException if the given {@link JSerialData} serialized data does
+     * @throws DataMismatchException if the given {@link JSerialData} serialized data does
      * not match the serialized data created by this JSerializer. This happens when the {@link
      * #identification} of the JSerializer and the {@link JSerialData} serialized data do not
      * match.
@@ -1289,7 +1380,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * deserialized for any reason.
      */
     public static <T extends JSerializable<T>> T deserialize(JSerialData serializedData, Class<? extends T> object)
-            throws DataMissmatchException {
+            throws DataMismatchException {
         T newInstance = constructSerializableObject(object);
         JSerializer<T> serializer = newInstance.getSerializer();
         return serializer.deserializeData(serializedData, newInstance);

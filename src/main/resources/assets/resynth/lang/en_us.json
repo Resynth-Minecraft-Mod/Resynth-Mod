@@ -494,12 +494,19 @@
   "_________COMMENT": "---Miscellaneous---",
   "misc.resynth.mineral_content": "Mineral Content: %s%%",
 
-  "__________COMMENT": "--- FOR TRANSLATION: new entries that have either been changed or not yet translated. ---",
+  "___________COMMENT": "--- FOR TRANSLATION: new entries that have either been changed or not yet translated. ---",
   "misc.resynth.growth_stage":                        "Growth Stage: %s",
 
   "block.resynth.crystalline_plant_netherite_scrap":  "Netherite Scrap Plant",
   "item.resynth.crystalline_seeds_netherite_scrap":   "Netherite Scrap Seeds",
   "item.resynth.crystalline_shard_netherite_scrap":   "Netherite Scrap Shard",
+
+  "__________COMMENT": "---Mineral Hoe Information Messages---",
+  "message.resynth.mineral_hoe_information.plant_info_header":
+  "%s------------------  %sPlant Information  %s-----------------",
+  "message.resynth.mineral_hoe_information.soil_info_header":
+  "%s---------------- %sMineral Soil Information %s---------------",
+
 
   "________COMMENT": "----PlantSet Property Tooltips----",
   "tooltip.resynth.plantset.property.bonemeal_effective":      "Bonemeal: %seffective",

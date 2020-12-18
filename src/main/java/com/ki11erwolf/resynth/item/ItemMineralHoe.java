@@ -22,12 +22,15 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.MineralHoeConfig;
+import com.ki11erwolf.resynth.packet.DisplayHoeInfoPacket;
+import com.ki11erwolf.resynth.packet.Packet;
 import com.ki11erwolf.resynth.util.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -40,6 +43,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.PacketDistributor;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
@@ -629,7 +633,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     // ********************
 
     private boolean getBlockInformation(World world, BlockPos pos, BlockState block, PlayerEntity player) {
-        MineralHoeInfo provider;
+        MineralHoeInfoProvider provider;
         Map<String, String[]> information;
 
         // Check if block is provider and has provided
@@ -640,29 +644,30 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         } else return false;
 
         // Information obtained! Convert to serializable HoeInformation
-        HoeInformation hoeInformation = new HoeInformation(information);
-        JSerializer.JSerialData serializedHoeInformation = JSerializer.serialize(hoeInformation);
+        MineralHoeInformation hoeInformation = new MineralHoeInformation(information);
 
+        if(player instanceof ServerPlayerEntity) {
+            Packet.send(PacketDistributor.PLAYER.with(
+                    () -> (ServerPlayerEntity) player), new DisplayHoeInfoPacket(hoeInformation)
+            );
 
-//        if(player instanceof ServerPlayerEntity)
-//            Packet.send(PacketDistributor.PLAYER.with(
-//                    () -> (ServerPlayerEntity) player), null
-//            );
+            return true;
+        }
 
-        return true;
+        return false;
     }
 
     @Nullable
-    private MineralHoeInfo asProvider(BlockState blockState) {
-        if(blockState.getBlock() instanceof MineralHoeInfo){
-            return (MineralHoeInfo) blockState.getBlock();
+    private MineralHoeInfoProvider asProvider(BlockState blockState) {
+        if(blockState.getBlock() instanceof MineralHoeInfoProvider){
+            return (MineralHoeInfoProvider) blockState.getBlock();
         }
 
         return null;
     }
 
     @Nullable
-    private static Map<String, String[]> callProvider(MineralHoeInfo provider, BlockState state, World world, BlockPos pos) {
+    private static Map<String, String[]> callProvider(MineralHoeInfoProvider provider, BlockState state, World world, BlockPos pos) {
         Map<String, String[]> cleanMap = new HashMap<>();
         boolean passed;
 
@@ -686,9 +691,9 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     // Information Serialization
     // *************************
 
-    public static class HoeInformation implements JSerializer.JSerializable<HoeInformation> {
+    public static class MineralHoeInformation implements JSerializer.JSerializable<MineralHoeInformation> {
 
-        public static final Serializer INFORMATION_SERIALIZER_INSTANCE = new Serializer();
+        public static JSerializer<MineralHoeInformation> INFORMATION_SERIALIZER_INSTANCE = new Serializer();
 
         private static final String SERIALIZER_IDENTIFICATION = "mineral-hoe-information";
 
@@ -696,16 +701,16 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
         private final Map<String, String[]> information;
 
-        private HoeInformation() {
+        private MineralHoeInformation() {
             this(new HashMap<>());
         }
 
-        private HoeInformation(Map<String, String[]> information) {
+        private MineralHoeInformation(Map<String, String[]> information) {
             this.information = Objects.requireNonNull(information);
         }
 
         @Override
-        public JSerializer<HoeInformation> getSerializer() {
+        public JSerializer<MineralHoeInformation> getSerializer() {
             return INFORMATION_SERIALIZER_INSTANCE;
         }
 
@@ -715,14 +720,14 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
         // Serializer implementation
 
-        private static final class Serializer extends JSerializer<HoeInformation> {
+        private static final class Serializer extends JSerializer<MineralHoeInformation> {
 
             private Serializer() {
                 super(SERIALIZER_IDENTIFICATION);
             }
 
             @Override
-            protected void objectToData(HoeInformation object, JSerialDataIO dataIO) {
+            protected void objectToData(MineralHoeInformation object, JSerialDataIO dataIO) {
                 Map<String, String[]> information = object.getInformation();
 
                 if(information.isEmpty())
@@ -743,7 +748,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             }
 
             @Override
-            protected HoeInformation dataToObject(HoeInformation newObject, JSerialDataIO dataIO) {
+            protected MineralHoeInformation dataToObject(MineralHoeInformation newObject, JSerialDataIO dataIO) {
                 JsonObject jsonInformation = dataIO.getObject(INFORMATION_MAP_KEY, null);
                 Map<String, String[]> information = new HashMap<>();
 
@@ -761,12 +766,12 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                     information.put(key, values.toArray(new String[0]));
                 }
 
-                return new HoeInformation(information);
+                return new MineralHoeInformation(information);
             }
 
             @Override
-            protected HoeInformation createInstance() {
-                return new HoeInformation();
+            protected MineralHoeInformation createInstance() {
+                return new MineralHoeInformation();
             }
         }
     }
@@ -779,11 +784,11 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * An interface provided by the {@link ItemMineralHoe} that allows any clickable {@link net.minecraft.block.Block}
      * to provide any information or data, to the MineralHoe when requested as part of its information feature.
      *
-     * <p/> The {@link MineralHoeInfo} is designed to be client-side safe while still providing server-side information
+     * <p/> The {@link MineralHoeInfoProvider} is designed to be client-side safe while still providing server-side information
      * and data. This means the information provided to the MineralHoe is not plant text, but rather as a map of
      * language translation keys mapped to a list data used to format the translation text referenced by key.
      */
-    public interface MineralHoeInfo {
+    public interface MineralHoeInfoProvider {
 
         /**
          * Called when an {@link ItemMineralHoe} is used on this block with a right-click,

@@ -1,0 +1,87 @@
+package com.ki11erwolf.resynth.packet;
+
+import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.item.ItemMineralHoe;
+import com.ki11erwolf.resynth.util.JSerializer;
+import com.ki11erwolf.resynth.util.SideUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.fml.network.NetworkEvent;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+public class DisplayHoeInfoPacket extends Packet<DisplayHoeInfoPacket> {
+
+    /**
+     * Logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
+
+    private final ItemMineralHoe.MineralHoeInformation information;
+
+    public DisplayHoeInfoPacket(ItemMineralHoe.MineralHoeInformation information) {
+        this.information = information;
+    }
+
+    @Override
+    BiConsumer<DisplayHoeInfoPacket, PacketBuffer> getEncoder() {
+        return (mineralHoeInfoPacket, packetBuffer) -> {
+            try {
+                String jsonHoeInfo = ItemMineralHoe.MineralHoeInformation.INFORMATION_SERIALIZER_INSTANCE
+                        .serializeObject(mineralHoeInfoPacket.information).getDataAsJsonString();
+                writeString(jsonHoeInfo, packetBuffer);
+            } catch (JSerializer.SerializeException e) {
+                LOG.error("Failed to encode DisplayHoeInfoPacket - exception when serializing data.", e);
+            }
+        };
+    }
+
+    @Override
+    Function<PacketBuffer, DisplayHoeInfoPacket> getDecoder() {
+        try {
+            return (packetBuffer) -> new DisplayHoeInfoPacket(
+                    ItemMineralHoe.MineralHoeInformation.INFORMATION_SERIALIZER_INSTANCE.deserializeData(
+                            JSerializer.JSerialData.fromJsonString(readString(packetBuffer))
+                    )
+            );
+        } catch (JSerializer.SerializeException e) {
+            LOG.error("Failed to decode DisplayHoeInfoPacket - exception when deserializing data.", e);
+            return (packetBuffer) -> new DisplayHoeInfoPacket(null);
+        }
+    }
+
+    @Override
+    BiConsumer<DisplayHoeInfoPacket, Supplier<NetworkEvent.Context>> getHandler() {
+        return (displayHoeInfoPacket, supplier) -> {
+            if(displayHoeInfoPacket.information == null) {
+                LOG.error("Skipping handling of DisplayHoeInfoPacket - information is null.");
+                return;
+            }
+
+            if(!SideUtil.isClientTrueSafe()) {
+                LOG.error("Skipping handling of DisplayHoeInfoPacket - not executing on physical client.");
+                return;
+            }
+
+            Map<String, String[]> hoeInfo = displayHoeInfoPacket.information.getInformation();
+            String message = "";
+
+            for (Map.Entry<String, String[]> lineInfo : hoeInfo.entrySet()) {
+                message += I18n.format(
+                        "message.resynth.mineral_hoe_information." + lineInfo.getKey(), (Object[]) lineInfo.getValue()
+                );
+            }
+
+            ClientPlayerEntity player = Objects.requireNonNull(Minecraft.getInstance().player);
+            player.sendMessage(new StringTextComponent(message), player.getUniqueID());
+        };
+    }
+}
