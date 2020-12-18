@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:biochemical_bulb_prismarine_crystal"
-  },
-  "result": "minecraft:prismarine_crystals",
-  "experience": 7.0,
-  "cookingtime": 200
-}

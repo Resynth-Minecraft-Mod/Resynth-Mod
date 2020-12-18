@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:metallic_organic_ore_mekanism_osmium"
-  },
-  "result": "mekanism:osmium_ore",
-  "experience": 7.0,
-  "cookingtime": 200
-}

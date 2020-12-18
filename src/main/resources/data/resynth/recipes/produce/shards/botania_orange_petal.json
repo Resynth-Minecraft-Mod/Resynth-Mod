@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:crystalline_shard_botania_orange_petal"
-  },
-  "result": "botania:orange_petal",
-  "experience": 7.0,
-  "cookingtime": 200
-}

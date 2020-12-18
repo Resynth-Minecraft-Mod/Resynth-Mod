@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:biochemical_bulb_dragons_breath"
-  },
-  "result": "minecraft:dragon_breath",
-  "experience": 7.0,
-  "cookingtime": 200
-}

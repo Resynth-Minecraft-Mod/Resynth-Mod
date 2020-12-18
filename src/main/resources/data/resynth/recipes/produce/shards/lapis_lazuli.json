@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:crystalline_shard_lapis_lazuli"
-  },
-  "result": "minecraft:lapis_lazuli",
-  "experience": 7.0,
-  "cookingtime": 200
-}

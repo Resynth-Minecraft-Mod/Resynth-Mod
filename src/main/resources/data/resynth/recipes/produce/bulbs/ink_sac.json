@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:biochemical_bulb_ink_sac"
-  },
-  "result": "minecraft:ink_sac",
-  "experience": 7.0,
-  "cookingtime": 200
-}

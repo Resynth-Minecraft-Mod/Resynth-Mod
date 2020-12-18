@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:metallic_organic_ore_simpleores_tin"
-  },
-  "result": "simpleores:tin_ore",
-  "experience": 7.0,
-  "cookingtime": 200
-}

@@ -24,6 +24,8 @@ import net.minecraft.util.ResourceLocation;
 import java.util.*;
 import java.util.function.Consumer;
 
+import static com.ki11erwolf.resynth.ResynthPlants.DEFAULT_PRODUCE_PROPERTIES;
+
 /**
  * Holds the definitions and references to every Resynth
  * plant (or plant set to be specific) for other mods
@@ -44,6 +46,7 @@ import java.util.function.Consumer;
 public class ResynthModPlants {
 
     //TODO: Updated mods: AE2, Thermal Foundation, Immersive Engineering
+    //TODO: Netherite plant should be Metallic, not Crystalline
 
     // ********
     //   Mods
@@ -511,35 +514,40 @@ public class ResynthModPlants {
      * The plant set instance for onyx from Simple Ores.
      */
     public static final PlantSet<?, ?> SIMPLE_ORES_ONYX = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.SIMPLE_ORES.getID("onyx"), ONYX_PROPERTIES, "onyx_ore"
+            Mods.SIMPLE_ORES.getID("onyx"), ONYX_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "onyx_gem", "onyx_ore"
     ));
 
     /**
      * The plant set instance for copper ore from Simple Ores.
      */
     public static final PlantSet<?, ?> SIMPLE_ORES_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.SIMPLE_ORES.getID("copper"), COPPER_PROPERTIES, "copper_ore"
+            Mods.SIMPLE_ORES.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "copper_ore", "copper_ore"
     ));
 
     /**
      * The plant set instance for tin ore from Simple Ores.
      */
     public static final PlantSet<?, ?> SIMPLE_ORES_TIN = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.SIMPLE_ORES.getID("tin"), TIN_PROPERTIES, "tin_ore"
+            Mods.SIMPLE_ORES.getID("tin"), TIN_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "tin_ore", "tin_ore"
     ));
 
     /**
      * The plant set instance for mythril ore from Simple Ores.
      */
     public static final PlantSet<?, ?> SIMPLE_ORES_MYTHRIL = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.SIMPLE_ORES.getID("mythril"), MYTHRIL_PROPERTIES, "mythril_ore"
+            Mods.SIMPLE_ORES.getID("mythril"), MYTHRIL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "mythril_ore", "mythril_ore"
     ));
 
     /**
      * The plant set instance for adamantium ore from Simple Ores.
      */
     public static final PlantSet<?, ?> SIMPLE_ORES_ADAMANTIUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.SIMPLE_ORES.getID("adamantium"), ADAMANTIUM_PROPERTIES, "adamantium_ore"
+            Mods.SIMPLE_ORES.getID("adamantium"), ADAMANTIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "adamantium_ore", "adamantium_ore"
     ));
 
     //More Ores in ONE
@@ -548,28 +556,32 @@ public class ResynthModPlants {
      * The plant set for ruby ore from More Ores in ONE.
      */
     public static final PlantSet<?, ?> MORE_ORES_RUBY = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.MORE_ORES_IN_ONE.getID("ruby"), RUBY_PROPERTIES, "ruby_ore"
+            Mods.MORE_ORES_IN_ONE.getID("ruby"), RUBY_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "ruby", "ruby_ore"
     ));
 
     /**
      * The plant set for sapphire ore from More Ores in ONE.
      */
     public static final PlantSet<?, ?> MORE_ORES_SAPPHIRE = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.MORE_ORES_IN_ONE.getID("sapphire"), SAPPHIRE_PROPERTIES, "sapphire_ore"
+            Mods.MORE_ORES_IN_ONE.getID("sapphire"), SAPPHIRE_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "sapphire", "sapphire_ore"
     ));
 
     /**
      * The plant set for topaz ore from More Ores in ONE.
      */
     public static final PlantSet<?, ?> MORE_ORES_TOPAZ = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.MORE_ORES_IN_ONE.getID("topaz"), TOPAZ_PROPERTIES, "topaz_ore"
+            Mods.MORE_ORES_IN_ONE.getID("topaz"), TOPAZ_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "topaz", "topaz_ore"
     ));
 
     /**
      * The plant set for amethyst ore from More Ores in ONE.
      */
     public static final PlantSet<?, ?> MORE_ORES_AMETHYST = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.MORE_ORES_IN_ONE.getID("amethyst"), AMETHYST_PROPERTIES, "amethyst_ore"
+            Mods.MORE_ORES_IN_ONE.getID("amethyst"), AMETHYST_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "amethyst", "amethyst_ore"
     ));
 
     //Just Another Ruby Mod
@@ -579,7 +591,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> JUST_ANOTHER_RUBY_MOD_RUBY
             = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.JUST_ANOTHER_RUBY_MOD.getID("ruby"), RUBY_PROPERTIES, "ruby_ore"
+            Mods.JUST_ANOTHER_RUBY_MOD.getID("ruby"), RUBY_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "ruby_gem", "ruby_ore"
     ));
 
     /**
@@ -587,7 +600,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> JUST_ANOTHER_RUBY_MOD_OPAL
             = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.JUST_ANOTHER_RUBY_MOD.getID("opal"), OPAL_PROPERTIES, "opal_ore"
+            Mods.JUST_ANOTHER_RUBY_MOD.getID("opal"), OPAL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "opal_gem", "opal_ore"
     ));
 
     //Blue Power
@@ -596,63 +610,72 @@ public class ResynthModPlants {
      * The plant set for amethyst from the Blue Power mod.
      */
     public static final PlantSet<?, ?> BLUE_POWER_AMETHYST = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.BLUE_POWER.getID("amethyst"), AMETHYST_PROPERTIES, "amethyst_ore"
+            Mods.BLUE_POWER.getID("amethyst"), AMETHYST_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "amethyst_gem", "amethyst_ore"
     ));
 
     /**
      * The plant set for ruby from the Blue Power mod.
      */
     public static final PlantSet<?, ?> BLUE_POWER_RUBY = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.BLUE_POWER.getID("ruby"), RUBY_PROPERTIES, "ruby_ore"
+            Mods.BLUE_POWER.getID("ruby"), RUBY_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "ruby_gem", "ruby_ore"
     ));
 
     /**
      * The plant set for sapphire from the Blue Power mod.
      */
     public static final PlantSet<?, ?> BLUE_POWER_SAPPHIRE = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.BLUE_POWER.getID("sapphire"), SAPPHIRE_PROPERTIES, "sapphire_ore"
+            Mods.BLUE_POWER.getID("sapphire"), SAPPHIRE_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "sapphire_gem", "sapphire_ore"
     ));
 
     /**
      * The plant set for malachite from the Blue Power mod.
      */
     public static final PlantSet<?, ?> BLUE_POWER_MALACHITE = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.BLUE_POWER.getID("malachite"), MALACHITE_PROPERTIES, "malachite_ore"
+            Mods.BLUE_POWER.getID("malachite"), MALACHITE_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "malachite_gem", "malachite_ore"
     ));
 
     /**
      * The plant set for teslatite from the Blue Power mod.
      */
     public static final PlantSet<?, ?> BLUE_POWER_TESLATITE = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.BLUE_POWER.getID("teslatite"), TESLATITE_PROPERTIES, "teslatite_ore"
+            Mods.BLUE_POWER.getID("teslatite"), TESLATITE_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "teslatite_gem", "teslatite_ore"
     ));
 
     /**
      * The plant set for copper from the Blue Power mod.
      */
     public static final PlantSet<?, ?> BLUE_POWER_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BLUE_POWER.getID("copper"), COPPER_PROPERTIES, "copper_ore"
+            Mods.BLUE_POWER.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "copper_ore", "copper_ore"
     ));
 
     /**
      * The plant set for silver from the Blue Power mod.
      */
     public static final PlantSet<?, ?> BLUE_POWER_SILVER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BLUE_POWER.getID("silver"), SILVER_PROPERTIES, "silver_ore"
+            Mods.BLUE_POWER.getID("silver"), SILVER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "silver_ore", "silver_ore"
     ));
 
     /**
      * The plant set for zinc from the Blue Power mod.
      */
     public static final PlantSet<?, ?> BLUE_POWER_ZINC = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BLUE_POWER.getID("zinc"), ZINC_PROPERTIES, "zinc_ore"
+            Mods.BLUE_POWER.getID("zinc"), ZINC_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "zinc_ore", "zinc_ore"
     ));
 
     /**
      * The plant set for tungsten from the Blue Power mod.
      */
     public static final PlantSet<?, ?> BLUE_POWER_TUNGSTEN = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BLUE_POWER.getID("tungsten"), TUNGSTEN_PROPERTIES, "tungsten_ore"
+            Mods.BLUE_POWER.getID("tungsten"), TUNGSTEN_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "tungsten_ore", "tungsten_ore"
     ));
 
     //Basic Nether Ores
@@ -661,14 +684,16 @@ public class ResynthModPlants {
      * The plant set for nether iron from Basic Nether Ores.
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_IRON = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BASIC_NETHER_ORES.getID("iron"), ResynthPlants.IRON_PROPERTIES, "netheriron_ore"
+            Mods.BASIC_NETHER_ORES.getID("iron"), ResynthPlants.IRON_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            new ResourceLocation("minecraft", "iron_ore"), Mods.BASIC_NETHER_ORES.getID("netheriron_ore")
     ));
 
     /**
      * The plant set for nether coal from Basic Nether Ores.
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_COAL = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.BASIC_NETHER_ORES.getID("coal"), ResynthPlants.COAL_PROPERTIES, "nethercoal_ore"
+            Mods.BASIC_NETHER_ORES.getID("coal"), ResynthPlants.COAL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            new ResourceLocation("minecraft", "coal"), Mods.BASIC_NETHER_ORES.getID("nethercoal_ore")
     ));
 
     /**
@@ -676,7 +701,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_LAPIS_LAZULI
             = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.BASIC_NETHER_ORES.getID("lapis_lazuli"), ResynthPlants.LAPIS_LAZULI_PROPERTIES, "netherlapis_ore"
+            Mods.BASIC_NETHER_ORES.getID("lapis_lazuli"), ResynthPlants.LAPIS_LAZULI_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            new ResourceLocation("minecraft", "lapis_lazuli"), Mods.BASIC_NETHER_ORES.getID("netherlapis_ore")
     ));
 
     /**
@@ -684,7 +710,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_REDSTONE
             = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.BASIC_NETHER_ORES.getID("redstone"), ResynthPlants.REDSTONE_PROPERTIES, "netherredstone_ore"
+            Mods.BASIC_NETHER_ORES.getID("redstone"), ResynthPlants.REDSTONE_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            new ResourceLocation("minecraft", "redstone"), Mods.BASIC_NETHER_ORES.getID("netherredstone_ore")
     ));
 
     /**
@@ -692,7 +719,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_DIAMOND
             = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.BASIC_NETHER_ORES.getID("diamond"), ResynthPlants.DIAMOND_PROPERTIES, "netherdiamond_ore"
+            Mods.BASIC_NETHER_ORES.getID("diamond"), ResynthPlants.DIAMOND_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            new ResourceLocation("minecraft", "diamond"), Mods.BASIC_NETHER_ORES.getID("netherdiamond_ore")
     ));
 
     /**
@@ -700,49 +728,56 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_EMERALD
             = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.BASIC_NETHER_ORES.getID("emerald"), ResynthPlants.EMERALD_PROPERTIES, "netheremerald_ore"
+            Mods.BASIC_NETHER_ORES.getID("emerald"), ResynthPlants.EMERALD_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            new ResourceLocation("minecraft", "emerald"), Mods.BASIC_NETHER_ORES.getID("netheremerald_ore")
     ));
 
     /**
      * The plant set for nether uranium for Basic Nether Ores.
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_URANIUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BASIC_NETHER_ORES.getID("uranium"), URANIUM_PROPERTIES, "netheruranium_ore"
+            Mods.BASIC_NETHER_ORES.getID("uranium"), URANIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "netheruranium_ore", "netheruranium_ore"
     ));
 
     /**
      * The plant set for nether tin for Basic Nether Ores.
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_TIN = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BASIC_NETHER_ORES.getID("tin"), TIN_PROPERTIES, "nethertin_ore"
+            Mods.BASIC_NETHER_ORES.getID("tin"), TIN_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "nethertin_ore", "nethertin_ore"
     ));
 
     /**
      * The plant set for nether silver for Basic Nether Ores.
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_SILVER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BASIC_NETHER_ORES.getID("silver"), SILVER_PROPERTIES, "nethersilver_ore"
+            Mods.BASIC_NETHER_ORES.getID("silver"), SILVER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "nethersilver_ore", "nethersilver_ore"
     ));
 
     /**
      * The plant set for nether nickel for Basic Nether Ores.
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_NICKEL = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BASIC_NETHER_ORES.getID("nickel"), NICKEL_PROPERTIES, "nethernickel_ore"
+            Mods.BASIC_NETHER_ORES.getID("nickel"), NICKEL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "nethernickel_ore", "nethernickel_ore"
     ));
 
     /**
      * The plant set for nether lead for Basic Nether Ores.
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_LEAD = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BASIC_NETHER_ORES.getID("lead"), LEAD_PROPERTIES, "netherlead_ore"
+            Mods.BASIC_NETHER_ORES.getID("lead"), LEAD_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "netherlead_ore", "netherlead_ore"
     ));
 
     /**
      * The plant set for nether copper for Basic Nether Ores.
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BASIC_NETHER_ORES.getID("copper"), COPPER_PROPERTIES, "nethercopper_ore"
+            Mods.BASIC_NETHER_ORES.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "nethercopper_ore", "nethercopper_ore"
     ));
 
     /**
@@ -750,7 +785,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> BASIC_NETHER_ORES_ALUMINIUM
             = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.BASIC_NETHER_ORES.getID("aluminium"), ALUMINIUM_PROPERTIES, "netheraluminum_ore"
+            Mods.BASIC_NETHER_ORES.getID("aluminium"), ALUMINIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "netheraluminum_ore", "netheraluminum_ore"
     ));
 
     //Mekanism
@@ -760,7 +796,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> MEKANISM_OSMIUM
             = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.MEKANISM.getID("osmium"), OSMIUM_PROPERTIES, "osmium_ore"
+            Mods.MEKANISM.getID("osmium"), OSMIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "osmium_ore", "osmium_ore"
     ));
 
     /**
@@ -768,7 +805,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> MEKANISM_COPPER
             = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.MEKANISM.getID("copper"), COPPER_PROPERTIES, "copper_ore"
+            Mods.MEKANISM.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "copper_ore", "copper_ore"
     ));
 
     /**
@@ -776,7 +814,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> MEKANISM_TIN
             = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.MEKANISM.getID("tin"), TIN_PROPERTIES, "tin_ore"
+            Mods.MEKANISM.getID("tin"), TIN_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "tin_ore", "tin_ore"
     ));
 
     //Mystical Agriculture
@@ -786,7 +825,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> MYSTICAL_AGRICULTURE_PROSPERITY
             = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.MYSTICAL_AGRICULTURE.getID("prosperity"), PROSPERITY_PROPERTIES, "prosperity_ore"
+            Mods.MYSTICAL_AGRICULTURE.getID("prosperity"), PROSPERITY_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "prosperity_shard", "prosperity_ore"
     ));
 
     /**
@@ -794,7 +834,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> MYSTICAL_AGRICULTURE_INFERIUM
             = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.MYSTICAL_AGRICULTURE.getID("inferium"), INFERIUM_PROPERTIES, "inferium_ore"
+            Mods.MYSTICAL_AGRICULTURE.getID("inferium"), INFERIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "inferium_essence", "inferium_ore"
     ));
 
     /**
@@ -802,7 +843,8 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> MYSTICAL_AGRICULTURE_SOULIUM
             = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.MYSTICAL_AGRICULTURE.getID("soulium"), SOULIUM_PROPERTIES, "soulium_ore"
+            Mods.MYSTICAL_AGRICULTURE.getID("soulium"), SOULIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "soulium_dust", "soulium_ore"
     ));
 
     // The Midnight
@@ -811,35 +853,40 @@ public class ResynthModPlants {
      * The plant set for Tenebrum from The Midnight Mod.
      */
     public static final PlantSet<?, ?> MIDNIGHT_TENEBRUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.THE_MIDNIGHT.getID("tenebrum"), MIDNIGHT_METALLIC, "tenebrum_ore"
+            Mods.THE_MIDNIGHT.getID("tenebrum"), MIDNIGHT_METALLIC, DEFAULT_PRODUCE_PROPERTIES,
+            "tenebrum_ore", "tenebrum_ore"
     ));
 
     /**
      * The plant set for Nagrilite from The Midnight Mod.
      */
     public static final PlantSet<?, ?> MIDNIGHT_NAGRILITE = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.THE_MIDNIGHT.getID("nagrilite"), MIDNIGHT_METALLIC, "nagrilite_ore"
+            Mods.THE_MIDNIGHT.getID("nagrilite"), MIDNIGHT_METALLIC, DEFAULT_PRODUCE_PROPERTIES,
+            "nagrilite_ore", "nagrilite_ore"
     ));
 
     /**
      * The plant set for Dark Pearls from The Midnight Mod.
      */
     public static final PlantSet<?, ?> MIDNIGHT_DARK_PEARL = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.THE_MIDNIGHT.getID("dark_pearl"), MIDNIGHT_CRYSTALLINE, "dark_pearl_ore"
+            Mods.THE_MIDNIGHT.getID("dark_pearl"), MIDNIGHT_CRYSTALLINE, DEFAULT_PRODUCE_PROPERTIES,
+            "dark_pearl", "dark_pearl_ore"
     ));
 
     /**
      * The plant set for Ebonite from The Midnight Mod.
      */
     public static final PlantSet<?, ?> MIDNIGHT_EBONITE = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.THE_MIDNIGHT.getID("ebonite"), MIDNIGHT_CRYSTALLINE, "ebonite_ore"
+            Mods.THE_MIDNIGHT.getID("ebonite"), MIDNIGHT_CRYSTALLINE, DEFAULT_PRODUCE_PROPERTIES,
+            "ebonite", "ebonite_ore"
     ));
 
     /**
      * The plant set for Archaic from The Midnight Mod.
      */
     public static final PlantSet<?, ?> MIDNIGHT_ARCHAIC = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-            Mods.THE_MIDNIGHT.getID("archaic"), MIDNIGHT_CRYSTALLINE, "archaic_ore"
+            Mods.THE_MIDNIGHT.getID("archaic"), MIDNIGHT_CRYSTALLINE, DEFAULT_PRODUCE_PROPERTIES,
+            "archaic_shard", "archaic_ore"
     ));
 
     // Botania
@@ -856,8 +903,8 @@ public class ResynthModPlants {
      */
     private static PlantSet<?, ?> newBotaniaPetalSet(String setIdentifier){
         return registerIfNotNull(PlantSetFactory.makeCrystallineSet(
-                Mods.BOTANIA.getID(setIdentifier + "_petal"), BOTANIA_PETAL_PROPERTIES,
-                setIdentifier + "_mystical_flower"
+                Mods.BOTANIA.getID(setIdentifier + "_petal"), BOTANIA_PETAL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+                setIdentifier + "_petal", setIdentifier + "_mystical_flower"
         ));
     }
 

@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:biochemical_bulb_string"
-  },
-  "result": "minecraft:string",
-  "experience": 7.0,
-  "cookingtime": 200
-}

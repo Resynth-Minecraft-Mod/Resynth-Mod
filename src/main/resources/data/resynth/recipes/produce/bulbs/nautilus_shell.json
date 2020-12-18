@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:biochemical_bulb_nautilus_shell"
-  },
-  "result": "minecraft:nautilus_shell",
-  "experience": 7.0,
-  "cookingtime": 200
-}

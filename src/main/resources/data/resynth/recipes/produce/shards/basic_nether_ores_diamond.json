@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:crystalline_shard_bno_diamond"
-  },
-  "result": "minecraft:diamond",
-  "experience": 7.0,
-  "cookingtime": 200
-}

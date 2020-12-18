@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:biochemical_bulb_rabbit_foot"
-  },
-  "result": "minecraft:rabbit_foot",
-  "experience": 7.0,
-  "cookingtime": 200
-}

@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:biochemical_bulb_shulker_shell"
-  },
-  "result": "minecraft:shulker_shell",
-  "experience": 7.0,
-  "cookingtime": 200
-}

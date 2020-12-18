@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "resynth:crystalline_shard_midnight_dark_pearl"
-  },
-  "result": "midnight:dark_pearl",
-  "experience": 7.0,
-  "cookingtime": 200
-}
