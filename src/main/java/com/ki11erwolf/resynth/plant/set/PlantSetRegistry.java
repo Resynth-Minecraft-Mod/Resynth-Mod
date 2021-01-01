@@ -100,7 +100,7 @@ class PlantSetRegistry {
             ResynthPlants.initSets();
             ResynthModPlants.initSets();
 
-            MinecraftForge.EVENT_BUS.addListener(Registerer::initializeRegistryReferences);
+            MinecraftForge.EVENT_BUS.addListener(Registerer::finalizePlantSets);
         }
 
         /**
@@ -133,10 +133,6 @@ class PlantSetRegistry {
             });
         }
 
-        public static void initializeRegistryReferences(FMLServerAboutToStartEvent event) {
-            PLANT_SETS.forEach(PlantSet::initSeedResources);
-        }
-
         /**
          * Registers a given plant sets plant block to the game.
          */
@@ -146,6 +142,14 @@ class PlantSetRegistry {
 
             //Hwyla
             Hwyla.addIfProvider(set.getPlantBlock());
+        }
+
+        public static void finalizePlantSets(FMLServerAboutToStartEvent event) {
+            try{
+                PLANT_SETS.forEach(PlantSet::initSeedResources);
+            } catch (IllegalStateException e) {
+                LOG.warn("Failed to finalize PlantSet initialization. Assuming PlantSets finalized earlier.", e);
+            }
         }
 
         /**

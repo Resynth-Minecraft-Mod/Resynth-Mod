@@ -17,6 +17,7 @@ package com.ki11erwolf.resynth.config.categories;
 
 import com.ki11erwolf.resynth.config.BooleanConfigValue;
 import com.ki11erwolf.resynth.config.ConfigCategory;
+import com.ki11erwolf.resynth.config.DoubleConfigValue;
 import com.ki11erwolf.resynth.config.IntegerConfigValue;
 
 /**
@@ -87,11 +88,41 @@ public class GeneralConfig extends ConfigCategory {
     /**
      * Config value that allows enabling or disabling light penalties in plant growth.
      */
-    private final BooleanConfigValue enableLightPenalty = new BooleanConfigValue(
-            "enable-light-penalty",
-            "Allows turning on or off light penalties in plant growth." +
-                     "\nWhen set to 'true', plants will grow slightly slower with less light.",
+    private final BooleanConfigValue enableBrightnessBasedGrowth = new BooleanConfigValue(
+            "is-growth-affected-by-light",
+            "Determines if the lighting in the world affects the growth rates and chances of planted crops.\n" +
+                     "When 'true', the growth rates of plants change slightly based on the amount of ambient light\n" +
+                     "and brightness on the plant. Low to moderate amounts of light negatively affect growth, while\n" +
+                     "very bright light  positively affects growth.",
             true, this
+    );
+
+    private final IntegerConfigValue lightLevelZeroPoint = new IntegerConfigValue(
+            "light-level-zero-point",
+            "The light level at which the growth multiplier is 0 (zero), making any lower light levels decrease the\n" +
+                     "multiplier while any higher light levels increase the multiplier. Said in layman's terms: sets the point\n" +
+                     "where light levels change from decreasing the growth multiplier to increasing the growth multiplier.",
+            11, 9, 13,
+            this
+    );
+
+    private final DoubleConfigValue lightLevelWorth = new DoubleConfigValue(
+            "worth-of-light-level-as-growth-multiplier",
+            "The percentage (in decimal form: 0.04 = 4%) each level of light (above or below the zero point) is worth.\n" +
+                     "Each level of light will change the multiplier by this value - minimum. So, at a worth of 0.04, 3 levels\n" +
+                     "above the zero point will add +0.12 to the multiplier, increasing growth by 12%. This works the same way in\n" +
+                     "the reverse direction.",
+            0.04, 0.001, 0.1,
+            this
+    );
+
+    private final DoubleConfigValue lightLevelInterest = new DoubleConfigValue(
+            "interest-increase-on-worth-per-level",
+            "The amount of interest added to the worth of a light level, for each light level above or below the zero\n" +
+                     "point. Put more simply, it's the amount each additional light level adds to the worth of a light level. \n" +
+                     "This value controls the exponential growth of the cost per light level.",
+            0.01, -1, 1,
+            this
     );
 
     /**
@@ -159,7 +190,7 @@ public class GeneralConfig extends ConfigCategory {
      * @return the config defined value that specifies if auto-farming
      * using hoppers is enabled or disabled.
      */
-    public boolean isHopperAutofarmingEnabled(){
+    public boolean isHopperAutoFarmingEnabled(){
         return enableHopperAutoFarming.getValue();
     }
 
@@ -171,10 +202,22 @@ public class GeneralConfig extends ConfigCategory {
     public int getTooltipCharacterLimit() { return tooltipCharacterLimit.getValue(); }
 
     /**
-     * @return the config defined value that specifies if light penalties to plant
-     * growth is enabled or disabled.
+     * @return the config defined value that specifies if the ambient lighting and
+     * brightness on the plant affects its growth rate.
      */
-    public boolean enableLightPenalty() { return enableLightPenalty.getValue(); }
+    public boolean isGrowthLightDependent() { return enableBrightnessBasedGrowth.getValue(); }
+
+    public int getLightLevelZeroPoint() {
+        return lightLevelZeroPoint.getValue();
+    }
+
+    public double getWorthPerLightLevel() {
+        return lightLevelWorth.getValue();
+    }
+
+    public double getInterestPerLightLevel() {
+        return lightLevelInterest.getValue();
+    }
 
     /**
      * @return the config defined value that specifies if crafting recipes for

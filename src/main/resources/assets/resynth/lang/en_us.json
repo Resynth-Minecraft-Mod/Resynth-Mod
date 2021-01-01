@@ -504,14 +504,37 @@
   "__________COMMENT": "---Mineral Hoe Information Messages---",
   "message.resynth.mineral_hoe_information.plant_info_header":
   "%s------------------  %sPlant Information  %s-----------------",
+  "message.resynth.mineral_hoe_information.plant_growth":
+  "%sGrowth Phase: %s%s %sof %s%s %sin the harvest cycle.",
+  "message.resynth.mineral_hoe_information.base_growth_rate":
+  "%sBase Growth Rate: %s%s%%.",
+  "message.resynth.mineral_hoe_information.soil_growth_modifier":
+  "%sSoil Growth Multiplier: %s%s%%.",
+  "message.resynth.mineral_hoe_information.light_growth_modifier":
+  "%sAmbient Light Growth Multiplier: %s%s%%",
+  "message.resynth.mineral_hoe_information.plant_growth_rate":
+  "%sChance of Growth: %s%s%% %s per tick",
   "message.resynth.mineral_hoe_information.soil_info_header":
   "%s---------------- %sMineral Soil Information %s---------------",
+  "message.resynth.mineral_hoe_information.soil_mineral_concentration":
+  "%sMineral Concentration: %s%s%% %s(%s%s%% + %s%s%%%s)",
+  "message.resynth.mineral_hoe_information.soil_enhancer":
+  "%sConcentration Enhancer: %s%s %s(%s+%s%%%s)",
+  "message.resynth.mineral_hoe_information.hopper_auto_harvesting":
+  "%sHopper Auto-Harvesting: %s%s",
+  "message.resynth.mineral_hoe_information.footer":
+  "%s----------------------------------------------------",
+  "value.resynth.mineral_hoe_information.true": "Yes",
+  "value.resynth.mineral_hoe_information.false": "No",
+  "value.resynth.mineral_hoe_information.no_enhancer": "None",
+  "value.resynth.mineral_hoe_information.calvinite_enhancer": "Calvinite",
+  "value.resynth.mineral_hoe_information.sylvanite_enhancer": "Sylvanite",
 
 
   "________COMMENT": "----PlantSet Property Tooltips----",
-  "tooltip.resynth.plantset.property.bonemeal_effective":      "Bonemeal: %seffective",
-  "tooltip.resynth.plantset.property.bonemeal_ineffective":    "Bonemeal: %sineffective",
-  "tooltip.resynth.plantset.property.growth_rate":             "Growth Rate Multiplier: %s%s",
+  "tooltip.resynth.plantset.property.bonemeal_effective":      "Bonemeal:%s effective",
+  "tooltip.resynth.plantset.property.bonemeal_ineffective":    "Bonemeal:%s ineffective",
+  "tooltip.resynth.plantset.property.growth_rate":             "Base Growth Rate: %s%s",
   "tooltip.resynth.plantset.property.seed_sources":            "Seeds Dropped by %s: %s%s",
   "tooltip.resynth.plantset.property.ore_seed_drop_rate":      "Ore Blocks Drop Seeds: %s%s%s of the time.",
   "tooltip.resynth.plantset.property.mob_seed_drop_rate":      "Mobs Drop Seeds: %s%s%s of the time.",

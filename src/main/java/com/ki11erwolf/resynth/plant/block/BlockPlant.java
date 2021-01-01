@@ -21,13 +21,13 @@ import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.block.tileEntity.TileEntityMineralSoil;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
+import com.ki11erwolf.resynth.item.ItemMineralHoe;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MathUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
-import com.ki11erwolf.resynth.util.PlantPatchInfoProvider;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoAccessor;
@@ -66,6 +66,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -79,7 +80,14 @@ import java.util.Random;
  * @param <T> the inheriting class (i.e. plant block).
  */
 public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T> implements
-        IPlantable, IGrowable, PlantPatchInfoProvider, IComponentProvider, IProbeInfoAccessor {
+        IPlantable, IGrowable, IComponentProvider, IProbeInfoAccessor, ItemMineralHoe.MineralHoeInfoProvider {
+
+    //TODO: I want to clean up the code for growth and probability.
+
+    /**
+     * Reference to the general config settings - for light level based growth.
+     */
+    private static final GeneralConfig GENERAL_CONFIG = ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class);
 
     /**
      * The prefix for all plant blocks.
@@ -93,9 +101,11 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     final IPlantSetProperties properties;
 
     BlockPlant(PlantSet<?, ?> parentSet) {
-        super(Properties.create(Material.PLANTS).sound(SoundType.PLANT).tickRandomly()
+        super(
+                Properties.create(Material.PLANTS).sound(SoundType.PLANT).tickRandomly()
                         .hardnessAndResistance(0.0F).doesNotBlockMovement(),
-                parentSet.getSetTypeName() + "_" + PLANT_PREFIX + "_" + parentSet.getSetName());
+                parentSet.getSetTypeName()+ "_" + PLANT_PREFIX + "_" + parentSet.getSetName()
+        );
 
         this.properties = parentSet.getPlantSetProperties();
         this.setDefaultState(this.stateContainer.getBaseState().with(this.getGrowthProperty(), 0));
@@ -128,10 +138,11 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return (worldIn.getNeighborAwareLightSubtracted(pos, 0) >= 8
-                || worldIn.canBlockSeeSky(pos))
-                && this.isValidGround(worldIn.getBlockState(pos.down()));
+    public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
+        if(!this.isValidGround(world.getBlockState(pos.down())))    return false;
+        if(world.canBlockSeeSky(pos)) return true;
+
+        return (world.getNeighborAwareLightSubtracted(pos, 0) >= 4);
     }
 
     /**
@@ -233,7 +244,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     /**
      * Auto-Farming check and attempt for all plants.
      * <b>Should be called in every plant types {@link
-     * #growPlant(World, BlockState, BlockPos, int)}
+     * #onGrowPlantBlock(World, BlockState, BlockPos, int)}
      * method, AFTER the growth has been calculated.</b>
      *
      * <p/><b>If - and only if the plant is fully grown and
@@ -257,9 +268,9 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * <p/><b>The plants growth should be reset if this
      * returns {@code true}!</b>
      */
-    protected boolean attemptAutoHarvest(int growth, World world, BlockPos pos){
+    protected boolean attemptAutoHarvest(int growth, World world, BlockPos pos) {
         //IF enabled
-        if(ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).isHopperAutofarmingEnabled()) {
+        if(ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).isHopperAutoFarmingEnabled()) {
             //AND       Plant is fully grown     AND      Produce was hoppered.
             if (growth >= getMaxGrowthStage() && tryHopperProduce(world, pos)) {
                 //Success - with particles!
@@ -361,7 +372,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     }
 
     // *************************
-    // Right-Click Harvest Logic
+    //       Harvest Logic
     // *************************
 
     /**
@@ -369,7 +380,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      *
      * Called when a player right-clicks this plant.
      * Used to implement right-click harvesting ({@link
-     * #tryRightclickHarvest(World, BlockPos, PlayerEntity)}).
+     * #attemptHarvest(World, BlockPos, PlayerEntity)}).
      *
      * @return {@link ActionResultType#SUCCESS} if the plant was harvested,
      * {@link ActionResultType#FAIL} if the plant could not be harvested.
@@ -378,7 +389,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     @SuppressWarnings("deprecation")
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player,
                                              Hand hand, BlockRayTraceResult hit) {
-        return tryRightclickHarvest(world, pos, player) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
+        return attemptHarvest(world, pos, player) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
     }
 
     /**
@@ -388,8 +399,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * <p/>A successful harvest will drop the plants produce in the world and
      * reset the plants growth to its specific post harvest stage.
      *
-     * <p/>Behaviour is dependent on: {@link #getGrowthPostHarvest()}, {@link
-     * #postHarvestNumberOfProduceDrops()}, and {@link #postHarvestSoundEvent()}.
+     * <p/>Behaviour is dependent on: {@link #getPostHarvestGrowthStage()}, {@link
+     * #getHarvestProduceQuantity()}, and {@link #getSoundEventOfHarvest()}.
      *
      * @param world the world the plant is in.
      * @param pos the position of the plant in the world.
@@ -397,29 +408,28 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * @return {@code true} if the harvest was successful,
      * {@code false} otherwise.
      */
-    private boolean tryRightclickHarvest(World world, BlockPos pos, PlayerEntity player){
+    private boolean attemptHarvest(World world, BlockPos pos, PlayerEntity player){
         //Check if harvestable.
-        if(getGrowthPostHarvest() == -1 || postHarvestNumberOfProduceDrops() == -1
-                || postHarvestSoundEvent() == null) return false;//Not harvestable!
+        if(getPostHarvestGrowthStage() == -1 || getHarvestProduceQuantity() == -1
+                || getSoundEventOfHarvest() == null) return false;//Not harvestable!
 
         int growth = world.getBlockState(pos).get(getGrowthProperty());
-        int postHarvestGrowth = getGrowthPostHarvest();
+        int postHarvestGrowth = getPostHarvestGrowthStage();
 
         //noinspection rawtypes
         if(growth >= ((BlockPlant)world.getBlockState(pos).getBlock()).getMaxGrowthStage()){
             if(setGrowthStage(world, pos, postHarvestGrowth)){
-
                 if(!world.isRemote) {
                     MinecraftUtil.spawnItemStackInWorld(
                             new ItemStack(
                                     getProduce().getItem(),
-                                    postHarvestNumberOfProduceDrops()
+                                    getHarvestProduceQuantity()
                             ), world, pos
                     );
                 }
 
                 EffectsUtil.playNormalSoundWithRandomPitch(
-                        world, player, pos, postHarvestSoundEvent(), SoundCategory.BLOCKS
+                        world, player, pos, getSoundEventOfHarvest(), SoundCategory.BLOCKS
                 );
 
                 return true;
@@ -429,98 +439,50 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         return false;
     }
 
-    // ************
-    // Growth Logic
-    // ************
+    // ****************************
+    //  Plant Growth & Probability
+    // ****************************
 
     /**
-     * Used to give a plant in the world a chance at growing.
+     * Attempt to grow the given plant crop, by giving it a single opportunity
+     * to grow based upon its own probability of growth -
      *
-     * <p/><b>Call from the onRandomTick method</b> native to Minecraft!
-     * Which will then give the plant its chance at growing, while still
-     * having growth speed determined by Minecraft ticks. <b>Without it</b>,
-     * the plant has <b>no way to grow</b> randomly in the world.
+     * <p/><b>Called directly using the {@link
+     * #randomTick(BlockState, ServerWorld, BlockPos, Random)} method from
+     * Minecraft</b> - tying plant growth to the games tick speed and probability,
+     * which will then give the plant its chance at growing, while still having
+     * growth speed determined by Minecraft ticks. <b>Without it</b>, the plant
+     * has no way to grow in relation to the speed of the game and world.
      *
-     * <p/>This is the first call in the long chain that is growth
-     * of a plant, and the determining of its growth probability
-     * and the conditions required. Ultimately ending in either
-     * the growth of a plant, or absolutely nothing.
+     * <p/>This is the first call in the long chain that is growth of a plant,
+     * and the determining of its growth probability and the conditions required.
+     * Ultimately ending in either the growth of a plant, or absolutely nothing.
      *
-     * <p/>Growth is determined <b>mostly by:</b>
-     * <br/>{@link #getPlantGrowthChance()},
-     * <br/>{@link #getMineralPercentIncrease(World, BlockPos)},
-     * <br/>{@link #getMineralPercent(World, BlockPos)},
-     * <br/>{@link #isLucky(World, BlockPos)},
-     * <br/>and to a lesser degree:
-     * <br/>{@link #canGrow(World, BlockPos)},
-     * <br/>{@link #getLightPenalty(World, BlockPos)},
-     * <br/>{@link World#isAreaLoaded(BlockPos, int)}.
+     * <p/>Growth is determined <b>in part by:</b>
+     * {@link #getPlantBaseGrowthChance()}, >{@link #getMineralEnhancement(World, BlockPos)},
+     * {@link #getMineralContent(World, BlockPos)}, {@link #isGrowthPossible(World, BlockPos)},
+     * {@link World#isAreaLoaded(BlockPos, int)}.
      *
      * @param world the world the plant is in.
      * @param state the block state as it is in the world.
      * @param pos the position of the plant in the world.
      */
-    public void giveChanceToGrow(BlockState state, IWorld world, BlockPos pos){
+    public void growPlantWithProbability(BlockState state, IWorld world, BlockPos pos) {
         //Check world object for nullity
         if((!(world instanceof World)))
             LOGGER.error("IWorld not a World object!", new IllegalArgumentException());
-        else onGrowthChance(state, (World)world, pos);
-    }
-
-    /**
-     * Called when the plant is given a chance to grow, to try
-     * and grow the plant and perform auto harvesting.
-     *
-     * <p/>When called, will attempt to grow the plant,
-     * if possible, based off all the required criteria
-     * and probability. If the plant does get to grow,
-     * an auto harvest will be attempted with its new growth.
-     * If the plant is already fully grown, an auto harvest
-     * will still be attempted, however it will skip its
-     * chance to grow.
-     *
-     * @param world the world the plant is in.
-     * @param state the block state as it is in the world.
-     * @param pos the position of the plant in the world.
-     */
-    protected void onGrowthChance(BlockState state, World world, BlockPos pos) {
-        int growth = getGrowthStage(state);
-        int harvestGrowth = getGrowthPostHarvest();
-
-        if(growth < 0)
-            growth = 0;
-
-        //If fully grown, skip growth for auto harvest.
-        if(isFullyGrown(state)){
-            if(attemptAutoHarvest(growth, world, pos)) {
-                setGrowthStage(world, pos, harvestGrowth);
-            }
-
-            return;
-        }
-
-        //Otherwise, if can grow and is lucky.
-        if(canGrow(world, pos)){
-            if(isLucky(world, pos)){
-                //Grow the plant.
-                grow(world, state, pos, 1);
-                onPlantGrow(state, world, pos.down(), pos);
-                //And try a harvest with the new growth
-                if(attemptAutoHarvest(growth, world, pos))
-                    setGrowthStage(world, pos, harvestGrowth);
-            }
-        }
+        else growPlantFromProbability((World) world, state, pos);
     }
 
     // ************************
-    //     Growth Logic Hook
+    //     Growth Tick Hook
     // ************************
 
     /**
      * Called by Minecraft, when its randomly determins that this plant block is due
      * for a random update tick.
      *
-     * <p/>When called, it will call {@link #giveChanceToGrow(BlockState, IWorld, BlockPos)},
+     * <p/>When called, it will call {@link #growPlantWithProbability(BlockState, IWorld, BlockPos)},
      * which is how the plant determines its own growth and ultimately grows.
      *
      * @param world the world the plant is in.
@@ -529,7 +491,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override @SuppressWarnings("deprecation")
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        this.giveChanceToGrow(state, world, pos);
+        growPlantWithProbability(state, world, pos);
     }
 
     /**
@@ -539,9 +501,9 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     @Override
     public boolean ticksRandomly(BlockState state) { return true; }
 
-    // ******
-    // Growth
-    // ******
+    // **********************
+    //  Miscellaneous Growth
+    // **********************
 
     /**
      * Used to check if the given plant is fully grown.
@@ -554,25 +516,43 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     }
 
     /**
-     * Used to get the amount of growth stages a plant
-     * should grow when given bonemeal.
+     * Used to get the amount of growth stages a plant should grow when given bonemeal.
      *
      * @return a random int in the range of 1 to 3 (inclusive).
      */
-    private int getBonemealIncrease(Random random){
+    private int getGrowthFromBonemeal(Random random){
         return MathUtil.getRandomIntegerInRange(random, 1, 3);
     }
 
     /**
+     * Checks if the conditions of the world & plant block
+     * are suitable. If so, growth can be allowed.
+     *
+     * <p/>In order to pass, the chunk must be loaded,
+     * and the plant cannot be fully grown.
+     *
+     * @param world the world the plant is in.
+     * @param pos the position of the plant in the world.
+     * @return {@code true} if the plant can grow.
+     */
+    private boolean isGrowthPossible(World world, BlockPos pos){
+        if (!world.isAreaLoaded(pos, 1))
+            return false; //Chunk load prevention
+
+        return !isFullyGrown(world.getBlockState(pos));
+    }
+
+    /**
      * Used to get the Mineral Concentration of the Mineral
-     * Soil block underneath the plant.
+     * Soil block underneath the plant, which acts as a
+     * growth rate multiplier.
      *
      * @param pos position of the plant block.
      * @return the Mineral Concentration of the Mineral Soil
      * block below the plant. Will be 0 if no soil block
      * is below the plant.
      */
-    private float getMineralPercent(World world, BlockPos pos){
+    private float getMineralContent(World world, BlockPos pos){
         TileEntityMineralSoil te = null;
 
         if(world.getTileEntity(pos.down()) instanceof TileEntityMineralSoil)
@@ -582,14 +562,14 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     }
 
     /**
-     * Used to get the Enhancer Mineral Concentration, increase,
+     * Used to get the Enhancer Mineral Concentration increase,
      * if any, of the Mineral Soil underneath the plant.
      *
      * @param pos position of the plant block.
      * @return the Mineral Percentage Increase from the soil
      * blocks enhancer block. Can be {@code 0}.
      */
-    private float getMineralPercentIncrease(World world, BlockPos pos){
+    private float getMineralEnhancement(World world, BlockPos pos){
         BlockState enhancer = world.getBlockState(pos.down().down());
 
         if(enhancer.getBlock() instanceof BlockEnhancer){
@@ -600,10 +580,9 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     }
 
     /**
-     * Returns the growth chance of unique to this
-     * specific plant type/instance.
+     * @return the base growth chance of this plant instance.
      */
-    private float getPlantGrowthChance(){
+    private float getPlantBaseGrowthChance(){
         return properties.growthProbability();
     }
 
@@ -635,10 +614,63 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         );
     }
 
+    // ******************
+    // Growable Interface
+    // ******************
+
     /**
-     * <b>Only ever override this in subclasses!</b> Used by
-     * specific plant types to define the plant block growth
-     * logic.
+     * Used to check if this plant can be grown
+     * (by bonemeal, specifically).
+     *
+     * @param world the world the plant is in.
+     * @param state the block state as it is in the world.
+     * @param pos the position of the plant in the world.
+     * @return {@code true} if bonemeal is enabled and the
+     * plant is not fully grown.
+     */
+    @Override
+    public boolean canGrow(IBlockReader world, BlockPos pos, BlockState state, boolean isClient) {
+        return properties.bonemealGrowth() && !isFullyGrown(state);
+    }
+
+    /**
+     * Used to check if bonemeal is enabled for the plant type.
+     *
+     * @param world the world the plant is in.
+     * @param state the block state as it is in the world.
+     * @param pos the position of the plant in the world.
+     * @return {@code true} if bonemeal is enabled
+     * for the plant type.
+     */
+    @Override
+    public boolean canUseBonemeal(World world, Random rand, BlockPos pos, BlockState state) {
+        return properties.bonemealGrowth();
+    }
+
+    /**
+     * Always grows the plant type in the world, <b>as though
+     * grown by/with Bonemeal</b>, unless already fully grown.
+     *
+     * <p/>Consider {@link #growPlantBlock(World, BlockState, BlockPos, int)}
+     * instead of this method.
+     *
+     * @param world the world the plant is in.
+     * @param state the block state as it is in the world.
+     * @param pos the position of the plant in the world.
+     */
+    @Override
+    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+        handlePlantGrowth(world, state, pos, getGrowthFromBonemeal(random));
+    }
+
+    // *************************
+    //  Abstract Implementation
+    // *************************
+
+    /**
+     * <b>Implementation specific to Plant Type! </b> Used by
+     * specific plant types to define how the actual plant
+     * block is grown.
      *
      * <p/><b>SHOULD NEVER BE CALLED DIRECTLY!</b>
      *
@@ -647,147 +679,170 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * without having to worry about growth chances and
      * the like.
      *
-     * <p/><b>This method SHOULD also do the auto-farm check
-     * ({@link #attemptAutoHarvest(int, World, BlockPos)})
-     * and reset the plants growth if it returns
-     * {@code true}.</b>
-     *
      * <p/> When called, this method should ALWAYS grow the plant.
      * unless already fully grown. This method is only called after
      * Mineral Soil Mineral Concentration and plant growth chances
      * are calculated, so no logic or checks need to be performed here.
      *
-     * <p/>
      * @param world the world the plant is in.
      * @param state the block state as it is in the world.
      * @param pos the position of the plant in the world.
      * @param increase the amount of stages to grow the plant by.
      */
-    abstract void growPlant(World world, BlockState state, BlockPos pos, int increase);
+    abstract void onGrowPlantBlock(World world, BlockState state, BlockPos pos, int increase);
+
+    // ********************
+    //  Plant Block Growth
+    // ********************
+
+    private void growPlantFromProbability(World world, BlockState state, BlockPos pos) {
+        double chance = calculateChanceOfGrowth(world, state, pos);
+        MathUtil.probableChance((in) -> {
+            if(in) handlePlantGrowth(world, state, pos, 1);
+            return null;
+        }, chance);
+    }
 
     /**
-     * Always grows the plant type in the world,
-     * unless already fully grown.
+     * Always grows the plant type in the world, unless already fully grown.
      *
-     * <p/>Handles calling the specific plant types grow method, and
-     * ensures the Forge growth hooks are notified as well. Does NOT
-     * handle growth checks and luck.
+     * <p/>Handles calling the specific plant types grow method, and ensures
+     * the Forge growth hooks are notified as well. Does NOT handle growth
+     * checks and luck.
      *
      * @param world the world the plant is in.
      * @param state the block state as it is in the world.
      * @param pos the position of the plant in the world.
      * @param increase the amount of stages to grow the plant by.
      */
-    private void grow(World world, BlockState state, BlockPos pos, int increase){
+    private void growPlantBlock(World world, BlockState state, BlockPos pos, int increase){
         //Don't grow if fully grown.
         if(isFullyGrown(world.getBlockState(pos)))
             return;
 
         ForgeHooks.onCropsGrowPre(world, pos, state, false);
-        growPlant(world, state, pos, increase);
+        onGrowPlantBlock(world, state, pos, increase);
+        onPlantGrow(state, world, pos.down(), pos);
         ForgeHooks.onCropsGrowPost(world, pos, state);
     }
 
-    // ******************
-    // Determining Growth
-    // ******************
+    private void handlePlantGrowth(World world, BlockState state, BlockPos pos, int increase) {
+        int growth = getGrowthStage(state);
 
-    /**
-     * Checks if the conditions of the world & plant block
-     * are suitable. If so, growth can be allowed.
-     *
-     * <p/>In order to pass, the chunk must be loaded,
-     * the light available must be bright enough, and
-     * the plant cannot already be fully grown.
-     *
-     * @param world the world the plant is in.
-     * @param pos the position of the plant in the world.
-     * @return {@code true} if the plant can grow.
-     */
-    private boolean canGrow(World world, BlockPos pos){
-        if (!world.isAreaLoaded(pos, 1))
-            return false; //Chunk load prevention
-
-        if (!(world.getNeighborAwareLightSubtracted(pos.up(), 0) >= 9))
-            return false; //Lighting
-
-        //Growth
-        return !isFullyGrown(world.getBlockState(pos));
-    }
-
-    /**
-     * Performs a once off check to determine if the plant in
-     * the world at the given position is lucky enough to grow.
-     *
-     * <p/>Check is based upon <b>random chance</b>, soil
-     * concentration, plant growth chance, and light available.
-     *
-     * @param world the world the plant is in.
-     * @param pos the position of the plant in the world.
-     * @return {@code true} if the plant got lucky, and
-     * can now possibly grow, otherwise {@code false} is
-     * returned.
-     */
-    private boolean isLucky(World world, BlockPos pos){
-        float mineralPercentChance = getMineralPercent(world, pos);
-        float combined = mineralPercentChance + ((mineralPercentChance > 49.9)
-                ? getMineralPercentIncrease(world, pos) : 0);
-
-        //Apply light penalty
-        combined = applyLightPenalty(world, pos, combined);
-
-        //If lucky with soil and plant growth chance
-        if(MathUtil.chance(combined)){
-            return MathUtil.chance(getPlantGrowthChance());
-        }
-
-        return false;
-    }
-
-    /**
-     * Gets an integer penalty based upon the amount
-     * of light in the given world at the given position.
-     * Used by {@link #isLucky(World, BlockPos)}.
-     *
-     * @param world the given world to check the light in.
-     * @param pos the position in the world to check the light value at.
-     * @return the integer penalty ranging from 0 to 5, based apon light level,
-     * where a bigger number means a bigger penalty. Will be {@code -1} if too
-     * low to grow crops.
-     */
-    public int getLightPenalty(World world, BlockPos pos){
-        if(!ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).enableLightPenalty())
-            return 0;
-
-        int lightPenalty = world.getMaxLightLevel() - world.getLight(pos.up());
-
-        if(lightPenalty >= 1){
-            if(lightPenalty >= 7)
-                return -1;
-            return lightPenalty;
-        } else return 0;
-    }
-
-    /**
-     * Gives a growth chance for a plant in the world that takes
-     * the light level near the plant into account.
-     *
-     * @param world the world the plant is in.
-     * @param pos the position of the plant in the world.
-     * @param in the input growth chance of the plant.
-     * @return the growth chance of the plant with the light penalty
-     * applied.
-     */
-    public float applyLightPenalty(World world, BlockPos pos, float in){
-        if(ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).enableLightPenalty())
-            if(in >= 25){
-                int penalty = getLightPenalty(world, pos);
-
-                if(penalty != -1)
-                    return in - penalty;
+        //If fully grown, skip growth and try auto harvest.
+        if(isFullyGrown(state)){
+            if(attemptAutoHarvest(growth, world, pos)) {
+                setGrowthStage(world, pos, getPostHarvestGrowthStage());
             }
 
-        return in;
+            return;
+        }
+
+        //Otherwise, if conditions for possible growth are met
+        if(!isGrowthPossible(world, pos))
+            return;
+
+        //Finally, if determined, grow in the world
+        growPlantBlock(world, state, pos, increase);
+        //And try a harvest with the new growth
+        if(attemptAutoHarvest(growth, world, pos))
+            setGrowthStage(world, pos, getPostHarvestGrowthStage());
+    }
+
+    // **********************
+    //  Grow Rates & Chances
+    // **********************
+
+    private double calculateChanceOfGrowth(World world, BlockState state, BlockPos pos) {
+        // Get plant value
+        double baseGrowth = getPlantBaseGrowthChance();
+
+        // Get Soil & Enhancer values
+        double soilModifier = getSoilGrowthModifier(world, pos);
+        double enhancedSoilModifier = applyEnhancerModifier(world, pos, soilModifier);
+
+        // Combine into single probability
+        double growthRate = enhancedSoilModifier * baseGrowth;
+
+        // and return the probability with lighting modifier
+        return applyLightingModifier(world, pos, growthRate);
+    }
+
+    private double applyLightingModifier(World world, BlockPos pos, double in) {
+        if(!GENERAL_CONFIG.isGrowthLightDependent()) return in; //If disabled
+
+        double lightModifier = getLightGrowthModifier(world, pos);
+        return lightModifier * in;
+    }
+
+    private double applyEnhancerModifier(World world, BlockPos pos, double in) {
+        double enhancerModifier = getEnhancerModifier(world, pos);
+
+        if(in >= 0.50 && enhancerModifier != 0)
+            return enhancerModifier + in;
+        else return in;
+    }
+
+    private double getLightGrowthModifier(World world, BlockPos pos) {
+        return lightLevelToGrowthMultiplier(getPlantLightLevel(world, pos), world.getMaxLightLevel());
+    }
+
+    private double getSoilGrowthModifier(World world, BlockPos pos) {
+        return getMineralContent(world, pos) / 100;
+    }
+
+    private double getEnhancerModifier(World world, BlockPos pos) {
+        return getMineralEnhancement(world, pos) / 100;
+    }
+
+    // ******************
+    // Light Based Growth
+    // ******************
+
+    public int getLightLevelZeroPoint() {
+        return GENERAL_CONFIG.getLightLevelZeroPoint();
+    }
+
+    public double getWorthPerLightLevel() {
+        return GENERAL_CONFIG.getWorthPerLightLevel();
+    }
+
+    public double getInterestPerLightLevel() {
+        return GENERAL_CONFIG.getInterestPerLightLevel();
+    }
+
+    public int getPlantLightLevel(World world, BlockPos pos) {
+        if(!(world.getBlockState(pos).getBlock() instanceof BlockPlant))
+            return 0;
+
+        return world.getLight(pos);
+    }
+
+    public double lightLevelToGrowthMultiplier(int lightLevel, int maxLightLevel) {
+        return lightLevelToGrowthMultiplier(lightLevel, maxLightLevel,
+                getLightLevelZeroPoint(), getWorthPerLightLevel(), getInterestPerLightLevel()
+        );
+    }
+
+    public double lightLevelToGrowthMultiplier(int lightLevel, int maxLightLevel, int zeroPoint, double cost, double interest) {
+        double multiplier = 1D;
+        int difference;
+
+        if ((difference = lightLevel - zeroPoint) > 0)
+            while(difference != 0) {
+                cost += interest;
+                multiplier += cost;
+                difference--;
+            }
+
+        if (difference < 0)
+            while(difference != 0) {
+                cost += interest;
+                multiplier -= cost;
+                difference++;
+            }
+
+        return Math.max(multiplier, 0D);
     }
 
     // **********
@@ -841,8 +896,8 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     // *******************
 
     /**
-     * Informs Minecraft that Resynth plants are
-     * crop types.
+     * Informs Minecraft that these Resynth plants are growable
+     * crop types, like wheat and the rest.
      *
      * @param world the world the plant is in.
      * @param pos the coords of the plant in the world.
@@ -865,55 +920,6 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() != this) return getDefaultState();
         return state;
-    }
-
-    // ******************
-    // Growable Interface
-    // ******************
-
-    /**
-     * Used to check if this plant can be grown
-     * (by bonemeal, specifically).
-     *
-     * @param world the world the plant is in.
-     * @param state the block state as it is in the world.
-     * @param pos the position of the plant in the world.
-     * @return {@code true} if bonemeal is enabled and the
-     * plant is not fully grown.
-     */
-    @Override
-    public boolean canGrow(IBlockReader world, BlockPos pos, BlockState state, boolean isClient) {
-        return properties.bonemealGrowth() && !isFullyGrown(state);
-    }
-
-    /**
-     * Used to check if bonemeal is enabled for the plant type.
-     *
-     * @param world the world the plant is in.
-     * @param state the block state as it is in the world.
-     * @param pos the position of the plant in the world.
-     * @return {@code true} if bonemeal is enabled
-     * for the plant type.
-     */
-    @Override
-    public boolean canUseBonemeal(World world, Random rand, BlockPos pos, BlockState state) {
-        return properties.bonemealGrowth();
-    }
-
-    /**
-     * Always grows the plant type in the world, <b>as though
-     * grown by/with Bonemeal</b>, unless already fully grown.
-     *
-     * <p/>Consider {@link #grow(World, BlockState, BlockPos, int)}
-     * instead of this method.
-     *
-     * @param world the world the plant is in.
-     * @param state the block state as it is in the world.
-     * @param pos the position of the plant in the world.
-     */
-    @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        grow(world, state, pos, getBonemealIncrease(random));
     }
 
     // *************
@@ -988,6 +994,51 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     // *****
     // Other
     // *****
+
+    @Override
+    public boolean provideHoeInformation(Map<String, Object[]> information, BlockState state, World world, BlockPos pos) {
+        information.put("plant_info_header", new Object[]{TextFormatting.GRAY, TextFormatting.RED, TextFormatting.GRAY});
+
+        //Growth Stage
+        int growthStage = getGrowthStage(world.getBlockState(pos));
+        information.put("plant_growth", new Object[] {
+                TextFormatting.GREEN, TextFormatting.GOLD, growthStage, TextFormatting.DARK_GREEN,
+                TextFormatting.GOLD, getMaxGrowthStage(), TextFormatting.DARK_GREEN
+        });
+
+        //Base Growth Rate of Plant Type
+        information.put("base_growth_rate", new Object[]{
+                TextFormatting.DARK_PURPLE, TextFormatting.GOLD, getPlantBaseGrowthChance()
+        });
+
+        //Soil Growth Modifier
+        double total = applyEnhancerModifier(world, pos, getSoilGrowthModifier(world, pos)) * 100;
+        information.put("soil_growth_modifier", new Object[]{
+                TextFormatting.AQUA, TextFormatting.GOLD, total
+        });
+
+        boolean useLight = GENERAL_CONFIG.isGrowthLightDependent();
+
+        //Brightness Growth Modifier
+        double lightMultiplier = lightLevelToGrowthMultiplier(getPlantLightLevel(world, pos), world.getMaxLightLevel());
+        information.put("light_growth_modifier", new Object[] {
+                TextFormatting.YELLOW.toString() + (!useLight ? TextFormatting.STRIKETHROUGH.toString() : ""),
+                TextFormatting.GOLD.toString() + (!useLight ? TextFormatting.STRIKETHROUGH.toString() : ""),
+                ((int) (lightMultiplier * 100))
+        });
+
+        //Final Growth Chance
+        double growthChance = ( ((total / 100) * (getPlantBaseGrowthChance() / 100)) * 100);
+        double lightBasedGrowthChance = ((lightMultiplier * (growthChance / 100)) * 100);
+        information.put("plant_growth_rate", new Object[]{ TextFormatting.BLUE, TextFormatting.GOLD,
+                MathUtil.roundToNDecimals((useLight ? lightBasedGrowthChance : growthChance), 3),
+                TextFormatting.DARK_BLUE
+        });
+
+        information.put("footer", new Object[]{TextFormatting.GRAY});
+
+        return true;
+    }
 
     /**
      * @return the properties object for the plant
@@ -1084,7 +1135,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * <p/>Will return {@code -1} if the plant cannot be
      * harvested with right-clicks.
      */
-    protected int getGrowthPostHarvest() {
+    protected int getPostHarvestGrowthStage() {
         return -1;
     }
 
@@ -1094,7 +1145,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * {@code -1} if the plant cannot be harvested with
      * right-clicks.
      */
-    protected int postHarvestNumberOfProduceDrops(){
+    protected int getHarvestProduceQuantity(){
         return -1;
     }
 
@@ -1104,7 +1155,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * {@code null} if the plant cannot be harvested with
      * right-clicks.
      */
-    protected SoundEvent postHarvestSoundEvent(){
+    protected SoundEvent getSoundEventOfHarvest(){
         return null;
     }
 }

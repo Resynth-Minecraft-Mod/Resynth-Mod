@@ -316,7 +316,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         boolean tilled = tryTillBlock(world, pos, block, item, player, face);
 
         if(!tilled) //return tryGetInfo(world, pos, block, player);
-            return getBlockInformation(world, pos, block, player);
+            return tryGetBlockInfoAsProvider(world, pos, block, player);
 
         return true;
     }
@@ -632,23 +632,21 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     // Information Provider
     // ********************
 
-    private boolean getBlockInformation(World world, BlockPos pos, BlockState block, PlayerEntity player) {
+    private boolean tryGetBlockInfoAsProvider(World world, BlockPos pos, BlockState block, PlayerEntity player) {
         MineralHoeInfoProvider provider;
-        Map<String, String[]> information;
+        Map<String, Object[]> information;
 
         // Check if block is provider and has provided
-        if((provider = asProvider(block)) != null){
-            if((information = callProvider(provider, block, world, pos)) == null) {
+        if((provider = asInfoProvider(block)) != null){
+            if((information = callInfoProvider(provider, block, world, pos)) == null) {
                 return false;
             }
         } else return false;
 
-        // Information obtained! Convert to serializable HoeInformation
-        MineralHoeInformation hoeInformation = new MineralHoeInformation(information);
-
+        // Information obtained! Convert to HoeInformation and send display packet
         if(player instanceof ServerPlayerEntity) {
-            Packet.send(PacketDistributor.PLAYER.with(
-                    () -> (ServerPlayerEntity) player), new DisplayHoeInfoPacket(hoeInformation)
+            Packet.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player),
+                    new DisplayHoeInfoPacket(new MineralHoeInformation(information))
             );
 
             return true;
@@ -658,7 +656,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     }
 
     @Nullable
-    private MineralHoeInfoProvider asProvider(BlockState blockState) {
+    private MineralHoeInfoProvider asInfoProvider(BlockState blockState) {
         if(blockState.getBlock() instanceof MineralHoeInfoProvider){
             return (MineralHoeInfoProvider) blockState.getBlock();
         }
@@ -667,8 +665,8 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
     }
 
     @Nullable
-    private static Map<String, String[]> callProvider(MineralHoeInfoProvider provider, BlockState state, World world, BlockPos pos) {
-        Map<String, String[]> cleanMap = new HashMap<>();
+    private static Map<String, Object[]> callInfoProvider(MineralHoeInfoProvider provider, BlockState state, World world, BlockPos pos) {
+        Map<String, Object[]> cleanMap = MineralHoeInformation.getNewMap();
         boolean passed;
 
         if(world.isRemote)
@@ -699,13 +697,13 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
         private static final String INFORMATION_MAP_KEY = "information-map";
 
-        private final Map<String, String[]> information;
+        private final Map<String, Object[]> information;
 
         private MineralHoeInformation() {
-            this(new HashMap<>());
+            this(getNewMap());
         }
 
-        private MineralHoeInformation(Map<String, String[]> information) {
+        private MineralHoeInformation(Map<String, Object[]> information) {
             this.information = Objects.requireNonNull(information);
         }
 
@@ -714,8 +712,12 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             return INFORMATION_SERIALIZER_INSTANCE;
         }
 
-        public Map<String, String[]> getInformation() {
+        public Map<String, Object[]> getInformation() {
             return this.information;
+        }
+
+        static Map<String, Object[]> getNewMap() {
+            return new LinkedHashMap<>();
         }
 
         // Serializer implementation
@@ -728,17 +730,17 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
             @Override
             protected void objectToData(MineralHoeInformation object, JSerialDataIO dataIO) {
-                Map<String, String[]> information = object.getInformation();
+                Map<String, Object[]> information = object.getInformation();
 
                 if(information.isEmpty())
                     throw new IllegalArgumentException("HoeInformation object contains empty information map.");
 
                 JsonObject jsonInformationMap = new JsonObject();
-                for(Map.Entry<String, String[]> info : information.entrySet()) {
+                for(Map.Entry<String, Object[]> info : information.entrySet()) {
                     JsonArray array = new JsonArray(); String key = info.getKey();
 
-                    for(String element : info.getValue()){
-                        array.add(element);
+                    for(Object element : info.getValue()){
+                        array.add(element.toString());
                     }
 
                     jsonInformationMap.add(key, array);
@@ -750,7 +752,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             @Override
             protected MineralHoeInformation dataToObject(MineralHoeInformation newObject, JSerialDataIO dataIO) {
                 JsonObject jsonInformation = dataIO.getObject(INFORMATION_MAP_KEY, null);
-                Map<String, String[]> information = new HashMap<>();
+                Map<String, Object[]> information = getNewMap();
 
                 if(jsonInformation == null || jsonInformation.size() == 0)
                     throw new IllegalArgumentException("HoeInformation object data gave an empty map.");
@@ -811,7 +813,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
          * and provide the information to the player. Returning {@code false} will signal to the
          * MineralHoe to instead not provide the information to the player.
          */
-        boolean provideHoeInformation(Map<String, String[]> information, BlockState state, World world, BlockPos pos);
+        boolean provideHoeInformation(Map<String, Object[]> information, BlockState state, World world, BlockPos pos);
 
     }
 }

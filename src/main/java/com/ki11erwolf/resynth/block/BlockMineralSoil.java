@@ -22,8 +22,10 @@ import com.ki11erwolf.resynth.config.categories.MineralSoilConfig;
 import com.ki11erwolf.resynth.item.ItemMineralHoe;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
-import com.ki11erwolf.resynth.util.PlantPatchInfoProvider;
-import mcjty.theoneprobe.api.*;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.IProbeInfoAccessor;
+import mcjty.theoneprobe.api.ProbeMode;
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
@@ -44,6 +46,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -72,8 +75,8 @@ import java.util.Map;
  * Hwyla & The One Probe, as well as with {@link ItemMineralHoe.MineralHoeInfoProvider}.
  */
 @SuppressWarnings("deprecation") // So many overriden deprecated methods...
-public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> implements PlantPatchInfoProvider,
-        IComponentProvider, IServerDataProvider<TileEntity>, IProbeInfoAccessor, ItemMineralHoe.MineralHoeInfoProvider {
+public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
+        implements IComponentProvider, IServerDataProvider<TileEntity>, IProbeInfoAccessor, ItemMineralHoe.MineralHoeInfoProvider {
 
     /**
      * Configuration settings for this block class.
@@ -104,9 +107,9 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
         this.setDefaultState(this.stateContainer.getBaseState().with(STAGE, 0));
     }
 
-    // ***
-    // LAF
-    // ***
+    // ***************
+    //  Look and feel
+    // ***************
 
     /**
      * {@inheritDoc}
@@ -450,7 +453,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
      * value.
      * @return the formatted localized message.
      */
-    private static String getMineralContentMessage(float mineralPercentage, float increase){
+    private static String getMineralContentMessage(float mineralPercentage, float increase) {
         return TextFormatting.AQUA + I18n.format(
                 "misc.resynth.mineral_content",
                 TextFormatting.GOLD + String.valueOf(mineralPercentage + increase)
@@ -458,11 +461,56 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil> i
     }
 
     @Override
-    public boolean provideHoeInformation(Map<String, String[]> information, BlockState state, World world, BlockPos pos) {
-        information.put("soil_info_header", new String[]{
-                TextFormatting.GOLD.toString(), TextFormatting.AQUA.toString(), TextFormatting.GOLD.toString()
+    public boolean provideHoeInformation(Map<String, Object[]> information, BlockState state, World world, BlockPos pos) {
+        information.put("soil_info_header", new Object[]{ TextFormatting.GRAY, TextFormatting.BLUE, TextFormatting.GRAY });
+
+        // Common data
+        float mineralConcentration = getTileEntity(world, pos).getMineralPercentage();
+        float enhancedConcentration = getMineralContentIncrease(world, pos);
+        float finalConcentration = mineralConcentration + ((mineralConcentration >= 50.0) ? enhancedConcentration : 0);
+
+        // Mineral Concentration
+        information.put("soil_mineral_concentration", new Object[]{
+                TextFormatting.AQUA, TextFormatting.GOLD, finalConcentration,
+                TextFormatting.GOLD, TextFormatting.DARK_AQUA, mineralConcentration,
+                TextFormatting.GREEN.toString() + (mineralConcentration < 50.0 ? TextFormatting.STRIKETHROUGH : ""),
+                enhancedConcentration, TextFormatting.GOLD
         });
 
+        // Enhancer - logic
+        ResourceLocation enhancer = world.getBlockState(pos.down()).getBlock().getRegistryName();
+        String enhancerKey = "$no_enhancer";
+        String color = TextFormatting.WHITE.toString();
+
+        if(enhancer != null) {
+            if (enhancer.equals(ResynthBlocks.BLOCK_CALVINITE_ENHANCER.getRegistryName())) {
+                enhancerKey = "$calvinite_enhancer";
+                color = TextFormatting.LIGHT_PURPLE.toString();
+            }
+            if (enhancer.equals(ResynthBlocks.BLOCK_SYLVANITE_ENHANCER.getRegistryName())) {
+                enhancerKey = "$sylvanite_enhancer";
+                color = TextFormatting.YELLOW.toString();
+            }
+
+            if(mineralConcentration < 50.0)
+                color += TextFormatting.STRIKETHROUGH;
+        }
+
+        // Enhancer
+        information.put("soil_enhancer", new Object[]{
+                TextFormatting.LIGHT_PURPLE, color, enhancerKey, TextFormatting.GOLD,
+                color, enhancedConcentration, TextFormatting.GOLD
+        });
+
+        // Hopper Auto Harvest
+        boolean hopperAutoHarvest = world.getBlockState(pos.down()).getBlock() == Blocks.HOPPER
+                || world.getBlockState(pos.down().down()).getBlock() == Blocks.HOPPER;
+
+        information.put("hopper_auto_harvesting", new Object[] {TextFormatting.BLUE,
+                (hopperAutoHarvest ? TextFormatting.DARK_GREEN : TextFormatting.DARK_RED), (hopperAutoHarvest ? "$true" : "$false")
+        });
+
+        information.put("footer", new Object[]{ TextFormatting.GRAY });
         return true;
     }
 }

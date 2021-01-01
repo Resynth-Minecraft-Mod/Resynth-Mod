@@ -115,7 +115,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
                     continue;
 
                 //Spawn
-                if(MathUtil.chance(spawnChance)){
+                if(MathUtil.chanceOfTrueBoolean(spawnChance)){
                     spawnSeeds(crystallineSet.seedsItem, (World) world, event.getPos());
                     event.setCanceled(true);
                     world.setBlockState(event.getPos(), Blocks.AIR.getDefaultState(), 2);
@@ -157,7 +157,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
 
                 //Spawn
                 for(int j = 0; j < count; j++){
-                    if(MathUtil.chance(spawnChance)){
+                    if(MathUtil.chanceOfTrueBoolean(spawnChance)){
                         spawnSeeds(set.getSeedsItem(), world, pos);
                     }
                 }

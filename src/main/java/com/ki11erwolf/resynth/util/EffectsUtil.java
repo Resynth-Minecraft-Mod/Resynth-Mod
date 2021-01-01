@@ -536,7 +536,7 @@ public class EffectsUtil {
                                                     IParticleData particleType, float chance){
         if(isUnsafe(world)) return false;//Safety check
 
-        if(MathUtil.chance(chance))
+        if(MathUtil.chanceOfTrueBoolean(chance))
             displayEffects(world, pos, intensity, speedMultiplier, particleType);
 
         //We return true even if we don't actually display the effects.

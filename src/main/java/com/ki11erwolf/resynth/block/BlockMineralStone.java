@@ -53,7 +53,7 @@ public class BlockMineralStone extends BlockOre{
                 new ItemStack(
                         ResynthItems.ITEM_MINERAL_ROCK,
                         CONFIG.getBaseDrops()
-                                + (MathUtil.chance((float) CONFIG.getExtraDropsChance()) ? CONFIG.getExtraDrops() : 0)
+                                + (MathUtil.chanceOfTrueBoolean((float) CONFIG.getExtraDropsChance()) ? CONFIG.getExtraDrops() : 0)
                 ),
                 worldIn, pos
         );

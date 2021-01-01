@@ -111,7 +111,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
                     if(loopedEntity == null) continue;
                     if(!loopedEntity.equals(deadEntity)) continue;
                     if(event.getEntity().getEntityWorld().isRemote) continue;
-                    if(!MathUtil.chance(plantSet.setProperties.seedSpawnChanceFromMob())) continue;
+                    if(!MathUtil.chanceOfTrueBoolean(plantSet.setProperties.seedSpawnChanceFromMob())) continue;
 
                     //and spawn seeds if lucky
                     spawnSeeds(set.getSeedsItem(), event.getEntity().getEntityWorld(),
@@ -139,7 +139,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
                 BiochemicalSet plantSet = (BiochemicalSet) set;
 
                 if(event.getOriginal().getItem() == plantSet.getProduceItem().asItem()){
-                    if(MathUtil.chance(plantSet.setProperties.seedSpawnChanceFromBulb())) {
+                    if(MathUtil.chanceOfTrueBoolean(plantSet.setProperties.seedSpawnChanceFromBulb())) {
                         if (!event.getEntity().getEntityWorld().isRemote) {
                             //Spawn seeds if lucky
                             spawnSeeds(

@@ -110,7 +110,7 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
      * plant type is reset to.
      */
     @Override
-    protected int getGrowthPostHarvest() {
+    protected int getPostHarvestGrowthStage() {
         return 0;
     }
 
@@ -118,10 +118,10 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
      * @return {@inheritDoc}
      *
      * <p/>Returns the config defined number of
-     * produce drops.
+     * produce drops for instances of this plant.
      */
     @Override
-    protected int postHarvestNumberOfProduceDrops(){
+    protected int getHarvestProduceQuantity(){
         return ((ICrystallineSetProperties) properties).plantYield();
     }
 
@@ -131,26 +131,15 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
      * <p/>Returns {@link SoundEvents#ITEM_CROP_PLANT}.
      */
     @Override
-    protected SoundEvent postHarvestSoundEvent(){
+    protected SoundEvent getSoundEventOfHarvest(){
         return SoundEvents.ITEM_CROP_PLANT;
     }
 
-    // ************
-    // Growth Logic
-    // ************
-
     /**
      * {@inheritDoc}
-     * <p/>
-     * Grows the plant in the world. Specifically, increases
-     * the plant growth property by the given amount, unless
-     * the plant is already fully grown.
-     *
-     * <p>Also performs the auto-farm check, and sets growth
-     * stage accordingly.
      */
     @Override
-    void growPlant(World world, BlockState state, BlockPos pos, int increase) {
+    void onGrowPlantBlock(World world, BlockState state, BlockPos pos, int increase) {
         int growth = increase + getGrowthStage(state);
 
         if(growth > getMaxGrowthStage())

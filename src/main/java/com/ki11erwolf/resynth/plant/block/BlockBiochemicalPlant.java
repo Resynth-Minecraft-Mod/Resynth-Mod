@@ -99,7 +99,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * plant type is reset to.
      */
     @Override
-    protected int getGrowthPostHarvest() {
+    protected int getPostHarvestGrowthStage() {
         return 3;
     }
 
@@ -107,7 +107,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * @return the config defined number of produce drops.
      */
     @Override
-    protected int postHarvestNumberOfProduceDrops(){
+    protected int getHarvestProduceQuantity(){
         return ((IBiochemicalSetProperties) properties).plantYield();
     }
 
@@ -115,7 +115,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * @return {@link SoundEvents#ENTITY_ITEM_PICKUP}
      */
     @Override
-    protected SoundEvent postHarvestSoundEvent(){
+    protected SoundEvent getSoundEventOfHarvest(){
         return SoundEvents.ENTITY_ITEM_PICKUP;
     }
 
@@ -130,7 +130,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      * the plant growth property by the given amount.
      */
     @Override
-    void growPlant(World world, BlockState state, BlockPos pos, int increase) {
+    void onGrowPlantBlock(World world, BlockState state, BlockPos pos, int increase) {
         int growth = increase + getGrowthStage(state);
 
         if(growth > getMaxGrowthStage())

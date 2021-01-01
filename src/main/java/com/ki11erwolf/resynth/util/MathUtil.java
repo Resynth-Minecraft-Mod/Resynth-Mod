@@ -15,6 +15,10 @@
  */
 package com.ki11erwolf.resynth.util;
 
+import javafx.util.Callback;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 /**
@@ -31,6 +35,31 @@ public final class MathUtil {
 
     //Static class.
     private MathUtil(){}
+
+    /**
+     * Rounds any double value (normal, half up rounding) to a certain number of
+     * decimal places. Correctly shortens floating point values with too many
+     * trailing decimals to a reasonable length. Particularly useful when displaying
+     * values.
+     *
+     * @param input the given floating point value to round and remove excess decimals.
+     * @param decimals the amount of decimals allowed in the output.
+     * @return the given {@code input} floating point value, with any excess trailing
+     * decimals removed, and rounded to the last decimal.
+     */
+    public static double roundToNDecimals(double input, int decimals){
+        if(decimals < 1) throw new IllegalArgumentException("Cannot have less than 1 decimal point of precision");
+        if(decimals > 16) throw new IllegalArgumentException("Cannot have more than 16 decimal points of precision");
+
+        StringBuilder pattern = new StringBuilder("#.");
+        for(int i = 0; i < decimals; i++){
+            pattern.append("#");
+        }
+
+        DecimalFormat df = new DecimalFormat(pattern.toString());
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        return Double.parseDouble(df.format(input).replace(",", "."));
+    }
 
     /**
      * Returns a random integer in the range of {@code min} to {@code max}.
@@ -73,14 +102,58 @@ public final class MathUtil {
      * @return {@code true} or {@code false} randomly
      * with the given percentage chance.
      */
-    public static boolean chance(float percentage){
+    public static boolean chanceOfTrueBoolean(float percentage){
         //Hard code 0% and 100%
-        if(percentage >= 100.0)
-            return true;
-        if(percentage <= 0.0F)
-            return false;
+        if(percentage >= 100.0) return true;
+        if(percentage <= 0.0F) return false;
 
+        //Do chance calculation
         float random = RANDOM_INSTANCE.nextFloat();
         return (percentage / 100) > random;
+    }
+
+    public static <R> R probableChance(Callback<Boolean, R> action, double probability) {
+        if(probability <= 0.0F) return action.call(false);
+        else if (probability >= 1.0F) return action.call(true);
+        else return action.call((probability) > RANDOM_INSTANCE.nextFloat());
+    }
+
+    public static <R> R percentageChance(Callback<Boolean, R> action, double percentage) {
+        if(percentage <= 0.0F) return action.call(false);
+        else if (percentage >= 100.0F) return action.call(true);
+        else return action.call((percentage / 100) > RANDOM_INSTANCE.nextFloat());
+    }
+
+    public static class Chance {
+
+        private double probability;
+
+        public Chance() {
+            this(0.0D);
+        }
+
+        public Chance(double probability) {
+            if(probability <= 0.0D)
+                throw new IllegalArgumentException("Chance must be above 0");
+            if(probability > 1.0D)
+                throw new IllegalArgumentException("Chance must be above 1");
+
+            this.probability = probability;
+        }
+
+        public static class Result {
+
+            private final boolean value;
+
+            private final Chance creator;
+
+            private Result(boolean value, Chance creator) {
+                this.value = value;
+                this.creator = creator;
+            }
+
+
+        }
+
     }
 }

@@ -4,10 +4,12 @@ import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.item.ItemMineralHoe;
 import com.ki11erwolf.resynth.util.JSerializer;
 import com.ki11erwolf.resynth.util.SideUtil;
+import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.network.NetworkEvent;
 import org.apache.logging.log4j.Logger;
@@ -71,17 +73,26 @@ public class DisplayHoeInfoPacket extends Packet<DisplayHoeInfoPacket> {
                 return;
             }
 
-            Map<String, String[]> hoeInfo = displayHoeInfoPacket.information.getInformation();
-            String message = "";
+            Map<String, Object[]> hoeInfo = displayHoeInfoPacket.information.getInformation();
+            StringBuilder message = new StringBuilder();
 
-            for (Map.Entry<String, String[]> lineInfo : hoeInfo.entrySet()) {
-                message += I18n.format(
-                        "message.resynth.mineral_hoe_information." + lineInfo.getKey(), (Object[]) lineInfo.getValue()
-                );
+            for (Map.Entry<String, Object[]> lineInfo : hoeInfo.entrySet()) {
+                String key = "message.resynth.mineral_hoe_information." + lineInfo.getKey();
+                Object[] values = lineInfo.getValue();
+
+                for(int i = 0; i < values.length; i++) {
+                    if(values[i].toString().startsWith("$"))
+                        values[i] = I18n.format(
+                                ("value.resynth.mineral_hoe_information." + values[i]).replace("$", "")
+                        );
+                }
+
+                message.append(I18n.format(key, values)).append("\n");
             }
 
             ClientPlayerEntity player = Objects.requireNonNull(Minecraft.getInstance().player);
-            player.sendMessage(new StringTextComponent(message), player.getUniqueID());
+            for(ITextComponent msg : Tooltip.formatLineFeeds(new StringTextComponent(message.toString())))
+                player.sendMessage(msg, player.getUniqueID());
         };
     }
 }

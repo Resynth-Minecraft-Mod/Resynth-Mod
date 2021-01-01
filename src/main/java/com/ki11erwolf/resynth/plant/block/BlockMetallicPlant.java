@@ -194,13 +194,13 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * its produce when it's already fully grown.
      */
     @Override
-    void growPlant(World world, BlockState state, BlockPos pos, int increase) {
+    void onGrowPlantBlock(World world, BlockState state, BlockPos pos, int increase) {
         int growth = increase + getGrowthStage(state);
 
         if(growth >= getMaxGrowthStage()){
             //Plance Produce
             if(attemptAutoHarvest(growth, world, pos)){
-                setGrowthStage(world, pos, getGrowthPostHarvest());
+                setGrowthStage(world, pos, getPostHarvestGrowthStage());
                 return;
             }
 
@@ -229,7 +229,7 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * @return {@code 6} - the growth stage this plant is normally reset to.
      */
     @Override
-    protected int getGrowthPostHarvest(){
+    protected int getPostHarvestGrowthStage(){
         return 5;
     }
 }
