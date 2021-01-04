@@ -1014,7 +1014,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
         //Soil Growth Modifier
         double total = applyEnhancerModifier(world, pos, getSoilGrowthModifier(world, pos)) * 100;
         information.put("soil_growth_modifier", new Object[]{
-                TextFormatting.AQUA, TextFormatting.GOLD, total
+                TextFormatting.AQUA, TextFormatting.GOLD, MathUtil.roundToNDecimals(total, 3)
         });
 
         boolean useLight = GENERAL_CONFIG.isGrowthLightDependent();

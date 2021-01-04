@@ -119,15 +119,6 @@ public class ResynthPlants {
     // Crystalline Sets
     // ****************
 
-    public static final PlantSet<?, ?> TEST_SET = PlantSetFactory.makeCrystallineSet(
-            minecraftResource("test"),
-            new CrystallineSetProperties(
-                    true, 50, 2, 50, 50
-            ), new PlantSetProduceProperties(
-                    5, 200, 7.5
-            ), new ResourceLocation("minecraft", "sand"), new ResourceLocation("minecraft", "dirtt")
-    ).register();
-
     /**
      * The plant set for Resynth Mineral Rocks
      */
