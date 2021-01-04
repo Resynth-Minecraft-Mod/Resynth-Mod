@@ -153,10 +153,10 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      */
     @Override
     @SuppressWarnings("deprecation")
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState,
+    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState,
                                            IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() :
-                super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return isValidGround(worldIn.getBlockState(currentPos.down())) ?
+                super.updatePostPlacement(state, facing, facingState, worldIn, currentPos, facingPos) : Blocks.AIR.getDefaultState();
     }
 
     // *************
