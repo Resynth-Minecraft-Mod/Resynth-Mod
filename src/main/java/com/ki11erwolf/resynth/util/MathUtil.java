@@ -15,11 +15,10 @@
  */
 package com.ki11erwolf.resynth.util;
 
-import javafx.util.Callback;
-
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Random;
+import java.util.function.Function;
 
 /**
  * A set of utilities for assistance in
@@ -92,68 +91,102 @@ public final class MathUtil {
         return random.nextInt((max - min) + 1) + min;
     }
 
-    /**
-     * Returns {@code true} randomly with the
-     * given chance (0.0F - 100.0F).
-     *
-     * @param percentage the percentage chance
-     *                   of the method returning
-     *                   true (0.0F - 100.0F)
-     * @return {@code true} or {@code false} randomly
-     * with the given percentage chance.
-     */
-    public static boolean chanceOfTrueBoolean(float percentage){
-        //Hard code 0% and 100%
-        if(percentage >= 100.0) return true;
-        if(percentage <= 0.0F) return false;
+    public static class Probability {
 
-        //Do chance calculation
-        float random = RANDOM_INSTANCE.nextFloat();
-        return (percentage / 100) > random;
-    }
+        private final double probability;
 
-    public static <R> R probableChance(Callback<Boolean, R> action, double probability) {
-        if(probability <= 0.0F) return action.call(false);
-        else if (probability >= 1.0F) return action.call(true);
-        else return action.call((probability) > RANDOM_INSTANCE.nextFloat());
-    }
+        // ---- Factory ----
 
-    public static <R> R percentageChance(Callback<Boolean, R> action, double percentage) {
-        if(percentage <= 0.0F) return action.call(false);
-        else if (percentage >= 100.0F) return action.call(true);
-        else return action.call((percentage / 100) > RANDOM_INSTANCE.nextFloat());
-    }
-
-    public static class Chance {
-
-        private double probability;
-
-        public Chance() {
-            this(0.0D);
+        public static Probability newRandomProbability() {
+            return new Probability(0.50D);
         }
 
-        public Chance(double probability) {
-            if(probability <= 0.0D)
-                throw new IllegalArgumentException("Chance must be above 0");
-            if(probability > 1.0D)
-                throw new IllegalArgumentException("Chance must be above 1");
+        public static Probability newProbability(double probability) {
+            return new Probability(probability);
+        }
 
+        public static Probability newPercentageProbability(double percentage) {
+            return new Probability(percentage / 100);
+        }
+
+        public static Probability addProbabilities(Probability a, Probability b) {
+            return new Probability(a.getProbability() + b.getProbability());
+        }
+
+        public static Probability multiplyProbabilities(Probability a, Probability b) {
+            return new Probability(a.getProbability() * b.getProbability());
+        }
+
+        // ---- Probability ----
+
+        private Probability(double probability) {
             this.probability = probability;
         }
+
+        public Result randomResult() {
+            if(probability <= 0.0D)
+                return new Result(false);
+            else if (probability >= 1.0D)
+                return new Result(true);
+            else if (probability == 0.50D)
+                return new Result(RANDOM_INSTANCE.nextBoolean());
+
+            return new Result(RANDOM_INSTANCE.nextFloat() < probability);
+        }
+
+        public double getProbability() {
+            return this.probability;
+        }
+
+        public double getProbability(int precision) {
+            return roundToNDecimals(this.probability, precision);
+        }
+
+        public double getPercentageProbability() {
+            return this.probability * 100;
+        }
+
+        public double getPercentageProbability(int precision) {
+            return getProbability(precision) * 100;
+        }
+
+        // ---------------------- Result ----------------------
 
         public static class Result {
 
             private final boolean value;
 
-            private final Chance creator;
-
-            private Result(boolean value, Chance creator) {
+            private Result(boolean value) {
                 this.value = value;
-                this.creator = creator;
             }
 
+            public boolean get() {
+                return this.value;
+            }
 
+            public boolean isTrue() {
+                return this.value;
+            }
+
+            public boolean isFalse() {
+                return !isTrue();
+            }
+
+            public <T> T action(Function<Boolean, T> action) {
+                return action.apply(get());
+            }
+
+            public <T> T ifTrue(Function<Boolean, T> action) {
+                if(isTrue())
+                    return action.apply(get());
+                else return null;
+            }
+
+            public <T> T ifFalse(Function<Boolean, T> action) {
+                if(isFalse())
+                    return action.apply(get());
+                else return null;
+            }
         }
-
     }
 }

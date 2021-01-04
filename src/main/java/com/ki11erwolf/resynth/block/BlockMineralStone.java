@@ -51,9 +51,9 @@ public class BlockMineralStone extends BlockOre{
     public void spawnAdditionalDrops(BlockState state, ServerWorld worldIn, BlockPos pos, ItemStack stack) {
         MinecraftUtil.spawnItemStackInWorld(
                 new ItemStack(
-                        ResynthItems.ITEM_MINERAL_ROCK,
-                        CONFIG.getBaseDrops()
-                                + (MathUtil.chanceOfTrueBoolean((float) CONFIG.getExtraDropsChance()) ? CONFIG.getExtraDrops() : 0)
+                        ResynthItems.ITEM_MINERAL_ROCK, CONFIG.getBaseDrops() +
+                        (MathUtil.Probability.newPercentageProbability(CONFIG.getExtraDropsChance())
+                                .randomResult().isTrue() ? CONFIG.getExtraDrops() : 0)
                 ),
                 worldIn, pos
         );
