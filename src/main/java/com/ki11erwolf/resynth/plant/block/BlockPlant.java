@@ -696,7 +696,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
     // ********************
 
     private void growPlantFromProbability(World world, BlockState state, BlockPos pos) {
-        MathUtil.Probability.newProbability(calculateChanceOfGrowth(world, state, pos)).randomResult().ifTrue((b) -> {
+        MathUtil.Probability.newPercentageProbability(calculateChanceOfGrowth(world, state, pos)).randomResult().ifTrue((b) -> {
             handlePlantGrowth(world, state, pos, 1);
             return null;
         });
