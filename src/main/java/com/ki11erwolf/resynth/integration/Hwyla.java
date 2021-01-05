@@ -74,10 +74,10 @@ public class Hwyla implements mcp.mobius.waila.api.IWailaPlugin{
      */
     @Override
     public void register(IRegistrar registrar) {
-        LOG.info("Setting up hwyla...");
+        LOG.info("Setting up Hwyla integration...");
 
         for(Object provider : PROVIDERS){
-            LOG.info("Registering provider: " + provider.getClass());
+            LOG.debug("Registering Hwyla tooltip provider: " + provider.toString());
 
             if(provider instanceof IComponentProvider){
                 registrar.registerComponentProvider(

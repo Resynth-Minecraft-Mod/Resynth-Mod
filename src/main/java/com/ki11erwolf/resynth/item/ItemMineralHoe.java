@@ -141,7 +141,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         CompoundNBT nbt = stack.getTag();
 
         if(nbt == null){
-            LOG.info("Setting NBT tag on a Mineral Hoe item stack...");
+            LOG.debug("Setting NBT tag on a Mineral Hoe item stack...");
             nbt = new CompoundNBT();
             nbt.putInt(NBT_TAG_CHARGES, (Math.min(CONFIG.getInitialCharges(), 2)));
             stack.setTag(nbt);

@@ -98,12 +98,15 @@ public final class ResynthAnalytics {
      */
     static {
         if(ENABLED) {
-            LOG.info("Analytics has been disabled!");
+            LOG.info("Analytics has been enabled!");
             ANALYTICS = new JGoogleAnalyticsTracker(
                     new AnalyticsConfigData(CODE),
                     JGoogleAnalyticsTracker.GoogleAnalyticsVersion.V_4_7_2
             );
-        } else ANALYTICS = null;
+        } else {
+            LOG.info("Analytics has been enabled!");
+            ANALYTICS = null;
+        }
     }
 
     //Static class.

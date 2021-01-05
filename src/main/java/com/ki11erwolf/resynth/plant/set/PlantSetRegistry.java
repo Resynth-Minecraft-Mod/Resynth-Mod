@@ -66,7 +66,7 @@ class PlantSetRegistry {
             return;
         }
 
-        LOG.info("Queuing plant set for registration: " + set.getSetName());
+        LOG.debug("Queuing plant set for registration: " + set.getSetName());
         PLANT_SETS.add(set);
     }
 

@@ -23,10 +23,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -88,8 +85,8 @@ public class ResynthMod {
         forgeBus.register(ResynthRecipes.INSTANCE);
 
         modBus.register(this);
-
         modBus.addListener(this::onSetup);
+        modBus.addListener(this::onFinishSetup);
         modBus.addListener(this::onClientSetup);
         modBus.addListener(this::onEnqueueModComs);
         modBus.addListener(this::onProcessModComs);
@@ -116,6 +113,10 @@ public class ResynthMod {
     private void onSetup(final FMLCommonSetupEvent event) {
         LOG.info(String.format("Beginning setup for Resynth, version '%s'...", MOD_VERSION));
         proxy.onSetup(event);
+    }
+
+    private void onFinishSetup(final FMLLoadCompleteEvent event) {
+        LOG.info("Finishing Resynth setup...");
     }
 
     /**

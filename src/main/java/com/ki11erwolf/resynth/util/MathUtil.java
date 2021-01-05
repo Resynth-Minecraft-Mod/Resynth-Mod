@@ -91,6 +91,21 @@ public final class MathUtil {
         return random.nextInt((max - min) + 1) + min;
     }
 
+    public static double within(double in, double min, double max){
+        if(in > max) return max;
+        else return Math.max(in, min);
+    }
+
+    public static int within(int in, int min, int max){
+        if(in > max) return max;
+        else return Math.max(in, min);
+    }
+
+    public static long within(long in, long min, long max){
+        if(in > max) return max;
+        else return Math.max(in, min);
+    }
+
     public static class Probability {
 
         private final double probability;

@@ -28,6 +28,8 @@ import java.util.List;
  */
 public interface BlockInfoProvider {
 
+    //TODO: Delete
+
     /**
      * Called when the Mineral Hoe wants to get information
      * from the block to display to the user. This method

@@ -15,42 +15,71 @@
  */
 package com.ki11erwolf.resynth.features;
 
-/**
- * Object holder class that holds references to every
- * created Resynth {@link net.minecraft.world.gen.feature.Feature}.
- * Also provides a base class for registering the created features.
- */
+import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.block.ResynthBlocks;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class ResynthFeatures {
 
-//    /**
-//     * Reference to the {@link SeedPodFeature}.
-//     */
-//    private static final SeedPodFeature SEED_POD_FEATURE = new SeedPodFeature();
-//
-//    /**
-//     * Reference to the {@link MineralStoneFeature}.
-//     */
-//    private static final MineralStoneFeature MINERAL_ROCK_FEATURE = new MineralStoneFeature();
-//
-//    /**
-//     * Reference to the {@link CalviniteFeature}
-//     */
-//    private static final CalviniteFeature CALVINITE_FEATURE = new CalviniteFeature();
-//
-//    /**
-//     * Reference to the {@link SylvaniteFeature}
-//     */
-//    private static final SylvaniteFeature SYLVANITE_FEATURE = new SylvaniteFeature();
+    private static final List<ResynthFeature<?>> FEATURE_LIST = new ArrayList<>();
 
-    /**Private Constructor.*/
-    private ResynthFeatures(){}
+    // **********
+    //  Features
+    // **********
 
-    /**
-     * Static initialization method. Ensures
-     * all Resynth Features are registered
-     * to the game.
-     */
-    public static void init(){
-        /*NO-OP - just serves to initialize the static references.*/
+    private static final ResynthFeature<ResynthOreFeature> MINERAL_STONE = new ResynthOreFeature(
+            new ResourceLocation(ResynthMod.MODID,  "mineral_stone_ore"),
+            new Biome.Category[] {
+                    Biome.Category.TAIGA, Biome.Category.EXTREME_HILLS, Biome.Category.JUNGLE, Biome.Category.MESA,
+                    Biome.Category.PLAINS, Biome.Category.SAVANNA, Biome.Category.ICY, Biome.Category.BEACH, Biome.Category.FOREST,
+                    Biome.Category.OCEAN, Biome.Category.DESERT, Biome.Category.RIVER, Biome.Category.SWAMP, Biome.Category.MUSHROOM
+            }, ResynthBlocks.BLOCK_MINERAL_STONE, MatchBlockListRuleTest.MATCH_OVERWORLD_ROCK,
+            100, 100, 0, 255
+    ).register();
+
+    private static final ResynthFeature<ResynthOreFeature> CALVINITE = new ResynthOreFeature(
+            new ResourceLocation(ResynthMod.MODID,  "calvinite_ore"),
+            new Biome.Category[] {
+                    Biome.Category.NETHER
+            }, ResynthBlocks.BLOCK_CALVINITE_NETHERRACK, MatchBlockListRuleTest.MATCH_NETHERWORLD_ROCK,
+            100, 100, 0, 255
+    ).register();
+
+    private static final ResynthFeature<ResynthOreFeature> SYLVANITE = new ResynthOreFeature(
+            new ResourceLocation(ResynthMod.MODID,  "sylvanite_ore"),
+            new Biome.Category[] {
+                    Biome.Category.THEEND
+            }, ResynthBlocks.BLOCK_SYLVANITE_END_STONE, MatchBlockListRuleTest.MATCH_ENDWORLD_ROCK,
+            100, 100, 0, 255
+    ).register();
+
+    // **************
+    //  Registration
+    // **************
+
+    private ResynthFeatures() { }
+
+    static {
+        MinecraftForge.EVENT_BUS.addListener(ResynthFeatures::onBiomeLoading);
+    }
+
+    public static void init() { }
+
+    protected static <T extends ResynthFeature<?>> T addFeature(T feature) {
+        FEATURE_LIST.add(Objects.requireNonNull(feature));
+        return feature;
+    }
+
+    private static void onBiomeLoading(BiomeLoadingEvent event) {
+        BiomeGenerationSettingsBuilder generation = event.getGeneration();
+        FEATURE_LIST.forEach((resynthFeature -> resynthFeature.configure(generation, event.getCategory())));
     }
 }

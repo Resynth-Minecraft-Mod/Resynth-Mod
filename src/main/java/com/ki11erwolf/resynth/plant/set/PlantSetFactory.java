@@ -340,7 +340,7 @@ public class PlantSetFactory {
         ICrystallineSetProperties properties = getCrystallineProperties(id, config);
 
         //Create & return new crystalline set
-        LOG.info(String.format("Creating Crystalline plant set: '%s' for mod: '%s'.", parentModID, setName));
+        LOG.info(String.format("Creating Crystalline plant set: '%s' for mod: '%s'.", setName, parentModID));
         return createNewCrystallineSet(setName, properties, oreBlockIDs);
     }
 

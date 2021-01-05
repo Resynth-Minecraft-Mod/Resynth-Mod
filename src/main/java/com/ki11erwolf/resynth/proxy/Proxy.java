@@ -32,6 +32,8 @@ public interface Proxy {
      */
     void onSetup(final FMLCommonSetupEvent event);
 
+    default void onFinishSetup(final FMLLoadCompleteEvent event){}
+
     // Optional
 
     /**
