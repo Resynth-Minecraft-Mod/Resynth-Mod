@@ -60,14 +60,6 @@ public class ResynthPlants {
     );
 
     /**
-     * The set properties for general Netherite scrap and Ancient Debris Ore.
-     */
-    static final CrystallineSetProperties NETHERITE_SCRAP_PROPERTIES = new CrystallineSetProperties(
-            false, 5.5F,2,
-            2.3F, 20.0F
-    );
-
-    /**
      * The set properties for general Redstone and Redstone Ore.
      */
     static final CrystallineSetProperties REDSTONE_PROPERTIES = new CrystallineSetProperties(
@@ -100,6 +92,14 @@ public class ResynthPlants {
     );
 
     // Metallic
+
+    /**
+     * The set properties for general Netherite scrap and Ancient Debris Ore.
+     */
+    static final MetallicSetProperties ANCIENT_DEBRIS_PROPERTIES = new MetallicSetProperties(
+            false, 10.0F, 4.0F, 8.0F
+    );
+
 
     /**
      * The set properties for general Iron and Iron Ore.
@@ -148,14 +148,6 @@ public class ResynthPlants {
                     2F,
                     10
             ), DEFAULT_PRODUCE_PROPERTIES, ResynthItems.ITEM_CALVINITE, ResynthBlocks.BLOCK_CALVINITE_NETHERRACK
-    ).register();
-
-    /**
-     * The plant set for Minecraft Netherite Scrap.
-     */
-    public static final PlantSet<?, ?> NETHERITE_SCRAP = PlantSetFactory.makeCrystallineSet(
-            minecraftResource("netherite_scrap"), NETHERITE_SCRAP_PROPERTIES,
-            DEFAULT_PRODUCE_PROPERTIES, Items.field_234754_kI_, Blocks.field_235398_nh_
     ).register();
 
     /**
@@ -254,6 +246,16 @@ public class ResynthPlants {
     // *************
     // Metallic Sets
     // *************
+
+    /**
+     * The plant set for Minecraft Ancient Debris.
+     */
+    public static final PlantSet<?, ?> ANCIENT_DEBRIS = PlantSetFactory.makeMetallicSet(
+            minecraftResource("ancient_debris"), ANCIENT_DEBRIS_PROPERTIES,
+            new PlantSetProduceProperties(
+                    2, 200, 2
+            ), Blocks.field_235398_nh_, Blocks.field_235398_nh_
+    ).register();
 
     /**
      * The plant set for Vanilla Iron.

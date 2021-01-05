@@ -15,10 +15,7 @@
  */
 package com.ki11erwolf.resynth;
 
-import com.ki11erwolf.resynth.plant.set.CrystallineSetProperties;
-import com.ki11erwolf.resynth.plant.set.MetallicSetProperties;
-import com.ki11erwolf.resynth.plant.set.PlantSet;
-import com.ki11erwolf.resynth.plant.set.PlantSetFactory;
+import com.ki11erwolf.resynth.plant.set.*;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
@@ -411,11 +408,24 @@ public class ResynthModPlants {
             false, 35, 1, 3, 6
     );
 
-    /**
-     * The plant set properties for all items from The Midnight Mod grown with Metallic plants.
-     */
-    private static final MetallicSetProperties MIDNIGHT_METALLIC = new MetallicSetProperties(
-            false, 35, 3, 6
+    private static final CrystallineSetProperties CERTUS_QUARTZ_PROPERTIES = new CrystallineSetProperties(
+            false, 20, 1, 3, 6
+    );
+
+    private static final CrystallineSetProperties CHARGED_CERTUS_QUARTZ_PROPERTIES = new CrystallineSetProperties(
+            false, 13, 1, 4, 8
+    );
+
+    private static final CrystallineSetProperties APATITE_PROPERTIES = new CrystallineSetProperties(
+            false, 40, 2, 3, 6
+    );
+
+    private static final CrystallineSetProperties CINNABAR_PROPERTIES = new CrystallineSetProperties(
+            false, 25, 2, 3, 6
+    );
+
+    private static final CrystallineSetProperties SULFUR_PROPERTIES = new CrystallineSetProperties(
+            false, 20, 2, 3, 6
     );
 
     // Metallic
@@ -476,6 +486,10 @@ public class ResynthModPlants {
             false, 25, 8, 8
     );
 
+    private static final MetallicSetProperties PLATINUM_PROPERTIES = new MetallicSetProperties(
+            false, 8, 4, 8
+    );
+
     /**
      * The set properties for general tungsten and tungsten ore.
      */
@@ -503,6 +517,14 @@ public class ResynthModPlants {
     static final MetallicSetProperties OSMIUM_PROPERTIES = new MetallicSetProperties(
             false, 30F, 6, 6
     );
+
+    /**
+     * The plant set properties for all items from The Midnight Mod grown with Metallic plants.
+     */
+    private static final MetallicSetProperties MIDNIGHT_METALLIC = new MetallicSetProperties(
+            false, 35, 3, 6
+    );
+
 
     // **********
     // PLANT SETS
@@ -887,6 +909,110 @@ public class ResynthModPlants {
     public static final PlantSet<?, ?> MIDNIGHT_ARCHAIC = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
             Mods.THE_MIDNIGHT.getID("archaic"), MIDNIGHT_CRYSTALLINE, DEFAULT_PRODUCE_PROPERTIES,
             "archaic_shard", "archaic_ore"
+    ));
+
+    // Applied Energistics 2
+
+    public static final PlantSet<?, ?> APPLIED_ENERGISTICS_2_CERTUS_QUARTZ = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
+            Mods.APPLIED_ENERGISTICS_2.getID("certus_quartz"), CERTUS_QUARTZ_PROPERTIES,
+            new PlantSetProduceProperties(3, 200, 2.0),
+            "certus_quartz_crystal", "quartz_ore"
+    ));
+
+    public static final PlantSet<?, ?> APPLIED_ENERGISTICS_2_CHARGED_CERTUS_QUARTZ = registerIfNotNull(
+            PlantSetFactory.makeCrystallineSet(Mods.APPLIED_ENERGISTICS_2.getID("charged_certus_quartz"),
+                    CHARGED_CERTUS_QUARTZ_PROPERTIES,
+                    new PlantSetProduceProperties(2, 200, 2.0),
+                    "certus_quartz_crystal_charged", "charged_quartz_ore"
+    ));
+
+    // Immersive Engineering
+
+    public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_ALUMINIUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.IMMERSIVE_ENGINEERING.getID("aluminium"), ALUMINIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "ore_aluminium", "ore_aluminium"
+    ));
+
+    public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.IMMERSIVE_ENGINEERING.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "ore_copper", "ore_copper"
+    ));
+
+    public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_LEAD = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.IMMERSIVE_ENGINEERING.getID("lead"), LEAD_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "ore_lead", "ore_lead"
+    ));
+
+    public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_NICKEL = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.IMMERSIVE_ENGINEERING.getID("nickel"), NICKEL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "ore_nickel", "ore_nickel"
+    ));
+
+    public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_SILVER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.IMMERSIVE_ENGINEERING.getID("silver"), SILVER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "ore_silver", "ore_silver"
+    ));
+
+    public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_URANIUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.IMMERSIVE_ENGINEERING.getID("uranium"), URANIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "ore_uranium", "ore_uranium"
+    ));
+
+    // Thermal Foundation
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_APATITE = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
+            Mods.THERMAL_FOUNDATION.getID("apatite"), APATITE_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "apatite", "apatite_ore"
+    ));
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_CINNABAR = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
+            Mods.THERMAL_FOUNDATION.getID("cinnabar"), CINNABAR_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "cinnabar", "cinnabar_ore"
+    ));
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_RUBY = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
+            Mods.THERMAL_FOUNDATION.getID("ruby"), RUBY_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "ruby", "ruby_ore"
+    ));
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_SAPPHIRE = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
+            Mods.THERMAL_FOUNDATION.getID("sapphire"), SAPPHIRE_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "sapphire", "sapphire_ore"
+    ));
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_SULFUR = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
+            Mods.THERMAL_FOUNDATION.getID("sulfur"), SULFUR_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "sulfur", "sulfur_ore"
+    ));
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.THERMAL_FOUNDATION.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "copper_ore", "copper_ore"
+    ));
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_LEAD = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.THERMAL_FOUNDATION.getID("lead"), LEAD_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "lead_ore", "lead_ore"
+    ));
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_NICKEL = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.THERMAL_FOUNDATION.getID("nickel"), NICKEL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "nickel_ore", "nickel_ore"
+    ));
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_PLATINUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.THERMAL_FOUNDATION.getID("platinum"), PLATINUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "platinum_ore", "platinum_ore"
+    ));
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_SILVER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.THERMAL_FOUNDATION.getID("silver"), SILVER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "silver_ore", "silver_ore"
+    ));
+
+    public static final PlantSet<?, ?> THERMAL_FOUNDATION_TIN = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.THERMAL_FOUNDATION.getID("tin"), TIN_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "tin_ore", "tin_ore"
     ));
 
     // Botania

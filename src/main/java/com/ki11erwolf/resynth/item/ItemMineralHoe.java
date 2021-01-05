@@ -59,7 +59,7 @@ import java.util.*;
  * completing these functions.
  *
  * <p/>Any block that has information to give to the
- * Mineral Hoe must implement {@link BlockInfoProvider}.
+ * Mineral Hoe must implement {@link MineralHoeInfoProvider}.
  */
 public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
@@ -544,63 +544,6 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         }
 
         return replaced;
-    }
-
-    // ********************
-    // Information Provider
-    // ********************
-
-    /**
-     * Will attempt to get the provided information from
-     * the given block if it a {@link BlockInfoProvider},
-     * if it is not, the method will simply return.
-     *
-     * @param world the world the block is in.
-     * @param pos the position of the block in the world.
-     * @param block the state of the block in the world.
-     * @param player the player using the Mineral Hoe.
-     * @return {@code true} if the given block is a
-     * {@link BlockInfoProvider} and information could
-     * be obtained successfully, {@code false} otherwise.
-     */
-    private boolean tryGetInfo(World world, BlockPos pos, BlockState block, PlayerEntity player){
-        if(!(block.getBlock() instanceof BlockInfoProvider))
-            return false;
-
-        //We want this done on the server side to get correct information.
-        if(world.isRemote)
-            return false;
-
-        BlockInfoProvider infoProvider = (BlockInfoProvider)block.getBlock();
-        player.sendMessage(new StringTextComponent(
-                getInfoFromProvider(infoProvider, world, pos, block)
-        ), player.getUniqueID());
-
-        return true;
-    }
-
-    /**
-     * Will get the information given from the given
-     * BlockInfoProvider Block.
-     *
-     * @param provider the specific info provider block.
-     * @param world the world the block is in.
-     * @param pos the position of the block in the world.
-     * @param block the state of the block in the world.
-     * @return the information from the provider as a
-     * complete string.
-     */
-    private String getInfoFromProvider(BlockInfoProvider provider, World world, BlockPos pos, BlockState block){
-        List<String> informationList = new ArrayList<>();
-        provider.appendBlockInformation(informationList, world, pos, block);
-
-        StringBuilder informationText = new StringBuilder();
-
-        for(String informationLine : informationList){
-            informationText.append(informationLine).append("\n");
-        }
-
-        return informationText.toString();
     }
 
     // ************

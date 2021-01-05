@@ -497,9 +497,9 @@
   "___________COMMENT": "--- FOR TRANSLATION: new entries that have either been changed or not yet translated. ---",
   "misc.resynth.growth_stage":                        "Growth Stage: %s",
 
-  "block.resynth.crystalline_plant_netherite_scrap":  "Netherite Scrap Plant",
-  "item.resynth.crystalline_seeds_netherite_scrap":   "Netherite Scrap Seeds",
-  "item.resynth.crystalline_shard_netherite_scrap":   "Netherite Scrap Shard",
+  "block.resynth.metallic_plant_ancient_debris":        "Ancient Debris Plant",
+  "item.resynth.metallic_seeds_ancient_debris":         "Ancient Debris Seeds",
+  "item.resynth.metallic_oragnic_ore_ancient_debris":   "Organic Ancient Debris",
 
   "__________COMMENT": "---Mineral Hoe Information Messages---",
   "message.resynth.mineral_hoe_information.plant_info_header":
