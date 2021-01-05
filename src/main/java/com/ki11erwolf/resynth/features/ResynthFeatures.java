@@ -17,6 +17,11 @@ package com.ki11erwolf.resynth.features;
 
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.CalviniteGenConfig;
+import com.ki11erwolf.resynth.config.categories.MineralStoneGenConfig;
+import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
+import com.ki11erwolf.resynth.config.categories.SylvaniteGenConfig;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,43 +36,49 @@ public class ResynthFeatures {
 
     private static final List<ResynthFeature<?>> FEATURE_LIST = new ArrayList<>();
 
+    // ****************
+    //  Feature Config
+    // ****************
+
+    private static final SeedPodConfig MYSTICAL_SEED_POD_CONFIG = ResynthConfig.GENERAL_CONFIG.getCategory(SeedPodConfig.class);
+
+    private static final MineralStoneGenConfig MINERAL_STONE_GEN_CONFIG
+            = ResynthConfig.GENERAL_CONFIG.getCategory(MineralStoneGenConfig.class);
+
+    private static final CalviniteGenConfig CALVINITE_GEN_CONFIG
+            = ResynthConfig.GENERAL_CONFIG.getCategory(CalviniteGenConfig.class);
+
+    private static final SylvaniteGenConfig SYLVANITE_GEN_CONFIG
+            = ResynthConfig.GENERAL_CONFIG.getCategory(SylvaniteGenConfig.class);
+
     // **********
     //  Features
     // **********
 
     private static final ResynthFeature<ResynthFlowerFeature> MYSTICAL_SEED_POD = new ResynthFlowerFeature(
-            new ResourceLocation(ResynthMod.MODID, "mystical_seed_pod_flower"),
-            new Biome.Category[] {
-                    Biome.Category.TAIGA, Biome.Category.EXTREME_HILLS, Biome.Category.JUNGLE, Biome.Category.MESA,
-                    Biome.Category.PLAINS, Biome.Category.SAVANNA, Biome.Category.ICY, Biome.Category.BEACH, Biome.Category.FOREST,
-                    Biome.Category.OCEAN, Biome.Category.DESERT, Biome.Category.RIVER, Biome.Category.SWAMP, Biome.Category.MUSHROOM
-            }, ResynthBlocks.BLOCK_SEED_POD, 64, 64
+            new ResourceLocation(ResynthMod.MODID, "mystical_seed_pod_flower"), getOverworldBiomes(),
+            ResynthBlocks.BLOCK_SEED_POD, MYSTICAL_SEED_POD_CONFIG.getRarity(), MYSTICAL_SEED_POD_CONFIG.getSize()
     ).register();
 
     private static final ResynthFeature<ResynthOreFeature> MINERAL_STONE = new ResynthOreFeature(
-            new ResourceLocation(ResynthMod.MODID,  "mineral_stone_ore"),
-            new Biome.Category[] {
-                    Biome.Category.TAIGA, Biome.Category.EXTREME_HILLS, Biome.Category.JUNGLE, Biome.Category.MESA,
-                    Biome.Category.PLAINS, Biome.Category.SAVANNA, Biome.Category.ICY, Biome.Category.BEACH, Biome.Category.FOREST,
-                    Biome.Category.OCEAN, Biome.Category.DESERT, Biome.Category.RIVER, Biome.Category.SWAMP, Biome.Category.MUSHROOM
-            }, ResynthBlocks.BLOCK_MINERAL_STONE, MatchBlockListRuleTest.MATCH_OVERWORLD_ROCK,
-            100, 100, 0, 255
+            new ResourceLocation(ResynthMod.MODID,  "mineral_stone_ore"), getOverworldBiomes(),
+            ResynthBlocks.BLOCK_MINERAL_STONE, MatchBlockListRuleTest.MATCH_OVERWORLD_ROCK,
+            MINERAL_STONE_GEN_CONFIG.getRarity(), MINERAL_STONE_GEN_CONFIG.getSize(),
+            MINERAL_STONE_GEN_CONFIG.getMinimumHeight(), MINERAL_STONE_GEN_CONFIG.getMaximumHeight()
     ).register();
 
     private static final ResynthFeature<ResynthOreFeature> CALVINITE = new ResynthOreFeature(
-            new ResourceLocation(ResynthMod.MODID,  "calvinite_ore"),
-            new Biome.Category[] {
-                    Biome.Category.NETHER
-            }, ResynthBlocks.BLOCK_CALVINITE_NETHERRACK, MatchBlockListRuleTest.MATCH_NETHERWORLD_ROCK,
-            100, 100, 0, 255
+            new ResourceLocation(ResynthMod.MODID,  "calvinite_ore"), getNetherworldBiomes(),
+            ResynthBlocks.BLOCK_CALVINITE_NETHERRACK, MatchBlockListRuleTest.MATCH_NETHERWORLD_ROCK,
+            CALVINITE_GEN_CONFIG.getRarity(), CALVINITE_GEN_CONFIG.getSize(),
+            CALVINITE_GEN_CONFIG.getMinimumHeight(), CALVINITE_GEN_CONFIG.getMaximumHeight()
     ).register();
 
     private static final ResynthFeature<ResynthOreFeature> SYLVANITE = new ResynthOreFeature(
-            new ResourceLocation(ResynthMod.MODID,  "sylvanite_ore"),
-            new Biome.Category[] {
-                    Biome.Category.THEEND
-            }, ResynthBlocks.BLOCK_SYLVANITE_END_STONE, MatchBlockListRuleTest.MATCH_ENDWORLD_ROCK,
-            100, 100, 0, 255
+            new ResourceLocation(ResynthMod.MODID,  "sylvanite_ore"), getEndworldBiomes(),
+            ResynthBlocks.BLOCK_SYLVANITE_END_STONE, MatchBlockListRuleTest.MATCH_ENDWORLD_ROCK,
+            SYLVANITE_GEN_CONFIG.getRarity(), SYLVANITE_GEN_CONFIG.getSize(),
+            SYLVANITE_GEN_CONFIG.getMinimumHeight(), SYLVANITE_GEN_CONFIG.getMaximumHeight()
     ).register();
 
     // **************
@@ -90,5 +101,21 @@ public class ResynthFeatures {
     private static void onBiomeLoading(BiomeLoadingEvent event) {
         BiomeGenerationSettingsBuilder generation = event.getGeneration();
         FEATURE_LIST.forEach((resynthFeature -> resynthFeature.configure(generation, event.getCategory())));
+    }
+
+    private static Biome.Category[] getOverworldBiomes() {
+        return new Biome.Category[]{
+                Biome.Category.TAIGA, Biome.Category.EXTREME_HILLS, Biome.Category.JUNGLE, Biome.Category.MESA,
+                Biome.Category.PLAINS, Biome.Category.SAVANNA, Biome.Category.ICY, Biome.Category.BEACH, Biome.Category.FOREST,
+                Biome.Category.OCEAN, Biome.Category.DESERT, Biome.Category.RIVER, Biome.Category.SWAMP, Biome.Category.MUSHROOM
+        };
+    }
+
+    private static Biome.Category[] getNetherworldBiomes() {
+        return new Biome.Category[]{ Biome.Category.NETHER };
+    }
+
+    private static Biome.Category[] getEndworldBiomes() {
+        return new Biome.Category[]{ Biome.Category.THEEND };
     }
 }

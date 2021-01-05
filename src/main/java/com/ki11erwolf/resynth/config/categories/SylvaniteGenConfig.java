@@ -25,9 +25,6 @@ public class SylvaniteGenConfig extends GenConfig {
      * for Sylvanite Infused End Stone.
      */
     public SylvaniteGenConfig() {
-        super(
-                "sylvanite",
-                true, 3, 30, 0, 126, 0
-        );
+        super("sylvanite", true, 3, 15, 0, 126);
     }
 }

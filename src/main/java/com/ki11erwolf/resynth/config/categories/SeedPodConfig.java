@@ -57,13 +57,21 @@ public class SeedPodConfig extends ConfigCategory {
      * Config value definition that allows setting the spawn frequency
      * of Mystical Seed Pods.
      */
-    private final IntegerConfigValue generationFrequency = new IntegerConfigValue(
-            "frequency-of-generation",
-            "The frequency (or the number of times) that Mystical Seed Pods will generate in the world." +
-                      "\nSetting this to a higher value will generate more Mystical Seed Pods",
+    private final IntegerConfigValue rarity = new IntegerConfigValue(
+            "flower-patch-rarity",
+            "The frequency (or the number of times) that patches of Mystical Seed Pods will generate in a chunk." +
+                      "\nSetting this to a higher value will generate more patches of Mystical Seed Pods.",
             5,
-            1, 70,
+            1, 64,
             this
+    );
+
+    private final IntegerConfigValue size = new IntegerConfigValue(
+            "flower-patch-size",
+            "The average amount of Mystical Seed Pods that will generate in a flower patch.\n" +
+                    "Setting this to a higher value will generate more Mystical Seed Pods per patch.",
+            4, 64,
+            1, this
     );
 
     /**
@@ -98,7 +106,11 @@ public class SeedPodConfig extends ConfigCategory {
      * @return the frequency of Mystical Seed
      * Pod generation as specified by the config.
      */
-    public int getGenerationFrequency(){
-        return this.generationFrequency.getValue();
+    public int getRarity(){
+        return this.rarity.getValue();
+    }
+
+    public int getSize() {
+        return this.size.getValue();
     }
 }

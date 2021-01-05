@@ -38,25 +38,19 @@ public class GenConfig extends ConfigCategory {
      * Config value that allows setting the frequency of the ore
      * veins.
      */
-    private final IntegerConfigValue count;
+    private final IntegerConfigValue rarity;
 
     /**
      * Config value that allows setting the min gen height of the ore
      * veins.
      */
-    private final IntegerConfigValue bottomOffset;
+    private final IntegerConfigValue minimumHeight;
 
     /**
      * Config value that allows setting the max gen height of the ore
      * veins.
      */
-    private final IntegerConfigValue maxHeight;
-
-    /**
-     * Config value that allows setting the max base height of the ore
-     * veins.
-     */
-    private final IntegerConfigValue topOffset;
+    private final IntegerConfigValue maximumHeight;
 
     /**
      * Creates a new, unique configuration category
@@ -65,8 +59,7 @@ public class GenConfig extends ConfigCategory {
      * @param configName the name of the config grouping.
      *                   Has {@code .ore-generation} appended.
      */
-    GenConfig(String configName, boolean generate, int veinSize, int veinCount, int bottomOffset, int maxHeight,
-              int topOffset) {
+    GenConfig(String configName, boolean generate, int size, int rarity, int minimumHeight, int maximumHeight) {
         super(configName + ".ore-generation");
 
         this.generate = new BooleanConfigValue(
@@ -81,41 +74,33 @@ public class GenConfig extends ConfigCategory {
                 "vein-size",
                 "The average size of the ore veins. Set this number" +
                         "\nhigher to increase the amount of ore blocks in an ore vein.",
-                veinSize,
-                1, 100,
+                size,
+                1, 64,
                 this
         );
 
-        this.count = new IntegerConfigValue(
-                "vein-count",
-                "The average count/frequency of ore veins in a chunk." +
+        this.rarity = new IntegerConfigValue(
+                "vein-rarity",
+                "The average number/frequency of ore veins in a chunk." +
                         "\nSet this number higher to increase the number of ore veins.",
-                veinCount,
-                1, 100,
+                rarity,
+                1, 64,
                 this
         );
 
-        this.bottomOffset = new IntegerConfigValue(
-                "bottom-offset",
+        this.minimumHeight = new IntegerConfigValue(
+                "minimum-vein-height",
                 "The minimum height (Y-level) that the ore blocks will generate.",
-                bottomOffset,
-                0, 255,
+                minimumHeight,
+                1, 254,
                 this
         );
 
-        this.maxHeight = new IntegerConfigValue(
-                "maximum-height",
+        this.maximumHeight = new IntegerConfigValue(
+                "maximum-vein-height",
                 "The maximum height (Y-level) that the ore blocks will generate",
-                maxHeight,
+                maximumHeight,
                 1, 255,
-                this
-        );
-
-        this.topOffset = new IntegerConfigValue(
-                "top-offset",
-                "The amount of blocks the ore block generation will be offset by on the Y-Axis.",
-                topOffset,
-                0, 255,
                 this
         );
     }
@@ -140,31 +125,24 @@ public class GenConfig extends ConfigCategory {
      * @return the frequency of the ore veins
      * as specified by the config.
      */
-    public int getCount(){
-        return this.count.getValue();
+    public int getRarity(){
+        return this.rarity.getValue();
     }
 
     /**
      * @return the min height of the ore veins
      * as specified by the config.
      */
-    public int getBottomOffset(){
-        return this.bottomOffset.getValue();
+    public int getMinimumHeight(){
+        return this.minimumHeight.getValue();
     }
 
     /**
      * @return the max height of the ore veins
      * as specified by the config.
      */
-    public int getMaxHeight(){
-        return this.maxHeight.getValue();
+    public int getMaximumHeight(){
+        return this.maximumHeight.getValue();
     }
 
-    /**
-     * @return the max base height of the ore veins
-     * as specified by the config.
-     */
-    public int getTopOffset(){
-        return this.topOffset.getValue();
-    }
 }

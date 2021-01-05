@@ -25,9 +25,6 @@ public class MineralStoneGenConfig extends GenConfig {
      * for Mineral Stone.
      */
     public MineralStoneGenConfig(){
-        super(
-                "mineral-stone",
-                true, 7, 20, 0, 10, 0
-        );
+        super("mineral-stone", true, 7, 20, 0, 15);
     }
 }

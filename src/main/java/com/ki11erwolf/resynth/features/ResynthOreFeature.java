@@ -27,12 +27,12 @@ public class ResynthOreFeature extends ResynthFeature<ResynthOreFeature> {
 
     private final int veinSize;
 
-    private final int veinMinY;
+    private final int veinMinHeight;
 
-    private final int veinMaxY;
+    private final int veinMaxHeight;
 
-    protected ResynthOreFeature(ResourceLocation id, Biome.Category[] biomes, Block ore,
-                                RuleTest target, int rarity, int size, int minY, int maxY) {
+    protected ResynthOreFeature(ResourceLocation id, Biome.Category[] biomes, Block ore, RuleTest target,
+                                int rarity, int size, int minHeight, int maxHeight) {
         super(id, biomes);
 
         this.ore = Objects.requireNonNull(ore);
@@ -40,8 +40,8 @@ public class ResynthOreFeature extends ResynthFeature<ResynthOreFeature> {
 
         this.veinRarity = MathUtil.within(rarity, 1, 64);
         this.veinSize = MathUtil.within(size, 1, 64);
-        this.veinMinY = MathUtil.within(minY, 1, 254);
-        this.veinMaxY = MathUtil.within(maxY, minY + 1, 255);
+        this.veinMinHeight = MathUtil.within(minHeight, 1, 254);
+        this.veinMaxHeight = MathUtil.within(maxHeight, minHeight + 1, 255);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ResynthOreFeature extends ResynthFeature<ResynthOreFeature> {
                 WorldGenRegistries.field_243653_e, ore.getRegistryName(), Feature.ORE.withConfiguration(
                         new OreFeatureConfig(target, ore.getDefaultState(), veinSize)
                 ).withPlacement(Placement.field_242907_l.configure(
-                        new TopSolidRangeConfig(veinMinY, veinMinY, veinMaxY)
+                        new TopSolidRangeConfig(veinMinHeight, veinMinHeight, veinMaxHeight)
                 )).func_242728_a().func_242731_b(veinRarity)
         );
 
