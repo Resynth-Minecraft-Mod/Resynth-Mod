@@ -25,9 +25,6 @@ public class CalviniteGenConfig extends GenConfig {
      * for Calvinite Infused Netherrack.
      */
     public CalviniteGenConfig() {
-        super(
-                "calvinite",
-                true, 4, 20, 0, 126, 0
-        );
+        super("calvinite", true, 4, 20, 0, 126, 0);
     }
 }

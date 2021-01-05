@@ -58,7 +58,7 @@ public class ResynthOreFeature extends ResynthFeature<ResynthOreFeature> {
 
         ConfiguredFeature<?,?> feature = WorldGenRegistries.field_243653_e.getOrDefault(ore.getRegistryName());
 
-        if(feature == null) throw new Exception("Feature configuration is null");
+        if(feature == null) throw new Exception("Ore Feature configuration is null");
         else builder.func_242513_a(GenerationStage.Decoration.UNDERGROUND_ORES, feature);
     }
 }

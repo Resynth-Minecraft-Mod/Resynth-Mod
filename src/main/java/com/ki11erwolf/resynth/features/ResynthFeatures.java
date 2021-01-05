@@ -35,6 +35,15 @@ public class ResynthFeatures {
     //  Features
     // **********
 
+    private static final ResynthFeature<ResynthFlowerFeature> MYSTICAL_SEED_POD = new ResynthFlowerFeature(
+            new ResourceLocation(ResynthMod.MODID, "mystical_seed_pod_flower"),
+            new Biome.Category[] {
+                    Biome.Category.TAIGA, Biome.Category.EXTREME_HILLS, Biome.Category.JUNGLE, Biome.Category.MESA,
+                    Biome.Category.PLAINS, Biome.Category.SAVANNA, Biome.Category.ICY, Biome.Category.BEACH, Biome.Category.FOREST,
+                    Biome.Category.OCEAN, Biome.Category.DESERT, Biome.Category.RIVER, Biome.Category.SWAMP, Biome.Category.MUSHROOM
+            }, ResynthBlocks.BLOCK_SEED_POD, 64, 64
+    ).register();
+
     private static final ResynthFeature<ResynthOreFeature> MINERAL_STONE = new ResynthOreFeature(
             new ResourceLocation(ResynthMod.MODID,  "mineral_stone_ore"),
             new Biome.Category[] {
