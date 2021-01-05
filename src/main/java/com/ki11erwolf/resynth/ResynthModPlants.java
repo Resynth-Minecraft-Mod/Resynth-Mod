@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Ki11er_wolf
+ * Copyright 2018-2021 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ import static com.ki11erwolf.resynth.ResynthPlants.DEFAULT_PRODUCE_PROPERTIES;
  *
  * All plant sets in this class are referred to as Modded plant sets.
  */
+@SuppressWarnings("ConstantConditions")
 public class ResynthModPlants {
 
     //TODO: Updated mods: AE2, Thermal Foundation, Immersive Engineering
