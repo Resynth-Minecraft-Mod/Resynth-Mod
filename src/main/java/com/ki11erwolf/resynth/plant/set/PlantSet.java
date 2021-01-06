@@ -39,7 +39,10 @@ public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistry
 
     //TODO: attempt to implement recipes related to plants in code.
     //TODO: look into programmatically generating plant set assets.
+
     //TODO: base class handling of seed spawner(s)?
+
+    //TODO: add client/server PlantSet Properties Synchronizer system (packets)
 
     /**
      * The logger for this class.
@@ -174,7 +177,6 @@ public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistry
 
         return true;
     }
-
 
     /**
      * Permanently flags this plant set as broken beyond repair - that is,

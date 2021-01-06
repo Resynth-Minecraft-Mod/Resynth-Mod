@@ -38,6 +38,8 @@ import java.util.function.Supplier;
 @SuppressWarnings("StaticInitializerReferencesSubClass")
 public abstract class Packet<S extends Packet<S>> {
 
+    //TODO: Add packet to make client display effects from server code.
+
     /**
      * Manager subclass instance that handles the registering of packets.
      */
