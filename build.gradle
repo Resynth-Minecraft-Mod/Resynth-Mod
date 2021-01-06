@@ -1,221 +1,191 @@
-//#########################//
-//         1.16.3          //
-//#########################//
+/*
+ * Copyright 2018-2021 Ki11er_wolf
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-buildscript {
-    repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-    }
-}
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.security.DigestInputStream
+import java.security.MessageDigest
+
+//#########################//
+//     Resynth 1.16.4      //
+//#########################//
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
 //####################################//
-//           Config Variables         //
+//              Properties            //
 //####################################//
 
-def mod_version = ext.mod_version
+/*
+ * Constant Properties
+ */
+
+/** The unique String ID that identifies this mod. */
+final String MODID = "resynth"
+
+/** The URL to the website of the mod. */
+final String MOD_URL = "https://resynth-minecraft-mod.github.io"
+
+/** The full English title of the mod. */
+final String MOD_TITLE = "Resynth-Minecraft-Mod"
+
+/** The mod authors pen name. */
+final String MOD_AUTHOR = "Ki11er_wolf"
+
+/*
+ * Build Versions
+ */
+
+/** The version to give this build of the mod. */
+final String MOD_VERSION = ext.getProperty('version.mod')
+
+/** The (minimum) version of MinecraftForge to build and run the mod against. */
+final String FORGE_VERSION = ext.getProperty('version.forge')
+
+/** The version of Minecraft the mod is built for. */
+final String MINECRAFT_VERSION = ext.getProperty('version.minecraft')
+
+//######################//
+//     Dependencies     //
+//######################//
+
+/*
+ * Dependency Config
+ */
+
+boolean enableTop = Boolean.valueOf(ext.getProperty('dependency.enabled.theoneprobe'))
+boolean enableHwyla = Boolean.valueOf(ext.getProperty('dependency.enabled.hwyla'))
+String hwylaGroup = "${ext.getProperty('dependency.group.hwyla')}:${ext.getProperty('dependency.version.hwyla')}"
+String topGroup = "${ext.getProperty('dependency.group.theoneprobe')}:${ext.getProperty('dependency.version.theoneprobe')}"
 
 /**
- * The specific Minecraft Forge version to use when building
- * the mod. The Built mod jar will only run with this
- * version of Forge or newer.
+ * Version dependencies on other mods. Handles compiling specific
+ * versions of required dependencies.
  */
-def forge_version = ext.forge_version
+dependencies {
+    //Forge
+    minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
 
-/**
- * The version of Minecraft this Resynth build is for.
- */
-def minecraft_version = ext.minecraft_version
+    //The One Probe
+    if (enableTop) {
+        compileOnly fg.deobf("${topGroup}:api")
+        runtimeOnly fg.deobf(topGroup)
+    }
 
-def the_one_probe = ext.the_one_probe
-
-def hwyla = ext.hwyla
-
-def enable_the_one_probe = ext.enable_the_one_probe
-
-def enable_hwyla = ext.enable_hwyla
-
-def enable_hwyla_http = ext.enable_hwyla_http
-
-def mod_title = ext.mod_title
-
-def mod_id = ext.mod_id
-
-def mod_author = ext.mod_author
-
-def mod_url = ext.mod_url
-
-/* Additional */
-
-def minecraft_forge_version = "${minecraft_version}-${forge_version}"
-
-def full_title_version = "Resynth-${mod_version}-[Minecraft-Forge-${minecraft_version}]"
-
-def complete_title_version = "Resynth-${mod_version}-[Minecraft-Forge-${minecraft_forge_version}]"
-
-def full_version = "${mod_version}-[${minecraft_version}]"
-
-def complete_version = "${mod_version}-[${minecraft_forge_version}]"
-
-def java_info = (System.getProperty("java.vendor") == "Oracle Corporation" ? "Java(TM)" : "Java-OpenJDK") +
-        "-${System.getProperty("java.version")}" + " (${System.getProperty("java.vendor")})"
-
-/**
- * The full name/title to give the mod jar when it's built.
- */
-def mod_jar_title = "${full_title_version}.jar"
-
-/**
- * The directory to put the mod jar in when it's built.
- */
-def mod_output_folder = project.file("jar")
-
-//####################################//
-//                 END                //
-//####################################//
-
-//Don't touch...
-archivesBaseName = mod_id
-version = mod_version
-group = "com.ki11erwolf.${archivesBaseName}"
-
-//noinspection GroovyUnusedAssignment
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
-
-minecraft {
-    mappings channel: 'snapshot', version: '20200514-1.16'
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-        }
-
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-        }
-
-        data {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-        }
+    //Hwyla
+    if (enableHwyla) {
+        compileOnly fg.deobf("${hwylaGroup}:api")
+        runtimeOnly fg.deobf(hwylaGroup)
     }
 }
 
+/**
+ * Specifies the URL's to the maven repositories that host the
+ * required dependencies.
+ */
 repositories {
-    jcenter()
-    mavenCentral()
+    // Forge
+    maven { name 'Forge'; url = 'https://files.minecraftforge.net/maven' }
 
-    maven {
-        name 'Forge'
-        url = 'https://files.minecraftforge.net/maven'
-    }
-
-    if (the_one_probe) maven {
+    //The One Probe
+    if (enableTop) maven {
         name 'TOP'
         url "https://maven.tterrag.com/"
     }
 
-    if (enable_hwyla) {
-        maven {
-            name 'Waila'
-            url = "https://maven.tehnut.info/"
-        }
-
-        if (enable_hwyla_http) maven {
-            name 'Waila-Unsecure-HTTP-Protocol'
-            url = "http://maven.tehnut.info/"
-        }
+    //Hwyla
+    if (enableHwyla) maven {
+        name 'Waila'
+        url = "https://maven.tehnut.info/"
     }
+
+    // Other
+    jcenter()
+    mavenCentral()
 }
 
-/** Someday... */
+//######################//
+//     Jar Manifest     //
+//######################//
 
-//processResources {
-//    inputs.property "mod_version", mod_version
-//    inputs.property "minecraft_version", minecraft_version
-//
-//    from(sourceSets.main.resources.srcDirs) {
-//        include 'mods.toml'
-//        expand 'mod_version': mod_version, 'minecraft_version': minecraft_version
-//    }
-//    rename '(.+_at.cfg)', 'META-INF/$1'
-//}
-
-//##########################################//
-//      Forge Version & Dependencies        //
-//##########################################//
-
-dependencies {
-    //Forge version
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
-    //The One Probe version
-    if (enable_the_one_probe) {
-        compileOnly fg.deobf("mcjty.theoneprobe:${the_one_probe}:api")
-        runtimeOnly fg.deobf("mcjty.theoneprobe:${the_one_probe}")
-    }
-
-    //Hwyla version
-    if (enable_hwyla) {
-        compileOnly fg.deobf("mcp.mobius.waila:${hwyla}:api")
-        runtimeOnly fg.deobf("mcp.mobius.waila:${hwyla}")
-    }
-}
-
+/**
+ * Mod Jar Archive manifest attribute specification.
+ * Adds additional custom manifest attributes.
+ */
 jar {
     manifest {
         attributes([
                 // Generic - for resynth in general
-                "Specification-Title":      mod_id,
-                "Specification-Vendor":     mod_author,
-                "Specification-Version":    full_version,
+                "Specification-Title":      MODID,
+                "Specification-Vendor":     MOD_AUTHOR,
+                "Specification-Version":    "${MOD_VERSION}-[${MINECRAFT_VERSION}]",
+
                 // Specific - for single resynth release
-                "Implementation-Title":     mod_title,
-                "Implementation-Version":   complete_title_version,
-                "Implementation-Vendor":    mod_author,
-                "Implementation-Vendor-Id": "${mod_title} (by ${mod_author})",
-                "Implementation-Timestamp": new Date().format("dd-MM-yyyy'_'HH:mm:ssZ"),
-                "Implementation-URL":       new URL(mod_url),
+                "Implementation-Title":     MOD_TITLE,
+                "Implementation-Version":   "Resynth-${MOD_VERSION}-[Minecraft-Forge-${MINECRAFT_VERSION}-${FORGE_VERSION}]",
+                "Implementation-Vendor":    MOD_AUTHOR,
+                "Implementation-Vendor-Id": "com.ki11erwolf",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "Implementation-URL":       new URL(MOD_URL),
+
                 // Java
-                "Signature-Version":        mod_version,
-                "Created-By":               java_info,
+                "Signature-Version":        MOD_VERSION,
+                "Created-By":               (System.getProperty("java.vendor") == "Oracle Corporation" ? "Java(TM)" : "Java-OpenJDK") +
+                        "-${System.getProperty("java.version")}" + " (${System.getProperty("java.vendor")})",
+
                 // Custom (Resynth/Forge/Minecraft)
                 "Mod-License":              "Apache License, Version 2.0",
         ])
     }
 }
 
+//######################//
+//     Custom Tasks     //
+//######################//
+
+boolean enableJarsigner = Boolean.valueOf(ext.getProperty('task.enabled.jarsigner'))
+String jarsignerProperties = ext.getProperty('task.properties.jarsigner')
+
 /**
  * Always called after the build task has completed.
  *
  * Handles renaming the recently created mod jar, created by the most
- * recent build task, to the more informative modtitle specified. It
- * is also simultaneously moved to a specified directory, preferability
- * one more visibilly accessable.
+ * recent build task, to the more informative mod title specified. It
+ * is also simultaneously moved to a specified directory, preferably
+ * one more visibly accessible.
  *
  * Mod jar title and output directory is specified using `jarTitle`
  * and `jarOutputDir` at top of this file.
  */
-task finalizeBuild() {
+task distribution() {
     //The directory where forge builds and saves the mod jar
     def lookIn = new File("${project.file("build")}/libs/")
 
-    //Defines the specfic mod jar name to be looked for.
+    // The directory to put the mod jar in when it's built.
+    def outputDirectory = project.file("jar")
+
+    //Defines the specific mod jar name to be looked for.
     //Later reassigned the value of the mod jar path before move.
-    def modjar = "${archivesBaseName}-${mod_version}.jar"
+    def modjar = "${MODID}-${MOD_VERSION}.jar"
+
+    //The final name & title of the output mod jar, expect when signed.
+    def outputModJar = "Resynth-${MOD_VERSION}-[Minecraft-Forge-${MINECRAFT_VERSION}].jar"
 
     /**
      * Called and executed last as part of the task,
@@ -228,10 +198,11 @@ task finalizeBuild() {
      */
     doLast {
         def result = null
+
         if(tryFindBuiltJar(lookIn, modjar)){
             //If Jar Found
-            def finalModJarDest = new File("${mod_output_folder}/${mod_jar_title}")
-            cleanAndCreate(mod_output_folder)
+            def finalModJarDest = new File("${outputDirectory}/${outputModJar}")
+            cleanAndCreate(outputDirectory)
 
             //Store results from the attempted Rename & Move operation
             result = tryRenameAndMove(modjar, finalModJarDest)
@@ -242,9 +213,19 @@ task finalizeBuild() {
             } else {
                 //If Move & Rename results are successful and verified!
                 //Also ensure control returns from the task on success, before failing by default.
-                println("\n[SUCCESS] Move & Rename operation completed with no known errors!")
-                println("\n* * * * ${finalModJarDest} * * * *")
-                return //SUCCESS
+
+                //Checksum the original
+                printMD5Checksum(finalModJarDest)
+
+                //Create a signed copy
+                if(signArchive(finalModJarDest)) {
+                    println("\n[SUCCESS] Move, Rename, and Sign operation completed with no known errors!")
+                    println("\n* * * * ${finalModJarDest} * * * *")
+                } else {
+                    println("\n[FAIL] Could not sign jar!")
+                }
+
+                return
             }
         }
         //Always defaults to FAILURE unless task is
@@ -262,11 +243,11 @@ task finalizeBuild() {
      * can proceed with certainty. Returns {@code false} in all other situations.
      */
     ext.tryFindBuiltJar = { scope, jar ->
-        //Begin search for existance of mod jar
+        //Begin search for existence of mod jar
         println("\nMod jar build completed by Forge! Looking for mod to rename and move...")
         println("Looking in: \"${scope}\" for \"${jar}\".")
 
-        //Check for mod jar existance, but first
+        //Check for mod jar existence, but first
         //Assign full path of jar back into 'modjar' for use later
         def found = (modjar = new File("${scope}/${jar}")).exists()
 
@@ -276,7 +257,7 @@ task finalizeBuild() {
             return false //FAIL
         } else {
             println("\nFound expected mod jar from build! Renaming & moving jar to...")
-            println("${mod_output_folder} as ${mod_jar_title}")
+            println("${outputDirectory} as ${outputModJar}")
             return true //PASS
         }
     }
@@ -323,9 +304,7 @@ task finalizeBuild() {
         try{
             //Attempt Move & Rename operation
             //noinspection UnnecessaryQualifiedReference
-            def finalPath = java.nio.file.Files.move(
-                    modStartDest.toPath(), modEndDest.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING
-            )
+            def finalPath = Files.move(modStartDest.toPath(), modEndDest.toPath(), StandardCopyOption.REPLACE_EXISTING)
             //Verify mod jar exists at destination path
             return finalPath.toFile().exists()
         } catch (Exception e){
@@ -336,13 +315,149 @@ task finalizeBuild() {
     }
 
     /**
+     * Attempts to sign and verify the jar archive using the keystore
+     * certificate credentials in the provided properties file.
+     */
+    ext.signArchive = { File archive ->
+        if(!enableJarsigner) {
+            println("\n[DISABLED] Skipping signing mod jar archive!")
+            return true
+        }
+
+        println("\nAttempting to sign mod jar archive...")
+
+        // Check properties file
+        Properties certificateProperties = new Properties()
+        File propertiesFile = jarsignerProperties.startsWith("/")
+                ? new File(projectDir.getAbsolutePath() + jarsignerProperties)
+                : new File(jarsignerProperties)
+
+        try {
+            certificateProperties.load(new FileReader(propertiesFile))
+        } catch (Exception e) {
+            println("[WARNING] Could not load certificate properties from file: " + e.getMessage())
+            createTemplate(certificateProperties, propertiesFile)
+            return false
+        }
+
+        // Private data
+        String signedArchive = archive == null ? null : archive.getAbsolutePath().replace(".jar", "-Signed.jar")
+        String keystorePath = certificateProperties.getProperty("keystore.path", null)
+        String keystorePassword = certificateProperties.getProperty("keystore.password", null)
+        String keyAlias = certificateProperties.getProperty("key.alias", null)
+
+        println("Creating signed archive '${signedArchive}'...")
+        Files.copy(archive.toPath(), new File(signedArchive).toPath(), StandardCopyOption.REPLACE_EXISTING)
+
+        // Sign
+        def exec_line = "jarsigner " + "-keystore \"${keystorePath}\" " + "-storepass ${keystorePassword} " +
+                "-tsa http://sha256timestamp.ws.symantec.com/sha256/timestamp " + "\"${signedArchive}\" \"${keyAlias}\""
+
+        println("Signing jar with '${exec_line.replace(keystorePassword, "******")}'")
+        Process signer = exec_line.execute()
+        def exitCode = signer.waitFor()
+
+        if(exitCode != 0) {
+            println("Jarsigner returned failure: ${exitCode}!")
+            new File(signedArchive).delete()
+            return false
+        } else println("Jar signer returned success!")
+
+        //Checksum
+        printMD5Checksum(new File(signedArchive))
+
+        // Verify
+        return verifySignedJar(signedArchive)
+    }
+
+    /**
+     * Verifies the the given signed jar archive has a
+     * valid certificate.
+     */
+    ext.verifySignedJar = { signedArchive ->
+        def exec_line_2 = "jarsigner -verify \"${signedArchive}\""
+
+        println("\nChecking jar signature with '${exec_line_2}'...")
+        Process verifier = exec_line_2.execute()
+        verifier.consumeProcessOutput(System.out, System.err)
+        def verifierExitCode = verifier.waitFor()
+
+        if(verifierExitCode != 0) {
+            println("Jar verifier returned failure: ${exitCode}!")
+            new File(signedArchive).delete()
+            return false
+        }
+
+        println("Jar verifier returned success!")
+        return true
+    }
+
+    /**
+     * Creates a new properties file for keystore certificate credentials
+     * with placeholders for credentials.
+     */
+    ext.createTemplate = { Properties properties, File propertiesFile ->
+        // Template
+        properties.setProperty("keystore.path", "/path/to/keystore.p12")
+        properties.setProperty("keystore.password", "password")
+        properties.setProperty("key.alias", "alias")
+
+        try {
+            // Write
+            FileOutputStream propertiesOut = new FileOutputStream(propertiesFile)
+            properties.store(propertiesOut, " Private certificate & keystore credentials for jar archive signing!")
+            propertiesOut.flush()
+            propertiesOut.close()
+
+            println("Created new template certificate properties file.")
+        } catch (Exception ex) {
+            println("[WARNING] Could not save new certificate properties file template: " + ex.getMessage())
+        }
+    }
+
+    /**
+     * Calculates the MD5 Checksum of any given file, and prints
+     * it to the console as a hexadecimal String, along with the filename.
+     */
+    ext.printMD5Checksum = { File archive ->
+        //noinspection GrUnnecessarySemicolon
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5")
+            InputStream is = Files.newInputStream(Paths.get(archive.getAbsolutePath()))
+            DigestInputStream dis = new DigestInputStream(is, md)
+
+            while(dis.read() != -1);
+
+            println("\nChecksum:\t${archive.getName()}  ${bytesToHex(md.digest())}")
+        } catch (Exception ex) {
+            println("\nChecksum failed! Reason: ${ex.getMessage()}")
+        }
+    }
+
+    /**
+     * Converts an array of bytes to a hexadecimal String.
+     */
+    ext.bytesToHex = { byte[] bytes ->
+        final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray()
+        char[] hexChars = new char[bytes.length * 2]
+
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4]
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F]
+        }
+
+        return new String(hexChars)
+    }
+
+    /**
      * Called as soon as, and never before the task is completely declared a failure,
      * when unable to guarantee success - at which point the whole task comes to an
      * end and deems itself a failure by default, prompting the call to this function.
      * The task releases control back directly after this function returns.
      *
      * The result that probably lead to the failure is passed along with the
-     * call, typically to pass on any Exceptions and stacktraces
+     * call, typically to pass on any Exceptions and stacktrace
      */
     ext.failByDefault = { result ->
         print("\n[FAILURE] Could not Move & Rename the built mod jar!")
@@ -352,5 +467,60 @@ task finalizeBuild() {
     }
 }
 
-//Captain Obvious strikes again!
-build.finalizedBy(finalizeBuild)
+build.finalizedBy(distribution)
+
+//########################//
+//      Miscellaneous     //
+//########################//
+
+/*
+ * General Properties
+ */
+
+archivesBaseName = MODID
+version = MOD_VERSION
+group = "com.ki11erwolf.${archivesBaseName}"
+
+String mappingsVersion = ext.getProperty("version.minecraft-mappings")
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+/**
+ * Sets up the version dependencies for the Forge buildscript.
+ */
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+    }
+}
+
+/**
+ * Configures the version of the deobfuscation map used to deobfuscate the names
+ * of fields and methods, as well as various other Minecraft properties.
+ */
+minecraft {
+    mappings channel: 'snapshot', version: mappingsVersion
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+}

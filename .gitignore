@@ -1,9 +1,8 @@
 .idea
 .gradle
-out
 build
-run
-eclipse
-fileTemplates
 jar
-/run-old/
+logs
+out
+run
+signing.properties

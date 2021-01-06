@@ -171,7 +171,7 @@ public interface Tooltip {
         Style previousLine = null;
         for(int i = 0; i < splitInput.length; i++){
             previousLine = (
-                    output[i] = new StringTextComponent(splitInput[i]).func_230530_a_(
+                    output[i] = new StringTextComponent(splitInput[i]).setStyle(
                             previousLine == null ? input.getStyle() : previousLine
                     )
             ).getStyle();

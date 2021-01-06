@@ -254,7 +254,7 @@ public class ResynthPlants {
             minecraftResource("ancient_debris"), ANCIENT_DEBRIS_PROPERTIES,
             new PlantSetProduceProperties(
                     2, 200, 2
-            ), Blocks.field_235398_nh_, Blocks.field_235398_nh_
+            ), Blocks.ANCIENT_DEBRIS, Blocks.ANCIENT_DEBRIS
     ).register();
 
     /**
@@ -721,7 +721,7 @@ public class ResynthPlants {
             ), new PlantSetProduceProperties(2, 200, 2), Items.EXPERIENCE_BOTTLE,
             BAT, BLAZE, CAVE_SPIDER, CHICKEN, COD, COW, CREEPER, DONKEY, DOLPHIN, DROWNED, ELDER_GUARDIAN,
             ENDER_DRAGON, ENDERMAN, ENDERMITE, EVOKER, GHAST, GIANT, GUARDIAN, HORSE, HUSK, LLAMA, MAGMA_CUBE,
-            MULE, MOOSHROOM, OCELOT, PARROT, PIG, PUFFERFISH, field_233592_ba_, POLAR_BEAR, RABBIT,
+            MULE, MOOSHROOM, OCELOT, PARROT, PIG, PUFFERFISH, ZOMBIFIED_PIGLIN, POLAR_BEAR, RABBIT,
             SALMON, SHEEP, SHULKER, SILVERFISH, SKELETON, SKELETON_HORSE, SLIME, SPIDER, SQUID, TURTLE, TROPICAL_FISH,
             WITCH, WITHER, WITHER_SKELETON, WOLF, ZOMBIE, ZOMBIE_VILLAGER, ZOMBIE_HORSE, PHANTOM
     ).register();

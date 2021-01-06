@@ -67,15 +67,15 @@ public class ResynthFlowerFeature extends ResynthFeature<ResynthFlowerFeature> {
         if(flower.getRegistryName() == null) throw new Exception("Flower registry name is null");
 
         Registry.register(
-                WorldGenRegistries.field_243653_e, flower.getRegistryName(), Feature.ORE.withConfiguration(
+                WorldGenRegistries.CONFIGURED_FEATURE, flower.getRegistryName(), Feature.ORE.withConfiguration(
                         new OreFeatureConfig(TARGET_FLOWERS, flower.getDefaultState(), patchSize)
-                ).withPlacement(Placement.field_242907_l.configure(FLOWER_HEIGHT_RANGE)).func_242728_a().func_242731_b(patchRarity)
+                ).withPlacement(Placement.RANGE.configure(FLOWER_HEIGHT_RANGE)).square().func_242731_b(patchRarity)
         );
 
-        ConfiguredFeature<?,?> feature = WorldGenRegistries.field_243653_e.getOrDefault(flower.getRegistryName());
+        ConfiguredFeature<?,?> feature = WorldGenRegistries.CONFIGURED_FEATURE.getOrDefault(flower.getRegistryName());
 
         if(feature == null) throw new Exception("Flower Feature configuration is null");
-        else builder.func_242513_a(GenerationStage.Decoration.UNDERGROUND_ORES, feature);
+        else builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, feature);
     }
 
 }

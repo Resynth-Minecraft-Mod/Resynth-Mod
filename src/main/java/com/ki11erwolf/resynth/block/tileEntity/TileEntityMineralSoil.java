@@ -78,9 +78,9 @@ public class TileEntityMineralSoil extends TileEntity {
      *
      * @param compound the nbt tag compound we will read the variable from.
      */
-    @Override //used to be read()
-    public void func_230337_a_(BlockState state, CompoundNBT compound) {
-        super.func_230337_a_(state, compound);
+    @Override
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
         mineralPercentage = compound.getFloat(MINERAL_CONTENT_TAG);
     }
 

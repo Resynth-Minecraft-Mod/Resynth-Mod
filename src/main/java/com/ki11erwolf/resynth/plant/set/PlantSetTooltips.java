@@ -129,7 +129,7 @@ public class PlantSetTooltips {
                     getFormattedTooltip("seed_sources.crystalline", TextFormatting.DARK_GREEN).getString(),
                     TextFormatting.WHITE, Tooltip.toTextComponent(Arrays.toString(
                             Arrays.stream(set.getSeedSources(Block[].class)).limit(limit).map(
-                                    in -> TextFormatting.GOLD + in.func_235333_g_().getString() + TextFormatting.WHITE
+                                    in -> TextFormatting.GOLD + in.getTranslatedName().getString() + TextFormatting.WHITE
                             ).toArray()
                     ) + s).getString()
             ));
@@ -140,7 +140,7 @@ public class PlantSetTooltips {
                     TextFormatting.WHITE, Tooltip.toTextComponent(
                             Arrays.toString(
                                     Arrays.stream(set.getSeedSources(Block[].class)).limit(limit).map(
-                                            in -> TextFormatting.GOLD + in.func_235333_g_().getString() + TextFormatting.WHITE
+                                            in -> TextFormatting.GOLD + in.getTranslatedName().getString() + TextFormatting.WHITE
                                     ).toArray()
                             ) + s).getString()
             ));

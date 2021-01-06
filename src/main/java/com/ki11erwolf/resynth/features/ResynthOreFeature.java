@@ -64,16 +64,16 @@ public class ResynthOreFeature extends ResynthFeature<ResynthOreFeature> {
         if(ore.getRegistryName() == null) throw new Exception("Ore registry name is null");
 
         Registry.register(
-                WorldGenRegistries.field_243653_e, ore.getRegistryName(), Feature.ORE.withConfiguration(
+                WorldGenRegistries.CONFIGURED_FEATURE, ore.getRegistryName(), Feature.ORE.withConfiguration(
                         new OreFeatureConfig(target, ore.getDefaultState(), veinSize)
-                ).withPlacement(Placement.field_242907_l.configure(
+                ).withPlacement(Placement.RANGE.configure(
                         new TopSolidRangeConfig(veinMinHeight, veinMinHeight, veinMaxHeight)
-                )).func_242728_a().func_242731_b(veinRarity)
+                )).square().func_242731_b(veinRarity)
         );
 
-        ConfiguredFeature<?,?> feature = WorldGenRegistries.field_243653_e.getOrDefault(ore.getRegistryName());
+        ConfiguredFeature<?,?> feature = WorldGenRegistries.CONFIGURED_FEATURE.getOrDefault(ore.getRegistryName());
 
         if(feature == null) throw new Exception("Ore Feature configuration is null");
-        else builder.func_242513_a(GenerationStage.Decoration.UNDERGROUND_ORES, feature);
+        else builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, feature);
     }
 }

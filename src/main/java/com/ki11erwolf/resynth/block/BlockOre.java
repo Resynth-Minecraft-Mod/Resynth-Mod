@@ -113,6 +113,6 @@ public class BlockOre extends ResynthBlock<BlockOre> {
      * with a new light value set to <code>luminance</code>.
      */
     private static Properties setLightValue(Properties propertiesIn, @SuppressWarnings("SameParameterValue") int lum){
-        return propertiesIn.func_235838_a_(value -> lum);
+        return propertiesIn.setLightLevel(value -> lum);
     }
 }

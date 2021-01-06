@@ -429,7 +429,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
     public void onAddReloadListeners(AddReloadListenerEvent event) {
         LOG.debug("onAddReloadListeners() fired! Setting up RecipeManager & self.");
 
-        recipeManager = event.getDataPackRegistries().func_240967_e_();
+        recipeManager = event.getDataPackRegistries().getRecipeManager();
         event.addListener(this);
     }
 

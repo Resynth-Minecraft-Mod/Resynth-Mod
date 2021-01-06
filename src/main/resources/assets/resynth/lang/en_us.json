@@ -499,7 +499,7 @@
 
   "block.resynth.metallic_plant_ancient_debris":        "Ancient Debris Plant",
   "item.resynth.metallic_seeds_ancient_debris":         "Ancient Debris Seeds",
-  "item.resynth.metallic_oragnic_ore_ancient_debris":   "Organic Ancient Debris",
+  "block.resynth.metallic_organic_ore_ancient_debris":  "Organic Ancient Debris",
 
   "__________COMMENT": "---Mineral Hoe Information Messages---",
   "message.resynth.mineral_hoe_information.plant_info_header":
