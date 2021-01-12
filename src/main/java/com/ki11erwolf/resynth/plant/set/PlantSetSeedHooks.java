@@ -93,9 +93,9 @@ class PlantSetSeedHooks {
     private static void playEffects(BlockPos pos, World world){
         Packet.send(
                 PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(
-                        pos.getX(), pos.getY() + 3, pos.getZ(), PLAYER_EFFECT_RADIUS, world.getDimensionKey()
+                        pos.getX(), pos.getY(), pos.getZ(), PLAYER_EFFECT_RADIUS, world.getDimensionKey()
                 )),
-                new ClientAVEffectPacket(ClientAVEffectPacket.AVEffect.SEEDS_SPAWNED)
+                new ClientAVEffectPacket(ClientAVEffectPacket.AVEffect.SEEDS_SPAWNED, pos)
         );
     }
 }

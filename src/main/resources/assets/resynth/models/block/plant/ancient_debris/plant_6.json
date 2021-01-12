@@ -1,0 +1,6 @@
+{
+  "parent": "resynth:block/plant/plant_metallic_6",
+  "textures": {
+    "stem": "resynth:blocks/plants/ancient_debris/plant_growing"
+  }
+}

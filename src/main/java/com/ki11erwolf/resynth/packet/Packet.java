@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth.packet;
 import com.ki11erwolf.resynth.ResynthMod;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -215,6 +216,9 @@ public abstract class Packet<S extends Packet<S>> {
      */
     static {
         MANAGER.register(new DisplayHoeInfoPacket(null));
-        MANAGER.register(new ClientAVEffectPacket(ClientAVEffectPacket.AVEffect.NONE), Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        MANAGER.register(
+                new ClientAVEffectPacket(ClientAVEffectPacket.AVEffect.NONE, new BlockPos(0, 0, 0)),
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
     }
 }

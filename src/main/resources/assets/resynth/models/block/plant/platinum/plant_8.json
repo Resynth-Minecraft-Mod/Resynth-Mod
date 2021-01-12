@@ -1,0 +1,7 @@
+{
+  "parent": "resynth:block/plant/plant_metallic_blooming",
+  "textures": {
+    "stem": "resynth:blocks/plants/platinum/plant_growing",
+    "upperstem": "resynth:blocks/plants/platinum/plant_grown"
+  }
+}

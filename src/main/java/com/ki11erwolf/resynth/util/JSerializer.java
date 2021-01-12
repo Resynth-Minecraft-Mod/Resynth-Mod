@@ -71,7 +71,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
 
     /**
      * The version number of this specific implementation of JSerializer,
-     * allowing different and suttle implementations of this specific
+     * allowing different and subtle implementations of this specific
      * JSerializer to exist. The version number also marks the serialized
      * data written with the version number, allowing data to be identified.
      */
@@ -129,7 +129,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
 
     /**
      * @return The version number of this specific implementation of JSerializer,
-     * allowing different and suttle implementations of this specific
+     * allowing different and subtle implementations of this specific
      * JSerializer to exist. The version number also marks the serialized
      * data written with the version number, allowing data to be identified.
      */
@@ -180,9 +180,9 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * {@link #identification} <b>and</b> {@link #version}. If the identification of the
      * JSerialData does not match this JSerializers, the operation will fail. Additionally,
      * the version numbers must match as well, or the implementations {@link
-     * #fixVersionMissmatch(JSerialDataIO, int, int)} will be called in an attempt to fix
-     * any data compatability issues. Care should be taken as {@link
-     * #fixVersionMissmatch(JSerialDataIO, int, int)} throws a {@link UnsupportedOperationException}
+     * #fixVersionMissMatch(JSerialDataIO, int, int)} will be called in an attempt to fix
+     * any data compatibility issues. Care should be taken as {@link
+     * #fixVersionMissMatch(JSerialDataIO, int, int)} throws a {@link UnsupportedOperationException}
      * by default.
      *
      * <p/> <b>Use with care: {@code suggestedInstance} object.</b> This specific deserialize
@@ -191,7 +191,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * a suggestion</b> and the specific implementation is <b>allowed to freely ignore the
      * suggestion.</b> This means that the suggested instance should not be expected to have
      * been changed or modified in any way. The specific JSerializer implementation should be
-     * consulted in such situations. <b>Perfer the returned object instance to the suggested
+     * consulted in such situations. <b>Prefer the returned object instance to the suggested
      * object instance!</b>
      *
      * @param data the {@link JSerialData} object holding the data of a previously serialized
@@ -221,9 +221,9 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * {@link #identification} <b>and</b> {@link #version}. If the identification of the
      * JSerialData does not match this JSerializers, the operation will fail. Additionally,
      * the version numbers must match as well, or the implementations {@link
-     * #fixVersionMissmatch(JSerialDataIO, int, int)} will be called in an attempt to fix
-     * any data compatability issues. Care should be taken as {@link
-     * #fixVersionMissmatch(JSerialDataIO, int, int)} throws a {@link UnsupportedOperationException}
+     * #fixVersionMissMatch(JSerialDataIO, int, int)} will be called in an attempt to fix
+     * any data compatibility issues. Care should be taken as {@link
+     * #fixVersionMissMatch(JSerialDataIO, int, int)} throws a {@link UnsupportedOperationException}
      * by default.
      *
      * @param data the {@link JSerialData} object holding the data of a previously serialized
@@ -258,7 +258,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * JSerialData} object instance which contains all the data in Json format -
      * effectively serializing the object.
      *
-     * <p/> This is an abstract method meant to be overriden and implemented by more
+     * <p/> This is an abstract method meant to be overridden and implemented by more
      * specialized JSerializers that handle specific {@link JSerializable}
      * implementations. Delegates the responsibility of copying the data from the object
      * instance into a serialized {@link JSerialData} object - letting the specialized
@@ -280,7 +280,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * @param dataIO the {@link JSerialDataIO} object which provides the means & methods
      * needed to read data from and write data to the {@link JSerialData} object containing
      * the serialized object data.
-     * @throws Exception if an issue arrised which prevented the object from being serialized
+     * @throws Exception if an issue arose which prevented the object from being serialized
      * correctly. If an Exception is raised, the objects data {@link JSerialData} should be
      * considered invalid and unfit for use.
      */
@@ -293,10 +293,10 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * as a {@link JSerialDataIO} object, and copies it to an object instance of the specific
      * JSerializable implementation - effectively deserializing the object. The deserialized
      * object instance may either be a brand new constructed object, or the object suggested
-     * with the {@code suggestedObject} paramater. The choice is up to the specific {@link
+     * with the {@code suggestedObject} parameter. The choice is up to the specific {@link
      * JSerializer} implementation to make.
      *
-     * <p/> This is an abstract method meant to be overriden and implemented by more
+     * <p/> This is an abstract method meant to be overridden and implemented by more
      * specialized JSerializers that handle specific {@link JSerializable} implementations.
      * Delegates the responsibility of copying the serialized data from the {@link JSerialData}
      * object instance into the into the {@link JSerializable} object instance - letting the
@@ -320,14 +320,14 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * @param dataIO the {@link JSerialDataIO} object which provides the means & methods
      * needed to read data from and write data to the {@link JSerialData} object meant to
      * store the serialized object data.
-     * @throws Exception if an issue arrised which prevented the object from being serialized
+     * @throws Exception if an issue arose which prevented the object from being serialized
      * correctly. If an Exception is raised, the objects data {@link JSerialData} should be
      * considered invalid and unfit for use.
      * @return the specific {@link JSerializable} implementation object instance, that contains
      * all the serialized data from the {@link JSerialData} object. If the data was written to
-     * the {@code suggestedObject} passed in as a paramater, return the same object, otherwise,
+     * the {@code suggestedObject} passed in as a parameter, return the same object, otherwise,
      * if a new object instance was used, return that object instance. If {@code null} is returned,
-     * the {@code suggestedObject} passed in as a paramater will be used as the deserialized object.
+     * the {@code suggestedObject} passed in as a parameter will be used as the deserialized object.
      */
     protected abstract T dataToObject(T suggestedObject, JSerialDataIO dataIO) throws Exception;
 
@@ -365,7 +365,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * that this JSerializer implementation only supports a single version.
      */
     @SuppressWarnings("RedundantThrows") // Allow implementations that override this to throw exceptions.
-    protected void fixVersionMissmatch(JSerialDataIO dataIO, int version, int dataVersion) throws Exception {
+    protected void fixVersionMissMatch(JSerialDataIO dataIO, int version, int dataVersion) throws Exception {
         throw new UnsupportedOperationException("This JSerializer only supports a single version: Version " + version + ".");
     }
 
@@ -419,9 +419,9 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * {@link #identification} <b>and</b> {@link #version}. If the identification of the
      * JSerialData does not match this JSerializers, the operation will fail. Additionally,
      * the version numbers must match as well, or the implementations {@link
-     * #fixVersionMissmatch(JSerialDataIO, int, int)} will be called in an attempt to fix
-     * any data compatability issues. Care should be taken as {@link
-     * #fixVersionMissmatch(JSerialDataIO, int, int)} throws a {@link UnsupportedOperationException}
+     * #fixVersionMissMatch(JSerialDataIO, int, int)} will be called in an attempt to fix
+     * any data compatibility issues. Care should be taken as {@link
+     * #fixVersionMissMatch(JSerialDataIO, int, int)} throws a {@link UnsupportedOperationException}
      * by default.
      *
      * <p/> <b>Use with care: {@code suggestedInstance} object.</b> This specific deserialize
@@ -430,7 +430,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
      * a suggestion</b> and the specific implementation is <b>allowed to freely ignore the
      * suggestion.</b> This means that the suggested instance should not be expected to have
      * been changed or modified in any way. The specific JSerializer implementation should be
-     * consulted in such situations. <b>Perfer the returned object instance to the suggested
+     * consulted in such situations. <b>Prefer the returned object instance to the suggested
      * object instance!</b>
      *
      * @param data the {@link JSerialData} object holding the data of a previously serialized
@@ -465,13 +465,13 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
     }
 
     /**
-     * Creates a brand new {@link JSerialData} object, constucted
+     * Creates a brand new {@link JSerialData} object, constructed
      * for this specific {@link JSerializer} implementation, and
      * returns the {@link JSerialDataIO} object used to modify the
      * data of the {@link JSerialData} object.
      *
      * @return the {@link JSerialDataIO} object of a brand new
-     * {@link JSerialData} object instance, constucted for this
+     * {@link JSerialData} object instance, constructed for this
      * specific {@link JSerializer} implementation
      */
     private JSerialDataIO getNewJSerialDataIO() {
@@ -502,33 +502,33 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
 
     /**
      * Checks the given {@link JSerialData}, {@code data}, to make sure
-     * the serialized data it holds matchs the {@link #identification}
+     * the serialized data it holds matches the {@link #identification}
      * and {@link #version} of this specific {@link JSerializer}
      * implementation. If the versions don't match, {@link
-     * #fixVersionMissmatch(JSerialDataIO, int, int)} will be called
+     * #fixVersionMissMatch(JSerialDataIO, int, int)} will be called
      * in an attempt to fix it.
      *
      * @param data the {@link JSerialData} object to check.
      * @throws DataMismatchException if the {@link JSerialData#identification}
      * doesn't match this {@link JSerializer}s {@link #identification}, or, if
-     * the {@link JSerialData#version} doesn't oesn't match this {@link
-     * JSerializer}s {@link #version} and it cannot be fixed using {@link
-     * #fixVersionMissmatch(JSerialDataIO, int, int)}.
+     * the {@link JSerialData#version} doesn't match this {@link JSerializer}s
+     * {@link #version} and it cannot be fixed using {@link
+     * #fixVersionMissMatch(JSerialDataIO, int, int)}.
      */
     private void matchData(JSerialData data) throws DataMismatchException {
-        boolean missmatch = false;
+        boolean missMatch = false;
 
         if(!doesDataIdentificationMatch(data))
-            missmatch = true;
+            missMatch = true;
 
         if(!doesDataVersionMatch(data))
             try {
-                fixVersionMissmatch(data.io, this.getVersion(), data.io.getVersion());
+                fixVersionMissMatch(data.io, this.getVersion(), data.io.getVersion());
             } catch (Exception cause) {
-                missmatch = true;
+                missMatch = true;
             }
 
-        if(missmatch) {
+        if(missMatch) {
             throw new DataMismatchException(
                     "Cannot deserialize " + data.toString() + " with " + this.toString()
             );
@@ -797,6 +797,26 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
          */
         public String getDataAsJsonString(Gson gson) {
             return Objects.requireNonNull(gson).toJson(getDataJsonObject());
+        }
+
+        /**
+         * @return the {@link JSerializer#identification unique String
+         * identifier} of the specific {@link JSerializer} implementation
+         * instance that created this {@link JSerialData}. Can be used to
+         * specify a specific {@link JSerializer} implementation instance
+         * when {@link JSerializer#deserialize(JSerialData, JSerializer)
+         * deserializing} objects.
+         */
+        public String getSerializerIdentification() {
+            return io.getIdentification();
+        }
+
+        /**
+         * @return the {@link JSerializer#version} of the of the {@link
+         * JSerializer} implementation that created the serialized data.
+         */
+        public int getSerializerVersion() {
+            return io.getVersion();
         }
 
         /**
@@ -1414,7 +1434,7 @@ public abstract class JSerializer<T extends JSerializer.JSerializable<T>> {
                 .filter(constructor -> constructor.getParameterCount() == 0)
                 .peek(constructor -> {
                     if(constructor.isAccessible())
-                        LOG.warn("Serializable object '" + object.getCanonicalName() + "' has accessable default constructor.");
+                        LOG.warn("Serializable object '" + object.getCanonicalName() + "' has accessible default constructor.");
                     else constructor.setAccessible(true);
                 }).findFirst().orElseThrow(() -> new IllegalArgumentException(
                         "Serializable object '" + object.getCanonicalName() + "' has no default constructor available."
