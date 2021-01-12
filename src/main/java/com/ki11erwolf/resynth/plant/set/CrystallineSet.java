@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
 import com.ki11erwolf.resynth.plant.item.ItemShard;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractCrystallineProperties;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -53,13 +54,13 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
     /**
      * The properties for this specific plant set instance.
      */
-    private final ICrystallineSetProperties setProperties;
+    private final AbstractCrystallineProperties setProperties;
 
     /**
      * @param setName the name of the specific plant set instance (e.g. diamond).
      * @param properties the properties for the specific plant set instance.
      */
-    CrystallineSet(String setName, ICrystallineSetProperties properties) {
+    CrystallineSet(String setName, AbstractCrystallineProperties properties) {
         super(SET_TYPE_NAME, setName, SEED_HOOKS, properties);
         this.setProperties = properties;
 

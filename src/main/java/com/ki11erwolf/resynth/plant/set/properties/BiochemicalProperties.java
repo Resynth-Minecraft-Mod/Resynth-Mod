@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Ki11er_wolf
+ * Copyright (c) 2018 - 2021 Ki11er_wolf.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plant.set;
+package com.ki11erwolf.resynth.plant.set.properties;
+
+import com.ki11erwolf.resynth.util.JSerializer;
 
 /**
  * A basic implementation of IBiochemicalSetProperties. Used
  * to specify the default properties of a specific plant set
  * instance (before config is taken into account).
  */
-public class BiochemicalSetProperties implements IBiochemicalSetProperties {
+public class BiochemicalProperties implements AbstractBiochemicalProperties {
 
     /**
      * Flag whether or not the plant set instance
@@ -63,8 +65,8 @@ public class BiochemicalSetProperties implements IBiochemicalSetProperties {
      * @param seedSpawnChanceFromBulb the default chance seeds will spawn when the sets
      *                                 produce item is smashed.
      */
-    public BiochemicalSetProperties(boolean canBonemeal, float chanceToGrow, int numberOfProduceDrops,
-                                    float seedSpawnChanceFromMob, float seedSpawnChanceFromBulb){
+    public BiochemicalProperties(boolean canBonemeal, float chanceToGrow, int numberOfProduceDrops,
+                                 float seedSpawnChanceFromMob, float seedSpawnChanceFromBulb){
         this.canBonemeal = canBonemeal;
         this.chanceToGrow = chanceToGrow;
         this.numberOfProduceDrops = numberOfProduceDrops;
@@ -110,5 +112,33 @@ public class BiochemicalSetProperties implements IBiochemicalSetProperties {
     @Override
     public float seedSpawnChanceFromBulb() {
         return seedSpawnChanceFromBulb;
+    }
+
+    // ##############
+    // # Serializer #
+    // ##############
+
+    static class BiochemicalPropertiesSerializer extends JSerializer<AbstractBiochemicalProperties> {
+
+        BiochemicalPropertiesSerializer() {
+            super("biochemical-plant-set-properties");
+        }
+
+        @Override
+        protected void objectToData(AbstractBiochemicalProperties object, JSerialDataIO dataIO) throws Exception {
+
+        }
+
+        @Override
+        protected AbstractBiochemicalProperties dataToObject(AbstractBiochemicalProperties suggestedObject, JSerialDataIO dataIO) throws Exception {
+            return null;
+        }
+
+        @Override
+        protected AbstractBiochemicalProperties createInstance() {
+            return new BiochemicalProperties(
+                    false, 0, 0, 0, 0
+            );
+        }
     }
 }

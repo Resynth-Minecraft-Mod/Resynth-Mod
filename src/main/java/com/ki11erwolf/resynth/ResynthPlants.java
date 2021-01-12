@@ -18,6 +18,10 @@ package com.ki11erwolf.resynth;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.plant.set.*;
+import com.ki11erwolf.resynth.plant.set.properties.BiochemicalProperties;
+import com.ki11erwolf.resynth.plant.set.properties.CrystallineProperties;
+import com.ki11erwolf.resynth.plant.set.properties.MetallicProperties;
+import com.ki11erwolf.resynth.plant.set.properties.ProduceProperties;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
@@ -45,7 +49,7 @@ public class ResynthPlants {
     // Set Properties
     // **************
 
-    static final PlantSetProduceProperties DEFAULT_PRODUCE_PROPERTIES = new PlantSetProduceProperties(
+    static final ProduceProperties DEFAULT_PRODUCE_PROPERTIES = new ProduceProperties(
             1, 200, 2.0
     );
 
@@ -54,7 +58,7 @@ public class ResynthPlants {
     /**
      * The set properties for general Diamond and Diamond Ore.
      */
-    static final CrystallineSetProperties DIAMOND_PROPERTIES = new CrystallineSetProperties(
+    static final CrystallineProperties DIAMOND_PROPERTIES = new CrystallineProperties(
             false, 8.0F,1,
             1.30F, 25.0F
     );
@@ -62,7 +66,7 @@ public class ResynthPlants {
     /**
      * The set properties for general Redstone and Redstone Ore.
      */
-    static final CrystallineSetProperties REDSTONE_PROPERTIES = new CrystallineSetProperties(
+    static final CrystallineProperties REDSTONE_PROPERTIES = new CrystallineProperties(
             false, 65.0F, 3,
             1.0F, 75.0F
     );
@@ -70,7 +74,7 @@ public class ResynthPlants {
     /**
      * The set properties for general Lapis Lazuli and Lapis Lazuli Ore.
      */
-    static final CrystallineSetProperties LAPIS_LAZULI_PROPERTIES = new CrystallineSetProperties(
+    static final CrystallineProperties LAPIS_LAZULI_PROPERTIES = new CrystallineProperties(
             false, 45, 3,
             2, 50F
     );
@@ -78,7 +82,7 @@ public class ResynthPlants {
     /**
      * The set properties for general Coal and Coal Ore.
      */
-    static final CrystallineSetProperties COAL_PROPERTIES = new CrystallineSetProperties(
+    static final CrystallineProperties COAL_PROPERTIES = new CrystallineProperties(
             false, 75, 2,
             0.5F, 50F
     );
@@ -86,7 +90,7 @@ public class ResynthPlants {
     /**
      * The set properties for general Emerald and Emerald Ore.
      */
-    static final CrystallineSetProperties EMERALD_PROPERTIES = new CrystallineSetProperties(
+    static final CrystallineProperties EMERALD_PROPERTIES = new CrystallineProperties(
             false, 7.0F, 1,
             1.5F, 25F
     );
@@ -96,7 +100,7 @@ public class ResynthPlants {
     /**
      * The set properties for general Netherite scrap and Ancient Debris Ore.
      */
-    static final MetallicSetProperties ANCIENT_DEBRIS_PROPERTIES = new MetallicSetProperties(
+    static final MetallicProperties ANCIENT_DEBRIS_PROPERTIES = new MetallicProperties(
             false, 10.0F, 4.0F, 8.0F
     );
 
@@ -104,14 +108,14 @@ public class ResynthPlants {
     /**
      * The set properties for general Iron and Iron Ore.
      */
-    static final MetallicSetProperties IRON_PROPERTIES = new MetallicSetProperties(
+    static final MetallicProperties IRON_PROPERTIES = new MetallicProperties(
             false, 40, 6, 6
     );
 
     /**
      * The set properties for general Gold and Gold Ore.
      */
-    static final MetallicSetProperties GOLD_PROPERTIES = new MetallicSetProperties(
+    static final MetallicProperties GOLD_PROPERTIES = new MetallicProperties(
             false, 25, 5, 5
     );
 
@@ -124,13 +128,13 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> MINERAL_ROCKS = PlantSetFactory.makeCrystallineSet(
             resynthResource("mineral_rock"),
-            new CrystallineSetProperties(
+            new CrystallineProperties(
                     false,
                     25,
                     3,
                     5,
                     30
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 3.0
             ),
             ResynthItems.ITEM_MINERAL_ROCK, ResynthBlocks.BLOCK_MINERAL_STONE
@@ -141,7 +145,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> CALVINITE_CRYSTAL = PlantSetFactory.makeCrystallineSet(
             resynthResource("calvinite_crystal"),
-            new CrystallineSetProperties(
+            new CrystallineProperties(
                     false,
                     10F,
                     1,
@@ -163,7 +167,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> REDSTONE = PlantSetFactory.makeCrystallineSet(
             minecraftResource("redstone"), REDSTONE_PROPERTIES,
-            new PlantSetProduceProperties(
+            new ProduceProperties(
                     3, 200, 2
             ), Items.REDSTONE, Blocks.REDSTONE_ORE
     ).register();
@@ -173,7 +177,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> LAPIS_LAZULI = PlantSetFactory.makeCrystallineSet(
             minecraftResource("lapis_lazuli"), LAPIS_LAZULI_PROPERTIES,
-            new PlantSetProduceProperties(
+            new ProduceProperties(
                     2, 200, 2
             ), Items.LAPIS_LAZULI, Blocks.LAPIS_ORE
     ).register();
@@ -183,7 +187,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> COAL = PlantSetFactory.makeCrystallineSet(
             minecraftResource("coal"), COAL_PROPERTIES,
-            new PlantSetProduceProperties(
+            new ProduceProperties(
                     2, 200, 2
             ), Items.COAL, Blocks.COAL_ORE
     ).register();
@@ -201,13 +205,13 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> GLOWSTONE = PlantSetFactory.makeCrystallineSet(
             minecraftResource("glowstone"),
-            new CrystallineSetProperties(
+            new CrystallineProperties(
                     false,
                     60,
                     2,
                     3.0F,
                     30.0F
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Items.GLOWSTONE_DUST, Blocks.GLOWSTONE
     ).register();
@@ -217,7 +221,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> QUARTZ = PlantSetFactory.makeCrystallineSet(
             minecraftResource("quartz"),
-            new CrystallineSetProperties(
+            new CrystallineProperties(
                     false,
                     50,
                     2,
@@ -232,13 +236,13 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> COOKIE = PlantSetFactory.makeCrystallineSet(
             minecraftResource("cookie"),
-            new CrystallineSetProperties(
+            new CrystallineProperties(
                     false,
                     65,
                     2,
                     2,
                     4
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Items.COOKIE, Blocks.COCOA
     ).register();
@@ -252,7 +256,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> ANCIENT_DEBRIS = PlantSetFactory.makeMetallicSet(
             minecraftResource("ancient_debris"), ANCIENT_DEBRIS_PROPERTIES,
-            new PlantSetProduceProperties(
+            new ProduceProperties(
                     2, 200, 2
             ), Blocks.ANCIENT_DEBRIS, Blocks.ANCIENT_DEBRIS
     ).register();
@@ -276,12 +280,12 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> CLAY = PlantSetFactory.makeMetallicSet(
             minecraftResource("clay"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     55,
                     10,
                     10
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Blocks.CLAY, Blocks.CLAY
     ).register();
@@ -291,7 +295,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> END_STONE = PlantSetFactory.makeMetallicSet(
             minecraftResource("end_stone"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     45,
                     4,
@@ -304,12 +308,12 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> SAND = PlantSetFactory.makeMetallicSet(
             minecraftResource("sand"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     60,
                     3,
                     3
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Blocks.SAND, Blocks.SAND
     ).register();
@@ -319,7 +323,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> STONE = PlantSetFactory.makeMetallicSet(
             minecraftResource("stone"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     60,
                     4,
@@ -332,12 +336,12 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> GRANITE = PlantSetFactory.makeMetallicSet(
             minecraftResource("granite"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     50,
                     3,
                     3
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Blocks.GRANITE, Blocks.GRANITE
     ).register();
@@ -347,12 +351,12 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> DIORITE = PlantSetFactory.makeMetallicSet(
             minecraftResource("diorite"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     50,
                     3,
                     3
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Blocks.DIORITE, Blocks.DIORITE
     ).register();
@@ -362,12 +366,12 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> ANDESITE = PlantSetFactory.makeMetallicSet(
             minecraftResource("andesite"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     50,
                     3,
                     3
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Blocks.ANDESITE, Blocks.ANDESITE
     ).register();
@@ -377,12 +381,12 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> DIRT = PlantSetFactory.makeMetallicSet(
             minecraftResource("dirt"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     70,
                     2,
                     2
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     4, 200, 2
             ), Blocks.DIRT, Blocks.DIRT
     ).register();
@@ -392,12 +396,12 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> COBBLESTONE = PlantSetFactory.makeMetallicSet(
             minecraftResource("cobblestone"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     75,
                     2,
                     2
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     3, 200, 2
             ), Blocks.COBBLESTONE, Blocks.COBBLESTONE
     ).register();
@@ -407,7 +411,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> SPONGE = PlantSetFactory.makeMetallicSet(
             minecraftResource("sponge"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     10,
                     5,
@@ -420,12 +424,12 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> GRAVEL = PlantSetFactory.makeMetallicSet(
             minecraftResource("gravel"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     40,
                     3,
                     3
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Blocks.GRAVEL, Blocks.GRAVEL
     ).register();
@@ -435,12 +439,12 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> NETHERRACK = PlantSetFactory.makeMetallicSet(
             minecraftResource("netherrack"),
-            new MetallicSetProperties(
+            new MetallicProperties(
                     false,
                     35,
                     4,
                     3
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Blocks.NETHERRACK, Blocks.NETHERRACK
     ).register();
@@ -454,7 +458,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> ENDER_PEARL = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("ender_pearl"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     13,
                     1,
@@ -468,7 +472,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> GUNPOWDER = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("gunpowder"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     30,
                     1,
@@ -482,7 +486,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> BLAZE_ROD = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("blaze_rod"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     16,
                     1,
@@ -496,13 +500,13 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> BONE = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("bone"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     30,
                     2,
                     5,
                     3
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Items.BONE, SKELETON
     ).register();
@@ -512,7 +516,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> STRING = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("string"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     25,
                     2,
@@ -526,7 +530,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> FEATHER = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("feather"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     35,
                     2,
@@ -540,7 +544,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> GHAST_TEAR = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("ghast_tear"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     5,
                     1,
@@ -554,7 +558,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> NETHER_STAR = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("nether_star"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     2,
                     1,
@@ -568,7 +572,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> SPIDER_EYE = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("spider_eye"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     20,
                     1,
@@ -582,7 +586,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> SLIME_BALL = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("slime_ball"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     20,
                     2,
@@ -596,7 +600,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> SHULKER_SHELL = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("shulker_shell"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     12,
                     1,
@@ -610,13 +614,13 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> INK_SAC = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("ink_sac"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     20,
                     2,
                     5,
                     2
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     2, 200, 2
             ), Items.INK_SAC, SQUID
     ).register();
@@ -626,7 +630,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> LEATHER = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("leather"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     13,
                     1,
@@ -640,13 +644,13 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> ROTTEN_FLESH = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("rotten_flesh"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     50,
                     2,
                     14,
                     12
-            ), new PlantSetProduceProperties(
+            ), new ProduceProperties(
                     4, 200, 2
             ), Items.ROTTEN_FLESH, ZOMBIE
     ).register();
@@ -656,7 +660,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> PRISMARINE_CRYSTAL = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("prismarine_crystal"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     10,
                     1,
@@ -670,7 +674,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> PRISMARINE_SHARD = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("prismarine_shard"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     10,
                     1,
@@ -684,7 +688,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> RABBIT_FOOT = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("rabbit_foot"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     25,
                     1,
@@ -698,7 +702,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> DRAGONS_BREATH = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("dragons_breath"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     15,
                     1,
@@ -712,13 +716,13 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> EXPERIENCE_BOTTLE = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("experience_bottle"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     4,
                     2,
                     0.5F,
                     0.5F
-            ), new PlantSetProduceProperties(2, 200, 2), Items.EXPERIENCE_BOTTLE,
+            ), new ProduceProperties(2, 200, 2), Items.EXPERIENCE_BOTTLE,
             BAT, BLAZE, CAVE_SPIDER, CHICKEN, COD, COW, CREEPER, DONKEY, DOLPHIN, DROWNED, ELDER_GUARDIAN,
             ENDER_DRAGON, ENDERMAN, ENDERMITE, EVOKER, GHAST, GIANT, GUARDIAN, HORSE, HUSK, LLAMA, MAGMA_CUBE,
             MULE, MOOSHROOM, OCELOT, PARROT, PIG, PUFFERFISH, ZOMBIFIED_PIGLIN, POLAR_BEAR, RABBIT,
@@ -731,7 +735,7 @@ public class ResynthPlants {
      */
     public static final PlantSet<?, ?> NAUTILUS_SHELL = PlantSetFactory.makeBiochemicalSet(
             minecraftResource("nautilus_shell"),
-            new BiochemicalSetProperties(
+            new BiochemicalProperties(
                     false,
                     6,
                     1,

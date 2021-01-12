@@ -15,7 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.block;
 
-import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractCrystallineProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -122,7 +122,7 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
      */
     @Override
     protected int getHarvestProduceQuantity(){
-        return ((ICrystallineSetProperties) properties).plantYield();
+        return ((AbstractCrystallineProperties) properties).plantYield();
     }
 
     /**

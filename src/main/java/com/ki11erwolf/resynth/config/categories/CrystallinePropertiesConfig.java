@@ -19,13 +19,13 @@ import com.ki11erwolf.resynth.config.BooleanConfigValue;
 import com.ki11erwolf.resynth.config.ConfigCategory;
 import com.ki11erwolf.resynth.config.DoubleConfigValue;
 import com.ki11erwolf.resynth.config.IntegerConfigValue;
-import com.ki11erwolf.resynth.plant.set.CrystallineSetProperties;
-import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
+import com.ki11erwolf.resynth.plant.set.properties.CrystallineProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractCrystallineProperties;
 
 /**
  * Defines the configuration settings used by Crystalline plant sets.
  * Each Crystalline plant set contains a reference their own instance
- * of {@link CrystallinePlantSetConfig}.
+ * of {@link CrystallinePropertiesConfig}.
  * <p/>
  * Unlike normal configuration classes, this one simply lays out the
  * configuration settings used by Crystalline plant sets, it does
@@ -33,11 +33,11 @@ import com.ki11erwolf.resynth.plant.set.ICrystallineSetProperties;
  * times under different names.
  * <p/>
  * Default values are provided to the constructor using a
- * {@link CrystallineSetProperties} instance, rather than
+ * {@link CrystallineProperties} instance, rather than
  * defined in the class.
  */
 //A thought: toggle that enables/disables using the config categories... for future updates that change config values.
-public class CrystallinePlantSetConfig extends ConfigCategory implements ICrystallineSetProperties {
+public class CrystallinePropertiesConfig extends ConfigCategory implements AbstractCrystallineProperties {
 
     /**
      * The prefix to the name of the config setting group.
@@ -105,7 +105,7 @@ public class CrystallinePlantSetConfig extends ConfigCategory implements ICrysta
      *                     category instance if for.
      * @param defaultProperties default config values.
      */
-    public CrystallinePlantSetConfig(String plantSetName, ICrystallineSetProperties defaultProperties) {
+    public CrystallinePropertiesConfig(String plantSetName, AbstractCrystallineProperties defaultProperties) {
         super(PREFIX + plantSetName);
 
         this.canUseBonemeal = new BooleanConfigValue(

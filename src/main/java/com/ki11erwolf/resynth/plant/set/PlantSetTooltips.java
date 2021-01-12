@@ -17,6 +17,9 @@ package com.ki11erwolf.resynth.plant.set;
 
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractBiochemicalProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractCrystallineProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractMetallicProperties;
 import com.ki11erwolf.resynth.util.CommonRKeys;
 import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import com.ki11erwolf.resynth.util.Tooltip;
@@ -99,12 +102,12 @@ public class PlantSetTooltips {
         setSourcesForSeeds(tooltip, set);
 
         // Various set type properties
-        if(set.getPlantSetProperties() instanceof ICrystallineSetProperties)
-            setCrystallinePropertiesTooltip(tooltip, (ICrystallineSetProperties) set.getPlantSetProperties());
-        else if (set.getPlantSetProperties() instanceof IMetallicSetProperties)
-            setMetallicPropertiesTooltip(tooltip, (IMetallicSetProperties) set.getPlantSetProperties());
-        else if (set.getPlantSetProperties() instanceof IBiochemicalSetProperties)
-            setBiochemicalPropertiesTooltip(tooltip, (IBiochemicalSetProperties) set.getPlantSetProperties());
+        if(set.getPlantSetProperties() instanceof AbstractCrystallineProperties)
+            setCrystallinePropertiesTooltip(tooltip, (AbstractCrystallineProperties) set.getPlantSetProperties());
+        else if (set.getPlantSetProperties() instanceof AbstractMetallicProperties)
+            setMetallicPropertiesTooltip(tooltip, (AbstractMetallicProperties) set.getPlantSetProperties());
+        else if (set.getPlantSetProperties() instanceof AbstractBiochemicalProperties)
+            setBiochemicalPropertiesTooltip(tooltip, (AbstractBiochemicalProperties) set.getPlantSetProperties());
 
         // Produce Yield
         int produceYield = set.getProduceProperties().produceYield();
@@ -160,7 +163,7 @@ public class PlantSetTooltips {
     /**
      * Handles Crystalline set properties and tooltips.
      */
-    private static void setCrystallinePropertiesTooltip(List<ITextComponent> tooltip, ICrystallineSetProperties properties){
+    private static void setCrystallinePropertiesTooltip(List<ITextComponent> tooltip, AbstractCrystallineProperties properties){
         tooltip.add(getFormattedTooltip(properties.plantYield() == 1 ? "plant_yield_singular": "plant_yield",
                 TextFormatting.DARK_AQUA, TextFormatting.GOLD, properties.plantYield(), TextFormatting.DARK_AQUA
         ));
@@ -177,7 +180,7 @@ public class PlantSetTooltips {
     /**
      * Handles Metallic set properties and tooltips.
      */
-    private static void setMetallicPropertiesTooltip(List<ITextComponent> tooltip, IMetallicSetProperties properties){
+    private static void setMetallicPropertiesTooltip(List<ITextComponent> tooltip, AbstractMetallicProperties properties){
         tooltip.add(getFormattedTooltip("ore_seed_drop_rate", TextFormatting.AQUA,
                 TextFormatting.GOLD, properties.seedSpawnChanceFromOre() + "%", TextFormatting.AQUA
         ));
@@ -190,7 +193,7 @@ public class PlantSetTooltips {
     /**
      * Handles Biochemical set properties and tooltips.
      */
-    private static void setBiochemicalPropertiesTooltip(List<ITextComponent> tooltip, IBiochemicalSetProperties properties){
+    private static void setBiochemicalPropertiesTooltip(List<ITextComponent> tooltip, AbstractBiochemicalProperties properties){
         tooltip.add(getFormattedTooltip(properties.plantYield() == 1 ? "plant_yield_singular": "plant_yield",
                 TextFormatting.DARK_AQUA, TextFormatting.GOLD, properties.plantYield(), TextFormatting.DARK_AQUA
         ));

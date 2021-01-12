@@ -16,6 +16,9 @@
 package com.ki11erwolf.resynth;
 
 import com.ki11erwolf.resynth.plant.set.*;
+import com.ki11erwolf.resynth.plant.set.properties.CrystallineProperties;
+import com.ki11erwolf.resynth.plant.set.properties.MetallicProperties;
+import com.ki11erwolf.resynth.plant.set.properties.ProduceProperties;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
@@ -309,7 +312,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general onyx gems and onyx ore.
      */
-    private static final CrystallineSetProperties ONYX_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties ONYX_PROPERTIES = new CrystallineProperties(
             false, 9, 1,
             7, 5
     );
@@ -317,7 +320,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general ruby ore and gems.
      */
-    private static final CrystallineSetProperties RUBY_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties RUBY_PROPERTIES = new CrystallineProperties(
             false, 14, 1,
             1, 25
     );
@@ -325,7 +328,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general sapphire ore and gems.
      */
-    private static final CrystallineSetProperties SAPPHIRE_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties SAPPHIRE_PROPERTIES = new CrystallineProperties(
             false, 14, 1,
             1, 25
     );
@@ -333,7 +336,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general topaz ore and gems.
      */
-    private static final CrystallineSetProperties TOPAZ_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties TOPAZ_PROPERTIES = new CrystallineProperties(
             false, 14, 1,
             1, 25
     );
@@ -341,7 +344,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general amethyst ore and gems.
      */
-    private static final CrystallineSetProperties AMETHYST_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties AMETHYST_PROPERTIES = new CrystallineProperties(
             false, 14, 1,
             1, 25
     );
@@ -349,7 +352,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general opal ore and gems.
      */
-    private static final CrystallineSetProperties OPAL_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties OPAL_PROPERTIES = new CrystallineProperties(
             false, 14, 1,
             1, 25
     );
@@ -357,7 +360,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general malachite ore and gems.
      */
-    private static final CrystallineSetProperties MALACHITE_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties MALACHITE_PROPERTIES = new CrystallineProperties(
             false, 14, 1,
             1, 25
     );
@@ -365,7 +368,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general teslatite ore and gems.
      */
-    private static final CrystallineSetProperties TESLATITE_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties TESLATITE_PROPERTIES = new CrystallineProperties(
             false, 13, 1,
             1, 25
     );
@@ -373,7 +376,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general Prosperity ore and gems/dusts.
      */
-    private static final CrystallineSetProperties PROSPERITY_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties PROSPERITY_PROPERTIES = new CrystallineProperties(
             false, 18, 2,
             1, 10
     );
@@ -381,7 +384,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general Inferium ore and gems/dusts.
      */
-    private static final CrystallineSetProperties INFERIUM_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties INFERIUM_PROPERTIES = new CrystallineProperties(
             false, 20, 2,
             1.5F, 10
     );
@@ -389,7 +392,7 @@ public class ResynthModPlants {
     /**
      * The set properties for general Soulium ore and gems/dusts.
      */
-    private static final CrystallineSetProperties SOULIUM_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties SOULIUM_PROPERTIES = new CrystallineProperties(
             false, 18, 2,
             1F, 10
     );
@@ -397,7 +400,7 @@ public class ResynthModPlants {
     /**
      * The plant set properties for every botania flower petal plant.
      */
-    private static final CrystallineSetProperties BOTANIA_PETAL_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties BOTANIA_PETAL_PROPERTIES = new CrystallineProperties(
             false, 25, 2, 10, 20
     );
 
@@ -405,27 +408,27 @@ public class ResynthModPlants {
     /**
      * The plant set properties for all items from The Midnight Mod grown with Crystalline plants.
      */
-    private static final CrystallineSetProperties MIDNIGHT_CRYSTALLINE = new CrystallineSetProperties(
+    private static final CrystallineProperties MIDNIGHT_CRYSTALLINE = new CrystallineProperties(
             false, 35, 1, 3, 6
     );
 
-    private static final CrystallineSetProperties CERTUS_QUARTZ_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties CERTUS_QUARTZ_PROPERTIES = new CrystallineProperties(
             false, 20, 1, 3, 6
     );
 
-    private static final CrystallineSetProperties CHARGED_CERTUS_QUARTZ_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties CHARGED_CERTUS_QUARTZ_PROPERTIES = new CrystallineProperties(
             false, 13, 1, 4, 8
     );
 
-    private static final CrystallineSetProperties APATITE_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties APATITE_PROPERTIES = new CrystallineProperties(
             false, 40, 2, 3, 6
     );
 
-    private static final CrystallineSetProperties CINNABAR_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties CINNABAR_PROPERTIES = new CrystallineProperties(
             false, 25, 2, 3, 6
     );
 
-    private static final CrystallineSetProperties SULFUR_PROPERTIES = new CrystallineSetProperties(
+    private static final CrystallineProperties SULFUR_PROPERTIES = new CrystallineProperties(
             false, 20, 2, 3, 6
     );
 
@@ -434,95 +437,95 @@ public class ResynthModPlants {
     /**
      * The set properties for general copper and copper ore.
      */
-    private static final MetallicSetProperties COPPER_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties COPPER_PROPERTIES = new MetallicProperties(
             false, 35, 7, 7
     );
 
     /**
      * The set properties for general tin and tin ore.
      */
-    private static final MetallicSetProperties TIN_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties TIN_PROPERTIES = new MetallicProperties(
             false, 35, 7, 7
     );
 
     /**
      * The set properties for general aluminium and aluminium ore.
      */
-    private static final MetallicSetProperties ALUMINIUM_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties ALUMINIUM_PROPERTIES = new MetallicProperties(
             false, 30, 6, 6
     );
 
     /**
      * The set properties for general lead and lead ore.
      */
-    private static final MetallicSetProperties LEAD_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties LEAD_PROPERTIES = new MetallicProperties(
             false, 25, 8, 8
     );
 
     /**
      * The set properties for general nickel and nickel ore.
      */
-    private static final MetallicSetProperties NICKEL_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties NICKEL_PROPERTIES = new MetallicProperties(
             false, 25, 8, 8
     );
 
     /**
      * The set properties for general uranium and uranium ore.
      */
-    private static final MetallicSetProperties URANIUM_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties URANIUM_PROPERTIES = new MetallicProperties(
             false, 15, 4, 4
     );
 
     /**
      * The set properties for general silver and silver ore.
      */
-    private static final MetallicSetProperties SILVER_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties SILVER_PROPERTIES = new MetallicProperties(
             false, 20, 8, 8
     );
 
     /**
      * The set properties for general zinc and zinc ore.
      */
-    private static final MetallicSetProperties ZINC_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties ZINC_PROPERTIES = new MetallicProperties(
             false, 25, 8, 8
     );
 
-    private static final MetallicSetProperties PLATINUM_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties PLATINUM_PROPERTIES = new MetallicProperties(
             false, 8, 4, 8
     );
 
     /**
      * The set properties for general tungsten and tungsten ore.
      */
-    private static final MetallicSetProperties TUNGSTEN_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties TUNGSTEN_PROPERTIES = new MetallicProperties(
             false, 25, 8, 8
     );
 
     /**
      * The set properties for general mythril and mythril ore.
      */
-    private static final MetallicSetProperties MYTHRIL_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties MYTHRIL_PROPERTIES = new MetallicProperties(
             false, 25, 5, 5
     );
 
     /**
      * The set properties for general adamantium and adamantium ore.
      */
-    private static final MetallicSetProperties ADAMANTIUM_PROPERTIES = new MetallicSetProperties(
+    private static final MetallicProperties ADAMANTIUM_PROPERTIES = new MetallicProperties(
             false, 20, 5, 5
     );
 
     /**
      * The set properties for general Osmium and Osmium Ore.
      */
-    static final MetallicSetProperties OSMIUM_PROPERTIES = new MetallicSetProperties(
+    static final MetallicProperties OSMIUM_PROPERTIES = new MetallicProperties(
             false, 30F, 6, 6
     );
 
     /**
      * The plant set properties for all items from The Midnight Mod grown with Metallic plants.
      */
-    private static final MetallicSetProperties MIDNIGHT_METALLIC = new MetallicSetProperties(
+    private static final MetallicProperties MIDNIGHT_METALLIC = new MetallicProperties(
             false, 35, 3, 6
     );
 
@@ -916,13 +919,13 @@ public class ResynthModPlants {
 
     public static final PlantSet<?, ?> APPLIED_ENERGISTICS_2_CERTUS_QUARTZ = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
             Mods.APPLIED_ENERGISTICS_2.getID("certus_quartz"), CERTUS_QUARTZ_PROPERTIES,
-            new PlantSetProduceProperties(3, 200, 2.0),
+            new ProduceProperties(3, 200, 2.0),
             "certus_quartz_crystal", "quartz_ore"
     ));
 
     public static final PlantSet<?, ?> APPLIED_ENERGISTICS_2_CHARGED_CERTUS_QUARTZ = registerIfNotNull(
             PlantSetFactory.makeCrystallineSet(Mods.APPLIED_ENERGISTICS_2.getID("charged_certus_quartz"),
-                    CHARGED_CERTUS_QUARTZ_PROPERTIES, new PlantSetProduceProperties(2, 200, 2.0),
+                    CHARGED_CERTUS_QUARTZ_PROPERTIES, new ProduceProperties(2, 200, 2.0),
                     "certus_quartz_crystal_charged", "charged_quartz_ore"
     ));
 

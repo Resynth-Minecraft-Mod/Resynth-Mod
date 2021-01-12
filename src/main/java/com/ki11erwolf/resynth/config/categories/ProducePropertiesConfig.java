@@ -19,17 +19,17 @@ import com.ki11erwolf.resynth.config.BooleanConfigValue;
 import com.ki11erwolf.resynth.config.ConfigCategory;
 import com.ki11erwolf.resynth.config.DoubleConfigValue;
 import com.ki11erwolf.resynth.config.IntegerConfigValue;
-import com.ki11erwolf.resynth.plant.set.IPlantSetProduceProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractProduceProperties;
 
 import java.util.Objects;
 
 /**
  * A type of {@link ConfigCategory} that stores and retrieves the configuration
- * values for a specific PlantSet's {@link IPlantSetProduceProperties}. Can be
+ * values for a specific PlantSet's {@link AbstractProduceProperties}. Can be
  * instantated multiple times under different unique identifying names to create
  * a configuration instance for each plant set. Allows specifing default values.
  */
-public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetProduceProperties {
+public class ProducePropertiesConfig extends ConfigCategory implements AbstractProduceProperties {
 
     /**
      * The prefix prepended to the unique name of this config setting group.
@@ -77,7 +77,7 @@ public class PlantSetProduceConfig extends ConfigCategory implements IPlantSetPr
      * @param defaultProperties the configuration setting values that
      *                          will used by default.
      */
-    public PlantSetProduceConfig(String uniqueName, IPlantSetProduceProperties defaultProperties) {
+    public ProducePropertiesConfig(String uniqueName, AbstractProduceProperties defaultProperties) {
         super(PREFIX + Objects.requireNonNull(uniqueName) + SUFFIX);
 
         this.resourceCountConfig = new IntegerConfigValue(

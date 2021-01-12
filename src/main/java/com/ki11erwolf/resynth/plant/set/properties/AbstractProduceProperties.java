@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Ki11er_wolf
+ * Copyright (c) 2018 - 2021 Ki11er_wolf.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plant.set;
+package com.ki11erwolf.resynth.plant.set.properties;
+
+import com.ki11erwolf.resynth.plant.set.PlantSet;
+import com.ki11erwolf.resynth.util.JSerializer;
 
 /**
  * The represents and defines any properties implementation which provides a
@@ -21,7 +24,9 @@ package com.ki11erwolf.resynth.plant.set;
  * how a particular {@link PlantSet}'s {@link PlantSet#getProduceItem() produce
  * item} will behave in a furnace.
  */
-public interface IPlantSetProduceProperties {
+public interface AbstractProduceProperties extends JSerializer.JSerializable<AbstractProduceProperties> {
+
+    JSerializer<AbstractProduceProperties> SERIALIZER = new ProduceProperties.ProducePropertiesSerializer();
 
     /**
      * Explicitly declares the amount of resource items that a single item of
@@ -57,4 +62,11 @@ public interface IPlantSetProduceProperties {
      */
     double experiencePoints();
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default JSerializer<AbstractProduceProperties> getSerializer() {
+        return SERIALIZER;
+    }
 }

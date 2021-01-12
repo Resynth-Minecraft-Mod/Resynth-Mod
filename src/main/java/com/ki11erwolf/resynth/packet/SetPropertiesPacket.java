@@ -23,22 +23,22 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class SyncPlantSetPropertiesPacket extends Packet<SyncPlantSetPropertiesPacket> {
+public class SetPropertiesPacket extends Packet<SetPropertiesPacket> {
 
     @Override
-    BiConsumer<SyncPlantSetPropertiesPacket, PacketBuffer> getEncoder() {
+    BiConsumer<SetPropertiesPacket, PacketBuffer> getEncoder() {
         return (propertiesPacket, packetBuffer) -> {
 
         };
     }
 
     @Override
-    Function<PacketBuffer, SyncPlantSetPropertiesPacket> getDecoder() {
-        return (packetBuffer) -> new SyncPlantSetPropertiesPacket();
+    Function<PacketBuffer, SetPropertiesPacket> getDecoder() {
+        return (packetBuffer) -> new SetPropertiesPacket();
     }
 
     @Override
-    BiConsumer<SyncPlantSetPropertiesPacket, Supplier<NetworkEvent.Context>> getHandler() {
+    BiConsumer<SetPropertiesPacket, Supplier<NetworkEvent.Context>> getHandler() {
         return (propertiesPacket, supplier) -> Packet.handle(supplier, () -> {
 
         });

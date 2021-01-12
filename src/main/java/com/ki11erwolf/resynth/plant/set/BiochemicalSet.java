@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.plant.block.BlockBiochemicalPlant;
 import com.ki11erwolf.resynth.plant.item.ItemBulb;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractBiochemicalProperties;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
@@ -50,13 +51,13 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
     /**
      * The properties specific to this plant set instance.
      */
-    private final IBiochemicalSetProperties setProperties;
+    private final AbstractBiochemicalProperties setProperties;
 
     /**
      * @param setName the name of the specific plant set instance (e.g. diamond).
      * @param properties the properties for the specific plant set instance.
      */
-    BiochemicalSet(String setName, IBiochemicalSetProperties properties) {
+    BiochemicalSet(String setName, AbstractBiochemicalProperties properties) {
         super(SET_TYPE_NAME, setName, SEED_HOOKS, properties);
         this.setProperties = properties;
 

@@ -18,13 +18,14 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.config.ConfigFile;
 import com.ki11erwolf.resynth.config.ResynthConfig;
-import com.ki11erwolf.resynth.config.categories.BiochemicalPlantSetConfig;
-import com.ki11erwolf.resynth.config.categories.CrystallinePlantSetConfig;
-import com.ki11erwolf.resynth.config.categories.MetallicPlantSetConfig;
-import com.ki11erwolf.resynth.config.categories.PlantSetProduceConfig;
+import com.ki11erwolf.resynth.config.categories.BiochemicalPropertiesConfig;
+import com.ki11erwolf.resynth.config.categories.CrystallinePropertiesConfig;
+import com.ki11erwolf.resynth.config.categories.MetallicPropertiesConfig;
+import com.ki11erwolf.resynth.config.categories.ProducePropertiesConfig;
 import com.ki11erwolf.resynth.plant.block.BlockBiochemicalPlant;
 import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
 import com.ki11erwolf.resynth.plant.block.BlockMetallicPlant;
+import com.ki11erwolf.resynth.plant.set.properties.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
@@ -57,7 +58,7 @@ public class PlantSetFactory {
     //Crystalline
 
     public static PlantSet<? extends BlockCrystallinePlant, Block> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties defaultConfig, PlantSetProduceProperties defaultProduceConfig,
+            ResourceLocation id, CrystallineProperties defaultConfig, ProduceProperties defaultProduceConfig,
             ResourceLocation outputItemID, ResourceLocation... oreBlockIDs) {
         return createCrystallineSet(
                 validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(defaultProduceConfig),
@@ -66,7 +67,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockCrystallinePlant, Block> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            ResourceLocation id, CrystallineProperties defaultConfig, ProduceProperties produceConfig,
             IItemProvider outputItem, Block... oreBlocks) {
         //Convert to ResourceLocations
         List<ResourceLocation> oreIDs = new ArrayList<>();
@@ -81,7 +82,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockCrystallinePlant, Block> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            ResourceLocation id, CrystallineProperties defaultConfig, ProduceProperties produceConfig,
             String outputItemName, String... oreBlockNames) {
         //Convert to ResourceLocations
         List<ResourceLocation> oreIDs = new ArrayList<>();
@@ -98,7 +99,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockCrystallinePlant, Block> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties defaultConfig, String... oreBlockNames) {
+            ResourceLocation id, CrystallineProperties defaultConfig, String... oreBlockNames) {
         //Convert to ResourceLocations
         List<ResourceLocation> oreIDs = new ArrayList<>();
         for(String ore : Objects.requireNonNull(oreBlockNames)) {
@@ -112,7 +113,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockCrystallinePlant, Block> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties defaultConfig, Block... oreBlocks) {
+            ResourceLocation id, CrystallineProperties defaultConfig, Block... oreBlocks) {
         //Convert to ResourceLocations
         List<ResourceLocation> oreIDs = new ArrayList<>();
         for(Block ore : Objects.requireNonNull(oreBlocks)) {
@@ -125,14 +126,14 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockCrystallinePlant, Block> makeCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties defaultConfig, ResourceLocation... oreBlockIDs) {
+            ResourceLocation id, CrystallineProperties defaultConfig, ResourceLocation... oreBlockIDs) {
         return createCrystallineSet(validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(oreBlockIDs));
     }
 
     // Metallic
 
     public static PlantSet<? extends BlockMetallicPlant, Block> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            ResourceLocation id, MetallicProperties defaultConfig, ProduceProperties produceConfig,
             ResourceLocation outputItemID, ResourceLocation... oreBlockIDs) {
         return createMetallicSet(
                 validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(produceConfig),
@@ -141,7 +142,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockMetallicPlant, Block> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            ResourceLocation id, MetallicProperties defaultConfig, ProduceProperties produceConfig,
             IItemProvider outputItem, Block... oreBlocks) {
         //Convert to ResourceLocations
         List<ResourceLocation> oreIDs = new ArrayList<>();
@@ -156,7 +157,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockMetallicPlant, Block> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            ResourceLocation id, MetallicProperties defaultConfig, ProduceProperties produceConfig,
             String oreBlockName, String outputItemName) {
         return createMetallicSet(
                 validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(produceConfig),
@@ -169,7 +170,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockMetallicPlant, Block> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties defaultConfig, String oreBlockName) {
+            ResourceLocation id, MetallicProperties defaultConfig, String oreBlockName) {
         return createMetallicSet(
                 validate(id), Objects.requireNonNull(defaultConfig),
                 new ResourceLocation(id.getNamespace(), Objects.requireNonNull(oreBlockName))
@@ -177,7 +178,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockMetallicPlant, Block> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties defaultConfig, Block... oreBlocks) {
+            ResourceLocation id, MetallicProperties defaultConfig, Block... oreBlocks) {
         //Convert to ResourceLocations
         List<ResourceLocation> oreIDs = new ArrayList<>();
         for(Block ore : Objects.requireNonNull(oreBlocks)) {
@@ -190,15 +191,15 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockMetallicPlant, Block> makeMetallicSet(
-            ResourceLocation id, MetallicSetProperties defaultConfig, ResourceLocation... oreBlockIDs) {
+            ResourceLocation id, MetallicProperties defaultConfig, ResourceLocation... oreBlockIDs) {
         return createMetallicSet(validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(oreBlockIDs));
     }
 
     // Biochemical
 
     public static PlantSet<? extends BlockBiochemicalPlant, EntityType<?>> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties defaultConfig, ResourceLocation outputItemID,
-            PlantSetProduceProperties produceConfig, ResourceLocation... entityIDs) {
+            ResourceLocation id, BiochemicalProperties defaultConfig, ResourceLocation outputItemID,
+            ProduceProperties produceConfig, ResourceLocation... entityIDs) {
         return createBiochemicalSet(
                 validate(id), Objects.requireNonNull(defaultConfig), validate(outputItemID),
                 Objects.requireNonNull(produceConfig), Objects.requireNonNull(entityIDs)
@@ -206,7 +207,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockBiochemicalPlant, EntityType<?>> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            ResourceLocation id, BiochemicalProperties defaultConfig, ProduceProperties produceConfig,
             IItemProvider outputItem, EntityType<?>... entities) {
         //Convert to ResourceLocations
         List<ResourceLocation> entityIDs = new ArrayList<>();
@@ -221,7 +222,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockBiochemicalPlant, EntityType<?>> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties defaultConfig, PlantSetProduceProperties produceConfig,
+            ResourceLocation id, BiochemicalProperties defaultConfig, ProduceProperties produceConfig,
             String outputItemName, String... entityNames) {
         //Convert to ResourceLocations
         List<ResourceLocation> entityIDs = new ArrayList<>();
@@ -237,7 +238,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockBiochemicalPlant, EntityType<?>> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties defaultConfig, String... entityNames) {
+            ResourceLocation id, BiochemicalProperties defaultConfig, String... entityNames) {
         //Convert to ResourceLocations
         List<ResourceLocation> entityIDs = new ArrayList<>();
         for(String entityName : Objects.requireNonNull(entityNames)) {
@@ -251,7 +252,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockBiochemicalPlant, EntityType<?>> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties defaultConfig, EntityType<?>... entities) {
+            ResourceLocation id, BiochemicalProperties defaultConfig, EntityType<?>... entities) {
         //Convert to ResourceLocations
         List<ResourceLocation> entityIDs = new ArrayList<>();
         for(EntityType<?> entity : Objects.requireNonNull(entities)) {
@@ -265,7 +266,7 @@ public class PlantSetFactory {
     }
 
     public static PlantSet<? extends BlockBiochemicalPlant, EntityType<?>> makeBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties defaultConfig, ResourceLocation... entityIDs) {
+            ResourceLocation id, BiochemicalProperties defaultConfig, ResourceLocation... entityIDs) {
         //Simply validate
         for(ResourceLocation entityID : Objects.requireNonNull(entityIDs))
             validate(entityID);
@@ -280,7 +281,7 @@ public class PlantSetFactory {
     // Crystalline
 
     private static PlantSet<? extends BlockCrystallinePlant, Block> createCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties config, PlantSetProduceProperties produceConfig,
+            ResourceLocation id, CrystallineProperties config, ProduceProperties produceConfig,
             ResourceLocation outputItemID, ResourceLocation... oreBlockIDs) {
         String setName = isVanilla(id) ? id.getPath() : combine(id, '_');
 
@@ -296,7 +297,7 @@ public class PlantSetFactory {
             return null;
 
         //Produce config...
-        PlantSetProduceConfig produceProperties = getSetProduceConfig(id, produceConfig);
+        ProducePropertiesConfig produceProperties = getSetProduceConfig(id, produceConfig);
         plantSet.setProduceProperties(produceProperties);
 
         //Create & add produce recipe
@@ -305,7 +306,7 @@ public class PlantSetFactory {
         );
 
         //Create & add seeds recipe if count not 0
-        int seedsRecipeCount = ((CrystallinePlantSetConfig) plantSet.getPlantSetProperties()).seedCraftingYield();
+        int seedsRecipeCount = ((CrystallinePropertiesConfig) plantSet.getPlantSetProperties()).seedCraftingYield();
         if(seedsRecipeCount > 0) {
             seedsRecipeCount = Math.min(seedsRecipeCount, 64);
 
@@ -319,7 +320,7 @@ public class PlantSetFactory {
 
     @SuppressWarnings("DuplicatedCode")
     private static PlantSet<? extends BlockCrystallinePlant, Block> createCrystallineSet(
-            ResourceLocation id, CrystallineSetProperties config, ResourceLocation... oreBlockIDs) {
+            ResourceLocation id, CrystallineProperties config, ResourceLocation... oreBlockIDs) {
         String setName = isVanilla(id) ? id.getPath() : combine(id, '_');
         String parentModID = id.getNamespace();
 
@@ -337,23 +338,23 @@ public class PlantSetFactory {
         }
 
         //Get player config
-        ICrystallineSetProperties properties = getCrystallineProperties(id, config);
+        AbstractCrystallineProperties properties = getCrystallineProperties(id, config);
 
         //Create & return new crystalline set
         LOG.info(String.format("Creating Crystalline plant set: '%s' for mod: '%s'.", setName, parentModID));
         return createNewCrystallineSet(setName, properties, oreBlockIDs);
     }
 
-    private static CrystallinePlantSetConfig getCrystallineProperties(ResourceLocation id, CrystallineSetProperties config) {
+    private static AbstractCrystallineProperties getCrystallineProperties(ResourceLocation id, CrystallineProperties config) {
         boolean vanilla = isVanilla(id);
         String setName = vanilla ? id.getPath() : combine(id, '-');
 
         ConfigFile configFile = vanilla ? ResynthConfig.VANILLA_PLANTS_CONFIG : ResynthConfig.MODDED_PLANTS_CONFIG;
-        return configFile.loadCategory(new CrystallinePlantSetConfig(setName, config));
+        return configFile.loadCategory(new CrystallinePropertiesConfig(setName, config));
     }
 
     private static PlantSet<? extends BlockCrystallinePlant, Block> createNewCrystallineSet(
-            String name, ICrystallineSetProperties config, ResourceLocation... oreBlockIDs) {
+            String name, AbstractCrystallineProperties config, ResourceLocation... oreBlockIDs) {
         return new CrystallineSet(name, config) {
             @Override
             Block[] onSeedSourcesRequest() {
@@ -378,7 +379,7 @@ public class PlantSetFactory {
     // Metallic
 
     private static PlantSet<? extends BlockMetallicPlant, Block> createMetallicSet(
-            ResourceLocation id, MetallicSetProperties config, PlantSetProduceProperties produceConfig,
+            ResourceLocation id, MetallicProperties config, ProduceProperties produceConfig,
             ResourceLocation outputItemID, ResourceLocation... oreBlockIDs) {
         String setName = isVanilla(id) ? id.getPath() : combine(id, '_');
 
@@ -394,7 +395,7 @@ public class PlantSetFactory {
             return null;
 
         //Produce config...
-        PlantSetProduceConfig produceProperties = getSetProduceConfig(id, produceConfig);
+        ProducePropertiesConfig produceProperties = getSetProduceConfig(id, produceConfig);
         plantSet.setProduceProperties(produceProperties);
 
         //Registry recipe
@@ -407,7 +408,7 @@ public class PlantSetFactory {
 
     @SuppressWarnings("DuplicatedCode")
     private static PlantSet<? extends BlockMetallicPlant, Block> createMetallicSet(
-            ResourceLocation id, MetallicSetProperties config, ResourceLocation... oreBlockIDs) {
+            ResourceLocation id, MetallicProperties config, ResourceLocation... oreBlockIDs) {
         String setName = isVanilla(id) ? id.getPath() : combine(id, '_');
         String parentModID = id.getNamespace();
 
@@ -425,23 +426,23 @@ public class PlantSetFactory {
         }
 
         //Get player config
-        IMetallicSetProperties properties = getMetallicProperties(id, config);
+        AbstractMetallicProperties properties = getMetallicProperties(id, config);
 
         //Create & return new crystalline set
         LOG.info(String.format("Creating Metallic plant set: '%s' for mod: '%s'.", setName, parentModID));
         return createNewMetallicSet(setName, properties, oreBlockIDs);
     }
 
-    private static MetallicPlantSetConfig getMetallicProperties(ResourceLocation id, MetallicSetProperties config) {
+    private static AbstractMetallicProperties getMetallicProperties(ResourceLocation id, MetallicProperties config) {
         boolean vanilla = isVanilla(id);
         String setName = vanilla ? id.getPath() : combine(id, '-');
 
         ConfigFile configFile = vanilla ? ResynthConfig.VANILLA_PLANTS_CONFIG : ResynthConfig.MODDED_PLANTS_CONFIG;
-        return configFile.loadCategory(new MetallicPlantSetConfig(setName, config));
+        return configFile.loadCategory(new MetallicPropertiesConfig(setName, config));
     }
 
     private static PlantSet<? extends BlockMetallicPlant, Block> createNewMetallicSet(
-            String name, IMetallicSetProperties config, ResourceLocation... oreBlockIDs) {
+            String name, AbstractMetallicProperties config, ResourceLocation... oreBlockIDs) {
         return new MetallicSet(name, config) {
             @Override
             Block[] onSeedSourcesRequest() {
@@ -466,8 +467,8 @@ public class PlantSetFactory {
     // Biochemical
 
     private static PlantSet<? extends BlockBiochemicalPlant, EntityType<?>> createBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties config, ResourceLocation outputItemID,
-            PlantSetProduceProperties produceConfig, ResourceLocation... entityIDs) {
+            ResourceLocation id, BiochemicalProperties config, ResourceLocation outputItemID,
+            ProduceProperties produceConfig, ResourceLocation... entityIDs) {
         String setName = isVanilla(id) ? id.getPath() : combine(id, '_');
 
         //Check for additional required mod
@@ -482,7 +483,7 @@ public class PlantSetFactory {
             return null;
 
         //Produce config...
-        PlantSetProduceConfig produceProperties = getSetProduceConfig(id, produceConfig);
+        ProducePropertiesConfig produceProperties = getSetProduceConfig(id, produceConfig);
         plantSet.setProduceProperties(produceProperties);
 
         //Registry recipe
@@ -495,7 +496,7 @@ public class PlantSetFactory {
 
     @SuppressWarnings("DuplicatedCode")
     private static PlantSet<? extends BlockBiochemicalPlant, EntityType<?>> createBiochemicalSet(
-            ResourceLocation id, BiochemicalSetProperties config, ResourceLocation... entityIDs) {
+            ResourceLocation id, BiochemicalProperties config, ResourceLocation... entityIDs) {
         String setName = isVanilla(id) ? id.getPath() : combine(id, '_');
         String parentModID = id.getNamespace();
 
@@ -513,24 +514,24 @@ public class PlantSetFactory {
         }
 
         //Get player config
-        IBiochemicalSetProperties properties = getBiochemicalProperties(id, config);
+        AbstractBiochemicalProperties properties = getBiochemicalProperties(id, config);
 
         //Create & return new crystalline set
         LOG.info(String.format("Creating Biochemical plant set: '%s' for mod: '%s'.", setName, parentModID));
         return createNewBiochemicalSet(setName, properties, entityIDs);
     }
 
-    private static BiochemicalPlantSetConfig getBiochemicalProperties(ResourceLocation id, BiochemicalSetProperties config) {
+    private static BiochemicalPropertiesConfig getBiochemicalProperties(ResourceLocation id, BiochemicalProperties config) {
         boolean vanilla = isVanilla(id);
         String setName = vanilla ? id.getPath() : combine(id, '-');
 
         ConfigFile configFile = vanilla ? ResynthConfig.VANILLA_PLANTS_CONFIG : ResynthConfig.MODDED_PLANTS_CONFIG;
-        return configFile.loadCategory(new BiochemicalPlantSetConfig(setName, config));
+        return configFile.loadCategory(new BiochemicalPropertiesConfig(setName, config));
     }
 
 
     private static PlantSet<? extends BlockBiochemicalPlant, EntityType<?>> createNewBiochemicalSet(
-            String name, IBiochemicalSetProperties config,
+            String name, AbstractBiochemicalProperties config,
             ResourceLocation... entityIDs) {
         return new BiochemicalSet(name, config) {
             @Override
@@ -557,13 +558,13 @@ public class PlantSetFactory {
     // General Util
     // ############
 
-    private static PlantSetProduceConfig getSetProduceConfig(ResourceLocation id, IPlantSetProduceProperties produceConfig) {
+    private static ProducePropertiesConfig getSetProduceConfig(ResourceLocation id, AbstractProduceProperties produceConfig) {
         boolean vanilla = isVanilla(id);
 
         String categoryName = vanilla ? id.getPath() : combine(id, '-');
         ConfigFile configFile = vanilla ? ResynthConfig.VANILLA_PLANTS_CONFIG : ResynthConfig.MODDED_PLANTS_CONFIG;
 
-        return configFile.loadCategory(new PlantSetProduceConfig(
+        return configFile.loadCategory(new ProducePropertiesConfig(
                 categoryName, produceConfig
         ));
     }

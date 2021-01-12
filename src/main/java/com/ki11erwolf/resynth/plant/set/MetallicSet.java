@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.plant.block.BlockMetallicPlant;
 import com.ki11erwolf.resynth.plant.block.BlockOrganicOre;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractMetallicProperties;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -50,13 +51,13 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant, Block> {
     /**
      * The properties for this specific plant set.
      */
-    private final IMetallicSetProperties properties;
+    private final AbstractMetallicProperties properties;
 
     /**
      * @param setName the name of the specific plant set instance (e.g. iron).
      * @param properties the properties for the specific plant set instance.
      */
-    MetallicSet(String setName, IMetallicSetProperties properties) {
+    MetallicSet(String setName, AbstractMetallicProperties properties) {
         super(SET_TYPE_NAME, setName, SEED_HOOKS, properties);
         this.properties = properties;
 

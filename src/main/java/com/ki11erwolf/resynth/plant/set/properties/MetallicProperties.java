@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Ki11er_wolf
+ * Copyright (c) 2018 - 2021 Ki11er_wolf.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plant.set;
+package com.ki11erwolf.resynth.plant.set.properties;
+
+import com.ki11erwolf.resynth.util.JSerializer;
 
 /**
  * A basic implementation of IMetallicSetProperties. Used
  * to specify the default properties of a specific plant set
  * instance (before config is taken into account).
  */
-public class MetallicSetProperties implements IMetallicSetProperties {
+public class MetallicProperties implements AbstractMetallicProperties {
 
     /**
      * {@code true} if bonemeal can be used on
@@ -53,8 +55,8 @@ public class MetallicSetProperties implements IMetallicSetProperties {
      * @param seedSpawnChanceFromOre the chance seeds will spawn when the ore block is blown up.
      * @param  seedSpawnChanceFromOrganicOre the chance seeds will spawn when the organic ore block is blown up.
      */
-    public MetallicSetProperties(boolean canBonemeal, float chanceToGrow, float seedSpawnChanceFromOre,
-                                 float seedSpawnChanceFromOrganicOre){
+    public MetallicProperties(boolean canBonemeal, float chanceToGrow, float seedSpawnChanceFromOre,
+                              float seedSpawnChanceFromOrganicOre){
         this.canBonemeal = canBonemeal;
         this.chanceToGrow = chanceToGrow;
         this.seedSpawnChanceFromOre = seedSpawnChanceFromOre;
@@ -91,5 +93,33 @@ public class MetallicSetProperties implements IMetallicSetProperties {
     @Override
     public float seedSpawnChanceFromOrganicOre() {
         return seedSpawnChanceFromOrganicOre;
+    }
+
+    // ##############
+    // # Serializer #
+    // ##############
+
+    static class MetallicPropertiesSerializer extends JSerializer<AbstractMetallicProperties> {
+
+        MetallicPropertiesSerializer() {
+            super("metallic-plant-set-properties");
+        }
+
+        @Override
+        protected void objectToData(AbstractMetallicProperties object, JSerialDataIO dataIO) throws Exception {
+
+        }
+
+        @Override
+        protected AbstractMetallicProperties dataToObject(AbstractMetallicProperties suggestedObject, JSerialDataIO dataIO) throws Exception {
+            return null;
+        }
+
+        @Override
+        protected AbstractMetallicProperties createInstance() {
+            return new MetallicProperties(
+                    false, 0, 0, 0
+            );
+        }
     }
 }

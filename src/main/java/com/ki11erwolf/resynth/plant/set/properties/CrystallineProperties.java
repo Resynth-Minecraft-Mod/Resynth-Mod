@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Ki11er_wolf
+ * Copyright (c) 2018 - 2021 Ki11er_wolf.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plant.set;
+package com.ki11erwolf.resynth.plant.set.properties;
+
+import com.ki11erwolf.resynth.util.JSerializer;
 
 /**
  * A basic implementation of ICrystallineSetProperties. Used
  * to specify the default properties of a specific plant set
  * instance (before config is taken into account).
  */
-public class CrystallineSetProperties implements ICrystallineSetProperties {
+public class CrystallineProperties implements AbstractCrystallineProperties {
 
     /**
      * Flag whether or not the plant set instance
@@ -70,8 +72,8 @@ public class CrystallineSetProperties implements ICrystallineSetProperties {
      * @param seedSpawnChanceFromShard the default chance seeds will spawn when the sets
      *                                 produce item is left to despawn in water.
      */
-    public CrystallineSetProperties(boolean canBonemeal, float chanceToGrow, int numberOfProduceDrops,
-                                    float seedSpawnChanceFromOre, float seedSpawnChanceFromShard){
+    public CrystallineProperties(boolean canBonemeal, float chanceToGrow, int numberOfProduceDrops,
+                                 float seedSpawnChanceFromOre, float seedSpawnChanceFromShard){
         this(canBonemeal, chanceToGrow, numberOfProduceDrops, seedSpawnChanceFromOre, seedSpawnChanceFromShard, 2);
     }
 
@@ -87,8 +89,8 @@ public class CrystallineSetProperties implements ICrystallineSetProperties {
      * @param resourcesPerSeeds The amount of the plant sets output resource item to give
      *                          the player for crafting the plant sets seed item.
      */
-    public CrystallineSetProperties(boolean canBonemeal, float chanceToGrow, int numberOfProduceDrops, float seedSpawnChanceFromOre,
-                                    float seedSpawnChanceFromShard, int resourcesPerSeeds){
+    public CrystallineProperties(boolean canBonemeal, float chanceToGrow, int numberOfProduceDrops, float seedSpawnChanceFromOre,
+                                 float seedSpawnChanceFromShard, int resourcesPerSeeds){
         this.canBonemeal = canBonemeal;
         this.chanceToGrow = chanceToGrow;
         this.numberOfProduceDrops = numberOfProduceDrops;
@@ -154,5 +156,33 @@ public class CrystallineSetProperties implements ICrystallineSetProperties {
     @Override
     public int seedCraftingYield() {
         return resourcesPerSeeds;
+    }
+
+    // ##############
+    // # Serializer #
+    // ##############
+
+    static class CrystallinePropertiesSerializer extends JSerializer<AbstractCrystallineProperties> {
+
+        CrystallinePropertiesSerializer() {
+            super("crystalline-plant-set-properties");
+        }
+
+        @Override
+        protected void objectToData(AbstractCrystallineProperties object, JSerialDataIO dataIO) throws Exception {
+
+        }
+
+        @Override
+        protected AbstractCrystallineProperties dataToObject(AbstractCrystallineProperties suggestedObject, JSerialDataIO dataIO) throws Exception {
+            return null;
+        }
+
+        @Override
+        protected AbstractCrystallineProperties createInstance() {
+            return new CrystallineProperties(
+                    false, 0, 0, 0, 0
+            );
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Ki11er_wolf
+ * Copyright (c) 2018 - 2021 Ki11er_wolf.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plant.set;
+package com.ki11erwolf.resynth.plant.set.properties;
 
 /**
  * Defines the required properties (configurable settings) common
  * to all plants and PlantSets.
  */
-public interface IPlantSetProperties {
+public interface AbstractPlantSetProperties {
 
     /**
      * Defines and returns if the plant block from the set can be

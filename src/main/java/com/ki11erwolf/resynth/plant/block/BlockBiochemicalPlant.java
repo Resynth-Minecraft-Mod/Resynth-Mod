@@ -15,7 +15,7 @@
  */
 package com.ki11erwolf.resynth.plant.block;
 
-import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractBiochemicalProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -108,7 +108,7 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
      */
     @Override
     protected int getHarvestProduceQuantity(){
-        return ((IBiochemicalSetProperties) properties).plantYield();
+        return ((AbstractBiochemicalProperties) properties).plantYield();
     }
 
     /**

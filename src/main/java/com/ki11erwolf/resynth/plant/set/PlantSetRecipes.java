@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthRecipes;
 import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractProduceProperties;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
@@ -70,7 +71,7 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         ));
     }
 
-    void addProduceRecipe(PlantSet<?, ?> set, ResourceLocation outputItemID, IPlantSetProduceProperties properties) {
+    void addProduceRecipe(PlantSet<?, ?> set, ResourceLocation outputItemID, AbstractProduceProperties properties) {
         addProduceRecipe(set, outputItemID, properties.produceYield(), properties.timePerYield(), properties.experiencePoints());
     }
 

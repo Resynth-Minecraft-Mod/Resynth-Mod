@@ -23,7 +23,7 @@ import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.item.ItemMineralHoe;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
-import com.ki11erwolf.resynth.plant.set.IPlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractPlantSetProperties;
 import com.ki11erwolf.resynth.plant.set.PlantSet;
 import com.ki11erwolf.resynth.util.EffectsUtil;
 import com.ki11erwolf.resynth.util.MathUtil;
@@ -98,7 +98,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * The unique properties of this specific plant type instance. Should
      * be config specified.
      */
-    final IPlantSetProperties properties;
+    final AbstractPlantSetProperties properties;
 
     BlockPlant(PlantSet<?, ?> parentSet) {
         super(
@@ -1044,7 +1044,7 @@ public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T
      * that specifies the values the plant uses,
      * like growth rate and seed drop chances.
      */
-    public IPlantSetProperties getProperties(){
+    public AbstractPlantSetProperties getProperties(){
         return this.properties;
     }
 

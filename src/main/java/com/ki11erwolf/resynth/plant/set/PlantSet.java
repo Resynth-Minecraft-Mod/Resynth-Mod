@@ -20,6 +20,8 @@ import com.ki11erwolf.resynth.analytics.PlantSetFailureEvent;
 import com.ki11erwolf.resynth.analytics.ResynthAnalytics;
 import com.ki11erwolf.resynth.plant.block.BlockPlant;
 import com.ki11erwolf.resynth.plant.item.ItemSeeds;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractPlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractProduceProperties;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import org.apache.logging.log4j.Logger;
@@ -62,9 +64,9 @@ public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistry
     /**
      * The properties for this plant set.
      */
-    private final IPlantSetProperties basicPlantSetProperties;
+    private final AbstractPlantSetProperties basicPlantSetProperties;
 
-    private IPlantSetProduceProperties produceProperties;
+    private AbstractProduceProperties produceProperties;
 
     /**
      * Will be {@code true} if this plant set has been
@@ -94,7 +96,7 @@ public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistry
      * @param setName The name of the plant set instance (e.g. diamond).
      * @param seedHooks the specific plant sets {@code static} SeedHooks instance.
      */
-    PlantSet(String setTypeName, String setName, PlantSetSeedHooks seedHooks, IPlantSetProperties properties){
+    PlantSet(String setTypeName, String setName, PlantSetSeedHooks seedHooks, AbstractPlantSetProperties properties){
         this.setTypeName = Objects.requireNonNull(setTypeName);
         this.setName = Objects.requireNonNull(setName);
         this.basicPlantSetProperties = Objects.requireNonNull(properties);
@@ -208,7 +210,7 @@ public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistry
         ResynthAnalytics.send(new PlantSetFailureEvent(setName));
     }
 
-    void setProduceProperties(IPlantSetProduceProperties properties){
+    void setProduceProperties(AbstractProduceProperties properties){
         this.produceProperties = Objects.requireNonNull(properties);
     }
 
@@ -264,11 +266,11 @@ public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistry
      * @return the properties for this plant set. May be
      * any of the plant set properties types.
      */
-    public IPlantSetProperties getPlantSetProperties(){
+    public AbstractPlantSetProperties getPlantSetProperties(){
         return this.basicPlantSetProperties;
     }
 
-    public IPlantSetProduceProperties getProduceProperties() {
+    public AbstractProduceProperties getProduceProperties() {
         return this.produceProperties;
     }
 

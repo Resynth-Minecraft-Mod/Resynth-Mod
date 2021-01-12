@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Ki11er_wolf
+ * Copyright (c) 2018 - 2021 Ki11er_wolf.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ki11erwolf.resynth.plant.set;
+package com.ki11erwolf.resynth.plant.set.properties;
+
+import com.ki11erwolf.resynth.plant.set.PlantSet;
+import com.ki11erwolf.resynth.util.JSerializer;
 
 /**
  * Defines the required "settings" (properties) needed for Crystalline
  * plant sets specifically.
  */
-public interface ICrystallineSetProperties extends IPlantSetProperties {
+public interface AbstractCrystallineProperties extends AbstractPlantSetProperties, JSerializer.JSerializable<AbstractCrystallineProperties> {
+
+    JSerializer<AbstractCrystallineProperties> SERIALIZER = new CrystallineProperties.CrystallinePropertiesSerializer();
 
     /**
      * Explicitly declares the amount of {@link PlantSet#getProduceItem() plant
@@ -60,4 +65,12 @@ public interface ICrystallineSetProperties extends IPlantSetProperties {
      * in which case this functionality is disabled.
      */
     int seedCraftingYield();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default JSerializer<AbstractCrystallineProperties> getSerializer(){
+        return SERIALIZER;
+    }
 }

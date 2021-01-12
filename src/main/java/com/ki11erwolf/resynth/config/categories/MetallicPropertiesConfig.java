@@ -18,38 +18,29 @@ package com.ki11erwolf.resynth.config.categories;
 import com.ki11erwolf.resynth.config.BooleanConfigValue;
 import com.ki11erwolf.resynth.config.ConfigCategory;
 import com.ki11erwolf.resynth.config.DoubleConfigValue;
-import com.ki11erwolf.resynth.config.IntegerConfigValue;
-import com.ki11erwolf.resynth.plant.set.BiochemicalSetProperties;
-import com.ki11erwolf.resynth.plant.set.IBiochemicalSetProperties;
-
-import java.util.Objects;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractMetallicProperties;
+import com.ki11erwolf.resynth.plant.set.properties.MetallicProperties;
 
 /**
- * Defines the configuration settings used by Biochemical plant sets.
- * Each Biochemical plant set contains a reference to their own instance
- * of {@link BiochemicalPlantSetConfig}.
+ * Defines the configuration settings used by Metallic plant sets.
+ * Each Metallic plant set contains a reference their own instance
+ * of {@link MetallicPropertiesConfig}.
  * <p/>
  * Unlike normal configuration classes, this one simply lays out the
- * configuration settings used by Biochemical plant sets, it does
+ * configuration settings used by Metallic plant sets, it does
  * not specify any default values and can be instantiated multiple
  * times under different names.
  * <p/>
  * Default values are provided to the constructor using a
- * {@link BiochemicalSetProperties} instance, rather than
- * defined in the class.
+ * {@link MetallicProperties} instance, rather than
+ * defined in the class, in order to specify the default values.
  */
-public class BiochemicalPlantSetConfig extends ConfigCategory implements IBiochemicalSetProperties {
+public class MetallicPropertiesConfig extends ConfigCategory implements AbstractMetallicProperties {
 
     /**
      * The prefix to the name of the config setting group.
      */
     private static final String PREFIX = "plant-set-";
-
-    /**
-     * Config value that specifies the percentage
-     * growth chance of the plant type.
-     */
-    private final DoubleConfigValue chanceToGrow;
 
     /**
      * Config value that specifies whether or not the plant
@@ -58,22 +49,24 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
     private final BooleanConfigValue canUseBonemeal;
 
     /**
-     * Config value that specifies the number of produce
-     * items the plant type drops when broken/harvested.
+     * Config value that specifies the percentage
+     * growth chance of the plant type.
      */
-    private final IntegerConfigValue numberOfProduceDrops;
+    private final DoubleConfigValue chanceToGrow;
 
     /**
-     * Config value that specifies the percentage chance that
-     * seeds will spawn from the resources mob when killed.
+     * Config value that specifies the percentage
+     * chance seeds will spawn when the ore block
+     * is blown up.
      */
-    private final DoubleConfigValue seedSpawnChanceFromMob;
+    private final DoubleConfigValue seedSpawnChanceFromOre;
 
     /**
-     * Config value that specifies the percentage chance that
-     * seeds will spawn from the plant produce when smashed
+     * Config value that specifies the percentage
+     * chance seeds will spawn when the plant produce
+     * block is blown up.
      */
-    private final DoubleConfigValue seedSpawnChanceFromBulb;
+    private final DoubleConfigValue seedSpawnChanceFromOrganicOre;
 
     /**
      * Config value that determines if the growth chance config
@@ -92,12 +85,22 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
     private final BooleanConfigValue useConfigSeedChanceValues;
 
     /**
-     * @param plantSetName the name of the plant set this
-     *                     instance if for (e.g. ender pearl)
+     * Creates a new Metallic plant set config category for the
+     * given plant set with the given default values.
+     *
+     * @param plantSetName the name of the plant set the this config
+     *                     category instance if for.
      * @param defaultProperties default config values.
      */
-    public BiochemicalPlantSetConfig(String plantSetName, IBiochemicalSetProperties defaultProperties){
-        super(PREFIX + Objects.requireNonNull(plantSetName));
+    public MetallicPropertiesConfig(String plantSetName, MetallicProperties defaultProperties) {
+        super(PREFIX + plantSetName);
+
+        this.canUseBonemeal = new BooleanConfigValue(
+                "enable-bonemeal",
+                "Set this to true to allow using bonemeal on this specific plant type.",
+                defaultProperties.bonemealGrowth(),
+                this
+        );
 
         this.chanceToGrow = new DoubleConfigValue(
                 "chance-to-grow",
@@ -110,40 +113,25 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
                 this
         );
 
-        this.canUseBonemeal = new BooleanConfigValue(
-                "enable-bonemeal",
-                "Set this to true to allow using bonemeal on this specific plant type.",
-                defaultProperties.bonemealGrowth(),
-                this
-        );
-
-        this.numberOfProduceDrops = new IntegerConfigValue(
-                "number-of-produce-drops",
-                "The number of produce item drops this plant type will drop when harvested/fully grown" +
-                        "and broken.",
-                defaultProperties.plantYield(),
-                1, 64,
-                this
-        );
-
-        this.seedSpawnChanceFromMob = new DoubleConfigValue(
-                "seed-spawn-chance-from-mob",
+        this.seedSpawnChanceFromOre = new DoubleConfigValue(
+                "seed-spawn-chance-from-ore",
                 "The chance (percentage) that this plant types seed will spawn" +
-                        "\nwhen the mob that normally drops the final resource is killed." +
-                        "\nSet this to 0 to prevent the seeds from spawning when the mob is killed." +
+                        "\nwhen the final products ore block is blown up with TNT." +
+                        "\nSet this to 0 to prevent the seeds from spawning when blowing up the ore blocks." +
                         "\nYOU MUST SET 'use-configuration-values-for-seed-drops' TO 'true' TO USE THIS.",
-                defaultProperties.seedSpawnChanceFromMob(),
+                defaultProperties.seedSpawnChanceFromOre(),
                 0.0, 100.0,
                 this
         );
 
-        this.seedSpawnChanceFromBulb = new DoubleConfigValue(
-                "seed-spawn-chance-from-bulb",
+        this.seedSpawnChanceFromOrganicOre = new DoubleConfigValue(
+                "seed-spawn-chance-from-organic-ore",
                 "The chance (percentage) that this plant types seed will spawn" +
-                        "\nwhen the plants produce (bulb) is smashed." +
-                        "\nSet this to 0 to prevent the seeds from spawning when the bulb is smashed." +
+                        "\nwhen the plant produce block is blown up with TNT." +
+                        "\nSet this to 0 to prevent the seeds from spawning when blowing" +
+                        "\nup the plant produce blocks." +
                         "\nYOU MUST SET 'use-configuration-values-for-seed-drops' TO 'true' TO USE THIS.",
-                defaultProperties.seedSpawnChanceFromBulb(),
+                defaultProperties.seedSpawnChanceFromOrganicOre(),
                 0.0, 100.0,
                 this
         );
@@ -169,34 +157,6 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
      * {@inheritDoc}
      */
     @Override
-    public int plantYield() {
-        return numberOfProduceDrops.getValue();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float seedSpawnChanceFromMob() {
-        if(!this.useConfigSeedChanceValues.getValue())
-            return Float.parseFloat(seedSpawnChanceFromMob.getDefaultValue().toString());
-        return (float) seedSpawnChanceFromMob.getValue();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float seedSpawnChanceFromBulb() {
-        if(!this.useConfigSeedChanceValues.getValue())
-            return Float.parseFloat(seedSpawnChanceFromBulb.getDefaultValue().toString());
-        return (float) seedSpawnChanceFromBulb.getValue();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean bonemealGrowth() {
         return canUseBonemeal.getValue();
     }
@@ -208,6 +168,26 @@ public class BiochemicalPlantSetConfig extends ConfigCategory implements IBioche
     public float growthProbability() {
         if(!this.useConfigGrowthChanceValue.getValue())
             return Float.parseFloat(chanceToGrow.getDefaultValue().toString());
-        return (float) this.chanceToGrow.getValue();
+        return (float) chanceToGrow.getValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public float seedSpawnChanceFromOre() {
+        if(!this.useConfigSeedChanceValues.getValue())
+            return Float.parseFloat(seedSpawnChanceFromOre.getDefaultValue().toString());
+        return (float) seedSpawnChanceFromOre.getValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public float seedSpawnChanceFromOrganicOre() {
+        if(!this.useConfigSeedChanceValues.getValue())
+            return Float.parseFloat(seedSpawnChanceFromOrganicOre.getDefaultValue().toString());
+        return (float) seedSpawnChanceFromOrganicOre.getValue();
     }
 }
