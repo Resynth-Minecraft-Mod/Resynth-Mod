@@ -18,11 +18,13 @@ package com.ki11erwolf.resynth.packet;
 import com.ki11erwolf.resynth.ResynthMod;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -122,8 +124,8 @@ public abstract class Packet<S extends Packet<S>> {
      * @param runnable code to execute.
      */
     static void handle(Supplier<NetworkEvent.Context> context, Runnable runnable){
-        context.get().enqueueWork(runnable);
         context.get().setPacketHandled(true);
+        context.get().enqueueWork(runnable);
     }
 
     /**
@@ -140,7 +142,7 @@ public abstract class Packet<S extends Packet<S>> {
          * Forge handler provided to register packets.
          */
         private final SimpleChannel handler
-                = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(ResynthMod.MODID, "main_channel"))
+                = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(ResynthMod.MODID, "packets"))
                     .clientAcceptedVersions(protocolVersion::equals)
                     .serverAcceptedVersions(protocolVersion::equals)
                     .networkProtocolVersion(() -> protocolVersion)
@@ -166,9 +168,14 @@ public abstract class Packet<S extends Packet<S>> {
          */
         @SuppressWarnings("unchecked")
         void register(@SuppressWarnings("rawtypes") Packet packet){
+            handler.registerMessage(lastID++, packet.getClass(), packet.getEncoder(), packet.getDecoder(), packet.getHandler());
+        }
+
+        @SuppressWarnings({"unchecked", "OptionalUsedAsFieldOrParameterType"})
+        void register(@SuppressWarnings("rawtypes") Packet packet, final Optional<NetworkDirection> direction){
             handler.registerMessage(
-                    lastID++, packet.getClass(),
-                    packet.getEncoder(), packet.getDecoder(), packet.getHandler()
+                    lastID++, packet.getClass(), packet.getEncoder(),
+                    packet.getDecoder(), packet.getHandler(), direction
             );
         }
     }
@@ -208,5 +215,6 @@ public abstract class Packet<S extends Packet<S>> {
      */
     static {
         MANAGER.register(new DisplayHoeInfoPacket(null));
+        MANAGER.register(new ClientAVEffectPacket(ClientAVEffectPacket.AVEffect.NONE), Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }
 }

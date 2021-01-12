@@ -24,9 +24,9 @@ import java.util.List;
 
 /**
  * A ReferenceKey - RKey for short, references one or more specific
- * keys on the keyboard. The RKey object instance can then be queryed
- * to check if the key/keys referenced are pressed or not. Sadly
- * Listener Callbacks are not a part of this class.
+ * keys on the keyboard. The RKey object instance can then be queried
+ * to check if the key/keys referenced are pressed or not. Listener
+ * Callbacks are not a part of this class.
  *
  * <p/>RKeys operate in one of two different {@link Mode modes},
  * either the default IF_ANY: checking if any referenced key is pressed,

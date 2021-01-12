@@ -77,7 +77,7 @@ public class DisplayHoeInfoPacket extends Packet<DisplayHoeInfoPacket> {
 
     @Override
     BiConsumer<DisplayHoeInfoPacket, Supplier<NetworkEvent.Context>> getHandler() {
-        return (displayHoeInfoPacket, supplier) -> {
+        return (displayHoeInfoPacket, supplier) -> Packet.handle(supplier, () -> {
             if(displayHoeInfoPacket.information == null) {
                 LOG.error("Skipping handling of DisplayHoeInfoPacket - information is null.");
                 return;
@@ -108,6 +108,6 @@ public class DisplayHoeInfoPacket extends Packet<DisplayHoeInfoPacket> {
             ClientPlayerEntity player = Objects.requireNonNull(Minecraft.getInstance().player);
             for(ITextComponent msg : Tooltip.formatLineFeeds(new StringTextComponent(message.toString())))
                 player.sendMessage(msg, player.getUniqueID());
-        };
+        });
     }
 }

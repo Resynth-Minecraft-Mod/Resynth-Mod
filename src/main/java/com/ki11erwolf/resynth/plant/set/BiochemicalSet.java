@@ -70,7 +70,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
 
             @Override
             protected ItemStack getProduce() {
-                return new ItemStack(produceItem.asItem(), properties.plantYield());
+                return new ItemStack(produceItem.asItem(), setProperties.plantYield());
             }
         };
         this.seedsItem = new ItemSeeds(this);
@@ -116,7 +116,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
                         continue;
 
                     //and spawn seeds if lucky
-                    spawnSeeds(set.getSeedsItem(), event.getEntity().getEntityWorld(),
+                    dropSeeds(set.getSeedsItem(), event.getEntity().getEntityWorld(),
                             new BlockPos(event.getEntity().getPositionVec())
                     );
                 }
@@ -145,7 +145,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
                             .randomResult().isTrue()) {
                         if (!event.getEntity().getEntityWorld().isRemote) {
                             //Spawn seeds if lucky
-                            spawnSeeds(
+                            dropSeeds(
                                     plantSet.getSeedsItem(), event.getEntity().getEntityWorld(),
                                     new BlockPos(event.getEntity().getPositionVec())
                             );

@@ -1,7 +1,7 @@
 # The name of the mod loader type to load (javafml) #mandatory
 modLoader="javafml"
 # A version range to match for said mod loader (34) #mandatory
-loaderVersion="[34,)"
+loaderVersion="[35,)"
 # A URL to refer people to when problems occur with this mod (GitHub Issues) #optional
 issueTrackerURL="https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/issues"
 # The name of the license that this mod is released under (Apache 2.0) #mandatory
@@ -16,7 +16,8 @@ license="Apache License, Version 2.0"
     version="5.2.1"
     # The description text for the mod #mandatory
     description='''
-    Lots of vanilla/mod: ore, mob, & resource growing crops & items, as simple, configurable itemsets.'''
+    Adds tons of Plant Crops that grow Ores, Mob Drops & Resources from both vanilla & other mods.
+    '''
     # A URL for the "homepage" for this mod #optional
     displayURL="https://resynth-minecraft-mod.github.io/"
     # A URL to query for updates for this mod. #optional

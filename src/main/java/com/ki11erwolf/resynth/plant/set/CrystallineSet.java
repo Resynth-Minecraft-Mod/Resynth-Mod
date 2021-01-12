@@ -72,7 +72,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
 
             @Override
             protected ItemStack getProduce(){
-                return new ItemStack(produceItem.asItem(), properties.plantYield());
+                return new ItemStack(produceItem.asItem(), setProperties.plantYield());
             }
         };
         this.seedsItem = new ItemSeeds(this);
@@ -116,7 +116,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
 
                 //Spawn
                 if(MathUtil.Probability.newPercentageProbability(spawnChance).randomResult().isTrue()){
-                    spawnSeeds(crystallineSet.seedsItem, (World) world, event.getPos());
+                    dropSeeds(crystallineSet.seedsItem, (World) world, event.getPos());
                     event.setCanceled(true);
                     world.setBlockState(event.getPos(), Blocks.AIR.getDefaultState(), 2);
                 }
@@ -158,7 +158,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
                 //Spawn
                 for(int j = 0; j < count; j++){
                     if(MathUtil.Probability.newPercentageProbability(spawnChance).randomResult().isTrue()){
-                        spawnSeeds(set.getSeedsItem(), world, pos);
+                        dropSeeds(set.getSeedsItem(), world, pos);
                     }
                 }
                 return;

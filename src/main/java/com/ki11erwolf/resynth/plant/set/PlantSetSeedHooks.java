@@ -15,15 +15,14 @@
  */
 package com.ki11erwolf.resynth.plant.set;
 
-import com.ki11erwolf.resynth.util.EffectsUtil;
+import com.ki11erwolf.resynth.packet.ClientAVEffectPacket;
+import com.ki11erwolf.resynth.packet.Packet;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.item.Item;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 /**
  * Allows implementing plant sets (e.g. {@link CrystallineSet})
@@ -34,6 +33,8 @@ import net.minecraftforge.common.MinecraftForge;
  * of registration and some utility methods.
  */
 class PlantSetSeedHooks {
+
+    private static final double PLAYER_EFFECT_RADIUS = 7;
 
     /**
      * {@code true} if this SeedHooks instance
@@ -68,9 +69,9 @@ class PlantSetSeedHooks {
      * @param world the world to spawn the seeds in.
      * @param pos the position in the world to spawn the seeds in.
      */
-    static void spawnSeeds(Item seeds, World world, BlockPos pos){
+    static void dropSeeds(Item seeds, World world, BlockPos pos){
         spawnSeedsStack(seeds, world, pos);
-        effects(pos);
+        playEffects(pos, world);
     }
 
     /**
@@ -89,11 +90,12 @@ class PlantSetSeedHooks {
      *
      * @param pos the position to play/display the effects.
      */
-    private static void effects(BlockPos pos){
-        EffectsUtil.displayStandardEffectsOnClient(pos, 10, ParticleTypes.FLASH);
-
-        EffectsUtil.playNormalSoundWithVolumeOnClient(
-                pos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.NEUTRAL, 8.0F
+    private static void playEffects(BlockPos pos, World world){
+        Packet.send(
+                PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(
+                        pos.getX(), pos.getY() + 3, pos.getZ(), PLAYER_EFFECT_RADIUS, world.getDimensionKey()
+                )),
+                new ClientAVEffectPacket(ClientAVEffectPacket.AVEffect.SEEDS_SPAWNED)
         );
     }
 }

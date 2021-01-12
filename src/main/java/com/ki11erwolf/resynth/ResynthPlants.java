@@ -56,7 +56,7 @@ public class ResynthPlants {
      */
     static final CrystallineSetProperties DIAMOND_PROPERTIES = new CrystallineSetProperties(
             false, 8.0F,1,
-            1.3F, 25.0F
+            1.30F, 25.0F
     );
 
     /**

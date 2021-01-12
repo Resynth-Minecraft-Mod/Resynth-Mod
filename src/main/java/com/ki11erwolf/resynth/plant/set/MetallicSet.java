@@ -118,7 +118,7 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant, Block> {
 
                     //Spawn item.
                     if(MathUtil.Probability.newPercentageProbability(chance).randomResult().isTrue()){
-                        spawnSeeds(set.getSeedsItem(), world, pos);
+                        dropSeeds(set.getSeedsItem(), world, pos);
                     }
                 }
             }
