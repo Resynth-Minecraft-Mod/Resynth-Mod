@@ -1,4 +1,4 @@
-package mcp.mobius.waila.api;
+package mcp.mobius.waila.apii;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

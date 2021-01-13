@@ -1,12 +1,12 @@
-package mcp.mobius.waila.api;
+package mcp.mobius.waila.apii;
 
 import net.minecraft.item.ItemStack;
 
 /**
  * Callback class interface used to provide Block/TileEntity decorator.<br>
  * All methods in this interface shouldn't to be called by the implementing mod. An instance of the class is to be
- * registered to Waila via the {@link IRegistrar} instance provided in the original registration callback method
- * (cf. {@link IRegistrar} documentation for more information).
+ * registered to Waila via the {@link mcp.mobius.waila.apii.IRegistrar} instance provided in the original registration callback method
+ * (cf. {@link mcp.mobius.waila.apii.IRegistrar} documentation for more information).
  *
  * @author ProfMobius
  */

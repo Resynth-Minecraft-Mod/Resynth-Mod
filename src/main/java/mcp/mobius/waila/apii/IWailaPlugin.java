@@ -1,4 +1,4 @@
-package mcp.mobius.waila.api;
+package mcp.mobius.waila.apii;
 
 /**
  * Main interface used for Waila plugins. Provides a valid instance of {@link IRegistrar}.

@@ -322,11 +322,16 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
      * @return {@code RecipeManager.recipes} as a {@link Field}.
      */
     private Field getRecipesField() {
+        List<String> fieldNames = Arrays.asList("recipes", "field_199522_d");
         Field recipesField;
 
         // Get RecipeManager.recipes reference
         try {
-            recipesField = RecipeManager.class.getDeclaredField("recipes");
+            recipesField = Arrays.stream(RecipeManager.class.getDeclaredFields()).filter(
+                    field -> fieldNames.contains(field.getName())
+            ).findFirst().orElseThrow(
+                    () -> new NoSuchFieldException("Could not find field 'RecipeManager.recipes' under any known name")
+            );
             recipesField.setAccessible(true);
             Object fieldObjectRef = recipesField.get(getRecipeManager());
 
@@ -336,11 +341,6 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
             }
         } catch (NoSuchFieldException e) {
             LOG.fatal("Failed to obtain 'RecipeManager.recipes' field reference! Cannot continue", e);
-
-            Arrays.asList(RecipeManager.class.getDeclaredFields()).stream().forEach(field -> {
-                LOG.info("Listed field of RecipeManager: " + field.getName() + "  |  " + field.toString());
-            });
-
             throw new IllegalStateException("'RecipeManager.recipes' is not a valid, obtainable field", e);
         } catch (IllegalAccessException e) {
             LOG.fatal("Failed to obtain 'RecipeManager.recipes' object reference! Cannot continue", e);

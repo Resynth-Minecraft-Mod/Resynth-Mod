@@ -17,6 +17,7 @@ package com.ki11erwolf.resynth.integration;
 
 import com.ki11erwolf.resynth.ResynthMod;
 import mcp.mobius.waila.api.*;
+import mcp.mobius.waila.api.IRegistrar;
 import net.minecraft.block.Block;
 import org.apache.logging.log4j.Logger;
 
@@ -30,8 +31,8 @@ import java.util.List;
  * a Hwyla provider interface for Hwyla registration. This
  * class also handles registering the queued providers.
  */
-@WailaPlugin
-public class Hwyla implements mcp.mobius.waila.api.IWailaPlugin{
+@mcp.mobius.waila.api.WailaPlugin
+public class Hwyla implements mcp.mobius.waila.api.IWailaPlugin {
 
     /**
      * The logger for this class.
@@ -59,7 +60,7 @@ public class Hwyla implements mcp.mobius.waila.api.IWailaPlugin{
      *                 provider.
      */
     public static void addIfProvider(Block provider){
-        if(provider instanceof IComponentProvider || provider instanceof IServerDataProvider)
+        if(provider instanceof IComponentProvider || provider instanceof mcp.mobius.waila.api.IServerDataProvider)
             PROVIDERS.add(provider);
     }
 
@@ -81,19 +82,19 @@ public class Hwyla implements mcp.mobius.waila.api.IWailaPlugin{
 
             if(provider instanceof IComponentProvider){
                 registrar.registerComponentProvider(
-                        (IComponentProvider)provider, TooltipPosition.HEAD, provider.getClass()
+                        (IComponentProvider)provider, mcp.mobius.waila.api.TooltipPosition.HEAD, provider.getClass()
                 );
                 registrar.registerComponentProvider(
-                        (IComponentProvider)provider, TooltipPosition.BODY, provider.getClass()
+                        (IComponentProvider)provider, mcp.mobius.waila.api.TooltipPosition.BODY, provider.getClass()
                 );
                 registrar.registerComponentProvider(
-                        (IComponentProvider)provider, TooltipPosition.TAIL, provider.getClass()
+                        (IComponentProvider)provider, mcp.mobius.waila.api.TooltipPosition.TAIL, provider.getClass()
                 );
             }
 
-            if(provider instanceof IServerDataProvider){
+            if(provider instanceof mcp.mobius.waila.api.IServerDataProvider){
                 //noinspection unchecked, rawtypes //Should be fine
-                registrar.registerBlockDataProvider((IServerDataProvider)provider, provider.getClass());
+                registrar.registerBlockDataProvider((mcp.mobius.waila.api.IServerDataProvider)provider, provider.getClass());
             }
         }
     }

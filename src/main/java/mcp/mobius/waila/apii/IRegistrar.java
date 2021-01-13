@@ -1,5 +1,7 @@
-package mcp.mobius.waila.api;
+package mcp.mobius.waila.apii;
 
+import mcp.mobius.waila.api.IComponentProvider;
+import mcp.mobius.waila.api.IEntityComponentProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -42,16 +44,16 @@ public interface IRegistrar {
      * @param position The position on the tooltip this applies to
      * @param block The highest level class to apply to
      */
-    void registerComponentProvider(IComponentProvider dataProvider, TooltipPosition position, Class block);
+    void registerComponentProvider(IComponentProvider dataProvider, mcp.mobius.waila.apii.TooltipPosition position, Class block);
 
     /**
-     * Registers an {@link IServerDataProvider<TileEntity>} instance for data syncing purposes.
+     * Registers an {@link mcp.mobius.waila.apii.IServerDataProvider <TileEntity>} instance for data syncing purposes.
      * A {@link TileEntity} is also an acceptable class type.
      *
      * @param dataProvider The data provider instance
      * @param block The highest level class to apply to
      */
-    void registerBlockDataProvider(IServerDataProvider<TileEntity> dataProvider, Class block);
+    void registerBlockDataProvider(mcp.mobius.waila.apii.IServerDataProvider<TileEntity> dataProvider, Class block);
 
     /**
      * Registers an {@link IEntityComponentProvider} instance to allow overriding the entity being displayed.
