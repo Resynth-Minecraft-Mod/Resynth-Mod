@@ -106,7 +106,7 @@ public class ResynthModPlants {
         /**
          * The mod id for "The Midnight" mod.
          */
-        private static final Mod THE_MIDNIGHT = new Mod("The Midnight Mod", "midnight");
+        private static final Mod THE_MIDNIGHT = new Mod("The Midnight", "midnight");
 
         /**
          * The mod id for the mod 'Applied Energistics 2'.
@@ -669,7 +669,7 @@ public class ResynthModPlants {
      */
     public static final PlantSet<?, ?> BLUE_POWER_TESLATITE = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
             Mods.BLUE_POWER.getID("teslatite"), TESLATITE_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
-            "teslatite_gem", "teslatite_ore"
+            "teslatite_dust", "teslatite_ore"
     ));
 
     /**
@@ -933,7 +933,7 @@ public class ResynthModPlants {
 
     public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_ALUMINIUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.IMMERSIVE_ENGINEERING.getID("aluminium"), ALUMINIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
-            "ore_aluminium", "ore_aluminium"
+            "ore_aluminum", "ore_aluminum"
     ));
 
     public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
@@ -1003,10 +1003,11 @@ public class ResynthModPlants {
             "nickel_ore", "nickel_ore"
     ));
 
-    public static final PlantSet<?, ?> THERMAL_FOUNDATION_PLATINUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+    // thermal:platinum_ore is not registered as tested on: thermal_foundation-1.16.3-1.1.6
+    /* public static final PlantSet<?, ?> THERMAL_FOUNDATION_PLATINUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.THERMAL_FOUNDATION.getID("platinum"), PLATINUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "platinum_ore", "platinum_ore"
-    ));
+    )); */
 
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_SILVER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.THERMAL_FOUNDATION.getID("silver"), SILVER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,

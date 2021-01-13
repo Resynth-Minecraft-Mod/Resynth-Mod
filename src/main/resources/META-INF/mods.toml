@@ -27,3 +27,15 @@ license="Apache License, Version 2.0"
     credits="Ki11er_wolf, Aikini"
     # A file name (in the root of the mod JAR) containing a logo for display #optional
     logoFile="logo.png"
+
+    [[dependencies.resynth]]
+
+        modId="minecraft"
+
+        mandatory=true
+
+        versionRange="[1.16.4,1.17)"
+
+        ordering="NONE"
+
+        side="BOTH"

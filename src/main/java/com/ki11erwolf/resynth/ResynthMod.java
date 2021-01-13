@@ -64,7 +64,7 @@ public class ResynthMod {
     /**
      * Minecraft version.
      */
-    public static final String MC_VERSION = "[1.16.3]";
+    public static final String MC_VERSION = "[1.16.4]";
 
     /**
      * FML initialized proxy. Will be ServerProxy on dedicated server, ClientProxy otherwise.
