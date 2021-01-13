@@ -926,7 +926,7 @@ public class ResynthModPlants {
     public static final PlantSet<?, ?> APPLIED_ENERGISTICS_2_CHARGED_CERTUS_QUARTZ = registerIfNotNull(
             PlantSetFactory.makeCrystallineSet(Mods.APPLIED_ENERGISTICS_2.getID("charged_certus_quartz"),
                     CHARGED_CERTUS_QUARTZ_PROPERTIES, new ProduceProperties(2, 200, 2.0),
-                    "certus_quartz_crystal_charged", "charged_quartz_ore"
+                    "charged_certus_quartz_crystal", "charged_quartz_ore"
     ));
 
     // Immersive Engineering

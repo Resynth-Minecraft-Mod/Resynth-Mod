@@ -36,10 +36,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * The global manager and handler for all custom {@link IRecipe Recipes}
@@ -339,6 +336,11 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
             }
         } catch (NoSuchFieldException e) {
             LOG.fatal("Failed to obtain 'RecipeManager.recipes' field reference! Cannot continue", e);
+
+            Arrays.asList(RecipeManager.class.getDeclaredFields()).stream().forEach(field -> {
+                LOG.info("Listed field of RecipeManager: " + field.getName() + "  |  " + field.toString());
+            });
+
             throw new IllegalStateException("'RecipeManager.recipes' is not a valid, obtainable field", e);
         } catch (IllegalAccessException e) {
             LOG.fatal("Failed to obtain 'RecipeManager.recipes' object reference! Cannot continue", e);
