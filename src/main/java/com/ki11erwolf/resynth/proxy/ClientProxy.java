@@ -17,7 +17,7 @@ package com.ki11erwolf.resynth.proxy;
 
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.plant.block.BlockPlant;
-import com.ki11erwolf.resynth.plant.set.PublicPlantSetRegistry;
+import com.ki11erwolf.resynth.plant.set.PlantSetAPI;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -44,7 +44,7 @@ public class ClientProxy extends ServerProxy {
         RenderType plantRenderType = BlockPlant.getResynthPlantRenderType();
 
         RenderTypeLookup.setRenderLayer(ResynthBlocks.BLOCK_SEED_POD, plantRenderType);
-        PublicPlantSetRegistry.foreach(PublicPlantSetRegistry.SetType.ALL, plantSet -> {
+        PlantSetAPI.foreachSet(PlantSetAPI.SetType.ALL, plantSet -> {
             RenderTypeLookup.setRenderLayer(plantSet.getPlantBlock(), plantRenderType);
             return null;
         });

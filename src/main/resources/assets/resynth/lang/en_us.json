@@ -619,7 +619,7 @@
   "tooltip.resynth.plantset.property.plant_yield_singular":    "Plant Yield: %s%s%s produce item",
   "tooltip.resynth.plantset.property.produce_yield":           "Produce Yield: %s%s%s items",
   "tooltip.resynth.plantset.property.produce_yield_singular":  "Produce Yield: %s%s%s item",
-  "tooltip.resynth.plantset.property.unavailable":             "Only available in singleplayer.",
+  "tooltip.resynth.plantset.property.synchronized":            "%sUsing Server Configured Stats!",
 
   "tooltip.resynth.plantset.property.seed_sources.crystalline":   "Mining",
   "tooltip.resynth.plantset.property.seed_sources.metallic":      "Blowing Up",

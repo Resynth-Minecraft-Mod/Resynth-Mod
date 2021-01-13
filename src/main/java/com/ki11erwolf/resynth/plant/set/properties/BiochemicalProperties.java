@@ -125,13 +125,30 @@ public class BiochemicalProperties implements AbstractBiochemicalProperties {
         }
 
         @Override
-        protected void objectToData(AbstractBiochemicalProperties object, JSerialDataIO dataIO) throws Exception {
-
+        protected void objectToData(AbstractBiochemicalProperties object, JSerialDataIO dataIO) {
+            dataIO.add(SerializedPropertyValue.TYPE_OF_PROPERTIES.key, "biochemical");
+            dataIO.add(SerializedPropertyValue.PROBABILITY_OF_GROWING.key, object.growthProbability());
+            dataIO.add(SerializedPropertyValue.FERTILIZED_BY_BONEMEAL.key, object.bonemealGrowth());
+            dataIO.add(SerializedPropertyValue.PLANT_HARVEST_YIELD.key, object.plantYield());
+            dataIO.add(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_SOURCE.key, object.seedSpawnChanceFromMob());
+            dataIO.add(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_PRODUCE.key, object.seedSpawnChanceFromBulb());
         }
 
         @Override
-        protected AbstractBiochemicalProperties dataToObject(AbstractBiochemicalProperties suggestedObject, JSerialDataIO dataIO) throws Exception {
-            return null;
+        protected AbstractBiochemicalProperties dataToObject(AbstractBiochemicalProperties suggestedObject,
+                                                             JSerialDataIO dataIO) throws Exception {
+            if(!"biochemical".equals(dataIO.getString(SerializedPropertyValue.TYPE_OF_PROPERTIES.key)))
+                throw new Exception("Not of type Biochemical!");
+
+            boolean bonemealGrowth = dataIO.getBoolean(SerializedPropertyValue.FERTILIZED_BY_BONEMEAL.key);
+            int plantYield = dataIO.get(SerializedPropertyValue.PLANT_HARVEST_YIELD.key).getAsInt();
+            float growthProbability = dataIO.get(SerializedPropertyValue.PROBABILITY_OF_GROWING.key).getAsFloat();
+            float seedSpawnChanceFromMob = dataIO.get(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_SOURCE.key).getAsFloat();
+            float seedSpawnChanceFromBulb = dataIO.get(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_PRODUCE.key).getAsFloat();
+
+            return new BiochemicalProperties(
+                    bonemealGrowth, growthProbability, plantYield, seedSpawnChanceFromMob, seedSpawnChanceFromBulb
+            );
         }
 
         @Override

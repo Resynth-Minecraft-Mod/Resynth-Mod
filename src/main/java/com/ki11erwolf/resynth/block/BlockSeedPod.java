@@ -18,7 +18,7 @@ package com.ki11erwolf.resynth.block;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
 import com.ki11erwolf.resynth.plant.set.PlantSet;
-import com.ki11erwolf.resynth.plant.set.PublicPlantSetRegistry;
+import com.ki11erwolf.resynth.plant.set.PlantSetAPI;
 import com.ki11erwolf.resynth.util.MathUtil;
 import com.ki11erwolf.resynth.util.MinecraftUtil;
 import net.minecraft.block.Block;
@@ -198,7 +198,7 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
             return;
         }
 
-        PlantSet<?, ?>[] plantSets = PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL);
+        PlantSet<?, ?>[] plantSets = PlantSetAPI.getSetsByType(PlantSetAPI.SetType.BIOCHEMICAL);
         PlantSet<?, ?> randomSet = plantSets[MathUtil.getRandomIntegerInRange(0, plantSets.length - 1)];
         MinecraftUtil.spawnItemInWorld(randomSet.getSeedsItem(), world, pos);
     }

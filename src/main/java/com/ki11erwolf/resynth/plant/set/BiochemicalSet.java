@@ -97,7 +97,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
         @SubscribeEvent
         public void onEntityKilled(LivingDeathEvent event){
             //For each plant set
-            for(PlantSet<?, ?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)){
+            for(PlantSet<?, ?> set : PlantSetAPI.getSetsByType(PlantSetAPI.SetType.BIOCHEMICAL)){
                 ResourceLocation deadEntity = event.getEntity().getType().getRegistryName();
                 BiochemicalSet plantSet = (BiochemicalSet) set;
 
@@ -136,7 +136,7 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
             if(event.getOriginal() == null) return;
 
             //For each plant set
-            for(PlantSet<?, ?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.BIOCHEMICAL)) {
+            for(PlantSet<?, ?> set : PlantSetAPI.getSetsByType(PlantSetAPI.SetType.BIOCHEMICAL)) {
                 if(set.isBroken()) continue;
 
                 BiochemicalSet plantSet = (BiochemicalSet) set;

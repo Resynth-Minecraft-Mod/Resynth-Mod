@@ -169,13 +169,32 @@ public class CrystallineProperties implements AbstractCrystallineProperties {
         }
 
         @Override
-        protected void objectToData(AbstractCrystallineProperties object, JSerialDataIO dataIO) throws Exception {
-
+        protected void objectToData(AbstractCrystallineProperties object, JSerialDataIO dataIO) {
+            dataIO.add(SerializedPropertyValue.TYPE_OF_PROPERTIES.key, "crystalline");
+            dataIO.add(SerializedPropertyValue.CRYSTALLINE_PRODUCE_SEED_YIELD.key, object.seedCraftingYield());
+            dataIO.add(SerializedPropertyValue.PROBABILITY_OF_GROWING.key, object.growthProbability());
+            dataIO.add(SerializedPropertyValue.FERTILIZED_BY_BONEMEAL.key, object.bonemealGrowth());
+            dataIO.add(SerializedPropertyValue.PLANT_HARVEST_YIELD.key, object.plantYield());
+            dataIO.add(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_SOURCE.key, object.seedSpawnChanceFromOre());
+            dataIO.add(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_PRODUCE.key, object.seedSpawnChanceFromShard());
         }
 
         @Override
-        protected AbstractCrystallineProperties dataToObject(AbstractCrystallineProperties suggestedObject, JSerialDataIO dataIO) throws Exception {
-            return null;
+        protected AbstractCrystallineProperties dataToObject(AbstractCrystallineProperties suggestedObject,
+                                                             JSerialDataIO dataIO) throws Exception {
+            if(!"crystalline".equals(dataIO.getString(SerializedPropertyValue.TYPE_OF_PROPERTIES.key)))
+                throw new Exception("Not of type Crystalline!");
+
+            boolean bonemealGrowth = dataIO.getBoolean(SerializedPropertyValue.FERTILIZED_BY_BONEMEAL.key);
+            float growthProbability = dataIO.get(SerializedPropertyValue.PROBABILITY_OF_GROWING.key).getAsFloat();
+            float seedSpawnChanceFromMob = dataIO.get(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_SOURCE.key).getAsFloat();
+            float seedSpawnChanceFromBulb = dataIO.get(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_PRODUCE.key).getAsFloat();
+            int plantYield = dataIO.get(SerializedPropertyValue.PLANT_HARVEST_YIELD.key).getAsInt();
+            int craftingYield = dataIO.getInteger(SerializedPropertyValue.CRYSTALLINE_PRODUCE_SEED_YIELD.key);
+
+            return new CrystallineProperties(
+                    bonemealGrowth, growthProbability, plantYield, seedSpawnChanceFromMob, seedSpawnChanceFromBulb, craftingYield
+            );
         }
 
         @Override

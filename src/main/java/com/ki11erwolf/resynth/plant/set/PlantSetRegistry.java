@@ -35,8 +35,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-//import com.ki11erwolf.resynth.integration.Hwyla;
+import java.util.stream.Stream;
 
 /**
  * Handles registering plant set items and blocks
@@ -53,7 +52,7 @@ class PlantSetRegistry {
     /**
      * List of all created and registered plant sets.
      */
-    private static final List<PlantSet<?, ?>> PLANT_SETS = new ArrayList<>(45);
+    private static final List<PlantSet<?, ?>> PLANT_SETS = new ArrayList<>(50);
 
     /**
      * Queues the given plant set for registration.
@@ -76,6 +75,10 @@ class PlantSetRegistry {
      */
     static PlantSet<?, ?>[] getPlantSets(){
         return PLANT_SETS.toArray(new PlantSet[0]);
+    }
+
+    static Stream<PlantSet<?, ?>> streamPlantSets() {
+        return PLANT_SETS.stream();
     }
 
     // ***************

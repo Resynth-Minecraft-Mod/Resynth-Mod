@@ -16,19 +16,20 @@
 package com.ki11erwolf.resynth.plant.set;
 
 import com.ki11erwolf.resynth.ResynthRecipes;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractPlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractProduceProperties;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
  * A publicly visible registry that provides
  * a solid API for obtaining plant sets.
  */
-public class PublicPlantSetRegistry {
+public class PlantSetAPI {
 
     /**Private Constructor.*/
-    private PublicPlantSetRegistry(){}
+    private PlantSetAPI(){}
 
     /**
      * Allows iterating over a list of plant sets specified by type.
@@ -36,11 +37,8 @@ public class PublicPlantSetRegistry {
      * @param setType the type of plant sets to iterate over.
      * @param action the action to perform for each plant set.
      */
-    public static void foreach(SetType setType, Function<PlantSet<?, ?>, Void> action){
-        for(PlantSet<?, ?> plantSet : PlantSetRegistry.getPlantSets()){
-            if(setType.matches(plantSet))
-                action.apply(plantSet);
-        }
+    public static void foreachSet(SetType setType, Function<PlantSet<?, ?>, Void> action){
+        PlantSetRegistry.streamPlantSets().filter(setType::matches).forEach(action::apply);
     }
 
     /**
@@ -49,15 +47,14 @@ public class PublicPlantSetRegistry {
      * @param setType the type of plant sets to obtain.
      * @return a modifiable list of the obtained plant sets.
      */
-    public static PlantSet<?, ?>[] getSets(SetType setType){
-        List<PlantSet<?, ?>> plantSets = new ArrayList<>();
+    public static PlantSet<?, ?>[] getSetsByType(SetType setType){
+        return PlantSetRegistry.streamPlantSets().filter(setType::matches).toArray(PlantSet<?, ?>[]::new);
+    }
 
-        for(PlantSet<?, ?> plantSet : PlantSetRegistry.getPlantSets()){
-            if(setType.matches(plantSet))
-                plantSets.add(plantSet);
-        }
-
-        return plantSets.toArray(new PlantSet[0]);
+    public static PlantSet<?, ?> getSetByName(String name) {
+        return PlantSetRegistry.streamPlantSets().filter(
+                (set) -> set.getSetName().equals(Objects.requireNonNull(name))
+        ) .findFirst().orElse(null);
     }
 
     /**
@@ -67,6 +64,13 @@ public class PublicPlantSetRegistry {
      */
     public static ResynthRecipes.RecipeProvider getPlantSetRecipes(){
         return PlantSetRecipes.INSTANCE;
+    }
+
+    public static void synchronizePlantSetProperties(String setName, AbstractPlantSetProperties properties,
+                                                     AbstractProduceProperties produceProperties) {
+        PropertiesSynchronizer.INSTANCE.handlePropertiesSynchronizing(
+                Objects.requireNonNull(setName), Objects.requireNonNull(properties), Objects.requireNonNull(produceProperties)
+        );
     }
 
     /**

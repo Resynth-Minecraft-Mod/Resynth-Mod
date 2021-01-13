@@ -20,11 +20,11 @@ import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.plant.set.properties.AbstractBiochemicalProperties;
 import com.ki11erwolf.resynth.plant.set.properties.AbstractCrystallineProperties;
 import com.ki11erwolf.resynth.plant.set.properties.AbstractMetallicProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractPlantSetProperties;
 import com.ki11erwolf.resynth.util.CommonRKeys;
 import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.text.ITextComponent;
@@ -82,40 +82,43 @@ public class PlantSetTooltips {
      * @param tooltip the tooltip array to append the tooltip to.
      */
     public static void setPropertiesTooltip(List<ITextComponent> tooltip, PlantSet<?, ?> set){
-        if(!Minecraft.getInstance().isSingleplayer()) {
-            tooltip.add(getFormattedTooltip("unavailable", TextFormatting.RED));
-            return;
-        }
+        AbstractPlantSetProperties properties = set.serverPlantSetProperties().orElse(null);
+
+        if(properties != null) {
+            tooltip.add(getFormattedTooltip(
+                    "synchronized", TextFormatting.DARK_GREEN,
+                    TextFormatting.BOLD.toString() + TextFormatting.ITALIC.toString()
+            ));
+            tooltip.add(new StringTextComponent(""));
+        } else properties = set.getPlantSetProperties();
 
         // Bonemeal
-        boolean bonemeal = set.getPlantSetProperties().bonemealGrowth();
+        boolean bonemeal = properties.bonemealGrowth();
         tooltip.add(getFormattedTooltip(bonemeal ? "bonemeal_effective" : "bonemeal_ineffective",
                 TextFormatting.RED, bonemeal ? TextFormatting.DARK_GREEN : TextFormatting.DARK_RED
         ));
 
         // Growth Rate Multiplier
         tooltip.add(getFormattedTooltip("growth_rate",
-                TextFormatting.BLUE, TextFormatting.GOLD, set.getPlantSetProperties().growthProbability() + "%"
+                TextFormatting.BLUE, TextFormatting.GOLD, properties.growthProbability() + "%"
         ));
 
         //Seed Sources
         setSourcesForSeeds(tooltip, set);
 
         // Various set type properties
-        if(set.getPlantSetProperties() instanceof AbstractCrystallineProperties)
-            setCrystallinePropertiesTooltip(tooltip, (AbstractCrystallineProperties) set.getPlantSetProperties());
-        else if (set.getPlantSetProperties() instanceof AbstractMetallicProperties)
-            setMetallicPropertiesTooltip(tooltip, (AbstractMetallicProperties) set.getPlantSetProperties());
-        else if (set.getPlantSetProperties() instanceof AbstractBiochemicalProperties)
-            setBiochemicalPropertiesTooltip(tooltip, (AbstractBiochemicalProperties) set.getPlantSetProperties());
+        if(properties instanceof AbstractCrystallineProperties)
+            setCrystallinePropertiesTooltip(tooltip, (AbstractCrystallineProperties) properties);
+        else if (properties instanceof AbstractMetallicProperties)
+            setMetallicPropertiesTooltip(tooltip, (AbstractMetallicProperties) properties);
+        else if (properties instanceof AbstractBiochemicalProperties)
+            setBiochemicalPropertiesTooltip(tooltip, (AbstractBiochemicalProperties) properties);
 
         // Produce Yield
-        int produceYield = set.getProduceProperties().produceYield();
-        if (set.getProduceProperties() != null) {
-            tooltip.add(getFormattedTooltip(produceYield == 1 ? "produce_yield_singular" : "produce_yield",
-                    TextFormatting.DARK_PURPLE, TextFormatting.GOLD, produceYield, TextFormatting.DARK_PURPLE
-            ));
-        }
+        int produceYield = set.serverPlantSetProduceProperties().orElse(set.getProduceProperties()).produceYield();
+        tooltip.add(getFormattedTooltip(produceYield == 1 ? "produce_yield_singular" : "produce_yield",
+                TextFormatting.DARK_PURPLE, TextFormatting.GOLD, produceYield, TextFormatting.DARK_PURPLE
+        ));
     }
 
     private static void setSourcesForSeeds(List<ITextComponent> tooltip, PlantSet<?, ?> set) {

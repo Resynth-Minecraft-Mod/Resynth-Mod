@@ -102,7 +102,7 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant, Block> {
                 BlockState block = world.getBlockState(pos);
 
                 //For each set
-                for(PlantSet<?, ?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.METALLIC)) {
+                for(PlantSet<?, ?> set : PlantSetAPI.getSetsByType(PlantSetAPI.SetType.METALLIC)) {
                     if(set.isBroken() || set.getSeedSources(Block[].class).length == 0)
                         continue;
 

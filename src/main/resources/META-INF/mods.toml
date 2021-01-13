@@ -16,8 +16,7 @@ license="Apache License, Version 2.0"
     version="5.2.1"
     # The description text for the mod #mandatory
     description='''
-    Adds tons of Plant Crops that grow Ores, Mob Drops & Resources from both vanilla & other mods.
-    '''
+    Adds tons of Plant Crops that grow Ores, Mob Drops, and Resources from both vanilla and many other popular mods!'''
     # A URL for the "homepage" for this mod #optional
     displayURL="https://resynth-minecraft-mod.github.io/"
     # A URL to query for updates for this mod. #optional

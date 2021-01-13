@@ -16,6 +16,8 @@
 package com.ki11erwolf.resynth.packet;
 
 import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.plant.set.properties.MetallicProperties;
+import com.ki11erwolf.resynth.plant.set.properties.ProduceProperties;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -215,10 +217,20 @@ public abstract class Packet<S extends Packet<S>> {
         & registration.
      */
     static {
-        MANAGER.register(new DisplayHoeInfoPacket(null));
+        MANAGER.register(new DisplayHoeInfoPacket(null), Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+
+        MANAGER.register(
+                new SyncSetPropertiesPacket("",
+                        new MetallicProperties(false, 0, 0,0),
+                        new ProduceProperties(0, 0, 0)
+                ),
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
+
         MANAGER.register(
                 new ClientAVEffectPacket(ClientAVEffectPacket.AVEffect.NONE, new BlockPos(0, 0, 0)),
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT)
         );
+
     }
 }

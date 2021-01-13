@@ -16,6 +16,115 @@
 
 package com.ki11erwolf.resynth.plant.set;
 
-public class PropertiesSynchronizer {
+import com.ki11erwolf.resynth.ResynthMod;
+import com.ki11erwolf.resynth.packet.Packet;
+import com.ki11erwolf.resynth.packet.SyncSetPropertiesPacket;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractPlantSetProperties;
+import com.ki11erwolf.resynth.plant.set.properties.AbstractProduceProperties;
+import com.ki11erwolf.resynth.util.SideUtil;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.dedicated.DedicatedServer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import org.apache.logging.log4j.Logger;
+
+enum PropertiesSynchronizer {
+
+    INSTANCE;
+
+    /**
+     * The logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
+
+    // ***
+    // API
+    // ***
+
+    protected void handleClientConnection(PlayerEntity playerEntity, MinecraftServer server) {
+        ServerPlayerEntity player;
+        if(!(playerEntity instanceof ServerPlayerEntity)){
+            LOG.error("[Server] Cannot synchronize with connected client! Invalid PlayerEntity type!");
+            return;
+        }
+
+        player = (ServerPlayerEntity) playerEntity;
+        if(server instanceof DedicatedServer)
+            synchronizeWithClient(player);
+        else if(!player.getPlayerIP().equals("local"))
+            synchronizeWithClient(player);
+        else restoreClient();
+    }
+
+    protected void handlePropertiesSynchronizing(String setName, AbstractPlantSetProperties properties,
+                                                 AbstractProduceProperties produceProperties) {
+        if(SideUtil.isClientSafe())
+            synchronizeSetProperties(PlantSetAPI.getSetByName(setName), properties, produceProperties);
+        else LOG.error("[Server] Cannot perform synchronization on Dedicated Server!");
+    }
+
+    // **************
+    // Implementation
+    // **************
+
+    private void synchronizeWithClient(ServerPlayerEntity connectedClient) {
+        LOG.info("[Server] A Client(ip=" + connectedClient.getPlayerIP()+ ") has connected! " +
+                "Attempting to synchronize the client  with the servers PlantSet Properties...");
+
+        PlantSetRegistry.streamPlantSets().forEach(serverPlantSet -> {
+            LOG.debug("[Server] Sending synchronization request for the '" + serverPlantSet.getSetName() + "' PlantSet Properties");
+            Packet.send(PacketDistributor.PLAYER.with(() -> connectedClient),
+                    new SyncSetPropertiesPacket(
+                            serverPlantSet.getSetName(),
+                            serverPlantSet.getPlantSetProperties(),
+                            serverPlantSet.getProduceProperties()
+                    )
+            );
+        });
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void synchronizeSetProperties(PlantSet<?, ?> plantSet, AbstractPlantSetProperties properties,
+                                          AbstractProduceProperties produce) {
+        if(plantSet != null){
+            LOG.info("[Client] Synchronizing own '" + plantSet.getSetName() + "' PlantSet with the Properties sent by the servers.");
+            plantSet.setServerPlantSetProperties(properties);
+            plantSet.setServerPlantSetProduceProperties(produce);
+        } else LOG.error("[Client] Failed to synchronize! The requested PlantSet is unknown, invalid, or not registered!");
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void restoreClient() {
+        LOG.info("[Client] Connected to local world! Ensuring PlantSets use Client Properties...");
+        long count = PlantSetRegistry.streamPlantSets().peek((clientPlantSet -> {
+            clientPlantSet.clearServerPlantSetProperties();
+            clientPlantSet.clearServerPlantSetProduceProperties();
+        })).count();
+
+        LOG.info("[Client] Processed " + count + " PlantSet Properties!");
+    }
+
+    // *****
+    // Hooks
+    // *****
+
+    @Mod.EventBusSubscriber(modid = ResynthMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+    private static class Hooks {
+
+        @SubscribeEvent
+        public static void onPlayerServerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+            PlayerEntity player = event.getPlayer();
+            MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+
+            INSTANCE.handleClientConnection(event.getPlayer(), server);
+        }
+    }
 
 }

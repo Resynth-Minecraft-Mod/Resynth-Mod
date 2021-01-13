@@ -105,7 +105,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
             IWorld world = event.getWorld();
 
             //Sets
-            for(PlantSet<?, ?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)){
+            for(PlantSet<?, ?> set : PlantSetAPI.getSetsByType(PlantSetAPI.SetType.CRYSTALLINE)){
                 if(set.isBroken() || set.getSeedSources(Block[].class).length == 0)
                     continue;
 
@@ -143,7 +143,7 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
                 return;
 
             //Sets
-            for(PlantSet<?, ?> set : PublicPlantSetRegistry.getSets(PublicPlantSetRegistry.SetType.CRYSTALLINE)) {
+            for(PlantSet<?, ?> set : PlantSetAPI.getSetsByType(PlantSetAPI.SetType.CRYSTALLINE)) {
                 //Checks
                 if(set.isBroken() || set.getSeedSources(Block[].class).length == 0)
                     continue;

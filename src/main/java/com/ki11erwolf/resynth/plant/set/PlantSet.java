@@ -29,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  *
@@ -75,6 +76,12 @@ public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistry
     private boolean isFailure;
 
     private S[] cachedSeedSources;
+
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private Optional<AbstractPlantSetProperties> serverPlantSetProperties = Optional.empty();
+
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private Optional<AbstractProduceProperties> serverPlantSetProduceProperties = Optional.empty();
 
     /**
      * The plant block instance in the set.
@@ -272,6 +279,30 @@ public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistry
 
     public AbstractProduceProperties getProduceProperties() {
         return this.produceProperties;
+    }
+
+    public Optional<AbstractPlantSetProperties> serverPlantSetProperties() {
+        return serverPlantSetProperties;
+    }
+
+    public Optional<AbstractProduceProperties> serverPlantSetProduceProperties() {
+        return serverPlantSetProduceProperties;
+    }
+
+    protected void setServerPlantSetProperties(AbstractPlantSetProperties serverPlantSetProperties) {
+        this.serverPlantSetProperties = Optional.of(serverPlantSetProperties);
+    }
+
+    protected void setServerPlantSetProduceProperties(AbstractProduceProperties serverPlantSetProduceProperties) {
+        this.serverPlantSetProduceProperties = Optional.of(serverPlantSetProduceProperties);
+    }
+
+    protected void clearServerPlantSetProperties() {
+        this.serverPlantSetProperties = Optional.empty();
+    }
+
+    protected void clearServerPlantSetProduceProperties() {
+        this.serverPlantSetProduceProperties = Optional.empty();
     }
 
     /**

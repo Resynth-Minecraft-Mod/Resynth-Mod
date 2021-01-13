@@ -20,7 +20,7 @@ import com.google.common.collect.Maps;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
-import com.ki11erwolf.resynth.plant.set.PublicPlantSetRegistry;
+import com.ki11erwolf.resynth.plant.set.PlantSetAPI;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.*;
@@ -58,7 +58,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
      * of Resynths recipe providers.
      */
     INSTANCE(// List of custom RecipeProviders
-        PublicPlantSetRegistry.getPlantSetRecipes(), CoreRecipes.INSTANCE
+        PlantSetAPI.getPlantSetRecipes(), CoreRecipes.INSTANCE
     );
 
     // Core recipes provider

@@ -106,20 +106,31 @@ public class MetallicProperties implements AbstractMetallicProperties {
         }
 
         @Override
-        protected void objectToData(AbstractMetallicProperties object, JSerialDataIO dataIO) throws Exception {
-
+        protected void objectToData(AbstractMetallicProperties object, JSerialDataIO dataIO) {
+            dataIO.add(SerializedPropertyValue.TYPE_OF_PROPERTIES.key, "metallic");
+            dataIO.add(SerializedPropertyValue.PROBABILITY_OF_GROWING.key, object.growthProbability());
+            dataIO.add(SerializedPropertyValue.FERTILIZED_BY_BONEMEAL.key, object.bonemealGrowth());
+            dataIO.add(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_SOURCE.key, object.seedSpawnChanceFromOre());
+            dataIO.add(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_PRODUCE.key, object.seedSpawnChanceFromOrganicOre());
         }
 
         @Override
-        protected AbstractMetallicProperties dataToObject(AbstractMetallicProperties suggestedObject, JSerialDataIO dataIO) throws Exception {
-            return null;
+        protected AbstractMetallicProperties dataToObject(AbstractMetallicProperties suggestedObject,
+                                                          JSerialDataIO dataIO) throws Exception {
+            if(!"metallic".equals(dataIO.getString(SerializedPropertyValue.TYPE_OF_PROPERTIES.key)))
+                throw new Exception("Not of type Metallic!");
+
+            boolean bonemealGrowth = dataIO.getBoolean(SerializedPropertyValue.FERTILIZED_BY_BONEMEAL.key);
+            float growthProbability = dataIO.get(SerializedPropertyValue.PROBABILITY_OF_GROWING.key).getAsFloat();
+            float seedSpawnChanceFromMob = dataIO.get(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_SOURCE.key).getAsFloat();
+            float seedSpawnChanceFromBulb = dataIO.get(SerializedPropertyValue.SEED_SPAWN_PROBABILITY_FROM_PRODUCE.key).getAsFloat();
+
+            return new MetallicProperties(bonemealGrowth, growthProbability, seedSpawnChanceFromMob, seedSpawnChanceFromBulb);
         }
 
         @Override
         protected AbstractMetallicProperties createInstance() {
-            return new MetallicProperties(
-                    false, 0, 0, 0
-            );
+            return new MetallicProperties(false, 0, 0, 0);
         }
     }
 }

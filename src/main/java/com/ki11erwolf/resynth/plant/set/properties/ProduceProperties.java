@@ -106,20 +106,24 @@ public class ProduceProperties implements AbstractProduceProperties {
         }
 
         @Override
-        protected void objectToData(AbstractProduceProperties object, JSerialDataIO dataIO) throws Exception {
-
+        protected void objectToData(AbstractProduceProperties object, JSerialDataIO dataIO) {
+            dataIO.add(SerializedPropertyValue.TYPE_OF_PROPERTIES.key, "produce");
+            dataIO.add(SerializedPropertyValue.SMELTED_PRODUCE_YIELD.key, object.produceYield());
         }
 
         @Override
-        protected AbstractProduceProperties dataToObject(AbstractProduceProperties suggestedObject, JSerialDataIO dataIO) throws Exception {
-            return null;
+        protected AbstractProduceProperties dataToObject(AbstractProduceProperties suggested,
+                                                         JSerialDataIO dataIO) throws Exception {
+            if(!"produce".equals(dataIO.getString(SerializedPropertyValue.TYPE_OF_PROPERTIES.key)))
+                throw new Exception("Not of type Produce!");
+
+            int yield = dataIO.get(SerializedPropertyValue.SMELTED_PRODUCE_YIELD.key).getAsInt();
+            return new ProduceProperties(yield, 200, 2);
         }
 
         @Override
         protected AbstractProduceProperties createInstance() {
-            return new ProduceProperties(
-                    0, 0, 0
-            );
+            return new ProduceProperties(0, 0, 0);
         }
     }
 }
