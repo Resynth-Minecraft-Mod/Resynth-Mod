@@ -145,7 +145,7 @@ public abstract class Packet<S extends Packet<S>> {
          * Forge handler provided to register packets.
          */
         private final SimpleChannel handler
-                = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(ResynthMod.MODID, "packets"))
+                = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(ResynthMod.MODID, "basic-packet-channel"))
                     .clientAcceptedVersions(protocolVersion::equals)
                     .serverAcceptedVersions(protocolVersion::equals)
                     .networkProtocolVersion(() -> protocolVersion)

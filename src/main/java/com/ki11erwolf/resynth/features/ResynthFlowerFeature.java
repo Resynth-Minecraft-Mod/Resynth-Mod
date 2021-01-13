@@ -19,8 +19,6 @@ import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -63,19 +61,17 @@ public class ResynthFlowerFeature extends ResynthFeature<ResynthFlowerFeature> {
     }
 
     @Override
-    protected void onConfigure(BiomeGenerationSettingsBuilder builder) throws Exception {
-        if(flower.getRegistryName() == null) throw new Exception("Flower registry name is null");
-
-        Registry.register(
-                WorldGenRegistries.CONFIGURED_FEATURE, flower.getRegistryName(), Feature.ORE.withConfiguration(
-                        new OreFeatureConfig(TARGET_FLOWERS, flower.getDefaultState(), patchSize)
-                ).withPlacement(Placement.RANGE.configure(FLOWER_HEIGHT_RANGE)).square().func_242731_b(patchRarity)
-        );
-
-        ConfiguredFeature<?,?> feature = WorldGenRegistries.CONFIGURED_FEATURE.getOrDefault(flower.getRegistryName());
-
-        if(feature == null) throw new Exception("Flower Feature configuration is null");
-        else builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, feature);
+    protected ConfiguredFeature<?, ?> constructFeature() {
+        return Feature.ORE.withConfiguration(
+                new OreFeatureConfig(TARGET_FLOWERS, flower.getDefaultState(), patchSize)
+        ).withPlacement(Placement.RANGE.configure(FLOWER_HEIGHT_RANGE)).func_242731_b(patchRarity);//.chance(patchRarity * 2);
     }
 
+    @Override
+    protected void onConfigureFeature(BiomeGenerationSettingsBuilder builder) throws Exception {
+        if(flower.getRegistryName() == null) throw new Exception("Flower registry name is null");
+
+        if(getFeature() == null) throw new Exception("Flower Feature was not constructed correctly!");
+        else builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, getFeature());
+    }
 }

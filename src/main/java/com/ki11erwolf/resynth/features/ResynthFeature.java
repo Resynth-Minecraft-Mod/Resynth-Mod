@@ -18,6 +18,7 @@ package com.ki11erwolf.resynth.features;
 import com.ki11erwolf.resynth.ResynthMod;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import org.apache.logging.log4j.Logger;
 
@@ -33,12 +34,16 @@ public abstract class ResynthFeature<T extends ResynthFeature<T>> {
 
     private final List<Biome.Category> biomes;
 
+    private ConfiguredFeature<?, ?> feature;
+
     protected ResynthFeature(ResourceLocation id, Biome.Category[] biomes) {
         this.id = Objects.requireNonNull(id);
         this.biomes = Arrays.asList(biomes);
     }
 
-    protected abstract void onConfigure(BiomeGenerationSettingsBuilder builder) throws Exception;
+    protected abstract ConfiguredFeature<?, ?> constructFeature();
+
+    protected abstract void onConfigureFeature(BiomeGenerationSettingsBuilder builder) throws Exception;
 
     protected final void configure(BiomeGenerationSettingsBuilder builder, Biome.Category biomeCategory) {
         if(!biomes.contains(biomeCategory))
@@ -46,10 +51,18 @@ public abstract class ResynthFeature<T extends ResynthFeature<T>> {
 
         try{
             LOG.debug("Configuring Resynth feature: '" + id.toString() + "' for biome: '" + biomeCategory.getName() + "'...");
-            onConfigure(builder);
+            onConfigureFeature(builder);
         } catch (Exception e) {
             LOG.error("Failed to configure feature: " + id.toString(), e);
         }
+    }
+
+    public ResourceLocation getID() {
+        return this.id;
+    }
+
+    public ConfiguredFeature<?, ?> getFeature() {
+        return feature == null ? feature = constructFeature() : feature;
     }
 
     public ResynthFeature<T> register() {

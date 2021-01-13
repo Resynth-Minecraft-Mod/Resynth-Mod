@@ -24,8 +24,10 @@ import java.security.MessageDigest
 //     Resynth 1.16.4      //
 //#########################//
 
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'eclipse'
 
 //####################################//
@@ -509,18 +511,37 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+
+            mods {
+                resynth {
+                    source sourceSets.main
+                }
+            }
         }
         server {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+
+            mods {
+                resynth {
+                    source sourceSets.main
+                }
+            }
         }
         data {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+
+            mods {
+                resynth {
+                    source sourceSets.main
+                }
+            }
         }
     }
 }

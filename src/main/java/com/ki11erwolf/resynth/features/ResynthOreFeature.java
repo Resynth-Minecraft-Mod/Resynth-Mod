@@ -18,8 +18,6 @@ package com.ki11erwolf.resynth.features;
 import com.ki11erwolf.resynth.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -60,20 +58,19 @@ public class ResynthOreFeature extends ResynthFeature<ResynthOreFeature> {
     }
 
     @Override
-    protected void onConfigure(BiomeGenerationSettingsBuilder builder) throws Exception {
+    protected ConfiguredFeature<?, ?> constructFeature() {
+        return Feature.ORE.withConfiguration(
+                new OreFeatureConfig(target, ore.getDefaultState(), veinSize)
+        ).withPlacement(Placement.RANGE.configure(
+                new TopSolidRangeConfig(veinMinHeight, veinMinHeight, veinMaxHeight)
+        )).square().func_242731_b(veinRarity);
+    }
+
+    @Override
+    protected void onConfigureFeature(BiomeGenerationSettingsBuilder builder) throws Exception {
         if(ore.getRegistryName() == null) throw new Exception("Ore registry name is null");
 
-        Registry.register(
-                WorldGenRegistries.CONFIGURED_FEATURE, ore.getRegistryName(), Feature.ORE.withConfiguration(
-                        new OreFeatureConfig(target, ore.getDefaultState(), veinSize)
-                ).withPlacement(Placement.RANGE.configure(
-                        new TopSolidRangeConfig(veinMinHeight, veinMinHeight, veinMaxHeight)
-                )).square().func_242731_b(veinRarity)
-        );
-
-        ConfiguredFeature<?,?> feature = WorldGenRegistries.CONFIGURED_FEATURE.getOrDefault(ore.getRegistryName());
-
-        if(feature == null) throw new Exception("Ore Feature configuration is null");
-        else builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, feature);
+        if(getFeature() == null) throw new Exception("Ore Feature was not constructed correctly!");
+        else builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, getFeature());
     }
 }

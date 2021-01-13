@@ -23,16 +23,27 @@ import com.ki11erwolf.resynth.config.categories.MineralStoneGenConfig;
 import com.ki11erwolf.resynth.config.categories.SeedPodConfig;
 import com.ki11erwolf.resynth.config.categories.SylvaniteGenConfig;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.IForgeRegistry;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Mod.EventBusSubscriber(modid = ResynthMod.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ResynthFeatures {
+
+    private static final Logger LOG = ResynthMod.getNewLogger();
 
     private static final List<ResynthFeature<?>> FEATURE_LIST = new ArrayList<>();
 
@@ -101,6 +112,18 @@ public class ResynthFeatures {
     private static void onBiomeLoading(BiomeLoadingEvent event) {
         BiomeGenerationSettingsBuilder generation = event.getGeneration();
         FEATURE_LIST.forEach((resynthFeature -> resynthFeature.configure(generation, event.getCategory())));
+    }
+
+    @SubscribeEvent
+    public static void registerFeatures(RegistryEvent.Register<Feature<?>> event) {
+        IForgeRegistry<Feature<?>> featureRegistry = event.getRegistry();
+        FEATURE_LIST.stream().peek(
+                feature -> LOG.info("Registering ResynthFeature {}.", feature.getID().toString())
+        ).filter(
+                feature -> feature.getFeature() != null
+        ).forEach(
+                feature -> Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, feature.getID(), feature.getFeature())
+        );
     }
 
     private static Biome.Category[] getOverworldBiomes() {

@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth.proxy;
 
+import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.plant.block.BlockPlant;
 import com.ki11erwolf.resynth.plant.set.PlantSetAPI;
@@ -22,11 +23,21 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Client side initialization class.
  */
 public class ClientProxy extends ServerProxy {
+
+    /**
+     * Logger for this class.
+     */
+    private static final Logger LOG = ResynthMod.getNewLogger();
+
+    public ClientProxy() {
+        LOG.info("Resynth ClientProxy initialized!");
+    }
 
     /**
      * {@inheritDoc}

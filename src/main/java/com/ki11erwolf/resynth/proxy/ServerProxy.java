@@ -40,6 +40,11 @@ public class ServerProxy implements Proxy {
      */
     private static final Logger LOG = ResynthMod.getNewLogger();
 
+    public ServerProxy() {
+        LOG.info("Resynth ServerProxy initialized!");
+    }
+
+
     /**
      * {@inheritDoc}
      *

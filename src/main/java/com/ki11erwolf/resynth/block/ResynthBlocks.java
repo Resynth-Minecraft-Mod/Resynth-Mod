@@ -118,8 +118,7 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
      *
      * @param event forge event.
      */
-    @SubscribeEvent
-    //Reflection
+    @SubscribeEvent//Reflection
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         INSTANCE.iterateQueue(block -> {
             ResynthMod.getNewLogger().debug("Registering Resynth Block: " + block);
