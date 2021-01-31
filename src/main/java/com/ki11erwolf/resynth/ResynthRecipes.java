@@ -399,14 +399,21 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
         }
 
         // Attempt to reset the 'someRecipesErrored' flag. Failure not fatal.
-        try {
-            Field erroredField = RecipeManager.class.getDeclaredField("someRecipesErrored");
-            erroredField.setAccessible(true);
-            erroredField.set(getRecipeManager(), false);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            LOG.error("Failed to reset 'RecipeManager.someRecipesErrored'! Continuing anyway...");
-        }
+        Field recipesErroredField = Arrays.stream(RecipeManager.class.getDeclaredFields())
+                .filter(field -> field.getType().equals(boolean.class))
+                .findFirst().orElse(null);
+
+        if(recipesErroredField != null) {
+            try {
+                recipesErroredField.setAccessible(true);
+                recipesErroredField.setBoolean(getRecipeManager(), false);
+                LOG.info("Reset the 'RecipeManager.someRecipesErrored' field.");
+            } catch (IllegalAccessException exception) {
+                LOG.error("Reset failed!", exception);
+            }
+        } else LOG.error("Could not find 'RecipeManager.someRecipesErrored', or any Boolean type fields at all.");
     }
+
 
     /**
      * @return the {@link #recipeManager} used to register recipes to the game.

@@ -484,6 +484,7 @@ version = MOD_VERSION
 group = "com.ki11erwolf.${archivesBaseName}"
 
 String mappingsVersion = ext.getProperty("version.minecraft-mappings")
+//noinspection GroovyUnusedAssignment
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 /**
