@@ -82,8 +82,6 @@ import java.util.Random;
 public abstract class BlockPlant<T extends BlockPlant<T>> extends ResynthBlock<T> implements
         IPlantable, IGrowable, IComponentProvider, IProbeInfoAccessor, ItemMineralHoe.MineralHoeInfoProvider {
 
-    //TODO: I want to clean up the code for growth and probability.
-
     /**
      * Reference to the general config settings - for light level based growth.
      */

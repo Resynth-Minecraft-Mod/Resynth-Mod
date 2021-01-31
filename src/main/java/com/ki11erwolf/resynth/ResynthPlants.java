@@ -42,7 +42,6 @@ import static net.minecraft.entity.EntityType.*;
  * All plant sets in this class are referred to as Vanilla plant sets.
  */
 //A thought: a json system that parses a json file containing the information in this class.
-//TODO: I should really write a script to automate asset creation for new plants
 public class ResynthPlants {
 
     // **************

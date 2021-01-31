@@ -46,7 +46,6 @@ import static com.ki11erwolf.resynth.ResynthPlants.DEFAULT_PRODUCE_PROPERTIES;
 @SuppressWarnings("ConstantConditions")
 public class ResynthModPlants {
 
-    //TODO: Updated mods: AE2, Thermal Foundation, Immersive Engineering
     //TODO: Netherite plant should be Metallic, not Crystalline
 
     // ********

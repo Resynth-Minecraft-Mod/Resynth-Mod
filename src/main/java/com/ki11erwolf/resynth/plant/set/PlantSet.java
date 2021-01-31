@@ -40,13 +40,6 @@ import java.util.Optional;
  */
 public abstract class PlantSet<P extends BlockPlant<?>, S extends IForgeRegistryEntry<?>> {
 
-    //TODO: attempt to implement recipes related to plants in code.
-    //TODO: look into programmatically generating plant set assets.
-
-    //TODO: base class handling of seed spawner(s)?
-
-    //TODO: add client/server PlantSet Properties Synchronizer system (packets)
-
     /**
      * The logger for this class.
      */
