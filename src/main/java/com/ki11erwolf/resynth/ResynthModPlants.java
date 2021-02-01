@@ -46,8 +46,6 @@ import static com.ki11erwolf.resynth.ResynthPlants.DEFAULT_PRODUCE_PROPERTIES;
 @SuppressWarnings("ConstantConditions")
 public class ResynthModPlants {
 
-    //TODO: Netherite plant should be Metallic, not Crystalline
-
     // ********
     //   Mods
     // ********
