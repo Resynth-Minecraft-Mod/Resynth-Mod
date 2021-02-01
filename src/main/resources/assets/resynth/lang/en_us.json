@@ -475,27 +475,80 @@
   "tooltip.resynth.common.alt_for_info":            "Hold %s<Alt>%s for additional info",
   "tooltip.resynth.common.unspecified":             "Tooltip is missing...",
 
-  "______COMMENT": "----Plant Item Tooltips----",
-  "tooltip.item.resynth.crystalline_seeds":
-  "Obtained by mining the ore the final resource is obtained from, or by leaving the plant produce (Shards) to despawn in water. Any plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
-  "tooltip.item.resynth.metallic_seeds":
-  "Obtained by blowing up the ore the final resource is obtained from with TNT, or by blowing up the plant produce (Organic Ore) with TNT. Any plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
-  "tooltip.item.resynth.biochemical_seeds":
-  "Obtained by killing the mob the final resource is obtained from, or by smashing the plant produce (Bulbs). Any plant can be hit (right-clicked) with a Mineral Hoe to check its growth.",
-  "tooltip.item.resynth.shard":
-  "Can be smelted into the final resource or left in water to despawn for a chance at getting more seeds.",
-  "tooltip.item.resynth.bulb":
-  "Can be smelted into the final resource, or smashed (by holding right-click) for a chance at getting more seeds.",
-
-  "_______COMMENT": "----Plant Block Tooltips----",
-  "tooltip.block.resynth.organic_ore":
-  "Can be smelted into the final resource ore, or blown up for a chance at getting more seeds. ",
-
   "_________COMMENT": "---Miscellaneous---",
   "misc.resynth.mineral_content": "Mineral Content: %s%%",
 
-  "___________COMMENT": "--- FOR TRANSLATION: new entries that have either been changed or not yet translated. ---",
-  "misc.resynth.growth_stage":                        "Growth Stage: %s",
+  "################## COMMENT ##################": "--- FOR TRANSLATION: new entries that have either been changed or not yet translated. ---",
+  "misc.resynth.growth_stage":  "Growth Stage: %s",
+
+  "______COMMENT": "----Plant Seed Tooltips----",
+  "tooltip.item.resynth.crystalline_seeds":
+  "Crystalline Seeds which can be planted on Mineral Enriched Soil to grow the specific item or other resource that the plant produces - indefinitely.\n\nCrystalline plants typically grow items mined from ore blocks or other similar types of item resources. Crystalline plants are very similar to Minecraft Wheat plants. They take a while to grow, and need to be fully regrown every harvest. Crystalline plants grow a type of produce called a Shard, which is used to obtain the final item resource. Crystalline plants can be harvested when fully grown, either by breaking or right-clicking the plant.\n\nAll Resynth plants will only ever drop 1 item of Seeds when broken. This ensures the plant is never lost, while also making the process of obtaining additional seeds more complex by requiring the produce harvested from the plant be destroyed.",
+  "tooltip.item.resynth.metallic_seeds":
+  "Metallic Seeds which can be planted on Mineral Enriched Soil to grow the specific item or other resource that the plant produces - indefinitely.\n\nMetallic plants typically grow complete ores and other blocks in the world as Organic Ore. Metallic plants are very similar to Minecraft Melon plants. They take very long to grow, however, they produce Organic Ore very quickly once grown and don't need to be grown again. Metallic plants grow a type of produce called Organic Ore, which is used to obtain the final item resource. Metallic plants cannot be harvested, instead, the plant grows a block in the world which can be broken or mined.\n\nAll Resynth plants will only ever drop 1 item of Seeds when broken. This ensures the plant is never lost, while also making the process of obtaining additional seeds more complex by requiring the produce harvested from the plant be destroyed.",
+  "tooltip.item.resynth.biochemical_seeds":
+  "Biochemical Seeds which can be planted on Mineral Enriched Soil to grow the specific item or other resource that the plant produces - indefinitely.\n\nBiochemical plants typically grow resources dropped by mobs when killed or other similar types of resources. Biochemical plants are somewhat similar to Minecraft Wheat plants. Initially, they grow slowly and need a long while to fully mature, much like Wheat. However, after being harvested, they only need to grow for a bit less than half the time to fully mature again. Biochemical plants grow a type of produce called a Bulb, which is used to obtain the final item resource. Biochemical plants should NOT be broken when fully grown, instead, harvest the produce from the plant with a right-click on the plant.\n\nAll Resynth plants will only ever drop 1 item of Seeds when broken. This ensures the plant is never lost, while also making the process of obtaining additional seeds more complex by requiring the produce harvested from the plant be destroyed.",
+
+  "_______COMMENT": "----Plant Produce Tooltips----",
+  "tooltip.item.resynth.shard":
+  "Crystalline Produce harvested from a Crystalline type plant - the type of plant that typically grows item resources, usually dropped by ore blocks.\n\nTo extract the resource from this, or any other item of produce, simply smelt it in a furnace. The amount of resources varies depending on the exact resource. This method of getting resources from produce is common to all plant and produce types.\n\nOtherwise, this item of produce can instead be destroyed for a small chance at getting more seeds, to grow additional plants of this exact type. To destroy the item of produce, leave it in a pool of water for a minutes or two. The item will dissolve in the water, and leave behind seeds if you're lucky. All Crystalline Produce items from Crystalline type plants can be destroyed in this manner.",
+  "tooltip.item.resynth.bulb":
+  "Biochemical Produce harvested from a Biochemical type plant - the type of plant that typically grows mob-drops or other similar resources.\n\nTo extract the resource from this, or any other item of produce, simply smelt it in a furnace. The amount of resources varies depending on the exact resource. This method of getting resources from produce is common to all plant and produce types.\n\nOtherwise, this item of produce can instead be destroyed for a small chance at getting more seeds, to grow additional plants of this exact type. To destroy the item of produce, right-click and hold with the item in hand. The item will shatter into dust after a short delay, and leave behind seeds if you're lucky. All Biochemical Produce items from Biochemical type plants can be destroyed in this manner.",
+  "tooltip.block.resynth.organic_ore":
+  "Metallic Produce harvested from a Metallic type plant - the type of plant that typically grows complete ores and other blocks (organically).\n\nTo extract the resource from this, or any other item of produce, simply smelt it in a furnace. The amount of resources varies depending on the exact resource. This method of getting resources from produce is common to all plant and produce types.\n\nOtherwise, this item of produce can instead be destroyed for a small chance at getting more seeds, to grow additional plants of this exact type. To destroy the item of produce, place it and blow it up with a block of TNT. The block of produce will (most likely) be blown to bits, and leave behind seeds if you're lucky. All Metallic Produce items from Metallic type plants can be destroyed in this manner.",
+
+  "__________COMMENT": "---Mineral Hoe Information Messages---",
+  "message.resynth.mineral_hoe_information.plant_info_header":
+  "%s------------------  %sPlant Information  %s-----------------",
+  "message.resynth.mineral_hoe_information.plant_growth":
+  "%sGrowth Phase: %s%s %sof %s%s %sin the harvest cycle.",
+  "message.resynth.mineral_hoe_information.base_growth_rate":
+  "%sBase Growth Rate: %s%s%%.",
+  "message.resynth.mineral_hoe_information.soil_growth_modifier":
+  "%sSoil Growth Multiplier: %s%s%%.",
+  "message.resynth.mineral_hoe_information.light_growth_modifier":
+  "%sAmbient Light Growth Multiplier: %s%s%%",
+  "message.resynth.mineral_hoe_information.plant_growth_rate":
+  "%sChance of Growth: %s%s%% %s per tick",
+  "message.resynth.mineral_hoe_information.soil_info_header":
+  "%s---------------- %sMineral Soil Information %s---------------",
+  "message.resynth.mineral_hoe_information.soil_mineral_concentration":
+  "%sMineral Concentration: %s%s%% %s(%s%s%% + %s%s%%%s)",
+  "message.resynth.mineral_hoe_information.soil_enhancer":
+  "%sConcentration Enhancer: %s%s %s(%s+%s%%%s)",
+  "message.resynth.mineral_hoe_information.hopper_auto_harvesting":
+  "%sHopper Auto-Harvesting: %s%s",
+  "message.resynth.mineral_hoe_information.footer":
+  "%s----------------------------------------------------",
+  "value.resynth.mineral_hoe_information.true": "Yes",
+  "value.resynth.mineral_hoe_information.false": "No",
+  "value.resynth.mineral_hoe_information.no_enhancer": "None",
+  "value.resynth.mineral_hoe_information.calvinite_enhancer": "Calvinite",
+  "value.resynth.mineral_hoe_information.sylvanite_enhancer": "Sylvanite",
+
+
+  "________COMMENT": "----PlantSet Property Tooltips----",
+  "tooltip.resynth.plantset.property.bonemeal_effective":      "Bonemeal:%s effective",
+  "tooltip.resynth.plantset.property.bonemeal_ineffective":    "Bonemeal:%s ineffective",
+  "tooltip.resynth.plantset.property.growth_rate":             "Base Growth Rate: %s%s",
+  "tooltip.resynth.plantset.property.seed_sources":            "Seeds Dropped by %s: %s%s",
+  "tooltip.resynth.plantset.property.ore_seed_drop_rate":      "Ore Blocks Drop Seeds: %s%s%s of the time.",
+  "tooltip.resynth.plantset.property.mob_seed_drop_rate":      "Mobs Drop Seeds: %s%s%s of the time.",
+  "tooltip.resynth.plantset.property.produce_seed_drop_rate":  "Produce Drops Seeds: %s%s%s of the time.",
+  "tooltip.resynth.plantset.property.plant_yield":             "Plant Yield: %s%s%s produce items ",
+  "tooltip.resynth.plantset.property.plant_yield_singular":    "Plant Yield: %s%s%s produce item",
+  "tooltip.resynth.plantset.property.produce_yield":           "Produce Yield: %s%s%s items",
+  "tooltip.resynth.plantset.property.produce_yield_singular":  "Produce Yield: %s%s%s item",
+  "tooltip.resynth.plantset.property.synchronized":            "%sUsing Server Configured Stats!",
+
+  "tooltip.resynth.plantset.property.seed_sources.crystalline":   "Mining",
+  "tooltip.resynth.plantset.property.seed_sources.metallic":      "Blowing Up",
+  "tooltip.resynth.plantset.property.seed_sources.biochemical":   "Slaying",
+
+  "tooltip.resynth.plantset.property.broken":
+  "This plant and its items are broken!",
+  "tooltip.resynth.plantset.property.broken.information":
+  "A severe error has occurred while attempting to build and setup the plant, seeds, and produce of this set, which was registered to the game but is now fundamentally broken and unusable. The error was immediately handled by Resynth to avoid crashing, by logging the error, stopping the setup and flagging the set as broken - preventing it and its items from being obtained, used, planted, or otherwise interacting with the game, and with error message tooltips on the sets items. It may still however, be possible to smelt any left over produce. These types of errors are almost always caused by an Item, Block, Mob, or other game resource used and required by the plant set, which was expected to be registered to the game but could not be found. Such as when another mod deletes, renames, or changes a resource - that Resynth has a plant and set for, and expects to exist with a specific name. Submit a bug report at https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/issues to get this problem sorted.",
 
   "block.resynth.metallic_plant_ancient_debris":        "Ancient Debris Plant",
   "item.resynth.metallic_seeds_ancient_debris":         "Ancient Debris Seeds",
@@ -575,58 +628,5 @@
 
   "block.resynth.metallic_plant_thermal_tin":               "Tin Plant (Thermal Foundation)",
   "item.resynth.metallic_seeds_thermal_tin":                "Tin Seeds (Thermal Foundation)",
-  "block.resynth.metallic_organic_ore_thermal_tin":         "Organic Tin (Thermal Foundation)",
-
-  "__________COMMENT": "---Mineral Hoe Information Messages---",
-  "message.resynth.mineral_hoe_information.plant_info_header":
-  "%s------------------  %sPlant Information  %s-----------------",
-  "message.resynth.mineral_hoe_information.plant_growth":
-  "%sGrowth Phase: %s%s %sof %s%s %sin the harvest cycle.",
-  "message.resynth.mineral_hoe_information.base_growth_rate":
-  "%sBase Growth Rate: %s%s%%.",
-  "message.resynth.mineral_hoe_information.soil_growth_modifier":
-  "%sSoil Growth Multiplier: %s%s%%.",
-  "message.resynth.mineral_hoe_information.light_growth_modifier":
-  "%sAmbient Light Growth Multiplier: %s%s%%",
-  "message.resynth.mineral_hoe_information.plant_growth_rate":
-  "%sChance of Growth: %s%s%% %s per tick",
-  "message.resynth.mineral_hoe_information.soil_info_header":
-  "%s---------------- %sMineral Soil Information %s---------------",
-  "message.resynth.mineral_hoe_information.soil_mineral_concentration":
-  "%sMineral Concentration: %s%s%% %s(%s%s%% + %s%s%%%s)",
-  "message.resynth.mineral_hoe_information.soil_enhancer":
-  "%sConcentration Enhancer: %s%s %s(%s+%s%%%s)",
-  "message.resynth.mineral_hoe_information.hopper_auto_harvesting":
-  "%sHopper Auto-Harvesting: %s%s",
-  "message.resynth.mineral_hoe_information.footer":
-  "%s----------------------------------------------------",
-  "value.resynth.mineral_hoe_information.true": "Yes",
-  "value.resynth.mineral_hoe_information.false": "No",
-  "value.resynth.mineral_hoe_information.no_enhancer": "None",
-  "value.resynth.mineral_hoe_information.calvinite_enhancer": "Calvinite",
-  "value.resynth.mineral_hoe_information.sylvanite_enhancer": "Sylvanite",
-
-
-  "________COMMENT": "----PlantSet Property Tooltips----",
-  "tooltip.resynth.plantset.property.bonemeal_effective":      "Bonemeal:%s effective",
-  "tooltip.resynth.plantset.property.bonemeal_ineffective":    "Bonemeal:%s ineffective",
-  "tooltip.resynth.plantset.property.growth_rate":             "Base Growth Rate: %s%s",
-  "tooltip.resynth.plantset.property.seed_sources":            "Seeds Dropped by %s: %s%s",
-  "tooltip.resynth.plantset.property.ore_seed_drop_rate":      "Ore Blocks Drop Seeds: %s%s%s of the time.",
-  "tooltip.resynth.plantset.property.mob_seed_drop_rate":      "Mobs Drop Seeds: %s%s%s of the time.",
-  "tooltip.resynth.plantset.property.produce_seed_drop_rate":  "Produce Drops Seeds: %s%s%s of the time.",
-  "tooltip.resynth.plantset.property.plant_yield":             "Plant Yield: %s%s%s produce items ",
-  "tooltip.resynth.plantset.property.plant_yield_singular":    "Plant Yield: %s%s%s produce item",
-  "tooltip.resynth.plantset.property.produce_yield":           "Produce Yield: %s%s%s items",
-  "tooltip.resynth.plantset.property.produce_yield_singular":  "Produce Yield: %s%s%s item",
-  "tooltip.resynth.plantset.property.synchronized":            "%sUsing Server Configured Stats!",
-
-  "tooltip.resynth.plantset.property.seed_sources.crystalline":   "Mining",
-  "tooltip.resynth.plantset.property.seed_sources.metallic":      "Blowing Up",
-  "tooltip.resynth.plantset.property.seed_sources.biochemical":   "Slaying",
-
-  "tooltip.resynth.plantset.property.broken":
-  "This plant and its items are broken!",
-  "tooltip.resynth.plantset.property.broken.information":
-  "A severe error has occurred while attempting to build and setup the plant, seeds, and produce of this set, which was registered to the game but is now fundamentally broken and unusable. The error was immediately handled by Resynth to avoid crashing, by logging the error, stopping the setup and flagging the set as broken - preventing it and its items from being obtained, used, planted, or otherwise interacting with the game, and with error message tooltips on the sets items. It may still however, be possible to smelt any left over produce. These types of errors are almost always caused by an Item, Block, Mob, or other game resource used and required by the plant set, which was expected to be registered to the game but could not be found. Such as when another mod deletes, renames, or changes a resource - that Resynth has a plant and set for, and expects to exist with a specific name. Submit a bug report at https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/issues to get this problem sorted."
+  "block.resynth.metallic_organic_ore_thermal_tin":         "Organic Tin (Thermal Foundation)"
 }
