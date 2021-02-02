@@ -59,12 +59,12 @@ public class ResynthMod {
     /**
      * Resynth version.
      */
-    public static final String MOD_VERSION = "6.0.0";
+    public static final String MOD_VERSION = "6.1.0";
 
     /**
      * Minecraft version.
      */
-    public static final String MC_VERSION = "[1.16.4]";
+    public static final String MC_VERSION = "[1.16.5]";
 
     /**
      * FML initialized proxy. Will be ServerProxy on dedicated server, ClientProxy otherwise.
