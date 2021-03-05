@@ -49,7 +49,7 @@ public class ResynthItems extends QueueRegisterer<Item> {
     /**
      * Mineral Rock. The item dropped from Mineral Rich Rock.
      */
-    public static final ResynthItem<?> ITEM_MINERAL_ROCK
+    public static final ResynthItem<ItemMineralRock> ITEM_MINERAL_ROCK
             = new ItemMineralRock().queueRegistration();
 
     /**
@@ -61,13 +61,13 @@ public class ResynthItems extends QueueRegisterer<Item> {
     /**
      * Mineral Crystal. Recipe component for the Mineral Hoe.
      */
-    public static final ResynthItem<?> ITEM_MINERAL_CRYSTAL
+    public static final ResynthItem<ItemMineralCrystal> ITEM_MINERAL_CRYSTAL
             = new ItemMineralCrystal("mineral_crystal").queueRegistration();
 
     /**
      * Mineral Hoe. Resynth's tool of choice.
      */
-    public static final ResynthItem<?> ITEM_MINERAL_HOE
+    public static final ResynthItem<ItemMineralHoe> ITEM_MINERAL_HOE
             = new ItemMineralHoe("mineral_hoe").queueRegistration();
 
     /**

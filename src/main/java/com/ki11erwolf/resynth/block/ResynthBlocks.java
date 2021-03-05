@@ -74,34 +74,32 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
     /**
      * Mystical Seed Pod. The random biochemical seed dropper plant.
      */
-    public static final ResynthBlock<?> BLOCK_SEED_POD
+    public static final ResynthBlock<BlockSeedPod> BLOCK_SEED_POD
             = new BlockSeedPod("seed_pod").queueRegistration();
 
     /**
      * Calaverite ore. Spawns in the nether.
      */
-    public static final ResynthBlock<?> BLOCK_CALVINITE_NETHERRACK
+    public static final ResynthBlock<BlockOre> BLOCK_CALVINITE_NETHERRACK
             = new BlockOre("calvinite_netherrack").queueRegistration();
 
     /**
      * Sylvanite ore. Spawns in the end.
      */
-    public static final ResynthBlock<?> BLOCK_SYLVANITE_END_STONE
+    public static final ResynthBlock<BlockOre> BLOCK_SYLVANITE_END_STONE
             = new BlockOre("sylvanite_end_stone").queueRegistration();
 
     /**
      * Calvinite Enhancer. Allows creating tier 2 Mineral Soil.
      */
-    @SuppressWarnings({"unused", "RedundantSuppression"})
-    public static final ResynthBlock<?> BLOCK_CALVINITE_ENHANCER = new BlockEnhancer(
+    public static final ResynthBlock<BlockEnhancer> BLOCK_CALVINITE_ENHANCER = new BlockEnhancer(
             "calvinite", ENHANCERS_CONFIG.getCalviniteMineralConcentrationIncrease(), 1
     ).queueRegistration();
 
     /**
      * Sylvanite Enhancer. Allows creating tier 3 Mineral Soil.
      */
-    @SuppressWarnings({"unused", "RedundantSuppression"})
-    public static final ResynthBlock<?> BLOCK_SYLVANITE_ENHANCER = new BlockEnhancer(
+    public static final ResynthBlock<BlockEnhancer> BLOCK_SYLVANITE_ENHANCER = new BlockEnhancer(
             "sylvanite", ENHANCERS_CONFIG.getSylvaniteMineralConcentrationIncrease(), 2
     ).queueRegistration();
 
@@ -109,7 +107,7 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
      * The weakened form of Ancient Debris which is used to get Seeds by blowing it up.
      */
     public static final ResynthBlock<DamagedBlock<Block>> WEAK_ANCIENT_DEBRIS = new DamagedBlock<>(
-            Blocks.ANCIENT_DEBRIS, 0
+            Blocks.ANCIENT_DEBRIS
     ).queueRegistration();
 
     // *****

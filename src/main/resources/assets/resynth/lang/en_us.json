@@ -460,7 +460,7 @@
   "tooltip.block.resynth.sylvanite_enhancer":
   "Can be placed directly underneath Mineral Enriched Soil, with a Mineral Content of 50%%, to increase its Mineral Content by another %s%%\n\nPlace a Hopper underneath this block to force plants to put their produce inside the hopper.",
   "tooltip.block.resynth.damaged":
-  "%s that has been lightly damaged in a crafting table; making it much weaker to TNT and more likely to drop Seeds. Any excess damaged blocks can be repaired in a crafting table if necessary.",
+  "%s that has been lightly damaged in a crafting table; making it much weaker to TNT and way more likely to drop Seeds. Any excess damaged blocks can be repaired in a crafting table if necessary. Use this version to get Seeds",
 
   "tooltip.item.resynth.mineral_hoe":
   "Resynth's tool of choice. Needed to till dirt or grass into a special farmland block needed for Resynth plants. Each use of the Mineral Hoe requires a charge. 1 charge = 1 Mineral Crystal. Charges can be added to the Mineral Hoe by right-clicking air, or shift-right-clicking a block, with the Hoe in hand and Mineral Crystals in your inventory. Can be used to check the growth stage of a plant by right-clicking it, or the Mineral Content of Mineral Soil by right clicking it. Can be used to grow any plant while in creative by shift-right-clicking the plant.",

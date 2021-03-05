@@ -99,11 +99,11 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         ResourceLocation fromRecipeID = new ResourceLocation(ResynthMod.MODID, set.getSetName() + "-from-" + recipeType);
 
         addRecipe(new ShapelessRecipeDefinition(
-                set, toRecipeID, recipeType, weakOre.getRegistryName(), 1, weakOre.original.getRegistryName()
+                set, toRecipeID, recipeType, weakOre.getRegistryName(), 1, weakOre.of().getRegistryName()
         ));
 
         addRecipe(new ShapelessRecipeDefinition(
-                set, fromRecipeID, recipeType, weakOre.original.getRegistryName(), 1, weakOre.getRegistryName()
+                set, fromRecipeID, recipeType, weakOre.of().getRegistryName(), 1, weakOre.getRegistryName()
         ));
     }
 
