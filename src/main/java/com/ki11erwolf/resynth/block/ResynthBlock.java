@@ -164,7 +164,7 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
     }
 
     /**
-     * Attempts to get the tooltip with the given blocks decription
+     * Attempts to get the tooltip with the given blocks description
      * from the user selected language file. The returned tooltip
      * will be formatted ({@link String#format(String, Object...)})
      * using the given parameters.

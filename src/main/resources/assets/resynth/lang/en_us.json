@@ -62,6 +62,12 @@
   "item.resynth.crystalline_seeds_cookie":                  "Cookie Seeds",
   "item.resynth.crystalline_shard_cookie":                  "Cookie Shard",
 
+  "block.resynth.damaged_ancient_debris":                   "Damaged Ancient Debris",
+
+  "block.resynth.metallic_plant_ancient_debris":            "Ancient Debris Plant",
+  "item.resynth.metallic_seeds_ancient_debris":             "Ancient Debris Seeds",
+  "block.resynth.metallic_organic_ore_ancient_debris":      "Organic Ancient Debris",
+
   "block.resynth.metallic_plant_iron":                      "Iron Plant",
   "item.resynth.metallic_seeds_iron":                       "Iron Seeds",
   "block.resynth.metallic_organic_ore_iron":                "Organic Iron Ore",
@@ -453,6 +459,8 @@
   "Can be placed directly underneath Mineral Enriched Soil, with a Mineral Content of 50%%, to increase its Mineral Content by another %s%%\n\nPlace a Hopper underneath this block to force plants to put their produce inside the hopper.",
   "tooltip.block.resynth.sylvanite_enhancer":
   "Can be placed directly underneath Mineral Enriched Soil, with a Mineral Content of 50%%, to increase its Mineral Content by another %s%%\n\nPlace a Hopper underneath this block to force plants to put their produce inside the hopper.",
+  "tooltip.block.resynth.damaged":
+  "%s that has been lightly damaged in a crafting table; making it much weaker to TNT and more likely to drop Seeds. Any excess damaged blocks can be repaired in a crafting table if necessary.",
 
   "tooltip.item.resynth.mineral_hoe":
   "Resynth's tool of choice. Needed to till dirt or grass into a special farmland block needed for Resynth plants. Each use of the Mineral Hoe requires a charge. 1 charge = 1 Mineral Crystal. Charges can be added to the Mineral Hoe by right-clicking air, or shift-right-clicking a block, with the Hoe in hand and Mineral Crystals in your inventory. Can be used to check the growth stage of a plant by right-clicking it, or the Mineral Content of Mineral Soil by right clicking it. Can be used to grow any plant while in creative by shift-right-clicking the plant.",
@@ -549,10 +557,6 @@
   "This plant and its items are broken!",
   "tooltip.resynth.plantset.property.broken.information":
   "A severe error has occurred while attempting to build and setup the plant, seeds, and produce of this set, which was registered to the game but is now fundamentally broken and unusable. The error was immediately handled by Resynth to avoid crashing, by logging the error, stopping the setup and flagging the set as broken - preventing it and its items from being obtained, used, planted, or otherwise interacting with the game, and with error message tooltips on the sets items. It may still however, be possible to smelt any left over produce. These types of errors are almost always caused by an Item, Block, Mob, or other game resource used and required by the plant set, which was expected to be registered to the game but could not be found. Such as when another mod deletes, renames, or changes a resource - that Resynth has a plant and set for, and expects to exist with a specific name. Submit a bug report at https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/issues to get this problem sorted.",
-
-  "block.resynth.metallic_plant_ancient_debris":        "Ancient Debris Plant",
-  "item.resynth.metallic_seeds_ancient_debris":         "Ancient Debris Seeds",
-  "block.resynth.metallic_organic_ore_ancient_debris":  "Organic Ancient Debris",
 
   "block.resynth.crystalline_plant_appliedenergistics2_certus_quartz":          "Certus Quartz Plant (Applied Energistics 2)",
   "item.resynth.crystalline_seeds_appliedenergistics2_certus_quartz":           "Certus Quartz Seeds (Applied Energistics 2)",

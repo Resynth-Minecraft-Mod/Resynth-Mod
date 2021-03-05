@@ -257,7 +257,7 @@ public class ResynthPlants {
             minecraftResource("ancient_debris"), ANCIENT_DEBRIS_PROPERTIES,
             new ProduceProperties(
                     2, 200, 2
-            ), Blocks.ANCIENT_DEBRIS, Blocks.ANCIENT_DEBRIS
+            ), Blocks.ANCIENT_DEBRIS, ResynthBlocks.WEAK_ANCIENT_DEBRIS
     ).register();
 
     /**

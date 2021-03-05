@@ -25,6 +25,7 @@ import com.ki11erwolf.resynth.config.categories.ProducePropertiesConfig;
 import com.ki11erwolf.resynth.plant.block.BlockBiochemicalPlant;
 import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
 import com.ki11erwolf.resynth.plant.block.BlockMetallicPlant;
+import com.ki11erwolf.resynth.block.DamagedBlock;
 import com.ki11erwolf.resynth.plant.set.properties.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -150,10 +151,20 @@ public class PlantSetFactory {
             oreIDs.add(ore.getRegistryName());
         }
 
-        return createMetallicSet(
+        //Create set
+        PlantSet<? extends BlockMetallicPlant, Block> set = createMetallicSet(
                 validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(produceConfig),
                 Objects.requireNonNull(outputItem).asItem().getRegistryName(), oreIDs.toArray(new ResourceLocation[0])
         );
+
+        //Register crafting recipes from any blocks of type BlockWeakOre
+        for(Block ore : Objects.requireNonNull(oreBlocks)) {
+            if (ore instanceof DamagedBlock && set != null) {
+                PlantSetRecipes.INSTANCE.addWeakOreRecipe(set, ((DamagedBlock<?>) ore));
+            }
+        }
+
+        return set;
     }
 
     public static PlantSet<? extends BlockMetallicPlant, Block> makeMetallicSet(
@@ -456,7 +467,8 @@ public class PlantSetFactory {
                                 "Could not get Metallic seed source entity '%s' for the PlantSet '%s'",
                                 entityID.toString(), name
                         ), null, null);
-                    else ores.add(ore);
+                    else
+                        ores.add(ore);
                 }
 
                 return ores.toArray(new Block[0]);
