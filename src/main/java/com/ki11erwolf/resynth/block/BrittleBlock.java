@@ -16,131 +16,128 @@
 
 package com.ki11erwolf.resynth.block;
 
+import com.ki11erwolf.resynth.ResynthRecipes;
 import com.ki11erwolf.resynth.ResynthTabs;
 import com.ki11erwolf.resynth.util.ExpandingTooltip;
 import com.ki11erwolf.resynth.util.Tooltip;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import static com.ki11erwolf.resynth.util.Tooltip.newBlankLine;
 
-/**
- * A special type of {@link Block} used to obtain Seeds from Blocks
- * which otherwise don't allow it.
- *
- * <p> Created as a workaround for Blocks like {@link Blocks#OBSIDIAN}
- * and {@link Blocks#ANCIENT_DEBRIS} which cannot otherwise cannot be
- * made into Metallic PlantSets because TNT does not affect them.
- */
-public class DamagedBlock<B extends Block> extends ResynthBlock<DamagedBlock<B>> {
+public class BrittleBlock<B extends Block> extends ResynthBlock<BrittleBlock<B>> {
 
-    /**
-     * The default resistance of {@link DamagedBlock}s.
-     * Similar to ores and rocks.
-     */
     public static final float DEFAULT_EXPLOSION_RESISTANCE = 6.0F;
 
-    /**
-     * The minimum resistance a {@link DamagedBlock} will
-     * ever go.
-     */
     public static final float MINIMUM_EXPLOSION_RESISTANCE = 1.0F;
 
-    /**
-     * The maximum resistance a {@link DamagedBlock} will
-     * ever go.
-     */
     public static final float MAXIMUM_EXPLOSION_RESISTANCE = 12.0F;
 
-    /**
-     * The String prefix appended to the beginning of the blocks registry name.
-     */
-    protected static final String PREFIX = "damaged";
+    protected static final String PREFIX = "brittle";
 
-    /**
-     * The wrapped {@link Block} and basis to this Block,
-     * which defines how this Block looks and acts on
-     * a most basic level.
-     */
-    private final B basis;
+    private final B block;
 
-    /**
-     * @param of the {@link Block} to create a damaged version of.
-     */
-    public DamagedBlock(B of) {
+    public BrittleBlock(B of) {
         this(of, DEFAULT_EXPLOSION_RESISTANCE);
     }
 
-    /**
-     * @param of the {@link Block} to create a damaged version of.
-     */
-    public DamagedBlock(B of, float resistance) {
+    public BrittleBlock(B of, float resistance) {
         //noinspection ConstantConditions
         super(
-                AbstractBlock.Properties.from(Objects.requireNonNull(of)).hardnessAndResistance(
+                AbstractBlock.Properties.from(Objects.requireNonNull(of)).lootFrom(() -> of).hardnessAndResistance(
                         of.getDefaultState().getBlockHardness(null, null),
                         Math.max(MINIMUM_EXPLOSION_RESISTANCE, Math.min(resistance, MAXIMUM_EXPLOSION_RESISTANCE))
                 ),
                 new Item.Properties().group(
                         ResynthTabs.TAB_RESYNTH
                 ),
-                String.join(
-                        "_", PREFIX, Objects.requireNonNull(of.getRegistryName()).getPath()
-                )
+                PREFIX + "_" +  Objects.requireNonNull(of.getRegistryName()).getPath()
         );
 
-        this.basis = of;
+        this.block = of;
     }
 
-    /**
-     * @return the {@link Block} this damaged version is based off of.
-     */
-    public final B of() {
-        return this.basis;
-    }
-
-    /**
-     * Specifies how resistant this {@link Block} is to {@link net.minecraft.block.TNTBlock}
-     * and other kinds of explosions.
-     *
-     * <p> The resistance is guaranteed to be low, allowing this Block to be used as a
-     * resource for obtaining Metallic Seeds.
-     *
-     * @return a resistance to explosions that is guaranteed to be relatively low and in the
-     * range of {@link #MINIMUM_EXPLOSION_RESISTANCE} and {@link #MAXIMUM_EXPLOSION_RESISTANCE}.
-     */
     @Override
     @SuppressWarnings("deprecation")
     public float getExplosionResistance() {
-        float resistance = super.getExplosionResistance();
+        float resistance = super.blastResistance;
         return Math.max(MINIMUM_EXPLOSION_RESISTANCE, Math.min(resistance, MAXIMUM_EXPLOSION_RESISTANCE));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        String originalName = TextFormatting.GRAY + basis.getTranslatedName().getString() + TextFormatting.DARK_GRAY;
+        String originalName = TextFormatting.GRAY + block.getTranslatedName().getString() + TextFormatting.DARK_GRAY;
 
         new ExpandingTooltip().setCtrlForDescription(
                 tooltips -> Tooltip.addBlankLine(tooltips).addAll(
                         Arrays.asList(Tooltip.formatLineFeeds(
-                                getDescriptiveTooltip(PREFIX, originalName), TextFormatting.DARK_GRAY
+                                getDescriptiveTooltip(PREFIX + "_block", originalName), TextFormatting.DARK_GRAY
                         ))
                 )
         ).write(tooltip).add(newBlankLine());
+    }
+
+    @Override
+    public ResynthBlock<BrittleBlock<B>> queueRegistration() {
+        BrittleBlockRecipes.INSTANCE.addBrittleBlockRecipe(this);
+        return super.queueRegistration();
+    }
+
+    public final B of() {
+        return this.block;
+    }
+
+    public enum BrittleBlockRecipes implements ResynthRecipes.RecipeProvider {
+
+        INSTANCE;
+
+        private List<BrittleBlock<?>> brittleBlocks = new ArrayList<>();
+
+        private List<IRecipe<?>> recipes;
+
+        void addBrittleBlockRecipe(BrittleBlock<?> block) {
+            brittleBlocks.add(block);
+        }
+
+        private void createRecipes() {
+            recipes = new ArrayList<>();
+
+            for(BrittleBlock<?> block : brittleBlocks) {
+                recipes.add(ResynthRecipes.RecipeProvider.newShapelessRecipe(
+                        Objects.requireNonNull(block.getRegistryName()).getPath()
+                                + "_to_" + Objects.requireNonNull(block.of().getRegistryName()).getPath(),
+                        "brittle_block_recipes", new ItemStack(block), block.of()
+                ));
+
+                recipes.add(ResynthRecipes.RecipeProvider.newShapelessRecipe(
+                        Objects.requireNonNull(block.of().getRegistryName()).getPath()
+                                + "_to_" + Objects.requireNonNull(block.getRegistryName()).getPath(),
+                        "brittle_block_recipes", new ItemStack(block.of()), block
+                ));
+            }
+
+            brittleBlocks = null;
+        }
+
+        @Override
+        public IRecipe<?>[] get() {
+            if(recipes == null)
+                createRecipes();
+
+            return recipes.toArray(new IRecipe[0]);
+        }
     }
 }

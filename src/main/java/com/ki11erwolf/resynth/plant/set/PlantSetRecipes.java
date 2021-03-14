@@ -18,7 +18,6 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthRecipes;
 import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
-import com.ki11erwolf.resynth.block.DamagedBlock;
 import com.ki11erwolf.resynth.plant.set.properties.AbstractProduceProperties;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -90,20 +89,6 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
 
         addRecipe(new FurnaceRecipeDefinition(
                 set, recipeID, recipeType, setProduce, outputItemID, count, experience, time
-        ));
-    }
-
-    void addWeakOreRecipe(PlantSet<?, ?> set, DamagedBlock<?> weakOre) {
-        String recipeType = "weak-ore-recipe";
-        ResourceLocation toRecipeID = new ResourceLocation(ResynthMod.MODID, set.getSetName() + "-to-" + recipeType);
-        ResourceLocation fromRecipeID = new ResourceLocation(ResynthMod.MODID, set.getSetName() + "-from-" + recipeType);
-
-        addRecipe(new ShapelessRecipeDefinition(
-                set, toRecipeID, recipeType, weakOre.getRegistryName(), 1, weakOre.of().getRegistryName()
-        ));
-
-        addRecipe(new ShapelessRecipeDefinition(
-                set, fromRecipeID, recipeType, weakOre.of().getRegistryName(), 1, weakOre.getRegistryName()
         ));
     }
 

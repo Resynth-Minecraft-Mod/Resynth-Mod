@@ -21,7 +21,6 @@ import com.ki11erwolf.resynth.config.categories.EnhancersConfig;
 import com.ki11erwolf.resynth.integration.Hwyla;
 import com.ki11erwolf.resynth.util.QueueRegisterer;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -101,13 +100,6 @@ public class ResynthBlocks extends QueueRegisterer<Block> {
      */
     public static final ResynthBlock<BlockEnhancer> BLOCK_SYLVANITE_ENHANCER = new BlockEnhancer(
             "sylvanite", ENHANCERS_CONFIG.getSylvaniteMineralConcentrationIncrease(), 2
-    ).queueRegistration();
-
-    /**
-     * The weakened form of Ancient Debris which is used to get Seeds by blowing it up.
-     */
-    public static final ResynthBlock<DamagedBlock<Block>> WEAK_ANCIENT_DEBRIS = new DamagedBlock<>(
-            Blocks.ANCIENT_DEBRIS
     ).queueRegistration();
 
     // *****

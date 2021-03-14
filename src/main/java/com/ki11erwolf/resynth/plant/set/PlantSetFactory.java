@@ -25,7 +25,6 @@ import com.ki11erwolf.resynth.config.categories.ProducePropertiesConfig;
 import com.ki11erwolf.resynth.plant.block.BlockBiochemicalPlant;
 import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
 import com.ki11erwolf.resynth.plant.block.BlockMetallicPlant;
-import com.ki11erwolf.resynth.block.DamagedBlock;
 import com.ki11erwolf.resynth.plant.set.properties.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -151,20 +150,11 @@ public class PlantSetFactory {
             oreIDs.add(ore.getRegistryName());
         }
 
-        //Create set
-        PlantSet<? extends BlockMetallicPlant, Block> set = createMetallicSet(
+        //Create and return set
+        return createMetallicSet(
                 validate(id), Objects.requireNonNull(defaultConfig), Objects.requireNonNull(produceConfig),
                 Objects.requireNonNull(outputItem).asItem().getRegistryName(), oreIDs.toArray(new ResourceLocation[0])
         );
-
-        //Register crafting recipes from any blocks of type BlockWeakOre
-        for(Block ore : Objects.requireNonNull(oreBlocks)) {
-            if (ore instanceof DamagedBlock && set != null) {
-                PlantSetRecipes.INSTANCE.addWeakOreRecipe(set, ((DamagedBlock<?>) ore));
-            }
-        }
-
-        return set;
     }
 
     public static PlantSet<? extends BlockMetallicPlant, Block> makeMetallicSet(

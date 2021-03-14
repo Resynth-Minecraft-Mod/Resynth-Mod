@@ -17,6 +17,7 @@ package com.ki11erwolf.resynth;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.ki11erwolf.resynth.block.BrittleBlock;
 import com.ki11erwolf.resynth.config.ResynthConfig;
 import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.item.ResynthItems;
@@ -55,7 +56,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
      * of Resynths recipe providers.
      */
     INSTANCE(// List of custom RecipeProviders
-        PlantSetAPI.getPlantSetRecipes(), CoreRecipes.INSTANCE
+        PlantSetAPI.getPlantSetRecipes(), CoreRecipes.INSTANCE, BrittleBlock.BrittleBlockRecipes.INSTANCE
     );
 
     // Core recipes provider

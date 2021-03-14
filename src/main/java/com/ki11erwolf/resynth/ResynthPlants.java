@@ -15,6 +15,7 @@
  */
 package com.ki11erwolf.resynth;
 
+import com.ki11erwolf.resynth.block.BrittleBlock;
 import com.ki11erwolf.resynth.block.ResynthBlocks;
 import com.ki11erwolf.resynth.item.ResynthItems;
 import com.ki11erwolf.resynth.plant.set.*;
@@ -257,7 +258,7 @@ public class ResynthPlants {
             minecraftResource("ancient_debris"), ANCIENT_DEBRIS_PROPERTIES,
             new ProduceProperties(
                     2, 200, 2
-            ), Blocks.ANCIENT_DEBRIS, ResynthBlocks.WEAK_ANCIENT_DEBRIS
+            ), Blocks.ANCIENT_DEBRIS, new BrittleBlock<>(Blocks.ANCIENT_DEBRIS).queueRegistration()
     ).register();
 
     /**
