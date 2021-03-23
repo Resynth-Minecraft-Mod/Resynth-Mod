@@ -122,7 +122,7 @@ public class PlantSetTooltips {
     }
 
     private static void setSourcesForSeeds(List<ITextComponent> tooltip, PlantSet<?, ?> set) {
-        if(set.isBroken())
+        if(set.isBroken() || set.getSeedSources() == null)
             return;
 
         int limit = 5;
