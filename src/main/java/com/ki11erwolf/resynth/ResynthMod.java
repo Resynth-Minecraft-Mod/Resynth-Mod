@@ -59,7 +59,7 @@ public class ResynthMod {
     /**
      * Resynth version.
      */
-    public static final String MOD_VERSION = "6.1.0";
+    public static final String MOD_VERSION = "6.1.1b";
 
     /**
      * Minecraft version.
