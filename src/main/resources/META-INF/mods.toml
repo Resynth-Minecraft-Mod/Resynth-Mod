@@ -9,14 +9,14 @@ license="Apache License, Version 2.0"
 
 [[mods]]
     # A display name for the mod #mandatory
-    displayName="Resynth - Growable Ores & Resources"
+    displayName="Resynth - Growable Resources"
     # The modid of the mod #mandatory
     modId="resynth"
     # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it #mandatory
-    version="6.1.1b"
+    version="6.1.1"
     # The description text for the mod #mandatory
     description='''
-    Adds tons of Plant Crops that grow Ores, Mob Drops, and Resources from both vanilla and many other popular mods!'''
+    Adds customizable ore and resource growing crops for Minecraft and other modded resources!'''
     # A URL for the "homepage" for this mod #optional
     displayURL="https://resynth-minecraft-mod.github.io/"
     # A URL to query for updates for this mod. #optional

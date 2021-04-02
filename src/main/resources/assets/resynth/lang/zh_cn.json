@@ -514,5 +514,137 @@
   "item.resynth.crystalline_seeds_netherite_scrap":         "下界合金碎片种子",
   "item.resynth.crystalline_shard_netherite_scrap":         "下界合金碎片碎片",
   "misc.resynth.growth_stage": "作物长势: %s",
-  "tooltip.property.resynth.stats_disabled":                "仅单人模式有效."
+  "tooltip.property.resynth.stats_disabled":                "仅单人模式有效.",
+
+  "block.resynth.brittle_ancient_debris":                   "Brittle Ancient Debris",
+
+  "block.resynth.metallic_plant_ancient_debris":            "Ancient Debris Plant",
+  "item.resynth.metallic_seeds_ancient_debris":             "Ancient Debris Seeds",
+  "block.resynth.metallic_organic_ore_ancient_debris":      "Organic Ancient Debris",
+
+  "message.resynth.mineral_hoe_information.plant_info_header":
+  "%s------------------  %sPlant Information  %s-----------------",
+  "message.resynth.mineral_hoe_information.plant_growth":
+  "%sGrowth Phase: %s%s %sof %s%s %sin the harvest cycle.",
+  "message.resynth.mineral_hoe_information.base_growth_rate":
+  "%sBase Growth Rate: %s%s%%.",
+  "message.resynth.mineral_hoe_information.soil_growth_modifier":
+  "%sSoil Growth Multiplier: %s%s%%.",
+  "message.resynth.mineral_hoe_information.light_growth_modifier":
+  "%sAmbient Light Growth Multiplier: %s%s%%",
+  "message.resynth.mineral_hoe_information.plant_growth_rate":
+  "%sChance of Growth: %s%s%% %s per tick",
+  "message.resynth.mineral_hoe_information.soil_info_header":
+  "%s---------------- %sMineral Soil Information %s---------------",
+  "message.resynth.mineral_hoe_information.soil_mineral_concentration":
+  "%sMineral Concentration: %s%s%% %s(%s%s%% + %s%s%%%s)",
+  "message.resynth.mineral_hoe_information.soil_enhancer":
+  "%sConcentration Enhancer: %s%s %s(%s+%s%%%s)",
+  "message.resynth.mineral_hoe_information.hopper_auto_harvesting":
+  "%sHopper Auto-Harvesting: %s%s",
+  "message.resynth.mineral_hoe_information.footer":
+  "%s----------------------------------------------------",
+  "value.resynth.mineral_hoe_information.true": "Yes",
+  "value.resynth.mineral_hoe_information.false": "No",
+  "value.resynth.mineral_hoe_information.no_enhancer": "None",
+  "value.resynth.mineral_hoe_information.calvinite_enhancer": "Calvinite",
+  "value.resynth.mineral_hoe_information.sylvanite_enhancer": "Sylvanite",
+
+  "tooltip.resynth.plantset.property.bonemeal_effective":      "Bonemeal:%s effective",
+  "tooltip.resynth.plantset.property.bonemeal_ineffective":    "Bonemeal:%s ineffective",
+  "tooltip.resynth.plantset.property.growth_rate":             "Base Growth Rate: %s%s",
+  "tooltip.resynth.plantset.property.seed_sources":            "Seeds Dropped by %s: %s%s",
+  "tooltip.resynth.plantset.property.ore_seed_drop_rate":      "Ore Blocks Drop Seeds: %s%s%s of the time.",
+  "tooltip.resynth.plantset.property.mob_seed_drop_rate":      "Mobs Drop Seeds: %s%s%s of the time.",
+  "tooltip.resynth.plantset.property.produce_seed_drop_rate":  "Produce Drops Seeds: %s%s%s of the time.",
+  "tooltip.resynth.plantset.property.plant_yield":             "Plant Yield: %s%s%s produce items ",
+  "tooltip.resynth.plantset.property.plant_yield_singular":    "Plant Yield: %s%s%s produce item",
+  "tooltip.resynth.plantset.property.produce_yield":           "Produce Yield: %s%s%s items",
+  "tooltip.resynth.plantset.property.produce_yield_singular":  "Produce Yield: %s%s%s item",
+  "tooltip.resynth.plantset.property.synchronized":            "%sUsing Server Configured Stats!",
+
+  "tooltip.resynth.plantset.property.seed_sources.crystalline":   "Mining",
+  "tooltip.resynth.plantset.property.seed_sources.metallic":      "Blowing Up",
+  "tooltip.resynth.plantset.property.seed_sources.biochemical":   "Slaying",
+
+  "tooltip.resynth.plantset.property.broken":
+  "This plant and its items are broken!",
+  "tooltip.resynth.plantset.property.broken.information":
+  "A severe error has occurred while attempting to build and setup the plant, seeds, and produce of this set, which was registered to the game but is now fundamentally broken and unusable. The error was immediately handled by Resynth to avoid crashing, by logging the error, stopping the setup and flagging the set as broken - preventing it and its items from being obtained, used, planted, or otherwise interacting with the game, and with error message tooltips on the sets items. It may still however, be possible to smelt any left over produce. These types of errors are almost always caused by an Item, Block, Mob, or other game resource used and required by the plant set, which was expected to be registered to the game but could not be found. Such as when another mod deletes, renames, or changes a resource - that Resynth has a plant and set for, and expects to exist with a specific name. Submit a bug report at https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/issues to get this problem sorted.",
+
+  "block.resynth.crystalline_plant_appliedenergistics2_certus_quartz":          "Certus Quartz Plant (Applied Energistics 2)",
+  "item.resynth.crystalline_seeds_appliedenergistics2_certus_quartz":           "Certus Quartz Seeds (Applied Energistics 2)",
+  "item.resynth.crystalline_shard_appliedenergistics2_certus_quartz":           "Certus Quartz Shard (Applied Energistics 2)",
+
+  "block.resynth.crystalline_plant_appliedenergistics2_charged_certus_quartz":  "Charged Certus Quartz Plant (Applied Energistics 2)",
+  "item.resynth.crystalline_seeds_appliedenergistics2_charged_certus_quartz":   "Charged Certus Quartz Seeds (Applied Energistics 2)",
+  "item.resynth.crystalline_shard_appliedenergistics2_charged_certus_quartz":   "Charged Certus Quartz Shard (Applied Energistics 2)",
+
+  "block.resynth.metallic_plant_immersiveengineering_aluminium":        "Aluminum Plant (Immersive Engineering)",
+  "item.resynth.metallic_seeds_immersiveengineering_aluminium":         "Aluminum Seeds (Immersive Engineering)",
+  "block.resynth.metallic_organic_ore_immersiveengineering_aluminium":  "Organic Aluminum (Immersive Engineering)",
+
+  "block.resynth.metallic_plant_immersiveengineering_copper":           "Copper Plant (Immersive Engineering)",
+  "item.resynth.metallic_seeds_immersiveengineering_copper":            "Copper Seeds (Immersive Engineering)",
+  "block.resynth.metallic_organic_ore_immersiveengineering_copper":     "Organic Copper (Immersive Engineering)",
+
+  "block.resynth.metallic_plant_immersiveengineering_lead":             "Lead Plant (Immersive Engineering)",
+  "item.resynth.metallic_seeds_immersiveengineering_lead":              "Lead Seeds (Immersive Engineering)",
+  "block.resynth.metallic_organic_ore_immersiveengineering_lead":       "Organic Lead (Immersive Engineering)",
+
+  "block.resynth.metallic_plant_immersiveengineering_nickel":           "Nickel Plant (Immersive Engineering)",
+  "item.resynth.metallic_seeds_immersiveengineering_nickel":            "Nickel Seeds (Immersive Engineering)",
+  "block.resynth.metallic_organic_ore_immersiveengineering_nickel":     "Organic Nickel (Immersive Engineering)",
+
+  "block.resynth.metallic_plant_immersiveengineering_silver":           "Silver Plant (Immersive Engineering)",
+  "item.resynth.metallic_seeds_immersiveengineering_silver":            "Silver Seeds (Immersive Engineering)",
+  "block.resynth.metallic_organic_ore_immersiveengineering_silver":     "Organic Silver (Immersive Engineering)",
+
+  "block.resynth.metallic_plant_immersiveengineering_uranium":          "Uranium Plant (Immersive Engineering)",
+  "item.resynth.metallic_seeds_immersiveengineering_uranium":           "Uranium Seeds (Immersive Engineering)",
+  "block.resynth.metallic_organic_ore_immersiveengineering_uranium":    "Organic Uranium (Immersive Engineering)",
+
+  "block.resynth.crystalline_plant_thermal_apatite":          "Apatite Plant (Thermal Foundation)",
+  "item.resynth.crystalline_seeds_thermal_apatite":           "Apatite Seeds (Thermal Foundation)",
+  "item.resynth.crystalline_shard_thermal_apatite":           "Apatite Shard (Thermal Foundation)",
+
+  "block.resynth.crystalline_plant_thermal_cinnabar":         "Cinnabar Plant (Thermal Foundation)",
+  "item.resynth.crystalline_seeds_thermal_cinnabar":          "Cinnabar Seeds (Thermal Foundation)",
+  "item.resynth.crystalline_shard_thermal_cinnabar":          "Cinnabar Shard (Thermal Foundation)",
+
+  "block.resynth.crystalline_plant_thermal_ruby":             "Ruby Plant (Thermal Foundation)",
+  "item.resynth.crystalline_seeds_thermal_ruby":              "Ruby Seeds (Thermal Foundation)",
+  "item.resynth.crystalline_shard_thermal_ruby":              "Ruby Shard (Thermal Foundation)",
+
+  "block.resynth.crystalline_plant_thermal_sapphire":         "Sapphire Plant (Thermal Foundation)",
+  "item.resynth.crystalline_seeds_thermal_sapphire":          "Sapphire Seeds (Thermal Foundation)",
+  "item.resynth.crystalline_shard_thermal_sapphire":          "Sapphire Shard (Thermal Foundation)",
+
+  "block.resynth.crystalline_plant_thermal_sulfur":           "Sulfur Plant (Thermal Foundation)",
+  "item.resynth.crystalline_seeds_thermal_sulfur":            "Sulfur Seeds (Thermal Foundation)",
+  "item.resynth.crystalline_shard_thermal_sulfur":            "Sulfur Shard (Thermal Foundation)",
+
+  "block.resynth.metallic_plant_thermal_copper":            "Copper Plant (Thermal Foundation)",
+  "item.resynth.metallic_seeds_thermal_copper":             "Copper Seeds (Thermal Foundation)",
+  "block.resynth.metallic_organic_ore_thermal_copper":      "Organic Copper (Thermal Foundation)",
+
+  "block.resynth.metallic_plant_thermal_lead":              "Lead Plant (Thermal Foundation)",
+  "item.resynth.metallic_seeds_thermal_lead":               "Lead Seeds (Thermal Foundation)",
+  "block.resynth.metallic_organic_ore_thermal_lead":        "Organic Lead (Thermal Foundation)",
+
+  "block.resynth.metallic_plant_thermal_nickel":            "Nickel Plant (Thermal Foundation)",
+  "item.resynth.metallic_seeds_thermal_nickel":             "Nickel Seeds (Thermal Foundation)",
+  "block.resynth.metallic_organic_ore_thermal_nickel":      "Organic Nickel (Thermal Foundation)",
+
+  "block.resynth.metallic_plant_thermal_platinum":          "Platinum Plant (Thermal Foundation)",
+  "item.resynth.metallic_seeds_thermal_platinum":           "Platinum Seeds (Thermal Foundation)",
+  "block.resynth.metallic_organic_ore_thermal_platinum":    "Organic Platinum (Thermal Foundation)",
+
+  "block.resynth.metallic_plant_thermal_silver":            "Silver Plant (Thermal Foundation)",
+  "item.resynth.metallic_seeds_thermal_silver":             "Silver Seeds (Thermal Foundation)",
+  "block.resynth.metallic_organic_ore_thermal_silver":      "Organic Silver (Thermal Foundation)",
+
+  "block.resynth.metallic_plant_thermal_tin":               "Tin Plant (Thermal Foundation)",
+  "item.resynth.metallic_seeds_thermal_tin":                "Tin Seeds (Thermal Foundation)",
+  "block.resynth.metallic_organic_ore_thermal_tin":         "Organic Tin (Thermal Foundation)"
 }
