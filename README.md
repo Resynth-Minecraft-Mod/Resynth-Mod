@@ -61,7 +61,7 @@ Special thanks goes out the following people who, directly or indirectly, helped
 
 ### Legal
 
-**Copyright © 2018-2020: Ki11er_wolf**
+**Copyright © 2018-2021: Ki11er_wolf**
 
 The Resynth Minecraft Mod, The Resynth Website, and all related content is licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0). All Resynth content is open source.
 
