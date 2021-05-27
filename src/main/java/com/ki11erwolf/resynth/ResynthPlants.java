@@ -42,7 +42,7 @@ import static net.minecraft.entity.EntityType.*;
  *
  * All plant sets in this class are referred to as Vanilla plant sets.
  */
-//A thought: a json system that parses a json file containing the information in this class.
+@SuppressWarnings("unused")
 public class ResynthPlants {
 
     // **************
@@ -98,10 +98,17 @@ public class ResynthPlants {
     // Metallic
 
     /**
-     * The set properties for general Netherite scrap and Ancient Debris Ore.
+     * The set properties for Ancient Debris.
      */
     static final MetallicProperties ANCIENT_DEBRIS_PROPERTIES = new MetallicProperties(
             false, 10.0F, 4.0F, 8.0F
+    );
+
+    /**
+     * The set properties for Obsidian.
+     */
+    static final MetallicProperties OBSIDIAN_PROPERTIES = new MetallicProperties(
+            false, 15.0F, 6.0F, 9.0F
     );
 
 
@@ -259,6 +266,16 @@ public class ResynthPlants {
             new ProduceProperties(
                     2, 200, 2
             ), Blocks.ANCIENT_DEBRIS, new BrittleBlock<>(Blocks.ANCIENT_DEBRIS).queueRegistration()
+    ).register();
+
+    /**
+     * The plant set for Minecraft Obsidian.
+     */
+    public static final PlantSet<?, ?> OBSIDIAN = PlantSetFactory.makeMetallicSet(
+            minecraftResource("obsidian"), OBSIDIAN_PROPERTIES,
+            new ProduceProperties(
+                    2, 200, 2
+            ), Blocks.OBSIDIAN, new BrittleBlock<>(Blocks.OBSIDIAN).queueRegistration()
     ).register();
 
     /**

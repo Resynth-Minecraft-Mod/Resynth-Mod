@@ -43,7 +43,7 @@ import static com.ki11erwolf.resynth.ResynthPlants.DEFAULT_PRODUCE_PROPERTIES;
  *
  * All plant sets in this class are referred to as Modded plant sets.
  */
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings({"ConstantConditions", "unused"})
 public class ResynthModPlants {
 
     // ********
@@ -121,6 +121,11 @@ public class ResynthModPlants {
         private static final Mod IMMERSIVE_ENGINEERING = new Mod("Immersive Engineering", "immersiveengineering");
 
         /**
+         * The mod id for the mod 'Create'.
+         */
+        private static final Mod CREATE = new Mod("Create", "create");
+
+        /**
          * The global map instance that stores the list of supported mods
          * for the class. Every supported mod is stored as a Mod object,
          * that holds the name & id of the mod, mapped to an internal
@@ -144,6 +149,7 @@ public class ResynthModPlants {
                 putMod(APPLIED_ENERGISTICS_2);
                 putMod(THERMAL_FOUNDATION);
                 putMod(IMMERSIVE_ENGINEERING);
+                putMod(CREATE);
             }
 
             /**
@@ -1000,12 +1006,6 @@ public class ResynthModPlants {
             "nickel_ore", "nickel_ore"
     ));
 
-    // thermal:platinum_ore is not registered as tested on: thermal_foundation-1.16.3-1.1.6
-    /* public static final PlantSet<?, ?> THERMAL_FOUNDATION_PLATINUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
-            Mods.THERMAL_FOUNDATION.getID("platinum"), PLATINUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
-            "platinum_ore", "platinum_ore"
-    )); */
-
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_SILVER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.THERMAL_FOUNDATION.getID("silver"), SILVER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "silver_ore", "silver_ore"
@@ -1014,6 +1014,18 @@ public class ResynthModPlants {
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_TIN = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.THERMAL_FOUNDATION.getID("tin"), TIN_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "tin_ore", "tin_ore"
+    ));
+
+    // Create
+
+    public static final PlantSet<?, ?> CREATE_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.CREATE.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "copper_ore", "copper_ore"
+    ));
+
+    public static final PlantSet<?, ?> CREATE_ZINC = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.CREATE.getID("zinc"), ZINC_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "zinc_ore", "zinc_ore"
     ));
 
     // Botania
