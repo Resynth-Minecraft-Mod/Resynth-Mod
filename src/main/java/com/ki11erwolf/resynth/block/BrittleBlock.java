@@ -38,22 +38,56 @@ import java.util.Objects;
 
 import static com.ki11erwolf.resynth.util.Tooltip.newBlankLine;
 
+/**
+ * A simple block that can be destroyed by explosions which
+ * is meant to wrap and mimic other blocks which cannot be,
+ * such as Obsidian. The block wrapper and the original block
+ * can also be converted to one another through a recipe.
+ *
+ * @param <B> the class of the block being wrapped.
+ */
 public class BrittleBlock<B extends Block> extends ResynthBlock<BrittleBlock<B>> {
 
+    /**
+     * The default resistance a BrittleBlock has to explosions.
+     */
     public static final float DEFAULT_EXPLOSION_RESISTANCE = 6.0F;
 
+    /**
+     * The minimum explosion resistance allowed for BrittleBlocks.
+     */
     public static final float MINIMUM_EXPLOSION_RESISTANCE = 1.0F;
 
+    /**
+     * The maximum explosion resistance allowed for BrittleBlocks.
+     */
     public static final float MAXIMUM_EXPLOSION_RESISTANCE = 12.0F;
 
+    /**
+     * The prefix to all BrittleBlock registry names.
+     */
     protected static final String PREFIX = "brittle";
 
+    /**
+     * A reference to the block being wrapped.
+     */
     private final B block;
 
+    /**
+     * Creates a new BrittleBlock which wraps and mimics the given block.
+     *
+     * @param of the block to mimic.
+     */
     public BrittleBlock(B of) {
         this(of, DEFAULT_EXPLOSION_RESISTANCE);
     }
 
+    /**
+     * Creates a new BrittleBlock which wraps and mimics the given block.
+     *
+     * @param resistance the explosion resistance of the created BrittleBlock.
+     * @param of the block to mimic.
+     */
     public BrittleBlock(B of, float resistance) {
         //noinspection ConstantConditions
         super(
@@ -70,6 +104,9 @@ public class BrittleBlock<B extends Block> extends ResynthBlock<BrittleBlock<B>>
         this.block = of;
     }
 
+    /**
+     * @return the resistance this particular block has to explosions.
+     */
     @Override
     @SuppressWarnings("deprecation")
     public float getExplosionResistance() {
@@ -77,6 +114,9 @@ public class BrittleBlock<B extends Block> extends ResynthBlock<BrittleBlock<B>>
         return Math.max(MINIMUM_EXPLOSION_RESISTANCE, Math.min(resistance, MAXIMUM_EXPLOSION_RESISTANCE));
     }
 
+    /**
+     * Creates a tooltip for the specific block.
+     */
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         String originalName = TextFormatting.GRAY + block.getTranslatedName().getString() + TextFormatting.DARK_GRAY;
@@ -90,28 +130,54 @@ public class BrittleBlock<B extends Block> extends ResynthBlock<BrittleBlock<B>>
         ).write(tooltip).add(newBlankLine());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResynthBlock<BrittleBlock<B>> queueRegistration() {
         BrittleBlockRecipes.INSTANCE.addBrittleBlockRecipe(this);
         return super.queueRegistration();
     }
 
+    /**
+     * @return the block instance this specific BrittleBlock mimics.
+     */
     public final B of() {
         return this.block;
     }
 
+    /**
+     * The class responsible for creating and registering the recipes
+     * which convert BrittleBlocks to and from the block they mimic.
+     */
     public enum BrittleBlockRecipes implements ResynthRecipes.RecipeProvider {
 
+        /**
+         * Singleton instance of the class.
+         */
         INSTANCE;
 
+        /**
+         * A list of all the BrittleBlocks created.
+         */
         private List<BrittleBlock<?>> brittleBlocks = new ArrayList<>();
 
+        /**
+         * The list of all recipes created for BrittleBlocks.
+         */
         private List<IRecipe<?>> recipes;
 
+        /**
+         * Adds a new recipe for the given BrittleBlock.
+         */
         void addBrittleBlockRecipe(BrittleBlock<?> block) {
             brittleBlocks.add(block);
         }
 
+        /**
+         * Creates recipes for every registered BrittleBlock and adds them to
+         * the array.
+         */
         private void createRecipes() {
             recipes = new ArrayList<>();
 
@@ -132,6 +198,11 @@ public class BrittleBlock<B extends Block> extends ResynthBlock<BrittleBlock<B>>
             brittleBlocks = null;
         }
 
+        /**
+         * {@inheritDoc}
+         *
+         * @return the list of all created recipes for converting to and from BrittleBlocks.
+         */
         @Override
         public IRecipe<?>[] get() {
             if(recipes == null)
