@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": [
+      { "model": "resynth:block/organic_ore/obsidian" }
+    ]
+  }
+}

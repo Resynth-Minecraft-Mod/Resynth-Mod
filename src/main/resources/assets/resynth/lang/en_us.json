@@ -68,6 +68,12 @@
   "item.resynth.metallic_seeds_ancient_debris":             "Ancient Debris Seeds",
   "block.resynth.metallic_organic_ore_ancient_debris":      "Organic Ancient Debris",
 
+  "block.resynth.brittle_obsidian":                         "Brittle Obsidian",
+
+  "block.resynth.metallic_plant_obsidian":                  "Obsidian Plant",
+  "item.resynth.metallic_seeds_obsidian":                   "Obsidian Seeds",
+  "block.resynth.metallic_organic_ore_obsidian":            "Organic Obsidian",
+
   "block.resynth.metallic_plant_iron":                      "Iron Plant",
   "item.resynth.metallic_seeds_iron":                       "Iron Seeds",
   "block.resynth.metallic_organic_ore_iron":                "Organic Iron Ore",
@@ -632,5 +638,13 @@
 
   "block.resynth.metallic_plant_thermal_tin":               "Tin Plant (Thermal Foundation)",
   "item.resynth.metallic_seeds_thermal_tin":                "Tin Seeds (Thermal Foundation)",
-  "block.resynth.metallic_organic_ore_thermal_tin":         "Organic Tin (Thermal Foundation)"
+  "block.resynth.metallic_organic_ore_thermal_tin":         "Organic Tin (Thermal Foundation)",
+
+  "block.resynth.metallic_plant_create_copper":             "Copper Plant (Create)",
+  "item.resynth.metallic_seeds_create_copper":              "Copper Seeds (Create)",
+  "block.resynth.metallic_organic_ore_create_copper":       "Organic Copper (Create)",
+
+  "block.resynth.metallic_plant_create_zinc":               "Zinc Plant (Create)",
+  "item.resynth.metallic_seeds_create_zinc":                "Zinc Seeds (Create)",
+  "block.resynth.metallic_organic_ore_create_zinc":         "Organic Zinc (Create)"
 }
