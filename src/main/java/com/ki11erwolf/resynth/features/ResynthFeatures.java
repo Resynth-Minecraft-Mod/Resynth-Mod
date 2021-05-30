@@ -26,7 +26,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.RegistryEvent;
@@ -45,7 +44,7 @@ public class ResynthFeatures {
 
     private static final Logger LOG = ResynthMod.getNewLogger();
 
-    private static final List<ResynthFeature<?>> FEATURE_LIST = new ArrayList<>();
+    private static final List<Feature<?>> FEATURE_LIST = new ArrayList<>();
 
     // ****************
     //  Feature Config
@@ -66,28 +65,28 @@ public class ResynthFeatures {
     //  Features
     // **********
 
-    private static final ResynthFeature<ResynthFlowerFeature> MYSTICAL_SEED_POD = new ResynthFlowerFeature(
+    private static final Feature<FlowerFeature> MYSTICAL_SEED_POD = new FlowerFeature(
             new ResourceLocation(ResynthMod.MODID, "mystical_seed_pod_flower"), getOverworldBiomes(),
             ResynthBlocks.BLOCK_SEED_POD, MYSTICAL_SEED_POD_CONFIG.getRarity(), MYSTICAL_SEED_POD_CONFIG.getSize()
     ).register();
 
-    private static final ResynthFeature<ResynthOreFeature> MINERAL_STONE = new ResynthOreFeature(
+    private static final Feature<OreFeature> MINERAL_STONE = new OreFeature(
             new ResourceLocation(ResynthMod.MODID,  "mineral_stone_ore"), getOverworldBiomes(),
-            ResynthBlocks.BLOCK_MINERAL_STONE, MatchBlockListRuleTest.MATCH_OVERWORLD_ROCK,
+            ResynthBlocks.BLOCK_MINERAL_STONE, BlockListMatcher.MATCH_OVERWORLD_ROCK,
             MINERAL_STONE_GEN_CONFIG.getRarity(), MINERAL_STONE_GEN_CONFIG.getSize(),
             MINERAL_STONE_GEN_CONFIG.getMinimumHeight(), MINERAL_STONE_GEN_CONFIG.getMaximumHeight()
     ).register();
 
-    private static final ResynthFeature<ResynthOreFeature> CALVINITE = new ResynthOreFeature(
+    private static final Feature<OreFeature> CALVINITE = new OreFeature(
             new ResourceLocation(ResynthMod.MODID,  "calvinite_ore"), getNetherworldBiomes(),
-            ResynthBlocks.BLOCK_CALVINITE_NETHERRACK, MatchBlockListRuleTest.MATCH_NETHERWORLD_ROCK,
+            ResynthBlocks.BLOCK_CALVINITE_NETHERRACK, BlockListMatcher.MATCH_NETHERWORLD_ROCK,
             CALVINITE_GEN_CONFIG.getRarity(), CALVINITE_GEN_CONFIG.getSize(),
             CALVINITE_GEN_CONFIG.getMinimumHeight(), CALVINITE_GEN_CONFIG.getMaximumHeight()
     ).register();
 
-    private static final ResynthFeature<ResynthOreFeature> SYLVANITE = new ResynthOreFeature(
+    private static final Feature<OreFeature> SYLVANITE = new OreFeature(
             new ResourceLocation(ResynthMod.MODID,  "sylvanite_ore"), getEndworldBiomes(),
-            ResynthBlocks.BLOCK_SYLVANITE_END_STONE, MatchBlockListRuleTest.MATCH_ENDWORLD_ROCK,
+            ResynthBlocks.BLOCK_SYLVANITE_END_STONE, BlockListMatcher.MATCH_ENDWORLD_ROCK,
             SYLVANITE_GEN_CONFIG.getRarity(), SYLVANITE_GEN_CONFIG.getSize(),
             SYLVANITE_GEN_CONFIG.getMinimumHeight(), SYLVANITE_GEN_CONFIG.getMaximumHeight()
     ).register();
@@ -104,19 +103,19 @@ public class ResynthFeatures {
 
     public static void init() { }
 
-    protected static <T extends ResynthFeature<?>> T addFeature(T feature) {
+    protected static <T extends Feature<?>> T addFeature(T feature) {
         FEATURE_LIST.add(Objects.requireNonNull(feature));
         return feature;
     }
 
     private static void onBiomeLoading(BiomeLoadingEvent event) {
         BiomeGenerationSettingsBuilder generation = event.getGeneration();
-        FEATURE_LIST.forEach((resynthFeature -> resynthFeature.configure(generation, event.getCategory())));
+        FEATURE_LIST.forEach((feature -> feature.configure(generation, event.getCategory())));
     }
 
     @SubscribeEvent
-    public static void registerFeatures(RegistryEvent.Register<Feature<?>> event) {
-        IForgeRegistry<Feature<?>> featureRegistry = event.getRegistry();
+    public static void registerFeatures(RegistryEvent.Register<net.minecraft.world.gen.feature.Feature> event) {
+        IForgeRegistry<net.minecraft.world.gen.feature.Feature> featureRegistry = event.getRegistry();
         FEATURE_LIST.stream().peek(
                 feature -> LOG.info("Registering ResynthFeature {}.", feature.getID().toString())
         ).filter(

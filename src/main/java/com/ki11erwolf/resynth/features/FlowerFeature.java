@@ -22,7 +22,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.placement.Placement;
@@ -31,13 +30,13 @@ import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 
 import java.util.Objects;
 
-public class ResynthFlowerFeature extends ResynthFeature<ResynthFlowerFeature> {
+public class FlowerFeature extends Feature<FlowerFeature> {
 
     /*
         Uses a modified ore generation feature to generate flowers.
      */
 
-    private static final RuleTest TARGET_FLOWERS = new MatchBlockListRuleTest(
+    private static final RuleTest TARGET_FLOWERS = new BlockListMatcher(
             Blocks.GRASS, Blocks.FERN, Blocks.DEAD_BUSH, Blocks.POPPY, Blocks.DANDELION, Blocks.BLUE_ORCHID,
             Blocks.SUNFLOWER, Blocks.OXEYE_DAISY, Blocks.PEONY
     );
@@ -52,7 +51,7 @@ public class ResynthFlowerFeature extends ResynthFeature<ResynthFlowerFeature> {
 
     private final int patchSize;
 
-    protected ResynthFlowerFeature(ResourceLocation id, Biome.Category[] biomes, Block flower, int patchRarity, int patchSize) {
+    protected FlowerFeature(ResourceLocation id, Biome.Category[] biomes, Block flower, int patchRarity, int patchSize) {
         super(id, biomes);
 
         this.flower = Objects.requireNonNull(flower);
@@ -62,7 +61,7 @@ public class ResynthFlowerFeature extends ResynthFeature<ResynthFlowerFeature> {
 
     @Override
     protected ConfiguredFeature<?, ?> constructFeature() {
-        return Feature.ORE.withConfiguration(
+        return net.minecraft.world.gen.feature.Feature.ORE.withConfiguration(
                 new OreFeatureConfig(TARGET_FLOWERS, flower.getDefaultState(), patchSize)
         ).withPlacement(Placement.RANGE.configure(FLOWER_HEIGHT_RANGE)).func_242731_b(patchRarity);//.chance(patchRarity * 2);
     }

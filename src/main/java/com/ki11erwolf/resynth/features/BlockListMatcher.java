@@ -23,23 +23,25 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.template.IRuleTestType;
 import net.minecraft.world.gen.feature.template.RuleTest;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
-public class MatchBlockListRuleTest extends RuleTest {
+public class BlockListMatcher extends RuleTest {
 
     // ***************
     //  General Tests
     // ***************
 
-    public static final RuleTest MATCH_OVERWORLD_ROCK = new MatchBlockListRuleTest(
+    public static final RuleTest MATCH_OVERWORLD_ROCK = new BlockListMatcher(
             Blocks.STONE, Blocks.DIORITE, Blocks.GRANITE, Blocks.ANDESITE
     );
 
-    public static final RuleTest MATCH_NETHERWORLD_ROCK = new MatchBlockListRuleTest(
+    public static final RuleTest MATCH_NETHERWORLD_ROCK = new BlockListMatcher(
             Blocks.NETHERRACK
     );
 
-    public static final RuleTest MATCH_ENDWORLD_ROCK = new MatchBlockListRuleTest(
+    public static final RuleTest MATCH_ENDWORLD_ROCK = new BlockListMatcher(
             Blocks.END_STONE
     );
 
@@ -48,21 +50,21 @@ public class MatchBlockListRuleTest extends RuleTest {
     // ***********
 
     @SuppressWarnings("deprecation")
-    private static final Codec<MatchBlockListRuleTest> CODEC =
+    private static final Codec<BlockListMatcher> CODEC =
             Registry.BLOCK.fieldOf("block").xmap(
-                    MatchBlockListRuleTest::new, (p_237076_0_) -> p_237076_0_.blocks[0]
+                    BlockListMatcher::new, (rule) -> rule.blocks[0]
     ).codec();
 
-    private static final IRuleTestType<MatchBlockListRuleTest> BLOCK_LIST_MATCH =
+    private static final IRuleTestType<BlockListMatcher> BLOCK_LIST_MATCH =
             IRuleTestType.func_237129_a_("block_list_match", CODEC);
 
     private final Block[] blocks;
 
-    public MatchBlockListRuleTest(Block... blocks) {
+    public BlockListMatcher(Block... blocks) {
         this.blocks = blocks;
     }
 
-    @Override
+    @Override @ParametersAreNonnullByDefault
     public boolean test(BlockState state, Random random) {
         for(Block block : blocks){
             if(state.getBlock() == block)
@@ -71,7 +73,7 @@ public class MatchBlockListRuleTest extends RuleTest {
         return false;
     }
 
-    @Override
+    @Override @Nonnull
     protected IRuleTestType<?> getType() {
         return BLOCK_LIST_MATCH;
     }

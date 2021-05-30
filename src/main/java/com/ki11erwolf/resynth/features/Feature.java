@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class ResynthFeature<T extends ResynthFeature<T>> {
+public abstract class Feature<T extends Feature<T>> {
 
     private static final Logger LOG = ResynthMod.getNewLogger();
 
@@ -36,7 +36,7 @@ public abstract class ResynthFeature<T extends ResynthFeature<T>> {
 
     private ConfiguredFeature<?, ?> feature;
 
-    protected ResynthFeature(ResourceLocation id, Biome.Category[] biomes) {
+    protected Feature(ResourceLocation id, Biome.Category[] biomes) {
         this.id = Objects.requireNonNull(id);
         this.biomes = Arrays.asList(biomes);
     }
@@ -65,7 +65,7 @@ public abstract class ResynthFeature<T extends ResynthFeature<T>> {
         return feature == null ? feature = constructFeature() : feature;
     }
 
-    public ResynthFeature<T> register() {
+    public Feature<T> register() {
         return ResynthFeatures.addFeature(this);
     }
 }

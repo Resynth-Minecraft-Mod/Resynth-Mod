@@ -21,7 +21,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.placement.Placement;
@@ -30,7 +29,7 @@ import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 
 import java.util.Objects;
 
-public class ResynthOreFeature extends ResynthFeature<ResynthOreFeature> {
+public class OreFeature extends Feature<OreFeature> {
 
     private final Block ore;
 
@@ -44,8 +43,8 @@ public class ResynthOreFeature extends ResynthFeature<ResynthOreFeature> {
 
     private final int veinMaxHeight;
 
-    protected ResynthOreFeature(ResourceLocation id, Biome.Category[] biomes, Block ore, RuleTest target,
-                                int rarity, int size, int minHeight, int maxHeight) {
+    protected OreFeature(ResourceLocation id, Biome.Category[] biomes, Block ore, RuleTest target,
+                         int rarity, int size, int minHeight, int maxHeight) {
         super(id, biomes);
 
         this.ore = Objects.requireNonNull(ore);
@@ -59,7 +58,7 @@ public class ResynthOreFeature extends ResynthFeature<ResynthOreFeature> {
 
     @Override
     protected ConfiguredFeature<?, ?> constructFeature() {
-        return Feature.ORE.withConfiguration(
+        return net.minecraft.world.gen.feature.Feature.ORE.withConfiguration(
                 new OreFeatureConfig(target, ore.getDefaultState(), veinSize)
         ).withPlacement(Placement.RANGE.configure(
                 new TopSolidRangeConfig(veinMinHeight, veinMinHeight, veinMaxHeight)
