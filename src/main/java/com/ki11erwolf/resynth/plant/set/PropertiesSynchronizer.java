@@ -35,6 +35,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import org.apache.logging.log4j.Logger;
 
+//TODO: Document
 enum PropertiesSynchronizer {
 
     INSTANCE;

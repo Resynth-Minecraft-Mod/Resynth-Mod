@@ -38,6 +38,7 @@ import java.util.function.Supplier;
 /**
  * Display Client-side Audio Visual Effect.
  */
+//TODO: Document
 public class ClientAVEffectPacket extends Packet<ClientAVEffectPacket>
         implements JSerializer.JSerializable<ClientAVEffectPacket>{
 

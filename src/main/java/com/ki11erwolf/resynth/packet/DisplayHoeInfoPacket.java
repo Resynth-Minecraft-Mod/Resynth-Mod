@@ -35,6 +35,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+//TODO: Document
 public class DisplayHoeInfoPacket extends Packet<DisplayHoeInfoPacket> {
 
     /**

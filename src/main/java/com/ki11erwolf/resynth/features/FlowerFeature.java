@@ -30,44 +30,76 @@ import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 
 import java.util.Objects;
 
+/**
+ * A plant decoration {@link Feature World Generation Feature}.
+ */
 public class FlowerFeature extends Feature<FlowerFeature> {
 
-    /*
-        Uses a modified ore generation feature to generate flowers.
+    /**
+     * A list of vanilla flowers generated in the world by Minecraft.
      */
-
-    private static final RuleTest TARGET_FLOWERS = new BlockListMatcher(
+    private static final RuleTest BASE_FLOWERS = new BlockListMatcher(
             Blocks.GRASS, Blocks.FERN, Blocks.DEAD_BUSH, Blocks.POPPY, Blocks.DANDELION, Blocks.BLUE_ORCHID,
             Blocks.SUNFLOWER, Blocks.OXEYE_DAISY, Blocks.PEONY
     );
 
-    private static final TopSolidRangeConfig FLOWER_HEIGHT_RANGE = new TopSolidRangeConfig(
-            50, 50, 255
+    /**
+     * The range of heights that flowers can be generated at.
+     */
+    private static final TopSolidRangeConfig HEIGHT_RANGE = new TopSolidRangeConfig(
+            40, 40, 255
     );
 
+    /**
+     * The specific flower Block to generate.
+     */
     private final Block flower;
 
-    private final int patchRarity;
+    /**
+     * The average amount of flower patches to generate in any given chunk.
+     */
+    private final int rarity;
 
-    private final int patchSize;
+    /**
+     * The average amount of flowers to generate in a patch of flowers.
+     */
+    private final int size;
 
-    protected FlowerFeature(ResourceLocation id, Biome.Category[] biomes, Block flower, int patchRarity, int patchSize) {
+    /**
+     * Creates a new FlowerFeature that generates a specific flower Block in a list of
+     * biomes.
+     *
+     * @param id a unique identifier for the constructed OreFeature.
+     * @param biomes list of {@link Biome.Category Biomes} to generate the ore in.
+     * @param flower the exact {@link Block} type to generate.
+     * @param rarity the average amount of flower patches to generate in any given chunk.
+     * @param size the average amount of flowers to generate in a patch of flowers.
+     */
+    protected FlowerFeature(ResourceLocation id, Biome.Category[] biomes, Block flower, int rarity, int size) {
         super(id, biomes);
 
         this.flower = Objects.requireNonNull(flower);
-        this.patchRarity = MathUtil.within(patchRarity, 1, 64);
-        this.patchSize = MathUtil.within(patchSize, 1, 64);
+        this.rarity = MathUtil.within(rarity, 1, 64);
+        this.size = MathUtil.within(size, 1, 64);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected ConfiguredFeature<?, ?> constructFeature() {
         return net.minecraft.world.gen.feature.Feature.ORE.withConfiguration(
-                new OreFeatureConfig(TARGET_FLOWERS, flower.getDefaultState(), patchSize)
-        ).withPlacement(Placement.RANGE.configure(FLOWER_HEIGHT_RANGE)).func_242731_b(patchRarity);//.chance(patchRarity * 2);
+                new OreFeatureConfig(BASE_FLOWERS, flower.getDefaultState(), size)
+        ).withPlacement(Placement.RANGE.configure(HEIGHT_RANGE)).func_242731_b(rarity);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * <p> <b>NOTE:</b> FlowerFeatures use underground ore generation behind the scenes. </p>
+     */
     @Override
-    protected void onConfigureFeature(BiomeGenerationSettingsBuilder builder) throws Exception {
+    protected void configureFeature(BiomeGenerationSettingsBuilder builder) throws Exception {
         if(flower.getRegistryName() == null) throw new Exception("Flower registry name is null");
 
         if(getFeature() == null) throw new Exception("Flower Feature was not constructed correctly!");

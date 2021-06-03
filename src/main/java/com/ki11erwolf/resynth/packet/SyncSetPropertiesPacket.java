@@ -32,6 +32,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+//TODO: Document
 public class SyncSetPropertiesPacket extends Packet<SyncSetPropertiesPacket> {
 
     private static final Map<String, JSerializer<? extends AbstractPlantSetProperties>> TYPENAME_TO_SERIALIZER

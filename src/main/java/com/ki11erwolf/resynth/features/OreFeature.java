@@ -29,20 +29,56 @@ import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 
 import java.util.Objects;
 
+/**
+ * An underground ore and resource {@link Feature World Generation Feature}.
+ */
 public class OreFeature extends Feature<OreFeature> {
 
+    /**
+     * The exact {@link Block} type to generate.
+     */
     private final Block ore;
 
+    /**
+     * The {@link Block Block/Blocks} in the worlds landscape
+     * to generate the ore blocks in.
+     */
     private final RuleTest target;
 
-    private final int veinRarity;
+    /**
+     * The number of veins of the ore to generate in any given Chunk.
+     */
+    private final int rarity;
 
-    private final int veinSize;
+    /**
+     * The number of ore blocks to generate in any given vein of ore.
+     */
+    private final int size;
 
-    private final int veinMinHeight;
+    /**
+     * The minimum height in the world where veins of the ore can generate.
+     */
+    private final int minimumHeight;
 
-    private final int veinMaxHeight;
+    /**
+     * The maximum height in the world where veins of the ore can generate.
+     */
+    private final int maximumHeight;
 
+    /**
+     * Creates a new OreFeature that generates a specific ore Block in a list of
+     * biomes.
+     *
+     * @param id a unique identifier for the constructed OreFeature.
+     * @param biomes list of {@link Biome.Category Biomes} to generate the ore in.
+     * @param ore the exact {@link Block} type to generate.
+     * @param target the {@link Block Block/Blocks} from the worlds landscape to
+     *               generate the ore blocks in.
+     * @param rarity the number of veins of the ore to generate in any given Chunk.
+     * @param size the number of ore blocks to generate in any given vein of ore.
+     * @param minHeight the minimum height in the world where veins of the ore can generate.
+     * @param maxHeight the maximum height in the world where veins of the ore can generate.
+     */
     protected OreFeature(ResourceLocation id, Biome.Category[] biomes, Block ore, RuleTest target,
                          int rarity, int size, int minHeight, int maxHeight) {
         super(id, biomes);
@@ -50,23 +86,29 @@ public class OreFeature extends Feature<OreFeature> {
         this.ore = Objects.requireNonNull(ore);
         this.target = Objects.requireNonNull(target);
 
-        this.veinRarity = MathUtil.within(rarity, 1, 64);
-        this.veinSize = MathUtil.within(size, 1, 64);
-        this.veinMinHeight = MathUtil.within(minHeight, 1, 254);
-        this.veinMaxHeight = MathUtil.within(maxHeight, minHeight + 1, 255);
+        this.rarity = MathUtil.within(rarity, 1, 64);
+        this.size = MathUtil.within(size, 1, 64);
+        this.minimumHeight = MathUtil.within(minHeight, 1, 254);
+        this.maximumHeight = MathUtil.within(maxHeight, minHeight + 1, 255);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected ConfiguredFeature<?, ?> constructFeature() {
         return net.minecraft.world.gen.feature.Feature.ORE.withConfiguration(
-                new OreFeatureConfig(target, ore.getDefaultState(), veinSize)
+                new OreFeatureConfig(target, ore.getDefaultState(), size)
         ).withPlacement(Placement.RANGE.configure(
-                new TopSolidRangeConfig(veinMinHeight, veinMinHeight, veinMaxHeight)
-        )).square().func_242731_b(veinRarity);
+                new TopSolidRangeConfig(minimumHeight, minimumHeight, maximumHeight)
+        )).square().func_242731_b(rarity);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void onConfigureFeature(BiomeGenerationSettingsBuilder builder) throws Exception {
+    protected void configureFeature(BiomeGenerationSettingsBuilder builder) throws Exception {
         if(ore.getRegistryName() == null) throw new Exception("Ore registry name is null");
 
         if(getFeature() == null) throw new Exception("Ore Feature was not constructed correctly!");

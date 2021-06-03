@@ -34,6 +34,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
+//TODO: Document
 enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
 
     /**
