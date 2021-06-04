@@ -24,6 +24,7 @@ import java.util.function.Function;
  * A set of utilities for assistance in
  * mathematics functions.
  */
+//TODO: Document
 public final class MathUtil {
 
     /**

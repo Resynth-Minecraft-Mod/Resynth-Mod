@@ -25,6 +25,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -86,6 +87,8 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant, Block> {
      */
     private static class SeedHooks extends PlantSetSeedHooks {
 
+        //TODO: Consider an (PlayerEvent.ItemSmeltedEvent) event for simple Metallic type seed dropping
+
         /**
          * Handles distributing plant set seeds in the world
          * when a specific ore/organic ore block is destroyed
@@ -108,17 +111,17 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant, Block> {
 
                     //Chance of spawning item.
                     float chance = 0.0F;
-                    if(block.getBlock() == Block.getBlockFromItem(set.getSeedSources(Block[].class)[0].asItem())){
+                    if(block.getBlock() == Block.getBlockFromItem(set.getSeedSources(Block[].class)[0].asItem())) {
                         chance = ((MetallicSet) set).properties.seedSpawnChanceFromOre();
                     } else if (!(block.getBlock().getRegistryName() == null
-                            && set.getProduceItem().asItem().getRegistryName() == null)){
-                        if(block.getBlock().getRegistryName().equals(set.getProduceItem().asItem().getRegistryName())){
+                            && set.getProduceItem().asItem().getRegistryName() == null)) {
+                        if(block.getBlock().getRegistryName().equals(set.getProduceItem().asItem().getRegistryName())) {
                             chance = ((MetallicSet) set).properties.seedSpawnChanceFromOrganicOre();
                         }
                     }
 
                     //Spawn item.
-                    if(MathUtil.Probability.newPercentageProbability(chance).randomResult().isTrue()){
+                    if(MathUtil.Probability.newPercentageProbability(chance).randomResult().isTrue()) {
                         dropSeeds(set.getSeedsItem(), world, pos);
                     }
                 }

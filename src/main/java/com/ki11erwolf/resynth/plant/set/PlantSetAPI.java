@@ -18,7 +18,10 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.ResynthRecipes;
 import com.ki11erwolf.resynth.plant.set.properties.AbstractPlantSetProperties;
 import com.ki11erwolf.resynth.plant.set.properties.AbstractProduceProperties;
+import com.ki11erwolf.resynth.util.MathUtil;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -26,6 +29,7 @@ import java.util.function.Function;
  * A publicly visible registry that provides
  * a solid API for obtaining plant sets.
  */
+//TODO: Document
 public class PlantSetAPI {
 
     /**Private Constructor.*/
@@ -55,6 +59,17 @@ public class PlantSetAPI {
         return PlantSetRegistry.streamPlantSets().filter(
                 (set) -> set.getSetName().equals(Objects.requireNonNull(name))
         ) .findFirst().orElse(null);
+    }
+
+    public static PlantSet<?, ?> getRandomSet() {
+        return getRandomSet(SetType.ALL);
+    }
+
+    public static PlantSet<?, ?> getRandomSet(SetType ofType) {
+        PlantSet<?, ?>[] sets = PlantSetAPI.getSetsByType(ofType);
+        int random = MathUtil.getRandomIntegerInRange(0, sets.length - 1);
+
+        return sets[random];
     }
 
     /**

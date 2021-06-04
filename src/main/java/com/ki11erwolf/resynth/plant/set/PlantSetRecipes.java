@@ -17,6 +17,8 @@ package com.ki11erwolf.resynth.plant.set;
 
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.ResynthRecipes;
+import com.ki11erwolf.resynth.config.ResynthConfig;
+import com.ki11erwolf.resynth.config.categories.GeneralConfig;
 import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
 import com.ki11erwolf.resynth.plant.set.properties.AbstractProduceProperties;
 import net.minecraft.block.Block;
@@ -68,7 +70,7 @@ enum PlantSetRecipes implements ResynthRecipes.RecipeProvider {
         ResourceLocation recipeID = new ResourceLocation(ResynthMod.MODID, set.getSetName() + "-" + recipeType);
 
         addRecipe(new ShapelessRecipeDefinition(
-                set, recipeID, recipeType, outputItemID, 2, set.getSeedsItem().getRegistryName()
+                set, recipeID, recipeType, outputItemID, count, set.getSeedsItem().getRegistryName()
         ));
     }
 

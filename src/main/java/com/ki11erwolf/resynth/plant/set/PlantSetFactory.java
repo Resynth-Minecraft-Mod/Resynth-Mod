@@ -18,10 +18,7 @@ package com.ki11erwolf.resynth.plant.set;
 import com.ki11erwolf.resynth.ResynthMod;
 import com.ki11erwolf.resynth.config.ConfigFile;
 import com.ki11erwolf.resynth.config.ResynthConfig;
-import com.ki11erwolf.resynth.config.categories.BiochemicalPropertiesConfig;
-import com.ki11erwolf.resynth.config.categories.CrystallinePropertiesConfig;
-import com.ki11erwolf.resynth.config.categories.MetallicPropertiesConfig;
-import com.ki11erwolf.resynth.config.categories.ProducePropertiesConfig;
+import com.ki11erwolf.resynth.config.categories.*;
 import com.ki11erwolf.resynth.plant.block.BlockBiochemicalPlant;
 import com.ki11erwolf.resynth.plant.block.BlockCrystallinePlant;
 import com.ki11erwolf.resynth.plant.block.BlockMetallicPlant;
@@ -42,6 +39,7 @@ import java.util.MissingResourceException;
 import java.util.Objects;
 
 //TODO: Document
+@SuppressWarnings("unused")
 public class PlantSetFactory {
 
     /**
@@ -312,9 +310,11 @@ public class PlantSetFactory {
         if(seedsRecipeCount > 0) {
             seedsRecipeCount = Math.min(seedsRecipeCount, 64);
 
-            PlantSetRecipes.INSTANCE.addCrystallineSeedsRecipe(
-                    plantSet, outputItemID, seedsRecipeCount
-            );
+            if (ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).enableCraftingCrystallineSeeds()) {
+                PlantSetRecipes.INSTANCE.addCrystallineSeedsRecipe(
+                        plantSet, outputItemID, seedsRecipeCount
+                );
+            }
         }
 
         return plantSet;

@@ -23,6 +23,7 @@ import com.ki11erwolf.resynth.config.IntegerConfigValue;
 /**
  * General configuration settings used by Resynth.
  */
+//TODO: Document
 public class GeneralConfig extends ConfigCategory {
 
     // *************
@@ -148,7 +149,17 @@ public class GeneralConfig extends ConfigCategory {
                      "This option is available if you wish to be able turn seeds mined from ores into the\n" +
                      "resource that would normally drop, without having to grow it, or for any other reason.\n" +
                      "Set this option to 'true' to enable the functionality.",
-            false, this
+            true, this
+    );
+
+    /**
+     * The config value that allows the user to enable or disable random plant items
+     * for ItemGroup icons.
+     */
+    private final BooleanConfigValue useRandomPlantTabItems = new BooleanConfigValue(
+            "use-random-plant-item-tabs",
+            "Allows turning on or off the use of random plant items for item tabs.",
+            true, this
     );
 
     /**
@@ -224,4 +235,16 @@ public class GeneralConfig extends ConfigCategory {
      * resources are enabled or disabled.
      */
     public boolean enableResourceRecipes() { return enableResourceRecipes.getValue(); }
+
+    /**
+     * @return the config defined value that specifies if random plant items
+     * should be used for plant related ItemGroup icons.
+     */
+    public boolean useRandomPlantTabItems () { return useRandomPlantTabItems.getValue(); }
+
+    /**
+     * @return the config defined value that specifies if crafting Crystalline
+     * seeds into resources is enabled or disabled.
+     */
+    public boolean enableCraftingCrystallineSeeds() { return enableCraftingCrystallineSeeds.getValue(); }
 }
