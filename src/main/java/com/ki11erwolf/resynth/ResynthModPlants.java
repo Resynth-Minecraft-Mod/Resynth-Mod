@@ -126,6 +126,11 @@ public class ResynthModPlants {
         private static final Mod CREATE = new Mod("Create", "create");
 
         /**
+         * The mod id for the mod 'Silent's Mechanisms'.
+         */
+        private static final Mod SILENTS_MECHANISMS = new Mod("Silent's Mechanisms", "silents_mechanisms");
+
+        /**
          * The global map instance that stores the list of supported mods
          * for the class. Every supported mod is stored as a Mod object,
          * that holds the name & id of the mod, mapped to an internal
@@ -137,19 +142,20 @@ public class ResynthModPlants {
                 putMod(-2, new Mod("The One Probe", "theoneprobe"));
                 putMod(-1, new Mod("Hwyla", "waila"));
                 //Normal mods
-                putMod(SIMPLE_ORES);
-                putMod(MORE_ORES_IN_ONE);
-                putMod(JUST_ANOTHER_RUBY_MOD);
-                putMod(BLUE_POWER);
-                putMod(BASIC_NETHER_ORES);
-                putMod(MYSTICAL_AGRICULTURE);
-                putMod(MEKANISM);
-                putMod(BOTANIA);
-                putMod(THE_MIDNIGHT);
-                putMod(APPLIED_ENERGISTICS_2);
-                putMod(THERMAL_FOUNDATION);
-                putMod(IMMERSIVE_ENGINEERING);
-                putMod(CREATE);
+                putMod(SIMPLE_ORES);            //  1
+                putMod(MORE_ORES_IN_ONE);       //  2
+                putMod(JUST_ANOTHER_RUBY_MOD);  //  3
+                putMod(BLUE_POWER);             //  4
+                putMod(BASIC_NETHER_ORES);      //  5
+                putMod(MYSTICAL_AGRICULTURE);   //  6
+                putMod(MEKANISM);               //  7
+                putMod(BOTANIA);                //  8
+                putMod(THE_MIDNIGHT);           //  9
+                putMod(APPLIED_ENERGISTICS_2);  // 10
+                putMod(THERMAL_FOUNDATION);     // 11
+                putMod(IMMERSIVE_ENGINEERING);  // 12
+                putMod(CREATE);                 // 13
+                putMod(SILENTS_MECHANISMS);     // 14
             }
 
             /**
@@ -530,6 +536,13 @@ public class ResynthModPlants {
      */
     private static final MetallicProperties MIDNIGHT_METALLIC = new MetallicProperties(
             false, 35, 3, 6
+    );
+
+    /**
+     * The set properties for general aluminium and aluminium ore.
+     */
+    private static final MetallicProperties BISMUTH_PROPERTIES = new MetallicProperties(
+            false, 33, 7, 9
     );
 
 
@@ -1026,6 +1039,58 @@ public class ResynthModPlants {
     public static final PlantSet<?, ?> CREATE_ZINC = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.CREATE.getID("zinc"), ZINC_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "zinc_ore", "zinc_ore"
+    ));
+
+    // Silent's Mechanisms
+
+    public static final PlantSet<?, ?> SILENTS_MECHANISMS_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.SILENTS_MECHANISMS.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "copper_ore", "copper_ore"
+    ));
+
+    public static final PlantSet<?, ?> SILENTS_MECHANISMS_TIN = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.SILENTS_MECHANISMS.getID("tin"), TIN_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "tin_ore", "tin_ore"
+    ));
+
+    public static final PlantSet<?, ?> SILENTS_MECHANISMS_SILVER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.SILENTS_MECHANISMS.getID("silver"), SILVER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "silver_ore", "silver_ore"
+    ));
+
+    public static final PlantSet<?, ?> SILENTS_MECHANISMS_LEAD = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.SILENTS_MECHANISMS.getID("lead"), LEAD_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "lead_ore", "lead_ore"
+    ));
+
+    public static final PlantSet<?, ?> SILENTS_MECHANISMS_NICKEL = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.SILENTS_MECHANISMS.getID("nickel"), NICKEL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "nickel_ore", "nickel_ore"
+    ));
+
+    public static final PlantSet<?, ?> SILENTS_MECHANISMS_PLATINUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.SILENTS_MECHANISMS.getID("platinum"), PLATINUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "platinum_ore", "platinum_ore"
+    ));
+
+    public static final PlantSet<?, ?> SILENTS_MECHANISMS_ZINC = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.SILENTS_MECHANISMS.getID("zinc"), ZINC_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "zinc_ore", "zinc_ore"
+    ));
+
+    public static final PlantSet<?, ?> SILENTS_MECHANISMS_BISMUTH = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.SILENTS_MECHANISMS.getID("bismuth"), BISMUTH_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "bismuth_ore", "bismuth_ore"
+    ));
+
+    public static final PlantSet<?, ?> SILENTS_MECHANISMS_BAUXITE = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.SILENTS_MECHANISMS.getID("bauxite"), ALUMINIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "bauxite_ore", "bauxite_ore"
+    ));
+
+    public static final PlantSet<?, ?> SILENTS_MECHANISMS_URANIUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
+            Mods.SILENTS_MECHANISMS.getID("uranium"), URANIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
+            "uranium_ore", "uranium_ore"
     ));
 
     // Botania
