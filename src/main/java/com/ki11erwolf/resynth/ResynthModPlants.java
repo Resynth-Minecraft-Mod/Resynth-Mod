@@ -933,12 +933,18 @@ public class ResynthModPlants {
 
     // Applied Energistics 2
 
+    /**
+     * The plant set for Certus Quartz from Applied Energistics 2.
+     */
     public static final PlantSet<?, ?> APPLIED_ENERGISTICS_2_CERTUS_QUARTZ = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
             Mods.APPLIED_ENERGISTICS_2.getID("certus_quartz"), CERTUS_QUARTZ_PROPERTIES,
             new ProduceProperties(3, 200, 2.0),
             "certus_quartz_crystal", "quartz_ore"
     ));
 
+    /**
+     * The plant set for Charged Certus Quartz from Applied Energistics 2.
+     */
     public static final PlantSet<?, ?> APPLIED_ENERGISTICS_2_CHARGED_CERTUS_QUARTZ = registerIfNotNull(
             PlantSetFactory.makeCrystallineSet(Mods.APPLIED_ENERGISTICS_2.getID("charged_certus_quartz"),
                     CHARGED_CERTUS_QUARTZ_PROPERTIES, new ProduceProperties(2, 200, 2.0),
@@ -947,31 +953,49 @@ public class ResynthModPlants {
 
     // Immersive Engineering
 
+    /**
+     * The plant set for Aluminium from Immersive Engineering.
+     */
     public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_ALUMINIUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.IMMERSIVE_ENGINEERING.getID("aluminium"), ALUMINIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "ore_aluminum", "ore_aluminum"
     ));
 
+    /**
+     * The plant set for Copper from Immersive Engineering.
+     */
     public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.IMMERSIVE_ENGINEERING.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "ore_copper", "ore_copper"
     ));
 
+    /**
+     * The plant set for Lead from Immersive Engineering.
+     */
     public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_LEAD = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.IMMERSIVE_ENGINEERING.getID("lead"), LEAD_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "ore_lead", "ore_lead"
     ));
 
+    /**
+     * The plant set for Nickel from Immersive Engineering.
+     */
     public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_NICKEL = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.IMMERSIVE_ENGINEERING.getID("nickel"), NICKEL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "ore_nickel", "ore_nickel"
     ));
 
+    /**
+     * The plant set for Silver from Immersive Engineering.
+     */
     public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_SILVER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.IMMERSIVE_ENGINEERING.getID("silver"), SILVER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "ore_silver", "ore_silver"
     ));
 
+    /**
+     * The plant set for Uranium from Immersive Engineering.
+     */
     public static final PlantSet<?, ?> IMMERSIVE_ENGINEERING_URANIUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.IMMERSIVE_ENGINEERING.getID("uranium"), URANIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "ore_uranium", "ore_uranium"
@@ -979,51 +1003,81 @@ public class ResynthModPlants {
 
     // Thermal Foundation
 
+    /**
+     * The plant set for Apatite from Thermal Foundation.
+     */
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_APATITE = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
             Mods.THERMAL_FOUNDATION.getID("apatite"), APATITE_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "apatite", "apatite_ore"
     ));
 
+    /**
+     * The plant set for Cinnabar from Thermal Foundation.
+     */
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_CINNABAR = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
             Mods.THERMAL_FOUNDATION.getID("cinnabar"), CINNABAR_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "cinnabar", "cinnabar_ore"
     ));
 
+    /**
+     * The plant set for Ruby from Thermal Foundation.
+     */
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_RUBY = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
             Mods.THERMAL_FOUNDATION.getID("ruby"), RUBY_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "ruby", "ruby_ore"
     ));
 
+    /**
+     * The plant set for Sapphire from Thermal Foundation.
+     */
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_SAPPHIRE = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
             Mods.THERMAL_FOUNDATION.getID("sapphire"), SAPPHIRE_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "sapphire", "sapphire_ore"
     ));
 
+    /**
+     * The plant set for Sulfur from Thermal Foundation.
+     */
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_SULFUR = registerIfNotNull(PlantSetFactory.makeCrystallineSet(
             Mods.THERMAL_FOUNDATION.getID("sulfur"), SULFUR_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "sulfur", "sulfur_ore"
     ));
 
+    /**
+     * The plant set for Copper from Thermal Foundation.
+     */
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.THERMAL_FOUNDATION.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "copper_ore", "copper_ore"
     ));
 
+    /**
+     * The plant set for Lead from Thermal Foundation.
+     */
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_LEAD = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.THERMAL_FOUNDATION.getID("lead"), LEAD_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "lead_ore", "lead_ore"
     ));
 
+    /**
+     * The plant set for Nickel from Thermal Foundation.
+     */
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_NICKEL = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.THERMAL_FOUNDATION.getID("nickel"), NICKEL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "nickel_ore", "nickel_ore"
     ));
 
+    /**
+     * The plant set for Silver from Thermal Foundation.
+     */
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_SILVER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.THERMAL_FOUNDATION.getID("silver"), SILVER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "silver_ore", "silver_ore"
     ));
 
+    /**
+     * The plant set for Tin from Thermal Foundation.
+     */
     public static final PlantSet<?, ?> THERMAL_FOUNDATION_TIN = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.THERMAL_FOUNDATION.getID("tin"), TIN_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "tin_ore", "tin_ore"
@@ -1031,11 +1085,17 @@ public class ResynthModPlants {
 
     // Create
 
+    /**
+     * The plant set for Copper from Create.
+     */
     public static final PlantSet<?, ?> CREATE_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.CREATE.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "copper_ore", "copper_ore"
     ));
 
+    /**
+     * The plant set for Zinc from Create.
+     */
     public static final PlantSet<?, ?> CREATE_ZINC = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.CREATE.getID("zinc"), ZINC_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "zinc_ore", "zinc_ore"
@@ -1043,51 +1103,81 @@ public class ResynthModPlants {
 
     // Silent's Mechanisms
 
+    /**
+     * The plant set for Copper from Silent's Mechanisms.
+     */
     public static final PlantSet<?, ?> SILENTS_MECHANISMS_COPPER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.SILENTS_MECHANISMS.getID("copper"), COPPER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "copper_ore", "copper_ore"
     ));
 
+    /**
+     * The plant set for Tin from Silent's Mechanisms.
+     */
     public static final PlantSet<?, ?> SILENTS_MECHANISMS_TIN = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.SILENTS_MECHANISMS.getID("tin"), TIN_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "tin_ore", "tin_ore"
     ));
 
+    /**
+     * The plant set for Silver from Silent's Mechanisms.
+     */
     public static final PlantSet<?, ?> SILENTS_MECHANISMS_SILVER = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.SILENTS_MECHANISMS.getID("silver"), SILVER_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "silver_ore", "silver_ore"
     ));
 
+    /**
+     * The plant set for Lead from Silent's Mechanisms.
+     */
     public static final PlantSet<?, ?> SILENTS_MECHANISMS_LEAD = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.SILENTS_MECHANISMS.getID("lead"), LEAD_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "lead_ore", "lead_ore"
     ));
 
+    /**
+     * The plant set for Nickel from Silent's Mechanisms.
+     */
     public static final PlantSet<?, ?> SILENTS_MECHANISMS_NICKEL = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.SILENTS_MECHANISMS.getID("nickel"), NICKEL_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "nickel_ore", "nickel_ore"
     ));
 
+    /**
+     * The plant set for Platinum from Silent's Mechanisms.
+     */
     public static final PlantSet<?, ?> SILENTS_MECHANISMS_PLATINUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.SILENTS_MECHANISMS.getID("platinum"), PLATINUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "platinum_ore", "platinum_ore"
     ));
 
+    /**
+     * The plant set for Zinc from Silent's Mechanisms.
+     */
     public static final PlantSet<?, ?> SILENTS_MECHANISMS_ZINC = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.SILENTS_MECHANISMS.getID("zinc"), ZINC_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "zinc_ore", "zinc_ore"
     ));
 
+    /**
+     * The plant set for Bismuth from Silent's Mechanisms.
+     */
     public static final PlantSet<?, ?> SILENTS_MECHANISMS_BISMUTH = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.SILENTS_MECHANISMS.getID("bismuth"), BISMUTH_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "bismuth_ore", "bismuth_ore"
     ));
 
+    /**
+     * The plant set for Bauxite (Aluminium) from Silent's Mechanisms.
+     */
     public static final PlantSet<?, ?> SILENTS_MECHANISMS_BAUXITE = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.SILENTS_MECHANISMS.getID("bauxite"), ALUMINIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "bauxite_ore", "bauxite_ore"
     ));
 
+    /**
+     * The plant set for Uranium from Silent's Mechanisms.
+     */
     public static final PlantSet<?, ?> SILENTS_MECHANISMS_URANIUM = registerIfNotNull(PlantSetFactory.makeMetallicSet(
             Mods.SILENTS_MECHANISMS.getID("uranium"), URANIUM_PROPERTIES, DEFAULT_PRODUCE_PROPERTIES,
             "uranium_ore", "uranium_ore"
@@ -1114,21 +1204,84 @@ public class ResynthModPlants {
 
     /* All 16 plant sets for the 16 different Botania Flower Petals */
 
+    /**
+     * The plant set for White Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_WHITE_PETAL         =       newBotaniaPetalSet("white");
+
+    /**
+     * The plant set for Red Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_RED_PETAL           =       newBotaniaPetalSet("red");
+
+    /**
+     * The plant set for Orange Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_ORANGE_PETAL        =       newBotaniaPetalSet("orange");
+
+    /**
+     * The plant set for Pink Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_PINK_PETAL          =       newBotaniaPetalSet("pink");
+
+    /**
+     * The plant set for Yellow Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_YELLOW_PETAL        =       newBotaniaPetalSet("yellow");
+
+    /**
+     * The plant set for Lime Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_LIME_PETAL          =       newBotaniaPetalSet("lime");
+
+    /**
+     * The plant set for Green Petal from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_GREEN_PETAL         =       newBotaniaPetalSet("green");
+
+    /**
+     * The plant set for Blue Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_LIGHT_BLUE_PETAL    =       newBotaniaPetalSet("light_blue");
+
+    /**
+     * The plant set for Cyan Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_CYAN_PETAL          =       newBotaniaPetalSet("cyan");
+
+    /**
+     * The plant set for Blue Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_BLUE_PETAL          =       newBotaniaPetalSet("blue");
+
+    /**
+     * The plant set for Magenta Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_MAGENTA_PETAL       =       newBotaniaPetalSet("magenta");
+
+    /**
+     * The plant set for Purple Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_PURPLE_PETAL        =       newBotaniaPetalSet("purple");
+
+    /**
+     * The plant set for Brown Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_BROWN_PETAL         =       newBotaniaPetalSet("brown");
+
+    /**
+     * The plant set for Gray Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_GRAY_PETAL          =       newBotaniaPetalSet("gray");
+
+    /**
+     * The plant set for Light Gray Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_LIGHT_GRAY_PETAL    =       newBotaniaPetalSet("light_gray");
+
+    /**
+     * The plant set for Black Petals from Botania.
+     */
     public static final PlantSet<?, ?> BOTANIA_BLACK_PETAL         =       newBotaniaPetalSet("black");
 
     /**Private constructor.*/

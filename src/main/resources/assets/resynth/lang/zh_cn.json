@@ -660,5 +660,45 @@
 
   "block.resynth.metallic_plant_create_zinc":               "Zinc Plant (Create)",
   "item.resynth.metallic_seeds_create_zinc":                "Zinc Seeds (Create)",
-  "block.resynth.metallic_organic_ore_create_zinc":         "Organic Zinc (Create)"
+  "block.resynth.metallic_organic_ore_create_zinc":         "Organic Zinc (Create)",
+
+  "block.resynth.metallic_plant_silents_mechanisms_copper":         "Copper Plant (Silent's Mechanisms)",
+  "item.resynth.metallic_seeds_silents_mechanisms_copper":          "Copper Seeds (Silent's Mechanisms)",
+  "block.resynth.metallic_organic_ore_silents_mechanisms_copper":   "Organic Copper (Silent's Mechanisms)",
+
+  "block.resynth.metallic_plant_silents_mechanisms_tin":            "Tin Plant (Silent's Mechanisms)",
+  "item.resynth.metallic_seeds_silents_mechanisms_tin":             "Tin Seeds (Silent's Mechanisms)",
+  "block.resynth.metallic_organic_ore_silents_mechanisms_tin":      "Organic Tin (Silent's Mechanisms)",
+
+  "block.resynth.metallic_plant_silents_mechanisms_silver":         "Silver Plant (Silent's Mechanisms)",
+  "item.resynth.metallic_seeds_silents_mechanisms_silver":          "Silver Seeds (Silent's Mechanisms)",
+  "block.resynth.metallic_organic_ore_silents_mechanisms_silver":   "Organic Silver (Silent's Mechanisms)",
+
+  "block.resynth.metallic_plant_silents_mechanisms_lead":           "Lead Plant (Silent's Mechanisms)",
+  "item.resynth.metallic_seeds_silents_mechanisms_lead":            "Lead Seeds (Silent's Mechanisms)",
+  "block.resynth.metallic_organic_ore_silents_mechanisms_lead":     "Organic Lead (Silent's Mechanisms)",
+
+  "block.resynth.metallic_plant_silents_mechanisms_nickel":         "Nickel Plant (Silent's Mechanisms)",
+  "item.resynth.metallic_seeds_silents_mechanisms_nickel":          "Nickel Seeds (Silent's Mechanisms)",
+  "block.resynth.metallic_organic_ore_silents_mechanisms_nickel":   "Organic Nickel (Silent's Mechanisms)",
+
+  "block.resynth.metallic_plant_silents_mechanisms_platinum":       "Platinum Plant (Silent's Mechanisms)",
+  "item.resynth.metallic_seeds_silents_mechanisms_platinum":        "Platinum Seeds (Silent's Mechanisms)",
+  "block.resynth.metallic_organic_ore_silents_mechanisms_platinum": "Organic Platinum (Silent's Mechanisms)",
+
+  "block.resynth.metallic_plant_silents_mechanisms_zinc":           "Zinc Plant (Silent's Mechanisms)",
+  "item.resynth.metallic_seeds_silents_mechanisms_zinc":            "Zinc Seeds (Silent's Mechanisms)",
+  "block.resynth.metallic_organic_ore_silents_mechanisms_zinc":     "Organic Zinc (Silent's Mechanisms)",
+
+  "block.resynth.metallic_plant_silents_mechanisms_bismuth":        "Bismuth Plant (Silent's Mechanisms)",
+  "item.resynth.metallic_seeds_silents_mechanisms_bismuth":         "Bismuth Seeds (Silent's Mechanisms)",
+  "block.resynth.metallic_organic_ore_silents_mechanisms_bismuth":  "Organic Bismuth (Silent's Mechanisms)",
+
+  "block.resynth.metallic_plant_silents_mechanisms_bauxite":        "Bauxite Plant (Silent's Mechanisms)",
+  "item.resynth.metallic_seeds_silents_mechanisms_bauxite":         "Bauxite Seeds (Silent's Mechanisms)",
+  "block.resynth.metallic_organic_ore_silents_mechanisms_bauxite":  "Organic Bauxite (Silent's Mechanisms)",
+
+  "block.resynth.metallic_plant_silents_mechanisms_uranium":        "Uranium Plant (Silent's Mechanisms)",
+  "item.resynth.metallic_seeds_silents_mechanisms_uranium":         "Uranium Seeds (Silent's Mechanisms)",
+  "block.resynth.metallic_organic_ore_silents_mechanisms_uranium":  "Organic Uranium (Silent's Mechanisms)"
 }
