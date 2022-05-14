@@ -66,7 +66,7 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
      * @param name the name of the block.
      */
     public ResynthBlock(Properties properties, String name){
-        this(properties, new Item.Properties().group(ResynthTabs.TAB_RESYNTH), name);
+        this(properties, new Item.Properties().tab(ResynthTabs.TAB_RESYNTH), name);
     }
 
     /**
@@ -98,7 +98,7 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
      * Sets the tooltip for this block from the lang files.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
         new ExpandingTooltip().setCtrlForDescription(
                 tooltips -> addBlankLine(tooltips).addAll(
@@ -179,7 +179,7 @@ public class ResynthBlock<T extends ResynthBlock<?>> extends Block {
         }
 
         return toTextComponent(WordUtils.wrap(
-                TextFormatting.DARK_GRAY + I18n.format("tooltip.block.resynth." + item, params),
+                TextFormatting.DARK_GRAY + I18n.get("tooltip.block.resynth." + item, params),
                 ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).getTooltipCharacterLimit(),
                 "\n", true
         ));

@@ -32,6 +32,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 /**
@@ -69,8 +71,10 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      * {@link ForgeEventFactory#onPlayerDestroyItem(PlayerEntity, ItemStack, Hand)} event.
      */
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entityLiving) {
-        if(world.isRemote)
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entityLiving) {
+        if(world.isClientSide)
             playSmashSound(world, entityLiving);
 
         if(!(entityLiving instanceof ServerPlayerEntity))
@@ -91,7 +95,7 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
     private static void playSmashSound(World world, LivingEntity player){
         if(player instanceof PlayerEntity)
             EffectsUtil.playNormalSoundWithPitchInRage(
-                    world, (PlayerEntity)player, SoundEvents.BLOCK_GLASS_BREAK,
+                    world, (PlayerEntity)player, SoundEvents.GLASS_BREAK,
                     SoundCategory.PLAYERS, 0.8F, 0.4F
             );
     }
@@ -116,9 +120,11 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      * {@inheritDoc}.
      */
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
-        playerIn.setActiveHand(handIn);
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        ItemStack itemstack = playerIn.getItemInHand(handIn);
+        playerIn.swing(handIn);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
@@ -126,7 +132,7 @@ public class ItemBulb extends ResynthItem<ItemBulb> {
      * Constructs the tooltip for the item.
      */
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip,
+    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
         addPlantItemTooltips(tooltip, PREFIX, parentSet);
     }

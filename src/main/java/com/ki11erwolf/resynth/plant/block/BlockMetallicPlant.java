@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Ki11er_wolf
+ * Copyright 2018-2022 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * The Metallic plant set type - used to grow resources that
@@ -47,7 +48,7 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * The direction the plant is facing when its grown
      * produce.
      */
-    private static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+    private static final DirectionProperty FACING = HorizontalBlock.FACING;
 
     @SuppressWarnings("WeakerAccess")//Lies
     public BlockMetallicPlant(PlantSet<BlockMetallicPlant, Block> parentSet) {
@@ -72,15 +73,15 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
     @Override
     VoxelShape[] getShapeByAge() {
         return new VoxelShape[]{
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 2.0D, 10.0D),  //1
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D),  //2
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 6.0D, 10.0D),  //3
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 8.0D, 10.0D),  //4
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 10.0D, 10.0D), //5
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 12.0D, 10.0D), //6
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 14.0D, 10.0D), //7
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D), //8
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 11.0D, 10.0D)  //9
+                Block.box(6.0D, 0.0D, 6.0D, 10.0D, 2.0D, 10.0D),  //1
+                Block.box(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D),  //2
+                Block.box(6.0D, 0.0D, 6.0D, 10.0D, 6.0D, 10.0D),  //3
+                Block.box(6.0D, 0.0D, 6.0D, 10.0D, 8.0D, 10.0D),  //4
+                Block.box(6.0D, 0.0D, 6.0D, 10.0D, 10.0D, 10.0D), //5
+                Block.box(6.0D, 0.0D, 6.0D, 10.0D, 12.0D, 10.0D), //6
+                Block.box(6.0D, 0.0D, 6.0D, 10.0D, 14.0D, 10.0D), //7
+                Block.box(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D), //8
+                Block.box(6.0D, 0.0D, 6.0D, 10.0D, 11.0D, 10.0D)  //9
         };
     }
 
@@ -110,8 +111,8 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * Registers the {@link #FACING} property.
      */
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(FACING);
     }
 
@@ -122,15 +123,16 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
      * when its produce is broken.
      */
     @Deprecated
+    @ParametersAreNonnullByDefault
     @SuppressWarnings("deprecation")
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos,
                                 boolean isMoving) {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
-        if(blockIn == Block.getBlockFromItem(getProduce().getItem())){
-            if(worldIn.getBlockState(pos).get(getGrowthProperty()) == this.getMaxGrowthStage())
+        if(blockIn == Block.byItem(getProduce().getItem())){
+            if(worldIn.getBlockState(pos).getValue(getGrowthProperty()) == this.getMaxGrowthStage())
                 //Reset the plant if the player breaks its produce.
-                worldIn.setBlockState(pos,
-                        this.getDefaultState().with(this.getGrowthProperty(), this.getMaxGrowthStage() - 1)
+                worldIn.setBlockAndUpdate(pos,
+                        this.defaultBlockState().setValue(this.getGrowthProperty(), this.getMaxGrowthStage() - 1)
                 );
         }
     }
@@ -174,8 +176,8 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
 
             if(block == null) return null;
 
-            if(block.getBlock() == Blocks.AIR && world.getBlockState(pos1.down()).isSolid()){ //Place produce block.
-                if(world.setBlockState(pos1, Block.getBlockFromItem(getProduce().getItem()).getDefaultState()))
+            if(block.getBlock() == Blocks.AIR && world.getBlockState(pos1.below()).canOcclude()){ //Place produce block.
+                if(world.setBlockAndUpdate(pos1, Block.byItem(getProduce().getItem()).defaultBlockState()))
                     return facing;
                 else return null;
             }
@@ -209,8 +211,8 @@ public abstract class BlockMetallicPlant extends BlockPlant<BlockMetallicPlant> 
 
             if(facing == null) return;
 
-            world.setBlockState(pos, this.getDefaultState().with(this.getGrowthProperty(), growth)
-                    .with(HorizontalBlock.HORIZONTAL_FACING, facing), 2);
+            world.setBlock(pos, this.defaultBlockState().setValue(this.getGrowthProperty(), growth)
+                    .setValue(HorizontalBlock.FACING, facing), 2);
         } else {//Grow Stem
             setGrowthStage(world, pos, growth);
         }

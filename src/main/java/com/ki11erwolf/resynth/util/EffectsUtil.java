@@ -168,7 +168,7 @@ public class EffectsUtil {
         float volume = 1.0F;
         //Random pitch in range
         float pitch = basePitch + world.getRandom().nextFloat() * pitchMultiplier;
-        BlockPos pos = new BlockPos(player.getPosX(), player.getPosY(), player.getPosZ());
+        BlockPos pos = new BlockPos(player.getX(), player.getY(), player.getZ());
 
         return playNormalSound(world, player, pos.getX(), pos.getY(), pos.getZ(), soundEvent, category, volume, pitch);
     }
@@ -349,7 +349,7 @@ public class EffectsUtil {
                                            SoundCategory category, float volume, float pitch, boolean distanceDelay){
         if(isUnsafe(world)) return false;//Safety check
 
-        world.playSound(x, y, z, soundEvent, category, volume, pitch, distanceDelay);
+        world.playLocalSound(x, y, z, soundEvent, category, volume, pitch, distanceDelay);
         return true;
     }
 
@@ -448,7 +448,7 @@ public class EffectsUtil {
         World world = getClientWorld();
         if(world == null) return false;//Safety check.
 
-        world.playSound(x, y, z, soundEvent, category, volume, pitch, distanceDelay);
+        world.playLocalSound(x, y, z, soundEvent, category, volume, pitch, distanceDelay);
         return true;
     }
 
@@ -479,7 +479,7 @@ public class EffectsUtil {
                                           IParticleData particleType){
         if(isUnsafe(world)) return false;//Safety check
 
-        Random random = world.rand;
+        Random random = world.random;
         double d = random.nextGaussian() * speedMultiplier;
         BlockState blockstate = world.getBlockState(pos);
 
@@ -489,7 +489,7 @@ public class EffectsUtil {
                         particleType,
                         (float)pos.getX() + random.nextFloat(),
                         (double)pos.getY() + (double)random.nextFloat()
-                                * blockstate.getShape(world, pos).getEnd(Direction.Axis.Y),
+                                * blockstate.getShape(world, pos).max(Direction.Axis.Y),
                         (float)pos.getZ() + random.nextFloat(), d, d, d
                 );
             }
@@ -637,7 +637,7 @@ public class EffectsUtil {
     /**
      * A utility class that enables us to obtain
      * a reference to the client side world instance
-     * ({@link Minecraft#world}), without bring up
+     * ({@link Minecraft#level}), without bring up
      * errors on servers.
      *
      * <p/>This class enables us to check for the client
@@ -657,7 +657,7 @@ public class EffectsUtil {
         private ClientWorldGetter(){}
 
         /**
-         * Used to get a reference to {@link Minecraft#world}
+         * Used to get a reference to {@link Minecraft#level}
          * without causing errors on server code, PROVIDED
          * the necessary checks are performed before hand.
          *
@@ -665,10 +665,10 @@ public class EffectsUtil {
          * if called on a dedicated server. Checks for this
          * must be performed before this method is called.
          *
-         * @return the {@link Minecraft#world} instance.
+         * @return the {@link Minecraft#level} instance.
          */
         private static World getClientWorld(){
-            return net.minecraft.client.Minecraft.getInstance().world;
+            return Minecraft.getInstance().level;
         }
     }
 }

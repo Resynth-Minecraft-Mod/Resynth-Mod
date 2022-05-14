@@ -45,6 +45,6 @@ public class MinecraftUtil {
      * @return {@code true} if the ItemStack was spawned.
      */
     public static boolean spawnItemStackInWorld(ItemStack stack, World world, BlockPos pos){
-        return world.addEntity(new ItemEntity(world,pos.getX(), pos.getY(), pos.getZ(), stack));
+        return world.addFreshEntity(new ItemEntity(world,pos.getX(), pos.getY(), pos.getZ(), stack));
     }
 }

@@ -257,9 +257,9 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
                 // Add recipe & log
                 recipes.add(recipe);
                 LOG.debug(String.format("Registered Resynth recipe: '%s' -> %s",
-                    recipe.getId().toString(), (recipe.getRecipeOutput().getItem().getRegistryName() != null ?
-                            recipe.getRecipeOutput().getItem().getRegistryName().toString() : "<NO REG NAME>")
-                            + "(" + recipe.getRecipeOutput().getCount() + ")"
+                    recipe.getId().toString(), (recipe.getResultItem().getItem().getRegistryName() != null ?
+                            recipe.getResultItem().getItem().getRegistryName().toString() : "<NO REG NAME>")
+                            + "(" + recipe.getResultItem().getCount() + ")"
                 ));
             }
         }
@@ -323,7 +323,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
      * @return {@code RecipeManager.recipes} as a {@link Field}.
      */
     private Field getRecipesField() {
-        List<String> fieldNames = Arrays.asList("recipes", "field_199522_d");
+        List<String> fieldNames = Arrays.asList("getRecipes", "recipes", "field_199522_d");
         Field recipesField;
 
         // Get RecipeManager.recipes reference
@@ -489,7 +489,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
          */
         static FurnaceRecipe newFurnaceRecipe(ResourceLocation resource, String group, double experience, int time,
                                                      ItemStack output, IItemProvider input) {
-            return new FurnaceRecipe(resource, group, Ingredient.fromItems(input), output, (float) experience, time);
+            return new FurnaceRecipe(resource, group, Ingredient.of(input), output, (float) experience, time);
         }
 
         /**
@@ -525,7 +525,7 @@ public enum ResynthRecipes implements IResourceManagerReloadListener {
                                                               ItemStack output, IItemProvider... input) {
             NonNullList<Ingredient> ingredients = NonNullList.create();
             for(IItemProvider in : input){
-                ingredients.add(Ingredient.fromItems(in));
+                ingredients.add(Ingredient.of(in));
             }
 
             return new ShapelessRecipe(resource, group, output, ingredients);

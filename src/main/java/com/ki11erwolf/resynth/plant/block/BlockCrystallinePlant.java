@@ -66,14 +66,14 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
     @Override
     VoxelShape[] getShapeByAge() {
         return new VoxelShape[]{
-                Block.makeCuboidShape(6.0D, 0.0D, 6.0D,10.0D, 2.0D, 10.0D), //1
-                Block.makeCuboidShape(5.0D, 0.0D, 5.0D,11.0D, 3.5D, 11.0D), //2
-                Block.makeCuboidShape(4.5D, 0.0D, 4.5D,11.5D, 5.0D, 11.5D), //3
-                Block.makeCuboidShape(2.5D, 0.0D, 2.5D,13.5D, 7.5D, 13.5),  //4
-                Block.makeCuboidShape(2.5D, 0.0D, 2.5D,13.5D, 7.5D, 13.5D), //5
-                Block.makeCuboidShape(0.5D, 0.5D, 0.5D,15.5D, 11.0D, 15.5D),//6
-                Block.makeCuboidShape(0.5D, 0.0D, 0.5D,15.5D, 14.0D, 15.5D),//7
-                Block.makeCuboidShape(0.5D, 0.0D, 0.5D,15.5D, 15.0D, 15.5D) //8
+                Block.box(6.0D, 0.0D, 6.0D,10.0D, 2.0D, 10.0D), //1
+                Block.box(5.0D, 0.0D, 5.0D,11.0D, 3.5D, 11.0D), //2
+                Block.box(4.5D, 0.0D, 4.5D,11.5D, 5.0D, 11.5D), //3
+                Block.box(2.5D, 0.0D, 2.5D,13.5D, 7.5D, 13.5),  //4
+                Block.box(2.5D, 0.0D, 2.5D,13.5D, 7.5D, 13.5D), //5
+                Block.box(0.5D, 0.5D, 0.5D,15.5D, 11.0D, 15.5D),//6
+                Block.box(0.5D, 0.0D, 0.5D,15.5D, 14.0D, 15.5D),//7
+                Block.box(0.5D, 0.0D, 0.5D,15.5D, 15.0D, 15.5D) //8
         };
     }
 
@@ -128,11 +128,11 @@ public abstract class BlockCrystallinePlant extends BlockPlant<BlockCrystallineP
     /**
      * @return {@inheritDoc}
      *
-     * <p/>Returns {@link SoundEvents#ITEM_CROP_PLANT}.
+     * <p/>Returns {@link SoundEvents#CROP_PLANTED}.
      */
     @Override
     protected SoundEvent getSoundEventOfHarvest(){
-        return SoundEvents.ITEM_CROP_PLANT;
+        return SoundEvents.CROP_PLANTED;
     }
 
     /**

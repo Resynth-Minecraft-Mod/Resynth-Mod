@@ -410,7 +410,7 @@ public class RKey {
             InputMappings.Input inputName = getInputFromName();
 
             if(inputName != null){
-                return (validated = (inputName.getKeyCode() == inputKeyCode.getKeyCode()));
+                return (validated = (inputName.getValue() == inputKeyCode.getValue()));
             }
 
             return (validated = false);
@@ -425,7 +425,7 @@ public class RKey {
             List<String> codes = new ArrayList<>();
 
             for(int keyCode : keyCodes){
-                codes.add(getInputFromCode(keyCode).getTranslationKey());
+                codes.add(getInputFromCode(keyCode).getDisplayName().getString());
             }
 
             return codes.toArray(new String[0]);
@@ -442,7 +442,7 @@ public class RKey {
                 if(hasValidatableName() && asInput != null && !validated){
                     throw new IllegalStateException(
                         "RKey '" + name + "' failed validation! "
-                        + "RKey with code is: '" + asInput.getTranslationKey() + "' instead!"
+                        + "RKey with code is: '" + asInput.getDisplayName() + "' instead!"
                     );
                 } else return queryGiven();
             } else return queryGiven();
@@ -480,7 +480,7 @@ public class RKey {
          * key, represented/referenced by this RKey, is pressed.
          */
         private boolean queryKeyCode(int code){
-            return InputMappings.isKeyDown(Minecraft.getInstance().getMainWindow().getHandle(), code);
+            return InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), code);
         }
 
         /**
@@ -498,7 +498,7 @@ public class RKey {
          * RKey represents. Obtained using the keycode given.
          */
         private InputMappings.Input getInputFromCode(int code){
-            return InputMappings.Type.KEYSYM.getOrMakeInput(code);
+            return InputMappings.Type.KEYSYM.getOrCreate(code);
         }
 
         /**
@@ -509,7 +509,7 @@ public class RKey {
         private InputMappings.Input getInputFromName(){
             if(RKey.this.name == null) return null;
             else try {
-                return InputMappings.getInputByName(RKey.this.name);
+                return InputMappings.getKey(RKey.this.name);
             } catch (Exception e) {
                 return null;
             }

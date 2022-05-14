@@ -63,7 +63,7 @@ public class TileEntityTypeMineralSoil {
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> e) {
             registerTileEntityType(
                     e.getRegistry(), register(
-                            TileEntityMineralSoil.TE_ID, TileEntityType.Builder.create(TileEntityMineralSoil::new)
+                            TileEntityMineralSoil.TE_ID, TileEntityType.Builder.of(TileEntityMineralSoil::new)
                     ),
                     ResynthMod.MODID + ":" + TileEntityMineralSoil.TE_ID
             );
@@ -116,7 +116,7 @@ public class TileEntityTypeMineralSoil {
             type = DataFixesManager.getDataFixer().getSchema(DataFixUtils.makeKey(1519))
                     .getChoiceType(TypeReferences.BLOCK_ENTITY, id);
         } catch (IllegalArgumentException ex) {
-            if (SharedConstants.developmentMode) {
+            if (SharedConstants.IS_RUNNING_IN_IDE) {
                 throw ex;
             }
         }

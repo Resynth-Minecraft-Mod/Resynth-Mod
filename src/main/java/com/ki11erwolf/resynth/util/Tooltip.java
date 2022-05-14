@@ -82,7 +82,7 @@ public interface Tooltip {
      * key could not be found.
      */
     static String localize(String key, Object... params){
-        return I18n.format(key, params);
+        return I18n.get(key, params);
     }
 
     /**

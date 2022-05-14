@@ -46,6 +46,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -58,6 +59,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Map;
 
@@ -94,7 +97,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
     /**
      * The shape and dimentions of the block.
      */
-    private static final VoxelShape MINERAL_SOIL_SHAPE = Block.makeCuboidShape(
+    private static final VoxelShape MINERAL_SOIL_SHAPE = Block.box(
             0.0D, 0.0D, 0.0D,
             16.0D, 15.0D, 16.0D
     );
@@ -103,8 +106,8 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * Default constructor.
      */
     BlockMineralSoil(String name){
-        super(Properties.create(Material.EARTH).hardnessAndResistance(2.0F).sound(SoundType.GROUND), name);
-        this.setDefaultState(this.stateContainer.getBaseState().with(STAGE, 0));
+        super(Properties.of(Material.DIRT).strength(2.0F).sound(SoundType.GRAVEL), name);
+        this.registerDefaultState(this.getStateDefinition().any().setValue(STAGE, 0));
     }
 
     // ***************
@@ -119,6 +122,8 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * @return {@link #MINERAL_SOIL_SHAPE}.
      */
     @Override
+    @Nonnull
+    @ParametersAreNonnullByDefault
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return MINERAL_SOIL_SHAPE;
     }
@@ -135,14 +140,14 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      */
     private void updateState(float mineralContent, World world, BlockState state, BlockPos pos){
         if(mineralContent > 49.9){
-            world.setBlockState(pos, state.with(STAGE, 4 + getStageIncrease(world, pos)));
+            world.setBlockAndUpdate(pos, state.setValue(STAGE, 4 + getStageIncrease(world, pos)));
         } else if(mineralContent > 39.9){
-            world.setBlockState(pos, state.with(STAGE, 3));
+            world.setBlockAndUpdate(pos, state.setValue(STAGE, 3));
         } else if(mineralContent > 29.9){
-            world.setBlockState(pos, state.with(STAGE, 2));
+            world.setBlockAndUpdate(pos, state.setValue(STAGE, 2));
         } else if(mineralContent > 19.9){
-            world.setBlockState(pos, state.with(STAGE, 1));
-        } else world.setBlockState(pos, state.with(STAGE, 0));
+            world.setBlockAndUpdate(pos, state.setValue(STAGE, 1));
+        } else world.setBlockAndUpdate(pos, state.setValue(STAGE, 0));
     }
 
     // *****
@@ -157,7 +162,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * @param builder StateContainer builder.
      */
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(STAGE);
     }
 
@@ -169,7 +174,9 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * {@inheritDoc}
      */
     @Override
-    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public ItemStack getCloneItemStack(IBlockReader worldIn, BlockPos pos, BlockState state) {
         return new ItemStack(this);
     }
 
@@ -183,15 +190,16 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * Handles dropping the extra drops - Mineral Crystal & Mineral Rocks.
      */
     @Override
-    public void spawnAdditionalDrops(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
-        if(world.isRemote)
+    @ParametersAreNonnullByDefault
+    public void spawnAfterBreak(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
+        if(world.isClientSide)
             return;
 
         //Dirt and Mineral Crystal
         MinecraftUtil.spawnItemInWorld(ResynthItems.ITEM_MINERAL_CRYSTAL, world, pos);
         MinecraftUtil.spawnItemStackInWorld(new ItemStack(Blocks.DIRT), world, pos);
 
-        super.spawnAdditionalDrops(state, world, pos, stack);
+        super.spawnAfterBreak(state, world, pos, stack);
     }
 
     /**
@@ -202,12 +210,13 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * put into the Mineral Soil block.
      */
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    @ParametersAreNonnullByDefault
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             //Checks
-            TileEntity tileentity = world.getTileEntity(pos);
+            TileEntity tileentity = world.getBlockEntity(pos);
             if (!(tileentity instanceof TileEntityMineralSoil)) {
-                super.onReplaced(state, world, pos, newState, isMoving);
+                super.onRemove(state, world, pos, newState, isMoving);
             }
 
             //Mineral Rocks
@@ -216,11 +225,11 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
             float content = ((TileEntityMineralSoil)tileentity).getMineralPercentage();
 
             int rocks = (int)((content - CONFIG.getStartingMineralContent())/CONFIG.getMineralRockWorth());
-            InventoryHelper.spawnItemStack(
-                    world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, rocks)
+            InventoryHelper.dropContents(
+                    world, pos, NonNullList.of(new ItemStack(ResynthItems.ITEM_MINERAL_ROCK, rocks))
             );
 
-            super.onReplaced(state, world, pos, newState, isMoving);
+            super.onRemove(state, world, pos, newState, isMoving);
         }
     }
 
@@ -233,7 +242,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * @return {@code {@link TileEntityMineralSoil}.class}.
      */
     @Override
-    public Class<TileEntityMineralSoil> getTileEntityClass() {
+    public Class<TileEntityMineralSoil> getBlockEntityClass() {
         return TileEntityMineralSoil.class;
     }
 
@@ -274,7 +283,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player,
                              World world, BlockState blockState, IProbeHitData data) {
-        TileEntityMineralSoil tile = getTileEntity(world, data.getPos());
+        TileEntityMineralSoil tile = getBlockEntity(world, data.getPos());
         float mineralContent = tile.getMineralPercentage();
         float contentIncrease = getMineralContentIncrease(world, data.getPos());
         float max = 50.0F;
@@ -290,7 +299,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
             );
 
         probeInfo.text(new StringTextComponent(
-                TextFormatting.BOLD.toString() + TextFormatting.BLUE.toString() + "C: " + totalMineralContent + "%")
+                TextFormatting.BOLD + TextFormatting.BLUE.toString() + "C: " + totalMineralContent + "%")
         );
     }
 
@@ -334,7 +343,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
         );
 
         if(mineralContent >= 50.0)
-            clientServerNBT.putFloat("mineralIncrease", getMineralContentIncrease(world, tileEntity.getPos()));
+            clientServerNBT.putFloat("mineralIncrease", getMineralContentIncrease(world, tileEntity.getBlockPos()));
     }
 
     // *****
@@ -352,10 +361,12 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * @return {@code true} if the item used is an accepted (usable) item.
      */
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player,
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player,
                                            Hand hand, BlockRayTraceResult hit){
-        ItemStack usedItem = player.getHeldItem(hand);
-        TileEntityMineralSoil entityMineralSoil = getTileEntity(world, pos);
+        ItemStack usedItem = player.getItemInHand(hand);
+        TileEntityMineralSoil entityMineralSoil = getBlockEntity(world, pos);
 
         float mineralContent = entityMineralSoil.getMineralPercentage();
         float increase;
@@ -373,7 +384,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
         }  else return ActionResultType.FAIL;
 
         //Do increase
-        if(world.isRemote)
+        if(world.isClientSide)
             return ActionResultType.SUCCESS;
 
         if(!player.isCreative()){
@@ -384,9 +395,9 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
         updateState(entityMineralSoil.getMineralPercentage(), world, state, pos);
 
         if(CONFIG.isChatMessageEnabled())
-            player.sendMessage(new StringTextComponent(I18n.format(
+            player.sendMessage(new StringTextComponent(I18n.get(
                     "misc.resynth.mineral_content", entityMineralSoil.getMineralPercentage()
-            ) + "%"), player.getUniqueID());
+            ) + "%"), player.getUUID());
 
         return ActionResultType.SUCCESS;
     }
@@ -402,10 +413,11 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * blocks and update its state accordingly.
      */
     @Override
+    @ParametersAreNonnullByDefault
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn,
                                 BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
-        updateState(getTileEntity(worldIn, pos).getMineralPercentage(), worldIn, state, pos);
+        updateState(getBlockEntity(worldIn, pos).getMineralPercentage(), worldIn, state, pos);
     }
 
     /**
@@ -418,7 +430,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * growth stage by (beyond 4).
      */
     private static int getStageIncrease(World world, BlockPos pos){
-        BlockState enhancer = world.getBlockState(pos.down());
+        BlockState enhancer = world.getBlockState(pos.below());
 
         if(enhancer.getBlock() instanceof BlockEnhancer){
             return ((BlockEnhancer)enhancer.getBlock()).getStageIncrease();
@@ -436,7 +448,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * if no Enhancer block is beneath the soil block.
      */
     private static float getMineralContentIncrease(World world, BlockPos pos){
-        BlockState enhancer = world.getBlockState(pos.down());
+        BlockState enhancer = world.getBlockState(pos.below());
 
         if(enhancer.getBlock() instanceof BlockEnhancer){
             return ((BlockEnhancer)enhancer.getBlock()).getIncrease();
@@ -454,7 +466,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
      * @return the formatted localized message.
      */
     private static String getMineralContentMessage(float mineralPercentage, float increase) {
-        return TextFormatting.AQUA + I18n.format(
+        return TextFormatting.AQUA + I18n.get(
                 "misc.resynth.mineral_content",
                 TextFormatting.GOLD + String.valueOf(mineralPercentage + increase)
         );
@@ -465,7 +477,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
         information.put("soil_info_header", new Object[]{ TextFormatting.GRAY, TextFormatting.BLUE, TextFormatting.GRAY });
 
         // Common data
-        float mineralConcentration = getTileEntity(world, pos).getMineralPercentage();
+        float mineralConcentration = getBlockEntity(world, pos).getMineralPercentage();
         float enhancedConcentration = getMineralContentIncrease(world, pos);
         float finalConcentration = mineralConcentration + ((mineralConcentration >= 50.0) ? enhancedConcentration : 0);
 
@@ -478,7 +490,7 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
         });
 
         // Enhancer - logic
-        ResourceLocation enhancer = world.getBlockState(pos.down()).getBlock().getRegistryName();
+        ResourceLocation enhancer = world.getBlockState(pos.below()).getBlock().getRegistryName();
         String enhancerKey = "$no_enhancer";
         String color = TextFormatting.WHITE.toString();
 
@@ -503,8 +515,8 @@ public class BlockMineralSoil extends ResynthTileEntity<TileEntityMineralSoil>
         });
 
         // Hopper Auto Harvest
-        boolean hopperAutoHarvest = world.getBlockState(pos.down()).getBlock() == Blocks.HOPPER
-                || world.getBlockState(pos.down().down()).getBlock() == Blocks.HOPPER;
+        boolean hopperAutoHarvest = world.getBlockState(pos.below()).getBlock() == Blocks.HOPPER
+                || world.getBlockState(pos.below().below()).getBlock() == Blocks.HOPPER;
 
         information.put("hopper_auto_harvesting", new Object[] {TextFormatting.BLUE,
                 (hopperAutoHarvest ? TextFormatting.DARK_GREEN : TextFormatting.DARK_RED), (hopperAutoHarvest ? "$true" : "$false")

@@ -46,7 +46,9 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
 /**
@@ -84,7 +86,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * @param name registry name of the item.
      */
     ItemMineralHoe(String name) {
-        super(new Properties().maxStackSize(1), name);
+        super(new Properties().stacksTo(1), name);
     }
 
     // *******
@@ -98,12 +100,12 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * and how to use the item.
      */
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
+    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
 
         //Check stack
         ensureChargesNBT(stack);
         if(stack.getTag() == null){
-            super.addInformation(stack, worldIn, tooltip, flagIn);
+            super.appendHoverText(stack, worldIn, tooltip, flagIn);
             return;
         }
 
@@ -121,7 +123,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         );
 
         //Add default information tooltip.
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 
     // ***********
@@ -246,19 +248,20 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * if it did not.
      */
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
+    @Nonnull
+    public ActionResultType useOn(ItemUseContext context) {
         boolean success;
 
         if(context.getPlayer() == null) {
             success = false;
         } else if(context.getPlayer().isCrouching()) {
-            success = onBlockShiftClick(context.getWorld(), context.getPos(),
-                context.getWorld().getBlockState(context.getPos()), context.getItem(), context.getPlayer()
+            success = onBlockShiftClick(context.getLevel(), context.getClickedPos(),
+                context.getLevel().getBlockState(context.getClickedPos()), context.getItemInHand(), context.getPlayer()
             );
         } else {
             success = onBlockClick(
-                    context.getWorld(), context.getPos(), context.getWorld().getBlockState(context.getPos()),
-                    context.getItem(), context.getPlayer(), context.getFace()
+                    context.getLevel(), context.getClickedPos(), context.getLevel().getBlockState(context.getClickedPos()),
+                    context.getItemInHand(), context.getPlayer(), context.getClickedFace()
             );
         }
 
@@ -280,14 +283,16 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * if it did not.
      */
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
         boolean success;
 
         if(player.isCrouching())    success = onItemShiftClick(world, player, stack);
         else                        success = onItemClick(world, player, stack);
 
-        return (success ? ActionResult.resultSuccess(stack) : ActionResult.resultFail(stack));
+        return (success ? ActionResult.success(stack) : ActionResult.fail(stack));
     }
 
     // **********************
@@ -414,8 +419,8 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             if(incrementCharges(item)){
                 if(CONFIG.playChargeSound())
                     EffectsUtil.playNormalSound(
-                            world, player, new BlockPos(player.getPositionVec()),
-                            SoundEvents.BLOCK_NOTE_BLOCK_CHIME, SoundCategory.BLOCKS
+                            world, player, new BlockPos(player.position()),
+                            SoundEvents.NOTE_BLOCK_CHIME, SoundCategory.BLOCKS
                     );
 
                 displayCharges(world, player, item);
@@ -435,13 +440,13 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * {@code false} otherwise.
      */
     private boolean tryTakeCrystal(PlayerEntity player){
-        for(ItemStack itemStack : player.container.getInventory()){
+
+        for(ItemStack itemStack : player.containerMenu.getItems()){
             if(itemStack.getItem() == ResynthItems.ITEM_MINERAL_CRYSTAL){
                 itemStack.shrink(1);
                 return true;
             }
         }
-
         return false;
     }
 
@@ -455,7 +460,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * @param item the Mineral Hoe item stack.
      */
     private void displayCharges(World world, PlayerEntity player, ItemStack item){
-        if(!world.isRemote)
+        if(!world.isClientSide)
             return;
 
         player.sendMessage(
@@ -463,7 +468,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
                     "mineral_hoe_charges", TextFormatting.GOLD,
                     getCharges(item) > 1 ? TextFormatting.AQUA : TextFormatting.RED,
                     getCharges(item)).getString()
-            ), player.getUniqueID()
+            ), player.getUUID()
         );
     }
 
@@ -494,7 +499,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             return false;
 
         //Check direction
-        if (!(face != Direction.DOWN && world.isAirBlock(pos.up()))) {
+        if (!(face != Direction.DOWN && world.isEmptyBlock(pos.above()))) {
             return false;
         }
 
@@ -502,7 +507,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         if(!(player.isCreative() || getCharges(item) > 0)){
             if(CONFIG.playFailSound())
                 EffectsUtil.playNormalSound(
-                        world, player, pos, SoundEvents.BLOCK_NOTE_BLOCK_HAT, SoundCategory.BLOCKS
+                        world, player, pos, SoundEvents.NOTE_BLOCK_HAT, SoundCategory.BLOCKS
                 );
             return false;
         }
@@ -530,16 +535,16 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
      * @return {@code true} if the block was successfully tilled/replaced.
      */
     private boolean tillBlock(World world, BlockPos pos, PlayerEntity player){
-        boolean replaced = world.setBlockState(pos, ResynthBlocks.BLOCK_MINERAL_SOIL.getDefaultState());
+        boolean replaced = world.setBlock(pos, ResynthBlocks.BLOCK_MINERAL_SOIL.defaultBlockState(), 0);
 
         if(replaced){
             //Particles
             if(CONFIG.showParticles())
-                EffectsUtil.displayStandardEffects(world, pos.up(), 5, ParticleTypes.FLAME);
+                EffectsUtil.displayStandardEffects(world, pos.above(), 5, ParticleTypes.FLAME);
 
             //Sound
             EffectsUtil.playNormalSound(
-                    world, player, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS
+                    world, player, pos, SoundEvents.HOE_TILL, SoundCategory.BLOCKS
             );
         }
 
@@ -552,8 +557,8 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
 
     /**
      * Attempts to grow a plant similar to bonemeal,
-     * however it ignores {@link IGrowable#canGrow(IBlockReader, BlockPos, BlockState, boolean)}
-     * and {@link IGrowable#canUseBonemeal(World, Random, BlockPos, BlockState)}. This method
+         * however it ignores {@link IGrowable#isValidBonemealTarget (IBlockReader, BlockPos, BlockState, boolean)}
+     * and {@link IGrowable#performBonemeal (World, Random, BlockPos, BlockState)}. This method
      * performs a creative check and only works for players in creative.
      *
      * @return {@code true} if the plant could be grown.
@@ -563,8 +568,8 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
             return false;//Creative check.
 
         if(block.getBlock() instanceof IGrowable){
-            if(!world.isRemote)
-                ((IGrowable)block.getBlock()).grow((ServerWorld)world, random, pos, world.getBlockState(pos));
+            if(!world.isClientSide)
+                ((IGrowable)block.getBlock()).performBonemeal((ServerWorld)world, random, pos, world.getBlockState(pos));
             return true;
         }
 
@@ -612,7 +617,7 @@ public class ItemMineralHoe extends ResynthItem<ItemMineralHoe> {
         Map<String, Object[]> cleanMap = MineralHoeInformation.getNewMap();
         boolean passed;
 
-        if(world.isRemote)
+        if(world.isClientSide)
             return null;
 
         try{

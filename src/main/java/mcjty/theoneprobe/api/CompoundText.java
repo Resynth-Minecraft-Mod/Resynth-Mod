@@ -128,7 +128,7 @@ public class CompoundText {
         } else if (component instanceof IFormattableTextComponent) {
             ((IFormattableTextComponent) component).append(cmp);
         } else {
-            component = component.deepCopy().append(cmp);
+            component = component.copy().append(cmp);
         }
         return this;
     }

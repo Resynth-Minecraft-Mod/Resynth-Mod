@@ -75,7 +75,7 @@ public class BlockListMatcher extends RuleTest {
     ).codec();
 
     private static final IRuleTestType<BlockListMatcher> BLOCK_LIST_MATCH =
-            IRuleTestType.func_237129_a_("block_list_match", CODEC);
+            IRuleTestType.register("block_list_match", CODEC);
 
     // *******
     //  Class

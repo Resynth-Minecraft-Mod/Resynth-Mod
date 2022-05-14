@@ -30,7 +30,7 @@ public interface IDataAccessor {
 
     BlockState getBlockState();
 
-    TileEntity getTileEntity();
+    TileEntity getBlockEntity();
 
     RayTraceResult getHitResult();
 

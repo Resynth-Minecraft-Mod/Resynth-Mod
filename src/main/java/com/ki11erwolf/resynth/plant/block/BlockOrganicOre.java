@@ -31,6 +31,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 /**
@@ -49,9 +50,9 @@ public class BlockOrganicOre extends ResynthBlock<BlockOrganicOre> {
 
     public BlockOrganicOre(PlantSet<BlockMetallicPlant, Block> parentSet) {
         super(
-                Block.Properties.create(Material.GOURD).harvestTool(ToolType.AXE)
-                .hardnessAndResistance(2),
-                new Item.Properties().group(ResynthTabs.TAB_RESYNTH_PRODUCE),
+                Block.Properties.of(Material.DIRT).harvestTool(ToolType.AXE)
+                .strength(2),
+                new Item.Properties().tab(ResynthTabs.TAB_RESYNTH_PRODUCE),
                 parentSet.getSetTypeName() + "_" + PREFIX + "_" + parentSet.getSetName()
         );
         this.parentSet = parentSet;
@@ -61,7 +62,7 @@ public class BlockOrganicOre extends ResynthBlock<BlockOrganicOre> {
      * Constructs the tooltip for the block.
      */
     @Override
-    public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag){
+    public void appendHoverText(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag){
         BlockPlant.addPlantItemBlockTooltips(tooltip, PREFIX, parentSet);
     }
 
@@ -72,8 +73,9 @@ public class BlockOrganicOre extends ResynthBlock<BlockOrganicOre> {
      * when it is broken.
      */
     @Override
+    @ParametersAreNonnullByDefault
     @SuppressWarnings("deprecation")
-    public void spawnAdditionalDrops(BlockState state, ServerWorld worldIn, BlockPos pos, ItemStack stack) {
+    public void spawnAfterBreak(BlockState state, ServerWorld worldIn, BlockPos pos, ItemStack stack) {
         MinecraftUtil.spawnItemStackInWorld(new ItemStack(state.getBlock()), worldIn, pos);
     }
 }

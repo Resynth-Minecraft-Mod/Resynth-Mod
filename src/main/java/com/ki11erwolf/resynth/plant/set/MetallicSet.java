@@ -111,7 +111,7 @@ abstract class MetallicSet extends PlantSet<BlockMetallicPlant, Block> {
 
                     //Chance of spawning item.
                     float chance = 0.0F;
-                    if(block.getBlock() == Block.getBlockFromItem(set.getSeedSources(Block[].class)[0].asItem())) {
+                    if(block.getBlock() == Block.byItem(set.getSeedSources(Block[].class)[0].asItem())) {
                         chance = ((MetallicSet) set).properties.seedSpawnChanceFromOre();
                     } else if (!(block.getBlock().getRegistryName() == null
                             && set.getProduceItem().asItem().getRegistryName() == null)) {

@@ -91,11 +91,11 @@ public class BrittleBlock<B extends Block> extends ResynthBlock<BrittleBlock<B>>
     public BrittleBlock(B of, float resistance) {
         //noinspection ConstantConditions
         super(
-                AbstractBlock.Properties.from(Objects.requireNonNull(of)).lootFrom(() -> of).hardnessAndResistance(
-                        of.getDefaultState().getBlockHardness(null, null),
+                AbstractBlock.Properties.copy(Objects.requireNonNull(of)).lootFrom(() -> of).strength(
+                        of.defaultBlockState().getDestroySpeed(null, null),
                         Math.max(MINIMUM_EXPLOSION_RESISTANCE, Math.min(resistance, MAXIMUM_EXPLOSION_RESISTANCE))
                 ),
-                new Item.Properties().group(
+                new Item.Properties().tab(
                         ResynthTabs.TAB_RESYNTH
                 ),
                 PREFIX + "_" +  Objects.requireNonNull(of.getRegistryName()).getPath()
@@ -110,7 +110,7 @@ public class BrittleBlock<B extends Block> extends ResynthBlock<BrittleBlock<B>>
     @Override
     @SuppressWarnings("deprecation")
     public float getExplosionResistance() {
-        float resistance = super.blastResistance;
+        float resistance = super.explosionResistance;
         return Math.max(MINIMUM_EXPLOSION_RESISTANCE, Math.min(resistance, MAXIMUM_EXPLOSION_RESISTANCE));
     }
 
@@ -118,8 +118,8 @@ public class BrittleBlock<B extends Block> extends ResynthBlock<BrittleBlock<B>>
      * Creates a tooltip for the specific block.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        String originalName = TextFormatting.GRAY + block.getTranslatedName().getString() + TextFormatting.DARK_GRAY;
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        String originalName = TextFormatting.GRAY + block.getName().getString() + TextFormatting.DARK_GRAY;
 
         new ExpandingTooltip().setCtrlForDescription(
                 tooltips -> Tooltip.addBlankLine(tooltips).addAll(
@@ -166,8 +166,7 @@ public class BrittleBlock<B extends Block> extends ResynthBlock<BrittleBlock<B>>
          * The list of all recipes created for BrittleBlocks.
          */
         private List<IRecipe<?>> recipes;
-
-        /**
+                /**
          * Adds a new recipe for the given BrittleBlock.
          */
         void addBrittleBlockRecipe(BrittleBlock<?> block) {

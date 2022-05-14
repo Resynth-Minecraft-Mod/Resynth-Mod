@@ -132,7 +132,7 @@ public class ClientAVEffectPacket extends Packet<ClientAVEffectPacket>
 
                 EffectsUtil.displayStandardEffectsOnClient(pos, 10, ParticleTypes.FLASH);
                 EffectsUtil.playNormalSoundWithVolumeOnClient(
-                        pos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 8.0F
+                        pos, SoundEvents.NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 8.0F
                 );
             }
         };

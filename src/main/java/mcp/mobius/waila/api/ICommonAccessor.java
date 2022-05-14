@@ -28,7 +28,7 @@ public interface ICommonAccessor {
 
     ResourceLocation getBlockId();
 
-    TileEntity getTileEntity();
+    TileEntity getBlockEntity();
 
     Entity getEntity();
 

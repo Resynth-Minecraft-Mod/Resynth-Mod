@@ -21,6 +21,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * The tile entity for the block BlockMineralSoil.
  * This class acts as the container for the
@@ -67,8 +70,10 @@ public class TileEntityMineralSoil extends TileEntity {
      * @return the nbt tag compound.
      */
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
         compound.putFloat(MINERAL_CONTENT_TAG, mineralPercentage);
         return compound;
     }
@@ -79,8 +84,9 @@ public class TileEntityMineralSoil extends TileEntity {
      * @param compound the nbt tag compound we will read the variable from.
      */
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
+    @ParametersAreNonnullByDefault
+    public void load(BlockState state, CompoundNBT compound) {
+        super.load(state, compound);
         mineralPercentage = compound.getFloat(MINERAL_CONTENT_TAG);
     }
 
@@ -110,7 +116,7 @@ public class TileEntityMineralSoil extends TileEntity {
             mineralPercentage = 50.0F;
 
         this.mineralPercentage = mineralPercentage;
-        markDirty();
+        setChanged();
     }
 
     /**

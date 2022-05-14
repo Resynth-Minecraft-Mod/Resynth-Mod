@@ -98,17 +98,17 @@ public class DisplayHoeInfoPacket extends Packet<DisplayHoeInfoPacket> {
 
                 for(int i = 0; i < values.length; i++) {
                     if(values[i].toString().startsWith("$"))
-                        values[i] = I18n.format(
+                        values[i] = I18n.get(
                                 ("value.resynth.mineral_hoe_information." + values[i]).replace("$", "")
                         );
                 }
 
-                message.append(I18n.format(key, values)).append("\n");
+                message.append(I18n.get(key, values)).append("\n");
             }
 
             ClientPlayerEntity player = Objects.requireNonNull(Minecraft.getInstance().player);
             for(ITextComponent msg : Tooltip.formatLineFeeds(new StringTextComponent(message.toString())))
-                player.sendMessage(msg, player.getUniqueID());
+                player.sendMessage(msg, player.getUUID());
         });
     }
 }

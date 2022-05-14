@@ -56,14 +56,14 @@ class ItemMineralRock extends ResynthItem<ItemMineralRock> {
      * was successfully used.
      */
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
+    public ActionResultType useOn(ItemUseContext context) {
         //Checks and definitions
         if(context.getPlayer() == null)
             return ActionResultType.FAIL;
 
         PlayerEntity player = context.getPlayer();
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
+        World world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
         BlockState source = world.getBlockState(pos);
 
         if(!player.isCrouching() || source.getBlock() != ResynthBlocks.BLOCK_MINERAL_SOIL)
@@ -71,15 +71,15 @@ class ItemMineralRock extends ResynthItem<ItemMineralRock> {
 
         TileEntityMineralSoil soilEntity;
 
-        if(!(world.getTileEntity(pos) instanceof TileEntityMineralSoil))
+        if(!(world.getBlockEntity(pos) instanceof TileEntityMineralSoil))
             return ActionResultType.FAIL;
 
         //Do increase
-        soilEntity = (TileEntityMineralSoil) world.getTileEntity(pos);
+        soilEntity = (TileEntityMineralSoil) world.getBlockEntity(pos);
 
         //noinspection ConstantConditions
         float concentration = soilEntity.getMineralPercentage();
-        int count = context.getItem().getCount();
+        int count = context.getItemInHand().getCount();
         int countUsed = 0;
         float worth = (float) ResynthConfig.GENERAL_CONFIG
                 .getCategory(MineralSoilConfig.class).getMineralRockWorth();
@@ -90,7 +90,7 @@ class ItemMineralRock extends ResynthItem<ItemMineralRock> {
             countUsed++;
         }
 
-        context.getItem().shrink(countUsed);
+        context.getItemInHand().shrink(countUsed);
         soilEntity.setMineralPercentage(concentration);
 
         source.neighborChanged(world, pos, source.getBlock(), pos, false);

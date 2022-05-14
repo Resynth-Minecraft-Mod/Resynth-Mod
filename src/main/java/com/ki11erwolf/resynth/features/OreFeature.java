@@ -97,11 +97,11 @@ public class OreFeature extends Feature<OreFeature> {
      */
     @Override
     protected ConfiguredFeature<?, ?> constructFeature() {
-        return net.minecraft.world.gen.feature.Feature.ORE.withConfiguration(
-                new OreFeatureConfig(target, ore.getDefaultState(), size)
-        ).withPlacement(Placement.RANGE.configure(
+        return net.minecraft.world.gen.feature.Feature.ORE.configured(
+                new OreFeatureConfig(target, ore.defaultBlockState(), size)
+        ).decorated(Placement.RANGE.configured(
                 new TopSolidRangeConfig(minimumHeight, minimumHeight, maximumHeight)
-        )).square().func_242731_b(rarity);
+        )).squared().chance(rarity);
     }
 
     /**
@@ -112,6 +112,6 @@ public class OreFeature extends Feature<OreFeature> {
         if(ore.getRegistryName() == null) throw new Exception("Ore registry name is null");
 
         if(getFeature() == null) throw new Exception("Ore Feature was not constructed correctly!");
-        else builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, getFeature());
+        else builder.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, getFeature());
     }
 }

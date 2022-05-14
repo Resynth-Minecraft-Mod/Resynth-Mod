@@ -57,7 +57,7 @@ public class BlockOre extends ResynthBlock<BlockOre> {
      */
     BlockOre(String oreName, int minXP, int maxXP) {
         super(
-            setLightValue(Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F), 1),
+            setLightValue(Properties.of(Material.STONE).strength(3.0F, 3.0F), 1),
             oreName
         );
 
@@ -113,6 +113,6 @@ public class BlockOre extends ResynthBlock<BlockOre> {
      * with a new light value set to <code>luminance</code>.
      */
     private static Properties setLightValue(Properties propertiesIn, @SuppressWarnings("SameParameterValue") int lum){
-        return propertiesIn.setLightLevel(value -> lum);
+        return propertiesIn.lightLevel(value -> lum);
     }
 }

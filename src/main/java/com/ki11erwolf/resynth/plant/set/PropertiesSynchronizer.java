@@ -59,7 +59,7 @@ enum PropertiesSynchronizer {
         player = (ServerPlayerEntity) playerEntity;
         if(server instanceof DedicatedServer)
             synchronizeWithClient(player);
-        else if(!player.getPlayerIP().equals("local"))
+        else if(!player.getIpAddress().equals("local"))
             synchronizeWithClient(player);
         else restoreClient();
     }
@@ -76,7 +76,7 @@ enum PropertiesSynchronizer {
     // **************
 
     private void synchronizeWithClient(ServerPlayerEntity connectedClient) {
-        LOG.info("[Server] A Client(ip=" + connectedClient.getPlayerIP()+ ") has connected! " +
+        LOG.info("[Server] A Client(ip=" + connectedClient.getIpAddress()+ ") has connected! " +
                 "Attempting to synchronize the client  with the servers PlantSet Properties...");
 
         PlantSetRegistry.streamPlantSets().forEach(serverPlantSet -> {

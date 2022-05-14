@@ -112,14 +112,14 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
                 CrystallineSet crystallineSet = (CrystallineSet) set;
                 float spawnChance = crystallineSet.setProperties.seedSpawnChanceFromOre();
 
-                if(spawnChance < 0 || !(block == Block.getBlockFromItem(crystallineSet.getSeedSources(Block[].class)[0].asItem())))
+                if(spawnChance < 0 || !(block == Block.byItem(crystallineSet.getSeedSources(Block[].class)[0].asItem())))
                     continue;
 
                 //Spawn
                 if(MathUtil.Probability.newPercentageProbability(spawnChance).randomResult().isTrue()){
                     dropSeeds(crystallineSet.seedsItem, (World) world, event.getPos());
                     event.setCanceled(true);
-                    world.setBlockState(event.getPos(), Blocks.AIR.getDefaultState(), 2);
+                    world.setBlock(event.getPos(), Blocks.AIR.defaultBlockState(), 2);
                 }
             }
         }
@@ -134,8 +134,8 @@ abstract class CrystallineSet extends PlantSet<BlockCrystallinePlant, Block> {
         public void onItemExpire(ItemExpireEvent event){
             //Checks and declarations
             Item i = event.getEntityItem().getItem().getItem();
-            World world = event.getEntityItem().world;
-            BlockPos pos = new BlockPos(event.getEntityItem().getPositionVec());
+            World world = event.getEntityItem().level;
+            BlockPos pos = new BlockPos(event.getEntityItem().position());
             int count = event.getEntityItem().getItem().getCount();
             Block b = world.getBlockState(pos).getBlock();
 

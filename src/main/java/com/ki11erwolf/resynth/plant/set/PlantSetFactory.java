@@ -606,7 +606,7 @@ public class PlantSetFactory {
 
     private static EntityType<?> getSetSeedEntity(PlantSet<?, ?> set, ResourceLocation entityID) {
         EntityType<?> entity = getRegistryEntity(entityID);
-        if(entity == null || entity.getClassification() == EntityClassification.MISC) {
+        if(entity == null || entity.getCategory() == EntityClassification.MISC) {
             LOG.error(String.format(
                     "Could not get the seed entity '%s' for the plant set '%s'",
                     entityID.toString(), set.toString()

@@ -61,14 +61,14 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
     @Override
     VoxelShape[] getShapeByAge() {
         return new VoxelShape[]{
-                Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 2.0D, 9.0D),   //1
-                Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 2.0D, 9.0D),   //2
-                Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 3.0D, 11.0D), //3
-                Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 5.0D, 11.0D), //4
-                Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 7.0D, 13.0D), //5
-                Block.makeCuboidShape(3.0D, 0.5D, 3.0D, 13.0D, 9.0D, 13.0D), //6
-                Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 11.0D, 13.0D),//7
-                Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D) //8
+                Block.box(7.0D, 0.0D, 7.0D, 9.0D, 2.0D, 9.0D),   //1
+                Block.box(7.0D, 0.0D, 7.0D, 9.0D, 2.0D, 9.0D),   //2
+                Block.box(5.0D, 0.0D, 5.0D, 11.0D, 3.0D, 11.0D), //3
+                Block.box(5.0D, 0.0D, 5.0D, 11.0D, 5.0D, 11.0D), //4
+                Block.box(3.0D, 0.0D, 3.0D, 13.0D, 7.0D, 13.0D), //5
+                Block.box(3.0D, 0.5D, 3.0D, 13.0D, 9.0D, 13.0D), //6
+                Block.box(3.0D, 0.0D, 3.0D, 13.0D, 11.0D, 13.0D),//7
+                Block.box(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D) //8
         };
     }
 
@@ -112,11 +112,11 @@ public abstract class BlockBiochemicalPlant extends BlockPlant<BlockBiochemicalP
     }
 
     /**
-     * @return {@link SoundEvents#ENTITY_ITEM_PICKUP}
+     * @return {@link SoundEvents#ITEM_PICKUP}
      */
     @Override
     protected SoundEvent getSoundEventOfHarvest(){
-        return SoundEvents.ENTITY_ITEM_PICKUP;
+        return SoundEvents.ITEM_PICKUP;
     }
 
     // ************

@@ -40,7 +40,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * The seeds item for every Growable resynth plant type (plant block).
+ * The seeds item for every Growable Resynth plant type (plant block).
  * Handles placement of the plant type as well as displays a tooltip
  * with the properties (e.g. growth chance) of the plant type.
  */
@@ -66,22 +66,22 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      * was placed, {@link ActionResultType#FAIL} otherwise.
      */
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
+    public ActionResultType useOn(ItemUseContext context) {
         //Don't plant broken plants
         if(parentSet.isBroken())
             return ActionResultType.FAIL;
 
         //Get vars
-        World world = context.getWorld();
-        BlockPos blockpos = context.getPos().up();
+        World world = context.getLevel();
+        BlockPos blockpos = context.getClickedPos().above();
 
         //If valid position to plant
-        if (context.getFace() == Direction.UP && world.isAirBlock(blockpos)
-                && this.parentSet.getPlantBlock().getDefaultState().isValidPosition(world, blockpos)) {
+        if (context.getClickedFace() == Direction.UP && world.isEmptyBlock(blockpos)
+                && this.parentSet.getPlantBlock().defaultBlockState().canSurvive(world, blockpos)) {
 
             //Set block in world
-            world.setBlockState(blockpos, this.parentSet.getPlantBlock().getDefaultState(), 11);
-            ItemStack itemstack = context.getItem();
+            world.setBlock(blockpos, this.parentSet.getPlantBlock().defaultBlockState(), 11);
+            ItemStack itemstack = context.getItemInHand();
             PlayerEntity playerEntity = context.getPlayer();
 
             //Trigger block placed event
@@ -94,7 +94,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
 
             //Play plant sound.
             EffectsUtil.playNormalSound(
-                    world, playerEntity, blockpos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS
+                    world, playerEntity, blockpos, SoundEvents.CROP_PLANTED, SoundCategory.BLOCKS
             );
 
             return ActionResultType.SUCCESS;
@@ -105,7 +105,7 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      * Constructs the tooltip for the item.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
         addPlantItemTooltips(tooltip, String.format("%s_%s", parentSet.getSetTypeName(), PREFIX), parentSet);
     }
 
@@ -114,6 +114,6 @@ public class ItemSeeds extends ResynthItem<ItemSeeds> implements IPlantable {
      */
     @Override
     public BlockState getPlant(IBlockReader world, BlockPos pos) {
-        return parentSet.getPlantBlock().getDefaultState();
+        return parentSet.getPlantBlock().defaultBlockState();
     }
 }

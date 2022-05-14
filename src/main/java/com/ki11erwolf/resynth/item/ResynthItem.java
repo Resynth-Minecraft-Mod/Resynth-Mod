@@ -83,7 +83,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      * @param group the custom ItemGroup.
      */
     public ResynthItem(String name, ItemGroup group){
-        super(new Properties().group(group));
+        super(new Properties().tab(group));
         this.setRegistryName(name);
     }
 
@@ -93,7 +93,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      * Sets the tooltip for this item from the lang files.
      */
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         new ExpandingTooltip().setCtrlForDescription(
                 tooltips -> Tooltip.addBlankLine(tooltips).addAll(
                         Arrays.asList(Tooltip.formatLineFeeds(getDescriptiveTooltip(this), TextFormatting.DARK_GRAY))
@@ -147,7 +147,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      * @return properties, the items properties object.
      */
     private static Properties setItemGroup(Properties properties){
-        properties.group(ResynthTabs.TAB_RESYNTH);
+        properties.tab(ResynthTabs.TAB_RESYNTH);
         return properties;
     }
 
@@ -163,7 +163,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
      */
     @SuppressWarnings("SameParameterValue")
     protected static ITextComponent getFormattedTooltip(String key, TextFormatting color, Object... params){
-        return toTextComponent(color + I18n.format("tooltip.item.resynth." + key, params));
+        return toTextComponent(color + I18n.get("tooltip.item.resynth." + key, params));
     }
 
     /**
@@ -195,7 +195,7 @@ public class ResynthItem<T extends ResynthItem<?>> extends Item {
 
         //noinspection deprecation
         return toTextComponent(WordUtils.wrap(
-                TextFormatting.DARK_GRAY + I18n.format("tooltip.item.resynth." + key, params),
+                TextFormatting.DARK_GRAY + I18n.get("tooltip.item.resynth." + key, params),
                 ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).getTooltipCharacterLimit(),
                 "\n", true
         ));

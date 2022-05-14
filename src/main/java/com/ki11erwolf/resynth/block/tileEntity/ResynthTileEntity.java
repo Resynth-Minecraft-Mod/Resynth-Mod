@@ -49,8 +49,8 @@ public abstract class ResynthTileEntity <T extends TileEntity> extends ResynthBl
      * @return the cast tile entity.
      */
     @SuppressWarnings({"unchecked"})
-    protected T getTileEntity(IBlockReader world, BlockPos pos) {
-        return (T)world.getTileEntity(pos);
+    protected T getBlockEntity(IBlockReader world, BlockPos pos) {
+        return (T)world.getBlockEntity(pos);
     }
 
     /**
@@ -73,7 +73,7 @@ public abstract class ResynthTileEntity <T extends TileEntity> extends ResynthBl
      * @return this blocks tile entity class.
      */
     @SuppressWarnings({"unused", "RedundantSuppression"})
-    public abstract Class<T> getTileEntityClass();
+    public abstract Class<T> getBlockEntityClass();
 
     /**
      * Constructs and returns the tile entity object instance

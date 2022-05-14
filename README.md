@@ -1,7 +1,6 @@
 # Resynth Minecraft Mod
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/35e65ea5f6c0426da2bf88d95822c8b1)](https://www.codacy.com/manual/LMelaia/Resynth-Mod?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Resynth-Minecraft-Mod/Resynth-Mod&amp;utm_campaign=Badge_Grade)
 ![](http://cf.way2muchnoise.eu/full_303846_downloads.svg)
 ![](http://cf.way2muchnoise.eu/versions/303846.svg)
 
@@ -61,7 +60,7 @@ Special thanks goes out the following people who, directly or indirectly, helped
 
 ### Legal
 
-**Copyright © 2018-2021: Ki11er_wolf**
+**Copyright © 2018-2022: Ki11er_wolf**
 
 The Resynth Minecraft Mod, The Resynth Website, and all related content is licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0). All Resynth content is open source.
 

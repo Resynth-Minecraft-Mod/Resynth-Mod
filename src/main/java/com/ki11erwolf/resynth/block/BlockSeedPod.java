@@ -40,6 +40,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * Mystical Seed Pod. Can be configured to drops Biochemical seeds when broken.
@@ -56,7 +57,7 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
     /**
      * The bounding/hit box (shape) for this block.
      */
-    private static final VoxelShape SEED_POD_SHAPE = Block.makeCuboidShape(
+    private static final VoxelShape SEED_POD_SHAPE = Block.box(
              3.0D, 0.0D, 3.0D,
             14.0D, 15.0D, 14.0D
     );
@@ -65,7 +66,7 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      * Default constructor.
      */
     BlockSeedPod(String name) {
-        super(Properties.create(Material.PLANTS).sound(SoundType.PLANT).notSolid(), name);
+        super(Properties.of(Material.PLANT).sound(SoundType.CROP).noCollission(), name);
     }
 
     // **************
@@ -90,16 +91,20 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      * with the offset.
      */
     @Override
+    @Nonnull
+    @ParametersAreNonnullByDefault
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         Vector3d vector3d = state.getOffset(worldIn, pos);
-        return SEED_POD_SHAPE.withOffset(vector3d.x, vector3d.y, vector3d.z);
+        return SEED_POD_SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
     }
 
     /**
      * @return {@code 0}.
      */
+
     @Override
-    public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    @ParametersAreNonnullByDefault
+    public int getLightBlock(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return 0;
     }
 
@@ -107,6 +112,8 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      * @return {@link VoxelShapes#empty()}.
      */
     @Override
+    @ParametersAreNonnullByDefault
+    @Nonnull
     public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return VoxelShapes.empty();
     }
@@ -124,7 +131,7 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
         BlockState state = world.getBlockState(pos);
 
         if (state.getBlock() != this)
-            return getDefaultState();
+            return state.getBlockState();
 
         return state;
     }
@@ -154,8 +161,9 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      * ({@link #isValidGround(BlockState)}).
      */
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        BlockPos blockpos = pos.down();
+    @ParametersAreNonnullByDefault
+    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        BlockPos blockpos = pos.below();
         //Forge: This function is called during world gen and placement,
         //before this block is set, so if we are not 'here' then assume it's the pre-check.
         if (state.getBlock() == this)
@@ -174,10 +182,12 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      * is no longer on valid ground.
      */
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState,
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState,
                                            IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState()
-                : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState()
+                : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     // ***********
@@ -192,7 +202,8 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      * of a random biochemical plant set depending on config.
      */
     @Override
-    public void spawnAdditionalDrops(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
+    @ParametersAreNonnullByDefault
+    public void spawnAfterBreak(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
         if (!CONFIG.areDropsEnabled()) {
             MinecraftUtil.spawnItemStackInWorld(new ItemStack(this), world, pos);
             return;
@@ -213,7 +224,8 @@ public class BlockSeedPod extends ResynthBlock<BlockSeedPod> implements IPlantab
      */
     @Override
     @Nonnull
-    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
+    @ParametersAreNonnullByDefault
+    public ItemStack getCloneItemStack(IBlockReader worldIn, BlockPos pos, BlockState state) {
         return new ItemStack(this);
     }
 }

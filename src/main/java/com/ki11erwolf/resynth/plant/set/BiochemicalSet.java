@@ -111,14 +111,14 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
                     //Do a lot of checks
                     if(loopedEntity == null) continue;
                     if(!loopedEntity.equals(deadEntity)) continue;
-                    if(event.getEntity().getEntityWorld().isRemote) continue;
+                    if(event.getEntity().level.isClientSide) continue;
                     if(MathUtil.Probability.newPercentageProbability(plantSet.setProperties.seedSpawnChanceFromMob())
                             .randomResult().isFalse())
                         continue;
 
                     //and spawn seeds if lucky
-                    dropSeeds(set.getSeedsItem(), event.getEntity().getEntityWorld(),
-                            new BlockPos(event.getEntity().getPositionVec())
+                    dropSeeds(set.getSeedsItem(), event.getEntity().level,
+                            new BlockPos(event.getEntity().position())
                     );
                 }
             }
@@ -144,11 +144,11 @@ abstract class BiochemicalSet extends PlantSet<BlockBiochemicalPlant, EntityType
                 if(event.getOriginal().getItem() == plantSet.getProduceItem().asItem()){
                     if(MathUtil.Probability.newPercentageProbability(plantSet.setProperties.seedSpawnChanceFromBulb())
                             .randomResult().isTrue()) {
-                        if (!event.getEntity().getEntityWorld().isRemote) {
+                        if (!event.getEntity().level.isClientSide) {
                             //Spawn seeds if lucky
                             dropSeeds(
-                                    plantSet.getSeedsItem(), event.getEntity().getEntityWorld(),
-                                    new BlockPos(event.getEntity().getPositionVec())
+                                    plantSet.getSeedsItem(), event.getEntity().level,
+                                    new BlockPos(event.getEntity().position())
                             );
                         }
                     }

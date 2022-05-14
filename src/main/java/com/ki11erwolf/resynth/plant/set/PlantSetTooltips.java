@@ -34,6 +34,7 @@ import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A set of utilities to aid with Plant Sets.
@@ -55,7 +56,7 @@ public class PlantSetTooltips {
 
         // Header
         tooltip.add(new StringTextComponent(TextFormatting.RED.toString() + TextFormatting.UNDERLINE
-                + getFormattedTooltip("broken", TextFormatting.UNDERLINE).getUnformattedComponentText()
+                + getFormattedTooltip("broken", TextFormatting.UNDERLINE).getString()
         ));
 
         // Additional information
@@ -64,7 +65,7 @@ public class PlantSetTooltips {
                     Arrays.asList(Tooltip.formatLineFeeds(new StringTextComponent(
                             WordUtils.wrap(
                                     getFormattedTooltip("broken.information", TextFormatting.DARK_RED)
-                                            .getUnformattedComponentText(),
+                                            .getString(),
                                     ResynthConfig.GENERAL_CONFIG.getCategory(GeneralConfig.class).getTooltipCharacterLimit(),
                                     "\n", true
                             )
@@ -135,7 +136,7 @@ public class PlantSetTooltips {
                     getFormattedTooltip("seed_sources.crystalline", TextFormatting.DARK_GREEN).getString(),
                     TextFormatting.WHITE, Tooltip.toTextComponent(Arrays.toString(
                             Arrays.stream(set.getSeedSources(Block[].class)).limit(limit).map(
-                                    in -> TextFormatting.GOLD + in.getTranslatedName().getString() + TextFormatting.WHITE
+                                    in -> TextFormatting.GOLD + in.getName().getString() + TextFormatting.WHITE
                             ).toArray()
                     ) + s).getString()
             ));
@@ -146,7 +147,7 @@ public class PlantSetTooltips {
                     TextFormatting.WHITE, Tooltip.toTextComponent(
                             Arrays.toString(
                                     Arrays.stream(set.getSeedSources(Block[].class)).limit(limit).map(
-                                            in -> TextFormatting.GOLD + in.getTranslatedName().getString() + TextFormatting.WHITE
+                                            in -> TextFormatting.GOLD + in.getName().getString() + TextFormatting.WHITE
                                     ).toArray()
                             ) + s).getString()
             ));
@@ -156,7 +157,7 @@ public class PlantSetTooltips {
                     getFormattedTooltip("seed_sources.biochemical", TextFormatting.DARK_GREEN).getString(),
                     TextFormatting.WHITE, Tooltip.toTextComponent(Arrays.toString(
                             Arrays.stream(set.getSeedSources(EntityType[].class)).limit(limit).map(
-                                    in -> TextFormatting.GOLD + in.getName().getString() + TextFormatting.WHITE
+                                    in -> TextFormatting.GOLD + Objects.requireNonNull(in.getRegistryName()).toString() + TextFormatting.WHITE
                             ).toArray()
                     ) + s).getString()
             ));
@@ -220,7 +221,7 @@ public class PlantSetTooltips {
      * @return the formatted tooltip from the language file.
      */
     private static ITextComponent getFormattedTooltip(String key, TextFormatting color, Object... params){
-        return new StringTextComponent(color + I18n.format("tooltip.resynth.plantset.property." + key, params));
+        return new StringTextComponent(color + I18n.get("tooltip.resynth.plantset.property." + key, params));
     }
 }
 

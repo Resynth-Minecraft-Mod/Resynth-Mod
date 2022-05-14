@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Ki11er_wolf
+ * Copyright 2018-2022 Ki11er_wolf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,7 +103,7 @@ dependencies {
  */
 repositories {
     // Forge
-    maven { name 'Forge'; url = 'https://files.minecraftforge.net/maven' }
+    maven { name 'Forge'; url = 'https://maven.minecraftforge.net' }
 
     //The One Probe
     if (enableTop) maven {
@@ -498,7 +498,7 @@ buildscript {
     }
 
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
 
@@ -507,7 +507,7 @@ buildscript {
  * of fields and methods, as well as various other Minecraft properties.
  */
 minecraft {
-    mappings channel: 'snapshot', version: mappingsVersion
+    mappings channel: 'official', version: mappingsVersion
 
     runs {
         client {

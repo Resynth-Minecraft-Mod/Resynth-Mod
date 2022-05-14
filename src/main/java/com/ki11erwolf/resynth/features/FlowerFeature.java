@@ -88,9 +88,9 @@ public class FlowerFeature extends Feature<FlowerFeature> {
      */
     @Override
     protected ConfiguredFeature<?, ?> constructFeature() {
-        return net.minecraft.world.gen.feature.Feature.ORE.withConfiguration(
-                new OreFeatureConfig(BASE_FLOWERS, flower.getDefaultState(), size)
-        ).withPlacement(Placement.RANGE.configure(HEIGHT_RANGE)).func_242731_b(rarity);
+        return net.minecraft.world.gen.feature.Feature.ORE.configured(
+                new OreFeatureConfig(BASE_FLOWERS, flower.defaultBlockState(), size)
+        ).decorated(Placement.RANGE.configured(HEIGHT_RANGE).chance(rarity));
     }
 
     /**
@@ -103,6 +103,6 @@ public class FlowerFeature extends Feature<FlowerFeature> {
         if(flower.getRegistryName() == null) throw new Exception("Flower registry name is null");
 
         if(getFeature() == null) throw new Exception("Flower Feature was not constructed correctly!");
-        else builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, getFeature());
+        else builder.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, getFeature());
     }
 }

@@ -184,7 +184,7 @@ public class SideUtil {
      * side.
      */
     public static boolean isLogicalSideServer(World world){
-        return !world.isRemote();
+        return !world.isClientSide();
     }
 
     /**
@@ -217,7 +217,7 @@ public class SideUtil {
      * side.
      */
     public static boolean isLogicalSideClient(World world){
-        return world.isRemote();
+        return world.isClientSide();
     }
 
     //Physical Side (client vs dedicated server jar) checks

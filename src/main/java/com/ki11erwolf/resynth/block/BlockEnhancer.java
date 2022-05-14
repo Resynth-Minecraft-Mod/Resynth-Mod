@@ -64,7 +64,7 @@ public class BlockEnhancer extends ResynthBlock<BlockEnhancer>{
      * @param stageIncrease The number of stages to increase the Mineral Soil block growth stage by.
      */
     BlockEnhancer(String name, float increase, int stageIncrease) {
-        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(2), name + "_" + BLOCK_NAME);
+        super(Block.Properties.of(Material.STONE).strength(2), name + "_" + BLOCK_NAME);
 
         this.increase = increase;
         this.stageIncrease = stageIncrease;
@@ -74,7 +74,7 @@ public class BlockEnhancer extends ResynthBlock<BlockEnhancer>{
      * {@inheritDoc}
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn) {
         new ExpandingTooltip().setCtrlForDescription(
                 tooltips -> Tooltip.addBlankLine(tooltips).addAll(

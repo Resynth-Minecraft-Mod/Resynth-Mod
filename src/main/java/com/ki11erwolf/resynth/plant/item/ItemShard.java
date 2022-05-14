@@ -49,7 +49,7 @@ public class ItemShard extends ResynthItem<ItemShard> {
      * Constructs the tooltip for the item.
      */
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
                                ITooltipFlag flagIn){
         addPlantItemTooltips(tooltip, PREFIX, parentSet);
     }
